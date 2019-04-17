@@ -1,0 +1,77 @@
+﻿@using GridMvc
+@using GridMvc.Demo.Models
+@using GridShared.Sorting
+@using Microsoft.AspNetCore.Localization
+@using Microsoft.AspNetCore.Mvc.ViewEngines
+@model IQueryable<Order>
+@inject ICompositeViewEngine viewEngine
+
+@{
+    ViewBag.Title = "Home Page";
+    var requestCulture = Context.Features.Get<IRequestCultureFeature>();
+    var locale = requestCulture.RequestCulture.UICulture.TwoLetterISOLanguageName;
+}
+
+<div class="row">
+    <div class="col-md-12">
+        <h1>Orders administration</h1>
+        <p>
+            This page demonstrates the possibilities of Grid.Mvc. For more documentation, please
+            see: <a href="http://gridmvc.codeplex.com/">http://gridmvc.codeplex.com/</a>
+        </p>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-3 col-md-push-9">
+        <h4>
+            Order details
+        </h4>
+        <div id="order-content">
+            <p class="muted">
+                Select order to display detailed infomation
+            </p>
+        </div>
+    </div>
+    <div class="col-md-9 col-md-pull-3">
+        @Html.Grid(Model, viewEngine).Named("ordersGrid").Columns(columns =>
+        {
+            /* Adding not mapped column, that renders body, using inline Razor html helper */
+            columns.Add().Encoded(false).Sanitized(false).SetWidth(30).Css("hidden-xs") //hide on phones
+                .RenderValueAs(o =>
+                        @<b>
+                            @Html.ActionLink("Edit", "Edit", new { id = o.OrderID }, new { @class = "modal_link" })
+                        </b>);
+
+                           /* Adding "OrderID" column: */
+                                    columns.Add(o => o.OrderID).Titled("Number").SetWidth(100);
+
+                           /* Adding "OrderDate" column: */
+                                    columns.Add(o => o.OrderDate, "OrderCustomDate").Titled("Date").SortInitialDirection(GridSortDirection.Descending)
+                                        .Format("{0:yyyy-MM-dd}").SetWidth(110);
+
+                           /* Adding "CompanyName" column: */
+                                    columns.Add(o => o.Customer.CompanyName).Titled("Company").SetWidth(250).ThenSortByDescending(o => o.OrderID)
+                                        .SetFilterWidgetType("CustomCompanyNameFilterWidget");
+
+                           /* Adding "Vip customer" column: */
+                                    columns.Add(o => o.Customer.IsVip).Titled("Is Vip").SetWidth(70).Css("hidden-xs") //hide on phones
+                                        .RenderValueAs(o => o.Customer.IsVip ? "Yes" : "No");
+                                }).SetRowCssClasses(item => item.Customer.IsVip ? "success" : string.Empty).WithPaging(15).SetLanguage(locale).Sortable().Filterable().WithMultipleFilters()
+    </div>
+</div>
+<script>
+    $(function () {
+        pageGrids.ordersGrid.addFilterWidget(new CustomersFilterWidget());
+
+        pageGrids.ordersGrid.onRowSelect(function (e) {
+            $.get("/Home/GetOrder?id=" + e.row.OrderID, function (data) {
+                if (data.status <= 0) {
+                    alert(data.message);
+                    return;
+                }
+                $("#order-content").html(data.content);
+            });
+        });
+    });
+</script>

@@ -1,0 +1,80 @@
+﻿@using GridShared.Columns
+@using GridMvc.Columns
+@model GridMvc.ISGrid
+@if (Model == null) { return; }
+@if (Model.RenderOptions.RenderRowsOnly)
+{
+    @if (!Model.ItemsToDisplay.Any())
+    {
+        <tr class="grid-empty-text">
+            <td colspan="@Model.Columns.Count()">
+                @Model.EmptyGridText
+            </td>
+        </tr>
+    }
+    else
+    {
+        @foreach (object item in Model.ItemsToDisplay)
+        {
+            <tr class="grid-row @Model.GetRowCssClasses(item)">
+                @foreach (IGridColumn column in Model.Columns)
+                {
+                    @(((ISGridColumn)column).CellRenderer.Render(column, column.GetCell(item)))
+               }
+            </tr>
+        }
+    }
+}
+else
+{
+    <div class="grid-mvc" data-lang="@Model.Language" data-gridname="@Model.RenderOptions.GridName" data-selectable="@Model.RenderOptions.Selectable.ToString().ToLower()" data-multiplefilters="@Model.RenderOptions.AllowMultipleFilters.ToString().ToLower()">
+        <div class="grid-wrap">
+            <table class="table table-striped grid-table">
+                @* Draw grid header *@
+                <thead>
+                    <tr>
+                        @foreach (IGridColumn column in Model.Columns)
+                        {
+                            @(((ISGridColumn)column).HeaderRenderer.Render(column))
+                                                    }
+                    </tr>
+                </thead>
+                <tbody>
+                    @if (!Model.ItemsToDisplay.Any())
+                    {
+                        <tr class="grid-empty-text">
+                            <td colspan="@Model.Columns.Count()">
+                                @Model.EmptyGridText
+                            </td>
+                        </tr>
+                    }
+                    else
+                    {
+                        @foreach (object item in Model.ItemsToDisplay)
+                        {
+                            <tr class="grid-row @Model.GetRowCssClasses(item)">
+                                @foreach (IGridColumn column in Model.Columns)
+                                {
+                                    @(((ISGridColumn)column).CellRenderer.Render(column, column.GetCell(item)))
+                                }
+                            </tr>
+                        }
+                    }
+                </tbody>
+            </table>
+            <div class="grid-footer">
+                @if (Model.RenderOptions.ShowGridItemsCount)
+                {
+                    <div class="grid-itemscount">
+                        <span class="grid-itemscount-label">@Model.RenderOptions.GridCountDisplayName:</span>
+                        <span class="grid-itemscount-caption">@Model.ItemsCount</span>
+                    </div>
+                }
+                @if (Model.EnablePaging && Model.Pager != null)
+                {
+                    @await Html.PartialAsync(Model.Pager.TemplateName, Model.Pager)
+                }
+            </div>
+        </div>
+    </div>
+}

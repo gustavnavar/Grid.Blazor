@@ -1,0 +1,11 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup Condition=" '$(RunConfiguration)' == 'Default' ">
+    <StartAction>Project</StartAction>
+    <ApplicationURL>http://localhost:65271</ApplicationURL>
+  </PropertyGroup>
+  <PropertyGroup>
+    <_LastSelectedProfileId>C:\Users\GustauNavarro\OneDrive - Agno\Visual Studio 2017\Projects\Grid.Blazor\GridMvc\Properties\PublishProfiles\FolderProfile.pubxml</_LastSelectedProfileId>
+    <ShowAllFiles>false</ShowAllFiles>
+  </PropertyGroup>
+</Project>

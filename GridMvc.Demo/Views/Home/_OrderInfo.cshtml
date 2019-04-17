@@ -1,0 +1,30 @@
+﻿@model GridMvc.Demo.Models.Order
+<dl>
+    <dt>Order number:</dt>
+    <dd>@Model.OrderID</dd>
+
+
+    @if (Model.OrderDate.HasValue)
+    {
+
+        <dt>Order date:</dt>
+        <dd>@Model.OrderDate.Value.ToString()</dd>
+ 
+    }
+
+    <dt>Freight:</dt>
+    <dd>@Model.Freight</dd>
+
+    <dt>Ship address:
+    </dt>
+    <dd>@Model.ShipPostalCode, @Model.ShipCity, @Model.ShipCity,
+        @Model.ShipAddress
+    </dd>
+
+    <dt>Customer:
+    </dt>
+    <dd>@Html.ActionLink(Model.Customer.CompanyName, "Index", "Home", new { id = Model.OrderID })</dd>
+</dl>
+<p>
+    @Html.ActionLink("Edit order", "Edit", "Home", new { id = Model.OrderID }, new { @class = "btn btn-primary" })
+</p>

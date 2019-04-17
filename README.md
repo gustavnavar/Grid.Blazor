@@ -1,2 +1,8 @@
 # Grid.Blazor
-Grid components for Blazor, Razor Components and ASP.NET Core MVC
+
+A fork from: https://gridmvc.codeplex.com/
+
+Grid components for:
+- Blazor and Razor Components
+- ASP.NET Core MVC
+

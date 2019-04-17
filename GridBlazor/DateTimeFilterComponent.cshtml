@@ -1,0 +1,46 @@
+﻿@using GridBlazor.Resources
+
+@typeparam T
+@inherits DateTimeFilterComponentBase<T>
+
+@if (visible)
+{
+    <div class="dropdown dropdown-menu grid-dropdown opened" style="display:block;">
+        <div class="grid-dropdown-arrow"></div>
+        <div class="grid-dropdown-inner">
+            <div class="grid-popup-widget">
+                <div class="form-group">
+                    <label><b>@Strings.FilterTypeLabel:</b></label>
+                    <select class="grid-filter-type form-control" bind="@filterType">
+                        <option value="1">@Strings.Equal</option>
+                        <option value="5">@Strings.GreaterThan</option>
+                        <option value="6">@Strings.LessThan</option>
+                        <option value="7">@Strings.GreaterThanOrEquals</option>
+                        <option value="8">@Strings.LessThanOrEquals</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label><b>@Strings.FilterValueLabel:</b></label>
+                    <input type="date" placeholder="yyyy-mm-dd" class="grid-filter-input form-control" bind="@filterValue" />
+                </div>
+                <div class="grid-filter-buttons" >
+                    <button type="button" class="btn btn-primary grid-apply" onclick="@ApplyButtonClicked">
+                        @Strings.ApplyFilterButtonText
+                    </button>
+                </div>
+            </div>
+            <div class="grid-popup-additional">
+                @if(_clearVisible)
+                {
+                    <ul class="menu-list">
+                        <li>
+                            <a class="grid-filter-clear" href="javascript:void(0);" onclick="@ClearButtonClicked">
+                                @Strings.ClearFilterLabel
+                            </a>
+                        </li>
+                    </ul>
+                }
+            </div>
+        </div>
+    </div>
+}

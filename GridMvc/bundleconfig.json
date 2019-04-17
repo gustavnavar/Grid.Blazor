@@ -1,0 +1,20 @@
+[
+  {
+    "outputFileName": "Resources/css/gridmvc.min.css",
+    "inputFiles": [
+      "Resources/css/gridmvc.css"
+    ]
+  },
+  {
+    "outputFileName": "Resources/js/gridmvc.min.js",
+    "inputFiles": [
+      "Resources/js/gridmvc.js"
+    ]
+  },
+  {
+    "outputFileName": "Resources/js/gridmvc-ajax.min.js",
+    "inputFiles": [
+      "Resources/js/gridmvc-ajax.js"
+    ]
+  }
+]

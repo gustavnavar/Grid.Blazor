@@ -1,0 +1,152 @@
+﻿@using GridBlazor.Columns
+@using GridBlazor.Filtering
+@using GridBlazor.Pagination
+@using GridBlazor.Sorting
+@using GridShared.Columns
+
+@typeparam T
+@inherits GridComponentBase<T>
+
+@if (Grid != null)
+{
+    if (Grid.ComponentOptions.RenderRowsOnly)
+    {
+        if (Grid.ItemsToDisplay.Count() == 0)
+        {
+            <tr class="grid-empty-text">
+                <td colspan="@Grid.Columns.Count()">
+                    @Grid.EmptyGridText
+                </td>
+            </tr>
+        }
+        else
+        {
+            int i = 0;
+            foreach (object item in Grid.ItemsToDisplay)
+            {
+                if (Grid.ComponentOptions.Selectable)
+                {
+                    int j = i;
+                    <tr class="grid-row@(_selectedRow == i ? " grid-row-selected" : "") @Grid.GetRowCssClasses(item)" onclick="@(() => RowClicked(j, item))">
+                        @foreach (IGridColumn column in Grid.Columns)
+                        {
+                            if (((GridColumnBase<T>)column).Hidden)
+                            {
+                                <GridHiddenCellComponent Column="@column" Cell="@column.GetCell(item)"></GridHiddenCellComponent>
+                            }
+                            else
+                            {
+                                <GridCellComponent Column="@column" Cell="@column.GetCell(item)"></GridCellComponent>
+                            }
+                        }
+                    </tr>
+                    i++;
+                }
+                else
+                {
+                    <tr class="grid-row @Grid.GetRowCssClasses(item)">
+                        @foreach (IGridColumn column in Grid.Columns)
+                        {
+                            if (((GridColumnBase<T>)column).Hidden)
+                            {
+                                <GridHiddenCellComponent Column="@column" Cell="@column.GetCell(item)"></GridHiddenCellComponent>
+                            }
+                            else
+                            {
+                                <GridCellComponent Column="@column" Cell="@column.GetCell(item)"></GridCellComponent>
+                            }
+                        }
+                    </tr>
+                }
+            }
+        }
+    }
+    else
+    {
+        <div class="grid-mvc" data-lang="@Grid.Language" data-gridname="@Grid.ComponentOptions.GridName" data-selectable="@Grid.ComponentOptions.Selectable.ToString().ToLower()" data-multiplefilters="@Grid.ComponentOptions.AllowMultipleFilters.ToString().ToLower()">
+            <div class="grid-wrap">
+                <table class="table table-striped grid-table">
+                    <thead>
+                        <tr>
+                            @foreach (IGridColumn column in Grid.Columns)
+                            {
+                                if (((GridColumnBase<T>)column).Hidden)
+                                {
+                                    <GridHiddenHeaderComponent T="@T" GridComponent="@this" Column="@column" FilterSettings="@((QueryStringFilterSettings)Grid.Settings.FilterSettings)" SortingSettings="@((QueryStringSortSettings)Grid.Settings.SortSettings)" Filters="@_filterComponents"></GridHiddenHeaderComponent>
+                                }
+                                else
+                                {
+                                    <GridHeaderComponent T="@T" GridComponent="@this" Column="@column" FilterSettings="@((QueryStringFilterSettings)Grid.Settings.FilterSettings)" SortingSettings="@((QueryStringSortSettings)Grid.Settings.SortSettings)" Filters="@_filterComponents"></GridHeaderComponent>
+                                }
+                            }
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @if (!Grid.ItemsToDisplay.Any())
+                        {
+                            <tr class="grid-empty-text">
+                                <td colspan="@Grid.Columns.Count()">
+                                    @Grid.EmptyGridText
+                                </td>
+                            </tr>
+                        }
+                        else
+                        {
+                            int i = 0;
+                            foreach (object item in Grid.ItemsToDisplay)
+                            {
+                                if (Grid.ComponentOptions.Selectable)
+                                {
+                                    int j = i;
+                                    <tr class="grid-row@(_selectedRow == i ? " grid-row-selected" : "") @Grid.GetRowCssClasses(item)" onclick="@(() => RowClicked(j, item))">
+                                        @foreach (IGridColumn column in Grid.Columns)
+                                        {
+                                            if (((GridColumnBase<T>)column).Hidden)
+                                            {
+                                                <GridHiddenCellComponent Column="@column" Cell="@column.GetCell(item)"></GridHiddenCellComponent>
+                                            }
+                                            else
+                                            {
+                                                <GridCellComponent Column="@column" Cell="@column.GetCell(item)"></GridCellComponent>
+                                            }
+                                        }
+                                    </tr>
+                                    i++;
+                                }
+                                else
+                                {
+                                    <tr class="grid-row @Grid.GetRowCssClasses(item)">
+                                        @foreach (IGridColumn column in Grid.Columns)
+                                        {
+                                            if (((GridColumnBase<T>)column).Hidden)
+                                            {
+                                                <GridHiddenCellComponent Column="@column" Cell="@column.GetCell(item)"></GridHiddenCellComponent>
+                                            }
+                                            else
+                                            {
+                                                <GridCellComponent Column="@column" Cell="@column.GetCell(item)"></GridCellComponent>
+                                            }
+                                        }
+                                    </tr>
+                                }
+                            }
+                        }
+                    </tbody>
+                </table>
+                <div class="grid-footer">
+                    @if (Grid.ComponentOptions.ShowGridItemsCount)
+                    {
+                        <div class="grid-itemscount">
+                            <span class="grid-itemscount-label">@Grid.ComponentOptions.GridCountDisplayName:</span>
+                            <span class="grid-itemscount-caption">@Grid.ItemsCount</span>
+                        </div>
+                    }
+                    @if (Grid.EnablePaging && Grid.Pager != null)
+                    {
+                        <GridPagerComponent T="@T" GridPager="@((GridPager)Grid.Pager)" GridComponent="@this"></GridPagerComponent>
+                    }
+                </div>
+            </div>
+        </div>
+    }
+}
