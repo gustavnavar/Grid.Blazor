@@ -5,6 +5,7 @@
     <GenerateEmbeddedFilesManifest>True</GenerateEmbeddedFilesManifest>
     <EnableDefaultEmbeddedResourceItems>False</EnableDefaultEmbeddedResourceItems>
     <Product>GridMvc</Product>
+    <PackageId>GridMvcCore</PackageId>
     <Version>2.4.18</Version>
     <Title>GridMvc</Title>
     <Description>ASP.NET MVC Grid component</Description>

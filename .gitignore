@@ -4,6 +4,7 @@
 
 /.vs
 /GridBlazor/bin
+/GridBlazor/GridBlazor.csproj.user
 /GridBlazor/obj
 /GridBlazor/Properties/PublishProfiles
 /GridBlazor.Demo.Client/bin
@@ -17,6 +18,7 @@
 /GridComponent.Demo/bin
 /GridComponent.Demo/obj
 /GridMvc/bin
+/GridMvc/GridMvc.csproj.user
 /GridMvc/obj
 /GridMvc/Properties/PublishProfiles
 /GridMvc.Demo/bin
@@ -25,5 +27,6 @@
 /GridMvc.Tests/bin
 /GridMvc.Tests/obj
 /GridShared/bin
+/GridShared/GridShared.csproj.user
 /GridShared/obj
 /GridShared/Properties/PublishProfiles
