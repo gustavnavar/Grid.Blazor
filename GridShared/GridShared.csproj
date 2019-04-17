@@ -9,7 +9,7 @@
     <Authors>Gustau Navarro</Authors>
     <PackageTags>grid blazor mvc</PackageTags>
     <PackageProjectUrl>https://github.com/gustavnavar/Grid.Blazor</PackageProjectUrl>
-    <PackageLicenseExpression>LGPL-2.1</PackageLicenseExpression>
+    <PackageLicenseExpression>LGPL-2.1-only</PackageLicenseExpression>
   </PropertyGroup>
 
   <ItemGroup>

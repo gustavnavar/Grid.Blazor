@@ -5,7 +5,7 @@
     <ApplicationURL>http://localhost:65271</ApplicationURL>
   </PropertyGroup>
   <PropertyGroup>
-    <_LastSelectedProfileId>C:\Users\GustauNavarro\OneDrive - Agno\Visual Studio 2017\Projects\Grid.Blazor\GridMvc\Properties\PublishProfiles\FolderProfile.pubxml</_LastSelectedProfileId>
+    <_LastSelectedProfileId>C:\Users\GustauNavarro\source\repos\gustavnavar\Grid.Blazor\GridMvc\Properties\PublishProfiles\FolderProfile.pubxml</_LastSelectedProfileId>
     <ShowAllFiles>false</ShowAllFiles>
   </PropertyGroup>
 </Project>
