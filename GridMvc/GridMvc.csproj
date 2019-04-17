@@ -5,9 +5,14 @@
     <GenerateEmbeddedFilesManifest>True</GenerateEmbeddedFilesManifest>
     <EnableDefaultEmbeddedResourceItems>False</EnableDefaultEmbeddedResourceItems>
     <Product>GridMvc</Product>
+    <Version>2.4.18</Version>
+    <Title>GridMvc</Title>
     <Description>ASP.NET MVC Grid component</Description>
-    <Authors />
-    <Version>2.4.17</Version>
+    <Summary>ASP.NET MVC Grid component</Summary>
+    <Authors>Gustau Navarro</Authors>
+    <PackageTags>grid mvc</PackageTags>
+    <PackageProjectUrl>https://github.com/gustavnavar/Grid.Blazor</PackageProjectUrl>
+    <PackageLicenseExpression>LGPL-2.1</PackageLicenseExpression>
   </PropertyGroup>
 
   <ItemGroup>
