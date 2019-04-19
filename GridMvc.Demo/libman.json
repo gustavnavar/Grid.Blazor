@@ -1,0 +1,22 @@
+{
+  "version": "1.0",
+  "defaultProvider": "cdnjs",
+  "libraries": [
+    {
+      "library": "jquery@3.4.0",
+      "destination": "wwwroot/lib/jquery/"
+    },
+    {
+      "library": "bootstrap-datepicker@1.8.0",
+      "destination": "wwwroot/lib/bootstrap-datepicker/"
+    },
+    {
+      "library": "jquery-validation-unobtrusive@3.2.11",
+      "destination": "wwwroot/lib/jquery-validation-unobtrusive/"
+    },
+    {
+      "library": "URI.js@1.19.1",
+      "destination": "wwwroot/lib/URI.js/"
+    }
+  ]
+}

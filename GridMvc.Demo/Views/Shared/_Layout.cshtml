@@ -4,26 +4,23 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@ViewData["Title"] - GridMvc</title>
-
     <environment names="Development">
-        <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.css" />
+        <link rel="stylesheet" href="~/css/bootstrap/css/bootstrap.css" />
         <link href="~/css/gridmvc.css" rel="stylesheet" type="text/css" />
-        <link href="~/lib/bootstrap-datepicker/dist/css/bootstrap-datepicker.css" rel="stylesheet" />
+        <link href="~/lib/bootstrap-datepicker/css/bootstrap-datepicker.css" rel="stylesheet" />
         <link rel="stylesheet" href="~/css/site.css" />
     </environment>
     <environment names="Staging,Production">
-        <link rel="stylesheet" href="https://ajax.aspnetcdn.com/ajax/bootstrap/3.3.7/css/bootstrap.min.css"
-              asp-fallback-href="~/lib/bootstrap/dist/css/bootstrap.min.css"
-              asp-fallback-test-class="sr-only" asp-fallback-test-property="position" asp-fallback-test-value="absolute" />
+        <link rel="stylesheet" href="~/css/bootstrap/css/bootstrap.min.css" />
         <link href="~/css/gridmvc.min.css" rel="stylesheet" type="text/css" />
-        <link href="~/lib/bootstrap-datepicker/dist/css/bootstrap-datepicker.css" rel="stylesheet" />
-        <link rel="stylesheet" href="~/css/site.min.css" asp-append-version="true" />
+        <link href="~/lib/bootstrap-datepicker/css/bootstrap-datepicker.min.css" rel="stylesheet" />
+        <link rel="stylesheet" href="~/css/site.min.css" />
     </environment>
 
     <environment names="Development">
-        <script src="~/lib/jquery/dist/jquery.js"></script>
-        <script src="~/lib/bootstrap/dist/js/bootstrap.js"></script>
-        <script src="~/lib/urijs/src/URI.js" type="text/javascript"></script>
+        <script src="~/lib/jquery/jquery.js"></script>
+        <script src="~/css/bootstrap/js/bootstrap.js"></script>
+        <script src="~/lib/URI.js/URI.js"></script>
         <script src="~/js/gridmvc.js" type="text/javascript"></script>
         <script src="~/js/gridmvc-lang-de.js"></script>
         <script src="~/js/gridmvc-lang-fr.js"></script>
@@ -32,28 +29,18 @@
         <script src="~/js/gridmvc-lang-es.js"></script>
         <script src="~/js/gridmvc.customwidgets.js" type="text/javascript"></script>
         <!-- referencing datepicker control -->
-        <script src="~/lib/bootstrap-datepicker/dist/js/bootstrap-datepicker.js"></script>
-        <script src="~/lib/bootstrap-datepicker/js/locales/bootstrap-datepicker.de.js"></script>
-        <script src="~/lib/bootstrap-datepicker/js/locales/bootstrap-datepicker.fr.js"></script>
-        <script src="~/lib/bootstrap-datepicker/js/locales/bootstrap-datepicker.it.js"></script>
-        <script src="~/lib/bootstrap-datepicker/js/locales/bootstrap-datepicker.ru.js"></script>
-        <script src="~/lib/bootstrap-datepicker/js/locales/bootstrap-datepicker.es.js"></script>
-        <script src="~/js/site.js" asp-append-version="true"></script>
+        <script src="~/lib/bootstrap-datepicker/js/bootstrap-datepicker.js"></script>
+        <script src="~/lib/bootstrap-datepicker/locales/bootstrap-datepicker.de.min.js"></script>
+        <script src="~/lib/bootstrap-datepicker/locales/bootstrap-datepicker.fr.min.js"></script>
+        <script src="~/lib/bootstrap-datepicker/locales/bootstrap-datepicker.it.min.js"></script>
+        <script src="~/lib/bootstrap-datepicker/locales/bootstrap-datepicker.ru.min.js"></script>
+        <script src="~/lib/bootstrap-datepicker/locales/bootstrap-datepicker.es.min.js"></script>
+        <script src="~/js/site.js"></script>
     </environment>
     <environment names="Staging,Production">
-        <script src="https://ajax.aspnetcdn.com/ajax/jquery/jquery-2.2.0.min.js"
-                asp-fallback-src="~/lib/jquery/dist/jquery.min.js"
-                asp-fallback-test="window.jQuery"
-                crossorigin="anonymous"
-                integrity="sha384-K+ctZQ+LL8q6tP7I94W+qzQsfRV2a+AfHIi9k8z8l9ggpc8X+Ytst4yBo/hH+8Fk">
-        </script>
-        <script src="https://ajax.aspnetcdn.com/ajax/bootstrap/3.3.7/bootstrap.min.js"
-                asp-fallback-src="~/lib/bootstrap/dist/js/bootstrap.min.js"
-                asp-fallback-test="window.jQuery && window.jQuery.fn && window.jQuery.fn.modal"
-                crossorigin="anonymous"
-                integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa">
-        </script>
-        <script src="~/lib/urijs/src/URI.js" type="text/javascript"></script>
+        <script src="~/lib/jquery/jquery.min.js"></script>
+        <script src="~/css/bootstrap/js/bootstrap.min.js"></script>
+        <script src="~/lib/URI.js/URI.min.js"></script>
         <script src="~/js/gridmvc.min.js" type="text/javascript"></script>
         <script src="~/js/gridmvc-lang-de.js"></script>
         <script src="~/js/gridmvc-lang-fr.js"></script>
@@ -62,13 +49,13 @@
         <script src="~/js/gridmvc-lang-es.js"></script>
         <script src="~/js/gridmvc.customwidgets.js" type="text/javascript"></script>
         <!-- referencing datepicker control -->
-        <script src="~/lib/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js"></script>
-        <script src="~/lib/bootstrap-datepicker/js/locales/bootstrap-datepicker.de.min.js"></script>
-        <script src="~/lib/bootstrap-datepicker/js/locales/bootstrap-datepicker.fr.min.js"></script>
-        <script src="~/lib/bootstrap-datepicker/js/locales/bootstrap-datepicker.it.min.js"></script>
-        <script src="~/lib/bootstrap-datepicker/js/locales/bootstrap-datepicker.ru.min.js"></script>
-        <script src="~/lib/bootstrap-datepicker/js/locales/bootstrap-datepicker.es.min.js"></script>
-        <script src="~/js/site.min.js" asp-append-version="true"></script>
+        <script src="~/lib/bootstrap-datepicker/js/bootstrap-datepicker.min.js"></script>
+        <script src="~/lib/bootstrap-datepicker/locales/bootstrap-datepicker.de.min.js"></script>
+        <script src="~/lib/bootstrap-datepicker/locales/bootstrap-datepicker.fr.min.js"></script>
+        <script src="~/lib/bootstrap-datepicker/locales/bootstrap-datepicker.it.min.js"></script>
+        <script src="~/lib/bootstrap-datepicker/locales/bootstrap-datepicker.ru.min.js"></script>
+        <script src="~/lib/bootstrap-datepicker/locales/bootstrap-datepicker.es.min.js"></script>
+        <script src="~/js/site.min.js"></script>
     </environment>
 
 </head>
