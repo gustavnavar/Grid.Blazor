@@ -1,5 +1,8 @@
+﻿@using GridBlazor
 @using GridBlazor.Resources
-@using GridComponent.Demo.Services
+@using System.Collections.Generic
+@using System.Net.Http
+@inject IUriHelper UriHelper
 
 @typeparam T
 
@@ -12,7 +15,7 @@
                 <div class="form-group">
                     <p><i>This is custom filter widget demo</i></p>
                     <select class="grid-filter-type customerslist form-control" style="width:250px;" bind="filterValue">
-                        @foreach (var customerName in customerService.GetCustomersNames())
+                        @foreach (var customerName in _customersNames)
                         {
                             <option value="@customerName">@customerName</option>
                         }
@@ -42,8 +45,7 @@
 
 @functions {
     private bool _clearVisible = false;
-
-    [Inject] private CustomerService customerService { get; set; }
+    private List<string> _customersNames = new List<string>();
 
     [CascadingParameter(Name = "GridHeaderComponent")]
     private GridHeaderComponent<T> GridHeaderComponent { get; set; }
@@ -56,6 +58,13 @@
 
     [Parameter]
     protected string filterValue { get; set; }
+
+    protected override async Task OnInitAsync()
+    {
+        string url = UriHelper.GetBaseUri() + "api/SampleData/GetCustomersNames";
+        HttpClient httpClient = new HttpClient();
+        _customersNames = await httpClient.GetJsonAsync<List<string>>(url);
+    }
 
     protected override void OnParametersSet()
     {

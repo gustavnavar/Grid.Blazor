@@ -1,4 +1,3 @@
-using GridComponent.Demo.Components;
 using GridComponent.Demo.Models;
 using GridComponent.Demo.Services;
 using GridMvc;
@@ -24,7 +23,8 @@ namespace GridComponent.Demo
             services.AddMvc()
                 .AddNewtonsoftJson();
 
-            services.AddRazorComponents();
+            services.AddRazorPages();
+            services.AddServerSideBlazor();
 
             // to ennable use of gridmvc.css
             services.AddGridMvc();
@@ -48,12 +48,15 @@ namespace GridComponent.Demo
             }
 
             app.UseHttpsRedirection();
+
             app.UseStaticFiles();
 
-            app.UseRouting(routes =>
+            app.UseRouting();
+
+            app.UseEndpoints(endpoints =>
             {
-                routes.MapRazorPages();
-                routes.MapComponentHub<App>("app");
+                endpoints.MapBlazorHub();
+                endpoints.MapFallbackToPage("/_Host");
             });
         }
     }

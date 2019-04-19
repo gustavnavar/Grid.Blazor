@@ -7,7 +7,7 @@
     <BlazorLinkOnBuild>false</BlazorLinkOnBuild>
     <GenerateEmbeddedFilesManifest>True</GenerateEmbeddedFilesManifest>
     <EnableDefaultEmbeddedResourceItems>False</EnableDefaultEmbeddedResourceItems>
-    <Version>0.2.6</Version>
+    <Version>0.2.7</Version>
     <Title>GridBlazor</Title>
     <Description>Grid components for Blazor</Description>
     <Summary>Grid components for Blazor</Summary>
@@ -27,9 +27,9 @@
     <PackageReference Include="Microsoft.AspNetCore.Components.Browser " Version="3.0.0-preview-19075-0444" />
     <PackageReference Include="Microsoft.AspNetCore.Components.Build" Version="3.0.0-preview3-19153-02" />
     <PackageReference Include="Microsoft.AspNetCore.Html.Abstractions" Version="2.2.0" />
-    <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="3.0.0-preview3.19153.1" />
-    <PackageReference Include="Microsoft.Extensions.Primitives" Version="3.0.0-preview3.19153.1" />
-    <PackageReference Include="System.ComponentModel.Annotations" Version="4.6.0-preview3.19128.7" />
+    <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="3.0.0-preview4.19216.2" />
+    <PackageReference Include="Microsoft.Extensions.Primitives" Version="3.0.0-preview4.19216.2" />
+    <PackageReference Include="System.ComponentModel.Annotations" Version="4.6.0-preview4.19212.13" />
   </ItemGroup>
 
   <ItemGroup>
@@ -71,6 +71,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Update="Microsoft.AspNetCore.Components.Browser" Version="3.0.0-preview3-19153-02" />
+    <PackageReference Update="Microsoft.AspNetCore.Components.Browser" Version="3.0.0-preview4-19216-03" />
   </ItemGroup>
 </Project>

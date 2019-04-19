@@ -4,14 +4,14 @@
     <TargetFramework>netcoreapp3.0</TargetFramework>
     <LangVersion>7.3</LangVersion>
     <_RazorComponentInclude>Components\**\*.cshtml</_RazorComponentInclude>
-    <Version>0.2.5</Version>
+    <Version>0.2.6</Version>
   </PropertyGroup>
 
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.Components.Server" Version="3.0.0-preview3-19153-02" />
-    <PackageReference Include="Microsoft.AspNetCore.Mvc.NewtonsoftJson" Version="3.0.0-preview3-19153-02" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="3.0.0-preview3.19153.1" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="3.0.0-preview3.19153.1" />
+    <PackageReference Include="Microsoft.AspNetCore.Mvc.NewtonsoftJson" Version="3.0.0-preview4-19216-03" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="3.0.0-preview4.19216.3" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="3.0.0-preview4.19216.3" />
   </ItemGroup>
 
   <ItemGroup>
@@ -21,8 +21,9 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Content Update="wwwroot\css\site.css">
-      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    <Content Update="Pages\_Imports.razor">
+      <CopyToPublishDirectory>Never</CopyToPublishDirectory>
+      <Generator>MSBuild:RazorGenerateComponentDeclarationDesignTime</Generator>
     </Content>
   </ItemGroup>
 

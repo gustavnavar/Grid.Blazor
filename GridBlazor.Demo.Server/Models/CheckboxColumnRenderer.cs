@@ -1,11 +1,12 @@
-﻿using GridShared.Columns;
+﻿using GridMvc;
+using GridShared.Columns;
 using Microsoft.AspNetCore.Mvc.ViewFeatures;
 using System.IO;
 using System.Text.Encodings.Web;
 
 namespace GridBlazor.Demo.Server.Models
 {
-    public class CheckboxColumnRenderer : GridMvc.GridHeaderRenderer
+    public class CheckboxColumnRenderer : GridHeaderRenderer
     {
         private readonly HtmlHelper _helper;
 
