@@ -20,9 +20,6 @@ namespace GridComponent.Demo
             services.AddDbContext<NorthwindDbContext>(options =>
                 options.UseSqlServer(ConnectionString));
 
-            services.AddMvc()
-                .AddNewtonsoftJson();
-
             services.AddRazorPages();
             services.AddServerSideBlazor();
 
