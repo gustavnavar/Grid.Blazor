@@ -3,7 +3,7 @@
   <PropertyGroup>
     <TargetFramework>netcoreapp3.0</TargetFramework>
     <LangVersion>7.3</LangVersion>
-    <_RazorComponentInclude>Components\**\*.cshtml</_RazorComponentInclude>
+    <AddRazorSupportForMvc>true</AddRazorSupportForMvc>
     <Version>0.2.6</Version>
   </PropertyGroup>
 
@@ -18,13 +18,6 @@
     <ProjectReference Include="..\GridBlazor.Demo.Shared\GridBlazor.Demo.Shared.csproj" />
     <ProjectReference Include="..\GridBlazor\GridBlazor.csproj" />
     <ProjectReference Include="..\GridMvc\GridMvc.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Content Update="Pages\_Imports.razor">
-      <CopyToPublishDirectory>Never</CopyToPublishDirectory>
-      <Generator>MSBuild:RazorGenerateComponentDeclarationDesignTime</Generator>
-    </Content>
   </ItemGroup>
 
 </Project>
