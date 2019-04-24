@@ -3,6 +3,7 @@
 }
 
 <script src="~/js/gridmvc-ajax.js" type="text/javascript"></script>
+<script src="~/lib/URI.js/URI.js" type="text/javascript"></script>
 
 <div class="row">
     <div class="col-md-12">
@@ -26,17 +27,17 @@
         </div>
     </div>
     <div class="col-md-9 col-md-pull-3">
-        @await  Component.InvokeAsync("AjaxGrid")
+        @await Component.InvokeAsync("AjaxGrid")
     </div>
 </div>
 <script>
     $(function () {
         pageGrids.ordersGrid.addFilterWidget(new CustomersFilterWidget());
-        
+
         pageGrids.ordersGrid.ajaxify({
             getPagedData: "/Home/GetOrdersGridRows"
         });
-        
+
         pageGrids.ordersGrid.onRowSelect(function (e) {
             $.get("/Home/GetOrder?id=" + e.row.OrderID, function (data) {
                 if (data.status <= 0) {
