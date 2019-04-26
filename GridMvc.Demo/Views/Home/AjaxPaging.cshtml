@@ -27,7 +27,7 @@
         </div>
     </div>
     <div class="col-md-9 col-md-pull-3">
-        @await Component.InvokeAsync("AjaxGrid")
+        @await Html.PartialAsync("_OrdersGrid")
     </div>
 </div>
 <script>

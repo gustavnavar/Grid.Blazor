@@ -57,7 +57,7 @@
                            /* Adding "Vip customer" column: */
                                     columns.Add(o => o.Customer.IsVip).Titled("Is Vip").SetWidth(70).Css("hidden-xs") //hide on phones
                                         .RenderValueAs(o => o.Customer.IsVip ? "Yes" : "No");
-                                }).SetRowCssClasses(item => item.Customer.IsVip ? "success" : string.Empty).WithPaging(15).SetLanguage(locale).Sortable().Filterable().WithMultipleFilters()
+                                }).SetRowCssClasses(item => item.Customer.IsVip ? "success" : string.Empty).WithPaging(10).SetLanguage(locale).Sortable().Filterable().WithMultipleFilters()
     </div>
 </div>
 <script>

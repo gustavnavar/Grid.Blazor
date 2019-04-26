@@ -72,8 +72,8 @@
             <div class="navbar-collapse navbar-ex5-collapse collapse">
                 <ul class="nav navbar-nav">
                     <li class="@(ViewBag.ActiveMenuTitle == "Demo" ? "active" : string.Empty)">@Html.ActionLink("Demo", "Index", "Home")</li>
-                    <li class="@(ViewBag.ActiveMenuTitle == "AjaxPaging" ? "active" : string.Empty)">@Html.ActionLink("Ajax paging", "AjaxPaging", "Home")</li>
-                    <li class="@(ViewBag.ActiveMenuTitle == "AjaxPagingAntiForgery" ? "active" : string.Empty)">@Html.ActionLink("Ajax paging Anti-Forgery", "AjaxPagingAntiForgery", "Home")</li>
+                    <li class="@(ViewBag.ActiveMenuTitle == "AjaxPaging" ? "active" : string.Empty)">@Html.ActionLink("Client side object model", "AjaxPaging", "Home")</li>
+                    <li class="@(ViewBag.ActiveMenuTitle == "AjaxPagingAntiForgery" ? "active" : string.Empty)">@Html.ActionLink("Client side object model & View component", "AjaxPagingAntiForgery", "Home")</li>
                     <li class="@(ViewBag.ActiveMenuTitle == "About" ? "active" : string.Empty)">@Html.ActionLink("About", "About", "Home")</li>
                 </ul>
                 @await Html.PartialAsync("_LanguagePartial")

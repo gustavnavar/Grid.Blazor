@@ -48,7 +48,7 @@ namespace GridBlazor.Demo.Server.Controllers
         {
             var repository = new OrdersRepository(_context);
             var server = new GridServer<Order>(repository.GetAll(), Request.Query,
-                true, "ordersGrid", columns, 15)
+                true, "ordersGrid", columns, 10)
                     .Sortable()
                     .Filterable()
                     .WithMultipleFilters();

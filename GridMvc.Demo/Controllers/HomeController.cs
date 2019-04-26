@@ -1,4 +1,5 @@
 ﻿using GridMvc.Demo.Models;
+using GridMvc.Pagination;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Localization;
 using Microsoft.AspNetCore.Mvc;
@@ -53,15 +54,20 @@ namespace GridMvc.Demo.Controllers
         [HttpGet]
         public ActionResult AjaxPaging()
         {
-            ViewBag.ActiveMenuTitle = "AjaxPaging";
+            var repository = new OrdersRepository(_context);
+            var model = new SGrid<Order>(repository.GetAll(), HttpContext.Request.Query, false, GridPager.DefaultAjaxPagerViewName);
 
-            return View();
+            ViewBag.ActiveMenuTitle = "AjaxPaging";
+            return View(model);
         }
 
         [HttpPost]
         public ActionResult GetOrdersGridRows()
         {
-            return ViewComponent("AjaxGrid");
+            var repository = new OrdersRepository(_context);
+            var model = new SGrid<Order>(repository.GetAll(), HttpContext.Request.Query, false, GridPager.DefaultAjaxPagerViewName);
+
+            return PartialView("_OrdersGrid", model);
         }
 
         [HttpGet]

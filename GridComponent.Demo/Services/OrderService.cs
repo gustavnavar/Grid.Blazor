@@ -26,7 +26,7 @@ namespace GridComponent.Demo.Services
         {
             var repository = new OrdersRepository(_context);
             var server = new GridServer<Order>(repository.GetAll(), new QueryCollection(query), 
-                true, "ordersGrid", columns, 15)
+                true, "ordersGrid", columns, 10)
                     .Sortable()
                     .Filterable()
                     .WithMultipleFilters();
