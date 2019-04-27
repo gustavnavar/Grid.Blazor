@@ -2,7 +2,10 @@
 
 A fork from: https://gridmvc.codeplex.com/
 
-Grid components for:
-- Blazor and Razor Components
-- ASP.NET Core MVC
+Native C# Grid components for:
+* [Blazor client-side]()
+* [Blazor server-side]()
+* [ASP.NET Core MVC](./docs/dotnetcore/Documentation.md)
+
+![Image of GridBlazor](./docs/images/GridBlazor.png)
 
