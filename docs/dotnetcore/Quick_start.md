@@ -4,7 +4,7 @@
 
 [Index](Documentation.md)
 
-Imagine that you have to retrieve acollection of model items in your project. For example if your model class is:
+Imagine that you have to retrieve a collection of model items in your project. For example if your model class is:
     
 ```c#
     public class Foo
@@ -14,7 +14,7 @@ Imagine that you have to retrieve acollection of model items in your project. Fo
     }
 ```
 
-The steps to build a Grid page are as follows:
+The steps to build a Grid page are:
 
 1. Your controller action has to retrieve a strongly-typed collection of the model items and pass it to the view. An example of this type of controller action is: 
 

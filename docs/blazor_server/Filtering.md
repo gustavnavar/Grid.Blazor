@@ -1,4 +1,4 @@
-## GridMvc for ASP.NET Core MVC
+## Blazor server-side
 
 # Filtering
 
@@ -14,16 +14,21 @@ You can enable the filtering option for your columns. To enable this functionali
 ```
 After that you can filter this column. 
 
-Remember that you can also enable filtering for all columns of a grid using the **Filterable** method of the **SGrid** object:
-```razor
-    @Html.Grid(Model, viewEngine).Columns(columns =>
-    {
-        columns.Add(foo => foo.Title);
-        columns.Add(foo => foo.Description);
-    }).Filterable()
-```
+You can enable filtering for all columns of a grid using the **Filterable** method for both **GridClient** and **GridServer** objects:
 
-**GridMvc** supports several types of columns (specified in the **Add** method):
+* razor page
+    ```c#
+        var client = new GridClient<Order>(url, query, false, "ordersGrid", Columns, locale)
+            .Filterable()
+    ```
+
+* service method
+    ```c#
+        var server = new GridServer<Order>(repository.GetAll(), Request.Query, true, "ordersGrid", columns, 10)
+            .Filterable()
+    ```
+
+**GridBlazor** supports several types of columns (specified in the **Add** method):
 
 * System.String
 * System.Int32
@@ -37,7 +42,7 @@ Remember that you can also enable filtering for all columns of a grid using the 
 
 It also supports nullable types of any element of the list.
 
-**GridMvc** has different filter widgets for these types:
+**GridBlazor** has different filter widgets for these types:
 * **TextFitlerWidget**: it provides a filter interface for text columns (System.String). This means that if your column has text data, **Grid.Mvc** will render an specific filter interface:
 
     ![](../images/Filtering_string.png)

@@ -1,16 +1,18 @@
-## GridMvc for ASP.NET Core MVC
+## Blazor server-side
 
 # Custom columns
 
 [Index](Documentation.md)
 
-* You can create a custom column by calling the **Columns.Add** method in your **SGrid** class. For example:
+All customization for columns must be done in the razor page:
+
+* You can create a custom column by calling the **Columns.Add** method in the **IGridColumnCollection** interface. For example:
 
     ```c#
         Columns.Add(o => o.Customers.CompanyName);
     ```
 
-* The **Titled** method of the **Column** object defines the column header text. If you don't call this method, **GridMvc** will use the name of the property by default (in this case **CompanyName**).
+* The **Titled** method of the **Column** object defines the column header text. If you don't call this method, **GridBlazor** will use the name of the property by default (in this case **CompanyName**).
 
     ```c#
         Columns.Add(o => o.Customers.CompanyName)
@@ -81,18 +83,7 @@ If you pass an ordered collection of items to the Grid constructor and you want 
                 .SortInitialDirection(GridSortDirection.Descending);
 ```
 
-Remember that you can also enable [Sorting](Sorting.md) for all columns.
-
-## Auto generating columns
-
-This feature of **GridMvc** component provides functionality to automatically create columns from public properties of your model class.
-
-To auto generate columns you must call the **AutoGenerateColumns** method of **SGrid<T>** class or the **Grid** html helper. After that **GridMvc** will add columns for each public property:
-
-```c#
-    @Html.Grid(Model, viewEngine).AutoGenerateColumns()
-```
-If you want to exclude some properties from auto generation or customize any property, you have to use Data annotations (please see [Data annotations](Data_annotations.md))
+Remember that you can also enable [Sorting](Sorting.md) for all columns of a grid.
 
 ## Column settings
 
