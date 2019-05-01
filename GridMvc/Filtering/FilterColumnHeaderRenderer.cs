@@ -37,7 +37,7 @@ namespace GridMvc.Filtering
 
             //determine current column filter settings
             var filterSettings = new List<ColumnFilterValue>();
-            if (_settings.IsInitState && column.InitialFilterSettings != ColumnFilterValue.Null)
+            if (_settings.IsInitState(column) && column.InitialFilterSettings != ColumnFilterValue.Null)
             {
                 filterSettings.Add(column.InitialFilterSettings);
             }
@@ -54,13 +54,15 @@ namespace GridMvc.Filtering
             var exceptQueryParameters = new List<string>
                 {
                     QueryStringFilterSettings.DefaultTypeQueryParameter,
-                    QueryStringFilterSettings.DefaultFilterInitQueryParameter
+                    QueryStringFilterSettings.DefaultClearInitFilterQueryParameter
                 };
             string pagerParameterName = GetPagerQueryParameterName(((ISGrid)column.ParentGrid).Pager);
             if (!string.IsNullOrEmpty(pagerParameterName))
                 exceptQueryParameters.Add(pagerParameterName);
 
             string url = builder.GetQueryStringExcept(exceptQueryParameters);
+
+            var clearInitFilter = _settings.Query[QueryStringFilterSettings.DefaultClearInitFilterQueryParameter];
 
             var gridFilterButton = new TagBuilder("span");
             gridFilterButton.AddCssClass(FilterButtonCss);
@@ -75,7 +77,8 @@ namespace GridMvc.Filtering
                     {"data-name", column.Name},
                     {"data-widgetdata", JsonHelper.JsonSerializer(column.FilterWidgetData)},
                     {"data-filterdata", JsonHelper.JsonSerializer(filterSettings)},
-                    {"data-url", url}
+                    {"data-url", url},
+                    {"data-clearinitfilter", clearInitFilter.ToString()}
                 };
 
             using (var sw = new StringWriter())

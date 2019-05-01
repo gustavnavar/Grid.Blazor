@@ -61,6 +61,11 @@
             else {
                 self.currentPage = 1;
             }
+
+            if (!self.clearInitFilters.includes(columnName)) {
+                self.clearInitFilters.push(columnName);
+            }
+
             self.loadPage();
         },
         ajaxify: function (options) {
@@ -88,6 +93,15 @@
                 self.orginalSort = self.gridSort;
             }
 
+            var clearInitFiltersString = self.jqContainer.find(".grid-filter").attr("data-clearinitfilter");
+            self.clearInitFilters = null;
+            if (clearInitFiltersString) {
+                self.clearInitFilters = clearInitFiltersString.split(',');
+            }
+            else {
+                self.clearInitFilters = new Array();
+            }
+
             self.getGridParameters = function () {
                 return self.getGridUrl("", self.gridColumnFilters);
             };
@@ -105,6 +119,12 @@
                     var mySort = URI.parseQuery(self.gridSort);
                     gridQuery.addSearch("grid-column", mySort["grid-column"]);
                     gridQuery.addSearch("grid-dir", mySort["grid-dir"]);
+                }
+
+                if (self.clearInitFilters) {
+                    for (var i = 0; i < self.clearInitFilters.length; i++) {
+                        gridQuery.addSearch("grid-clearinitfilter", self.clearInitFilters[i]);
+                    }
                 }
 
                 var gridUrl = URI(griLoaddAction).addQuery(gridQuery.search().replace("?", ""));

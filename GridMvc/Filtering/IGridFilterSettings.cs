@@ -1,4 +1,6 @@
-﻿namespace GridMvc.Filtering
+﻿using GridShared.Columns;
+
+namespace GridMvc.Filtering
 {
     public interface IGridFilterSettings
     {
@@ -7,6 +9,6 @@
         /// <summary>
         ///     Is filter settings int the init state
         /// </summary>
-        bool IsInitState { get; }
+        bool IsInitState(IGridColumn column);
     }
 }

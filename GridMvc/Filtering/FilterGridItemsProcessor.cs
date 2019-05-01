@@ -39,7 +39,7 @@ namespace GridMvc.Filtering
                 if (gridColumn == null) continue;
                 if (gridColumn.Filter == null) continue;
 
-                IEnumerable<ColumnFilterValue> options = _settings.IsInitState
+                IEnumerable<ColumnFilterValue> options = _settings.IsInitState(column)
                                                              ? new List<ColumnFilterValue>
                                                                  {
                                                                      column.InitialFilterSettings

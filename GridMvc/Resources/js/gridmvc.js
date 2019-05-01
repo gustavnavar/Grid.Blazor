@@ -303,6 +303,22 @@ GridMvc = (function ($) {
             }
         }
 
+        var clearInitFiltersString = this.jqContainer.find(".grid-filter").attr("data-clearinitfilter");
+        var clearInitFilters;
+        if (clearInitFiltersString) {
+            clearInitFilters = clearInitFiltersString.split(',');
+        }
+        else {
+            clearInitFilters = new Array();
+        }
+        if (!clearInitFilters.includes(columnName)) {
+            clearInitFilters.push(columnName);
+        }
+        for (var j = 0; j < clearInitFilters.length; j++) {
+            if (url.length > 0) url += "&";
+            url += "grid-clearinitfilter=" + clearInitFilters[j];
+        }
+
         window.location.search = initialUrl + url;
     };
     gridMvc.prototype.getFilterQueryData = function (columnName, values) {

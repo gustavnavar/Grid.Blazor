@@ -89,7 +89,7 @@ namespace GridMvc.Columns
             return this;
         }
 
-        public IGridColumn<T> SetInitialFilter(GridShared.Filtering.GridFilterType type, string value)
+        public IGridColumn<T> SetInitialFilter(GridFilterType type, string value)
         {
             var filter = new ColumnFilterValue
                 {

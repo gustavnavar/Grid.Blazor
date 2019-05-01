@@ -1,6 +1,7 @@
 ﻿@using GridMvc
 @using GridMvc.Demo.Models
 @using GridShared
+@using GridShared.Filtering
 @using GridShared.Sorting
 @using Microsoft.AspNetCore.Localization
 @using Microsoft.AspNetCore.Mvc.ViewEngines
@@ -37,6 +38,7 @@
             .Titled("Company")
             .SetWidth(250)
             .ThenSortByDescending(o => o.OrderID)
+            .SetInitialFilter(GridFilterType.StartsWith, "a")
             .SetFilterWidgetType("CustomCompanyNameFilterWidget");
 
 /* Adding "Vip customer" column: */
