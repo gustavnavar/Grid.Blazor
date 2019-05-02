@@ -283,7 +283,7 @@ namespace GridMvc.Tests.Filtering
             var filterCollection = new DefaultFilterColumnCollection { value };
 
             filterSetting.Setup(t => t.FilteredColumns).Returns(filterCollection);
-            filterSetting.Setup(t => t.IsInitState).Returns(false);
+            filterSetting.Setup(t => t.IsInitState(_grid.Columns.First())).Returns(false);
 
             settingsMock.Setup(s => s.FilterSettings).Returns(filterSetting.Object);
             settingsMock.Setup(s => s.SortSettings).Returns(new QueryStringSortSettings(_query));
