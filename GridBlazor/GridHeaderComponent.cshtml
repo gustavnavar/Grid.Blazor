@@ -7,7 +7,7 @@
 <th class="@_cssClass" style="@_cssStyles">
     @if (Column.FilterEnabled)
     {
-    <div class="grid-filter" data-type="@Column.FilterWidgetTypeName" data-name="@Column.Name" data-widgetdata="@Json.Serialize(Column.FilterWidgetData)" data-filterdata="@Json.Serialize(_filterSettings)" data-url="@_url">
+    <div class="grid-filter" data-type="@Column.FilterWidgetTypeName" data-name="@Column.Name" data-widgetdata="@Json.Serialize(Column.FilterWidgetData)" data-filterdata="@Json.Serialize(_filterSettings)" data-url="@_url" data-clearinitfilter="@_clearInitFilter.ToString()">
         <span class="@_cssFilterClass" title="@Strings.FilterButtonTooltipText" onclick="@FilterIconClicked"></span>
         @FilterWidgetRender
     </div>

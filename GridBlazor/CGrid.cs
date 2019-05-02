@@ -1,12 +1,12 @@
-﻿using GridShared;
-using GridShared.Columns;
-using GridShared.DataAnnotations;
-using GridShared.Utility;
-using GridBlazor.Columns;
+﻿using GridBlazor.Columns;
 using GridBlazor.DataAnnotations;
 using GridBlazor.Filtering;
 using GridBlazor.Pagination;
 using GridBlazor.Resources;
+using GridShared;
+using GridShared.Columns;
+using GridShared.DataAnnotations;
+using GridShared.Utility;
 using Microsoft.AspNetCore.Components;
 using Microsoft.Extensions.Primitives;
 using System;
@@ -15,7 +15,6 @@ using System.Globalization;
 using System.Linq;
 using System.Net.Http;
 using System.Reflection;
-using System.Threading;
 using System.Threading.Tasks;
 
 namespace GridBlazor
@@ -340,10 +339,27 @@ namespace GridBlazor
                     new StringValues(newFilters.ToArray());
             }
 
+            AddClearInitFilters(columnName);
+
             _settings = new QueryStringGridSettingsProvider(_query);
             _columnsCollection.SortSettings = _settings.SortSettings;
             _columnsCollection.UpdateColumnsSorting();
             ((GridPager)_pager).Query = _query;
+        }
+
+        private void AddClearInitFilters(string columnName)
+        {
+            if (_query.ContainsKey(QueryStringFilterSettings.DefaultClearInitFilterQueryParameter))
+            {
+                StringValues clearInitFilters = _query[QueryStringFilterSettings.DefaultClearInitFilterQueryParameter];
+                if (!clearInitFilters.Contains(columnName))
+                {
+                    clearInitFilters = StringValues.Concat(clearInitFilters, columnName);
+                    _query[QueryStringFilterSettings.DefaultClearInitFilterQueryParameter] = clearInitFilters;
+                }
+            }
+            else
+                _query.Add(QueryStringFilterSettings.DefaultClearInitFilterQueryParameter, columnName);
         }
 
         public void RemoveFilterParameter(string columnName)
@@ -356,6 +372,8 @@ namespace GridBlazor
                 _query[QueryStringFilterSettings.DefaultTypeQueryParameter] =
                     new StringValues(newFilters.ToArray());
             }
+
+            AddClearInitFilters(columnName); 
 
             _settings = new QueryStringGridSettingsProvider(_query);
             _columnsCollection.SortSettings = _settings.SortSettings;

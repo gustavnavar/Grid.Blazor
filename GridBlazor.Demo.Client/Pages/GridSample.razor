@@ -1,4 +1,5 @@
 ﻿@using GridShared
+@using GridShared.Filtering
 @using GridShared.Sorting
 @using GridShared.Utility
 @using GridBlazor.Demo.Shared.Models
@@ -45,22 +46,23 @@ else
 
     public static Action<IGridColumnCollection<Order>> Columns = c =>
     {
-        /* Adding not mapped column, that renders body, using inline Razor html helper */
+    /* Adding not mapped column, that renders body, using inline Razor html helper */
         c.Add().Encoded(false).Sanitized(false).SetWidth(30).Css("hidden-xs") //hide on phones
         .RenderValueAs(o => $"<b><a class='modal_link' href='/Home/Edit/{o.OrderID}'>Edit</a></b>");
 
-        /* Adding "OrderID" column: */
+    /* Adding "OrderID" column: */
         c.Add(o => o.OrderID).Titled("Number").SetWidth(100);
 
-        /* Adding "OrderDate" column: */
+    /* Adding "OrderDate" column: */
         c.Add(o => o.OrderDate, "OrderCustomDate").Titled("Date").SortInitialDirection(GridSortDirection.Descending)
         .Format("{0:yyyy-MM-dd}").SetWidth(110);
 
-        /* Adding "CompanyName" column: */
+    /* Adding "CompanyName" column: */
         c.Add(o => o.Customer.CompanyName).Titled("Company").SetWidth(250).ThenSortByDescending(o => o.OrderID)
+        .SetInitialFilter(GridFilterType.StartsWith, "a")
         .SetFilterWidgetType(companyNameFilter);
 
-        /* Adding "Vip customer" column: */
+    /* Adding "Vip customer" column: */
         c.Add(o => o.Customer.IsVip).Titled("Is Vip").SetWidth(70).Css("hidden-xs") //hide on phones
         .RenderValueAs(o => o.Customer.IsVip ? "Yes" : "No");
     };

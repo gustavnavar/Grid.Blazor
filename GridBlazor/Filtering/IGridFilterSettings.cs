@@ -1,4 +1,6 @@
-﻿namespace GridBlazor.Filtering
+﻿using GridShared.Columns;
+
+namespace GridBlazor.Filtering
 {
     public interface IGridFilterSettings
     {
@@ -7,6 +9,6 @@
         /// <summary>
         ///     Is filter settings int the init state
         /// </summary>
-        bool IsInitState { get; }
+        bool IsInitState(IGridColumn column);
     }
 }

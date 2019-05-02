@@ -1,4 +1,5 @@
-﻿using GridShared.Filtering;
+﻿using GridShared.Columns;
+using GridShared.Filtering;
 using GridShared.Utility;
 using Microsoft.Extensions.Primitives;
 using System;
@@ -14,7 +15,7 @@ namespace GridBlazor.Filtering
     {
         public const string DefaultTypeQueryParameter = "grid-filter";
         public const string FilterDataDelimeter = "__";
-        public const string DefaultFilterInitQueryParameter = "gridinit";
+        public const string DefaultClearInitFilterQueryParameter = "grid-clearinitfilter";
         public readonly IQueryDictionary<StringValues> Query;
         private readonly DefaultFilterColumnCollection _filterValues = new DefaultFilterColumnCollection();
 
@@ -26,7 +27,7 @@ namespace GridBlazor.Filtering
                 throw new ArgumentException("No http context here!");
             Query = query;
 
-            string[] filters = Query.Get(DefaultTypeQueryParameter).ToArray();
+            string[] filters = Query.Count > 0 ? Query.Get(DefaultTypeQueryParameter).ToArray() : null;
             if (filters != null)
             {
                 foreach (string filter in filters)
@@ -62,12 +63,15 @@ namespace GridBlazor.Filtering
             get { return _filterValues; }
         }
 
-        public bool IsInitState
+        public bool IsInitState(IGridColumn column)
         {
-            get
+            if (column.InitialFilterSettings == ColumnFilterValue.Null)
             {
-                if (FilteredColumns.Any()) return false;
-                return Query.Get(DefaultFilterInitQueryParameter) != StringValues.Empty;
+                return false;
+            }
+            else
+            {
+                return !Query.Get(DefaultClearInitFilterQueryParameter).Any(r => r.Equals(column.Name));
             }
         }
 

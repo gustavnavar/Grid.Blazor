@@ -7,7 +7,7 @@
     <BlazorLinkOnBuild>false</BlazorLinkOnBuild>
     <GenerateEmbeddedFilesManifest>True</GenerateEmbeddedFilesManifest>
     <EnableDefaultEmbeddedResourceItems>False</EnableDefaultEmbeddedResourceItems>
-    <Version>0.2.7</Version>
+    <Version>0.2.8</Version>
     <Title>GridBlazor</Title>
     <Description>Grid components for Blazor</Description>
     <Summary>Grid components for Blazor</Summary>
@@ -15,6 +15,7 @@
     <PackageTags>grid blazor</PackageTags>
     <PackageProjectUrl>https://github.com/gustavnavar/Grid.Blazor</PackageProjectUrl>
     <PackageLicenseExpression>LGPL-2.1-only</PackageLicenseExpression>
+    <PackageReleaseNotes>Support .NET Core 3.0 Preview 4</PackageReleaseNotes>
   </PropertyGroup>
 
   <ItemGroup>

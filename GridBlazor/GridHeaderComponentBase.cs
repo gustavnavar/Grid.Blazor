@@ -6,6 +6,7 @@ using GridShared.Filtering;
 using GridShared.Sorting;
 using GridShared.Utility;
 using Microsoft.AspNetCore.Components;
+using Microsoft.Extensions.Primitives;
 using System;
 using System.Collections.Generic;
 using System.Globalization;
@@ -27,6 +28,7 @@ namespace GridBlazor
         protected List<ColumnFilterValue> _filterSettings;
         private bool _isColumnFiltered;
         protected string _url;
+        protected StringValues _clearInitFilter;
 
         protected string _cssStyles;
         protected string _cssClass;
@@ -51,7 +53,7 @@ namespace GridBlazor
         {
             //determine current column filter settings
             _filterSettings = new List<ColumnFilterValue>();
-            if (FilterSettings.IsInitState && Column.InitialFilterSettings != ColumnFilterValue.Null)
+            if (FilterSettings.IsInitState(Column) && Column.InitialFilterSettings != ColumnFilterValue.Null)
             {
                 _filterSettings.Add(Column.InitialFilterSettings);
             }
@@ -68,13 +70,15 @@ namespace GridBlazor
             var exceptQueryParameters = new List<string>
                 {
                     QueryStringFilterSettings.DefaultTypeQueryParameter,
-                    QueryStringFilterSettings.DefaultFilterInitQueryParameter
+                    QueryStringFilterSettings.DefaultClearInitFilterQueryParameter
                 };
             string pagerParameterName = GetPagerQueryParameterName(((ICGrid<T>)(Column.ParentGrid)).Pager);
             if (!string.IsNullOrEmpty(pagerParameterName))
                 exceptQueryParameters.Add(pagerParameterName);
 
             _url = queryBuilder.GetQueryStringExcept(exceptQueryParameters);
+
+            _clearInitFilter = FilterSettings.Query.Get(QueryStringFilterSettings.DefaultClearInitFilterQueryParameter);
 
             _cssStyles = ((GridStyled)Column).GetCssStylesString() + " " + ThStyle;
             _cssClass = ((GridStyled)Column).GetCssClassesString() + " " + ThClass;
