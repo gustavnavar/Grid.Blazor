@@ -1,5 +1,4 @@
-﻿@using GridBlazor.Columns
-@using GridBlazor.Filtering
+﻿@using GridBlazor.Filtering
 @using GridBlazor.Pagination
 @using GridBlazor.Sorting
 @using GridShared.Columns
@@ -30,14 +29,7 @@
                     <tr class="grid-row@(_selectedRow == i ? " grid-row-selected" : "") @Grid.GetRowCssClasses(item)" onclick="@(() => RowClicked(j, item))">
                         @foreach (IGridColumn column in Grid.Columns)
                         {
-                            if (((GridColumnBase<T>)column).Hidden)
-                            {
-                                <GridHiddenCellComponent Column="@column" Cell="@column.GetCell(item)"></GridHiddenCellComponent>
-                            }
-                            else
-                            {
-                                <GridCellComponent Column="@column" Cell="@column.GetCell(item)"></GridCellComponent>
-                            }
+                            <GridCellComponent T="@T" Column="@column" Cell="@column.GetCell(item)"></GridCellComponent>
                         }
                     </tr>
                     i++;
@@ -47,14 +39,7 @@
                     <tr class="grid-row @Grid.GetRowCssClasses(item)">
                         @foreach (IGridColumn column in Grid.Columns)
                         {
-                            if (((GridColumnBase<T>)column).Hidden)
-                            {
-                                <GridHiddenCellComponent Column="@column" Cell="@column.GetCell(item)"></GridHiddenCellComponent>
-                            }
-                            else
-                            {
-                                <GridCellComponent Column="@column" Cell="@column.GetCell(item)"></GridCellComponent>
-                            }
+                            <GridCellComponent T="@T" Column="@column" Cell="@column.GetCell(item)"></GridCellComponent>
                         }
                     </tr>
                 }
@@ -70,14 +55,7 @@
                         <tr>
                             @foreach (IGridColumn column in Grid.Columns)
                             {
-                                if (((GridColumnBase<T>)column).Hidden)
-                                {
-                                    <GridHiddenHeaderComponent T="@T" GridComponent="@this" Column="@column" FilterSettings="@((QueryStringFilterSettings)Grid.Settings.FilterSettings)" SortingSettings="@((QueryStringSortSettings)Grid.Settings.SortSettings)" Filters="@_filterComponents"></GridHiddenHeaderComponent>
-                                }
-                                else
-                                {
-                                    <GridHeaderComponent T="@T" GridComponent="@this" Column="@column" FilterSettings="@((QueryStringFilterSettings)Grid.Settings.FilterSettings)" SortingSettings="@((QueryStringSortSettings)Grid.Settings.SortSettings)" Filters="@_filterComponents"></GridHeaderComponent>
-                                }
+                                <GridHeaderComponent T="@T" GridComponent="@this" Column="@column" FilterSettings="@((QueryStringFilterSettings)Grid.Settings.FilterSettings)" SortingSettings="@((QueryStringSortSettings)Grid.Settings.SortSettings)" Filters="@_filterComponents"></GridHeaderComponent>
                             }
                         </tr>
                     </thead>
@@ -101,14 +79,7 @@
                                     <tr class="grid-row@(_selectedRow == i ? " grid-row-selected" : "") @Grid.GetRowCssClasses(item)" onclick="@(() => RowClicked(j, item))">
                                         @foreach (IGridColumn column in Grid.Columns)
                                         {
-                                            if (((GridColumnBase<T>)column).Hidden)
-                                            {
-                                                <GridHiddenCellComponent Column="@column" Cell="@column.GetCell(item)"></GridHiddenCellComponent>
-                                            }
-                                            else
-                                            {
-                                                <GridCellComponent Column="@column" Cell="@column.GetCell(item)"></GridCellComponent>
-                                            }
+                                            <GridCellComponent T="@T" Column="@column" Cell="@column.GetCell(item)"></GridCellComponent>
                                         }
                                     </tr>
                                     i++;
@@ -118,14 +89,7 @@
                                     <tr class="grid-row @Grid.GetRowCssClasses(item)">
                                         @foreach (IGridColumn column in Grid.Columns)
                                         {
-                                            if (((GridColumnBase<T>)column).Hidden)
-                                            {
-                                                <GridHiddenCellComponent Column="@column" Cell="@column.GetCell(item)"></GridHiddenCellComponent>
-                                            }
-                                            else
-                                            {
-                                                <GridCellComponent Column="@column" Cell="@column.GetCell(item)"></GridCellComponent>
-                                            }
+                                            <GridCellComponent T="@T" Column="@column" Cell="@column.GetCell(item)"></GridCellComponent>
                                         }
                                     </tr>
                                 }

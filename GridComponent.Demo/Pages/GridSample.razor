@@ -74,12 +74,16 @@ else
 
         //var locale = CultureInfo.CurrentCulture;
         var locale = new CultureInfo("fr-FR");
+        
         var client = new GridClient<Order>(q => orderService.GetOrdersGridRows(columns, q), query, false,
             "ordersGrid", columns, locale)
             .SetRowCssClasses(item => item.Customer.IsVip ? "success" : string.Empty)
             .Sortable()
             .Filterable()
             .WithMultipleFilters();
+
+        //var client = new GridClient<Order>(q => orderService.GetOrdersGridRows(q), query, false,
+        //    "ordersGrid", null, locale).AutoGenerateColumns();
 
         _customFilters.Add(companyNameFilter, typeof(CustomersFilterComponent<Order>));
 

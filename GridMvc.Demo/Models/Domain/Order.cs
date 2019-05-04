@@ -24,6 +24,7 @@ namespace GridMvc.Demo.Models
     }
 
     [ModelMetadataTypeAttribute(typeof(OrderMetaData))]
+    [GridTable(PagingEnabled = true, PageSize = 20)]
     public partial class Order
     {
         public Order()

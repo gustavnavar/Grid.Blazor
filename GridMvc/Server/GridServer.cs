@@ -18,11 +18,11 @@ namespace GridMvc.Server
         private readonly SGrid<T> _source;
 
         public GridServer(IEnumerable<T> items, IQueryCollection query, bool renderOnlyRows, 
-            string viewName, Action<IGridColumnCollection<T>> columns, int? pageSize = null, string language = "")
+            string viewName, Action<IGridColumnCollection<T>> columns = null, int? pageSize = null, string language = "")
         {
             _source = new SGrid<T>(items, query, renderOnlyRows);
             GridViewName = viewName;
-            columns(_source.Columns);
+            columns?.Invoke(_source.Columns);
             if (!string.IsNullOrWhiteSpace(language))
                 _source.Language = language;
             if(pageSize.HasValue)
@@ -170,8 +170,9 @@ namespace GridMvc.Server
         public ItemsDTO<T> ItemsToDisplay
         {
             get {
-                return new ItemsDTO<T>(_source.GetItemsToDisplay(), new PagerDTO(Grid.Pager.PageSize, 
-                    Grid.Pager.CurrentPage, Grid.Pager.ItemsCount));
+                var items = _source.GetItemsToDisplay();
+                return new ItemsDTO<T>(items, new PagerDTO(_source.Pager.PageSize,
+                    _source.Pager.CurrentPage, _source.Pager.ItemsCount));
             }
         }
 

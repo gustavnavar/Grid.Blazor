@@ -1,6 +1,4 @@
-﻿using GridShared;
-using GridShared.Utility;
-using GridBlazor.Demo.Client.Pages;
+﻿using GridBlazor.Demo.Client.Pages;
 using GridBlazor.Demo.Server.Models;
 using GridBlazor.Demo.Shared.Models;
 using GridMvc.Server;
@@ -40,21 +38,26 @@ namespace GridBlazor.Demo.Server.Controllers
 
         [HttpGet("[action]")]
         public ActionResult GetOrdersGridForSample()
-        { 
-            return Ok(GetOrdersGridRows(GridSample.Columns));
-        }
-
-        private ItemsDTO<Order> GetOrdersGridRows(Action<IGridColumnCollection<Order>> columns)
         {
             var repository = new OrdersRepository(_context);
-            var server = new GridServer<Order>(repository.GetAll(), Request.Query,
-                true, "ordersGrid", columns, 10)
+            IGridServer<Order> server = new GridServer<Order>(repository.GetAll(), Request.Query,
+                true, "ordersGrid", GridSample.Columns, 10)
                     .Sortable()
                     .Filterable()
                     .WithMultipleFilters();
 
-            // return items to displays
-            return server.ItemsToDisplay;
+            return Ok(server.ItemsToDisplay);
+        }
+
+        [HttpGet("[action]")]
+        public ActionResult GetOrdersAutoGenerateColumns()
+        {
+            var repository = new OrdersRepository(_context);
+            IGridServer<Order> server = new GridServer<Order>(repository.GetAll(), Request.Query,
+                true, "ordersGrid", null)
+                    .AutoGenerateColumns();
+
+            return Ok(server.ItemsToDisplay);
         }
 
         [HttpGet("[action]")]

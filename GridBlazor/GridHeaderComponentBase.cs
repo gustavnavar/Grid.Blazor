@@ -1,4 +1,5 @@
-﻿using GridBlazor.Filtering;
+﻿using GridBlazor.Columns;
+using GridBlazor.Filtering;
 using GridBlazor.Pagination;
 using GridBlazor.Sorting;
 using GridShared.Columns;
@@ -18,7 +19,7 @@ namespace GridBlazor
     public class GridHeaderComponentBase<T> : ComponentBase
     {
         private const string ThClass = "grid-header";
-        private const string ThStyle = "";
+        private const string ThStyle = "display:none;";
 
         private const string FilteredButtonCssClass = "filtered";
         private const string FilterButtonCss = "grid-filter-btn";
@@ -80,7 +81,10 @@ namespace GridBlazor
 
             _clearInitFilter = FilterSettings.Query.Get(QueryStringFilterSettings.DefaultClearInitFilterQueryParameter);
 
-            _cssStyles = ((GridStyled)Column).GetCssStylesString() + " " + ThStyle;
+            if (((GridColumnBase<T>)Column).Hidden)
+                _cssStyles = ((GridStyled)Column).GetCssStylesString() + " " + ThStyle;
+            else
+                _cssStyles = ((GridStyled)Column).GetCssStylesString();
             _cssClass = ((GridStyled)Column).GetCssClassesString() + " " + ThClass;
 
             if (!string.IsNullOrWhiteSpace(Column.Width))

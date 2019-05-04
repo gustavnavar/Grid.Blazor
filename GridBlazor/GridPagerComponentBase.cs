@@ -6,8 +6,6 @@ namespace GridBlazor
 {
     public class GridPagerComponentBase<T> : ComponentBase
     {
-        private int _sequence = 0;
-
         [CascadingParameter (Name = "GridComponent")]
         private GridComponent<T> GridComponent { get; set; }
 

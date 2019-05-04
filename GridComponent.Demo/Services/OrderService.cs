@@ -1,8 +1,8 @@
-using GridShared;
-using GridShared.Utility;
 using GridBlazor.Demo.Shared.Models;
 using GridComponent.Demo.Models;
 using GridMvc.Server;
+using GridShared;
+using GridShared.Utility;
 using Microsoft.AspNetCore.Http.Internal;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Primitives;
@@ -31,6 +31,16 @@ namespace GridComponent.Demo.Services
                     .Filterable()
                     .WithMultipleFilters();
             
+            // return items to displays
+            return server.ItemsToDisplay;
+        }
+
+        public ItemsDTO<Order> GetOrdersGridRows(QueryDictionary<StringValues> query)
+        {
+            var repository = new OrdersRepository(_context);
+            var server = new GridServer<Order>(repository.GetAll(), new QueryCollection(query),
+                true, "ordersGrid", null).AutoGenerateColumns();
+
             // return items to displays
             return server.ItemsToDisplay;
         }

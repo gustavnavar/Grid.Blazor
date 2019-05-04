@@ -1,13 +1,14 @@
-﻿using GridShared;
+﻿using GridBlazor.Columns;
+using GridShared;
 using GridShared.Columns;
 using Microsoft.AspNetCore.Components;
 
 namespace GridBlazor
 {
-    public class GridCellComponentBase : ComponentBase
+    public class GridCellComponentBase<T> : ComponentBase
     {
         private const string TdClass = "grid-cell";
-        private const string TdStyle = "";
+        private const string TdStyle = "display:none;";
 
         protected string _cssStyles;
         protected string _cssClass;
@@ -19,7 +20,10 @@ namespace GridBlazor
 
         protected override void OnParametersSet()
         {
-            _cssStyles = ((GridStyled)Column).GetCssStylesString() + " " + TdStyle;
+            if (((GridColumnBase<T>)Column).Hidden)
+                _cssStyles = ((GridStyled)Column).GetCssStylesString() + " " + TdStyle;
+            else
+                _cssStyles = ((GridStyled)Column).GetCssStylesString();
             _cssClass = ((GridStyled)Column).GetCssClassesString() + " " + TdClass;
         }
     }

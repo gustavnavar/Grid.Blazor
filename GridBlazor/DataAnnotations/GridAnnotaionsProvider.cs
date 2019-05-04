@@ -22,11 +22,11 @@ namespace GridBlazor.DataAnnotations
                 if (gridAttr == null)
                 {
                     dataAnnotationAttr = new GridColumnAttribute
-                        {
-                            Title = dataAnnotations.DisplayName,
-                            FilterEnabled = dataAnnotations.FilterEnabled ?? false,
-                            Format = dataAnnotations.Format
-                        };
+                    {
+                        Title = dataAnnotations.DisplayName,
+                        FilterEnabled = dataAnnotations.FilterEnabled ?? false,
+                        Format = dataAnnotations.Format
+                    };
                 }
                 else
                 {
@@ -52,9 +52,9 @@ namespace GridBlazor.DataAnnotations
             if (dataAnnotations != null)
             {
                 dataAnnotationAttr = new GridHiddenColumnAttribute
-                    {
-                        Format = dataAnnotations.Format
-                    };
+                {
+                    Format = dataAnnotations.Format
+                };
             }
             return dataAnnotationAttr;
         }
@@ -66,11 +66,25 @@ namespace GridBlazor.DataAnnotations
 
         public GridTableAttribute GetAnnotationForTable<T>()
         {
+            var modelType = typeof(T).GetAttribute<GridMetadataTypeAttribute>();
+            if (modelType != null)
+            {
+                var metadataAttr = modelType.MetadataType.GetAttribute<GridTableAttribute>();
+                if (metadataAttr != null)
+                    return metadataAttr;
+            }
             return typeof(T).GetAttribute<GridTableAttribute>();
         }
 
         private PropertyInfo GetMetadataProperty<T>(PropertyInfo pi)
         {
+            var modelType = typeof(T).GetAttribute<GridMetadataTypeAttribute>();
+            if (modelType != null)
+            {
+                PropertyInfo metadataProperty = modelType.MetadataType.GetProperty(pi.Name);
+                if (metadataProperty != null)
+                    return metadataProperty; //replace property
+            }
             return pi;
         }
 

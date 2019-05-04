@@ -42,11 +42,6 @@ namespace GridMvc.Pagination
             PageSize = DefaultPageSize;
         }
 
-        public GridPager(IQueryCollection query, int page, string pagerViewName) : this(query)
-        {
-            CurrentPage = page;
-            TemplateName = pagerViewName;
-        }
         #endregion
 
         #region IGridPager members

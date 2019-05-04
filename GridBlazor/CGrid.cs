@@ -38,7 +38,7 @@ namespace GridBlazor
         private readonly Func<QueryDictionary<StringValues>, ItemsDTO<T>> _dataService;
 
         public CGrid(string url, IQueryDictionary<StringValues> query, bool renderOnlyRows,
-            Action<IGridColumnCollection<T>> columns, CultureInfo cultureInfo = null)
+            Action<IGridColumnCollection<T>> columns = null, CultureInfo cultureInfo = null)
         {
             _dataService = null;
 
@@ -68,12 +68,12 @@ namespace GridBlazor
             Pager = new GridPager(query);
 
             ComponentOptions.RenderRowsOnly = renderOnlyRows;
-            columns(Columns);
+            columns?.Invoke(Columns);      
         }
 
         public CGrid(Func<QueryDictionary<StringValues>, ItemsDTO<T>> dataService,
             QueryDictionary<StringValues> query, bool renderOnlyRows, 
-            Action<IGridColumnCollection<T>> columns, CultureInfo cultureInfo = null)
+            Action<IGridColumnCollection<T>> columns = null, CultureInfo cultureInfo = null)
         {
             _dataService = dataService;
 
@@ -107,7 +107,7 @@ namespace GridBlazor
             Pager = new GridPager(query);
 
             ComponentOptions.RenderRowsOnly = renderOnlyRows;
-            columns(Columns);
+            columns?.Invoke(Columns);
         }
 
         /// <summary>

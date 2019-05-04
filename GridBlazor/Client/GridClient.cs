@@ -17,7 +17,7 @@ namespace GridBlazor
         private readonly CGrid<T> _source;
 
         public GridClient(string url, IQueryDictionary<StringValues> query, bool renderOnlyRows, 
-            string gridName, Action<IGridColumnCollection<T>> columns, CultureInfo cultureInfo = null)
+            string gridName, Action<IGridColumnCollection<T>> columns = null, CultureInfo cultureInfo = null)
         {
             _source =  new CGrid<T>(url, query, renderOnlyRows, columns, cultureInfo);
             Named(gridName);
@@ -26,7 +26,7 @@ namespace GridBlazor
 
         public GridClient(Func<QueryDictionary<StringValues>, ItemsDTO<T>> dataService, 
             QueryDictionary<StringValues> query, bool renderOnlyRows, string gridName, 
-            Action<IGridColumnCollection<T>> columns, CultureInfo cultureInfo = null)
+            Action<IGridColumnCollection<T>> columns = null, CultureInfo cultureInfo = null)
         {
             _source = new CGrid<T>(dataService, query, renderOnlyRows, columns, cultureInfo);
             Named(gridName);

@@ -56,7 +56,8 @@ namespace GridMvc
                 int.TryParse(pageParameter, out page);
             if (page == 0)
                 page++;
-            Pager = new GridPager(query, page, pagerViewName);
+            ((GridPager)_pager).CurrentPage = page;
+            ((GridPager)_pager).TemplateName = pagerViewName;
             RenderOptions.RenderRowsOnly = renderOnlyRows;
         }
 

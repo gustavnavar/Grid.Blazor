@@ -69,18 +69,21 @@ else
 
     protected override async Task OnInitAsync()
     {
-        string url = UriHelper.GetBaseUri() + "api/SampleData/GetOrdersGridForSample";
-
         var query = new QueryDictionary<StringValues>();
         query.Add("grid-page", "2");
 
         //var locale = CultureInfo.CurrentCulture;
         var locale = new CultureInfo("de-DE");
+        
+        string url = UriHelper.GetBaseUri() + "api/SampleData/GetOrdersGridForSample";
         var client = new GridClient<Order>(url, query, false, "ordersGrid", Columns, locale)
             .SetRowCssClasses(item => item.Customer.IsVip ? "success" : string.Empty)
             .Sortable()
             .Filterable()
-            .WithMultipleFilters();
+            .WithMultipleFilters(); 
+
+        //string url = UriHelper.GetBaseUri() + "api/SampleData/GetOrdersAutoGenerateColumns";
+        //var client = new GridClient<Order>(url, query, false, "ordersGrid", null, locale).AutoGenerateColumns();
 
         _customFilters.Add(companyNameFilter, typeof(CustomersFilterComponent<Order>));
 
