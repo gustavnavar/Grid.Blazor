@@ -20,10 +20,21 @@ Imagine that you have to retrieve a collection of model items in your project. F
 
 The steps to build a grid razor page using **GridBlazor** are:
 
-1. Create a razor page on the client project to render the grid. The page file must have a .razor extension. An example of razor page is:
+1. Add a reference to **GridBlazor** in the **_Imports.razor** file of the client project's root folder
+
+    ```razor
+        ...
+        @using GridBlazor
+        ...
+    ```
+
+2. Create a razor page on the client project to render the grid. The page file must have a .razor extension. An example of razor page is:
 
     ```razor
         @page "/gridsample"
+        @using GridShared
+        @using GridShared.Utility
+        @using Microsoft.Extensions.Primitives
         @inject IUriHelper UriHelper
 
         @if (_task.IsCompleted)
@@ -65,7 +76,7 @@ The steps to build a grid razor page using **GridBlazor** are:
         }
     ```
 
-2. Create a controller action in the server project. An example of this type of controller action is: 
+3. Create a controller action in the server project. An example of this type of controller action is: 
 
     ```c#
         [Route("api/[controller]")]

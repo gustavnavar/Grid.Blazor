@@ -71,6 +71,10 @@ The steps to build a grid razor page using **GridBlazor** are:
 
     ```razor
         @page "/gridsample"
+        @using GridBlazor
+        @using GridShared
+        @using GridShared.Utility
+        @using Microsoft.Extensions.Primitives
         @inject OrderService orderService
 
         @if (_task.IsCompleted)

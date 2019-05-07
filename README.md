@@ -2,7 +2,7 @@
 
 A fork from: https://gridmvc.codeplex.com/
 
-It supports .NET Core 3.0 Preview 4
+It supports .NET Core 3.0 Preview 5
 
 Native C# Grid components for:
 * [Blazor client-side](./docs/blazor_client/Documentation.md)

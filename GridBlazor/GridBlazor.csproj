@@ -7,7 +7,7 @@
     <BlazorLinkOnBuild>false</BlazorLinkOnBuild>
     <GenerateEmbeddedFilesManifest>True</GenerateEmbeddedFilesManifest>
     <EnableDefaultEmbeddedResourceItems>False</EnableDefaultEmbeddedResourceItems>
-    <Version>0.2.9</Version>
+    <Version>0.2.10</Version>
     <Title>GridBlazor</Title>
     <Description>Grid components for Blazor</Description>
     <Summary>Grid components for Blazor</Summary>
@@ -15,7 +15,7 @@
     <PackageTags>grid blazor</PackageTags>
     <PackageProjectUrl>https://github.com/gustavnavar/Grid.Blazor</PackageProjectUrl>
     <PackageLicenseExpression>LGPL-2.1-only</PackageLicenseExpression>
-    <PackageReleaseNotes>Support .NET Core 3.0 Preview 4</PackageReleaseNotes>
+    <PackageReleaseNotes>Support .NET Core 3.0 Preview 5</PackageReleaseNotes>
   </PropertyGroup>
 
   <ItemGroup>
@@ -28,9 +28,9 @@
     <PackageReference Include="Microsoft.AspNetCore.Components.Browser " Version="3.0.0-preview-19075-0444" />
     <PackageReference Include="Microsoft.AspNetCore.Components.Build" Version="3.0.0-preview3-19153-02" />
     <PackageReference Include="Microsoft.AspNetCore.Html.Abstractions" Version="2.2.0" />
-    <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="3.0.0-preview4.19216.2" />
-    <PackageReference Include="Microsoft.Extensions.Primitives" Version="3.0.0-preview4.19216.2" />
-    <PackageReference Include="System.ComponentModel.Annotations" Version="4.6.0-preview4.19212.13" />
+    <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="3.0.0-preview5.19227.9" />
+    <PackageReference Include="Microsoft.Extensions.Primitives" Version="3.0.0-preview5.19227.9" />
+    <PackageReference Include="System.ComponentModel.Annotations" Version="4.6.0-preview5.19224.8" />
   </ItemGroup>
 
   <ItemGroup>
@@ -54,9 +54,10 @@
       <Generator></Generator>
     </EmbeddedResource>
     <!-- .js/.css files will be referenced via <script>/<link> tags; other content files will just be included in the app's 'dist' directory without any tags referencing them -->
-    <EmbeddedResource Include="Content\**\*.js" LogicalName="blazor:js:%(RecursiveDir)%(Filename)%(Extension)" />
-    <EmbeddedResource Include="Content\**\*.css" LogicalName="blazor:css:%(RecursiveDir)%(Filename)%(Extension)" />
-    <EmbeddedResource Include="Content\**" Exclude="**\*.js;**\*.css" LogicalName="blazor:file:%(RecursiveDir)%(Filename)%(Extension)" />
+    <!-- <EmbeddedResource Include="Content\**\*.js" LogicalName="blazor:js:%(RecursiveDir)%(Filename)%(Extension)" /> -->
+    <!-- <EmbeddedResource Include="Content\**\*.css" LogicalName="blazor:css:%(RecursiveDir)%(Filename)%(Extension)" /> -->
+    <!-- <EmbeddedResource Include="Content\**" Exclude="**\*.js;**\*.css" LogicalName="blazor:file:%(RecursiveDir)%(Filename)%(Extension)" /> -->
+    <EmbeddedResource Include="Content\css\gridblazor.min.css" LogicalName="blazor:css:%(RecursiveDir)%(Filename)%(Extension)" />
   </ItemGroup>
 
   <ItemGroup>
@@ -72,6 +73,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Update="Microsoft.AspNetCore.Components.Browser" Version="3.0.0-preview4-19216-03" />
+    <PackageReference Update="Microsoft.AspNetCore.Components.Browser" Version="3.0.0-preview5-19227-01" />
   </ItemGroup>
 </Project>
