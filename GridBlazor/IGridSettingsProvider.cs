@@ -1,6 +1,7 @@
-﻿using GridShared.Sorting;
+﻿using GridShared.Filtering;
+using GridShared.Searching;
+using GridShared.Sorting;
 using GridShared.Utility;
-using GridBlazor.Filtering;
 using Microsoft.Extensions.Primitives;
 
 namespace GridBlazor
@@ -12,6 +13,7 @@ namespace GridBlazor
     {
         IGridSortSettings SortSettings { get; }
         IGridFilterSettings FilterSettings { get; }
+        IGridSearchSettings SearchSettings { get; }
 
         IQueryDictionary<StringValues> ToQuery();
     }

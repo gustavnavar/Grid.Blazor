@@ -8,7 +8,7 @@ English is the default laguage. But you can use other languages. You have to cre
     
 ```c#
     var locale = new CultureInfo("de-DE");
-    var client = new GridClient<Order>(url, query, false, "ordersGrid", Columns, locale);
+    var client = new GridClient<Order>(q => orderService.GetOrdersGridRows(columns, q), query, false, "ordersGrid", Columns, locale);
 ```
 
 ## Supported languages

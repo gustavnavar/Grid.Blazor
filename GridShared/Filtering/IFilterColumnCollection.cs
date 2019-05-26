@@ -1,9 +1,8 @@
 ﻿using GridShared.Columns;
-using GridShared.Filtering;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace GridBlazor.Filtering
+namespace GridShared.Filtering
 {
     /// <summary>
     ///     Collection of current filter options for the grid

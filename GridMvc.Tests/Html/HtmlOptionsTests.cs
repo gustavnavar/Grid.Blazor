@@ -37,6 +37,10 @@ namespace GridMvc.Tests.Html
             _opt.WithMultipleFilters();
             Assert.IsTrue(_grid.RenderOptions.AllowMultipleFilters);
 
+            _opt.Searchable();
+            Assert.IsTrue(_grid.SearchingEnabled);
+            Assert.IsTrue(_grid.SearchingOnlyTextColumns);
+
             _opt.Named("test");
             Assert.AreEqual(_grid.RenderOptions.GridName, "test");
 

@@ -156,6 +156,9 @@
   <data name="GreaterThanOrEquals" xml:space="preserve">
     <value>Greater than or equals</value>
   </data>
+  <data name="Items" xml:space="preserve">
+    <value>Items</value>
+  </data>
   <data name="Lang" xml:space="preserve">
     <value>en</value>
   </data>
@@ -164,6 +167,9 @@
   </data>
   <data name="LessThanOrEquals" xml:space="preserve">
     <value>Less than or equals</value>
+  </data>
+  <data name="SearchFor" xml:space="preserve">
+    <value>Search for ...</value>
   </data>
   <data name="StartsWith" xml:space="preserve">
     <value>Starts with</value>

@@ -1,14 +1,13 @@
-﻿using GridShared.Sorting;
-using System;
+﻿using System;
 using System.Linq;
 using System.Linq.Expressions;
 
-namespace GridBlazor.Sorting
+namespace GridShared.Sorting
 {
     /// <summary>
     ///     Object applies ThenBy and ThenByDescending order for items collection
     /// </summary>
-    internal class ThenByColumnOrderer<T, TKey> : IColumnOrderer<T>
+    public class ThenByColumnOrderer<T, TKey> : IColumnOrderer<T>
     {
         private readonly Expression<Func<T, TKey>> _expression;
         private readonly GridSortDirection _initialDirection;

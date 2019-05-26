@@ -17,4 +17,4 @@ You can enable sorting for all columns of a grid using the **Sortable** method f
             .Sortable();
     ```
 
-[<- Custom columns](Custom_columns.md) | [Filtering ->](Filtering.md)
+[<- Custom columns](Custom_columns.md) | [Searching ->](Searching.md)

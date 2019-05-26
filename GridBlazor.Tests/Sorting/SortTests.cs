@@ -30,7 +30,7 @@ namespace GridBlazor.Tests.Sorting
             {
                 c.Add(x => x.Title).Sortable(true);
             };
-            var grid = new TestGrid((q) => _repo.GetAllService(columns, q), true, columns, Thread.CurrentThread.CurrentCulture);
+            var grid = new TestGrid((q) => _repo.GetAllService(columns, q, false, true), true, columns, Thread.CurrentThread.CurrentCulture);
             if (
                 !ValidateSorting<string,  object>(grid, x => x.Title,  "Title", GridSortDirection.Descending, null, null))
             {
@@ -45,7 +45,7 @@ namespace GridBlazor.Tests.Sorting
             {
                 c.Add(x => x.Title, "someid").Sortable(true);
             };
-            var grid = new TestGrid((q) => _repo.GetAllService(columns, q), true, columns, Thread.CurrentThread.CurrentCulture);
+            var grid = new TestGrid((q) => _repo.GetAllService(columns, q, false, true), true, columns, Thread.CurrentThread.CurrentCulture);
             if (
                 !ValidateSorting<string,  object>(grid, x => x.Title, "someid",
                                                          GridSortDirection.Descending, null, null))
@@ -61,7 +61,7 @@ namespace GridBlazor.Tests.Sorting
             {
                 c.Add(x => x.Title).Sortable(true);
             };
-            var grid = new TestGrid((q) => _repo.GetAllService(columns, q), true, columns, Thread.CurrentThread.CurrentCulture);
+            var grid = new TestGrid((q) => _repo.GetAllService(columns, q, false, true), true, columns, Thread.CurrentThread.CurrentCulture);
             if (
                 !ValidateSorting<string,  object>(grid, x => x.Title, "Title",
                                                          GridSortDirection.Ascending, null, null))
@@ -77,7 +77,7 @@ namespace GridBlazor.Tests.Sorting
             {
                 c.Add(x => x.Title, "someid").Sortable(true);
             };
-            var grid = new TestGrid((q) => _repo.GetAllService(columns, q), true, columns, Thread.CurrentThread.CurrentCulture);
+            var grid = new TestGrid((q) => _repo.GetAllService(columns, q, false, true), true, columns, Thread.CurrentThread.CurrentCulture);
             if (
                 !ValidateSorting<string,  object>(grid, x => x.Title, "someid",
                                                          GridSortDirection.Ascending, null, null))
@@ -93,7 +93,7 @@ namespace GridBlazor.Tests.Sorting
             {
                 c.Add(x => x.Id).Sortable(true);
             };
-            var grid = new TestGrid((q) => _repo.GetAllService(columns, q), true, columns, Thread.CurrentThread.CurrentCulture);
+            var grid = new TestGrid((q) => _repo.GetAllService(columns, q, false, true), true, columns, Thread.CurrentThread.CurrentCulture);
             if (
                 !ValidateSorting<int,  object>(grid, x => x.Id,"Id", GridSortDirection.Ascending, null,
                                                    null))
@@ -109,7 +109,7 @@ namespace GridBlazor.Tests.Sorting
             {
                 c.Add(x => x.Id).Sortable(true);
             };
-            var grid = new TestGrid((q) => _repo.GetAllService(columns, q), true, columns, Thread.CurrentThread.CurrentCulture);
+            var grid = new TestGrid((q) => _repo.GetAllService(columns, q, false, true), true, columns, Thread.CurrentThread.CurrentCulture);
             if (
                 !ValidateSorting<int,  object>(grid, x => x.Id, "Id", GridSortDirection.Descending, null,
                                                    null))
@@ -125,7 +125,7 @@ namespace GridBlazor.Tests.Sorting
             {
                 c.Add(x => x.Child.ChildTitle).Sortable(true);
             };
-            var grid = new TestGrid((q) => _repo.GetAllService(columns, q), true, columns, Thread.CurrentThread.CurrentCulture);
+            var grid = new TestGrid((q) => _repo.GetAllService(columns, q, false, true), true, columns, Thread.CurrentThread.CurrentCulture);
             if (
                 !ValidateSorting<string,  object>(grid, x => x.Child.ChildTitle, "Child.ChildTitle", GridSortDirection.Ascending, null, null))
             {
@@ -140,7 +140,7 @@ namespace GridBlazor.Tests.Sorting
             {
                 c.Add(x => x.Child.ChildTitle).Sortable(true);
             };
-            var grid = new TestGrid((q) => _repo.GetAllService(columns, q), true, columns, Thread.CurrentThread.CurrentCulture);
+            var grid = new TestGrid((q) => _repo.GetAllService(columns, q, false, true), true, columns, Thread.CurrentThread.CurrentCulture);
             if (
                 !ValidateSorting<string, object>(grid, x => x.Child.ChildTitle, 
                                                          "Child.ChildTitle", GridSortDirection.Descending, null, null))
@@ -156,7 +156,7 @@ namespace GridBlazor.Tests.Sorting
             {
                 c.Add(x => x.Child.ChildCreated).Sortable(true);
             };
-            var grid = new TestGrid((q) => _repo.GetAllService(columns, q), true, columns, Thread.CurrentThread.CurrentCulture);
+            var grid = new TestGrid((q) => _repo.GetAllService(columns, q, false, true), true, columns, Thread.CurrentThread.CurrentCulture);
             if (
                 !ValidateSorting<DateTime,  object>(grid, x => x.Child.ChildCreated, 
                                                              "Child.ChildCreated", GridSortDirection.Descending, null,
@@ -173,7 +173,7 @@ namespace GridBlazor.Tests.Sorting
             {
                 c.Add(x => x.Child.ChildCreated, "someid").Sortable(true);
             };
-            var grid = new TestGrid((q) => _repo.GetAllService(columns, q), true, columns, Thread.CurrentThread.CurrentCulture);
+            var grid = new TestGrid((q) => _repo.GetAllService(columns, q, false, true), true, columns, Thread.CurrentThread.CurrentCulture);
             if (
                 !ValidateSorting<DateTime, object>(grid, x => x.Child.ChildCreated,
                                                              "someid", GridSortDirection.Descending, null,
@@ -190,7 +190,7 @@ namespace GridBlazor.Tests.Sorting
             {
                 c.Add(x => x.Child.ChildCreated).Sortable(true);
             };
-            var grid = new TestGrid((q) => _repo.GetAllService(columns, q), true, columns, Thread.CurrentThread.CurrentCulture);
+            var grid = new TestGrid((q) => _repo.GetAllService(columns, q, false, true), true, columns, Thread.CurrentThread.CurrentCulture);
             if (
                 !ValidateSorting<DateTime, object>(grid, x => x.Child.ChildCreated,
                                                              "Child.ChildCreated", GridSortDirection.Ascending, null,
@@ -207,7 +207,7 @@ namespace GridBlazor.Tests.Sorting
             {
                 c.Add(x => x.Child.ChildCreated).Sortable(true).ThenSortBy(x => x.Title);
             };
-            var grid = new TestGrid((q) => _repo.GetAllService(columns, q), true, columns, Thread.CurrentThread.CurrentCulture);
+            var grid = new TestGrid((q) => _repo.GetAllService(columns, q, false, true), true, columns, Thread.CurrentThread.CurrentCulture);
             if (
                 !ValidateSorting(grid, x => x.Child.ChildCreated,"Child.ChildCreated",
                                  GridSortDirection.Ascending, x => x.Title, GridSortDirection.Ascending))
@@ -223,7 +223,7 @@ namespace GridBlazor.Tests.Sorting
             {
                 c.Add(x => x.Child.ChildCreated).Sortable(true).ThenSortByDescending(x => x.Title);
             };
-            var grid = new TestGrid((q) => _repo.GetAllService(columns, q), true, columns, Thread.CurrentThread.CurrentCulture);
+            var grid = new TestGrid((q) => _repo.GetAllService(columns, q, false, true), true, columns, Thread.CurrentThread.CurrentCulture);
             if (
                 !ValidateSorting(grid, x => x.Child.ChildCreated, "Child.ChildCreated",
                                  GridSortDirection.Ascending, x => x.Title, GridSortDirection.Descending))

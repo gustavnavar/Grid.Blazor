@@ -1,6 +1,6 @@
-﻿using GridShared.Filtering;
-using GridMvc.Filtering;
+﻿using GridMvc.Searching;
 using GridMvc.Sorting;
+using GridShared.Filtering;
 using Microsoft.AspNetCore.Http;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
@@ -287,6 +287,7 @@ namespace GridMvc.Tests.Filtering
 
             settingsMock.Setup(s => s.FilterSettings).Returns(filterSetting.Object);
             settingsMock.Setup(s => s.SortSettings).Returns(new QueryStringSortSettings(_query));
+            settingsMock.Setup(s => s.SearchSettings).Returns(new QueryStringSearchSettings(_query));
             grid.Settings = settingsMock.Object;
 
             IEnumerable<TestModel> resultCollection = _grid.GetItemsToDisplay();

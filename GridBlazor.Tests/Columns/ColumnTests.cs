@@ -22,7 +22,7 @@ namespace GridBlazor.Tests.Columns
                 c.Add(r => r.Id);
             };
             var repo = new TestRepository();
-            _grid = new TestGrid((q) => repo.GetAllService(columns, q), true, columns, Thread.CurrentThread.CurrentCulture);
+            _grid = new TestGrid((q) => repo.GetAllService(columns, q, false, true), true, columns, Thread.CurrentThread.CurrentCulture);
 
             _columns = new GridColumnCollection<TestModel>(new DefaultColumnBuilder<TestModel>(_grid, new GridAnnotaionsProvider()), _grid.Settings.SortSettings);
         }

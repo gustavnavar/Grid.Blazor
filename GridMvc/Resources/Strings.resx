@@ -123,7 +123,13 @@
   <data name="FilterButtonTooltipText" xml:space="preserve">
     <value>Filter this column</value>
   </data>
+  <data name="Items" xml:space="preserve">
+    <value>Items</value>
+  </data>
   <data name="Lang" xml:space="preserve">
     <value>en</value>
+  </data>
+  <data name="SearchFor" xml:space="preserve">
+    <value>Search for ...</value>
   </data>
 </root>

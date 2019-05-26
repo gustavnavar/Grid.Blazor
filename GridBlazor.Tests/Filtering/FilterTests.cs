@@ -216,7 +216,7 @@ namespace GridBlazor.Tests.Filtering
             {
                 c.Add(x => x.Created, "someid").Filterable(true);
             };
-            var grid = new TestGrid((q) => _repo.GetAllService(columns, q), true, columns, Thread.CurrentThread.CurrentCulture);
+            var grid = new TestGrid((q) => _repo.GetAllService(columns, q, false, true), true, columns, Thread.CurrentThread.CurrentCulture);
             if (!ValidateFiltering(grid, settings, x => x.Created < filterValue))
             {
                 Assert.Fail("Filtering works incorrect");
@@ -270,7 +270,7 @@ namespace GridBlazor.Tests.Filtering
             {
                 c.Add(column, settings.ColumnName).Filterable(true);
             };
-            var grid = new TestGrid((q) => _repo.GetAllService(columns, q), true, columns, Thread.CurrentThread.CurrentCulture);
+            var grid = new TestGrid((q) => _repo.GetAllService(columns, q, false, true), true, columns, Thread.CurrentThread.CurrentCulture);
             if (!ValidateFiltering(grid, settings, filterContraint))
             {
                 Assert.Fail("Filtering works incorrect");

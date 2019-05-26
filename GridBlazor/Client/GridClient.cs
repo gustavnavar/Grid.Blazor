@@ -6,6 +6,7 @@ using Microsoft.Extensions.Primitives;
 using System;
 using System.Globalization;
 using System.Threading.Tasks;
+using GridBlazor.Resources;
 
 namespace GridBlazor
 {
@@ -21,7 +22,7 @@ namespace GridBlazor
         {
             _source =  new CGrid<T>(url, query, renderOnlyRows, columns, cultureInfo);
             Named(gridName);
-            WithPaging(_source.Pager.PageSize);
+            //WithPaging(_source.Pager.PageSize);
         }
 
         public GridClient(Func<QueryDictionary<StringValues>, ItemsDTO<T>> dataService, 
@@ -30,7 +31,7 @@ namespace GridBlazor
         {
             _source = new CGrid<T>(dataService, query, renderOnlyRows, columns, cultureInfo);
             Named(gridName);
-            WithPaging(_source.Pager.PageSize);
+            //WithPaging(_source.Pager.PageSize);
         }
 
         #region IGridHtmlOptions<T> Members
@@ -106,6 +107,24 @@ namespace GridBlazor
             return this;
         }
 
+
+        public IGridClient<T> Searchable()
+        {
+            return Searchable(true, true);
+        }
+
+        public IGridClient<T> Searchable(bool enable)
+        {
+            return Searchable(enable, true);
+        }
+
+        public IGridClient<T> Searchable(bool enable, bool onlyTextColumns)
+        {
+            _source.SearchingEnabled = enable;
+            _source.SearchingOnlyTextColumns = onlyTextColumns;
+            return this;
+        }
+
         public IGridClient<T> Selectable(bool set)
         {
             _source.ComponentOptions.Selectable = set;
@@ -159,7 +178,7 @@ namespace GridBlazor
         public IGridClient<T> WithGridItemsCount(string gridItemsName)
         {
             if (string.IsNullOrWhiteSpace(gridItemsName))
-                gridItemsName = "Items count";
+                gridItemsName = Strings.Items;
 
             _source.ComponentOptions.GridCountDisplayName = gridItemsName;
             _source.ComponentOptions.ShowGridItemsCount = true;

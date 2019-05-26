@@ -123,7 +123,13 @@
   <data name="FilterButtonTooltipText" xml:space="preserve">
     <value>Добавить фильтр по полю</value>
   </data>
+  <data name="Items" xml:space="preserve">
+    <value>Предметы</value>
+  </data>
   <data name="Lang" xml:space="preserve">
     <value>ru</value>
+  </data>
+  <data name="SearchFor" xml:space="preserve">
+    <value>искать</value>
   </data>
 </root>

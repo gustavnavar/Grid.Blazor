@@ -1,4 +1,5 @@
 ﻿using GridShared.Filtering;
+using GridShared.Searching;
 using GridShared.Sorting;
 using System;
 using System.Collections.Generic;
@@ -6,7 +7,7 @@ using System.Linq.Expressions;
 
 namespace GridShared.Columns
 {
-    public interface IGridColumn<T> : IGridColumn, IColumn<T>, ISortableColumn<T>, IFilterableColumn<T>
+    public interface IGridColumn<T> : IGridColumn, IColumn<T>, ISortableColumn<T>, IFilterableColumn<T>, ISearchableColumn<T>
     {      
     }
 
@@ -197,5 +198,13 @@ namespace GridShared.Columns
         string FilterWidgetTypeName { get; }
 
         object FilterWidgetData { get; }
+    }
+
+    public interface ISearchableColumn<T>
+    {
+        /// <summary>
+        ///     Collection of current column filter
+        /// </summary>
+        IColumnSearch<T> Search { get; }
     }
 }

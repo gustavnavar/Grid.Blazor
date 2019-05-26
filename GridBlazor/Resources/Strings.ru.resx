@@ -168,4 +168,10 @@
   <data name="StartsWith" xml:space="preserve">
     <value>Начинается с</value>
   </data>
+  <data name="SearchFor" xml:space="preserve">
+    <value>искать</value>
+  </data>
+  <data name="Items" xml:space="preserve">
+    <value>Предметы</value>
+  </data>
 </root>

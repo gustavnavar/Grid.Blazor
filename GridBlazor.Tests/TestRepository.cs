@@ -17,14 +17,15 @@ namespace GridBlazor.Tests
         }
 
         public ItemsDTO<TestModel> GetAllService(Action<IGridColumnCollection<TestModel>> columns,
-            QueryDictionary<StringValues> query)
+            QueryDictionary<StringValues> query, bool enable, bool onlyTextColumns)
         {
             GridServer<TestModel> server = new GridServer<TestModel>(GetTestData().AsQueryable(),
                 new QueryCollection(query), true, "_Grid", columns);
 
             server.Sortable()
                 .Filterable()
-                .WithMultipleFilters();
+                .WithMultipleFilters()
+                .Searchable(enable, onlyTextColumns);
 
             // return items to displays
             return server.ItemsToDisplay;

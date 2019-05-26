@@ -9,5 +9,10 @@ namespace GridMvc.Tests
             : base(items, (new DefaultHttpContext()).Request.Query)
         {
         }
+
+        public TestGrid(IEnumerable<TestModel> items, IQueryCollection query)
+            : base(items, query)
+        {
+        }
     }
 }

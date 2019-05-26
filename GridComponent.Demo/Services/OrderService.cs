@@ -4,21 +4,19 @@ using GridMvc.Server;
 using GridShared;
 using GridShared.Utility;
 using Microsoft.AspNetCore.Http.Internal;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Primitives;
 using System;
 
 namespace GridComponent.Demo.Services
 {
-    public class OrderService
+    public class OrderService : IOrderService
     {
+
         private readonly NorthwindDbContext _context;
 
-        public OrderService()
+        public OrderService(NorthwindDbContext context)
         {
-            var builder = new DbContextOptionsBuilder<NorthwindDbContext>();
-            builder.UseSqlServer(Startup.ConnectionString);
-            _context = new NorthwindDbContext(builder.Options);
+            _context = context;
         }
 
         public ItemsDTO<Order> GetOrdersGridRows(Action<IGridColumnCollection<Order>> columns,
@@ -26,13 +24,21 @@ namespace GridComponent.Demo.Services
         {
             var repository = new OrdersRepository(_context);
             var server = new GridServer<Order>(repository.GetAll(), new QueryCollection(query), 
-                true, "ordersGrid", columns, 10)
+                true, "ordersGrid", columns)
                     .Sortable()
+                    .WithPaging(10)
                     .Filterable()
-                    .WithMultipleFilters();
+                    .WithMultipleFilters()
+                    .Searchable(true, false);
             
             // return items to displays
-            return server.ItemsToDisplay;
+            var items = server.ItemsToDisplay;
+
+            // uncomment the following lines are to test null responses
+            //items = null;
+            //items.Items = null;
+            //items.Pager = null;
+            return items;
         }
 
         public ItemsDTO<Order> GetOrdersGridRows(QueryDictionary<StringValues> query)
@@ -44,5 +50,11 @@ namespace GridComponent.Demo.Services
             // return items to displays
             return server.ItemsToDisplay;
         }
+    }
+
+    public interface IOrderService
+    {
+        ItemsDTO<Order> GetOrdersGridRows(Action<IGridColumnCollection<Order>> columns, QueryDictionary<StringValues> query);
+        ItemsDTO<Order> GetOrdersGridRows(QueryDictionary<StringValues> query);
     }
 }

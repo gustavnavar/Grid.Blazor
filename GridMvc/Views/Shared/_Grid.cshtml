@@ -1,4 +1,5 @@
 ﻿@using GridShared.Columns
+@using GridMvc
 @using GridMvc.Columns
 @model GridMvc.ISGrid
 @if (Model == null) { return; }
@@ -20,7 +21,7 @@
                 @foreach (IGridColumn column in Model.Columns)
                 {
                     @(((ISGridColumn)column).CellRenderer.Render(column, column.GetCell(item)))
-               }
+                }
             </tr>
         }
     }
@@ -29,6 +30,10 @@ else
 {
     <div class="grid-mvc" data-lang="@Model.Language" data-gridname="@Model.RenderOptions.GridName" data-selectable="@Model.RenderOptions.Selectable.ToString().ToLower()" data-multiplefilters="@Model.RenderOptions.AllowMultipleFilters.ToString().ToLower()">
         <div class="grid-wrap">
+            @if (Model.SearchingEnabled)
+            {
+                @(((IGridSearchHeaderRenderer)Model.Settings.GetHeaderRenderer()).Render())
+            }
             <table class="table table-striped grid-table">
                 @* Draw grid header *@
                 <thead>
@@ -36,7 +41,7 @@ else
                         @foreach (IGridColumn column in Model.Columns)
                         {
                             @(((ISGridColumn)column).HeaderRenderer.Render(column))
-                                                    }
+                        }
                     </tr>
                 </thead>
                 <tbody>
@@ -65,10 +70,10 @@ else
             <div class="grid-footer">
                 @if (Model.RenderOptions.ShowGridItemsCount)
                 {
-                    <div class="grid-itemscount">
+                    <span class="grid-itemscount">
                         <span class="grid-itemscount-label">@Model.RenderOptions.GridCountDisplayName:</span>
-                        <span class="grid-itemscount-caption">@Model.ItemsCount</span>
-                    </div>
+                        <span class="grid-itemscount-caption"><b>@Model.ItemsCount</b></span>
+                    </span>
                 }
                 @if (Model.EnablePaging && Model.Pager != null)
                 {

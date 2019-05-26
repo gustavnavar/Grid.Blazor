@@ -54,6 +54,7 @@ GridMvc = (function ($) {
 
         this.openedMenuBtn = null;
         this.initFilters();
+        this.initSearch();
     };
     /***
     * Handle Grid row events
@@ -385,6 +386,65 @@ GridMvc = (function ($) {
 
     gridMvc.prototype.selectable = function (enable) {
         this.options.selectable = enable;
+    };
+
+    /***
+    * ============= SEARCH =============
+    * Methods that provides functionality for searching
+    */
+    /***
+    * Method search all search buttons and register 'onclick' event handlers:
+    */
+    gridMvc.prototype.initSearch = function () {
+        var self = this;
+        this.jqContainer.find(".grid-search-apply").each(function () {
+            $(this).click(function () {
+                var searchText = self.jqContainer.find(".grid-search-input").first().val();
+                self.applySearchValues(searchText, false);
+            });
+        });
+        this.jqContainer.find(".grid-search-clear").each(function () {
+            $(this).click(function () {
+                self.applySearchValues("", true);
+            });
+        });
+    };
+
+    /***
+    * Applies selected search value by redirecting to another url:
+    */
+    gridMvc.prototype.applySearchValues = function (searchText, skip) {      
+        var url = "";
+        var gridSearch = this.jqContainer.find(".grid-search").first();
+        if (gridSearch) {
+            url = gridSearch.attr("data-search-url") || "";
+        }
+
+        if (skip) {
+            url = (url.length && url[0] == '?') ? url.slice(1) : url;
+            var params = url.split('&');
+            for (var i = params.length - 1; i >= 0; i--) {
+                var param = params[i].split('=');
+                if (param[0] === 'grid-search') {
+                    params.splice(i, 1);
+                }
+            }
+            url = params.join('&');
+        }
+        else {
+            if (url.length > 0)
+                url += "&";
+            url += this.getSearchQueryData(searchText);
+        } 
+        window.location.search = url;
+    };
+
+    gridMvc.prototype.getSearchQueryData = function (searchText) {
+        var url = "";
+        if (searchText) {
+            url += "grid-search=" + encodeURIComponent(searchText);
+        }
+        return url;
     };
 
     return gridMvc;

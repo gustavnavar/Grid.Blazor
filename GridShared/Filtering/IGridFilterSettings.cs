@@ -1,6 +1,6 @@
 ﻿using GridShared.Columns;
 
-namespace GridBlazor.Filtering
+namespace GridShared.Filtering
 {
     public interface IGridFilterSettings
     {

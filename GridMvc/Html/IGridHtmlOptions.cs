@@ -53,6 +53,21 @@ namespace GridMvc.Html
         IGridHtmlOptions<T> Filterable(bool enable);
 
         /// <summary>
+        ///     Enable searching for text columns
+        /// </summary>
+        IGridHtmlOptions<T> Searchable();
+
+        /// <summary>
+        ///     Enable or disable searching for text columns
+        /// </summary>
+        IGridHtmlOptions<T> Searchable(bool enable);
+
+        /// <summary>
+        ///     Enable or disable searching for all columns
+        /// </summary>
+        IGridHtmlOptions<T> Searchable(bool enable, bool onlyTextColumns);
+
+        /// <summary>
         ///     Enable or disable client grid items selectable feature
         /// </summary>
         IGridHtmlOptions<T> Selectable(bool set);

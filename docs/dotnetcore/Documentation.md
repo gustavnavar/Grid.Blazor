@@ -11,6 +11,7 @@
 * [Paging](Paging.md)
 * [Custom columns](Custom_columns.md)
 * [Sorting](Sorting.md)
+* [Searching](Searching.md)
 * [Filtering](Filtering.md)
 	* [Creating custom filter widget](Creating_custom_filter_widget.md)
 	* [Setup initial column filtering](Setup_initial_column_filtering.md)

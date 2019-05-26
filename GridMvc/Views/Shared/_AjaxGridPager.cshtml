@@ -5,7 +5,7 @@
 {
     return;
 }
-<div class="grid-pager" data-currentpage="@Model.CurrentPage">
+<nav class="grid-pager" data-currentpage="@Model.CurrentPage">
     <ul class="pagination">
         @if (Model.CurrentPage > 1)
         {
@@ -48,4 +48,4 @@
             <li><a href="#" class="grid-page-link" data-page="@(Model.CurrentPage + 1)">»</a></li>
         }
     </ul>
-</div>
+</nav>

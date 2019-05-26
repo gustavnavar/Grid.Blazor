@@ -1,5 +1,6 @@
 ﻿using GridBlazor.Demo.Shared.Models;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Diagnostics;
 
 namespace GridComponent.Demo.Models
 {

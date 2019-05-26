@@ -6,6 +6,7 @@ using Moq;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using GridMvc.Searching;
 
 namespace GridMvc.Tests.Sorting
 {
@@ -196,6 +197,7 @@ namespace GridMvc.Tests.Sorting
             settingsMock.Setup(s => s.SortSettings.ColumnName).Returns(columnName);
             settingsMock.Setup(s => s.SortSettings.Direction).Returns(direction);
             settingsMock.Setup(s => s.FilterSettings).Returns(new QueryStringFilterSettings(_query));
+            settingsMock.Setup(s => s.SearchSettings).Returns(new QueryStringSearchSettings(_query));
             grid.Settings = settingsMock.Object;
 
             IEnumerable<TestModel> resultCollection = _grid.GetItemsToDisplay();

@@ -68,6 +68,17 @@
 
             self.loadPage();
         },
+        applySearchValues: function (searchText, skip) {  
+            var self = this;
+            if (skip) {
+                self.gridSearch = "";
+            }
+            else {
+                self.gridSearch = this.getSearchQueryData(searchText);
+            }
+
+            self.loadPage();
+        },
         ajaxify: function (options) {
             var self = this;
             if (this.options.currentPage) {
@@ -81,6 +92,7 @@
             self.token = options.token;
             self.gridSort = self.jqContainer.find("div.sorted a").attr('href');
             self.gridColumnFilters = "";
+            self.gridSearch = "";
             var $namedGrid = $('[data-gridname="' + self.jqContainer.data("gridname") + '"]');
             self.jqContainer = $namedGrid.length === 1 ? $namedGrid : self.jqContainer;
 
@@ -103,14 +115,19 @@
             }
 
             self.getGridParameters = function () {
-                return self.getGridUrl("", self.gridColumnFilters);
+                return self.getGridUrl("", self.gridColumnFilters, self.gridSearch);
             };
 
-            self.getGridUrl = function (griLoaddAction, search) {
+            self.getGridUrl = function (griLoaddAction, filters, search) {
                 var gridQuery = "?";
                 gridQuery = URI(gridQuery);
 
-                var myColFilters = URI.parseQuery(search);
+                var mySearch = URI.parseQuery(search);
+                if (mySearch['grid-search']) {
+                    gridQuery.addSearch("grid-search", mySearch["grid-search"]);
+                }
+
+                var myColFilters = URI.parseQuery(filters);
                 if (myColFilters['grid-filter']) {
                     gridQuery.addSearch("grid-filter", myColFilters["grid-filter"]);
                 }
@@ -167,6 +184,15 @@
                     e.preventDefault();
                     return self.openFilterPopup.call(this, self, self.filterMenuHtml());
                 });
+                self.jqContainer.on('click', '.grid-search-apply', function (e) {
+                    e.preventDefault();
+                    var searchText = self.jqContainer.find(".grid-search-input").first().val();
+                    return self.applySearchValues(searchText, false);
+                });
+                self.jqContainer.on('click', '.grid-search-clear', function (e) {
+                    e.preventDefault();
+                    return self.applySearchValues("", true);
+                });
             };
 
             self.setupPagerLinkEvents = function () {
@@ -180,7 +206,7 @@
 
             self.loadPage = function () {
                 var dfd = new $.Deferred();
-                var gridUrl = self.getGridUrl(self.pagedDataAction, self.gridColumnFilters);
+                var gridUrl = self.getGridUrl(self.pagedDataAction, self.gridColumnFilters, self.gridSearch);
 
                 $.ajax({
                     url: gridUrl,
@@ -213,11 +239,7 @@
                 var filters = self.jqContainer.find(".grid-filter");
                 var url = URI("").normalizeSearch().search();
 
-                if (url.length > 0)
-                    url += "&";
-
                 self.gridColumnFilters = "";
-                
 
                 if (this.options.multiplefilters) { //multiple filters enabled
                     for (var i = 0; i < filters.length; i++) {
@@ -239,9 +261,16 @@
                 self.gridColumnFilters = fullSearch;
             };
 
+            self.initSearch = function () {
+                self.gridSearch = null;
+                var search = self.jqContainer.find(".grid-search-input").first().val();
+                self.gridSearch = this.getSearchQueryData(search);
+            };
+
             self.setupGridHeaderEvents();
             self.setupPagerLinkEvents();
             self.initFilters();
+            self.initSearch();
         },
         onGridLoaded: function (func) {
             this.events.push({ name: "onGridLoaded", callback: func });

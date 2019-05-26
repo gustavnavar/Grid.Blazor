@@ -45,6 +45,10 @@ namespace GridMvc.Tests.Server
             _server.WithMultipleFilters();
             Assert.IsTrue(_server.Grid.RenderOptions.AllowMultipleFilters);
 
+            _server.Searchable();
+            Assert.IsTrue(_server.Grid.SearchingEnabled);
+            Assert.IsTrue(_server.Grid.SearchingOnlyTextColumns);
+
             _server.Named("test");
             Assert.AreEqual(_server.Grid.RenderOptions.GridName, "test");
 

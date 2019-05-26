@@ -43,7 +43,6 @@ namespace GridBlazor
             _dataService = null;
 
             Items = new List<T>();
-            ItemsCount = -1;
 
             Url = url;
             _query = query;
@@ -78,7 +77,6 @@ namespace GridBlazor
             _dataService = dataService;
 
             Items = new List<T>(); //response.Items;
-            ItemsCount = -1; // Items.Count();
 
             Url = null;
             _query = query;
@@ -100,10 +98,6 @@ namespace GridBlazor
 
             ApplyGridSettings();
 
-            //Pager = new GridPager(query, response.Pager.CurrentPage);
-            //((GridPager)Pager).PageSize = response.Pager.PageSize;
-            //((GridPager)Pager).ItemsCount = response.Pager.ItemsCount;
-
             Pager = new GridPager(query);
 
             ComponentOptions.RenderRowsOnly = renderOnlyRows;
@@ -113,7 +107,11 @@ namespace GridBlazor
         /// <summary>
         /// Total count of items in the grid
         /// </summary>
-        public int ItemsCount { get; set; } = -1;
+        public int ItemsCount { get { return _pager.ItemsCount; } }
+
+        public bool SearchingEnabled { get; set; }
+
+        public bool SearchingOnlyTextColumns { get; set; }
 
         /// <summary>
         ///     Items, displaying in the grid view
@@ -321,6 +319,20 @@ namespace GridBlazor
             ((GridPager)_pager).Query = _query;
         }
 
+        public void RemoveQueryParameter(string parameterName)
+        {
+            if (string.IsNullOrEmpty(parameterName))
+                throw new ArgumentException("parameterName");
+
+            if (_query.ContainsKey(parameterName))
+                _query.Remove(parameterName);
+
+            _settings = new QueryStringGridSettingsProvider(_query);
+            _columnsCollection.SortSettings = _settings.SortSettings;
+            _columnsCollection.UpdateColumnsSorting();
+            ((GridPager)_pager).Query = _query;
+        }
+
         public void AddFilterParameter(string columnName, string filterType, string filterValue)
         {
             var filters = _query.Get(QueryStringFilterSettings.DefaultTypeQueryParameter).ToArray();
@@ -383,22 +395,34 @@ namespace GridBlazor
 
         public async Task UpdateGrid()
         {
-            ItemsDTO<T> response;     
-            if (_dataService == null)
+            try
             {
-                string urlParameters = ((GridPager)_pager).GetLink();
-                HttpClient httpClient = new HttpClient();
-                response = await httpClient.GetJsonAsync<ItemsDTO<T>>(Url + urlParameters);
+                ItemsDTO<T> response;
+                if (_dataService == null)
+                {
+                    string urlParameters = ((GridPager)_pager).GetLink();
+                    HttpClient httpClient = new HttpClient();
+                    response = await httpClient.GetJsonAsync<ItemsDTO<T>>(Url + urlParameters);
+                }
+                else
+                {
+                    response = _dataService((QueryDictionary<StringValues>)_query);
+                }
+                if (response != null && response.Items != null && response.Pager != null)
+                {
+                    Items = response.Items;
+                    EnablePaging = response.Pager.EnablePaging;
+                    _pager = new GridPager(_query, response.Pager.CurrentPage);
+                    ((GridPager)_pager).PageSize = response.Pager.PageSize;
+                    ((GridPager)_pager).ItemsCount = response.Pager.ItemsCount;            
+                }
+                else
+                    Console.WriteLine("Response is null");
             }
-            else
+            catch (Exception e)
             {
-                response = _dataService((QueryDictionary<StringValues>)_query);
+                Console.WriteLine(e.Message);
             }
-
-            Items = response.Items;
-            _pager = new GridPager(_query, response.Pager.CurrentPage);
-            ((GridPager)_pager).PageSize = response.Pager.PageSize;
-            ((GridPager)_pager).ItemsCount = response.Pager.ItemsCount;
         }
     }
 }

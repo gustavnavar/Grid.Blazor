@@ -1,6 +1,7 @@
 ﻿using GridShared;
 using GridShared.Columns;
 using GridShared.Filtering;
+using GridShared.Searching;
 using GridShared.Sorting;
 using System;
 using System.Collections.Generic;
@@ -120,6 +121,8 @@ namespace GridBlazor.Columns
         public abstract IColumnFilter<T> Filter { get; }
         public abstract string FilterWidgetTypeName { get; }
         public object FilterWidgetData { get; protected set; }
+
+        public abstract IColumnSearch<T> Search { get; }
 
         #endregion
 

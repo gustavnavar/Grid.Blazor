@@ -1,14 +1,15 @@
-﻿using GridShared;
-using GridShared.Columns;
-using GridShared.DataAnnotations;
-using GridShared.Utility;
-using GridMvc.Columns;
+﻿using GridMvc.Columns;
 using GridMvc.DataAnnotations;
 using GridMvc.Filtering;
 using GridMvc.Html;
 using GridMvc.Pagination;
 using GridMvc.Resources;
+using GridMvc.Searching;
 using GridMvc.Sorting;
+using GridShared;
+using GridShared.Columns;
+using GridShared.DataAnnotations;
+using GridShared.Utility;
 using Microsoft.AspNetCore.Http;
 using System.Collections.Generic;
 using System.Linq;
@@ -24,6 +25,7 @@ namespace GridMvc
         private readonly IGridAnnotaionsProvider _annotaions;
         private readonly IColumnBuilder<T> _columnBuilder;
         private readonly GridColumnCollection<T> _columnsCollection;
+        private readonly SearchGridItemsProcessor<T> _currentSearchItemsProcessor;
         private readonly FilterGridItemsProcessor<T> _currentFilterItemsProcessor;
         private readonly SortGridItemsProcessor<T> _currentSortItemsProcessor;
 
@@ -70,13 +72,16 @@ namespace GridMvc
 
             //set up sort settings:
             _settings = new QueryStringGridSettingsProvider(_query);
+
             Sanitizer = new Sanitizer();
             EmptyGridText = Strings.DefaultGridEmptyText;
             Language = Strings.Lang;
 
             _currentSortItemsProcessor = new SortGridItemsProcessor<T>(this, _settings.SortSettings);
             _currentFilterItemsProcessor = new FilterGridItemsProcessor<T>(this, _settings.FilterSettings);
+            _currentSearchItemsProcessor = new SearchGridItemsProcessor<T>(this, _settings.SearchSettings);       
             AddItemsPreProcessor(_currentFilterItemsProcessor);
+            AddItemsPreProcessor(_currentSearchItemsProcessor);
             InsertItemsProcessor(0, _currentSortItemsProcessor);
 
             _annotaions = new GridAnnotaionsProvider();
@@ -98,6 +103,10 @@ namespace GridMvc
         {
             get { return _columnsCollection; }
         }
+
+        public bool SearchingEnabled { get; set; }
+
+        public bool SearchingOnlyTextColumns { get; set; }
 
         /// <summary>
         ///     Sets or get default value of sorting for all adding columns
@@ -130,6 +139,7 @@ namespace GridMvc
                 _settings = value;
                 _currentSortItemsProcessor.UpdateSettings(_settings.SortSettings);
                 _currentFilterItemsProcessor.UpdateSettings(_settings.FilterSettings);
+                _currentSearchItemsProcessor.UpdateSettings(_settings.SearchSettings);
             }
         }
 

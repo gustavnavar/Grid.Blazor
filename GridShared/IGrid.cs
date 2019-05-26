@@ -28,6 +28,16 @@ namespace GridShared
         bool EnablePaging { get; }
 
         /// <summary>
+        ///     Set or get default value of searching
+        /// </summary>
+        bool SearchingEnabled { get; set; }
+
+        /// <summary>
+        ///     Set or get value of searching for all columns or only text ones
+        /// </summary>
+        bool SearchingOnlyTextColumns { get; set; }
+
+        /// <summary>
         ///     Text in empty grid (no items for display)
         /// </summary>
         string EmptyGridText { get; }

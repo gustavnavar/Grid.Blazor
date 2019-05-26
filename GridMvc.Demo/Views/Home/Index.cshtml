@@ -40,10 +40,10 @@
             /* Adding not mapped column, that renders body, using inline Razor html helper */
             columns.Add().Encoded(false).Sanitized(false).SetWidth(30).Css("hidden-xs") //hide on phones
                 .RenderValueAs(o =>
-                    @<b>
-                        @Html.ActionLink("Edit", "Edit", new { id = o.OrderID }, new { @class = "modal_link" })
-                    </b>);
-            
+                        @<b>
+                            @Html.ActionLink("Edit", "Edit", new { id = o.OrderID }, new { @class = "modal_link" })
+                        </b>);
+
             /* Adding "OrderID" column: */
             columns.Add(o => o.OrderID).Titled("Number").SetWidth(100);
 
@@ -61,7 +61,7 @@
             /* Adding "Vip customer" column: */
             columns.Add(o => o.Customer.IsVip).Titled("Is Vip").SetWidth(70).Css("hidden-xs") //hide on phones
                 .RenderValueAs(o => o.Customer.IsVip ? "Yes" : "No");
-        }).SetRowCssClasses(item => item.Customer.IsVip ? "success" : string.Empty).WithPaging(10).SetLanguage(locale).Sortable().Filterable().WithMultipleFilters()
+        }).SetRowCssClasses(item => item.Customer.IsVip ? "success" : string.Empty).WithPaging(10).SetLanguage(locale).Sortable().Filterable().WithMultipleFilters().Searchable(true, false).WithGridItemsCount()
     </div>
 </div>
 <script>

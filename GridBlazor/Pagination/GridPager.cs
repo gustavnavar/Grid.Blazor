@@ -126,11 +126,6 @@ namespace GridBlazor.Pagination
         /// </summary>
         public int PageCount { get; protected set; }
 
-        public virtual void Initialize(int count)
-        {
-            ItemsCount = count; //take total items count from collection
-        }
-
         protected virtual void RecalculatePages()
         {
             if (ItemsCount == 0)

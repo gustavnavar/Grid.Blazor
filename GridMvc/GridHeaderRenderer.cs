@@ -9,7 +9,7 @@ using System.Text.Encodings.Web;
 
 namespace GridMvc
 {
-    public class GridHeaderRenderer : GridStyledRenderer, IGridColumnHeaderRenderer
+    public class GridHeaderRenderer : GridStyledRenderer, IGridColumnHeaderRenderer, IGridSearchHeaderRenderer
     {
         private const string ThClass = "grid-header";
 
@@ -40,6 +40,15 @@ namespace GridMvc
                 builder.WriteTo(sw, HtmlEncoder.Default);
                 return new HtmlString(sw.ToString());
             }
+        }
+
+        public IGridSearchHeaderRenderer SearchRender { get; set; }
+
+        public IHtmlContent Render()
+        {
+            if (SearchRender == null) return new HtmlString(string.Empty);
+
+            return SearchRender.Render();
         }
 
         protected virtual string RenderAdditionalContent(IGridColumn column)

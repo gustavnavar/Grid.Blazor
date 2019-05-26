@@ -1,6 +1,7 @@
 ﻿using GridShared;
 using GridShared.Columns;
 using GridShared.Filtering;
+using GridShared.Searching;
 using GridShared.Sorting;
 using GridShared.Utility;
 using System;
@@ -69,6 +70,11 @@ namespace GridMvc.Columns
         public override string FilterWidgetTypeName
         {
             get { return PropertiesHelper.GetUnderlyingType(typeof(TDataType)).FullName; }
+        }
+
+        public override IColumnSearch<T> Search
+        {
+            get { return null; }
         }
 
         //public override bool IsSorted { get; set; }

@@ -61,4 +61,4 @@ It also supports nullable types of any element of the list.
 
 You can also create your own filter widgets.
 
-[<- Sorting](Sorting.md) | [Creating custom filter widget ->](Creating_custom_filter_widget.md)
+[<- Searching](Searching.md) | [Creating custom filter widget ->](Creating_custom_filter_widget.md)

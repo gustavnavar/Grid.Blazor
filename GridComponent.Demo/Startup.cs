@@ -4,6 +4,7 @@ using GridMvc;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Diagnostics;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 
@@ -18,7 +19,11 @@ namespace GridComponent.Demo
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddDbContext<NorthwindDbContext>(options =>
-                options.UseSqlServer(ConnectionString));
+            {
+                options.UseSqlServer(ConnectionString);
+                options.ConfigureWarnings(warnings => warnings.Ignore(RelationalEventId.QueryClientEvaluationWarning));
+            });
+
 
             services.AddRazorPages();
             services.AddServerSideBlazor();
@@ -27,7 +32,7 @@ namespace GridComponent.Demo
             services.AddGridMvc();
 
             services.AddSingleton<WeatherForecastService>();
-            services.AddSingleton<OrderService>();
+            services.AddScoped<IOrderService, OrderService>();
             services.AddSingleton<CustomerService>();
         }
 

@@ -3,11 +3,6 @@
     public interface IGridPager
     {
         /// <summary>
-        ///     Method invokes before pager render
-        /// </summary>
-        void Initialize(int count);
-
-        /// <summary>
         ///     Max grid items, displaying on the page
         /// </summary>
         int PageSize { get; set; }

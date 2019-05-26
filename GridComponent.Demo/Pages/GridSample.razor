@@ -8,7 +8,7 @@
 @using GridComponent.Demo.Services
 @using Microsoft.Extensions.Primitives
 @using System.Globalization
-@inject OrderService orderService
+@inject IOrderService orderService
 
 <h1>Grid Sample</h1>
 
@@ -80,7 +80,9 @@ else
             .SetRowCssClasses(item => item.Customer.IsVip ? "success" : string.Empty)
             .Sortable()
             .Filterable()
-            .WithMultipleFilters();
+            .WithMultipleFilters()
+            .Searchable(true, false)
+            .WithGridItemsCount();
 
         //var client = new GridClient<Order>(q => orderService.GetOrdersGridRows(q), query, false,
         //    "ordersGrid", null, locale).AutoGenerateColumns();

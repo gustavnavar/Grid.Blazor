@@ -18,7 +18,7 @@ You can enable filtering for all columns of a grid using the **Filterable** meth
 
 * razor page
     ```c#
-        var client = new GridClient<Order>(url, query, false, "ordersGrid", Columns, locale)
+        var client = new GridClient<Order>(q => orderService.GetOrdersGridRows(columns, q), query, false, "ordersGrid", Columns, locale)
             .Filterable()
     ```
 
@@ -61,4 +61,4 @@ It also supports nullable types of any element of the list.
 
 You can also create your own filter widgets.
 
-[<- Sorting](Sorting.md) | [Creating custom filter widget ->](Creating_custom_filter_widget.md)
+[<- Searching](Searching.md) | [Creating custom filter widget ->](Creating_custom_filter_widget.md)

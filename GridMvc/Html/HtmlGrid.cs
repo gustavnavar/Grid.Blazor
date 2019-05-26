@@ -56,6 +56,16 @@ namespace GridMvc.Html
             get { return _source.EnablePaging; }
         }
 
+        bool IGrid.SearchingEnabled {
+            get { return _source.SearchingEnabled;  }
+            set { _source.SearchingEnabled = value; }
+        }
+
+        bool IGrid.SearchingOnlyTextColumns {
+            get { return _source.SearchingOnlyTextColumns; }
+            set { _source.SearchingOnlyTextColumns = value; }
+        }
+
         string IGrid.EmptyGridText
         {
             get { return _source.EmptyGridText; }

@@ -23,6 +23,7 @@ Method name | Description | Example
 ----------- | ----------- | -------
 AutoGenerateColumns | Generates columns for all properties of the model using data annotations | GridClient<Order>(...).AutoGenerateColumns();
 Sortable | Enable or disable sorting for all columns of the grid | GridClient<Order>(...).Sortable(true);
+Searchable | Enable or disable searching on the grid | GridClient<Order>(...).Searchable(true, true);
 Filterable | Enable or disable filtering for all columns of the grid | GridClient<Order>(...).Filterable(true);
 WithMultipleFilters | Allow grid to use multiple filters | GridClient<Order>(...).WithMultipleFilters();
 Selectable | Enable or disable the client grid items selectable feature | GridClient<Order>(...).Selectable(true);
@@ -47,6 +48,7 @@ Method name | Description | Example
 ----------- | ----------- | -------
 AutoGenerateColumns | Generates columns for all properties of the model using data annotations | GridServer<Order>(...).AutoGenerateColumns();
 Sortable | Enable or disable sorting for all columns of the grid | GridServer<Order>(...).Sortable(true);
+Searchable | Enable or disable searching on the grid | GridServer<Order>(...).Searchable(true, true);
 Filterable | Enable or disable filtering for all columns of the grid | GridServer<Order>(...).Filterable(true);
 WithMultipleFilters | Allow grid to use multiple filters | GridServer<Order>(...).WithMultipleFilters();
 WithGridItemsCount | Allows the grid to show items count | GridServer<Order>(...).WithGridItemsCount();

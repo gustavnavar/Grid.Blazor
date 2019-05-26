@@ -177,6 +177,17 @@ namespace GridBlazor.Resources
         }
 
         /// <summary>
+        /// Gets the resource string indexed by the Items key.
+        /// </summary>
+        public static string Items
+        {
+            get
+            {
+                return Strings.ResourceManager.GetString("Items", Strings.CultureInfo);
+            }
+        }
+
+        /// <summary>
         /// Gets the resource string indexed by the Lang key.
         /// </summary>
         public static string Lang
@@ -222,6 +233,17 @@ namespace GridBlazor.Resources
                 }
 
                 return Strings.resourceManager;
+            }
+        }
+
+        /// <summary>
+        /// Gets the resource string indexed by the SearchFor key.
+        /// </summary>
+        public static string SearchFor
+        {
+            get
+            {
+                return Strings.ResourceManager.GetString("SearchFor", Strings.CultureInfo);
             }
         }
 

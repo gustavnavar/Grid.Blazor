@@ -88,7 +88,7 @@ namespace GridBlazor
             _cssClass = ((GridStyled)Column).GetCssClassesString() + " " + ThClass;
 
             if (!string.IsNullOrWhiteSpace(Column.Width))
-                _cssStyles = string.Concat(_cssStyles, " width:", Column.Width, ";").Trim();;
+                _cssStyles = string.Concat(_cssStyles, " width:", Column.Width, ";").Trim();
 
             List<string> cssFilterClasses = new List<string>();
             cssFilterClasses.Add(FilterButtonCss);

@@ -123,7 +123,13 @@
   <data name="FilterButtonTooltipText" xml:space="preserve">
     <value>Fügen Sie auf dem Feld filtern</value>
   </data>
+  <data name="Items" xml:space="preserve">
+    <value>Artikel</value>
+  </data>
   <data name="Lang" xml:space="preserve">
     <value>de</value>
+  </data>
+  <data name="SearchFor" xml:space="preserve">
+    <value>Suchen ...</value>
   </data>
 </root>

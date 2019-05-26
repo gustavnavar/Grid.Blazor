@@ -4,10 +4,14 @@
     <TargetFramework>netstandard2.0</TargetFramework>
     <OutputType>Library</OutputType>
     <IsPackable>true</IsPackable>
-    <BlazorLinkOnBuild>false</BlazorLinkOnBuild>
+    <RestoreAdditionalProjectSources>
+      https://dotnet.myget.org/F/aspnetcore-dev/api/v3/index.json;
+      https://dotnet.myget.org/F/blazor-dev/api/v3/index.json;
+    </RestoreAdditionalProjectSources>
+    <AddRazorSupportForMvc>true</AddRazorSupportForMvc>
     <GenerateEmbeddedFilesManifest>True</GenerateEmbeddedFilesManifest>
     <EnableDefaultEmbeddedResourceItems>False</EnableDefaultEmbeddedResourceItems>
-    <Version>0.2.10</Version>
+    <Version>0.3.0</Version>
     <Title>GridBlazor</Title>
     <Description>Grid components for Blazor</Description>
     <Summary>Grid components for Blazor</Summary>
@@ -25,7 +29,7 @@
   </ItemGroup>
   
   <ItemGroup>
-    <PackageReference Include="Microsoft.AspNetCore.Components.Browser " Version="3.0.0-preview-19075-0444" />
+    <PackageReference Include="Microsoft.AspNetCore.Components.Browser" Version="3.0.0-preview5-19227-01" />
     <PackageReference Include="Microsoft.AspNetCore.Components.Build" Version="3.0.0-preview3-19153-02" />
     <PackageReference Include="Microsoft.AspNetCore.Html.Abstractions" Version="2.2.0" />
     <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="3.0.0-preview5.19227.9" />

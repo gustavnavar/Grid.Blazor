@@ -53,6 +53,21 @@ namespace GridBlazor
         IGridClient<T> Filterable(bool enable);
 
         /// <summary>
+        ///     Enable searching for text columns
+        /// </summary>
+        IGridClient<T> Searchable();
+
+        /// <summary>
+        ///     Enable or disable searching for text columns
+        /// </summary>
+        IGridClient<T> Searchable(bool enable);
+
+        /// <summary>
+        ///     Enable or disable searching for all columns
+        /// </summary>
+        IGridClient<T> Searchable(bool enable, bool onlyTextColumns);
+
+        /// <summary>
         ///     Enable or disable client grid items selectable feature
         /// </summary>
         IGridClient<T> Selectable(bool set);

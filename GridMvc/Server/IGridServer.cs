@@ -53,6 +53,21 @@ namespace GridMvc.Server
         IGridServer<T> Filterable(bool enable);
 
         /// <summary>
+        ///     Enable searching for text columns
+        /// </summary>
+        IGridServer<T> Searchable();
+
+        /// <summary>
+        ///     Enable or disable searching for text columns
+        /// </summary>
+        IGridServer<T> Searchable(bool enable);
+
+        /// <summary>
+        ///     Enable or disable searching for all columns
+        /// </summary>
+        IGridServer<T> Searchable(bool enable, bool onlyTextColumns);
+
+        /// <summary>
         ///     Enable or disable client grid items selectable feature
         /// </summary>
         IGridServer<T> Selectable(bool set);

@@ -41,12 +41,20 @@ namespace GridBlazor.Demo.Server.Controllers
         {
             var repository = new OrdersRepository(_context);
             IGridServer<Order> server = new GridServer<Order>(repository.GetAll(), Request.Query,
-                true, "ordersGrid", GridSample.Columns, 10)
+                true, "ordersGrid", GridSample.Columns)
+                    .WithPaging(10)
                     .Sortable()
                     .Filterable()
-                    .WithMultipleFilters();
+                    .WithMultipleFilters()
+                    .Searchable(true, false);
 
-            return Ok(server.ItemsToDisplay);
+            var items = server.ItemsToDisplay;
+
+            // uncomment the following lines are to test null responses
+            //items = null;
+            //items.Items = null;
+            //items.Pager = null;
+            return Ok(items);
         }
 
         [HttpGet("[action]")]

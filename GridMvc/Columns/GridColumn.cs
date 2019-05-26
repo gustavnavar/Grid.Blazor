@@ -1,9 +1,10 @@
-﻿using GridShared;
+﻿using GridMvc.Sorting;
+using GridShared;
 using GridShared.Columns;
 using GridShared.Filtering;
+using GridShared.Searching;
 using GridShared.Sorting;
 using GridShared.Utility;
-using GridMvc.Sorting;
 using System;
 using System.Collections.Generic;
 using System.Linq.Expressions;
@@ -24,6 +25,11 @@ namespace GridMvc.Columns
         ///     Filters and orderers collection for this columns
         /// </summary>
         private readonly IColumnFilter<T> _filter;
+
+        /// <summary>
+        ///     Searchers collection for this columns
+        /// </summary>
+        private readonly IColumnSearch<T> _search;
 
         /// <summary>
         ///     Parent grid of this column
@@ -64,6 +70,7 @@ namespace GridMvc.Columns
                 _constraint = expression.Compile();
                 _orderers.Insert(0, new OrderByGridOrderer<T, TDataType>(expression));
                 _filter = new DefaultColumnFilter<T, TDataType>(expression);
+                _search = new DefaultColumnSearch<T, TDataType>(expression);
                 //Generate unique column name:
                 Name = PropertiesHelper.BuildColumnNameFromMemberExpression(expr);
                 Title = Name; //Using the same name by default
@@ -105,6 +112,11 @@ namespace GridMvc.Columns
         public override string FilterWidgetTypeName
         {
             get { return _filterWidgetTypeName; }
+        }
+
+        public override IColumnSearch<T> Search
+        {
+            get { return _search; }
         }
 
         public override IGrid ParentGrid

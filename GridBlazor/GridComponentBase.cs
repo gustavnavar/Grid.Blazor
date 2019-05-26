@@ -1,4 +1,5 @@
 ﻿using GridBlazor.Pagination;
+using GridBlazor.Searching;
 using GridShared.Utility;
 using Microsoft.AspNetCore.Components;
 using System;
@@ -83,6 +84,18 @@ namespace GridBlazor
         public async Task RemoveFilter(string columnName)
         {
             ((CGrid<T>)Grid).RemoveFilterParameter(columnName);
+            await UpdateGrid();
+        }
+
+        public async Task AddSearch(string searchValue)
+        {
+            ((CGrid<T>)Grid).AddQueryParameter(QueryStringSearchSettings.DefaultSearchQueryParameter, searchValue);
+            await UpdateGrid();
+        }
+
+        public async Task RemoveSearch()
+        {
+            ((CGrid<T>)Grid).RemoveQueryParameter(QueryStringSearchSettings.DefaultSearchQueryParameter);
             await UpdateGrid();
         }
 

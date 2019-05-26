@@ -7,7 +7,7 @@
 You can enable sorting for all columns of a grid using the **Sortable** method for both **GridClient** and **GridServer** objects:
 * razor page
     ```c#
-        var client = new GridClient<Order>(url, query, false, "ordersGrid", Columns, locale)
+        var client = new GridClient<Order>(q => orderService.GetOrdersGridRows(columns, q), query, false, "ordersGrid", Columns, locale)
             .Sortable()
     ```
 
@@ -17,4 +17,4 @@ You can enable sorting for all columns of a grid using the **Sortable** method f
             .Sortable()
     ```
 
-[<- Custom columns](Custom_columns.md) | [Filtering ->](Filtering.md)
+[<- Custom columns](Custom_columns.md) | [Searching ->](Searching.md)

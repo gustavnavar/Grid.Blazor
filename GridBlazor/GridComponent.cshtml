@@ -50,6 +50,10 @@
     {
         <div class="grid-mvc" data-lang="@Grid.Language" data-gridname="@Grid.ComponentOptions.GridName" data-selectable="@Grid.ComponentOptions.Selectable.ToString().ToLower()" data-multiplefilters="@Grid.ComponentOptions.AllowMultipleFilters.ToString().ToLower()">
             <div class="grid-wrap">
+                @if (Grid.SearchingEnabled)
+                {
+                    <GridSearchComponent T="@T" GridComponent="@this" Grid="@Grid"></GridSearchComponent>
+                }
                 <table class="table table-striped grid-table">
                     <thead>
                         <tr>
@@ -100,10 +104,10 @@
                 <div class="grid-footer">
                     @if (Grid.ComponentOptions.ShowGridItemsCount)
                     {
-                        <div class="grid-itemscount">
+                        <span class="grid-itemscount">
                             <span class="grid-itemscount-label">@Grid.ComponentOptions.GridCountDisplayName:</span>
-                            <span class="grid-itemscount-caption">@Grid.ItemsCount</span>
-                        </div>
+                            <span class="grid-itemscount-caption"><b>@Grid.ItemsCount</b></span>
+                        </span>
                     }
                     @if (Grid.EnablePaging && Grid.Pager != null)
                     {

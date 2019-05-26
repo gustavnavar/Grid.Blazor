@@ -1,5 +1,6 @@
-﻿using GridShared.Sorting;
-using GridMvc.Filtering;
+﻿using GridShared.Filtering;
+using GridShared.Searching;
+using GridShared.Sorting;
 
 namespace GridMvc
 {
@@ -10,6 +11,7 @@ namespace GridMvc
     {
         IGridSortSettings SortSettings { get; }
         IGridFilterSettings FilterSettings { get; }
+        IGridSearchSettings SearchSettings { get; }
         IGridColumnHeaderRenderer GetHeaderRenderer();
     }
 }

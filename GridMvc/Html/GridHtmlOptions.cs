@@ -9,6 +9,7 @@ using Microsoft.AspNetCore.Mvc.ViewFeatures;
 using System;
 using System.IO;
 using System.Text.Encodings.Web;
+using GridMvc.Resources;
 
 namespace GridMvc.Html
 {
@@ -119,6 +120,23 @@ namespace GridMvc.Html
             return this;
         }
 
+        public IGridHtmlOptions<T> Searchable()
+        {
+            return Searchable(true, true);
+        }
+
+        public IGridHtmlOptions<T> Searchable(bool enable)
+        {
+            return Searchable(enable, true);
+        }
+
+        public IGridHtmlOptions<T> Searchable(bool enable, bool onlyTextColumns)
+        {
+            _source.SearchingEnabled = enable;
+            _source.SearchingOnlyTextColumns = onlyTextColumns;
+            return this;
+        }
+
         public IGridHtmlOptions<T> Selectable(bool set)
         {
             _source.RenderOptions.Selectable = set;
@@ -172,7 +190,7 @@ namespace GridMvc.Html
         public IGridHtmlOptions<T> WithGridItemsCount(string gridItemsName)
         {
             if (string.IsNullOrWhiteSpace(gridItemsName))
-                gridItemsName = "Items count";
+                gridItemsName = Strings.Items;
 
             _source.RenderOptions.GridCountDisplayName = gridItemsName;
             _source.RenderOptions.ShowGridItemsCount = true;

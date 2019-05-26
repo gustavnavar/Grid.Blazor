@@ -104,6 +104,23 @@ namespace GridMvc.Server
             return this;
         }
 
+        public IGridServer<T> Searchable()
+        {
+            return Searchable(true, true);
+        }
+
+        public IGridServer<T> Searchable(bool enable)
+        {
+            return Searchable(enable, true);
+        }
+
+        public IGridServer<T> Searchable(bool enable, bool onlyTextColumns)
+        {
+            _source.SearchingEnabled = enable;
+            _source.SearchingOnlyTextColumns = onlyTextColumns;
+            return this;
+        }
+
         public IGridServer<T> Selectable(bool set)
         {
             _source.RenderOptions.Selectable = set;
@@ -171,8 +188,8 @@ namespace GridMvc.Server
         {
             get {
                 var items = _source.GetItemsToDisplay();
-                return new ItemsDTO<T>(items, new PagerDTO(_source.Pager.PageSize,
-                    _source.Pager.CurrentPage, _source.Pager.ItemsCount));
+                return new ItemsDTO<T>(items, new PagerDTO(_source.EnablePaging, _source.Pager.PageSize,
+                    _source.Pager.CurrentPage, _source.ItemsCount));
             }
         }
 

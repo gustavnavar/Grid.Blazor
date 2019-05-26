@@ -69,6 +69,7 @@ Named | Setup the grid client name | Html.Grid(Model, viewEngine).Named("Product
 Columns | Setup the grid client name | Html.Grid(Model, viewEngine).Columns(...);
 AutoGenerateColumns | Generates columns for all properties of the model using data annotations | Html.Grid(Model, viewEngine).AutoGenerateColumns();
 Sortable | Enable or disable sorting for all columns of the grid | Html.Grid(Model, viewEngine).Sortable(true);
+Searchable | Enable or disable searching on the grid | Html.Grid(Model, viewEngine).Searchable(true, true);
 Filterable | Enable or disable filtering for all columns of the grid | Html.Grid(Model, viewEngine).Filterable(true);
 WithMultipleFilters | Allow grid to use multiple filters | Html.Grid(Model, viewEngine).WithMultipleFilters();
 Selectable | Enable or disable the client grid items selectable feature | Html.Grid(Model, viewEngine).Filterable(true);

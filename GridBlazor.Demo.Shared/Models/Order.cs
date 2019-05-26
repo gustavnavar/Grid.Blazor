@@ -23,7 +23,7 @@ namespace GridBlazor.Demo.Shared.Models
     }
 
     [GridMetadataTypeAttribute(typeof(OrderMetaData))]
-    [GridTable(PagingEnabled = true, PageSize = 20)]
+    //[GridTable(PagingEnabled = true, PageSize = 20)]
     public partial class Order
     {
         public Order()

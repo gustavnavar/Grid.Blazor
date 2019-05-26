@@ -168,4 +168,10 @@
   <data name="StartsWith" xml:space="preserve">
     <value>Inizia con</value>
   </data>
+  <data name="SearchFor" xml:space="preserve">
+    <value>Cercare ...</value>
+  </data>
+  <data name="Items" xml:space="preserve">
+    <value>Elementi</value>
+  </data>
 </root>
