@@ -27,7 +27,7 @@ namespace GridBlazor.Demo.Server
             services.AddDbContext<NorthwindDbContext>(options =>
             {
                 options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection"));
-                options.ConfigureWarnings(warnings => warnings.Ignore(RelationalEventId.QueryClientEvaluationWarning));
+                //options.ConfigureWarnings(warnings => warnings.Ignore(RelationalEventId.QueryClientEvaluationWarning));
             });
 
             services.AddMvc().AddNewtonsoftJson();

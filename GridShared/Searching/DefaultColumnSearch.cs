@@ -73,7 +73,7 @@ namespace GridShared.Searching
                 firstExpression = Expression.Call(firstExpression, toString);
             }
 
-            MethodInfo toUpper = typeof(string).GetMethod("ToUpperInvariant");
+            MethodInfo toUpper = typeof(string).GetMethod("ToUpper", new Type[] { });
             firstExpression = Expression.Call(firstExpression, toUpper);
             MethodInfo miContains = typeof(string).GetMethod("Contains", new[] { typeof(string) });
             Expression valueExpression = Expression.Constant(value);

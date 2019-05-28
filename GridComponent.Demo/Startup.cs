@@ -21,7 +21,7 @@ namespace GridComponent.Demo
             services.AddDbContext<NorthwindDbContext>(options =>
             {
                 options.UseSqlServer(ConnectionString);
-                options.ConfigureWarnings(warnings => warnings.Ignore(RelationalEventId.QueryClientEvaluationWarning));
+                //options.ConfigureWarnings(warnings => warnings.Ignore(RelationalEventId.QueryClientEvaluationWarning));
             });
 
 
