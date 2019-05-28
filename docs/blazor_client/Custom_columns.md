@@ -33,6 +33,13 @@ All customization for columns must be done on the client project, preferably in 
                 .RenderValueAs(o => o.Employees.FirstName + " " + o.Employees.LastName)
     ```
 
+* You can build **html** content in the column using the **RenderValueAs**, **Encoded** and **Sanitized** methods:
+
+    ```c#
+         c.Add(o => o.OrderID).Encoded(false).Sanitized(false)
+        	.RenderValueAs(o => $"<b><a class='modal_link' href='/Home/Edit/{o.OrderID}'>Edit</a></b>");
+    ```
+
 * As a general rule you can concatenate method calls of the **Column** object to configure each column. For example:
 
     ```c#
