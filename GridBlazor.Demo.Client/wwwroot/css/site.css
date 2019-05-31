@@ -137,3 +137,7 @@ table.table tr.success {
         display: block;
     }
 }
+
+.red {
+    color: red;
+}

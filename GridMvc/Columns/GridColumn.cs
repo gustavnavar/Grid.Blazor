@@ -1,5 +1,4 @@
-﻿using GridMvc.Sorting;
-using GridShared;
+﻿using GridShared;
 using GridShared.Columns;
 using GridShared.Filtering;
 using GridShared.Searching;
@@ -30,6 +29,11 @@ namespace GridMvc.Columns
         ///     Searchers collection for this columns
         /// </summary>
         private readonly IColumnSearch<T> _search;
+
+        /// <summary>
+        ///     Expression to class, used for this column
+        /// </summary>
+        private Func<T, string> _cellCssClassesContraint;
 
         /// <summary>
         ///     Parent grid of this column
@@ -145,6 +149,10 @@ namespace GridMvc.Columns
             {
                 IsSorted = true;
                 Direction = direction;
+
+                // added to enable initial sorting
+                _grid.Settings.SortSettings.ColumnName = Name;
+                _grid.Settings.SortSettings.Direction = direction;
             }
             return this;
         }
@@ -227,6 +235,22 @@ namespace GridMvc.Columns
             }
             FilterEnabled = enable;
             return this;
+        }
+
+        public override IGridColumn<T> SetCellCssClassesContraint(Func<T, string> contraint)
+        {
+            _cellCssClassesContraint = contraint;
+            return this;
+        }
+
+        public override string GetCellCssClasses(object item)
+        {
+            if (_cellCssClassesContraint == null)
+                return string.Empty;
+            var typed = (T)item;
+            if (typed == null)
+                throw new InvalidCastException(string.Format("The item must be of type '{0}'", typeof(T).FullName));
+            return _cellCssClassesContraint(typed);
         }
     }
 }

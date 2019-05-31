@@ -20,7 +20,7 @@
             <tr class="grid-row @Model.GetRowCssClasses(item)">
                 @foreach (IGridColumn column in Model.Columns)
                 {
-                    @(((ISGridColumn)column).CellRenderer.Render(column, column.GetCell(item)))
+                    @(((ISGridColumn)column).CellRenderer.Render(column, item))
                 }
             </tr>
         }
@@ -60,7 +60,7 @@ else
                             <tr class="grid-row @Model.GetRowCssClasses(item)">
                                 @foreach (IGridColumn column in Model.Columns)
                                 {
-                                    @(((ISGridColumn)column).CellRenderer.Render(column, column.GetCell(item)))
+                                    @(((ISGridColumn)column).CellRenderer.Render(column, item))
                                 }
                             </tr>
                         }

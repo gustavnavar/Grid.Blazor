@@ -153,5 +153,15 @@ namespace GridBlazor.Columns
         {
             return GetValue((T)instance);
         }
+
+        public override IGridColumn<T> SetCellCssClassesContraint(Func<T, string> contraint)
+        {
+            return this;
+        }
+
+        public override string GetCellCssClasses(object item)
+        {
+            return string.Empty;
+        }
     }
 }

@@ -30,6 +30,7 @@
         c.Add(o => o.OrderDate, "OrderCustomDate")
             .Titled("Date")
             .SortInitialDirection(GridSortDirection.Descending)
+            .SetCellCssClassesContraint(o => o.OrderDate.HasValue && o.OrderDate.Value >= DateTime.Parse("1997-01-01") ? "red" : "")
             .Format("{0:yyyy-MM-dd}")
             .SetWidth(110);
 

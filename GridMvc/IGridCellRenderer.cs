@@ -1,5 +1,4 @@
-﻿using GridShared;
-using GridShared.Columns;
+﻿using GridShared.Columns;
 using Microsoft.AspNetCore.Html;
 
 namespace GridMvc
@@ -13,8 +12,8 @@ namespace GridMvc
         ///     Render grid cell
         /// </summary>
         /// <param name="column">Column of the cell</param>
-        /// <param name="cell">The cell</param>
+        /// <param name="item">The row</param>
         /// <returns>HTML</returns>
-        IHtmlContent Render(IGridColumn column, IGridCell cell);
+        IHtmlContent Render(IGridColumn column, object item);
     }
 }

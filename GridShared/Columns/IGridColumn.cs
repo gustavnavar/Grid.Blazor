@@ -56,6 +56,11 @@ namespace GridShared.Columns
         IGridColumn<T> Css(string cssClasses);
 
         /// <summary>
+        ///     Setup the custom classes for cells
+        /// </summary>
+        IGridColumn<T> SetCellCssClassesContraint(Func<T, string> contraint);
+
+        /// <summary>
         ///     Setup the custom rendere for property
         /// </summary>
         IGridColumn<T> RenderValueAs(Func<T, string> constraint);
@@ -95,6 +100,11 @@ namespace GridShared.Columns
         /// </summary>
         /// <param name="instance">Instance of the item</param>
         IGridCell GetCell(object instance);
+
+        /// <summary>
+        ///     Get custom css classes mapped to the cell
+        /// </summary>
+        string GetCellCssClasses(object item);
     }
 
     /// <summary>

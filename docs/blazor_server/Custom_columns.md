@@ -40,6 +40,19 @@ All customization for columns must be done in the razor page:
         	.RenderValueAs(o => $"<b><a class='modal_link' href='/Home/Edit/{o.OrderID}'>Edit</a></b>");
     ```
 
+* You can apply css classes to all cells of a column:
+
+    ```c#
+        Columns.Add(o => o.Employees.LastName).Css("hidden-xs")
+    ```
+
+* You can apply css classes to selected cells of a column:
+
+    ```c#
+        Columns.Add(o => o.OrderDate)
+            .SetCellCssClassesContraint(o => o.OrderDate.HasValue && o.OrderDate.Value >= DateTime.Parse("1997-01-01") ? "red" : "")
+    ```
+
 * As a general rule you can concatenate method calls of the **Column** object to configure each column. For example:
 
     ```c#
@@ -110,6 +123,7 @@ Filterable | Enable or disable filtering feauture on the column | Columns.Add(x=
 SetFilterWidgetType | Setup filter widget type for rendering custom filtering user interface | Columns.Add(x=>x.Name).Filterable(true).SetFilterWidgetType("MyFilter");
 Format | Format column value | Columns.Add(o => o.OrderDate).Format("{0:dd/MM/yyyy}");
 Css | Apply css classes to the column | Columns.Add(x => x.Number).Css("hidden-xs");
+SetCellCssClassesContraint | Apply css classes to selected cells | Columns.Add(x => x.Number).SetCellCssClassesContraint(x => x.Number < 0 ? "red" : "black");
 
 
 [<- Paging](Paging.md) | [Sorting ->](Sorting.md)

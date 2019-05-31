@@ -17,11 +17,13 @@ namespace GridMvc.Tests.Renderers
     public class RendererTests
     {
         private IQueryCollection _query;
+        private TestRepository _repo;
 
         [TestInitialize]
         public void Init()
         {
             _query = (new DefaultHttpContext()).Request.Query;
+            _repo = new TestRepository();
         }
 
         [TestMethod]
@@ -45,10 +47,11 @@ namespace GridMvc.Tests.Renderers
         [TestMethod]
         public void TestGridCellRenderer()
         {
+            var testGrid = new TestGrid(_repo.GetAll());
             var renderer = new GridCellRenderer();
             var column = new GridColumn<TestModel, string>(c => c.Title, null);
-            var cell = new GridCell("test");
-            var htmlstring = renderer.Render(column, cell);
+            
+            var htmlstring = renderer.Render(column, testGrid.GridItems.First());
 
             Assert.IsNotNull(htmlstring);
             string html;
@@ -60,7 +63,7 @@ namespace GridMvc.Tests.Renderers
             Assert.IsTrue(!string.IsNullOrWhiteSpace(html));
 
             Assert.IsTrue(html.Contains("<td"));
-            Assert.IsTrue(html.Contains(">test</td>"));
+            Assert.IsTrue(html.Contains(">A1 test</td>"));
             Assert.IsTrue(html.Contains("class=\"grid-cell\""));
             Assert.IsTrue(html.Contains("data-name=\"Title\""));
         }

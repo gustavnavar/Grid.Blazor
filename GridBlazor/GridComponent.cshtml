@@ -29,7 +29,7 @@
                     <tr class="grid-row@(_selectedRow == i ? " grid-row-selected" : "") @Grid.GetRowCssClasses(item)" onclick="@(() => RowClicked(j, item))">
                         @foreach (IGridColumn column in Grid.Columns)
                         {
-                            <GridCellComponent T="@T" Column="@column" Cell="@column.GetCell(item)"></GridCellComponent>
+                            <GridCellComponent T="@T" Column="@column" Item="@item"></GridCellComponent>
                         }
                     </tr>
                     i++;
@@ -39,7 +39,7 @@
                     <tr class="grid-row @Grid.GetRowCssClasses(item)">
                         @foreach (IGridColumn column in Grid.Columns)
                         {
-                            <GridCellComponent T="@T" Column="@column" Cell="@column.GetCell(item)"></GridCellComponent>
+                            <GridCellComponent T="@T" Column="@column" Item="@item"></GridCellComponent>
                         }
                     </tr>
                 }
@@ -83,7 +83,7 @@
                                     <tr class="grid-row@(_selectedRow == i ? " grid-row-selected" : "") @Grid.GetRowCssClasses(item)" onclick="@(() => RowClicked(j, item))">
                                         @foreach (IGridColumn column in Grid.Columns)
                                         {
-                                            <GridCellComponent T="@T" Column="@column" Cell="@column.GetCell(item)"></GridCellComponent>
+                                            <GridCellComponent T="@T" Column="@column" Item="@item"></GridCellComponent>
                                         }
                                     </tr>
                                     i++;
@@ -93,7 +93,7 @@
                                     <tr class="grid-row @Grid.GetRowCssClasses(item)">
                                         @foreach (IGridColumn column in Grid.Columns)
                                         {
-                                            <GridCellComponent T="@T" Column="@column" Cell="@column.GetCell(item)"></GridCellComponent>
+                                            <GridCellComponent T="@T" Column="@column" Item="@item"></GridCellComponent>
                                         }
                                     </tr>
                                 }

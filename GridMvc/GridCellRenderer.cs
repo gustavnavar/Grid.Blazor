@@ -16,14 +16,18 @@ namespace GridMvc
             AddCssClass(TdClass);
         }
 
-        public IHtmlContent Render(IGridColumn column, IGridCell cell)
+        public IHtmlContent Render(IGridColumn column, object item)
         {
+            IGridCell cell = column.GetCell(item);
             string cssStyles = GetCssStylesString();
             string cssClass = GetCssClassesString();
+            string columnCssClasses = column.GetCellCssClasses(item);
 
             var builder = new TagBuilder("td");
             if (!string.IsNullOrWhiteSpace(cssClass))
                 builder.AddCssClass(cssClass);
+            if (!string.IsNullOrWhiteSpace(columnCssClasses))
+                builder.AddCssClass(columnCssClasses);
             if (!string.IsNullOrWhiteSpace(cssStyles))
                 builder.MergeAttribute("style", cssStyles);
             builder.MergeAttribute("data-name", column.Name);

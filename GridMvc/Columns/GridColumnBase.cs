@@ -67,8 +67,7 @@ namespace GridMvc.Columns
             if (cellStyledRender != null)
                 cellStyledRender.AddCssClass(cssClasses);
             return this;
-        }
-
+        }       
 
         public IGridColumn<T> RenderValueAs(Func<T, string> constraint)
         {
@@ -124,6 +123,8 @@ namespace GridMvc.Columns
         public abstract IGridColumn<T> SetFilterWidgetType(string typeName);
         public abstract IGridColumn<T> SetFilterWidgetType(string typeName, object widgetData);
 
+        public abstract IGridColumn<T> SetCellCssClassesContraint(Func<T, string> contraint);
+        public abstract string GetCellCssClasses(object item);
 
         public abstract IColumnFilter<T> Filter { get; }
         public abstract string FilterWidgetTypeName { get; }
