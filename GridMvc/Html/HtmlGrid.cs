@@ -1,5 +1,4 @@
 ﻿using GridShared;
-using GridMvc.Pagination;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.AspNetCore.Mvc.ViewEngines;
 using System.Collections.Generic;
@@ -9,20 +8,11 @@ namespace GridMvc.Html
     /// <summary>
     ///     Grid adapter for html helper
     /// </summary>
-    public class HtmlGrid<T> : GridHtmlOptions<T>, ISGrid
+    public class HtmlGrid<T> : GridHtmlOptions<T>, IGrid
     {
-        private readonly SGrid<T> _source;
-
-
         public HtmlGrid(SGrid<T> source, ViewContext viewContext, string viewName, IViewEngine viewEngine)
             : base(source, viewContext, viewName, viewEngine)
         {
-            _source = source;
-        }
-
-        public GridRenderOptions RenderOptions
-        {
-            get { return _source.RenderOptions; }
         }
 
         IGridColumnCollection IGrid.Columns
@@ -44,11 +34,6 @@ namespace GridMvc.Html
         int IGrid.DisplayingItemsCount
         {
             get { return _source.DisplayingItemsCount; }
-        }
-
-        IGridPager ISGrid.Pager
-        {
-            get { return _source.Pager; }
         }
 
         bool IGrid.EnablePaging
@@ -84,20 +69,6 @@ namespace GridMvc.Html
         string IGrid.GetRowCssClasses(object item)
         {
             return _source.GetRowCssClasses(item);
-        }
-
-        /// <summary>
-        ///     To show Grid Items count
-        ///     - Author by Jeeva
-        /// </summary>
-        int IGrid.ItemsCount
-        {
-            get { return _source.ItemsCount; }
-        }
-
-        IGridSettingsProvider ISGrid.Settings
-        {
-            get { return _source.Settings; }
         }
     }
 }

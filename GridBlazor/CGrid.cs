@@ -236,6 +236,26 @@ namespace GridBlazor
         public ISanitizer Sanitizer { get; set; }
 
         /// <summary>
+        ///     Sum enabled for some columns
+        /// </summary>
+        public bool IsSumEnabled { get { return Columns.Any(r => ((ICGridColumn)r).IsSumEnabled); } }
+
+        /// <summary>
+        ///     Average enabled for some columns
+        /// </summary>
+        public bool IsAverageEnabled { get { return Columns.Any(r => ((ICGridColumn)r).IsAverageEnabled); } }
+
+        /// <summary>
+        ///     Max enabled for some columns
+        /// </summary>
+        public bool IsMaxEnabled { get { return Columns.Any(r => ((ICGridColumn)r).IsMaxEnabled); } }
+
+        /// <summary>
+        ///     Min enabled for some columns
+        /// </summary>
+        public bool IsMinEnabled { get { return Columns.Any(r => ((ICGridColumn)r).IsMinEnabled); } }
+
+        /// <summary>
         ///     Manage pager properties
         /// </summary>
         public IGridPager Pager
@@ -414,7 +434,42 @@ namespace GridBlazor
                     EnablePaging = response.Pager.EnablePaging;
                     _pager = new GridPager(_query, response.Pager.CurrentPage);
                     ((GridPager)_pager).PageSize = response.Pager.PageSize;
-                    ((GridPager)_pager).ItemsCount = response.Pager.ItemsCount;            
+                    ((GridPager)_pager).ItemsCount = response.Pager.ItemsCount;
+
+                    if (response.Totals != null)
+                    {
+                        if (response.Totals.Sum != null)
+                            foreach (var keyValue in response.Totals.Sum)
+                            {
+                                var column = (GridColumnBase<T>)Columns.SingleOrDefault(r => r.Name != null && r.Name.Equals(keyValue.Key));
+                                if (column != null && column.IsSumEnabled)
+                                    column.SumString = keyValue.Value;
+                            }
+
+                        if (response.Totals.Average != null)
+                            foreach (var keyValue in response.Totals.Average)
+                            {
+                                var column = (GridColumnBase<T>)Columns.SingleOrDefault(r => r.Name != null && r.Name.Equals(keyValue.Key));
+                                if (column != null && column.IsAverageEnabled)
+                                    column.AverageString = keyValue.Value;
+                            }
+
+                        if (response.Totals.Max != null)
+                            foreach (var keyValue in response.Totals.Max)
+                            {
+                                var column = (GridColumnBase<T>)Columns.SingleOrDefault(r => r.Name != null && r.Name.Equals(keyValue.Key));
+                                if (column != null && column.IsMaxEnabled)
+                                    column.MaxString = keyValue.Value;
+                            }
+
+                        if (response.Totals.Min != null)
+                            foreach (var keyValue in response.Totals.Min)
+                            {
+                                var column = (GridColumnBase<T>)Columns.SingleOrDefault(r => r.Name != null && r.Name.Equals(keyValue.Key));
+                                if (column != null && column.IsMinEnabled)
+                                    column.MinString = keyValue.Value;
+                            }
+                    }          
                 }
                 else
                     Console.WriteLine("Response is null");

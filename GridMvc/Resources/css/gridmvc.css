@@ -24,6 +24,9 @@ table.grid-table { margin: 0; }
     table.grid-table tr.grid-row-selected td { background: #4888C2 !important; color: white; }
     table.grid-table tr.grid-row-selected a { color: white; }
 
+    /* Grid totals */
+    table.grid-table tr.grid-totals-row td { border-color: #aaa; background: #eee !important;}
+
 /* Grid filtering */
 input.grid-filter-input { padding: 4px; /*font-size: 13px;*/ }
 table.grid-table .grid-filter { position: relative; margin-top: 2px; float: right; width: 10px; height: 12px; }

@@ -132,4 +132,16 @@
   <data name="SearchFor" xml:space="preserve">
     <value>Suchen ...</value>
   </data>
+  <data name="Max" xml:space="preserve">
+    <value>Max</value>
+  </data>
+  <data name="Min" xml:space="preserve">
+    <value>Min</value>
+  </data>
+  <data name="Sum" xml:space="preserve">
+    <value>Summe</value>
+  </data>
+  <data name="Average" xml:space="preserve">
+    <value>Mittel</value>
+  </data>
 </root>

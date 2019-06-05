@@ -34,6 +34,17 @@ namespace GridMvc.Resources
         public static CultureInfo CultureInfo { get; set; }
 
         /// <summary>
+        /// Gets the resource string indexed by the Average key.
+        /// </summary>
+        public static string Average
+        {
+            get
+            {
+                return Strings.ResourceManager.GetString("Average", Strings.CultureInfo);
+            }
+        }
+
+        /// <summary>
         /// Gets the resource string indexed by the DefaultGridEmptyText key.
         /// </summary>
         public static string DefaultGridEmptyText
@@ -78,6 +89,28 @@ namespace GridMvc.Resources
         }
 
         /// <summary>
+        /// Gets the resource string indexed by the Max key.
+        /// </summary>
+        public static string Max
+        {
+            get
+            {
+                return Strings.ResourceManager.GetString("Max", Strings.CultureInfo);
+            }
+        }
+
+        /// <summary>
+        /// Gets the resource string indexed by the Min key.
+        /// </summary>
+        public static string Min
+        {
+            get
+            {
+                return Strings.ResourceManager.GetString("Min", Strings.CultureInfo);
+            }
+        }
+
+        /// <summary>
         /// Gets the cached ResourceManager instance used by this class.
         /// </summary>
         public static ResourceManager ResourceManager
@@ -101,6 +134,17 @@ namespace GridMvc.Resources
             get
             {
                 return Strings.ResourceManager.GetString("SearchFor", Strings.CultureInfo);
+            }
+        }
+
+        /// <summary>
+        /// Gets the resource string indexed by the Sum key.
+        /// </summary>
+        public static string Sum
+        {
+            get
+            {
+                return Strings.ResourceManager.GetString("Sum", Strings.CultureInfo);
             }
         }
     }

@@ -1,4 +1,5 @@
-﻿@using GridBlazor.Filtering
+﻿@using GridBlazor.Columns
+@using GridBlazor.Filtering
 @using GridBlazor.Pagination
 @using GridBlazor.Sorting
 @using GridShared.Columns
@@ -48,6 +49,7 @@
     }
     else
     {
+        var firstColumn = (ICGridColumn)Grid.Columns.FirstOrDefault();
         <div class="grid-mvc" data-lang="@Grid.Language" data-gridname="@Grid.ComponentOptions.GridName" data-selectable="@Grid.ComponentOptions.Selectable.ToString().ToLower()" data-multiplefilters="@Grid.ComponentOptions.AllowMultipleFilters.ToString().ToLower()">
             <div class="grid-wrap">
                 @if (Grid.SearchingEnabled)
@@ -57,6 +59,13 @@
                 <table class="table table-striped grid-table">
                     <thead>
                         <tr>
+                            @if ((Grid.IsSumEnabled || Grid.IsAverageEnabled || Grid.IsMaxEnabled || Grid.IsMinEnabled)
+                                && firstColumn != null 
+                                    && (firstColumn.IsSumEnabled || firstColumn.IsAverageEnabled
+                                        || firstColumn.IsMaxEnabled || firstColumn.IsMinEnabled))
+                            {
+                                <th class="grid-header" style="width:60px;"></th>
+                            }
                             @foreach (IGridColumn column in Grid.Columns)
                             {
                                 <GridHeaderComponent T="@T" GridComponent="@this" Column="@column" FilterSettings="@((QueryStringFilterSettings)Grid.Settings.FilterSettings)" SortingSettings="@((QueryStringSortSettings)Grid.Settings.SortSettings)" Filters="@_filterComponents"></GridHeaderComponent>
@@ -67,6 +76,13 @@
                         @if (!Grid.ItemsToDisplay.Any())
                         {
                             <tr class="grid-empty-text">
+                                @if ((Grid.IsSumEnabled || Grid.IsAverageEnabled || Grid.IsMaxEnabled || Grid.IsMinEnabled)
+                                   && firstColumn != null 
+                                    && (firstColumn.IsSumEnabled || firstColumn.IsAverageEnabled
+                                        || firstColumn.IsMaxEnabled || firstColumn.IsMinEnabled))
+                                {
+                                    <td class="grid-cell"></td>
+                                }
                                 <td colspan="@Grid.Columns.Count()">
                                     @Grid.EmptyGridText
                                 </td>
@@ -81,6 +97,13 @@
                                 {
                                     int j = i;
                                     <tr class="grid-row@(_selectedRow == i ? " grid-row-selected" : "") @Grid.GetRowCssClasses(item)" onclick="@(() => RowClicked(j, item))">
+                                        @if ((Grid.IsSumEnabled || Grid.IsAverageEnabled || Grid.IsMaxEnabled || Grid.IsMinEnabled)
+                                            && firstColumn != null 
+                                            && (firstColumn.IsSumEnabled || firstColumn.IsAverageEnabled
+                                                || firstColumn.IsMaxEnabled || firstColumn.IsMinEnabled))
+                                        {
+                                            <td class="grid-cell"></td>
+                                        }
                                         @foreach (IGridColumn column in Grid.Columns)
                                         {
                                             <GridCellComponent T="@T" Column="@column" Item="@item"></GridCellComponent>
@@ -98,6 +121,10 @@
                                     </tr>
                                 }
                             }
+                        }
+                        @if (Grid.IsSumEnabled || Grid.IsAverageEnabled || Grid.IsMaxEnabled || Grid.IsMinEnabled)
+                        {
+                            <GridTotalsComponent T="@T" Grid="@Grid"></GridTotalsComponent>
                         }
                     </tbody>
                 </table>

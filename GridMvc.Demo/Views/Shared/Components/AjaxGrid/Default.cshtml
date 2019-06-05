@@ -32,7 +32,8 @@
             .SortInitialDirection(GridSortDirection.Descending)
             .SetCellCssClassesContraint(o => o.OrderDate.HasValue && o.OrderDate.Value >= DateTime.Parse("1997-01-01") ? "red" : "")
             .Format("{0:yyyy-MM-dd}")
-            .SetWidth(110);
+            .SetWidth(110)
+            .Max(true).Min(true);
 
 /* Adding "CompanyName" column: */
         c.Add(o => o.Customer.CompanyName)
@@ -40,7 +41,15 @@
             .SetWidth(250)
             .ThenSortByDescending(o => o.OrderID)
             .SetInitialFilter(GridFilterType.StartsWith, "a")
-            .SetFilterWidgetType("CustomCompanyNameFilterWidget");
+            .SetFilterWidgetType("CustomCompanyNameFilterWidget")
+            .Max(true).Min(true);
+
+/* Adding "Freight" column: */
+        c.Add(o => o.Freight)
+            .Titled("Freight")
+            .SetWidth(100)
+            .Format("{0:F}")
+            .Sum(true).Average(true).Max(true).Min(true);
 
 /* Adding "Vip customer" column: */
         c.Add(o => o.Customer.IsVip)

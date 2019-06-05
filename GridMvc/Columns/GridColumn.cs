@@ -3,6 +3,7 @@ using GridShared.Columns;
 using GridShared.Filtering;
 using GridShared.Searching;
 using GridShared.Sorting;
+using GridShared.Totals;
 using GridShared.Utility;
 using System;
 using System.Collections.Generic;
@@ -29,6 +30,11 @@ namespace GridMvc.Columns
         ///     Searchers collection for this columns
         /// </summary>
         private readonly IColumnSearch<T> _search;
+
+        /// <summary>
+        ///     Totals collection for this columns
+        /// </summary>
+        private readonly IColumnTotals<T> _totals;
 
         /// <summary>
         ///     Expression to class, used for this column
@@ -75,6 +81,7 @@ namespace GridMvc.Columns
                 _orderers.Insert(0, new OrderByGridOrderer<T, TDataType>(expression));
                 _filter = new DefaultColumnFilter<T, TDataType>(expression);
                 _search = new DefaultColumnSearch<T, TDataType>(expression);
+                _totals = new DefaultColumnTotals<T, TDataType>(expression);
                 //Generate unique column name:
                 Name = PropertiesHelper.BuildColumnNameFromMemberExpression(expr);
                 Title = Name; //Using the same name by default
@@ -121,6 +128,11 @@ namespace GridMvc.Columns
         public override IColumnSearch<T> Search
         {
             get { return _search; }
+        }
+
+        public override IColumnTotals<T> Totals
+        {
+            get { return _totals; }
         }
 
         public override IGrid ParentGrid

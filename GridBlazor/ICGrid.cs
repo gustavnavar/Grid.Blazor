@@ -7,7 +7,7 @@ namespace GridBlazor
     /// <summary>
     ///     Grid.Mvc interface
     /// </summary>
-    public interface ICGrid<T> : IGrid
+    public interface ICGrid<T> : IGrid, IGridOptions
     {
         /// <summary>
         ///     Grid component options

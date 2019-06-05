@@ -1,6 +1,7 @@
 ﻿using GridShared.Filtering;
 using GridShared.Searching;
 using GridShared.Sorting;
+using GridShared.Totals;
 using System;
 using System.Collections.Generic;
 using System.Linq.Expressions;
@@ -69,6 +70,26 @@ namespace GridShared.Columns
         ///     Format column values with specified text pattern
         /// </summary>
         IGridColumn<T> Format(string pattern);
+
+        /// <summary>
+        ///     Calculate Sum of column values
+        /// </summary>
+        IGridColumn<T> Sum(bool enabled);
+
+        /// <summary>
+        ///     Calculate average of column values
+        /// </summary>
+        IGridColumn<T> Average(bool enabled);
+
+        /// <summary>
+        ///     Calculate max of column values
+        /// </summary>
+        IGridColumn<T> Max(bool enabled);
+
+        /// <summary>
+        ///     Calculate min of column values
+        /// </summary>
+        IGridColumn<T> Min(bool enabled);
     }
 
     public interface IColumn
@@ -213,8 +234,16 @@ namespace GridShared.Columns
     public interface ISearchableColumn<T>
     {
         /// <summary>
-        ///     Collection of current column filter
+        ///     Collection of current column search
         /// </summary>
         IColumnSearch<T> Search { get; }
+    }
+
+    public interface ITotalsColumn<T>
+    {
+        /// <summary>
+        ///     Collection of current column totals
+        /// </summary>
+        IColumnTotals<T> Totals { get; }
     }
 }

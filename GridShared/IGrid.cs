@@ -58,7 +58,5 @@ namespace GridShared
         string GetRowCssClasses(object item);
 
         //void OnPreRender(); //TODO backward Compatibility
-
-        int ItemsCount { get; }
     }
 }

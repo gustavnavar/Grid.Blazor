@@ -130,6 +130,18 @@
     <value>ru</value>
   </data>
   <data name="SearchFor" xml:space="preserve">
-    <value>искать</value>
+    <value>Искать</value>
+  </data>
+  <data name="Max" xml:space="preserve">
+    <value>Mакс(им)</value>
+  </data>
+  <data name="Min" xml:space="preserve">
+    <value>Mин</value>
+  </data>
+  <data name="Sum" xml:space="preserve">
+    <value>Cу́мма</value>
+  </data>
+  <data name="Average" xml:space="preserve">
+    <value>Cреднюю</value>
   </data>
 </root>

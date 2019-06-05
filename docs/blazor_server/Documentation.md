@@ -11,6 +11,7 @@
 * [GridBlazor configuration](GridBlazor_configuration.md)
 * [Paging](Paging.md)
 * [Custom columns](Custom_columns.md)
+* [Totals](Totals.md)
 * [Sorting](Sorting.md)
 * [Searching](Searching.md)
 * [Filtering](Filtering.md)

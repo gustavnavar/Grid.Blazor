@@ -13,6 +13,7 @@ namespace GridMvc
         //pre-processors process items before adds to main collection (like filtering)
         private readonly List<IGridItemsProcessor<T>> _preprocessors = new List<IGridItemsProcessor<T>>();
         private readonly List<IGridItemsProcessor<T>> _processors = new List<IGridItemsProcessor<T>>();
+        private IGridItemsProcessor<T> _totalsprocessor;
         protected IEnumerable<T> AfterItems; //items after processors
         protected IQueryable<T> BeforeItems; //items before processors
 
@@ -52,6 +53,9 @@ namespace GridMvc
                 }
                 // added to avoid 2nd EF opened task if counting later
                 _itemsCount = BeforeItems.Count();
+
+                // calculate totals
+                _totalsprocessor.Process(BeforeItems);
             }
         }
 
@@ -145,6 +149,10 @@ namespace GridMvc
                 _processors.Insert(position, processor);
         }
 
+        protected void SetTotalsProcessor(IGridItemsProcessor<T> processor)
+        {
+            _totalsprocessor = processor;
+        }
         #endregion
     }
 }

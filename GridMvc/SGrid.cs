@@ -6,9 +6,11 @@ using GridMvc.Pagination;
 using GridMvc.Resources;
 using GridMvc.Searching;
 using GridMvc.Sorting;
+using GridMvc.Totals;
 using GridShared;
 using GridShared.Columns;
 using GridShared.DataAnnotations;
+using GridShared.Totals;
 using GridShared.Utility;
 using Microsoft.AspNetCore.Http;
 using System.Collections.Generic;
@@ -28,6 +30,7 @@ namespace GridMvc
         private readonly SearchGridItemsProcessor<T> _currentSearchItemsProcessor;
         private readonly FilterGridItemsProcessor<T> _currentFilterItemsProcessor;
         private readonly SortGridItemsProcessor<T> _currentSortItemsProcessor;
+        private readonly TotalsGridItemsProcessor<T> _currentTotalsItemsProcessor;
 
         private IQueryCollection _query;
         private int _displayingItemsCount = -1; // count of displaying items (if using pagination)
@@ -79,10 +82,12 @@ namespace GridMvc
 
             _currentSortItemsProcessor = new SortGridItemsProcessor<T>(this, _settings.SortSettings);
             _currentFilterItemsProcessor = new FilterGridItemsProcessor<T>(this, _settings.FilterSettings);
-            _currentSearchItemsProcessor = new SearchGridItemsProcessor<T>(this, _settings.SearchSettings);       
+            _currentSearchItemsProcessor = new SearchGridItemsProcessor<T>(this, _settings.SearchSettings);
+            _currentTotalsItemsProcessor = new TotalsGridItemsProcessor<T>(this);
             AddItemsPreProcessor(_currentFilterItemsProcessor);
             AddItemsPreProcessor(_currentSearchItemsProcessor);
             InsertItemsProcessor(0, _currentSortItemsProcessor);
+            SetTotalsProcessor(_currentTotalsItemsProcessor);
 
             _annotaions = new GridAnnotaionsProvider();
 
@@ -211,6 +216,26 @@ namespace GridMvc
             get { return Columns; }
         }
 
+        /// <summary>
+        ///     Sum enabled for some columns
+        /// </summary>
+        public bool IsSumEnabled { get { return Columns.Any(r => ((ISGridColumn)r).IsSumEnabled); } }
+
+        /// <summary>
+        ///     Average enabled for some columns
+        /// </summary>
+        public bool IsAverageEnabled { get { return Columns.Any(r => ((ISGridColumn)r).IsAverageEnabled); } }
+
+        /// <summary>
+        ///     Max enabled for some columns
+        /// </summary>
+        public bool IsMaxEnabled { get { return Columns.Any(r => ((ISGridColumn)r).IsMaxEnabled); } }
+
+        /// <summary>
+        ///     Min enabled for some columns
+        /// </summary>
+        public bool IsMinEnabled { get { return Columns.Any(r => ((ISGridColumn)r).IsMinEnabled); } }
+
         #endregion
 
         /// <summary>
@@ -253,5 +278,38 @@ namespace GridMvc
             }
         }
 
+        public TotalsDTO GetTotals()
+        {
+            var totals = new TotalsDTO();
+            if (IsSumEnabled)
+                foreach(ISGridColumn column in Columns)
+                {
+                    if (column.IsSumEnabled)
+                        totals.Sum.Add(((GridColumnBase<T>)column).Name, column.SumString);
+                }
+            
+            if (IsAverageEnabled)
+                foreach(ISGridColumn column in Columns)
+                {
+                    if (column.IsAverageEnabled)
+                        totals.Average.Add(((GridColumnBase<T>)column).Name, column.AverageString);
+                }
+            
+            if (IsMaxEnabled)
+                foreach(ISGridColumn column in Columns)
+                {
+                    if (column.IsMaxEnabled)
+                        totals.Max.Add(((GridColumnBase<T>)column).Name, column.MaxString);
+                }
+            
+            if (IsMinEnabled)
+                foreach(ISGridColumn column in Columns)
+                {
+                    if (column.IsMinEnabled)
+                        totals.Min.Add(((GridColumnBase<T>)column).Name, column.MinString);
+                }
+            
+            return totals;
+        }
     }
 }

@@ -174,4 +174,16 @@
   <data name="Items" xml:space="preserve">
     <value>Articles</value>
   </data>
+  <data name="Max" xml:space="preserve">
+    <value>Max</value>
+  </data>
+  <data name="Min" xml:space="preserve">
+    <value>Min</value>
+  </data>
+  <data name="Sum" xml:space="preserve">
+    <value>Somme</value>
+  </data>
+  <data name="Average" xml:space="preserve">
+    <value>Moyen</value>
+  </data>
 </root>

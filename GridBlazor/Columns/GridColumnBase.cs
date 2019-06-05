@@ -10,7 +10,7 @@ using System.Linq.Expressions;
 
 namespace GridBlazor.Columns
 {
-    public abstract class GridColumnBase<T> : GridStyled, IGridColumn<T>
+    public abstract class GridColumnBase<T> : GridStyled, IGridColumn<T>, ICGridColumn
     {
         protected Func<T, string> ValueConstraint;
         protected string ValuePattern;
@@ -33,6 +33,23 @@ namespace GridBlazor.Columns
         public bool Hidden { get; protected set; }
 
         public GridSortDirection? Direction { get; set; }
+
+        public bool IsSumEnabled { get; internal set; } = false;
+
+        public bool IsAverageEnabled { get; internal set; } = false;
+
+        public bool IsMaxEnabled { get; internal set; } = false;
+
+        public bool IsMinEnabled { get; internal set; } = false;
+
+        public string SumString { get; set; }
+
+        public string AverageString { get; set; }
+
+        public string MaxString { get; set; }
+
+        public string MinString { get; set; }
+
 
         public IGridColumn<T> Titled(string title)
         {
@@ -73,6 +90,30 @@ namespace GridBlazor.Columns
         public IGridColumn<T> Format(string pattern)
         {
             ValuePattern = pattern;
+            return this;
+        }
+
+        public IGridColumn<T> Sum(bool enabled)
+        {
+            IsSumEnabled = enabled;
+            return this;
+        }
+
+        public IGridColumn<T> Average(bool enabled)
+        {
+            IsAverageEnabled = enabled;
+            return this;
+        }
+
+        public IGridColumn<T> Max(bool enabled)
+        {
+            IsMaxEnabled = enabled;
+            return this;
+        }
+
+        public IGridColumn<T> Min(bool enabled)
+        {
+            IsMinEnabled = enabled;
             return this;
         }
 

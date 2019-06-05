@@ -3,6 +3,7 @@ using GridShared.Columns;
 using GridShared.Filtering;
 using GridShared.Searching;
 using GridShared.Sorting;
+using GridShared.Totals;
 using GridShared.Utility;
 using System;
 using System.Collections.Generic;
@@ -73,6 +74,11 @@ namespace GridMvc.Columns
         }
 
         public override IColumnSearch<T> Search
+        {
+            get { return null; }
+        }
+
+        public override IColumnTotals<T> Totals
         {
             get { return null; }
         }

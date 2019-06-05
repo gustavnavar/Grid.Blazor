@@ -1,6 +1,7 @@
-﻿using GridShared;
+﻿using GridMvc.Pagination;
+using GridMvc.Resources;
+using GridShared;
 using GridShared.Columns;
-using GridMvc.Pagination;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -9,7 +10,6 @@ using Microsoft.AspNetCore.Mvc.ViewFeatures;
 using System;
 using System.IO;
 using System.Text.Encodings.Web;
-using GridMvc.Resources;
 
 namespace GridMvc.Html
 {
@@ -18,7 +18,7 @@ namespace GridMvc.Html
     /// </summary>
     public class GridHtmlOptions<T> : IGridHtmlOptions<T>
     {
-        private readonly SGrid<T> _source;
+        internal readonly SGrid<T> _source;
         private readonly ViewContext _viewContext;
 
         private IViewEngine _viewEngine;
@@ -195,6 +195,21 @@ namespace GridMvc.Html
             _source.RenderOptions.GridCountDisplayName = gridItemsName;
             _source.RenderOptions.ShowGridItemsCount = true;
             return this;
+        }
+
+        public GridRenderOptions RenderOptions
+        {
+            get { return _source.RenderOptions; }
+        }
+
+        public IGridPager Pager
+        {
+            get { return _source.Pager; }
+        }
+
+        public IGridSettingsProvider Settings
+        {
+            get { return _source.Settings; }
         }
 
         #endregion

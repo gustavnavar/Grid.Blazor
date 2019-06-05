@@ -40,6 +40,17 @@ namespace GridBlazor.Resources
         }
 
         /// <summary>
+        /// Gets the resource string indexed by the Average key.
+        /// </summary>
+        public static string Average
+        {
+            get
+            {
+                return Strings.ResourceManager.GetString("Average", Strings.CultureInfo);
+            }
+        }
+
+        /// <summary>
         /// Gets the resource string indexed by the BoolFalseLabel key.
         /// </summary>
         public static string BoolFalseLabel
@@ -221,6 +232,28 @@ namespace GridBlazor.Resources
         }
 
         /// <summary>
+        /// Gets the resource string indexed by the Max key.
+        /// </summary>
+        public static string Max
+        {
+            get
+            {
+                return Strings.ResourceManager.GetString("Max", Strings.CultureInfo);
+            }
+        }
+
+        /// <summary>
+        /// Gets the resource string indexed by the Min key.
+        /// </summary>
+        public static string Min
+        {
+            get
+            {
+                return Strings.ResourceManager.GetString("Min", Strings.CultureInfo);
+            }
+        }
+
+        /// <summary>
         /// Gets the cached ResourceManager instance used by this class.
         /// </summary>
         public static ResourceManager ResourceManager
@@ -255,6 +288,17 @@ namespace GridBlazor.Resources
             get
             {
                 return Strings.ResourceManager.GetString("StartsWith", Strings.CultureInfo);
+            }
+        }
+
+        /// <summary>
+        /// Gets the resource string indexed by the Sum key.
+        /// </summary>
+        public static string Sum
+        {
+            get
+            {
+                return Strings.ResourceManager.GetString("Sum", Strings.CultureInfo);
             }
         }
     }

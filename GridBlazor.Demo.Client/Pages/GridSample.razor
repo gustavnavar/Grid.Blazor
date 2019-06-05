@@ -56,12 +56,21 @@ else
         /* Adding "OrderDate" column: */
         c.Add(o => o.OrderDate, "OrderCustomDate").Titled("Date").SortInitialDirection(GridSortDirection.Descending)
         .SetCellCssClassesContraint(o => o.OrderDate.HasValue && o.OrderDate.Value >= DateTime.Parse("1997-01-01") ? "red" : "")
-        .Format("{0:yyyy-MM-dd}").SetWidth(110);
+        .Format("{0:yyyy-MM-dd}").SetWidth(120)
+        .Max(true).Min(true);
 
         /* Adding "CompanyName" column: */
         c.Add(o => o.Customer.CompanyName).Titled("Company").SetWidth(250).ThenSortByDescending(o => o.OrderID)
         .SetInitialFilter(GridFilterType.StartsWith, "a")
-        .SetFilterWidgetType(companyNameFilter);
+        .SetFilterWidgetType(companyNameFilter)
+        .Max(true).Min(true);
+
+        /* Adding "Freight" column: */
+        c.Add(o => o.Freight)
+        .Titled("Freight")
+        .Format("{0:F}")
+        .Sum(true).Average(true).Max(true).Min(true);
+
 
         /* Adding "Vip customer" column: */
         c.Add(o => o.Customer.IsVip).Titled("Is Vip").SetWidth(70).Css("hidden-xs") //hide on phones

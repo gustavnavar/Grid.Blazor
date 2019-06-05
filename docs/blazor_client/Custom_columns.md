@@ -126,4 +126,4 @@ Css | Apply css classes to the column | Columns.Add(x => x.Number).Css("hidden-x
 SetCellCssClassesContraint | Apply css classes to selected cells | Columns.Add(x => x.Number).SetCellCssClassesContraint(x => x.Number < 0 ? "red" : "black");
 
 
-[<- Paging](Paging.md) | [Sorting ->](Sorting.md)
+[<- Paging](Paging.md) | [Totals ->](Totals.md)

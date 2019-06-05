@@ -188,7 +188,8 @@ namespace GridMvc.Server
         {
             get {
                 var items = _source.GetItemsToDisplay();
-                return new ItemsDTO<T>(items, new PagerDTO(_source.EnablePaging, _source.Pager.PageSize,
+                var totals = _source.GetTotals();
+                return new ItemsDTO<T>(items, totals, new PagerDTO(_source.EnablePaging, _source.Pager.PageSize,
                     _source.Pager.CurrentPage, _source.ItemsCount));
             }
         }

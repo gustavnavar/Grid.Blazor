@@ -3,6 +3,7 @@ using GridShared.Columns;
 using GridShared.Filtering;
 using GridShared.Searching;
 using GridShared.Sorting;
+using GridShared.Totals;
 using System;
 using System.Collections.Generic;
 using System.Globalization;
@@ -10,10 +11,10 @@ using System.Linq.Expressions;
 
 namespace GridMvc.Columns
 {
-    public abstract class GridColumnBase<T> : IGridColumn<T>, ISGridColumn
+    public abstract class GridColumnBase<T> : IGridColumn<T>, ISGridColumn, ITotalsColumn<T>
     {
         protected Func<T, string> ValueConstraint;
-        protected string ValuePattern;
+        public string ValuePattern { get; protected set; }
 
         #region IGridColumn<T> Members
 
@@ -30,6 +31,30 @@ namespace GridMvc.Columns
 
         public bool IsSorted { get; set; }
         public GridSortDirection? Direction { get; set; }
+
+        public bool IsSumEnabled { get; internal set; } = false;
+
+        public bool IsAverageEnabled { get; internal set; } = false;
+
+        public bool IsMaxEnabled { get; internal set; } = false;
+
+        public bool IsMinEnabled { get; internal set; } = false;
+
+        public decimal SumValue { get; set; }
+
+        public decimal AverageValue { get; set; }
+
+        public object MaxValue { get; set; }
+
+        public object MinValue { get; set; }
+
+        public string SumString { get; set; }
+
+        public string AverageString { get; set; }
+
+        public string MaxString { get; set; }
+
+        public string MinString { get; set; }
 
         public IGridColumn<T> Titled(string title)
         {
@@ -78,6 +103,30 @@ namespace GridMvc.Columns
         public IGridColumn<T> Format(string pattern)
         {
             ValuePattern = pattern;
+            return this;
+        }
+
+        public IGridColumn<T> Sum(bool enabled)
+        {
+            IsSumEnabled = enabled;
+            return this;
+        }
+
+        public IGridColumn<T> Average(bool enabled)
+        {
+            IsAverageEnabled = enabled;
+            return this;
+        }
+
+        public IGridColumn<T> Max(bool enabled)
+        {
+            IsMaxEnabled = enabled;
+            return this;
+        }
+
+        public IGridColumn<T> Min(bool enabled)
+        {
+            IsMinEnabled = enabled;
             return this;
         }
 
@@ -131,6 +180,8 @@ namespace GridMvc.Columns
         public object FilterWidgetData { get; protected set; }
 
         public abstract IColumnSearch<T> Search { get; }
+
+        public abstract IColumnTotals<T> Totals { get; }
 
         #endregion
 

@@ -1,4 +1,5 @@
-﻿using GridShared;
+﻿using GridMvc.Pagination;
+using GridShared;
 using Microsoft.AspNetCore.Html;
 using System;
 
@@ -120,5 +121,14 @@ namespace GridMvc.Html
         /// </summary>
         /// <returns>Grid html layout</returns>
         string Render();
+
+        /// <summary>
+        ///     Pager for the grid
+        /// </summary>
+        IGridPager Pager { get; }
+
+        IGridSettingsProvider Settings { get; }
+
+        GridRenderOptions RenderOptions { get; }
     }
 }
