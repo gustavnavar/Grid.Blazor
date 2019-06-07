@@ -38,11 +38,19 @@ namespace GridMvc.Totals
                 }
 
                 bool isNullable = gridColumn.Totals.IsNullable();
-                Type type = gridColumn.Totals.GetPropertyType(isNullable);             
+                Type type = gridColumn.Totals.GetPropertyType(isNullable);
 
                 var names = gridColumn.Totals.GetNames();
+                if (names == null)
+                {
+                    gridColumn.IsSumEnabled = false;
+                    gridColumn.IsAverageEnabled = false;
+                    gridColumn.IsMaxEnabled = false;
+                    gridColumn.IsMinEnabled = false;
+                    continue;
+                }
                 var expression = gridColumn.Totals.GetExpression(names, parameter);
-                if(expression == null)
+                if (expression == null)
                 {
                     gridColumn.IsSumEnabled = false;
                     gridColumn.IsAverageEnabled = false;

@@ -23,15 +23,22 @@ namespace GridShared.Totals
 
         public IList<string> GetNames()
         {
-            List<string> names = new List<string>();
-            Expression expression = _expression.Body;
-            while (expression.NodeType != ExpressionType.Parameter)
+            try
             {
-                names.Add(((MemberExpression)expression).Member.Name);
-                expression = ((MemberExpression)expression).Expression;
+                List<string> names = new List<string>();
+                Expression expression = _expression.Body;
+                while (expression.NodeType != ExpressionType.Parameter)
+                {
+                    names.Add(((MemberExpression)expression).Member.Name);
+                    expression = ((MemberExpression)expression).Expression;
+                }
+                names.Reverse();
+                return names;
             }
-            names.Reverse();
-            return names;
+            catch(Exception)
+            {
+                return null;
+            }
         }
 
         public bool IsNullable()
