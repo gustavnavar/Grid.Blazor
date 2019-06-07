@@ -58,12 +58,12 @@ namespace GridMvc.Totals
                         var lambdaExpression = Expression.Lambda<Func<T,Nullable<Single>>>(expression, parameter);
                         if (gridColumn.IsSumEnabled)
                         {
-                            gridColumn.SumValue = (decimal)items.Sum(lambdaExpression);
+                            gridColumn.SumValue = (decimal?)items.Sum(lambdaExpression);
                             gridColumn.SumString = getString(gridColumn.SumValue, gridColumn.ValuePattern);
                         }
                         if (gridColumn.IsAverageEnabled)
                         {
-                            gridColumn.AverageValue = (decimal)items.Average(lambdaExpression);
+                            gridColumn.AverageValue = (decimal?)items.Average(lambdaExpression);
                             gridColumn.AverageString = getString(gridColumn.AverageValue, gridColumn.ValuePattern);
                         }
                         if (gridColumn.IsMaxEnabled)
@@ -82,12 +82,12 @@ namespace GridMvc.Totals
                         var lambdaExpression = Expression.Lambda<Func<T, Nullable<Int32>>>(expression, parameter);
                         if (gridColumn.IsSumEnabled)
                         {
-                            gridColumn.SumValue = (decimal)items.Sum(lambdaExpression);
+                            gridColumn.SumValue = (decimal?)items.Sum(lambdaExpression);
                             gridColumn.SumString = getString(gridColumn.SumValue, gridColumn.ValuePattern);
                         }
                         if (gridColumn.IsAverageEnabled)
                         {
-                            gridColumn.AverageValue = (decimal)items.Average(lambdaExpression);
+                            gridColumn.AverageValue = (decimal?)items.Average(lambdaExpression);
                             gridColumn.AverageString = getString(gridColumn.AverageValue, gridColumn.ValuePattern);
                         }
                         if (gridColumn.IsMaxEnabled)
@@ -106,12 +106,12 @@ namespace GridMvc.Totals
                         var lambdaExpression = Expression.Lambda<Func<T, Nullable<Int64>>>(expression, parameter);
                         if (gridColumn.IsSumEnabled)
                         {
-                            gridColumn.SumValue = (decimal)items.Sum(lambdaExpression);
+                            gridColumn.SumValue = (decimal?)items.Sum(lambdaExpression);
                             gridColumn.SumString = getString(gridColumn.SumValue, gridColumn.ValuePattern);
                         }
                         if (gridColumn.IsAverageEnabled)
                         {
-                            gridColumn.AverageValue = (decimal)items.Average(lambdaExpression);
+                            gridColumn.AverageValue = (decimal?)items.Average(lambdaExpression);
                             gridColumn.AverageString = getString(gridColumn.AverageValue, gridColumn.ValuePattern);
                         }
                         if (gridColumn.IsMaxEnabled)
@@ -130,12 +130,12 @@ namespace GridMvc.Totals
                         var lambdaExpression = Expression.Lambda<Func<T, Nullable<Double>>>(expression, parameter);
                         if (gridColumn.IsSumEnabled)
                         {
-                            gridColumn.SumValue = (decimal)items.Sum(lambdaExpression);
+                            gridColumn.SumValue = (decimal?)items.Sum(lambdaExpression);
                             gridColumn.SumString = getString(gridColumn.SumValue, gridColumn.ValuePattern);
                         }
                         if (gridColumn.IsAverageEnabled)
                         {
-                            gridColumn.AverageValue = (decimal)items.Average(lambdaExpression);
+                            gridColumn.AverageValue = (decimal?)items.Average(lambdaExpression);
                             gridColumn.AverageString = getString(gridColumn.AverageValue, gridColumn.ValuePattern);
                         }
                         if (gridColumn.IsMaxEnabled)
@@ -154,12 +154,12 @@ namespace GridMvc.Totals
                         var lambdaExpression = Expression.Lambda<Func<T, Nullable<Decimal>>>(expression, parameter);
                         if (gridColumn.IsSumEnabled)
                         {
-                            gridColumn.SumValue = (decimal)items.Sum(lambdaExpression);
+                            gridColumn.SumValue = (decimal?)items.Sum(lambdaExpression);
                             gridColumn.SumString = getString(gridColumn.SumValue, gridColumn.ValuePattern);
                         }
                         if (gridColumn.IsAverageEnabled)
                         {
-                            gridColumn.AverageValue = (decimal)items.Average(lambdaExpression);
+                            gridColumn.AverageValue = (decimal?)items.Average(lambdaExpression);
                             gridColumn.AverageString = getString(gridColumn.AverageValue, gridColumn.ValuePattern);
                         }
                         if (gridColumn.IsMaxEnabled)
@@ -222,12 +222,12 @@ namespace GridMvc.Totals
                         var lambdaExpression = Expression.Lambda<Func<T, Single>>(expression, parameter);
                         if (gridColumn.IsSumEnabled)
                         {
-                            gridColumn.SumValue = (decimal)items.Sum(lambdaExpression);
+                            gridColumn.SumValue = (decimal?)items.Sum(lambdaExpression);
                             gridColumn.SumString = getString(gridColumn.SumValue, gridColumn.ValuePattern);
                         }
                         if (gridColumn.IsAverageEnabled)
                         {
-                            gridColumn.AverageValue = (decimal)items.Average(lambdaExpression);
+                            gridColumn.AverageValue = (decimal?)items.Average(lambdaExpression);
                             gridColumn.AverageString = getString(gridColumn.AverageValue, gridColumn.ValuePattern);
                         }
                         if (gridColumn.IsMaxEnabled)
@@ -246,12 +246,12 @@ namespace GridMvc.Totals
                         var lambdaExpression = Expression.Lambda<Func<T, Int32>>(expression, parameter);
                         if (gridColumn.IsSumEnabled)
                         {
-                            gridColumn.SumValue = (decimal)items.Sum(lambdaExpression);
+                            gridColumn.SumValue = (decimal?)items.Sum(lambdaExpression);
                             gridColumn.SumString = getString(gridColumn.SumValue, gridColumn.ValuePattern);
                         }
                         if (gridColumn.IsAverageEnabled)
                         {
-                            gridColumn.AverageValue = (decimal)items.Average(lambdaExpression);
+                            gridColumn.AverageValue = (decimal?)items.Average(lambdaExpression);
                             gridColumn.AverageString = getString(gridColumn.AverageValue, gridColumn.ValuePattern);
                         }
                         if (gridColumn.IsMaxEnabled)
@@ -270,12 +270,12 @@ namespace GridMvc.Totals
                         var lambdaExpression = Expression.Lambda<Func<T, Int64>>(expression, parameter);
                         if (gridColumn.IsSumEnabled)
                         {
-                            gridColumn.SumValue = (decimal)items.Sum(lambdaExpression);
+                            gridColumn.SumValue = (decimal?)items.Sum(lambdaExpression);
                             gridColumn.SumString = getString(gridColumn.SumValue, gridColumn.ValuePattern);
                         }
                         if (gridColumn.IsAverageEnabled)
                         {
-                            gridColumn.AverageValue = (decimal)items.Average(lambdaExpression);
+                            gridColumn.AverageValue = (decimal?)items.Average(lambdaExpression);
                             gridColumn.AverageString = getString(gridColumn.AverageValue, gridColumn.ValuePattern);
                         }
                         if (gridColumn.IsMaxEnabled)
@@ -294,12 +294,12 @@ namespace GridMvc.Totals
                         var lambdaExpression = Expression.Lambda<Func<T, Double>>(expression, parameter);
                         if (gridColumn.IsSumEnabled)
                         {
-                            gridColumn.SumValue = (decimal)items.Sum(lambdaExpression);
+                            gridColumn.SumValue = (decimal?)items.Sum(lambdaExpression);
                             gridColumn.SumString = getString(gridColumn.SumValue, gridColumn.ValuePattern);
                         }
                         if (gridColumn.IsAverageEnabled)
                         {
-                            gridColumn.AverageValue = (decimal)items.Average(lambdaExpression);
+                            gridColumn.AverageValue = (decimal?)items.Average(lambdaExpression);
                             gridColumn.AverageString = getString(gridColumn.AverageValue, gridColumn.ValuePattern);
                         }
                         if (gridColumn.IsMaxEnabled)
@@ -313,17 +313,17 @@ namespace GridMvc.Totals
                             gridColumn.MinString = getString(gridColumn.MinValue, gridColumn.ValuePattern);
                         }
                     }
-                    else if (type == typeof(Double))
+                    else if (type == typeof(Decimal))
                     {
-                        var lambdaExpression = Expression.Lambda<Func<T, Double>>(expression, parameter);
+                        var lambdaExpression = Expression.Lambda<Func<T, Decimal>>(expression, parameter);
                         if (gridColumn.IsSumEnabled)
                         {
-                            gridColumn.SumValue = (decimal)items.Sum(lambdaExpression);
+                            gridColumn.SumValue = (decimal?)items.Sum(lambdaExpression);
                             gridColumn.SumString = getString(gridColumn.SumValue, gridColumn.ValuePattern);
                         }
                         if (gridColumn.IsAverageEnabled)
                         {
-                            gridColumn.AverageValue = (decimal)items.Average(lambdaExpression);
+                            gridColumn.AverageValue = (decimal?)items.Average(lambdaExpression);
                             gridColumn.AverageString = getString(gridColumn.AverageValue, gridColumn.ValuePattern);
                         }
                         if (gridColumn.IsMaxEnabled)
@@ -388,6 +388,8 @@ namespace GridMvc.Totals
 
         private string getString(object value, string valuePattern)
         {
+            if (value == null)
+                return null;
             try
             {
                 if (!string.IsNullOrEmpty(valuePattern))

@@ -40,9 +40,9 @@ namespace GridMvc.Columns
 
         public bool IsMinEnabled { get; internal set; } = false;
 
-        public decimal SumValue { get; set; }
+        public decimal? SumValue { get; set; }
 
-        public decimal AverageValue { get; set; }
+        public decimal? AverageValue { get; set; }
 
         public object MaxValue { get; set; }
 

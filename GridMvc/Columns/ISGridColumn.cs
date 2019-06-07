@@ -7,13 +7,13 @@
 
         bool IsSumEnabled { get; }
 
-        decimal SumValue { get; set; }
+        decimal? SumValue { get; set; }
 
         string SumString { get; set; }
 
         bool IsAverageEnabled { get; }
 
-        decimal AverageValue { get; set; }
+        decimal? AverageValue { get; set; }
 
         string AverageString { get; set; }
 
