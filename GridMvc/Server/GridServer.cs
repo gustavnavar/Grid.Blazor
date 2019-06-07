@@ -18,18 +18,17 @@ namespace GridMvc.Server
         private readonly SGrid<T> _source;
 
         public GridServer(IEnumerable<T> items, IQueryCollection query, bool renderOnlyRows, 
-            string viewName, Action<IGridColumnCollection<T>> columns = null, int? pageSize = null, string language = "")
+            string viewName, Action<IGridColumnCollection<T>> columns = null, int? pageSize = null, 
+            string language = "", string pagerViewName = GridPager.DefaultPagerViewName)
         {
-            _source = new SGrid<T>(items, query, renderOnlyRows);
-            GridViewName = viewName;
+            _source = new SGrid<T>(items, query, renderOnlyRows, pagerViewName);
+            _source.RenderOptions.GridName = viewName;
             columns?.Invoke(_source.Columns);
             if (!string.IsNullOrWhiteSpace(language))
                 _source.Language = language;
             if(pageSize.HasValue)
                 WithPaging(pageSize.Value);
         }
-
-        public string GridViewName { get; set; }
 
         #region IGridHtmlOptions<T> Members
 
