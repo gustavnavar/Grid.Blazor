@@ -159,13 +159,13 @@ namespace GridBlazor
         public async Task AddFilter(string filterType, string filterValue)
         {
             _isVisible = !_isVisible;
-            await GridComponent.AddFilter(Column.Name, filterType, filterValue);
+            await GridComponent.AddFilter(Column, filterType, filterValue);
         }
 
         public async Task RemoveFilter()
         {
             _isVisible = !_isVisible;
-            await GridComponent.RemoveFilter(Column.Name);
+            await GridComponent.RemoveFilter(Column);
         }
     }
 }

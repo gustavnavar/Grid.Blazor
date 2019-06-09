@@ -6,6 +6,7 @@ using GridBlazor.Resources;
 using GridShared;
 using GridShared.Columns;
 using GridShared.DataAnnotations;
+using GridShared.Filtering;
 using GridShared.Utility;
 using Microsoft.AspNetCore.Components;
 using Microsoft.Extensions.Primitives;
@@ -353,25 +354,25 @@ namespace GridBlazor
             ((GridPager)_pager).Query = _query;
         }
 
-        public void AddFilterParameter(string columnName, string filterType, string filterValue)
+        public void AddFilterParameter(IGridColumn column, string filterType, string filterValue)
         {
             var filters = _query.Get(QueryStringFilterSettings.DefaultTypeQueryParameter).ToArray();
             if (filters == null)
                 _query.Add(QueryStringFilterSettings.DefaultTypeQueryParameter,
-                    columnName + QueryStringFilterSettings.FilterDataDelimeter +
+                    column.Name + QueryStringFilterSettings.FilterDataDelimeter +
                     filterType + QueryStringFilterSettings.FilterDataDelimeter +
                     filterValue);
             else
             {
-                var newFilters = filters.Where(r => !r.ToLower().StartsWith(columnName.ToLower()
+                var newFilters = filters.Where(r => !r.ToLower().StartsWith(column.Name.ToLower()
                     + QueryStringFilterSettings.FilterDataDelimeter)).ToList();
-                newFilters.Add(columnName + QueryStringFilterSettings.FilterDataDelimeter +
+                newFilters.Add(column.Name + QueryStringFilterSettings.FilterDataDelimeter +
                     filterType + QueryStringFilterSettings.FilterDataDelimeter + filterValue);
                 _query[QueryStringFilterSettings.DefaultTypeQueryParameter] =
                     new StringValues(newFilters.ToArray());
             }
 
-            AddClearInitFilters(columnName);
+            AddClearInitFilters(column);
 
             _settings = new QueryStringGridSettingsProvider(_query);
             _columnsCollection.SortSettings = _settings.SortSettings;
@@ -379,33 +380,54 @@ namespace GridBlazor
             ((GridPager)_pager).Query = _query;
         }
 
-        private void AddClearInitFilters(string columnName)
+        private void AddClearInitFilters(IGridColumn column)
         {
-            if (_query.ContainsKey(QueryStringFilterSettings.DefaultClearInitFilterQueryParameter))
+            if (ComponentOptions.AllowMultipleFilters)
             {
-                StringValues clearInitFilters = _query[QueryStringFilterSettings.DefaultClearInitFilterQueryParameter];
-                if (!clearInitFilters.Contains(columnName))
+                if (column.InitialFilterSettings != ColumnFilterValue.Null)
                 {
-                    clearInitFilters = StringValues.Concat(clearInitFilters, columnName);
-                    _query[QueryStringFilterSettings.DefaultClearInitFilterQueryParameter] = clearInitFilters;
+                    if (_query.ContainsKey(QueryStringFilterSettings.DefaultClearInitFilterQueryParameter))
+                    {
+                        StringValues clearInitFilters = _query[QueryStringFilterSettings.DefaultClearInitFilterQueryParameter];
+                        if (!clearInitFilters.Contains(column.Name))
+                        {
+                            clearInitFilters = StringValues.Concat(clearInitFilters, column.Name);
+                            _query[QueryStringFilterSettings.DefaultClearInitFilterQueryParameter] = clearInitFilters;
+                        }
+                    }
+                    else
+                        _query.Add(QueryStringFilterSettings.DefaultClearInitFilterQueryParameter, column.Name);
                 }
             }
             else
-                _query.Add(QueryStringFilterSettings.DefaultClearInitFilterQueryParameter, columnName);
+            {
+                StringValues clearInitFilters = new StringValues();
+
+                var columnsToAdd = Columns.Where(r => r.InitialFilterSettings != ColumnFilterValue.Null); 
+                foreach (var columnToAdd in columnsToAdd)
+                {
+                    clearInitFilters = StringValues.Concat(clearInitFilters, columnToAdd.Name);
+                }
+
+                if (_query.ContainsKey(QueryStringFilterSettings.DefaultClearInitFilterQueryParameter))
+                    _query[QueryStringFilterSettings.DefaultClearInitFilterQueryParameter] = clearInitFilters;
+                else
+                    _query.Add(QueryStringFilterSettings.DefaultClearInitFilterQueryParameter, clearInitFilters);
+            }       
         }
 
-        public void RemoveFilterParameter(string columnName)
+        public void RemoveFilterParameter(IGridColumn column)
         {
             var filters = _query.Get(QueryStringFilterSettings.DefaultTypeQueryParameter).ToArray();
             if (filters != null)
             {
-                var newFilters = filters.Where(r => !r.ToLower().StartsWith(columnName.ToLower()
+                var newFilters = filters.Where(r => !r.ToLower().StartsWith(column.Name.ToLower()
                     + QueryStringFilterSettings.FilterDataDelimeter));
                 _query[QueryStringFilterSettings.DefaultTypeQueryParameter] =
                     new StringValues(newFilters.ToArray());
             }
 
-            AddClearInitFilters(columnName); 
+            AddClearInitFilters(column); 
 
             _settings = new QueryStringGridSettingsProvider(_query);
             _columnsCollection.SortSettings = _settings.SortSettings;

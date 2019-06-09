@@ -44,6 +44,16 @@
                         continue;
                     }
                 }
+                if (self.initialFilters.includes(columnName) && !self.clearInitialFilters.includes(columnName)) {
+                    self.clearInitialFilters.push(columnName);
+                }
+            }
+            else {
+                for (var j = 0; j < self.initialFilters.length; j++) {
+                    if (!self.clearInitialFilters.includes(self.initialFilters[j])) {
+                        self.clearInitialFilters.push(self.initialFilters[j]);
+                    }
+                }
             }
 
             if (self.gridColumnFilters.length > 0) {
@@ -60,10 +70,6 @@
             }
             else {
                 self.currentPage = 1;
-            }
-
-            if (!self.clearInitFilters.includes(columnName)) {
-                self.clearInitFilters.push(columnName);
             }
 
             self.loadPage();
@@ -105,13 +111,21 @@
                 self.orginalSort = self.gridSort;
             }
 
-            var clearInitFiltersString = self.jqContainer.find(".grid-filter").attr("data-clearinitfilter");
-            self.clearInitFilters = null;
-            if (clearInitFiltersString) {
-                self.clearInitFilters = clearInitFiltersString.split(',');
+            var initialFiltersString = self.jqContainer.attr("data-initfilters");
+            self.initialFilters = null;
+            if (initialFiltersString) {
+                self.initialFilters = initialFiltersString.split(',');
             }
             else {
-                self.clearInitFilters = new Array();
+                self.initialFilters = new Array();
+            }
+            var clearInitialFiltersString = self.jqContainer.find(".grid-filter").attr("data-clearinitfilter");
+            self.clearInitialFilters = null;
+            if (clearInitialFiltersString) {
+                self.clearInitialFilters = clearInitialFiltersString.split(',');
+            }
+            else {
+                self.clearInitialFilters = new Array();
             }
 
             self.getGridParameters = function () {
@@ -119,8 +133,7 @@
             };
 
             self.getGridUrl = function (griLoaddAction, filters, search) {
-                var gridQuery = "?";
-                gridQuery = URI(gridQuery);
+                var gridQuery = URI(griLoaddAction);
 
                 var mySearch = URI.parseQuery(search);
                 if (mySearch['grid-search']) {
@@ -138,16 +151,15 @@
                     gridQuery.addSearch("grid-dir", mySort["grid-dir"]);
                 }
 
-                if (self.clearInitFilters) {
-                    for (var i = 0; i < self.clearInitFilters.length; i++) {
-                        gridQuery.addSearch("grid-clearinitfilter", self.clearInitFilters[i]);
+                if (self.clearInitialFilters) {
+                    for (var i = 0; i < self.clearInitialFilters.length; i++) {
+                        gridQuery.addSearch("grid-clearinitfilter", self.clearInitialFilters[i]);
                     }
                 }
 
-                var gridUrl = URI(griLoaddAction).addQuery(gridQuery.search().replace("?", ""));
-                gridUrl = URI(gridUrl).removeQuery("grid-page");
-                gridUrl = gridUrl.addQuery("grid-page", self.currentPage);
-                gridUrl = URI.decode(gridUrl);
+                gridQuery.removeQuery("grid-page");
+                gridQuery.addQuery("grid-page", self.currentPage);
+                var gridUrl = URI.decode(gridQuery);
                 return gridUrl;
             };
 

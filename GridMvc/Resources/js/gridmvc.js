@@ -283,6 +283,27 @@ GridMvc = (function ($) {
     */
     gridMvc.prototype.applyFilterValues = function (initialUrl, columnName, values, skip) {
         var filters = this.jqContainer.find(".grid-filter");
+
+        var initialFiltersString = this.jqContainer.attr("data-initfilters");
+        var initialFilters;
+        if (initialFiltersString) {
+            initialFilters = initialFiltersString.split(',');
+        }
+        else {
+            initialFilters = new Array();
+        }
+        var clearInitialFiltersString = this.jqContainer.find(".grid-filter").attr("data-clearinitfilter");
+        var clearInitialFilters;
+        if (clearInitialFiltersString) {
+            clearInitialFilters = clearInitialFiltersString.split(',');
+        }
+        else {
+            clearInitialFilters = new Array();
+        }
+        if (initialFilters.includes(columnName) && !clearInitialFilters.includes(columnName)) {
+            clearInitialFilters.push(columnName);
+        }
+
         if (initialUrl.length > 0)
             initialUrl += "&";
 
@@ -302,23 +323,18 @@ GridMvc = (function ($) {
                     continue;
                 }
             }
-        }
 
-        var clearInitFiltersString = this.jqContainer.find(".grid-filter").attr("data-clearinitfilter");
-        var clearInitFilters;
-        if (clearInitFiltersString) {
-            clearInitFilters = clearInitFiltersString.split(',');
+            for (var j = 0; j < clearInitialFilters.length; j++) {
+                if (url.length > 0) url += "&";
+                url += "grid-clearinitfilter=" + clearInitialFilters[j];
+            }
         }
         else {
-            clearInitFilters = new Array();
-        }
-        if (!clearInitFilters.includes(columnName)) {
-            clearInitFilters.push(columnName);
-        }
-        for (var j = 0; j < clearInitFilters.length; j++) {
-            if (url.length > 0) url += "&";
-            url += "grid-clearinitfilter=" + clearInitFilters[j];
-        }
+            for (var k = 0; k < initialFilters.length; k++) {
+                if (url.length > 0) url += "&";
+                url += "grid-clearinitfilter=" + initialFilters[k];
+            }
+        }  
 
         window.location.search = initialUrl + url;
     };

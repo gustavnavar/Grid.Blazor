@@ -1,7 +1,18 @@
 ﻿@using GridShared.Columns
+@using GridShared.Filtering
 @using GridMvc
 @using GridMvc.Columns
 @model GridMvc.ISGrid
+
+@{
+    var columns = Model.Columns.Where(r => r.InitialFilterSettings != ColumnFilterValue.Null).Select(r => r.Name);
+    string initialFilters = "";
+    if (columns != null)
+    {
+        initialFilters = string.Join(",", columns);
+    }
+}
+
 @if (Model == null) { return; }
 @if (Model.RenderOptions.RenderRowsOnly)
 {
@@ -29,7 +40,7 @@
 else
 {
     var firstColumn = (ISGridColumn)Model.Columns.FirstOrDefault();
-    <div class="grid-mvc" data-lang="@Model.Language" data-gridname="@Model.RenderOptions.GridName" data-selectable="@Model.RenderOptions.Selectable.ToString().ToLower()" data-multiplefilters="@Model.RenderOptions.AllowMultipleFilters.ToString().ToLower()">
+    <div class="grid-mvc" data-lang="@Model.Language" data-gridname="@Model.RenderOptions.GridName" data-selectable="@Model.RenderOptions.Selectable.ToString().ToLower()" data-multiplefilters="@Model.RenderOptions.AllowMultipleFilters.ToString().ToLower()" data-initfilters="@initialFilters">
         <div class="grid-wrap">
             @if (Model.SearchingEnabled)
             {
@@ -40,9 +51,9 @@ else
                 <thead>
                     <tr>
                         @if ((Model.IsSumEnabled || Model.IsAverageEnabled || Model.IsMaxEnabled || Model.IsMinEnabled)
-                            && firstColumn != null 
-                            && (firstColumn.IsSumEnabled || firstColumn.IsAverageEnabled
-                                || firstColumn.IsMaxEnabled || firstColumn.IsMinEnabled))
+                           && firstColumn != null
+                           && (firstColumn.IsSumEnabled || firstColumn.IsAverageEnabled
+                               || firstColumn.IsMaxEnabled || firstColumn.IsMinEnabled))
                         {
                             <th class="grid-header" style="width:60px;"></th>
                         }
@@ -57,9 +68,9 @@ else
                     {
                         <tr class="grid-empty-text">
                             @if ((Model.IsSumEnabled || Model.IsAverageEnabled || Model.IsMaxEnabled || Model.IsMinEnabled)
-                                && firstColumn != null 
-                                && (firstColumn.IsSumEnabled || firstColumn.IsAverageEnabled
-                                    || firstColumn.IsMaxEnabled || firstColumn.IsMinEnabled))
+                               && firstColumn != null
+                               && (firstColumn.IsSumEnabled || firstColumn.IsAverageEnabled
+                                   || firstColumn.IsMaxEnabled || firstColumn.IsMinEnabled))
                             {
                                 <td class="grid-cell"></td>
                             }
@@ -74,9 +85,9 @@ else
                         {
                             <tr class="grid-row @Model.GetRowCssClasses(item)">
                                 @if ((Model.IsSumEnabled || Model.IsAverageEnabled || Model.IsMaxEnabled || Model.IsMinEnabled)
-                                    && firstColumn != null 
-                                    && (firstColumn.IsSumEnabled || firstColumn.IsAverageEnabled
-                                        || firstColumn.IsMaxEnabled || firstColumn.IsMinEnabled))
+                                   && firstColumn != null
+                                   && (firstColumn.IsSumEnabled || firstColumn.IsAverageEnabled
+                                       || firstColumn.IsMaxEnabled || firstColumn.IsMinEnabled))
                                 {
                                     <td class="grid-cell"></td>
                                 }
@@ -92,7 +103,7 @@ else
                         @await Html.PartialAsync("_Totals", Model)
                     }
                 </tbody>
-            </table>                   
+            </table>
             <div class="grid-footer">
                 @if (Model.RenderOptions.ShowGridItemsCount)
                 {

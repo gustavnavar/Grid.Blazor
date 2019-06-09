@@ -1,4 +1,5 @@
 ﻿using GridShared;
+using GridShared.Columns;
 using GridShared.Filtering;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
@@ -217,7 +218,8 @@ namespace GridBlazor.Tests.Filtering
                 c.Add(x => x.Created, "someid").Filterable(true);
             };
             var grid = new TestGrid((q) => _repo.GetAllService(columns, q, false, true), true, columns, Thread.CurrentThread.CurrentCulture);
-            if (!ValidateFiltering(grid, settings, x => x.Created < filterValue))
+            if (!ValidateFiltering(grid, grid.Columns.GetByName("someid"), settings, 
+                x => x.Created < filterValue))
             {
                 Assert.Fail("Filtering works incorrect");
             }
@@ -271,16 +273,16 @@ namespace GridBlazor.Tests.Filtering
                 c.Add(column, settings.ColumnName).Filterable(true);
             };
             var grid = new TestGrid((q) => _repo.GetAllService(columns, q, false, true), true, columns, Thread.CurrentThread.CurrentCulture);
-            if (!ValidateFiltering(grid, settings, filterContraint))
+            if (!ValidateFiltering(grid, grid.Columns.GetByName(settings.ColumnName), settings, filterContraint))
             {
                 Assert.Fail("Filtering works incorrect");
             }
         }
 
-        private bool ValidateFiltering(TestGrid grid, ColumnFilterValue value,
+        private bool ValidateFiltering(TestGrid grid, IGridColumn column, ColumnFilterValue value,
                                                         Func<TestModel, bool> filterExpression)
         {
-            grid.AddFilterParameter(value.ColumnName, value.FilterType.ToString("d"), value.FilterValue);
+            grid.AddFilterParameter(column, value.FilterType.ToString("d"), value.FilterValue);
             grid.UpdateGrid().Wait();
 
             IEnumerable<TestModel> resultCollection = grid.GetItemsToDisplay();
