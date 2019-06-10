@@ -1,5 +1,4 @@
 ﻿using GridMvc.Html;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.AspNetCore.Mvc.ViewEngines;
@@ -20,11 +19,9 @@ namespace GridMvc.Tests.Html
         [TestInitialize]
         public void Init()
         {
-            HttpContext context = new DefaultHttpContext();
             _grid = new TestGrid(Enumerable.Empty<TestModel>());
-            var viewContextMock = new Mock<ViewContext>();
-            var viewEngine = new MyViewEngine();
-            _opt = new GridHtmlOptions<TestModel>(_grid, viewContextMock.Object, "_Grid", viewEngine);
+            var htmlHelper = new Mock<IHtmlHelper>();
+            _opt = new GridHtmlOptions<TestModel>(htmlHelper.Object, _grid, "_Grid");
         }
 
         [TestMethod]
