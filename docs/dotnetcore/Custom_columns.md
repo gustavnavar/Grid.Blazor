@@ -110,7 +110,7 @@ This feature of **GridMvc** component provides functionality to automatically cr
 To auto generate columns you must call the **AutoGenerateColumns** method of **SGrid<T>** class or the **Grid** html helper. After that **GridMvc** will add columns for each public property:
 
 ```c#
-    @Html.Grid(Model, viewEngine).AutoGenerateColumns()
+    @Html.Grid(Model).AutoGenerateColumns()
 ```
 If you want to exclude some properties from auto generation or customize any property, you have to use Data annotations (please see [Data annotations](Data_annotations.md))
 

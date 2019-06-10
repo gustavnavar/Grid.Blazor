@@ -28,7 +28,7 @@ The guiding principle is to have unique names for all colummns in all the grids 
 To resolve paging configuration conflicts you must use "unique" custom pager name for each grid (**grid1-page** in the following example):
 
 ```c#
-    @Html.Grid(Model, viewEngine).Columns(columns =>
+    @Html.Grid(Model).Columns(columns =>
     {
         ...
     })..WithPaging(15, 6,"grid1-page")
@@ -40,7 +40,7 @@ If you want to use the [client side object model API](Client_side_object_model.m
 
 
 ```c#
-    @Html.Grid(Model, viewEngine).Named("myGrid").Columns(columns =>
+    @Html.Grid(Model).Named("myGrid").Columns(columns =>
     {
         ...
     })

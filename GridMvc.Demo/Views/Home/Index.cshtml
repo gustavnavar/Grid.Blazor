@@ -1,4 +1,6 @@
 ﻿@using GridMvc
+@addTagHelper *, GridMvc
+
 @model ISGrid
 
 @{
@@ -27,7 +29,7 @@
         </div>
     </div>
     <div class="col-md-9 col-md-pull-3">
-        <partial name="_Grid" model="@Model" />
+        <grid model="@Model" />
     </div>
 </div>
 <script>

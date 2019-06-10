@@ -11,7 +11,7 @@ using System.Linq.Expressions;
 
 namespace GridMvc.Columns
 {
-    public abstract class GridColumnBase<T> : IGridColumn<T>, ISGridColumn, ITotalsColumn<T>
+    public abstract class GridColumnBase<T> : GridStyledColumn, IGridColumn<T>, ISGridColumn, ITotalsColumn<T>
     {
         protected Func<T, string> ValueConstraint;
         public string ValuePattern { get; protected set; }
@@ -31,6 +31,8 @@ namespace GridMvc.Columns
 
         public bool IsSorted { get; set; }
         public GridSortDirection? Direction { get; set; }
+
+        public bool Hidden { get; protected set; }
 
         public bool IsSumEnabled { get; internal set; } = false;
 
@@ -82,15 +84,7 @@ namespace GridMvc.Columns
 
         public IGridColumn<T> Css(string cssClasses)
         {
-            if (string.IsNullOrEmpty(cssClasses))
-                return this;
-            var headerStyledRender = HeaderRenderer as GridStyledRenderer;
-            if (headerStyledRender != null)
-                headerStyledRender.AddCssClass(cssClasses);
-
-            var cellStyledRender = CellRenderer as GridStyledRenderer;
-            if (cellStyledRender != null)
-                cellStyledRender.AddCssClass(cssClasses);
+            AddCssClass(cssClasses);
             return this;
         }       
 
@@ -158,8 +152,6 @@ namespace GridMvc.Columns
         public abstract IEnumerable<IColumnOrderer<T>> Orderers { get; }
         public abstract IGridColumn<T> Sortable(bool sort);
 
-        public abstract IGridColumnHeaderRenderer HeaderRenderer { get; set; }
-        public abstract IGridCellRenderer CellRenderer { get; set; }
         public abstract IGridCell GetCell(object instance);
 
         public abstract bool FilterEnabled { get; set; }

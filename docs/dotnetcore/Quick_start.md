@@ -15,48 +15,10 @@ Imagine that you have to retrieve a collection of model items in your project. F
 ```
 
 There are 2 methods to configure a grid on ASP.NET Core MVC:
+* Create a **GridServer** object on the controller and using a **TagHelper**
 * Create a **Grid** on the view using an **HtmlHelper**
-* Create a **GridServer** object on the controller
 
-## Method 1: Create a **Grid** on the view using an **HtmlHelper**
-
-The steps to build a Grid page are:
-
-1. Your controller action has to retrieve a strongly-typed collection of the model items and pass it to the view. An example of this type of controller action is: 
-
-    ```c#
-        public class HomeController : Controller
-        {
-            private readonly FooRepository fooRepository;
-
-            public HomeController(FooRepository fooRepository)
-            {
-                this.fooRepository = fooRepository;
-            }
-
-            public ActionResult Index()
-            {
-                IQueryable<Foo> items = fooRepository.GetAll();
-                return View(items);
-            }
-        }
-    ```
-
-2. And finally the view has to render your items collection. You can use an html helper extension. A simple view can be as follows:
-
-    ```razor
-        @using GridMvc
-        @model IEnumerable<Foo>
-        @inject ICompositeViewEngine viewEngine
-
-        @Html.Grid(Model, viewEngine).Columns(columns =>
-        {
-            columns.Add(foo => foo.Title);
-            columns.Add(foo => foo.Description);
-        })
-    ```
-
-## Method 2: Create a **GridServer** object on the controller
+## Method 1: Create a **GridServer** object on the controller and using a **TagHelper**
 
 The steps are:
 
@@ -87,44 +49,52 @@ The steps are:
         }
     ```
 
-2. And finally the view has to render the **Grid**. You can use an **partial** element. A simple view can be as follows:
+2. And finally the view has to render the **Grid**. You can use a **TagHelper**. A simple view can be as follows:
 
     ```razor
         @using GridMvc
+        @addTagHelper *, GridMvc
         @model ISGrid
 
-        <partial name="_Grid" model="@Model" />
+        <grid model="@Model" />
     ```
-## Grid configuration
 
-You can use multiple methods of the **SGrid** object to configure a grid. For example:
-```razor
-    @Html.Grid(Model, viewEngine).Columns(columns =>
-    {
-       columns.Add(foo => foo.Title);
-       columns.Add(foo => foo.Description);
-    }).WithPaging(10).SetLanguage("fr").Sortable().Filterable().WithMultipleFilters()
-```
-  
-## Grid methods
+## Method 2: Create a **Grid** on the view using an **HtmlHelper**
 
-Method name | Description | Example
-------------- | ----------- | -------
-Named | Setup the grid client name | Html.Grid(Model, viewEngine).Named("Product List");
-Columns | Setup the grid client name | Html.Grid(Model, viewEngine).Columns(...);
-AutoGenerateColumns | Generates columns for all properties of the model using data annotations | Html.Grid(Model, viewEngine).AutoGenerateColumns();
-Sortable | Enable or disable sorting for all columns of the grid | Html.Grid(Model, viewEngine).Sortable(true);
-Searchable | Enable or disable searching on the grid | Html.Grid(Model, viewEngine).Searchable(true, true);
-Filterable | Enable or disable filtering for all columns of the grid | Html.Grid(Model, viewEngine).Filterable(true);
-WithMultipleFilters | Allow grid to use multiple filters | Html.Grid(Model, viewEngine).WithMultipleFilters();
-Selectable | Enable or disable the client grid items selectable feature | Html.Grid(Model, viewEngine).Filterable(true);
-WithPaging | Enable paging for grid | Html.Grid(Model, viewEngine).WithPaging(10);
-SetLanguage | Setup the language of the grid | Html.Grid(Model, viewEngine).SetLanguage('fr');
-EmptyText | Setup the text displayed for all empty items in the grid | Html.Grid(Model, viewEngine).EmptyText(' - ');
-WithGridItemsCount | Allows the grid to show items count | Html.Grid(Model, viewEngine).WithGridItemsCount();
-SetRowCssClasses | Setup specific row css classes | Html.Grid(Model, viewEngine).SetRowCssClasses(item => item.Customer.IsVip ? "success" : string.Empty);
+The steps to build a Grid page are:
 
-For more documentation about column options, please see: [Custom columns](Custom_columns.md).
+1. Your controller action has to retrieve a strongly-typed collection of the model items and pass it to the view. An example of this type of controller action is: 
+
+    ```c#
+        public class HomeController : Controller
+        {
+            private readonly FooRepository fooRepository;
+
+            public HomeController(FooRepository fooRepository)
+            {
+                this.fooRepository = fooRepository;
+            }
+
+            public ActionResult Index()
+            {
+                IQueryable<Foo> items = fooRepository.GetAll();
+                return View(items);
+            }
+        }
+    ```
+
+2. And finally the view has to render your items collection. You can use an html helper extension. A simple view can be as follows:
+
+    ```razor
+        @using GridMvc
+        @model IEnumerable<Foo>
+
+        @Html.Grid(Model).Columns(columns =>
+        {
+            columns.Add(foo => foo.Title);
+            columns.Add(foo => foo.Description);
+        })
+    ```
 
 ## GridServer parameters
 
@@ -153,5 +123,36 @@ SetLanguage | Setup the language of the grid | Html.Grid(Model, viewEngine).SetL
 EmptyText | Setup the text displayed for all empty items in the grid | GridClient<Order>(...).EmptyText(' - ');
 WithGridItemsCount | Allows the grid to show items count | GridServer<Order>(...).WithGridItemsCount();
 SetRowCssClasses | Setup specific row css classes | GridClient<Order>(...).SetRowCssClasses(item => item.Customer.IsVip ? "success" : string.Empty);
+
+## Grid configuration
+
+You can use multiple methods of the **SGrid** object to configure a grid. For example:
+```razor
+    @Html.Grid(Model).Columns(columns =>
+    {
+       columns.Add(foo => foo.Title);
+       columns.Add(foo => foo.Description);
+    }).WithPaging(10).SetLanguage("fr").Sortable().Filterable().WithMultipleFilters()
+```
+  
+## Grid methods
+
+Method name | Description | Example
+------------- | ----------- | -------
+Named | Setup the grid client name | Html.Grid(Model, viewEngine).Named("Product List");
+Columns | Setup the grid client name | Html.Grid(Model, viewEngine).Columns(...);
+AutoGenerateColumns | Generates columns for all properties of the model using data annotations | Html.Grid(Model, viewEngine).AutoGenerateColumns();
+Sortable | Enable or disable sorting for all columns of the grid | Html.Grid(Model, viewEngine).Sortable(true);
+Searchable | Enable or disable searching on the grid | Html.Grid(Model, viewEngine).Searchable(true, true);
+Filterable | Enable or disable filtering for all columns of the grid | Html.Grid(Model, viewEngine).Filterable(true);
+WithMultipleFilters | Allow grid to use multiple filters | Html.Grid(Model, viewEngine).WithMultipleFilters();
+Selectable | Enable or disable the client grid items selectable feature | Html.Grid(Model, viewEngine).Filterable(true);
+WithPaging | Enable paging for grid | Html.Grid(Model, viewEngine).WithPaging(10);
+SetLanguage | Setup the language of the grid | Html.Grid(Model, viewEngine).SetLanguage('fr');
+EmptyText | Setup the text displayed for all empty items in the grid | Html.Grid(Model, viewEngine).EmptyText(' - ');
+WithGridItemsCount | Allows the grid to show items count | Html.Grid(Model, viewEngine).WithGridItemsCount();
+SetRowCssClasses | Setup specific row css classes | Html.Grid(Model, viewEngine).SetRowCssClasses(item => item.Customer.IsVip ? "success" : string.Empty);
+
+For more documentation about column options, please see: [Custom columns](Custom_columns.md).
 
 [<- Installation](Installation.md) | [Paging ->](Paging.md)

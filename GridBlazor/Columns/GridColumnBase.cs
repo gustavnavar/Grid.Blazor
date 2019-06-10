@@ -10,7 +10,7 @@ using System.Linq.Expressions;
 
 namespace GridBlazor.Columns
 {
-    public abstract class GridColumnBase<T> : GridStyled, IGridColumn<T>, ICGridColumn
+    public abstract class GridColumnBase<T> : GridStyledColumn, IGridColumn<T>, ICGridColumn
     {
         protected Func<T, string> ValueConstraint;
         protected string ValuePattern;
@@ -29,10 +29,9 @@ namespace GridBlazor.Columns
         public string Name { get; set; }
 
         public bool IsSorted { get; set; }
+        public GridSortDirection? Direction { get; set; }
 
         public bool Hidden { get; protected set; }
-
-        public GridSortDirection? Direction { get; set; }
 
         public bool IsSumEnabled { get; internal set; } = false;
 

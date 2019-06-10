@@ -15,9 +15,8 @@ Then you have to call the **SetLanguage** function with the required language va
 ```razor
     @using GridMvc
     @model IEnumerable<Foo>
-    @inject ICompositeViewEngine viewEngine
 
-    @Html.Grid(Model, viewEngine).Columns(columns =>
+    @Html.Grid(Model).Columns(columns =>
     {
         columns.Add(foo => foo.Title);
         columns.Add(foo => foo.Description);

@@ -1,8 +1,8 @@
-﻿@using GridShared.Columns
-@using GridShared.Filtering
-@using GridMvc
+﻿@using GridMvc
 @using GridMvc.Columns
-@model GridMvc.ISGrid
+@using GridShared.Columns
+@using GridShared.Filtering
+@model ISGrid
 
 @{
     var columns = Model.Columns.Where(r => r.InitialFilterSettings != ColumnFilterValue.Null).Select(r => r.Name);
@@ -31,7 +31,7 @@
             <tr class="grid-row @Model.GetRowCssClasses(item)">
                 @foreach (IGridColumn column in Model.Columns)
                 {
-                    @(((ISGridColumn)column).CellRenderer.Render(column, item))
+                    @await Html.PartialAsync("_GridCell", new Tuple<IGridColumn, object>(column, item))
                 }
             </tr>
         }
@@ -44,7 +44,7 @@ else
         <div class="grid-wrap">
             @if (Model.SearchingEnabled)
             {
-                @(((IGridSearchHeaderRenderer)Model.Settings.GetHeaderRenderer()).Render())
+                @await Html.PartialAsync("_GridSearch", Model)
             }
             <table class="table table-striped grid-table">
                 @* Draw grid header *@
@@ -59,7 +59,7 @@ else
                         }
                         @foreach (IGridColumn column in Model.Columns)
                         {
-                            @(((ISGridColumn)column).HeaderRenderer.Render(column))
+                            @await Html.PartialAsync("_GridHeader", column)
                         }
                     </tr>
                 </thead>
@@ -68,9 +68,9 @@ else
                     {
                         <tr class="grid-empty-text">
                             @if ((Model.IsSumEnabled || Model.IsAverageEnabled || Model.IsMaxEnabled || Model.IsMinEnabled)
-                               && firstColumn != null
-                               && (firstColumn.IsSumEnabled || firstColumn.IsAverageEnabled
-                                   || firstColumn.IsMaxEnabled || firstColumn.IsMinEnabled))
+                                && firstColumn != null
+                                && (firstColumn.IsSumEnabled || firstColumn.IsAverageEnabled
+                                    || firstColumn.IsMaxEnabled || firstColumn.IsMinEnabled))
                             {
                                 <td class="grid-cell"></td>
                             }
@@ -85,22 +85,22 @@ else
                         {
                             <tr class="grid-row @Model.GetRowCssClasses(item)">
                                 @if ((Model.IsSumEnabled || Model.IsAverageEnabled || Model.IsMaxEnabled || Model.IsMinEnabled)
-                                   && firstColumn != null
-                                   && (firstColumn.IsSumEnabled || firstColumn.IsAverageEnabled
-                                       || firstColumn.IsMaxEnabled || firstColumn.IsMinEnabled))
+                                    && firstColumn != null
+                                    && (firstColumn.IsSumEnabled || firstColumn.IsAverageEnabled
+                                        || firstColumn.IsMaxEnabled || firstColumn.IsMinEnabled))
                                 {
                                     <td class="grid-cell"></td>
                                 }
                                 @foreach (IGridColumn column in Model.Columns)
                                 {
-                                    @(((ISGridColumn)column).CellRenderer.Render(column, item))
+                                    @await Html.PartialAsync("_GridCell", new Tuple<IGridColumn, object>(column, item))
                                 }
                             </tr>
                         }
                     }
                     @if (Model.IsSumEnabled || Model.IsAverageEnabled || Model.IsMaxEnabled || Model.IsMinEnabled)
                     {
-                        @await Html.PartialAsync("_Totals", Model)
+                        @await Html.PartialAsync("_GridTotals", Model)
                     }
                 </tbody>
             </table>

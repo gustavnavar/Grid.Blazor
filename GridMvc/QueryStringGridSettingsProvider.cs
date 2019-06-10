@@ -42,15 +42,6 @@ namespace GridMvc
             get { return _searchSettings; }
         }
 
-        public IGridColumnHeaderRenderer GetHeaderRenderer()
-        {
-            var headerRenderer = new GridHeaderRenderer();
-            headerRenderer.AddAdditionalRenderer(new QueryStringFilterColumnHeaderRenderer(_filterSettings));
-            headerRenderer.AddAdditionalRenderer(new QueryStringSortColumnHeaderRenderer(_sortSettings));
-            headerRenderer.SearchRender = new QueryStringSearchHeaderRenderer(_searchSettings);
-            return headerRenderer;
-        }
-
         #endregion
     }
 }

@@ -15,36 +15,29 @@ namespace GridMvc
     {
         internal const string DefaultPartialViewName = "_Grid";
 
-        public static HtmlGrid<T> Grid<T>(this IHtmlHelper helper, IEnumerable<T> items, IViewEngine viewEngine)
+        public static HtmlGrid<T> Grid<T>(this IHtmlHelper helper, IEnumerable<T> items, IViewEngine viewEngine = null)
         {
-            return Grid(helper, items, DefaultPartialViewName, viewEngine);
+            return Grid(helper, items, DefaultPartialViewName);
         }
 
-        public static HtmlGrid<T> Grid<T>(this IHtmlHelper helper, IEnumerable<T> items, string viewName, IViewEngine viewEngine)
-        {
-            return Grid(helper, items, GridRenderOptions.Create(string.Empty, viewName), viewEngine);
-        }
-
-        public static HtmlGrid<T> Grid<T>(this IHtmlHelper helper, IEnumerable<T> items,
-                                          GridRenderOptions renderOptions, IViewEngine viewEngine)
+        public static HtmlGrid<T> Grid<T>(this IHtmlHelper helper, IEnumerable<T> items, string viewName, IViewEngine viewEngine = null)
         {
             var newGrid = new SGrid<T>(items, helper.ViewContext.HttpContext.Request.Query);
-            newGrid.RenderOptions = renderOptions;
-            var htmlGrid = new HtmlGrid<T>(newGrid, helper.ViewContext, renderOptions.ViewName, viewEngine);
+            var htmlGrid = new HtmlGrid<T>(helper, newGrid, viewName);
             return htmlGrid;
         }
 
-        public static HtmlGrid<T> Grid<T>(this IHtmlHelper helper, SGrid<T> sourceGrid, IViewEngine viewEngine)
+        public static HtmlGrid<T> Grid<T>(this IHtmlHelper helper, SGrid<T> sourceGrid, IViewEngine viewEngine = null)
         {
             //wrap source grid:
-            var htmlGrid = new HtmlGrid<T>(sourceGrid, helper.ViewContext, DefaultPartialViewName, viewEngine);
+            var htmlGrid = new HtmlGrid<T>(helper, sourceGrid, DefaultPartialViewName);
             return htmlGrid;
         }
 
         public static HtmlGrid<T> Grid<T>(this IHtmlHelper helper, SGrid<T> sourceGrid, string viewName, IViewEngine viewEngine)
         {
             //wrap source grid:
-            var htmlGrid = new HtmlGrid<T>(sourceGrid, helper.ViewContext, viewName, viewEngine);
+            var htmlGrid = new HtmlGrid<T>(helper, sourceGrid, viewName);
             return htmlGrid;
         }
 

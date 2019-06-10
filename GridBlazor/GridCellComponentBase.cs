@@ -23,10 +23,10 @@ namespace GridBlazor
         {
             _cell = Column.GetCell(Item);
             if (((GridColumnBase<T>)Column).Hidden)
-                _cssStyles = ((GridStyled)Column).GetCssStylesString() + " " + TdStyle;
+                _cssStyles = ((GridStyledColumn)Column).GetCssStylesString() + " " + TdStyle;
             else
-                _cssStyles = ((GridStyled)Column).GetCssStylesString();
-            _cssClass = ((GridStyled)Column).GetCssClassesString() + " " + TdClass;
+                _cssStyles = ((GridStyledColumn)Column).GetCssStylesString();
+            _cssClass = ((GridStyledColumn)Column).GetCssClassesString() + " " + TdClass;
             string columnCssClasses = Column.GetCellCssClasses(Item);
             if(!string.IsNullOrWhiteSpace(columnCssClasses))
                 _cssClass += " " + columnCssClasses;

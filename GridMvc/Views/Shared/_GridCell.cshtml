@@ -1,0 +1,36 @@
+﻿@using GridShared
+@using GridShared.Columns
+@using Microsoft.AspNetCore.Html
+@model Tuple<IGridColumn, object>
+
+@{
+    const string TdClass = "grid-cell";
+    const string TdStyle = "display:none;";
+
+    IGridColumn column = Model.Item1;
+    object item = Model.Item2;
+    Type T = item.GetType();
+
+    IGridCell _cell = column.GetCell(item);
+
+    string _cssStyles;
+    if (column.Hidden)
+    {
+        _cssStyles = ((GridStyledColumn)column).GetCssStylesString() + " " + TdStyle;
+    }
+    else
+    {
+        _cssStyles = ((GridStyledColumn)column).GetCssStylesString();
+    }
+
+    string _cssClass = ((GridStyledColumn)column).GetCssClassesString() + " " + TdClass;
+    string columnCssClasses = column.GetCellCssClasses(item);
+    if (!string.IsNullOrWhiteSpace(columnCssClasses))
+    {
+        _cssClass += " " + columnCssClasses;
+    }
+}
+
+<td class="@_cssClass" style="@_cssStyles" data-name="@column.Name">
+    @(new HtmlString(_cell.ToString()))
+</td>

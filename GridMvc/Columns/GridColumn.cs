@@ -48,10 +48,7 @@ namespace GridMvc.Columns
 
         private readonly List<IColumnOrderer<T>> _orderers = new List<IColumnOrderer<T>>();
 
-        private IGridCellRenderer _cellRenderer;
-
         private string _filterWidgetTypeName;
-        private IGridColumnHeaderRenderer _headerRenderer;
 
 
         public GridColumn(Expression<Func<T, TDataType>> expression, ISGrid grid)
@@ -62,10 +59,10 @@ namespace GridMvc.Columns
             SortEnabled = false;
             SanitizeEnabled = true;
 
+            Hidden = false;
+
             _filterWidgetTypeName = PropertiesHelper.GetUnderlyingType(typeof(TDataType)).FullName;
             _grid = grid;
-
-            _cellRenderer = new GridCellRenderer();
 
             #endregion
 
@@ -86,25 +83,6 @@ namespace GridMvc.Columns
                 Name = PropertiesHelper.BuildColumnNameFromMemberExpression(expr);
                 Title = Name; //Using the same name by default
             }
-        }
-
-        public override IGridColumnHeaderRenderer HeaderRenderer
-        {
-            get
-            {
-                if (_headerRenderer == null)
-                {
-                    _headerRenderer = _grid.Settings.GetHeaderRenderer();
-                }
-                return _headerRenderer;
-            }
-            set { _headerRenderer = value; }
-        }
-
-        public override IGridCellRenderer CellRenderer
-        {
-            get { return _cellRenderer; }
-            set { _cellRenderer = value; }
         }
 
         public override IEnumerable<IColumnOrderer<T>> Orderers

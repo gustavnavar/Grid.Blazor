@@ -2,9 +2,6 @@
 {
     public interface ISGridColumn
     {
-        IGridColumnHeaderRenderer HeaderRenderer { get; set; }
-        IGridCellRenderer CellRenderer { get; set; }
-
         bool IsSumEnabled { get; }
 
         decimal? SumValue { get; set; }

@@ -15,6 +15,7 @@ namespace GridShared.Columns
     public interface IGridColumn : ISortableColumn, IFilterableColumn
     {
         IGrid ParentGrid { get; }
+        bool Hidden { get; }
     }
 
     /// <summary>

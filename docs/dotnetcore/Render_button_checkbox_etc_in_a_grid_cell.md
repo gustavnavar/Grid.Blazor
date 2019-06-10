@@ -43,7 +43,7 @@ You can render any custom layout using razor @helper:
         }
     }
 
-    @Html.Grid(Model, viewEngine).Columns(columns =>
+    @Html.Grid(Model).Columns(columns =>
     {
         columns.Add(o => o.Customer.IsVip)
                 .Titled("Vip customer")

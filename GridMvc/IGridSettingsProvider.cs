@@ -12,6 +12,5 @@ namespace GridMvc
         IGridSortSettings SortSettings { get; }
         IGridFilterSettings FilterSettings { get; }
         IGridSearchSettings SearchSettings { get; }
-        IGridColumnHeaderRenderer GetHeaderRenderer();
     }
 }

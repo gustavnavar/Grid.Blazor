@@ -18,13 +18,13 @@ namespace GridMvc.Columns
     {
         private readonly Func<T, TDataType> _constraint;
         private readonly ISGrid _grid;
-        private IGridCellRenderer _cellRenderer;
 
         public HiddenGridColumn(Expression<Func<T, TDataType>> expression, ISGrid grid)
         {
             _grid = grid;
-            _cellRenderer = new GridHiddenCellRenderer();
             SortEnabled = false;
+
+            Hidden = true;
 
             if (expression != null)
             {
@@ -43,18 +43,6 @@ namespace GridMvc.Columns
         public override IEnumerable<IColumnOrderer<T>> Orderers
         {
             get { throw new InvalidOperationException("You cannot sort hidden field"); }
-        }
-
-        public override IGridColumnHeaderRenderer HeaderRenderer
-        {
-            get { return new GridHiddenHeaderRenderer(); }
-            set { throw new InvalidOperationException("You can't set header renderer of hidden column"); }
-        }
-
-        public override IGridCellRenderer CellRenderer
-        {
-            get { return _cellRenderer; }
-            set { _cellRenderer = value; }
         }
 
         public override bool FilterEnabled

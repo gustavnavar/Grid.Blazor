@@ -33,9 +33,8 @@ The steps to build a grid page using the client side object model are as follows
     ```razor
        @using GridMvc
        @model SGrid<Order>
-       @inject ICompositeViewEngine viewEngine
 
-       @Html.Grid(Model, viewEngine).Named("ordersGrid").Columns(columns =>
+       @Html.Grid(Model).Named("ordersGrid").Columns(columns =>
        {
            columns.Add(o => o.OrderID).Titled("Custom column ID");
            columns.Add(o => o.OrderDate).Sortable(true);

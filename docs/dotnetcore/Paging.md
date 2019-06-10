@@ -9,9 +9,8 @@ You can call the Html helper extension with the **WithPaging** method to enable 
 ```razor
     @using GridMvc
     @model IEnumerable<Foo>
-    @inject ICompositeViewEngine viewEngine
 
-    @Html.Grid(Model, viewEngine).Columns(columns =>
+    @Html.Grid(Model).Columns(columns =>
     {
         columns.Add(foo => foo.Title);
         columns.Add(foo => foo.Description);

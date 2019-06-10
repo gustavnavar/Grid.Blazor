@@ -2,11 +2,8 @@
 using GridMvc.Resources;
 using GridShared;
 using GridShared.Columns;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.AspNetCore.Mvc.ViewEngines;
-using Microsoft.AspNetCore.Mvc.ViewFeatures;
 using System;
 using System.IO;
 using System.Text.Encodings.Web;
@@ -18,16 +15,16 @@ namespace GridMvc.Html
     /// </summary>
     public class GridHtmlOptions<T> : IGridHtmlOptions<T>
     {
+        private readonly IHtmlHelper _helper;
         internal readonly SGrid<T> _source;
         private readonly ViewContext _viewContext;
 
         private IViewEngine _viewEngine;
 
-        public GridHtmlOptions(SGrid<T> source, ViewContext viewContext, string viewName, IViewEngine viewEngine)
+        public GridHtmlOptions(IHtmlHelper helper, SGrid<T> source, string viewName)
         {
-            _viewEngine = viewEngine;
+            _helper = helper;
             _source = source;
-            _viewContext = viewContext;
             GridViewName = viewName;
         }
 
@@ -37,7 +34,7 @@ namespace GridMvc.Html
 
         public void WriteTo(TextWriter writer, HtmlEncoder encoder)
         {
-            RenderPartialViewToString(writer, GridViewName, _source, _viewContext, _viewEngine);
+            _helper.PartialAsync(GridViewName, _source).Result.WriteTo(writer, encoder);
         }
 
         public IGridHtmlOptions<T> WithGridItemsCount()
@@ -213,33 +210,5 @@ namespace GridMvc.Html
         }
 
         #endregion
-
-        private static string RenderPartialViewToString(TextWriter writer, string viewName, object model, ViewContext viewContext, IViewEngine viewEngine)
-        {
-            if (string.IsNullOrEmpty(viewName))
-                throw new ArgumentException("viewName");
-
-            var context = new ControllerContext(viewContext);
-            ViewEngineResult viewResult = viewEngine.FindView(context, viewName, false);
-            if (viewResult.View == null)
-                throw new InvalidDataException(
-                    string.Format("Specified view name for Grid.Mvc not found. ViewName: {0}", viewName));
-
-            var viewDictionary = new ViewDataDictionary(new EmptyModelMetadataProvider(), new ModelStateDictionary())
-            {
-                Model = model
-            };
-
-            var newViewContext = new ViewContext(
-                context,
-                viewResult.View,
-                viewDictionary,
-                viewContext.TempData,
-                writer,
-                new HtmlHelperOptions());
-            var task = viewResult.View.RenderAsync(newViewContext);
-            task.Wait();
-            return writer.ToString();
-        }
     }
 }

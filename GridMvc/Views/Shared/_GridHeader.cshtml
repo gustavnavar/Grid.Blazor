@@ -1,0 +1,160 @@
+﻿@using GridMvc
+@using GridMvc.Filtering
+@using GridMvc.Pagination
+@using GridMvc.Resources
+@using GridMvc.Sorting
+@using GridShared.Columns
+@using GridShared.Filtering
+@using GridShared.Sorting
+@using GridShared.Utility
+@using Microsoft.Extensions.Primitives
+@using System.Globalization
+
+@model IGridColumn
+
+@{
+    const string ThClass = "grid-header";
+    const string ThStyle = "display:none;";
+
+    const string FilteredButtonCssClass = "filtered";
+    const string FilterButtonCss = "grid-filter-btn";
+
+    List<ColumnFilterValue> _filterSettings;
+    string _url;
+    string _cssStyles;
+    string _cssClass;
+    string _cssFilterClass;
+    string _cssSortingClass;
+    bool _isColumnFiltered;
+    StringValues _clearInitFilter;
+
+
+    _filterSettings = new List<ColumnFilterValue>();
+    IGridSettingsProvider _settings = ((ISGrid)(Model.ParentGrid)).Settings;
+    if (_settings.FilterSettings.IsInitState(Model) && Model.InitialFilterSettings != ColumnFilterValue.Null)
+    {
+        _filterSettings.Add(Model.InitialFilterSettings);
+    }
+    else
+    {
+        _filterSettings.AddRange(_settings.FilterSettings.FilteredColumns.GetByColumn(Model));
+    }
+
+    _isColumnFiltered = _filterSettings.Any();
+
+    //determine current url:
+    var queryBuilder = new CustomQueryStringBuilder(((QueryStringFilterSettings)_settings.FilterSettings).Query);
+
+    var exceptQueryParameters = new List<string>
+    {
+        QueryStringFilterSettings.DefaultTypeQueryParameter,
+        QueryStringFilterSettings.DefaultClearInitFilterQueryParameter
+    };
+
+    string pagerParameterName = GetPagerQueryParameterName(((ISGrid)(Model.ParentGrid)).Pager);
+    if (!string.IsNullOrEmpty(pagerParameterName))
+    {
+        exceptQueryParameters.Add(pagerParameterName);
+    }
+
+    _url = queryBuilder.GetQueryStringExcept(exceptQueryParameters);
+
+    _clearInitFilter = ((QueryStringFilterSettings)_settings.FilterSettings)
+        .Query[QueryStringFilterSettings.DefaultClearInitFilterQueryParameter];
+
+    if (Model.Hidden)
+    {
+        _cssStyles = ((GridStyledColumn)Model).GetCssStylesString() + " " + ThStyle;
+    }
+    else
+    {
+        _cssStyles = ((GridStyledColumn)Model).GetCssStylesString();
+    }
+    _cssClass = ((GridStyledColumn)Model).GetCssClassesString() + " " + ThClass;
+
+    if (!string.IsNullOrWhiteSpace(Model.Width))
+    {
+        _cssStyles = string.Concat(_cssStyles, " width:", Model.Width, ";").Trim();
+    }
+
+    List<string> cssFilterClasses = new List<string>();
+    cssFilterClasses.Add(FilterButtonCss);
+    if (_isColumnFiltered)
+    {
+        cssFilterClasses.Add(FilteredButtonCssClass);
+    }
+    _cssFilterClass = string.Join(" ", cssFilterClasses);
+
+    List<string> cssSortingClass = new List<string>();
+    cssSortingClass.Add("grid-header-title");
+
+    if (Model.IsSorted)
+    {
+        cssSortingClass.Add("sorted");
+        cssSortingClass.Add(Model.Direction == GridSortDirection.Ascending ? "sorted-asc" : "sorted-desc");
+    }
+    _cssSortingClass = string.Join(" ", cssSortingClass);
+
+    string _href = GetSortUrl(Model.Name, Model.Direction);
+
+    string GetPagerQueryParameterName(IGridPager pager)
+    {
+        var defaultPager = pager as GridPager;
+        if (defaultPager == null)
+            return string.Empty;
+        return defaultPager.ParameterName;
+    }
+
+    string GetSortUrl(string columnName, GridSortDirection? direction)
+    {
+        //switch direction for link:
+        GridSortDirection newDir = direction == GridSortDirection.Ascending
+            ? GridSortDirection.Descending : GridSortDirection.Ascending;
+
+        //determine current url:
+        var builder = new CustomQueryStringBuilder(((QueryStringSortSettings)_settings.SortSettings).Query);
+        string url = builder.GetQueryStringExcept(new[]
+        {
+            GridPager.DefaultPageQueryParameter,
+            ((QueryStringSortSettings)_settings.SortSettings).ColumnQueryParameterName,
+            ((QueryStringSortSettings)_settings.SortSettings).DirectionQueryParameterName
+        });
+        if (string.IsNullOrEmpty(url))
+        {
+            url = "?";
+        }
+        else
+        {
+            url += "&";
+        }
+        return string.Format("{0}{1}={2}&{3}={4}", url,
+            ((QueryStringSortSettings)_settings.SortSettings).ColumnQueryParameterName, columnName,
+            ((QueryStringSortSettings)_settings.SortSettings).DirectionQueryParameterName,
+            ((int)newDir).ToString(CultureInfo.InvariantCulture));
+    }
+}
+
+<th class="@_cssClass" style="@_cssStyles">
+    @if (Model.FilterEnabled)
+    {
+        <div class="grid-filter" data-type="@Model.FilterWidgetTypeName" data-name="@Model.Name" data-widgetdata="@GridShared.Utility.JsonHelper.JsonSerializer(Model.FilterWidgetData)" data-filterdata="@GridShared.Utility.JsonHelper.JsonSerializer(_filterSettings)" data-url="@_url" data-clearinitfilter="@_clearInitFilter.ToString()">
+            <span class="@_cssFilterClass" title="@Strings.FilterButtonTooltipText"></span>
+        </div>
+    }
+    <div class="@_cssSortingClass">
+        @if (Model.SortEnabled)
+        {
+            <a href="@_href">@Model.Title</a>
+        }
+        else
+        {
+            <span>@Model.Title</span>
+        }
+        @if (Model.IsSorted)
+        {
+            <span class="grid-sort-arrow"></span>
+        }
+    </div>
+</th>
+
+

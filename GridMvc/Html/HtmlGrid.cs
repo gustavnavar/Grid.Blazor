@@ -1,6 +1,5 @@
 ﻿using GridShared;
 using Microsoft.AspNetCore.Mvc.Rendering;
-using Microsoft.AspNetCore.Mvc.ViewEngines;
 using System.Collections.Generic;
 
 namespace GridMvc.Html
@@ -10,8 +9,8 @@ namespace GridMvc.Html
     /// </summary>
     public class HtmlGrid<T> : GridHtmlOptions<T>, IGrid
     {
-        public HtmlGrid(SGrid<T> source, ViewContext viewContext, string viewName, IViewEngine viewEngine)
-            : base(source, viewContext, viewName, viewEngine)
+        public HtmlGrid(IHtmlHelper helper, SGrid<T> source, string viewName)
+            : base(helper, source, viewName)
         {
         }
 

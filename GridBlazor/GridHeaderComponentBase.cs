@@ -82,10 +82,10 @@ namespace GridBlazor
             _clearInitFilter = FilterSettings.Query.Get(QueryStringFilterSettings.DefaultClearInitFilterQueryParameter);
 
             if (((GridColumnBase<T>)Column).Hidden)
-                _cssStyles = ((GridStyled)Column).GetCssStylesString() + " " + ThStyle;
+                _cssStyles = ((GridStyledColumn)Column).GetCssStylesString() + " " + ThStyle;
             else
-                _cssStyles = ((GridStyled)Column).GetCssStylesString();
-            _cssClass = ((GridStyled)Column).GetCssClassesString() + " " + ThClass;
+                _cssStyles = ((GridStyledColumn)Column).GetCssStylesString();
+            _cssClass = ((GridStyledColumn)Column).GetCssClassesString() + " " + ThClass;
 
             if (!string.IsNullOrWhiteSpace(Column.Width))
                 _cssStyles = string.Concat(_cssStyles, " width:", Column.Width, ";").Trim();

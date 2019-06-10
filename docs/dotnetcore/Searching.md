@@ -11,7 +11,7 @@ You can enable the searching option for your grid. Searching allows to search fo
 You can enable searching for all columns of a grid using the **Searchable** method of the **SGrid** object:
 
 ```razor
-    @Html.Grid(Model, viewEngine).Columns(columns =>
+    @Html.Grid(Model).Columns(columns =>
     {
         columns.Add(foo => foo.Title);
         columns.Add(foo => foo.Description);

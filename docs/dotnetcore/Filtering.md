@@ -16,7 +16,7 @@ After that you can filter this column.
 
 Remember that you can also enable filtering for all columns of a grid using the **Filterable** method of the **SGrid** object:
 ```razor
-    @Html.Grid(Model, viewEngine).Columns(columns =>
+    @Html.Grid(Model).Columns(columns =>
     {
         columns.Add(foo => foo.Title);
         columns.Add(foo => foo.Description);
