@@ -36,4 +36,4 @@ You can use the **RenderValueAs** method to render a custom html markup in the g
         .RenderValueAs(o => $"<b><a class='modal_link' href='/Home/Edit/{o.OrderID}'>Edit</a></b>");
 ```
 
-[<- Data annotations](Data_annotations.md)
+[<- Data annotations](Data_annotations.md) | [Front-end back-end API ->](API.md)

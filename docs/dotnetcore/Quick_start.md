@@ -100,7 +100,7 @@ The steps to build a Grid page are:
 
 Parameter | Description | Example
 --------- | ----------- | -------
-items | **IEnumerable<T>** oblect containing all the grid rows | repository.GetAll()
+items | **IEnumerable<T>** object containing all the grid rows | repository.GetAll()
 query | **IQueryCollection** containing all grid parameters | Must be the **Request.Query** of the controller
 renderOnlyRows | boolean to configure if only rows are renderend by the server or all the grid object | Must be **false** for ASP.NET Core MVC solutions
 gridName | string containing the grid client name  | ordersGrid
