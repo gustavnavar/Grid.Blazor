@@ -39,6 +39,7 @@ Follow thes steps to create a custom filter widget:
     ```razor
         @using GridBlazor
         @using GridBlazor.Resources
+        @using GridShared.Filtering
         @using GridComponent.Demo.Services
 
         @typeparam T
@@ -51,7 +52,7 @@ Follow thes steps to create a custom filter widget:
                     <div class="grid-popup-widget">
                         <div class="form-group">
                             <p><i>This is custom filter widget demo</i></p>
-                            <select class="grid-filter-type customerslist form-control" style="width:250px;" bind="filterValue">
+                            <select class="grid-filter-type customerslist form-control" style="width:250px;" bind="_filterValue">
                                 @foreach (var customerName in customerService.GetCustomersNames())
                                 {
                                     <option value="@customerName">@customerName</option>
@@ -82,9 +83,10 @@ Follow thes steps to create a custom filter widget:
 
         @functions {
             private bool _clearVisible = false;
+            protected string _filterValue;
 
             [Inject] private CustomerService customerService { get; set; }
-
+        
             [CascadingParameter(Name = "GridHeaderComponent")]
             private GridHeaderComponent<T> GridHeaderComponent { get; set; }
 
@@ -92,19 +94,20 @@ Follow thes steps to create a custom filter widget:
             protected bool visible { get; set; }
 
             [Parameter]
-            protected string filterType { get; set; }
+            protected string ColumnName { get; set; }
 
             [Parameter]
-            protected string filterValue { get; set; }
+            protected IEnumerable<ColumnFilterValue> FilterSettings { get; set; }
 
             protected override void OnParametersSet()
             {
-                _clearVisible = !string.IsNullOrWhiteSpace(filterValue);
+                _filterValue = FilterSettings.FirstOrDefault().FilterValue;
+                _clearVisible = !string.IsNullOrWhiteSpace(_filterValue);
             }
 
             protected async Task ApplyButtonClicked()
             {
-                await GridHeaderComponent.AddFilter("1", filterValue);
+                await GridHeaderComponent.AddFilter(new FilterCollection(GridFilterType.Equals.ToString("d"), _filterValue));
             }
 
             protected async Task ClearButtonClicked()
@@ -112,6 +115,7 @@ Follow thes steps to create a custom filter widget:
                 await GridHeaderComponent.RemoveFilter();
             }
         }
+
     ```
 
     This example loads a customer's list using a singleton service. So we had to create this service in the project to get a list of clients from the database. But it is not mandatory to use a singleton. This example always uses a **filterType** with value **1** when calling the **GridHeaderComponent.AddFilter** method.

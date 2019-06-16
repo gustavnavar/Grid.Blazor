@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Reflection;
@@ -21,13 +22,22 @@ namespace GridShared.Filtering
 
         #region IColumnFilter<T> Members
 
-        public IQueryable<T> ApplyFilter(IQueryable<T> items, ColumnFilterValue value)
+        public IQueryable<T> ApplyFilter(IQueryable<T> items, IEnumerable<ColumnFilterValue> values)
         {
-            if (value == ColumnFilterValue.Null)
-                throw new ArgumentNullException("value");
+            if (values == null && values.Where(r => r != ColumnFilterValue.Null).Count() <= 0)
+                throw new ArgumentNullException("values");
 
             var pi = (PropertyInfo) ((MemberExpression) _expression.Body).Member;
-            Expression<Func<T, bool>> expr = GetFilterExpression(pi, value);
+
+            GridFilterCondition condition;
+            var cond = values.SingleOrDefault(r => r != ColumnFilterValue.Null
+                && r.FilterType == GridFilterType.Condition);
+            if (!Enum.TryParse(cond.FilterValue, true, out condition))
+                condition = GridFilterCondition.And;
+
+            values = values.Where(r => r != ColumnFilterValue.Null && r.FilterType != GridFilterType.Condition);
+            
+            Expression<Func<T, bool>> expr = GetFilterExpression(pi, values, condition);
             if (expr == null)
                 return items;
             return items.Where(expr);
@@ -35,18 +45,47 @@ namespace GridShared.Filtering
 
         #endregion
 
-        private Expression<Func<T, bool>> GetFilterExpression(PropertyInfo pi, ColumnFilterValue value)
+        private Expression<Func<T, bool>> GetFilterExpression(PropertyInfo pi, IEnumerable<ColumnFilterValue> values,
+            GridFilterCondition condition)
+        {
+            Expression binaryExpression = null;
+            foreach (var value in values)
+            {
+                if (value == ColumnFilterValue.Null)
+                    continue;
+
+                Expression expression = GetExpression(pi, value);
+                if(expression != null)
+                {
+                    if (binaryExpression == null)
+                        binaryExpression = expression;
+                    else if (condition == GridFilterCondition.Or)
+                        binaryExpression = Expression.OrElse(binaryExpression, expression);
+                    else
+                        binaryExpression = Expression.AndAlso(binaryExpression, expression);
+                }
+            }
+
+            if (binaryExpression == null)
+                return null;
+
+            //build expression to filter collection:
+            ParameterExpression entityParam = _expression.Parameters[0];
+            //return filter expression 
+            return Expression.Lambda<Func<T, bool>>(binaryExpression, entityParam);
+        }
+
+        private Expression GetExpression(PropertyInfo pi, ColumnFilterValue value)
         {
             //detect nullable
             bool isNullable = pi.PropertyType.GetTypeInfo().IsGenericType &&
-                              pi.PropertyType.GetGenericTypeDefinition() == typeof (Nullable<>);
+                              pi.PropertyType.GetGenericTypeDefinition() == typeof(Nullable<>);
             //get target type:
             Type targetType = isNullable ? Nullable.GetUnderlyingType(pi.PropertyType) : pi.PropertyType;
 
             IFilterType filterType = _typeResolver.GetFilterType(targetType);
 
-            //build expression to filter collection:
-            ParameterExpression entityParam = _expression.Parameters[0];
+            
             //support nullable types:
             Expression firstExpr = isNullable
                                        ? Expression.Property(_expression.Body, pi.PropertyType.GetProperty("Value"))
@@ -55,7 +94,7 @@ namespace GridShared.Filtering
             Expression binaryExpression = filterType.GetFilterExpression(firstExpr, value.FilterValue, value.FilterType);
             if (binaryExpression == null) return null;
 
-            if (targetType == typeof (string))
+            if (targetType == typeof(string))
             {
                 //check for strings, they may be NULL
                 //It's ok for ORM, but throw exception in linq to objects. Additional check string on null
@@ -71,7 +110,7 @@ namespace GridShared.Filtering
                 binaryExpression = Expression.AndAlso(hasValueExpr, binaryExpression);
             }
             //return filter expression
-            return Expression.Lambda<Func<T, bool>>(binaryExpression, entityParam);
+            return binaryExpression;
         }
     }
 }

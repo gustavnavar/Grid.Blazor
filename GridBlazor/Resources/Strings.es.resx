@@ -186,4 +186,10 @@
   <data name="Average" xml:space="preserve">
     <value>Media</value>
   </data>
+  <data name="And" xml:space="preserve">
+    <value>Y</value>
+  </data>
+  <data name="Or" xml:space="preserve">
+    <value>O</value>
+  </data>
 </root>

@@ -26,7 +26,7 @@ function CustomersFilterWidget() {
     /***
     * This method invokes when filter widget was shown on the page
     */
-    this.onShow = function () {
+    this.onShow = function (columnName) {
         /* Place your on show logic here */
     };
 
@@ -38,11 +38,12 @@ function CustomersFilterWidget() {
     * container - html element, which must contain widget layout;
     * lang - current language settings;
     * typeName - current column type (if widget assign to multipile types, see: getAssociatedTypes);
+    * columnName - current column name;
     * values - current filter values. Array of objects [{filterValue: '', filterType:'1'}];
     * cb - callback function that must invoked when user want to filter this column. Widget must pass filter type and filter value.
     * data - widget data passed from the server
     */
-    this.onRender = function (container, lang, typeName, values, cb, data) {
+    this.onRender = function (container, lang, typeName, columnName, values, cb) {
         //store parameters:
         this.cb = cb;
         this.container = container;

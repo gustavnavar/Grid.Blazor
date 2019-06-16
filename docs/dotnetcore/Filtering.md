@@ -54,6 +54,12 @@ It also supports nullable types of any element of the list.
 
     ![](../images/Filtering_datetime.png)
 
+## Multiple filters
+
+Pressing the **+** and **-** buttons you can add multiple options to filter. You can also select the condition you want to use, either **And** or **Or**:
+
+![](../images/Filtering_multiple.png)
+
 You can also create your own filter widgets.
 
 [<- Searching](Searching.md) | [Creating custom filter widget ->](Creating_custom_filter_widget.md)

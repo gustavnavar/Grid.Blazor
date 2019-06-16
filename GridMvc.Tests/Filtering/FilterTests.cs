@@ -30,12 +30,14 @@ namespace GridMvc.Tests.Filtering
         [TestMethod]
         public void TestFilter()
         {
-            var filterOptions = new ColumnFilterValue
+            var filterOption = new ColumnFilterValue
                 {
                     ColumnName = "Created",
                     FilterType = GridFilterType.LessThan,
                     FilterValue = "10.05.2005"
                 };
+            var filterOptions = new List<ColumnFilterValue>();
+            filterOptions.Add(filterOption);
             var filter = new DefaultColumnFilter<TestModel, DateTime>(m => m.Created);
 
             var filtered = filter.ApplyFilter(_repo.GetAll().AsQueryable(), filterOptions);
@@ -54,12 +56,14 @@ namespace GridMvc.Tests.Filtering
         [TestMethod]
         public void TestFilterLessOrEquals()
         {
-            var filterOptions = new ColumnFilterValue
+            var filterOption = new ColumnFilterValue
             {
                 ColumnName = "Created",
                 FilterType = GridFilterType.LessThanOrEquals,
                 FilterValue = "2002-05-01"
             };
+            var filterOptions = new List<ColumnFilterValue>();
+            filterOptions.Add(filterOption);
             var filter = new DefaultColumnFilter<TestModel, DateTime>(m => m.Created);
 
             var filtered = filter.ApplyFilter(_repo.GetAll().AsQueryable(), filterOptions);
@@ -76,12 +80,14 @@ namespace GridMvc.Tests.Filtering
         [TestMethod]
         public void TestFilterGreaterOrEquals()
         {
-            var filterOptions = new ColumnFilterValue
+            var filterOption = new ColumnFilterValue
             {
                 ColumnName = "Created",
                 FilterType = GridFilterType.GreaterThanOrEquals,
                 FilterValue = "2002-05-01"
             };
+            var filterOptions = new List<ColumnFilterValue>();
+            filterOptions.Add(filterOption);
             var filter = new DefaultColumnFilter<TestModel, DateTime>(m => m.Created);
 
             var filtered = filter.ApplyFilter(_repo.GetAll().AsQueryable(), filterOptions);
@@ -98,12 +104,14 @@ namespace GridMvc.Tests.Filtering
         [TestMethod]
         public void TestFilterContains()
         {
-            var filterOptions = new ColumnFilterValue
+            var filterOption = new ColumnFilterValue
             {
                 ColumnName = "Title",
                 FilterType = GridFilterType.Contains,
                 FilterValue = "test"
             };
+            var filterOptions = new List<ColumnFilterValue>();
+            filterOptions.Add(filterOption);
             var filter = new DefaultColumnFilter<TestModel, string>(m => m.Title);
 
             var filtered = filter.ApplyFilter(_repo.GetAll().AsQueryable(), filterOptions);
@@ -120,12 +128,14 @@ namespace GridMvc.Tests.Filtering
         [TestMethod]
         public void TestInt16Filtering()
         {
-            var filterOptions = new ColumnFilterValue
+            var filterOption = new ColumnFilterValue
             {
                 ColumnName = "Int16Field",
                 FilterType = GridFilterType.Equals,
                 FilterValue = "16"
             };
+            var filterOptions = new List<ColumnFilterValue>();
+            filterOptions.Add(filterOption);
             var filter = new DefaultColumnFilter<TestModel, Int16>(m => m.Int16Field);
 
             var filtered = filter.ApplyFilter(_repo.GetAll().AsQueryable(), filterOptions);
@@ -142,12 +152,14 @@ namespace GridMvc.Tests.Filtering
         [TestMethod]
         public void TestUInt16Filtering()
         {
-            var filterOptions = new ColumnFilterValue
+            var filterOption = new ColumnFilterValue
             {
                 ColumnName = "UInt16Field",
                 FilterType = GridFilterType.Equals,
                 FilterValue = "16"
             };
+            var filterOptions = new List<ColumnFilterValue>();
+            filterOptions.Add(filterOption);
             var filter = new DefaultColumnFilter<TestModel, UInt16>(m => m.UInt16Field);
 
             var filtered = filter.ApplyFilter(_repo.GetAll().AsQueryable(), filterOptions);
@@ -164,12 +176,14 @@ namespace GridMvc.Tests.Filtering
         [TestMethod]
         public void TestUInt32Filtering()
         {
-            var filterOptions = new ColumnFilterValue
+            var filterOption = new ColumnFilterValue
             {
                 ColumnName = "UInt32Field",
                 FilterType = GridFilterType.Equals,
                 FilterValue = "65549"
             };
+            var filterOptions = new List<ColumnFilterValue>();
+            filterOptions.Add(filterOption);
             var filter = new DefaultColumnFilter<TestModel, UInt32>(m => m.UInt32Field);
 
             var filtered = filter.ApplyFilter(_repo.GetAll().AsQueryable(), filterOptions);
@@ -186,12 +200,14 @@ namespace GridMvc.Tests.Filtering
         [TestMethod]
         public void TestUInt64Filtering()
         {
-            var filterOptions = new ColumnFilterValue
+            var filterOption = new ColumnFilterValue
             {
                 ColumnName = "UInt64Field",
                 FilterType = GridFilterType.Equals,
                 FilterValue = "4294967888"
             };
+            var filterOptions = new List<ColumnFilterValue>();
+            filterOptions.Add(filterOption);
             var filter = new DefaultColumnFilter<TestModel, UInt64>(m => m.UInt64Field);
 
             var filtered = filter.ApplyFilter(_repo.GetAll().AsQueryable(), filterOptions);

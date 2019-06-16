@@ -10,7 +10,7 @@
 @{
     Action<IGridColumnCollection<Order>> columns = c =>
     {
-/* Adding not mapped column, that renders body, using inline Razor html helper */
+        /* Adding not mapped column, that renders body, using inline Razor html helper */
         c.Add()
             .Encoded(false)
             .Sanitized(false)
@@ -18,13 +18,13 @@
             .Css("hidden-xs") //hide on phones
             .RenderValueAs(o => $"<b><a class='modal_link' href='/Home/Edit/{o.OrderID}'>Edit</a></b>");
 
-/* Adding "OrderID" column: */
+        /* Adding "OrderID" column: */
 
         c.Add(o => o.OrderID)
             .Titled("Number")
             .SetWidth(100);
 
-/* Adding "OrderDate" column: */
+        /* Adding "OrderDate" column: */
         c.Add(o => o.OrderDate, "OrderCustomDate")
             .Titled("Date")
             .SortInitialDirection(GridSortDirection.Descending)
@@ -33,7 +33,7 @@
             .SetWidth(110)
             .Max(true).Min(true);
 
-/* Adding "CompanyName" column: */
+        /* Adding "CompanyName" column: */
         c.Add(o => o.Customer.CompanyName)
             .Titled("Company")
             .SetWidth(250)
@@ -42,14 +42,18 @@
             .SetFilterWidgetType("CustomCompanyNameFilterWidget")
             .Max(true).Min(true);
 
-/* Adding "Freight" column: */
+        /* Adding "ContactName" column: */
+        c.Add(o => o.Customer.ContactName).Titled("ContactName").SetWidth(250)
+            .Max(true).Min(true);
+
+        /* Adding "Freight" column: */
         c.Add(o => o.Freight)
             .Titled("Freight")
             .SetWidth(100)
             .Format("{0:F}")
             .Sum(true).Average(true).Max(true).Min(true);
 
-/* Adding "Vip customer" column: */
+        /* Adding "Vip customer" column: */
         c.Add(o => o.Customer.IsVip)
             .Titled("Is Vip")
             .SetWidth(70)

@@ -354,22 +354,45 @@ namespace GridBlazor
             ((GridPager)_pager).Query = _query;
         }
 
-        public void AddFilterParameter(IGridColumn column, string filterType, string filterValue)
+        public void AddFilterParameter(IGridColumn column, FilterCollection filters)
         {
-            var filters = _query.Get(QueryStringFilterSettings.DefaultTypeQueryParameter).ToArray();
-            if (filters == null)
-                _query.Add(QueryStringFilterSettings.DefaultTypeQueryParameter,
-                    column.Name + QueryStringFilterSettings.FilterDataDelimeter +
-                    filterType + QueryStringFilterSettings.FilterDataDelimeter +
-                    filterValue);
+            var columnFilters = _query.Get(QueryStringFilterSettings.DefaultTypeQueryParameter).ToArray();
+            if (ComponentOptions.AllowMultipleFilters)
+            {
+                if (columnFilters == null)
+                {
+                    foreach (var filter in filters)
+                    {
+                        _query.Add(QueryStringFilterSettings.DefaultTypeQueryParameter,
+                            column.Name + QueryStringFilterSettings.FilterDataDelimeter +
+                            filter.Type + QueryStringFilterSettings.FilterDataDelimeter +
+                            filter.Value);
+                    }
+                }
+                else
+                {
+                    var newFilters = columnFilters.Where(r => !r.ToLower().StartsWith(column.Name.ToLower()
+                        + QueryStringFilterSettings.FilterDataDelimeter)).ToList();
+                    foreach (var filter in filters)
+                    {
+                        newFilters.Add(column.Name + QueryStringFilterSettings.FilterDataDelimeter +
+                            filter.Type + QueryStringFilterSettings.FilterDataDelimeter + filter.Value);
+                    }
+                    _query[QueryStringFilterSettings.DefaultTypeQueryParameter] =
+                        new StringValues(newFilters.ToArray());
+                }
+            }
             else
             {
-                var newFilters = filters.Where(r => !r.ToLower().StartsWith(column.Name.ToLower()
-                    + QueryStringFilterSettings.FilterDataDelimeter)).ToList();
-                newFilters.Add(column.Name + QueryStringFilterSettings.FilterDataDelimeter +
-                    filterType + QueryStringFilterSettings.FilterDataDelimeter + filterValue);
-                _query[QueryStringFilterSettings.DefaultTypeQueryParameter] =
-                    new StringValues(newFilters.ToArray());
+                RemoveQueryParameter(QueryStringFilterSettings.DefaultTypeQueryParameter);
+
+                if (filters.Count() > 0)
+                {
+                    _query.Add(QueryStringFilterSettings.DefaultTypeQueryParameter,
+                        column.Name + QueryStringFilterSettings.FilterDataDelimeter +
+                        filters.First().Type + QueryStringFilterSettings.FilterDataDelimeter +
+                        filters.First().Value);
+                }
             }
 
             AddClearInitFilters(column);

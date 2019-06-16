@@ -9,7 +9,6 @@ using Microsoft.AspNetCore.Localization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ViewEngines;
 using System;
-using System.Globalization;
 using System.Linq;
 
 namespace GridMvc.Demo.Controllers
@@ -61,6 +60,10 @@ namespace GridMvc.Demo.Controllers
                     .SetFilterWidgetType("CustomCompanyNameFilterWidget")
                     .Max(true).Min(true);
 
+                /* Adding "ContactName" column: */
+                c.Add(o => o.Customer.ContactName).Titled("ContactName").SetWidth(250)
+                    .Max(true).Min(true);
+
                 /* Adding "Freight" column: */
                 c.Add(o => o.Freight)
                     .Titled("Freight")
@@ -75,7 +78,8 @@ namespace GridMvc.Demo.Controllers
                     .Css("hidden-xs") //hide on phones
                     .RenderValueAs(o => o.Customer.IsVip ? "Yes" : "No");
             };
-            var locale = CultureInfo.CurrentCulture.TwoLetterISOLanguageName;
+            var requestCulture = HttpContext.Features.Get<IRequestCultureFeature>();
+            var locale = requestCulture.RequestCulture.UICulture.TwoLetterISOLanguageName;
 
             var repository = new OrdersRepository(_context);
             var server = new GridServer<Order>(repository.GetAll(), Request.Query, false, "ordersGrid", 

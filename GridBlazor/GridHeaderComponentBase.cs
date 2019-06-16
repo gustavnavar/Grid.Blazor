@@ -63,7 +63,7 @@ namespace GridBlazor
                 _filterSettings.AddRange(FilterSettings.FilteredColumns.GetByColumn(Column));
             }
 
-            _isColumnFiltered = _filterSettings.Any();
+            _isColumnFiltered = _filterSettings.Any(r => r.FilterType != GridFilterType.Condition);
 
             //determine current url:
             var queryBuilder = new CustomQueryStringBuilder(FilterSettings.Query);
@@ -122,8 +122,8 @@ namespace GridBlazor
             }
             builder.AddAttribute(++_sequence, "GridHeaderComponent", this);
             builder.AddAttribute(++_sequence, "visible", _isVisible);
-            builder.AddAttribute(++_sequence, "filterType", _filterSettings.FirstOrDefault().FilterType.ToString("d"));
-            builder.AddAttribute(++_sequence, "filterValue", _filterSettings.FirstOrDefault().FilterValue);
+            builder.AddAttribute(++_sequence, "ColumnName", Column.Name);
+            builder.AddAttribute(++_sequence, "FilterSettings", _filterSettings);
             builder.CloseComponent();
         };
 
@@ -156,10 +156,10 @@ namespace GridBlazor
             StateHasChanged();
         }
 
-        public async Task AddFilter(string filterType, string filterValue)
+        public async Task AddFilter(FilterCollection filters)
         {
             _isVisible = !_isVisible;
-            await GridComponent.AddFilter(Column, filterType, filterValue);
+            await GridComponent.AddFilter(Column, filters);
         }
 
         public async Task RemoveFilter()

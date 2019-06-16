@@ -3,9 +3,9 @@ using GridMvc.Server;
 using GridShared;
 using GridShared.Filtering;
 using GridShared.Sorting;
+using Microsoft.AspNetCore.Localization;
 using Microsoft.AspNetCore.Mvc;
 using System;
-using System.Globalization;
 using System.Threading.Tasks;
 
 namespace GridMvc.Demo.Components
@@ -55,6 +55,10 @@ namespace GridMvc.Demo.Components
                     .SetFilterWidgetType("CustomCompanyNameFilterWidget")
                     .Max(true).Min(true);
 
+                /* Adding "ContactName" column: */
+                c.Add(o => o.Customer.ContactName).Titled("ContactName").SetWidth(250)
+                    .Max(true).Min(true);
+
                 /* Adding "Freight" column: */
                 c.Add(o => o.Freight)
                     .Titled("Freight")
@@ -71,7 +75,8 @@ namespace GridMvc.Demo.Components
             };
 
             var repository = new OrdersRepository(_context);
-            var locale = CultureInfo.CurrentCulture.TwoLetterISOLanguageName;
+            var requestCulture = HttpContext.Features.Get<IRequestCultureFeature>();
+            var locale = requestCulture.RequestCulture.UICulture.TwoLetterISOLanguageName;
 
             var server = new GridServer<Order>(repository.GetAll(), Request.Query, false, "ordersGrid",
                 columns, 10, locale)

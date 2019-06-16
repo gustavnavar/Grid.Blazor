@@ -11,7 +11,7 @@ $.fn.extend({
         var aObj = [];
         $(this).each(function () {
             if (!$(this).data("gridmvc")) {
-                var options = { lang: $(this).attr("data-lang"), selectable: $(this).attr("data-selectable") == "true", multiplefilters: $(this).attr("data-multiplefilters") == "true", currentPage: $(this).find(".grid-pager").first().attr("data-currentpage") };
+                var options = { lang: $(this).attr("data-lang"), selectable: $(this).attr("data-selectable") === "true", multiplefilters: $(this).attr("data-multiplefilters") === "true", currentPage: $(this).find(".grid-pager").first().attr("data-currentpage") };
                 var grid = new GridMvc(this, options);
                 var name = $(this).attr("data-gridname");
                 if (name.length > 0)
@@ -23,7 +23,7 @@ $.fn.extend({
                 aObj.push($(this).data("gridmvc"));
             }
         });
-        if (aObj.length == 1)
+        if (aObj.length === 1)
             return aObj[0];
         return aObj;
     }
@@ -40,7 +40,7 @@ GridMvc = (function ($) {
     gridMvc.prototype.init = function () {
         //load current lang options:
         this.lang = GridMvc.lang[this.options.lang];
-        if (typeof (this.lang) == 'undefined')
+        if (typeof this.lang === 'undefined')
             this.lang = GridMvc.lang.en;
         this.events = [];
         if (this.options.selectable)
@@ -56,18 +56,18 @@ GridMvc = (function ($) {
         this.initFilters();
         this.initSearch();
     };
-    /***
-    * Handle Grid row events
-    */
+    //
+    // Handle Grid row events
+    //
     gridMvc.prototype.initGridRowsEvents = function () {
         var $this = this;
         this.jqContainer.on("click", ".grid-row", function () {
             $this.rowClicked.call(this, $this);
         });
     };
-    /***
-    * Trigger on Grid row click
-    */
+    //
+    // Trigger on Grid row click
+    //
     gridMvc.prototype.rowClicked = function ($context) {
         if (!$context.options.selectable)
             return;
@@ -85,16 +85,16 @@ GridMvc = (function ($) {
         if (!evt.isDefaultPrevented())
             $context.markRowSelected(row);
     };
-    /***
-    * Mark Grid row as selected
-    */
+    //
+    // Mark Grid row as selected
+    //
     gridMvc.prototype.markRowSelected = function (row) {
         this.jqContainer.find(".grid-row.grid-row-selected").removeClass("grid-row-selected");
         row.addClass("grid-row-selected");
     };
-    /***
-    * Default Grid.Mvc options
-    */
+    //
+    // Default Grid.Mvc options
+    //
     gridMvc.prototype.defaults = function () {
         return {
             selectable: true,
@@ -102,10 +102,10 @@ GridMvc = (function ($) {
             lang: 'en'
         };
     };
-    /***
-    * ============= EVENTS =============
-    * Methods that provides functionality for grid events
-    */
+    //
+    // ============= EVENTS =============
+    // Methods that provides functionality for grid events
+    //
     gridMvc.prototype.onRowSelect = function (func) {
         this.events.push({ name: "onRowSelect", callback: func });
     };
@@ -117,7 +117,7 @@ GridMvc = (function ($) {
 
     gridMvc.prototype.notifyEvent = function (eventName, e) {
         for (var i = 0; i < this.events.length; i++) {
-            if (this.events[i].name == eventName)
+            if (this.events[i].name === eventName)
                 if (!this.events[i].callback(e)) break;
         }
     };
@@ -137,28 +137,29 @@ GridMvc = (function ($) {
             });
         });
     };
-    /***
-    * Shows filter popup window and render filter widget
-    */
+    //
+    // Shows filter popup window and render filter widget
+    //
     gridMvc.prototype.openFilterPopup = function (self, html) {
         //retrive all column filter parameters from html attrs:
         var columnType = $(this).attr("data-type") || "";
         //determine widget
         var widget = self.getFilterWidgetForType(columnType);
         //if widget for specified column type not found - do nothing
-        if (widget == null)
+        if (widget === null)
             return false;
+
+        var columnName = $(this).attr("data-name") || "";
 
         //if widget allready rendered - just open popup menu:
         if (this.hasAttribute("data-rendered")) {
             var or = self.openMenuOnClick.call(this, self);
             self.setupPopupInitialPosition($(this));
-            if (!or && typeof (widget.onShow) != 'undefined')
-                widget.onShow();
+            if (!or && typeof widget.onShow !== 'undefined')
+                widget.onShow(columnName);
             return or;
         }
-
-        var columnName = $(this).attr("data-name") || "";
+        
         var filterData = $(this).attr("data-filterdata") || "";
         var widgetData = $(this).attr("data-widgetdata") || "{}";
         var filterDataObj = self.parseFilterValues(filterData) || {};
@@ -172,8 +173,8 @@ GridMvc = (function ($) {
         //determine widget container:
         var widgetContainer = $(this).find(".grid-popup-widget");
         //onRender target widget
-        if (typeof (widget.onRender) != 'undefined')
-            widget.onRender(widgetContainer, self.lang, columnType, filterDataObj, function (values) {
+        if (typeof widget.onRender !== 'undefined')
+            widget.onRender(widgetContainer, self.lang, columnType, columnName, filterDataObj, function (values) {
                 self.closeOpenedPopups();
                 self.applyFilterValues(filterUrl, columnName, values, false);
             }, $.parseJSON(widgetData));
@@ -186,8 +187,8 @@ GridMvc = (function ($) {
             });
         }
         var openResult = self.openMenuOnClick.call(this, self);
-        if (typeof (widget.onShow) != 'undefined')
-            widget.onShow();
+        if (typeof widget.onShow !== 'undefined')
+            widget.onShow(columnName);
         self.setupPopupInitialPosition($(this));
         return openResult;
     };
@@ -199,23 +200,24 @@ GridMvc = (function ($) {
             return { arrow: arrow, currentDropLeft: parseInt(drop.css("left")), currentArrowLeft: parseInt(arrow.css("left")) };
         }
         var dropLeft = drop.offset().left;
+        var info;
         if (dropLeft < 0) {
-            var info = getInfo();
-            info.arrow.css({ left: (info.currentArrowLeft + dropLeft - 10) + "px" });
-            drop.css({ left: (info.currentDropLeft - dropLeft + 10) + "px" });
+            info = getInfo();
+            info.arrow.css({ left: info.currentArrowLeft + dropLeft - 10 + "px" });
+            drop.css({ left: info.currentDropLeft - dropLeft + 10 + "px" });
             return;
         }
         var dropWidth = drop.width();
         var offsetRight = $(window).width() + $(window).scrollLeft() - (dropLeft + dropWidth);
         if (offsetRight < 0) {
-            var info = getInfo();
-            info.arrow.css({ left: (info.currentArrowLeft - offsetRight + 5) + "px" });
-            drop.css({ left: (info.currentDropLeft + offsetRight - 5) + "px" });
+            info = getInfo();
+            info.arrow.css({ left: info.currentArrowLeft - offsetRight + 5 + "px" });
+            drop.css({ left: info.currentDropLeft + offsetRight - 5 + "px" });
         }
     };
-    /***
-    * Returns layout of filter popup menu
-    */
+    //
+    // Returns layout of filter popup menu
+    //
     gridMvc.prototype.filterMenuHtml = function () {
         return '<div class="dropdown dropdown-menu grid-dropdown" style="display: none;">\
                     <div class="grid-dropdown-arrow"></div>\
@@ -225,23 +227,23 @@ GridMvc = (function ($) {
                     </div>\
                 </div>';
     };
-    /***
-    * Returns layout of 'clear filter' button
-    */
+    //
+    // Returns layout of 'clear filter' button
+    //
     gridMvc.prototype.getClearFilterButton = function () {
         return '<ul class="menu-list">\
                     <li><a class="grid-filter-clear" href="javascript:void(0);">' + this.lang.clearFilterLabel + '</a></li>\
                 </ul>';
     };
-    /***
-    * Register filter widget in widget collection
-    */
+    //
+    // Register filter widget in widget collection
+    //
     gridMvc.prototype.addFilterWidget = function (widget) {
         this.filterWidgets.push(widget);
     };
-    /***
-    * Parse filter settings from data attribute
-    */
+    //
+    // Parse filter settings from data attribute
+    //
     gridMvc.prototype.parseFilterValues = function (filterData) {
         var opt = $.parseJSON(filterData);
         var filters = [];
@@ -255,9 +257,9 @@ GridMvc = (function ($) {
         return decodeURIComponent((str + '').replace(/\+/g, '%20'));
     };
 
-    /***
-    * Return registred widget for specific column type name
-    */
+    //
+    // Return registred widget for specific column type name
+    //
     gridMvc.prototype.getFilterWidgetForType = function (typeName) {
         for (var i = 0; i < this.filterWidgets.length; i++) {
             if ($.inArray(typeName, this.filterWidgets[i].getAssociatedTypes()) >= 0)
@@ -265,9 +267,9 @@ GridMvc = (function ($) {
         }
         return null;
     };
-    /***
-    * Replace existed filter widget
-    */
+    //
+    // Replace existed filter widget
+    //
     gridMvc.prototype.replaceFilterWidget = function (typeNameToReplace, widget) {
         for (var i = 0; i < this.filterWidgets.length; i++) {
             if ($.inArray(typeNameToReplace, this.filterWidgets[i].getAssociatedTypes()) >= 0) {
@@ -278,9 +280,9 @@ GridMvc = (function ($) {
         }
         return false;
     };
-    /***
-    * Applies selected filter value by redirecting to another url:
-    */
+    //
+    // Applies selected filter value by redirecting to another url:
+    //
     gridMvc.prototype.applyFilterValues = function (initialUrl, columnName, values, skip) {
         var filters = this.jqContainer.find(".grid-filter");
 
@@ -314,9 +316,9 @@ GridMvc = (function ($) {
 
         if (this.options.multiplefilters) { //multiple filters enabled
             for (var i = 0; i < filters.length; i++) {
-                if ($(filters[i]).attr("data-name") != columnName) {
+                if ($(filters[i]).attr("data-name") !== columnName) {
                     var filterData = this.parseFilterValues($(filters[i]).attr("data-filterdata"));
-                    if (filterData.length == 0) continue;
+                    if (filterData.length === 0) continue;
                     if (url.length > 0) url += "&";
                     url += this.getFilterQueryData($(filters[i]).attr("data-name"), filterData);
                 } else {
@@ -334,7 +336,7 @@ GridMvc = (function ($) {
                 if (url.length > 0) url += "&";
                 url += "grid-clearinitfilter=" + initialFilters[k];
             }
-        }  
+        }
 
         window.location.search = initialUrl + url;
     };
@@ -342,21 +344,21 @@ GridMvc = (function ($) {
         var url = "";
         for (var i = 0; i < values.length; i++) {
             url += "grid-filter=" + encodeURIComponent(columnName) + "__" + values[i].filterType + "__" + encodeURIComponent(values[i].filterValue);
-            if (i != values.length - 1)
+            if (i !== values.length - 1)
                 url += "&";
         }
         return url;
     };
-    /***
-    * ============= POPUP MENU =============
-    * Methods that provides base functionality for popup menus
-    */
+    //
+    // ============= POPUP MENU =============
+    // Methods that provides base functionality for popup menus
+    //
     gridMvc.prototype.openMenuOnClick = function (self) {
         if ($(this).hasClass("clicked")) return true;
         self.closeOpenedPopups();
         $(this).addClass("clicked");
         var popup = $(this).find(".dropdown-menu");
-        if (popup.length == 0) return true;
+        if (popup.length === 0) return true;
         popup.show();
         popup.addClass("opened");
         self.openedMenuBtn = $(this);
@@ -371,13 +373,13 @@ GridMvc = (function ($) {
         var target = e.target || e.srcElement;
         var box = $(".dropdown-menu.opened").get(0);
         var html = $("html").get(0);
-        if (typeof box != "undefined") {
+        if (typeof box !== "undefined") {
             do {
-                if (box == target) {
+                if (box === target) {
                     // Click occured inside the box, do nothing.
                     return;
                 }
-                if (html == target) {
+                if (html === target) {
                     box.style.display = "none";
                     $(box).removeClass("opened");
                 }
@@ -385,7 +387,7 @@ GridMvc = (function ($) {
             } while (target); // Click was outside the box, hide it.
 
         }
-        if ($context.openedMenuBtn != null)
+        if ($context.openedMenuBtn !== null)
             $context.openedMenuBtn.removeClass("clicked");
         $(document).unbind("click.gridmvc");
     };
@@ -394,11 +396,11 @@ GridMvc = (function ($) {
         var openedPopup = $(".dropdown-menu.opened");
         openedPopup.hide();
         openedPopup.removeClass("opened");
-        if (this.openedMenuBtn != null)
+        if (this.openedMenuBtn !== null)
             this.openedMenuBtn.removeClass("clicked");
     };
 
-    /* Grid.Mvc clients functions */
+    // Grid.Mvc clients functions 
 
     gridMvc.prototype.selectable = function (enable) {
         this.options.selectable = enable;
@@ -426,10 +428,10 @@ GridMvc = (function ($) {
         });
     };
 
-    /***
-    * Applies selected search value by redirecting to another url:
-    */
-    gridMvc.prototype.applySearchValues = function (searchText, skip) {      
+    //
+    // Applies selected search value by redirecting to another url:
+    //
+    gridMvc.prototype.applySearchValues = function (searchText, skip) {
         var url = "";
         var gridSearch = this.jqContainer.find(".grid-search").first();
         if (gridSearch) {
@@ -437,7 +439,7 @@ GridMvc = (function ($) {
         }
 
         if (skip) {
-            url = (url.length && url[0] == '?') ? url.slice(1) : url;
+            url = url.length && url[0] === '?' ? url.slice(1) : url;
             var params = url.split('&');
             for (var i = params.length - 1; i >= 0; i--) {
                 var param = params[i].split('=');
@@ -451,7 +453,7 @@ GridMvc = (function ($) {
             if (url.length > 0)
                 url += "&";
             url += this.getSearchQueryData(searchText);
-        } 
+        }
         window.location.search = url;
     };
 
@@ -472,7 +474,7 @@ GridMvc = (function ($) {
 * This script file provides localization only for english language.
 * For more documentation see: http://gridmvc.codeplex.com/documentation
 */
-if (typeof (GridMvc.lang) == 'undefined')
+if (typeof GridMvc.lang === 'undefined')
     GridMvc.lang = {};
 GridMvc.lang.en = {
     filterTypeLabel: "Type: ",
@@ -486,7 +488,9 @@ GridMvc.lang.en = {
         GreaterThan: "Greater than",
         LessThan: "Less than",
         GreaterThanOrEquals: "Greater than or equals",
-        LessThanOrEquals: "Less than or equals"
+        LessThanOrEquals: "Less than or equals",
+        And: "And",
+        Or: "Or"
     },
     code: 'en',
     boolTrueLabel: "Yes",
@@ -508,84 +512,202 @@ GridMvc.lang.en = {
 */
 TextFilterWidget = (function ($) {
     function textFilterWidget() { }
-    /***
-    * This method must return type of columns that must be associated with current widget
-    * If you not specify your own type name for column (see 'SetFilterWidgetType' method), GridMvc setup column type name from .Net type ("System.DateTime etc.)
-    */
+    //
+    // This method must return type of columns that must be associated with current widget
+    // If you not specify your own type name for column (see 'SetFilterWidgetType' method), GridMvc setup column type name from .Net type ("System.DateTime etc.)
+    //
     textFilterWidget.prototype.getAssociatedTypes = function () { return ["System.String"]; };
-    /***
-    * This method invokes when filter widget was shown on the page
-    */
-    textFilterWidget.prototype.onShow = function () {
-        var textBox = this.container.find(".grid-filter-input");
+    //
+    // This method invokes when filter widget was shown on the page
+    //
+    textFilterWidget.prototype.onShow = function (columnName) {
+        var textBox = this.filterData[columnName].container.find(".grid-filter-type");
         if (textBox.length <= 0) return;
-        textBox.focus();
+        textBox.last().focus();
     };
-    /***
-    * This method specify whether onRender 'Clear filter' button for this widget.
-    */
+    //
+    // This method specify whether onRender 'Clear filter' button for this widget.
+    //
     textFilterWidget.prototype.showClearFilterButton = function () { return true; };
-    /***
-    * This method will invoke when user first clicked on filter button.
-    * container - html element, which must contain widget layout;
-    * lang - current language settings;
-    * typeName - current column type (if widget assign to multipile types, see: getAssociatedTypes);
-    * filterType - current filter type (like equals, starts with etc);
-    * filterValue - current filter value;
-    * cb - callback function that must invoked when user want to filter this column. Widget must pass filter type and filter value.
-    */
-    textFilterWidget.prototype.onRender = function (container, lang, typeName, values, cb) {
+    //
+    // This method will invoke when user first clicked on filter button.
+    // container - html element, which must contain widget layout;
+    // lang - current language settings;
+    // typeName - current column type (if widget assign to multipile types, see: getAssociatedTypes);
+    // filterType - current filter type (like equals, starts with etc);
+    // filterValue - current filter value;
+    // cb - callback function that must invoked when user want to filter this column. Widget must pass filter type and filter value.
+    //
+    textFilterWidget.prototype.onRender = function (container, lang, typeName, columnName, values, cb) {
         this.cb = cb;
-        this.container = container;
         this.lang = lang;
-        this.value = values.length > 0 ? values[0] : { filterType: 1, filterValue: "" };//support only one filter value
-        this.renderWidget();
-        this.registerEvents();
+
+        if (!this.filterData) {
+            this.filterData = new Object();
+        }
+        if (!this.filterData[columnName]) {
+            this.filterData[columnName] = new Object();
+        }
+        this.filterData[columnName].container = container;
+        this.filterData[columnName].typeName = typeName;
+        var cond = values.find(x => x.filterType === 9 && x.filterValue && x.columnName === columnName);
+        this.filterData[columnName].condition = cond ? cond.filterValue : "1";
+        this.filterData[columnName].values = values.filter(x => x.filterType !== 9 && x.filterValue && x.columnName === columnName);
+        if (!this.filterData[columnName].values) {
+            this.filterData[columnName].values = new Array();
+        }
+        if (this.filterData[columnName].values.length === 0) {
+            this.filterData[columnName].values.push({
+                filterType: "1",
+                filterValue: "",
+                columnName: columnName
+            });
+        }
+
+        this.renderWidget(columnName);
+        this.registerEvents(columnName);
     };
-    /***
-    * Internal method that build widget layout and append it to the widget container
-    */
-    textFilterWidget.prototype.renderWidget = function () {
-        var html = '<div class="form-group">\
-                        <label>' + this.lang.filterTypeLabel + '</label>\
-                        <select class="grid-filter-type form-control">\
-                            <option value="1" ' + (this.value.filterType == "1" ? "selected=\"selected\"" : "") + '>' + this.lang.filterSelectTypes.Equals + '</option>\
-                            <option value="2" ' + (this.value.filterType == "2" ? "selected=\"selected\"" : "") + '>' + this.lang.filterSelectTypes.Contains + '</option>\
-                            <option value="3" ' + (this.value.filterType == "3" ? "selected=\"selected\"" : "") + '>' + this.lang.filterSelectTypes.StartsWith + '</option>\
-                            <option value="4" ' + (this.value.filterType == "4" ? "selected=\"selected\"" : "") + '>' + this.lang.filterSelectTypes.EndsWith + '</option>\
-                        </select>\
-                    </div>\
-                    <div class="form-group">\
-                        <label>' + this.lang.filterValueLabel + '</label>\
-                        <input type="text" class="grid-filter-input form-control" value="' + this.value.filterValue + '" />\
-                    </div>\
-                    <div class="grid-filter-buttons">\
-                        <button type="button" class="btn btn-primary grid-apply" >' + this.lang.applyFilterButtonText + '</button>\
-                    </div>';
-        this.container.append(html);
+    //
+    // Internal method that build widget layout and append it to the widget container
+    //
+    textFilterWidget.prototype.renderWidget = function (columnName) {
+        var html = '<div class="grid-filter-body">';
+        for (var i = 0; i < this.filterData[columnName].values.length; i++) {
+            if (i === 1) {
+                html += '<div class="form-group row">\
+                            <div class="col-md-4 col-md-offset-4 offset-md-4">\
+                                <select class="grid-filter-cond form-control">\
+                                    <option value="1" ' + (this.filterData[columnName].condition === "1" ? "selected=\"selected\"" : "") + '>' + this.lang.filterSelectTypes.And + '</option>\
+                                    <option value="2" ' + (this.filterData[columnName].condition === "2" ? "selected=\"selected\"" : "") + '>' + this.lang.filterSelectTypes.Or + '</option>\
+                                </select>\
+                            </div>\
+                        </div>';
+            }
+            else if (i > 1) {
+                html += '<div class="form-group row">\
+                            <div class="col-md-4 col-md-offset-4 offset-md-4">\
+                                <select class="grid-filter-conddis form-control" disabled="disabled">\
+                                    <option value="1" ' + (this.filterData[columnName].condition === "1" ? "selected=\"selected\"" : "") + '>' + this.lang.filterSelectTypes.And + '</option>\
+                                    <option value="2" ' + (this.filterData[columnName].condition === "2" ? "selected=\"selected\"" : "") + '>' + this.lang.filterSelectTypes.Or + '</option>\
+                                </select>\
+                            </div>\
+                        </div>';
+            }
+            html += '<div class="form-group row">\
+                        <div class="col-md-6">';
+            if (i === 0) {
+                html +=     '<label class="control-label">' + this.lang.filterTypeLabel + '</label>';
+            }         
+            html +=         '<div>\
+                                <select class="grid-filter-type form-control">\
+                                    <option value="1" ' + (this.filterData[columnName].values[i].filterType.toString() === "1" ? "selected=\"selected\"" : "") + '>' + this.lang.filterSelectTypes.Equals + '</option>\
+                                    <option value="2" ' + (this.filterData[columnName].values[i].filterType.toString() === "2" ? "selected=\"selected\"" : "") + '>' + this.lang.filterSelectTypes.Contains + '</option>\
+                                    <option value="3" ' + (this.filterData[columnName].values[i].filterType.toString() === "3" ? "selected=\"selected\"" : "") + '>' + this.lang.filterSelectTypes.StartsWith + '</option>\
+                                    <option value="4" ' + (this.filterData[columnName].values[i].filterType.toString() === "4" ? "selected=\"selected\"" : "") + '>' + this.lang.filterSelectTypes.EndsWith + '</option>\
+                                </select>\
+                            </div>\
+                        </div>\
+                        <div class="col-md-6">';
+            if (i === 0) {
+                html +=     '<label class="control-label">' + this.lang.filterValueLabel + '</label>';
+            }   
+            html +=         '<div>\
+                                <input type="text" class="grid-filter-input form-control" value="' + this.filterData[columnName].values[i].filterValue + '" />\
+                            </div>\
+                        </div>\
+                    </div > ';
+        }
+        html += '<div class="grid-filter-buttons" style="float:right;">\
+                    <button type ="button" class="btn btn-primary grid-add"><b>+</b></button>';
+        if (this.filterData[columnName].values.length > 1) {
+            html += '<button type="button" class="btn btn-primary grid-remove" style="margin-left:10px;"><b>-</b></button>';
+        }
+        html += '</div>';
+        html += '<div class="grid-filter-buttons" style="margin-top:10px;">\
+                    <button type="button" class="btn btn-primary grid-apply" >' + this.lang.applyFilterButtonText + '</button>\
+                 </div>\
+            </div> ';
+        var filterBody = this.filterData[columnName].container.find(".grid-filter-body");
+        if (filterBody) {
+            filterBody.remove();
+        }
+        this.filterData[columnName].container.append(html);
     };
-    /***
-    * Internal method that register event handlers for 'apply' button.
-    */
-    textFilterWidget.prototype.registerEvents = function () {
+    //
+    // Internal method that register event handlers for 'apply' button.
+    //
+    textFilterWidget.prototype.registerEvents = function (columnName) {
         //get apply button from:
-        var applyBtn = this.container.find(".grid-apply");
+        var applyBtn = this.filterData[columnName].container.find(".grid-apply");
         //save current context:
-        var $context = this;
+        var self = this;
+        var $context = this.filterData[columnName];
         //register onclick event handler
         applyBtn.click(function () {
-            //get selected filter type:
-            var type = $context.container.find(".grid-filter-type").val();
-            //get filter value:
-            var value = $context.container.find(".grid-filter-input").val();
-            //invoke callback with selected filter values:
-            var filterValues = [{ filterType: type, filterValue: value }];
-            $context.cb(filterValues);
+            var cond = $context.container.find(".grid-filter-cond").val();
+            var types = $context.container.find(".grid-filter-type");
+            var values = $context.container.find(".grid-filter-input");
+            if (types.length === values.length) {
+                var filters = new Array();
+                if (cond) {
+                    filters.push({ filterType: "9", filterValue: cond });
+                }
+                for (var i = 0; i < types.length; i++) {
+                    filters.push({ filterType: types[i].value, filterValue: values[i].value });
+                }
+                self.cb(filters);
+            }
         });
         //register onEnter event for filter text box:
-        this.container.find(".grid-filter-input").keyup(function (event) {
-            if (event.keyCode == 13) { applyBtn.click(); }
-            if (event.keyCode == 27) { GridMvc.closeOpenedPopups(); }
+        this.filterData[columnName].container.find(".grid-filter-input").keyup(function (event) {
+            if (event.keyCode === 13) { applyBtn.click(); }
+            if (event.keyCode === 27) { GridMvc.closeOpenedPopups(); }
+        });
+        //get add button from:
+        var addBtn = this.filterData[columnName].container.find(".grid-add");
+        //register onclick event handler
+        addBtn.click(function () {
+            var cond = $context.container.find(".grid-filter-cond").val();
+            var types = $context.container.find(".grid-filter-type");
+            var values = $context.container.find(".grid-filter-input");
+            if (types.length === values.length) {
+                $context.values = new Array();
+                if (cond) {
+                    $context.condition = cond;
+                }
+                for (var i = 0; i < types.length; i++) {
+                    $context.values.push({ filterType: types[i].value, filterValue: values[i].value, columnName: columnName });
+                }
+                $context.values.push({ filterType: "1", filterValue: "", columnName: columnName });
+                self.renderWidget(columnName);
+                self.registerEvents(columnName);
+                self.onShow(columnName);
+            }
+        });
+        //get add button from:
+        var removeBtn = this.filterData[columnName].container.find(".grid-remove");
+        //register onclick event handler
+        removeBtn.click(function () {
+            var cond = $context.container.find(".grid-filter-cond").val();
+            var types = $context.container.find(".grid-filter-type");
+            var values = $context.container.find(".grid-filter-input");
+            if (types.length === values.length) {
+                $context.values = new Array();
+                if (cond) {
+                    $context.condition = cond;
+                }
+                for (var i = 0; i < types.length; i++) {
+                    $context.values.push({ filterType: types[i].value, filterValue: values[i].value, columnName: columnName });
+                }
+                $context.values.splice(values.length - 1, 1);
+                self.renderWidget(columnName);
+                self.registerEvents(columnName);
+                self.onShow(columnName);
+            }
+        });
+        var condSelect = this.filterData[columnName].container.find(".grid-filter-cond");
+        condSelect.change(function () {
+            $(".grid-filter-conddis").val(this.value);
         });
     };
 
@@ -607,63 +729,182 @@ NumberFilterWidget = (function ($) {
         return ["System.Int32", "System.Double", "System.Decimal", "System.Byte", "System.Single", "System.Float", "System.Int64", "System.Int16", "System.UInt64", "System.UInt32", "System.UInt16"];
     };
 
-    numberFilterWidget.prototype.onShow = function () {
-        var textBox = this.container.find(".grid-filter-input");
-        if (textBox.length <= 0) return; 
-        textBox.focus();
+    numberFilterWidget.prototype.onShow = function (columnName) {
+        var textBox = this.filterData[columnName].container.find(".grid-filter-type");
+        if (textBox.length <= 0) return;
+        textBox.last().focus();
     };
 
-    numberFilterWidget.prototype.onRender = function (container, lang, typeName, values, cb) {
+    numberFilterWidget.prototype.onRender = function (container, lang, typeName, columnName, values, cb) {
         this.cb = cb;
-        this.container = container;
         this.lang = lang;
-        this.typeName = typeName;
-        this.value = values.length > 0 ? values[0] : { filterType: 1, filterValue: "" };//support only one filter value
-        this.renderWidget();
-        this.registerEvents();
+
+        if (!this.filterData) {
+            this.filterData = new Object();
+        }
+        if (!this.filterData[columnName]) {
+            this.filterData[columnName] = new Object();
+        }
+        this.filterData[columnName].container = container;
+        this.filterData[columnName].typeName = typeName;
+        var cond = values.find(x => x.filterType === 9 && x.filterValue && x.columnName === columnName);
+        this.filterData[columnName].condition = cond ? cond.filterValue : "1";
+        this.filterData[columnName].values = values.filter(x => x.filterType !== 9 && x.filterValue && x.columnName === columnName);
+        if (!this.filterData[columnName].values) {
+            this.filterData[columnName].values = new Array();
+        }
+        if (this.filterData[columnName].values.length === 0) {
+            this.filterData[columnName].values.push({
+                filterType: "1",
+                filterValue: "",
+                columnName: columnName
+            });
+        }
+
+        this.renderWidget(columnName);
+        this.registerEvents(columnName);
     };
 
-    numberFilterWidget.prototype.renderWidget = function () {
-        var html = '<div class="form-group">\
-                        <label>' + this.lang.filterTypeLabel + '</label>\
-                        <select class="grid-filter-type form-control">\
-                            <option value="1" ' + (this.value.filterType == "1" ? "selected=\"selected\"" : "") + '>' + this.lang.filterSelectTypes.Equals + '</option>\
-                            <option value="5" ' + (this.value.filterType == "5" ? "selected=\"selected\"" : "") + '>' + this.lang.filterSelectTypes.GreaterThan + '</option>\
-                            <option value="6" ' + (this.value.filterType == "6" ? "selected=\"selected\"" : "") + '>' + this.lang.filterSelectTypes.LessThan + '</option>\
-                            <option value="7" ' + (this.value.filterType == "7" ? "selected=\"selected\"" : "") + '>' + this.lang.filterSelectTypes.GreaterThanOrEquals + '</option>\
-                            <option value="8" ' + (this.value.filterType == "8" ? "selected=\"selected\"" : "") + '>' + this.lang.filterSelectTypes.LessThanOrEquals + '</option>\
-                        </select>\
-                    </div>\
-                    <div class="form-group">\
-                        <label>' + this.lang.filterValueLabel + '</label>\
-                        <input type="text" class="grid-filter-input form-control" value="' + this.value.filterValue + '" />\
-                    </div>\
-                    <div class="grid-filter-buttons">\
-                        <button type="button" class="btn btn-primary grid-apply">' + this.lang.applyFilterButtonText + '</button>\
-                    </div>';
-        this.container.append(html);
+    numberFilterWidget.prototype.renderWidget = function (columnName) {
+        var html = '<div class="grid-filter-body">';
+        for (var i = 0; i < this.filterData[columnName].values.length; i++) {
+            if (i === 1) {
+                html += '<div class="form-group row">\
+                            <div class="col-md-4 col-md-offset-4 offset-md-4">\
+                                <select class="grid-filter-cond form-control">\
+                                    <option value="1" ' + (this.filterData[columnName].condition === "1" ? "selected=\"selected\"" : "") + '>' + this.lang.filterSelectTypes.And + '</option>\
+                                    <option value="2" ' + (this.filterData[columnName].condition === "2" ? "selected=\"selected\"" : "") + '>' + this.lang.filterSelectTypes.Or + '</option>\
+                                </select>\
+                            </div>\
+                        </div>';
+            }
+            else if (i > 1) {
+                html += '<div class="form-group row">\
+                            <div class="col-md-4 col-md-offset-4 offset-md-4">\
+                                <select class="grid-filter-conddis form-control" disabled="disabled">\
+                                    <option value="1" ' + (this.filterData[columnName].condition === "1" ? "selected=\"selected\"" : "") + '>' + this.lang.filterSelectTypes.And + '</option>\
+                                    <option value="2" ' + (this.filterData[columnName].condition === "2" ? "selected=\"selected\"" : "") + '>' + this.lang.filterSelectTypes.Or + '</option>\
+                                </select>\
+                            </div>\
+                        </div>';
+            }
+            html += '<div class="form-group row">\
+                        <div class="col-md-6">';
+            if (i === 0) {
+                html += '<label class="control-label">' + this.lang.filterTypeLabel + '</label>';
+            }
+            html +=         '<div>\
+                                <select class="grid-filter-type form-control">\
+                                    <option value="1" ' + (this.filterData[columnName].values[i].filterType.toString() === "1" ? "selected=\"selected\"" : "") + '>' + this.lang.filterSelectTypes.Equals + '</option>\
+                                    <option value="5" ' + (this.filterData[columnName].values[i].filterType.toString() === "5" ? "selected=\"selected\"" : "") + '>' + this.lang.filterSelectTypes.GreaterThan + '</option>\
+                                    <option value="6" ' + (this.filterData[columnName].values[i].filterType.toString() === "6" ? "selected=\"selected\"" : "") + '>' + this.lang.filterSelectTypes.LessThan + '</option>\
+                                    <option value="7" ' + (this.filterData[columnName].values[i].filterType.toString() === "7" ? "selected=\"selected\"" : "") + '>' + this.lang.filterSelectTypes.GreaterThanOrEquals + '</option>\
+                                    <option value="8" ' + (this.filterData[columnName].values[i].filterType.toString() === "8" ? "selected=\"selected\"" : "") + '>' + this.lang.filterSelectTypes.LessThanOrEquals + '</option>\
+                                </select>\
+                            </div >\
+                        </div>\
+                        <div class="col-md-6">';
+            if (i === 0) {
+                html +=     '<label class="control-label">' + this.lang.filterValueLabel + '</label>';
+            }
+            html +=         '<div>\
+                                <input type="text" class="grid-filter-input form-control" value="' + this.filterData[columnName].values[i].filterValue + '" />\
+                            </div>\
+                        </div>\
+                    </div> ';
+        }
+        html += '<div class="grid-filter-buttons" style="float:right;">\
+                    <button type ="button" class="btn btn-primary grid-add"><b>+</b></button>';
+        if (this.filterData[columnName].values.length > 1) {
+            html += '<button type="button" class="btn btn-primary grid-remove" style="margin-left:10px;"><b>-</b></button>';
+        }
+        html += '</div>';
+        html += '<div class="grid-filter-buttons" style="margin-top:10px;">\
+                    <button type="button" class="btn btn-primary grid-apply" >' + this.lang.applyFilterButtonText + '</button>\
+                </div>\
+            </div> ';
+        var filterBody = this.filterData[columnName].container.find(".grid-filter-body");
+        if (filterBody) {
+            filterBody.remove();
+        }
+        this.filterData[columnName].container.append(html);
     };
 
-    numberFilterWidget.prototype.registerEvents = function () {
-        var $context = this;
-        var applyBtn = this.container.find(".grid-apply");
+    numberFilterWidget.prototype.registerEvents = function (columnName) {
+        var $context = this.filterData[columnName];
+        var self = this;
+        var applyBtn = this.filterData[columnName].container.find(".grid-apply");
         applyBtn.click(function () {
-            var type = $context.container.find(".grid-filter-type").val();
-            var value = $context.container.find(".grid-filter-input").val();
-            var filters = [{ filterType: type, filterValue: value }];
-            $context.cb(filters);
+            var option = $context.container.find(".grid-filter-cond").val();
+            var types = $context.container.find(".grid-filter-type");
+            var values = $context.container.find(".grid-filter-input");
+            if (types.length === values.length) {
+                var filters = new Array();
+                if (option) {
+                    filters.push({ filterType: "9", filterValue: option });
+                }
+                for (var i = 0; i < types.length; i++) {
+                    filters.push({ filterType: types[i].value, filterValue: values[i].value });
+                }
+                self.cb(filters);
+            }
         });
-        var txt = this.container.find(".grid-filter-input");
+        var txt = this.filterData[columnName].container.find(".grid-filter-input");
         txt.keyup(function (event) {
-            if (event.keyCode == 13) { applyBtn.click(); }
-            if (event.keyCode == 27) { GridMvc.closeOpenedPopups(); }
-        })
-            .keypress(function (event) { return $context.validateInput.call($context, event); });
-        if (this.typeName == "System.Byte")
+            if (event.keyCode === 13) { applyBtn.click(); }
+            if (event.keyCode === 27) { GridMvc.closeOpenedPopups(); }
+        }).keypress(function (event) { return self.validateInput.call($context, columnName, event); });
+        if (this.filterData[columnName].typeName === "System.Byte")
             txt.attr("maxlength", "3");
+        //get add button from:
+        var addBtn = this.filterData[columnName].container.find(".grid-add");
+        //register onclick event handler
+        addBtn.click(function () {
+            var cond = $context.container.find(".grid-filter-cond").val();
+            var types = $context.container.find(".grid-filter-type");
+            var values = $context.container.find(".grid-filter-input");
+            if (types.length === values.length) {
+                $context.values = new Array();
+                if (cond) {
+                    $context.condition = cond;
+                }
+                for (var i = 0; i < types.length; i++) {
+                    $context.values.push({ filterType: types[i].value, filterValue: values[i].value, columnName: columnName });
+                }
+                $context.values.push({ filterType: "1", filterValue: "", columnName: columnName });
+                self.renderWidget(columnName);
+                self.registerEvents(columnName);
+                self.onShow(columnName);
+            }
+        });
+        //get add button from:
+        var removeBtn = this.filterData[columnName].container.find(".grid-remove");
+        //register onclick event handler
+        removeBtn.click(function () {
+            var cond = $context.container.find(".grid-filter-cond").val();
+            var types = $context.container.find(".grid-filter-type");
+            var values = $context.container.find(".grid-filter-input");
+            if (types.length === values.length) {
+                $context.values = new Array();
+                if (cond) {
+                    $context.condition = cond;
+                }
+                for (var i = 0; i < types.length; i++) {
+                    $context.values.push({ filterType: types[i].value, filterValue: values[i].value, columnName: columnName });
+                }
+                $context.values.splice(values.length - 1, 1);
+                self.renderWidget(columnName);
+                self.registerEvents(columnName);
+                self.onShow(columnName);
+            }
+        });
+        var condSelect = this.filterData[columnName].container.find(".grid-filter-cond");
+        condSelect.change(function () {
+            $(".grid-filter-conddis").val(this.value);
+        });
     };
 
-    numberFilterWidget.prototype.validateInput = function (evt) {
+    numberFilterWidget.prototype.validateInput = function (columnName, evt) {
         var $event = evt || window.event;
         var key = $event.keyCode || $event.which;
         key = String.fromCharCode(key);
@@ -701,78 +942,203 @@ DateTimeFilterWidget = (function ($) {
 
     dateTimeFilterWidget.prototype.showClearFilterButton = function () { return true; };
 
-    dateTimeFilterWidget.prototype.onRender = function (container, lang, typeName, values, applycb, data) {
-        this.datePickerIncluded = typeof ($.fn.datepicker) != 'undefined';
+    dateTimeFilterWidget.prototype.onShow = function (columnName) {
+        var textBox = this.filterData[columnName].container.find(".grid-filter-type");
+        if (textBox.length <= 0) return;
+        textBox.last().focus();
+    };
+
+    dateTimeFilterWidget.prototype.onRender = function (container, lang, typeName, columnName, values, applycb, data) {
+        this.datePickerIncluded = typeof $.fn.datepicker !== 'undefined';
         this.cb = applycb;
         this.data = data;
-        this.typeName = typeName;
-        this.container = container;
         this.lang = lang;
-        this.value = values.length > 0 ? values[0] : { filterType: 1, filterValue: "" };//support only one filter value
-        this.renderWidget();
-        this.registerEvents();
-    };
 
-    dateTimeFilterWidget.prototype.renderWidget = function () {
-        var html = '<div class="form-group">\
-                        <label>' + this.lang.filterTypeLabel + '</label>\
-                        <select class="grid-filter-type form-control">\
-                            <option value="1" ' + (this.value.filterType == "1" ? "selected=\"selected\"" : "") + '>' + this.lang.filterSelectTypes.Equals + '</option>\
-                            <option value="5" ' + (this.value.filterType == "5" ? "selected=\"selected\"" : "") + '>' + this.lang.filterSelectTypes.GreaterThan + '</option>\
-                            <option value="6" ' + (this.value.filterType == "6" ? "selected=\"selected\"" : "") + '>' + this.lang.filterSelectTypes.LessThan + '</option>\
-                            <option value="7" ' + (this.value.filterType == "7" ? "selected=\"selected\"" : "") + '>' + this.lang.filterSelectTypes.GreaterThanOrEquals + '</option>\
-                            <option value="8" ' + (this.value.filterType == "8" ? "selected=\"selected\"" : "") + '>' + this.lang.filterSelectTypes.LessThanOrEquals + '</option>\
-                        </select >\
-                    </div>' +
-                        (this.datePickerIncluded ?
-                            '<div class="grid-filter-datepicker"></div>'
-                            :
-                            '<div class="form-group">\
-                                <label>' + this.lang.filterValueLabel + '</label>\
-                                <input type="text" class="grid-filter-input form-control" value="' + this.value.filterValue + '" />\
-                             </div>\
-                             <div class="grid-filter-buttons">\
-                                <input type="button" class="btn btn-primary grid-apply" value="' + this.lang.applyFilterButtonText + '" />\
-                             </div>');
-        this.container.append(html);
-        //if window.jQueryUi included:
-        if (this.datePickerIncluded) {
-            var datePickerOptions = this.data || {};
-            datePickerOptions.format = datePickerOptions.format || "yyyy-mm-dd";
-            datePickerOptions.language = datePickerOptions.language || this.lang.code;
-
-            var $context = this;
-            var dateContainer = this.container.find(".grid-filter-datepicker");
-            dateContainer.datepicker(datePickerOptions).on('changeDate', function (ev) {
-                var type = $context.container.find(".grid-filter-type").val();
-                //if (type == "1") {
-                //    var tomorrow = new Date(ev.getTime());
-                //    tomorrow.setDate(ev.getDate() + 1);
-                //    var filterValues = [{ filterType: type, filterValue: ev.format() }];
-                //}
-                //else{
-                    var filterValues = [{ filterType: type, filterValue: ev.format() }];
-                //}
-                $context.cb(filterValues);
-            });
-            if (this.value.filterValue)
-                dateContainer.datepicker('update', this.value.filterValue);
+        if (!this.filterData) {
+            this.filterData = new Object();
         }
+        if (!this.filterData[columnName]) {
+            this.filterData[columnName] = new Object();
+        }
+        this.filterData[columnName].container = container;
+        this.filterData[columnName].typeName = typeName;
+        var cond = values.find(x => x.filterType === 9 && x.filterValue && x.columnName === columnName);
+        this.filterData[columnName].condition = cond ? cond.filterValue : "1";
+        this.filterData[columnName].values = values.filter(x => x.filterType !== 9 && x.filterValue && x.columnName === columnName);
+        if (!this.filterData[columnName].values) {
+            this.filterData[columnName].values = new Array();
+        }
+        if (this.filterData[columnName].values.length === 0) {
+            this.filterData[columnName].values.push({
+                filterType: "1",
+                filterValue: "",
+                columnName: columnName
+            });
+        }
+
+        this.renderWidget(columnName);
+        this.registerEvents(columnName);
     };
 
-    dateTimeFilterWidget.prototype.registerEvents = function () {
-        var $context = this;
-        var applyBtn = this.container.find(".grid-apply");
-        applyBtn.click(function () {
-            var type = $context.container.find(".grid-filter-type").val();
-            var value = $context.container.find(".grid-filter-input").val();
-            var filterValues = [{ filterType: type, filterValue: value }];
-            $context.cb(filterValues);
-        });
-        this.container.find(".grid-filter-input").keyup(function (event) {
-            if (event.keyCode == 13) {
-                applyBtn.click();
+    dateTimeFilterWidget.prototype.renderWidget = function (columnName) {
+        this.datePickerIncluded = typeof $.fn.datepicker !== 'undefined';
+        var html = '<div class="grid-filter-body">';
+        for (var i = 0; i < this.filterData[columnName].values.length; i++) {
+            if (i === 1) {
+                html += '<div class="form-group row">\
+                            <div class="col-md-4 col-md-offset-4 offset-md-4">\
+                                <select class="grid-filter-cond form-control">\
+                                    <option value="1" ' + (this.filterData[columnName].condition === "1" ? "selected=\"selected\"" : "") + '>' + this.lang.filterSelectTypes.And + '</option>\
+                                    <option value="2" ' + (this.filterData[columnName].condition === "2" ? "selected=\"selected\"" : "") + '>' + this.lang.filterSelectTypes.Or + '</option>\
+                                </select>\
+                            </div>\
+                        </div>';
             }
+            else if (i > 1) {
+                html += '<div class="form-group row">\
+                            <div class="col-md-4 col-md-offset-4 offset-md-4">\
+                                <select class="grid-filter-conddis form-control" disabled="disabled">\
+                                    <option value="1" ' + (this.filterData[columnName].condition === "1" ? "selected=\"selected\"" : "") + '>' + this.lang.filterSelectTypes.And + '</option>\
+                                    <option value="2" ' + (this.filterData[columnName].condition === "2" ? "selected=\"selected\"" : "") + '>' + this.lang.filterSelectTypes.Or + '</option>\
+                                </select>\
+                            </div>\
+                        </div>';
+            }
+            html += '<div class="form-group row">\
+                        <div class="col-md-6">';
+            if (i === 0) {
+                html += '<label class="control-label">' + this.lang.filterTypeLabel + '</label>';
+            }
+            html +=         '<div>\
+                                <select class="grid-filter-type form-control">\
+                                    <option value="1" ' + (this.filterData[columnName].values[i].filterType.toString() === "1" ? "selected=\"selected\"" : "") + '>' + this.lang.filterSelectTypes.Equals + '</option>\
+                                    <option value="5" ' + (this.filterData[columnName].values[i].filterType.toString() === "5" ? "selected=\"selected\"" : "") + '>' + this.lang.filterSelectTypes.GreaterThan + '</option>\
+                                    <option value="6" ' + (this.filterData[columnName].values[i].filterType.toString() === "6" ? "selected=\"selected\"" : "") + '>' + this.lang.filterSelectTypes.LessThan + '</option>\
+                                    <option value="7" ' + (this.filterData[columnName].values[i].filterType.toString() === "7" ? "selected=\"selected\"" : "") + '>' + this.lang.filterSelectTypes.GreaterThanOrEquals + '</option>\
+                                    <option value="8" ' + (this.filterData[columnName].values[i].filterType.toString() === "8" ? "selected=\"selected\"" : "") + '>' + this.lang.filterSelectTypes.LessThanOrEquals + '</option>\
+                                </select>\
+                            </div>\
+                        </div>\
+                        <div class="col-md-6">';
+            if (i === 0) {
+                html +=     '<label class="control-label">' + this.lang.filterValueLabel + '</label>';
+            }
+            html +=        '<div>\
+                                <input id="input-' + columnName + '-' + i.toString() + '" type="text" placeholder="yyyy-mm-dd" class="grid-filter-input form-control" value="' + this.filterData[columnName].values[i].filterValue + '" />\
+                            </div>';
+            html += this.datePickerIncluded ? '<div id="picker-' + columnName + '-' + i.toString() + '" class="grid-filter-datepicker"></div>' : '';
+            html +=    '</div>\
+                    </div > ';
+        }
+        html += '<div class="grid-filter-buttons" style="float:right;">\
+                    <button type ="button" class="btn btn-primary grid-add"><b>+</b></button>';
+        if (this.filterData[columnName].values.length > 1) {
+            html += '<button type="button" class="btn btn-primary grid-remove" style="margin-left:10px;"><b>-</b></button>';
+        }
+        html += '</div>';
+        html += '<div class="grid-filter-buttons" style="margin-top:10px;">\
+                    <button type="button" class="btn btn-primary grid-apply" >' + this.lang.applyFilterButtonText + '</button>\
+                 </div>\
+            </div> ';
+        var filterBody = this.filterData[columnName].container.find(".grid-filter-body");
+        if (filterBody) {
+            filterBody.remove();
+        }
+        this.filterData[columnName].container.append(html);
+    };
+
+    dateTimeFilterWidget.prototype.registerEvents = function (columnName) {
+        var self = this;
+        var $context = this.filterData[columnName];
+        var applyBtn = this.filterData[columnName].container.find(".grid-apply");
+        applyBtn.click(function () {
+            var option = $context.container.find(".grid-filter-cond").val();
+            var types = $context.container.find(".grid-filter-type");
+            var values = $context.container.find(".grid-filter-input");
+            if (types.length === values.length) {
+                var filters = new Array();
+                if (option) {
+                    filters.push({ filterType: "9", filterValue: option });
+                }
+                for (var i = 0; i < types.length; i++) {
+                    filters.push({ filterType: types[i].value, filterValue: values[i].value });
+                }
+                self.cb(filters);
+            }
+        });
+        var dateInput = this.filterData[columnName].container.find(".grid-filter-input");
+        dateInput.each(function () {
+            $(this).click(function () {
+                if (self.datePickerIncluded) {
+                    var id = $(this).attr("id");
+                    var pickerid = id.replace("input-", "picker-");
+
+                    var datePickerOptions = self.data || {};
+                    datePickerOptions.format = datePickerOptions.format || "yyyy-mm-dd";
+                    datePickerOptions.language = datePickerOptions.language || self.lang.code;
+
+                    var dateContainer = $context.container.find("#" + pickerid);
+                    dateContainer.datepicker(datePickerOptions).on('changeDate', function (ev) {                       
+                        var inputContainer = $context.container.find("#" + id);
+                        inputContainer.val(ev.format());
+                        $(this).hide();
+                    });
+                    if (this.value)
+                        dateContainer.datepicker('update', this.value);
+                    dateContainer.css({ "position": "relative", "left": "-120px", "top": "0px" });
+                    dateContainer.show();
+                }
+            });
+        });
+        dateInput.keyup(function (event) {
+            if (event.keyCode === 13) { applyBtn.click(); }
+            if (event.keyCode === 27) { GridMvc.closeOpenedPopups(); }
+        });
+        //get add button from:
+        var addBtn = this.filterData[columnName].container.find(".grid-add");
+        //register onclick event handler
+        addBtn.click(function () {
+            var cond = $context.container.find(".grid-filter-cond").val();
+            var types = $context.container.find(".grid-filter-type");
+            var values = $context.container.find(".grid-filter-input");
+            if (types.length === values.length) {
+                $context.values = new Array();
+                if (cond) {
+                    $context.condition = cond;
+                }
+                for (var i = 0; i < types.length; i++) {
+                    $context.values.push({ filterType: types[i].value, filterValue: values[i].value, columnName: columnName });
+                }
+                $context.values.push({ filterType: "1", filterValue: "", columnName: columnName });
+                self.renderWidget(columnName);
+                self.registerEvents(columnName);
+                self.onShow(columnName);
+            }
+        });
+        //get add button from:
+        var removeBtn = this.filterData[columnName].container.find(".grid-remove");
+        //register onclick event handler
+        removeBtn.click(function () {
+            var cond = $context.container.find(".grid-filter-cond").val();
+            var types = $context.container.find(".grid-filter-type");
+            var values = $context.container.find(".grid-filter-input");
+            if (types.length === values.length) {
+                $context.values = new Array();
+                if (cond) {
+                    $context.condition = cond;
+                }
+                for (var i = 0; i < types.length; i++) {
+                    $context.values.push({ filterType: types[i].value, filterValue: values[i].value, columnName: columnName });
+                }
+                $context.values.splice(values.length - 1, 1);
+                self.renderWidget(columnName);
+                self.registerEvents(columnName);
+                self.onShow(columnName);
+            }
+        });
+        var condSelect = this.filterData[columnName].container.find(".grid-filter-cond");
+        condSelect.change(function () {
+            $(".grid-filter-conddis").val(this.value);
         });
     };
 
@@ -791,7 +1157,7 @@ BooleanFilterWidget = (function ($) {
 
     booleanFilterWidget.prototype.showClearFilterButton = function () { return true; };
 
-    booleanFilterWidget.prototype.onRender = function (container, lang, typeName, values, cb) {
+    booleanFilterWidget.prototype.onRender = function (container, lang, typeName, columnName, values, cb) {
         this.cb = cb;
         this.container = container;
         this.lang = lang;
@@ -803,13 +1169,13 @@ BooleanFilterWidget = (function ($) {
     booleanFilterWidget.prototype.renderWidget = function () {
         var html = '<label>' + this.lang.filterValueLabel + '</label>\
                     <ul class="menu-list">\
-                        <li><a class="grid-filter-choose ' + (this.value.filterValue == "true" ? "choose-selected" : "") + '" data-value="true" href="javascript:void(0);">' + this.lang.boolTrueLabel + '</a></li>\
-                        <li><a class="grid-filter-choose ' + (this.value.filterValue == "false" ? "choose-selected" : "") + '" data-value="false" href="javascript:void(0);">' + this.lang.boolFalseLabel + '</a></li>\
+                        <li><a class="grid-filter-choose ' + (this.value.filterValue === "true" ? "choose-selected" : "") + '" data-value="true" href="javascript:void(0);">' + this.lang.boolTrueLabel + '</a></li>\
+                        <li><a class="grid-filter-choose ' + (this.value.filterValue === "false" ? "choose-selected" : "") + '" data-value="false" href="javascript:void(0);">' + this.lang.boolFalseLabel + '</a></li>\
                     </ul>';
         this.container.append(html);
     };
 
-    booleanFilterWidget.prototype.registerEvents = function () { 
+    booleanFilterWidget.prototype.registerEvents = function () {
         var $context = this;
         var applyBtn = this.container.find(".grid-filter-choose");
         applyBtn.click(function () {

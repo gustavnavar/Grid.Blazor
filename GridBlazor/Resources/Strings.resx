@@ -186,4 +186,10 @@
   <data name="Sum" xml:space="preserve">
     <value>Sum</value>
   </data>
+  <data name="And" xml:space="preserve">
+    <value>And</value>
+  </data>
+  <data name="Or" xml:space="preserve">
+    <value>Or</value>
+  </data>
 </root>

@@ -186,4 +186,10 @@
   <data name="Average" xml:space="preserve">
     <value>Cреднюю</value>
   </data>
+  <data name="And" xml:space="preserve">
+    <value>И</value>
+  </data>
+  <data name="Or" xml:space="preserve">
+    <value>Или</value>
+  </data>
 </root>

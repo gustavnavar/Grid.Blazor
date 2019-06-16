@@ -41,12 +41,14 @@ table.grid-table .grid-filter-choose.choose-selected { background-color: white!i
 table.grid-table .grid-popup-additional { padding: 3px 0 0 0; }
 
 /* POP-UP */
-.grid-dropdown { font-weight: normal; left: -102px; top: 16px!important; min-width: 180px; }
+.grid-dropdown { font-weight: normal; left: -102px; top: 16px!important; min-width: 360px; }
 .grid-dropdown-arrow { background: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAA4AAAAICAYAAADJEc7MAAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAOwgAADsIBFShKgAAAABp0RVh0U29mdHdhcmUAUGFpbnQuTkVUIHYzLjUuMTAw9HKhAAAAl0lEQVQoU42PMQuFMAyE6xN5gpOjjsIb/P9/o3O3zh27dY25kIPq8DBwmLT35WoQkUEVOmGec84CaW2q7+N+AdCD6M9SisQYTei1jsfyCeCu+vjFVGs1AN++94DRfUOfuNLoKUiyRC5y2F5I8NdaM4P/l0EswvBorQTnfxBhLMRih+2pklIy+eEtjQPu6MNZwIBNbwteMBd5X4ZGHcwL3QAAAABJRU5ErkJggg==") no-repeat; height: 8px; left: 99px; position: absolute; top: -8px; width: 14px; }
 .grid-dropdown-inner { padding: 5px 7px; }
 .grid-dropdown ul.menu-list { list-style-type: none; margin: 3px 0 0 0; padding: 0; }
     .grid-dropdown ul.menu-list li a { text-decoration: none; background-position: 6px center; background-repeat: no-repeat; display: block; padding: 4px 5px; }
         .grid-dropdown ul.menu-list li a:hover { background-color: #EEE; text-decoration: none; }
+.grid-dropdown input.grid-filter-input { width: 100%; }
+.grid-dropdown select.grid-filter-type { width: 100%; }
 
 /*Grid footer*/
 .grid-itemscount { float:right; margin-top: 10px;}

@@ -24,6 +24,13 @@ namespace GridShared.Filtering
             set { FilterValue = value; }
         }
 
+        public ColumnFilterValue(string name, GridFilterType type, string value)
+        {
+            ColumnName = name;
+            FilterType = type;
+            FilterValue = value;
+        }
+
         public static ColumnFilterValue Null
         {
             get { return default(ColumnFilterValue); }

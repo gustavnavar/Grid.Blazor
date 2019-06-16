@@ -1,7 +1,7 @@
-﻿using GridBlazor.Filtering;
-using GridBlazor.Pagination;
+﻿using GridBlazor.Pagination;
 using GridBlazor.Searching;
 using GridShared.Columns;
+using GridShared.Filtering;
 using GridShared.Utility;
 using Microsoft.AspNetCore.Components;
 using System;
@@ -77,14 +77,10 @@ namespace GridBlazor
             await UpdateGrid();
         }
 
-        public async Task AddFilter(IGridColumn column, string filterType, string filterValue)
+        public async Task AddFilter(IGridColumn column, FilterCollection filters)
         {
-            if (!Grid.ComponentOptions.AllowMultipleFilters)
-                ((CGrid<T>)Grid).RemoveQueryParameter(QueryStringFilterSettings.DefaultTypeQueryParameter);
-
-            ((CGrid<T>)Grid).AddFilterParameter(column, filterType, filterValue);
+            ((CGrid<T>)Grid).AddFilterParameter(column, filters);
             await UpdateGrid();
-
         }
 
         public async Task RemoveFilter(IGridColumn column)

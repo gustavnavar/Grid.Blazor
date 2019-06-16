@@ -45,12 +45,8 @@ namespace GridMvc.Filtering
                                                                      column.InitialFilterSettings
                                                                  }
                                                              : _settings.FilteredColumns.GetByColumn(column);
-                foreach (ColumnFilterValue filterOptions in options)
-                {
-                    if (filterOptions == ColumnFilterValue.Null)
-                        continue;
-                    items = gridColumn.Filter.ApplyFilter(items, filterOptions);
-                }
+
+                items = gridColumn.Filter.ApplyFilter(items, options);
             }
             return items;
         }

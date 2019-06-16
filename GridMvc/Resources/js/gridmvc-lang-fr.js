@@ -15,7 +15,9 @@ GridMvc.lang.fr = {
         GreaterThan: "Supérieur à",
         LessThan: "Inférieur à",
         GreaterThanOrEquals: "Supérieur ou égale à",
-        LessThanOrEquals: "Inférieur ou égale à"
+        LessThanOrEquals: "Inférieur ou égale à",
+        And: "Et",
+        Or: "Ou"
     },
     code: 'fr',
     boolTrueLabel: "Oui",

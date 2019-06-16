@@ -9,6 +9,7 @@
         GreaterThan = 5,
         LessThan = 6,
         GreaterThanOrEquals = 7,
-        LessThanOrEquals = 8
+        LessThanOrEquals = 8,
+        Condition = 9
     }
 }

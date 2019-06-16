@@ -29,6 +29,17 @@ namespace GridBlazor.Resources
         }
 
         /// <summary>
+        /// Gets the resource string indexed by the And key.
+        /// </summary>
+        public static string And
+        {
+            get
+            {
+                return Strings.ResourceManager.GetString("And", Strings.CultureInfo);
+            }
+        }
+
+        /// <summary>
         /// Gets the resource string indexed by the ApplyFilterButtonText key.
         /// </summary>
         public static string ApplyFilterButtonText
@@ -250,6 +261,17 @@ namespace GridBlazor.Resources
             get
             {
                 return Strings.ResourceManager.GetString("Min", Strings.CultureInfo);
+            }
+        }
+
+        /// <summary>
+        /// Gets the resource string indexed by the Or key.
+        /// </summary>
+        public static string Or
+        {
+            get
+            {
+                return Strings.ResourceManager.GetString("Or", Strings.CultureInfo);
             }
         }
 

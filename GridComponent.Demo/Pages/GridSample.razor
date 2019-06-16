@@ -70,6 +70,10 @@ else
                 .SetFilterWidgetType(companyNameFilter)
                 .Max(true).Min(true);
 
+        /* Adding "ContactName" column: */
+            c.Add(o => o.Customer.ContactName).Titled("ContactName").SetWidth(250)
+                .Max(true).Min(true);
+
         /* Adding "Freight" column: */
             c.Add(o => o.Freight)
                 .Titled("Freight")

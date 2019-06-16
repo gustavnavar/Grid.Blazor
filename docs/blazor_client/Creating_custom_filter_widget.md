@@ -39,6 +39,7 @@ Follow thes steps to create a custom filter widget:
     ```razor
         @using GridBlazor
         @using GridBlazor.Resources
+        @using GridShared.Filtering
         @using System.Collections.Generic
         @using System.Net.Http
         @inject IUriHelper UriHelper
@@ -53,7 +54,7 @@ Follow thes steps to create a custom filter widget:
                     <div class="grid-popup-widget">
                         <div class="form-group">
                             <p><i>This is custom filter widget demo</i></p>
-                            <select class="grid-filter-type customerslist form-control" style="width:250px;" bind="filterValue">
+                            <select class="grid-filter-type customerslist form-control" style="width:250px;" bind="_filterValue">
                                 @foreach (var customerName in _customersNames)
                                 {
                                     <option value="@customerName">@customerName</option>
@@ -84,6 +85,7 @@ Follow thes steps to create a custom filter widget:
 
         @functions {
             private bool _clearVisible = false;
+            protected string _filterValue;
             private List<string> _customersNames = new List<string>();
 
             [CascadingParameter(Name = "GridHeaderComponent")]
@@ -93,10 +95,10 @@ Follow thes steps to create a custom filter widget:
             protected bool visible { get; set; }
 
             [Parameter]
-            protected string filterType { get; set; }
+            protected string ColumnName { get; set; }
 
             [Parameter]
-            protected string filterValue { get; set; }
+            protected IEnumerable<ColumnFilterValue> FilterSettings { get; set; }
 
             protected override async Task OnInitAsync()
             {
@@ -107,12 +109,13 @@ Follow thes steps to create a custom filter widget:
 
             protected override void OnParametersSet()
             {
-                _clearVisible = !string.IsNullOrWhiteSpace(filterValue);
+                _filterValue = FilterSettings.FirstOrDefault().FilterValue;
+                _clearVisible = !string.IsNullOrWhiteSpace(_filterValue);
             }
 
             protected async Task ApplyButtonClicked()
             {
-                await GridHeaderComponent.AddFilter("1", filterValue);
+                await GridHeaderComponent.AddFilter(new FilterCollection(GridFilterType.Equals.ToString("d"), _filterValue));
             }
 
             protected async Task ClearButtonClicked()

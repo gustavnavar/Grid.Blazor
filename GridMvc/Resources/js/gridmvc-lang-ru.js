@@ -15,7 +15,9 @@ GridMvc.lang.ru = {
         GreaterThan: "Больше",
         LessThan: "Меньше",
         GreaterThanOrEquals: "Больше или равно",
-        LessThanOrEquals: "Меньше или равно"
+        LessThanOrEquals: "Меньше или равно",
+        And: "И",
+        Or: "Или"
     },
     code: 'ru',
     boolTrueLabel: "Да",
