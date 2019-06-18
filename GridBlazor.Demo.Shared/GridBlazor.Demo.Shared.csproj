@@ -3,12 +3,11 @@
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
     <LangVersion>7.3</LangVersion>
-    <Version>0.5.0</Version>
+    <Version>0.6.0</Version>
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Newtonsoft.Json" Version="12.0.1" />
-    <PackageReference Include="System.ComponentModel.Annotations" Version="4.6.0-preview5.19224.8" />
+    <PackageReference Include="System.ComponentModel.Annotations" Version="4.6.0-preview6.19303.8" />
   </ItemGroup>
 
   <ItemGroup>

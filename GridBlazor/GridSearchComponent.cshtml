@@ -7,11 +7,11 @@
     <div class="col-md-offset-6 offset-md-6 col-md-6">
         <div class="input-group">
             <span class="input-group-btn input-group-prepend">
-                <button class="btn btn-default btn-outline-secondary grid-search-apply" type="button" onclick="@ApplyButtonClicked"></button>
+                <button class="btn btn-default btn-outline-secondary grid-search-apply" type="button" @onclick="@ApplyButtonClicked"></button>
             </span>
-            <input type="text" class="form-control grid-search-input" bind="@_searchValue" placeholder="@Strings.SearchFor" />
+            <input type="text" class="form-control grid-search-input" @bind="@_searchValue" placeholder="@Strings.SearchFor" />
             <span class="input-group-btn input-group-append">
-                <button class="btn btn-default btn-outline-secondary grid-search-clear" type="button" onclick="@ClearButtonClicked"></button>
+                <button class="btn btn-default btn-outline-secondary grid-search-clear" type="button" @onclick="@ClearButtonClicked"></button>
             </span>
         </div>
     </div>

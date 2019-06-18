@@ -15,7 +15,7 @@
             <div class="grid-popup-widget">
                 <div class="form-group">
                     <p><i>This is custom filter widget demo</i></p>
-                    <select class="grid-filter-type customerslist form-control" style="width:250px;" bind="_filterValue">
+                    <select class="grid-filter-type customerslist form-control" style="width:250px;" @bind="_filterValue">
                         @foreach (var customerName in _customersNames)
                         {
                             <option value="@customerName">@customerName</option>
@@ -23,7 +23,7 @@
                     </select>
                 </div>
                 <div class="grid-filter-buttons">
-                    <button type="button" class="btn btn-primary grid-apply" onclick="@ApplyButtonClicked">
+                    <button type="button" class="btn btn-primary grid-apply" @onclick="@ApplyButtonClicked">
                         @Strings.ApplyFilterButtonText
                     </button>
                 </div>
@@ -33,7 +33,7 @@
                 {
                     <ul class="menu-list">
                         <li>
-                            <a class="grid-filter-clear" href="javascript:void(0);" onclick="@ClearButtonClicked">
+                            <a class="grid-filter-clear" href="javascript:void(0);" @onclick="@ClearButtonClicked">
                                 @Strings.ClearFilterLabel
                             </a>
                         </li>
@@ -44,7 +44,7 @@
     </div>
 }
 
-@functions {
+@code {
     private bool _clearVisible = false;
     protected string _filterValue;
     private List<string> _customersNames = new List<string>();

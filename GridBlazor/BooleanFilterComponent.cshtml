@@ -12,12 +12,12 @@
                 <label><b>@Strings.FilterValueLabel:</b></label>
                 <ul class="menu-list">
                     <li>
-                        <a class="grid-filter-choose@(_filterValue != null && _filterValue.ToLower() == "true" ? " choose-selected" : "")" data-value="true" href="javascript:void(0);" onclick="@ApplyTrueButtonClicked">
+                        <a class="grid-filter-choose@(_filterValue != null && _filterValue.ToLower() == "true" ? " choose-selected" : "")" data-value="true" href="javascript:void(0);" @onclick="@ApplyTrueButtonClicked">
                             @Strings.BoolTrueLabel
                         </a>
                     </li>
                     <li>
-                        <a class="grid-filter-choose@(_filterValue != null && _filterValue.ToLower() == "false" ? " choose-selected" : "")" data-value="false" href="javascript:void(0);" onclick="@ApplyFalseButtonClicked">
+                        <a class="grid-filter-choose@(_filterValue != null && _filterValue.ToLower() == "false" ? " choose-selected" : "")" data-value="false" href="javascript:void(0);" @onclick="@ApplyFalseButtonClicked">
                             @Strings.BoolFalseLabel
                         </a>
                     </li>
@@ -28,7 +28,7 @@
                 {
                     <ul class="menu-list">
                         <li>
-                            <a class="grid-filter-clear" href="javascript:void(0);" onclick="@ClearButtonClicked">
+                            <a class="grid-filter-clear" href="javascript:void(0);" @onclick="@ClearButtonClicked">
                                 @Strings.ClearFilterLabel
                             </a>
                         </li>

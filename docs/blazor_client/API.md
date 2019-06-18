@@ -4,6 +4,8 @@
 
 [Index](Documentation.md)
 
+Normal usage of  **GridBlazor** and **GridMvcCore** packages doesn't require any knowledge of this interface. This documentation is included only for those who want to implement their own back endpoint instead of using **GridMvcCore**. 
+
 The interface between **GridBlazor** and **GridMvcCore** packages on Blazor client-site solutions uses a query string for the request from the front-end and a json file for the response from the back-end.
 
 ## Request

@@ -8,18 +8,18 @@
             @if (GridPager.CurrentPage > 1)
             {
                 <li class="page-item">
-                    <button class="page-link" onclick="@(async () => await PagerButtonClicked(GridPager.CurrentPage - 1))">«</button>
+                    <button class="page-link" @onclick="@(async () => await PagerButtonClicked(GridPager.CurrentPage - 1))">«</button>
                 </li>
             }
             @if (GridPager.StartDisplayedPage > 1)
             {
                 <li class="page-item">
-                    <button class="page-link" onclick="@(async () => await PagerButtonClicked(1))">1</button>
+                    <button class="page-link" @onclick="@(async () => await PagerButtonClicked(1))">1</button>
                 </li>
                 @if (GridPager.StartDisplayedPage > 2)
                 {
                     <li class="page-item">
-                        <button class="page-link" onclick="@(async () => await PagerButtonClicked(GridPager.StartDisplayedPage - 1))">...</button>
+                        <button class="page-link" @onclick="@(async () => await PagerButtonClicked(GridPager.StartDisplayedPage - 1))">...</button>
                     </li>
                 }
             }
@@ -35,7 +35,7 @@
                 {
                     int j = i;
                     <li class="page-item">
-                        <button class="page-link" onclick="@(async () => await PagerButtonClicked(j))">@j</button>
+                        <button class="page-link" @onclick="@(async () => await PagerButtonClicked(j))">@j</button>
                     </li>
                 }
             }
@@ -44,17 +44,17 @@
                 if (GridPager.EndDisplayedPage < GridPager.PageCount - 1)
                 {
                     <li class="page-item">
-                        <button class="page-link" onclick="@(async () => await PagerButtonClicked(GridPager.EndDisplayedPage + 1))">...</button>
+                        <button class="page-link" @onclick="@(async () => await PagerButtonClicked(GridPager.EndDisplayedPage + 1))">...</button>
                     </li>
                 }
                 <li class="page-item">
-                    <button class="page-link" onclick="@(async () => await PagerButtonClicked(GridPager.PageCount))">@GridPager.PageCount</button>
+                    <button class="page-link" @onclick="@(async () => await PagerButtonClicked(GridPager.PageCount))">@GridPager.PageCount</button>
                 </li>
             }
             @if (GridPager.CurrentPage < GridPager.PageCount)
             {
                 <li class="page-item">
-                    <button class="page-link" onclick="@(async () => await PagerButtonClicked(GridPager.CurrentPage + 1))">»</button>
+                    <button class="page-link" @onclick="@(async () => await PagerButtonClicked(GridPager.CurrentPage + 1))">»</button>
                 </li>
             }
         </ul>

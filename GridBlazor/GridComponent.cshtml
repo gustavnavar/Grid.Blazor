@@ -27,7 +27,7 @@
                 if (Grid.ComponentOptions.Selectable)
                 {
                     int j = i;
-                    <tr class="grid-row@(_selectedRow == i ? " grid-row-selected" : "") @Grid.GetRowCssClasses(item)" onclick="@(() => RowClicked(j, item))">
+                    <tr class="grid-row@(_selectedRow == i ? " grid-row-selected" : "") @Grid.GetRowCssClasses(item)" @onclick="@(() => RowClicked(j, item))">
                         @foreach (IGridColumn column in Grid.Columns)
                         {
                             <GridCellComponent T="@T" Column="@column" Item="@item"></GridCellComponent>
@@ -96,7 +96,7 @@
                                 if (Grid.ComponentOptions.Selectable)
                                 {
                                     int j = i;
-                                    <tr class="grid-row@(_selectedRow == i ? " grid-row-selected" : "") @Grid.GetRowCssClasses(item)" onclick="@(() => RowClicked(j, item))">
+                                    <tr class="grid-row@(_selectedRow == i ? " grid-row-selected" : "") @Grid.GetRowCssClasses(item)" @onclick="@(() => RowClicked(j, item))">
                                         @if ((Grid.IsSumEnabled || Grid.IsAverageEnabled || Grid.IsMaxEnabled || Grid.IsMinEnabled)
                                             && firstColumn != null 
                                             && (firstColumn.IsSumEnabled || firstColumn.IsAverageEnabled
