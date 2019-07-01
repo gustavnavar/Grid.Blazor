@@ -52,4 +52,4 @@ You can render any custom layout using razor @helper:
     })
 ```
 
-[<- Data annotations](Data_annotations.md)
+[<- Data annotations](Data_annotations.md) | [Subgrids ->](Subgrids.md)

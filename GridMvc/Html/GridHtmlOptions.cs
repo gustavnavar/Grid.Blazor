@@ -3,7 +3,6 @@ using GridMvc.Resources;
 using GridShared;
 using GridShared.Columns;
 using Microsoft.AspNetCore.Mvc.Rendering;
-using Microsoft.AspNetCore.Mvc.ViewEngines;
 using System;
 using System.IO;
 using System.Text.Encodings.Web;
@@ -17,9 +16,6 @@ namespace GridMvc.Html
     {
         private readonly IHtmlHelper _helper;
         internal readonly SGrid<T> _source;
-        private readonly ViewContext _viewContext;
-
-        private IViewEngine _viewEngine;
 
         public GridHtmlOptions(IHtmlHelper helper, SGrid<T> source, string viewName)
         {
@@ -191,6 +187,15 @@ namespace GridMvc.Html
 
             _source.RenderOptions.GridCountDisplayName = gridItemsName;
             _source.RenderOptions.ShowGridItemsCount = true;
+            return this;
+        }
+
+        /// <summary>
+        ///    Allow grid to show a SubGrid
+        /// </summary>
+        public IGridHtmlOptions<T> SubGrid(string[] keys)
+        {
+            _source.Keys = keys;
             return this;
         }
 

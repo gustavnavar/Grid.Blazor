@@ -1,0 +1,69 @@
+﻿@using GridMvc
+@using GridMvc.Columns
+@using GridShared.Columns
+@model ISGrid
+
+@if (Model == null) { return; }
+
+@{
+    var firstColumn = (ISGridColumn)Model.Columns.FirstOrDefault();
+    bool hasSubGrid = Model.Keys != null && Model.Keys.Length > 0;
+    bool hasTotals = Model.IsSumEnabled || Model.IsAverageEnabled || Model.IsMaxEnabled || Model.IsMinEnabled;
+    bool requiredTotalsColumn = hasTotals
+              && firstColumn != null
+              && (firstColumn.IsSumEnabled || firstColumn.IsAverageEnabled
+                  || firstColumn.IsMaxEnabled || firstColumn.IsMinEnabled);
+}
+
+@if (Model.ItemsToDisplay.Count() == 0)
+{
+    <tr class="grid-empty-text">
+        @if (hasSubGrid)
+        {
+            <td class="grid-cell" data-name=""></td>
+        }
+        @if (requiredTotalsColumn)
+        {
+            <td class="grid-cell" data-name=""></td>
+        }
+        <td colspan="@Model.Columns.Count()">
+            @Model.EmptyGridText
+        </td>
+    </tr>
+}
+else
+{
+    @foreach (object item in Model.ItemsToDisplay)
+    {
+        <tr class="grid-row @Model.GetRowCssClasses(item)">
+            @if (hasSubGrid)
+            {
+                string values = "";
+                string[] keyValues = Model.GetKeyValues(item);
+                if (keyValues.Length == Model.Keys.Length)
+                {
+                    values = string.Join(",", keyValues);
+                }
+                <td class="grid-cell grid-subgrid" data-is-rendered="false" data-is-visible="false" @(string.IsNullOrWhiteSpace(values) ? "" : "data-values=" + values) data-name="">
+                    <span class="subgrid-caret">&nbsp;</span>
+                </td>
+            }
+            @if (requiredTotalsColumn)
+            {
+                <td class="grid-cell" data-name=""></td>
+            }
+            @foreach (IGridColumn column in Model.Columns)
+            {
+                @await Html.PartialAsync("_GridCell", new Tuple<IGridColumn, object>(column, item))
+            }
+        </tr>
+        @if (hasSubGrid)
+        {
+            <tr class="subgrid-row" style="display:none;"></tr>
+        }
+    }
+}
+@if (hasTotals)
+{
+    @await Html.PartialAsync("_GridTotals", Model)
+}

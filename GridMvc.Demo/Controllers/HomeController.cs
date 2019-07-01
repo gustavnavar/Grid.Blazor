@@ -10,6 +10,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ViewEngines;
 using System;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace GridMvc.Demo.Controllers
 {
@@ -101,14 +102,15 @@ namespace GridMvc.Demo.Controllers
         }
 
         [HttpGet]
-        public ActionResult GetOrder(int id)
+        public async Task<ActionResult> GetOrder(int id)
         {
             var repository = new OrdersRepository(_context);
             Order order = repository.GetById(id);
             if (order == null)
                 return Json(new { status = 0, message = "Not found" });
 
-            return Json(new { status = 1, message = "Ok", content = RenderPartialViewToString("_OrderInfo", order) });
+            string content = await RenderAsync("_OrderInfo", order);
+            return Json(new { status = 1, message = "Ok", content });
         }
 
         [HttpGet]
@@ -123,7 +125,7 @@ namespace GridMvc.Demo.Controllers
         public ActionResult AjaxPaging()
         {
             var repository = new OrdersRepository(_context);
-            var model = new SGrid<Order>(repository.GetAll(), HttpContext.Request.Query, false, GridPager.DefaultAjaxPagerViewName);
+            var model = new SGrid<Order>(repository.GetAll(), Request.Query, false, GridPager.DefaultAjaxPagerViewName);
 
             ViewBag.ActiveMenuTitle = "AjaxPaging";
             return View(model);
@@ -133,9 +135,60 @@ namespace GridMvc.Demo.Controllers
         public ActionResult GetOrdersGridRows()
         {
             var repository = new OrdersRepository(_context);
-            var model = new SGrid<Order>(repository.GetAll(), HttpContext.Request.Query, false, GridPager.DefaultAjaxPagerViewName);
+            var model = new SGrid<Order>(repository.GetAll(), Request.Query, false, GridPager.DefaultAjaxPagerViewName);
 
             return PartialView("_OrdersGrid", model);
+        }
+
+        [HttpPost]
+        public ActionResult GetOrderDetailsGrid(int OrderId)
+        {
+            Action<IGridColumnCollection<OrderDetail>> columns = c =>
+            {
+                /* Adding "OrderID" column: */
+                c.Add(o => o.OrderID)
+                    .Titled("Order Number")
+                    .SortInitialDirection(GridSortDirection.Descending)
+                    .SetWidth(100);
+
+                /* Adding "ProductID" column: */
+                c.Add(o => o.ProductID)
+                    .Titled("Product Number")
+                    .ThenSortByDescending(o => o.ProductID)
+                    .SetWidth(100);
+
+                /* Adding "ProductName" column: */
+                c.Add(o => o.Product.ProductName)
+                    .Titled("Product Name")
+                    .SetWidth(250);
+
+                /* Adding "Quantity" column: */
+                c.Add(o => o.Quantity)
+                    .Titled("Quantity")
+                    .SetCellCssClassesContraint(o => o.Quantity >= 50 ? "red" : "")
+                    .SetWidth(100)
+                    .Format("{0:F}");
+
+                /* Adding "UnitPrice" column: */
+                c.Add(o => o.UnitPrice)
+                    .Titled("Unit Price")
+                    .SetWidth(100)
+                    .Format("{0:F}");
+            };
+
+            var requestCulture = HttpContext.Features.Get<IRequestCultureFeature>();
+            var locale = requestCulture.RequestCulture.UICulture.TwoLetterISOLanguageName;
+            var orderDetails = (new OrderDetailsRepository(_context)).GetForOrder(OrderId);
+
+            var server = new GridServer<OrderDetail>(orderDetails, Request.Query,
+                    false, "orderDetailsGrid" + OrderId.ToString(), columns, 10, locale)
+                        .SetRowCssClasses(item => item.Quantity > 10 ? "success" : string.Empty)
+                        .Sortable()
+                        .Filterable()
+                        .WithMultipleFilters()
+                        .WithGridItemsCount();
+
+            return PartialView("_SubGrid", server.Grid);
         }
 
         [HttpGet]

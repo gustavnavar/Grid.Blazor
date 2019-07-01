@@ -116,6 +116,11 @@ namespace GridBlazor
         IGridClient<T> WithGridItemsCount();
 
         /// <summary>
+        ///    Allow grid to show a SubGrid
+        /// </summary>
+        IGridClient<T> SubGrid(Func<object[], Task<ICGrid>> subGrids, string[] keys);
+
+        /// <summary>
         ///    Get grid object
         /// </summary>
         CGrid<T> Grid { get; }

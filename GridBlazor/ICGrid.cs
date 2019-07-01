@@ -1,13 +1,14 @@
 ﻿using GridShared;
 using GridBlazor.Pagination;
 using System.Threading.Tasks;
+using System;
 
 namespace GridBlazor
 {
     /// <summary>
     ///     Grid.Mvc interface
     /// </summary>
-    public interface ICGrid<T> : IGrid, IGridOptions
+    public interface ICGrid : IGrid, IGridOptions
     {
         /// <summary>
         ///     Grid component options
@@ -18,6 +19,23 @@ namespace GridBlazor
         ///     Pager for the grid
         /// </summary>
         IGridPager Pager { get; }
+
+        /// <summary>
+        ///     Keys for subgrid
+        /// </summary>
+        string[] Keys { get; }
+
+        /// <summary>
+        ///     Subgrid clients
+        /// </summary>
+        Func<object[], Task<ICGrid>> SubGrids { get; }
+
+        Type Type { get; }
+
+        /// <summary>
+        ///     Get foreign key values for subgrid records
+        /// </summary>
+        object[] GetKeyValues(object item);
 
         IGridSettingsProvider Settings { get; }
 

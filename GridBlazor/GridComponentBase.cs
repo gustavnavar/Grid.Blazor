@@ -1,21 +1,30 @@
-﻿using GridBlazor.Pagination;
+﻿using GridBlazor.Columns;
+using GridBlazor.Pagination;
 using GridBlazor.Searching;
 using GridShared.Columns;
 using GridShared.Filtering;
 using GridShared.Utility;
 using Microsoft.AspNetCore.Components;
 using System;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace GridBlazor
 {
     public class GridComponentBase<T> : ComponentBase
     {
-        protected int _selectedRow = -1;
+        protected bool _hasSubGrid = false;
+        protected bool _hasTotals = false;
+        protected bool _requiredTotalsColumn = false;
+        internal bool[] IsSubGridVisible;
+        internal bool[] InitSubGrid;
         protected IQueryDictionary<Type> _filterComponents;
 
+        internal int SelectedRow { get; set; } = -1;
+        internal ICGridColumn FirstColumn { get; set; }
+
         [Parameter]
-        protected ICGrid<T> Grid { get; set; }
+        internal ICGrid Grid { get; set; }
 
         [Parameter]
         protected Action<object> OnRowClicked { get; set; }
@@ -53,14 +62,44 @@ namespace GridBlazor
                         _filterComponents.Add(widget);
                 }
             }
+
+            FirstColumn = (ICGridColumn)Grid.Columns.FirstOrDefault();
+
+            _hasSubGrid = Grid.Keys != null && Grid.Keys.Length > 0;
+            _hasTotals = Grid.IsSumEnabled || Grid.IsAverageEnabled || Grid.IsMaxEnabled || Grid.IsMinEnabled;
+            _requiredTotalsColumn = _hasTotals
+                && FirstColumn != null
+                && (FirstColumn.IsSumEnabled || FirstColumn.IsAverageEnabled
+                    || FirstColumn.IsMaxEnabled || FirstColumn.IsMinEnabled);
+
+            if (_hasSubGrid && IsSubGridVisible == null)
+            {
+                IsSubGridVisible = new bool[Grid.DisplayingItemsCount];
+                for (int i = 0; i < IsSubGridVisible.Length; i++)
+                {
+                    IsSubGridVisible[i] = false;
+                }
+            }
+            if (_hasSubGrid && InitSubGrid == null)
+            {
+                InitSubGrid = new bool[Grid.DisplayingItemsCount];
+                for (int i = 0; i < InitSubGrid.Length; i++)
+                {
+                    InitSubGrid[i] = true;
+                }
+            }
         }
 
         protected void RowClicked(int i, object item)
         {
-            _selectedRow = i;
+            SelectedRow = i;
             if (OnRowClicked != null)
                 OnRowClicked.Invoke(item);
-            StateHasChanged();
+        }
+
+        protected void SubGridClicked(int i)
+        {
+            IsSubGridVisible[i] = !IsSubGridVisible[i];
         }
 
         public async Task GoTo(int page)
@@ -103,7 +142,18 @@ namespace GridBlazor
 
         private async Task UpdateGrid()
         {
-            _selectedRow = -1;
+            SelectedRow = -1;
+            if (_hasSubGrid)
+            {
+                for (int i = 0; i < IsSubGridVisible.Length; i++)
+                {
+                    IsSubGridVisible[i] = false;
+                }
+                for (int i = 0; i < InitSubGrid.Length; i++)
+                {
+                    InitSubGrid[i] = true;
+                }
+            }
             await Grid.UpdateGrid();
             StateHasChanged();
         }

@@ -23,7 +23,7 @@ namespace GridBlazor
     /// <summary>
     ///     Grid.Mvc base class
     /// </summary>
-    public class CGrid<T> : ICGrid<T>
+    public class CGrid<T> : ICGrid
     {
         private Func<T, string> _rowCssClassesContraint;
 
@@ -266,6 +266,32 @@ namespace GridBlazor
         }
 
         /// <summary>
+        ///     Keys for subgrid
+        /// </summary>
+        public string[] Keys { get; set; }
+
+        /// <summary>
+        ///     Subgrids
+        /// </summary>
+        public Func<object[], Task<ICGrid>> SubGrids { get; set;  }
+
+        public Type Type { get { return typeof(T); } }
+
+        /// <summary>
+        ///     Get foreign key values for subgrid records
+        /// </summary>
+        public object[] GetKeyValues(object item)
+        {
+            List<object> values = new List<object>();
+            foreach (var key in Keys)
+            {
+                object value = item.GetType().GetProperty(key).GetValue(item);
+                values.Add(value);
+            }
+            return values.ToArray();
+        }
+
+        /// <summary>
         ///     Applies data annotations settings
         /// </summary>
         private void ApplyGridSettings()
@@ -466,6 +492,8 @@ namespace GridBlazor
                 if (_dataService == null)
                 {
                     string urlParameters = ((GridPager)_pager).GetLink();
+                    if (Url.Contains("?"))
+                        urlParameters = urlParameters.Replace("?", "&");
                     HttpClient httpClient = new HttpClient();
                     response = await httpClient.GetJsonAsync<ItemsDTO<T>>(Url + urlParameters);
                 }

@@ -16,9 +16,9 @@ namespace GridBlazor.Columns
     public class HiddenGridColumn<T, TDataType> : GridColumnBase<T>
     {
         private readonly Func<T, TDataType> _constraint;
-        private readonly ICGrid<T> _grid;
+        private readonly ICGrid _grid;
 
-        public HiddenGridColumn(Expression<Func<T, TDataType>> expression, ICGrid<T> grid)
+        public HiddenGridColumn(Expression<Func<T, TDataType>> expression, ICGrid grid)
         {
             _grid = grid;
             SortEnabled = false;

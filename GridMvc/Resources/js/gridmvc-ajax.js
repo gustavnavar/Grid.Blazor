@@ -94,6 +94,7 @@
                 self.currentPage = 1;
             }
             self.pagedDataAction = options.getPagedData;
+            self.subGridDataAction = options.getSubGridData;
             self.data = options.data;
             self.token = options.token;
             self.gridSort = self.jqContainer.find("div.sorted a").attr('href');
@@ -163,56 +164,82 @@
                 return gridUrl;
             };
 
-            self.setupGridHeaderEvents = function () {
-                self.jqContainer.on('click', '.grid-header-title > a', function (e) {
-                    self.gridSort = '';
-                    e.preventDefault();
+            self.getSubGridUrl = function (griLoaddAction, keys, values) {
+                if (keys && values && keys.length === values.length) {
+                    var gridQuery = URI(griLoaddAction);
 
-                    // remove grid sort arrows
-                    self.jqContainer.find(".grid-header-title").removeClass("sorted-asc");
-                    self.jqContainer.find(".grid-header-title").removeClass("sorted-desc");
-
-                    var search = $(this).attr('href');
-                    var isAscending = search.indexOf("grid-dir=1") !== -1;
-                    self.gridSort = search.substr(search.match(/grid-column=\w+/).index);
-
-                    // load new data
-                    self.loadPage();
-
-                    // update link to sort in opposite direction
-                    if (isAscending) {
-                        $(this).attr('href', search.replace("grid-dir=1", "grid-dir=0"));
-                    } else {
-                        $(this).attr('href', search.replace("grid-dir=0", "grid-dir=1"));
+                    for (var i = 0; i < values.length; i++) {
+                        gridQuery.addSearch(keys[i], values[i]);
                     }
 
-                    // add new grid sort arrow
-                    var newSortClass = isAscending ? "sorted-desc" : "sorted-asc";
-                    $(this).parent(".grid-header-title").addClass(newSortClass);
-                    $(this).parent(".grid-header-title").children("span").remove();
-                    $(this).parent(".grid-header-title").append($("<span/>").addClass("grid-sort-arrow"));
+                    var gridUrl = URI.decode(gridQuery);
+                    return gridUrl;
+                }
+            };
+
+            self.setupGridHeaderEvents = function () {
+                self.jqContainer.find(".grid-header-title > a").each(function () {
+                    $(this).click(function (e) {
+                        self.gridSort = '';
+                        e.preventDefault();
+
+                        // remove grid sort arrows
+                        self.jqContainer.find(".grid-header-title").removeClass("sorted-asc");
+                        self.jqContainer.find(".grid-header-title").removeClass("sorted-desc");
+
+                        var search = $(this).attr('href');
+                        var isAscending = search.indexOf("grid-dir=1") !== -1;
+                        self.gridSort = search.substr(search.match(/grid-column=\w+/).index);
+
+                        // load new data
+                        self.loadPage();
+
+                        // update link to sort in opposite direction
+                        if (isAscending) {
+                            $(this).attr('href', search.replace("grid-dir=1", "grid-dir=0"));
+                        } else {
+                            $(this).attr('href', search.replace("grid-dir=0", "grid-dir=1"));
+                        }
+
+                        // add new grid sort arrow
+                        var newSortClass = isAscending ? "sorted-desc" : "sorted-asc";
+                        $(this).parent(".grid-header-title").addClass(newSortClass);
+                        $(this).parent(".grid-header-title").children("span").remove();
+                        $(this).parent(".grid-header-title").append($("<span/>").addClass("grid-sort-arrow"));
+                    });
+                });            
+
+                self.jqContainer.find(".grid-filter").each(function () {
+                    $(this).click(function (e) {
+                        e.preventDefault();
+                        return self.openFilterPopup.call(this, self, self.filterMenuHtml());
+                    });
                 });
-                self.jqContainer.on('click', '.grid-filter', function (e) {
-                    e.preventDefault();
-                    return self.openFilterPopup.call(this, self, self.filterMenuHtml());
+
+                self.jqContainer.find(".grid-search-apply").each(function () {
+                    $(this).click(function (e) {
+                        e.preventDefault();
+                        var searchText = self.jqContainer.find(".grid-search-input").first().val();
+                        return self.applySearchValues(searchText, false);
+                    });
                 });
-                self.jqContainer.on('click', '.grid-search-apply', function (e) {
-                    e.preventDefault();
-                    var searchText = self.jqContainer.find(".grid-search-input").first().val();
-                    return self.applySearchValues(searchText, false);
-                });
-                self.jqContainer.on('click', '.grid-search-clear', function (e) {
-                    e.preventDefault();
-                    return self.applySearchValues("", true);
+
+                self.jqContainer.find(".grid-search-clear").each(function () {
+                    $(this).click(function (e) {
+                        e.preventDefault();
+                        return self.applySearchValues("", true);
+                    });
                 });
             };
 
             self.setupPagerLinkEvents = function () {
-                self.jqContainer.on("click", ".grid-page-link", function (e) {
-                    e.preventDefault();
-                    var pageNumber = $(this).attr('data-page');
-                    self.currentPage = pageNumber;
-                    self.loadPage();
+                self.jqContainer.find(".grid-page-link").each(function () {
+                    $(this).click(function (e) {
+                        e.preventDefault();
+                        var pageNumber = $(this).attr('data-page');
+                        self.currentPage = pageNumber;
+                        self.loadPage();
+                    });
                 });
             };
 
@@ -229,19 +256,60 @@
                         "RequestVerificationToken": self.token
                     }
                 })
-                    .done(function (response) {
-                        self.jqContainer.hide();
-                        self.jqContainer.html(response);
-                        self.jqContainer.html(self.jqContainer.children().first().html());
-                        self.jqContainer.show();
-                        self.notifyOnGridLoaded(response, $.Event("GridLoaded"));
-                    })
-                    .fail(function () {
-                        self.notifyOnGridError(null, $.Event("GridError"));
-                    })
-                    .always(function (response) {
-                        dfd.resolve(response);
+                .done(function (response) {
+                    self.jqContainer.hide();
+                    self.jqContainer.html(response);
+                    self.jqContainer.html(self.jqContainer.children().first().html());
+
+                    // subgrids and others must be initialized after each page load
+                    self.setupGridHeaderEvents();
+                    self.setupPagerLinkEvents();
+                    self.initFilters();
+                    self.initSearch();
+                    self.initSubGrids();
+
+                    self.jqContainer.show();
+                    self.notifyOnGridLoaded(response, $.Event("GridLoaded"));
+                })
+                .fail(function () {
+                    self.notifyOnGridError(null, $.Event("GridError"));
+                })
+                .always(function (response) {
+                    dfd.resolve(response);
+                });
+
+                return dfd.promise();
+            };
+
+            self.loadSubGridPage = function (values, subGridRow, td, cols) {
+                var dfd = new $.Deferred();
+                var gridUrl = self.getSubGridUrl(self.subGridDataAction, self.keys, values);
+
+                $.ajax({
+                    url: gridUrl,
+                    type: "POST",
+                    contentType: "application/json; charset=utf-8",
+                    headers: {
+                        "RequestVerificationToken": self.token
+                    }
+                })
+                .done(function (response) {
+                    subGridRow.html("<td></td><td colspan=" + cols + ">" + response + "</td>");
+
+                    // init grid javascript
+                    var newGrid = subGridRow.find(".grid-mvc");
+                    newGrid.gridmvc();
+                    window.pageGrids[newGrid.attr("data-gridname")].ajaxify({
+                        getPagedData: gridUrl,
+                        token: self.token
                     });
+
+                    // change is-rendered attrib
+                    td.attr("data-is-rendered", "true");
+                })
+                .always(function (response) {
+                    dfd.resolve(response);
+                });
 
                 return dfd.promise();
             };
@@ -279,10 +347,60 @@
                 self.gridSearch = this.getSearchQueryData(search);
             };
 
+            self.initSubGrids = function () {
+                self.keys = new Array();
+                var keysString = this.jqContainer.attr("data-keys");
+                if (keysString) {
+                    self.keys = keysString.split(',');
+                }
+
+                this.jqContainer.find(".grid-subgrid").each(function () {
+                    $(this).click(function (e) {
+                        e.stopPropagation();
+                        var cols = $(this).parent().children().length;
+                        var subGridRow = $(this).parent().next();
+                        if (subGridRow && subGridRow.hasClass("subgrid-row")) {
+                            var isVisible = $(this).attr("data-is-visible");
+                            if (isVisible && isVisible === "true") {
+                                // hide subgrid row
+                                subGridRow.hide();
+                                // change is-visible attrib and caret
+                                $(this).attr("data-is-visible", "false");
+                                var span = $(this).find(".subgrid-caret-down");
+                                span.removeClass("subgrid-caret-down");
+                                span.addClass("subgrid-caret");
+                            }
+                            else {
+                                var isRendered = $(this).attr("data-is-rendered");
+                                if (isRendered && isRendered === "false") {
+                                    // get query values
+                                    var values = new Array();
+                                    var valuesString = $(this).attr("data-values");
+                                    if (valuesString) {
+                                        values = valuesString.split(',');
+                                    }
+                                    if (self.keys && self.keys.length === values.length) {
+                                        self.loadSubGridPage(values, subGridRow, $(this), cols - 1);
+                                    }
+                                }
+                                // show subgrid row
+                                $(this).parent().next().show();
+                                // change is-visible attrib and caret
+                                $(this).attr("data-is-visible", "true");
+                                var span = $(this).find(".subgrid-caret");
+                                span.removeClass("subgrid-caret");
+                                span.addClass("subgrid-caret-down")
+                            }
+                        }
+                    });
+                });
+            };
+
             self.setupGridHeaderEvents();
             self.setupPagerLinkEvents();
             self.initFilters();
             self.initSearch();
+            self.initSubGrids();
         },
         onGridLoaded: function (func) {
             this.events.push({ name: "onGridLoaded", callback: func });

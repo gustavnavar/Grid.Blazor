@@ -44,7 +44,7 @@ else
     private Order _order;
     private IQueryDictionary<Type> _customFilters = new QueryDictionary<Type>();
 
-    public static Action<IGridColumnCollection<Order>> Columns = c =>
+    public static Action<IGridColumnCollection<Order>> OrderColumns = c =>
     {
         /* Adding not mapped column, that renders body, using inline Razor html helper */
         c.Add().Encoded(false).Sanitized(false).SetWidth(30).Css("hidden-xs") //hide on phones
@@ -81,22 +81,71 @@ else
         .RenderValueAs(o => o.Customer.IsVip ? "Yes" : "No");
     };
 
+    public static Action<IGridColumnCollection<OrderDetail>> OrderDetailColumns = c =>
+    {
+        /* Adding "OrderID" column: */
+        c.Add(o => o.OrderID)
+            .Titled("Order Number")
+            .SortInitialDirection(GridSortDirection.Descending)
+            .SetWidth(100);
+
+        /* Adding "ProductID" column: */
+        c.Add(o => o.ProductID)
+            .Titled("Product Number")
+            .ThenSortByDescending(o => o.ProductID)
+            .SetWidth(100);
+
+        /* Adding "ProductName" column: */
+        c.Add(o => o.Product.ProductName)
+            .Titled("Product Name")
+            .SetWidth(250);
+
+        /* Adding "Quantity" column: */
+        c.Add(o => o.Quantity)
+            .Titled("Quantity")
+            .SetCellCssClassesContraint(o => o.Quantity >= 50 ? "red" : "")
+            .SetWidth(100)
+            .Format("{0:F}");
+
+        /* Adding "UnitPrice" column: */
+        c.Add(o => o.UnitPrice)
+            .Titled("Unit Price")
+            .SetWidth(100)
+            .Format("{0:F}");
+    };
+
     protected override async Task OnInitAsync()
     {
-        var query = new QueryDictionary<StringValues>();
-        query.Add("grid-page", "2");
-
         //var locale = CultureInfo.CurrentCulture;
         var locale = new CultureInfo("de-DE");
+        
+        Func<object[], Task<ICGrid>> subGrids = async keys =>
+        {
+            string subGridUrl = UriHelper.GetBaseUri() + "api/SampleData/GetOrderDetailsGrid?OrderId=";
+            var subGridQuery = new QueryDictionary<StringValues>();
+            var subGridClient = new GridClient<OrderDetail>(subGridUrl + keys[0], subGridQuery, false, 
+                "orderDetailsGrid" + keys[0].ToString(), OrderDetailColumns, locale)
+                    .SetRowCssClasses(item => item.Quantity > 10 ? "success" : string.Empty)
+                    .Sortable()
+                    .Filterable()
+                    .WithMultipleFilters()
+                    .WithGridItemsCount();
 
+            await subGridClient.UpdateGrid();
+            return subGridClient.Grid;
+        };
+
+        var query = new QueryDictionary<StringValues>();
+        query.Add("grid-page", "2");
         string url = UriHelper.GetBaseUri() + "api/SampleData/GetOrdersGridForSample";
-        var client = new GridClient<Order>(url, query, false, "ordersGrid", Columns, locale)
+        var client = new GridClient<Order>(url, query, false, "ordersGrid", OrderColumns, locale)
             .SetRowCssClasses(item => item.Customer.IsVip ? "success" : string.Empty)
             .Sortable()
             .Filterable()
             .WithMultipleFilters()
             .Searchable(true, false)
-            .WithGridItemsCount();
+            .WithGridItemsCount()
+            .SubGrid(subGrids, new string[] { "OrderID" });
 
         //string url = UriHelper.GetBaseUri() + "api/SampleData/GetOrdersAutoGenerateColumns";
         //var client = new GridClient<Order>(url, query, false, "ordersGrid", null, locale).AutoGenerateColumns();

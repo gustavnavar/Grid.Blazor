@@ -54,3 +54,11 @@ table.grid-table .grid-popup-additional { padding: 3px 0 0 0; }
 .grid-itemscount { float:right; margin-top: 10px;}
 .grid-pager { margin-top: 20px; }
 .page-link:focus { box-shadow: none; }
+
+/* Style the caret/arrow */
+.subgrid-caret { cursor: pointer; user-select: none; }
+.subgrid-caret::after { content: "\25B7"; }
+
+/* Rotate the caret/arrow icon when clicked on (using JavaScript) */
+.subgrid-caret-down { cursor: pointer; user-select: none; }
+.subgrid-caret-down::after { content: "\25E2"; }

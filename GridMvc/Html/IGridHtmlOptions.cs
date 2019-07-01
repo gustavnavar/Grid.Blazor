@@ -117,6 +117,11 @@ namespace GridMvc.Html
         IGridHtmlOptions<T> WithGridItemsCount();
 
         /// <summary>
+        ///    Allow grid to show a SubGrid
+        /// </summary>
+        IGridHtmlOptions<T> SubGrid(string[] keys);
+
+        /// <summary>
         ///     Obviously render Grid markup
         /// </summary>
         /// <returns>Grid html layout</returns>

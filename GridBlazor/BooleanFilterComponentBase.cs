@@ -15,7 +15,7 @@ namespace GridBlazor
         private GridHeaderComponent<T> GridHeaderComponent { get; set; }
 
         [Parameter]
-        protected bool visible { get; set; }
+        protected bool Visible { get; set; }
 
         [Parameter]
         protected string ColumnName { get; set; }

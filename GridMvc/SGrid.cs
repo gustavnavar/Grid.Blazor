@@ -211,6 +211,25 @@ namespace GridMvc
             set { _pager = value; }
         }
 
+        /// <summary>
+        ///     Keys for subgrid
+        /// </summary>
+        public string[] Keys { get; set; }
+
+        /// <summary>
+        ///     Get foreign key values for subgrid records
+        /// </summary>
+        public string[] GetKeyValues(object item)
+        {
+            List<string> values = new List<string>();
+            foreach (var key in Keys)
+            {
+                string value = item.GetType().GetProperty(key).GetValue(item).ToString();
+                values.Add(value);
+            }
+            return values.ToArray();
+        }
+
         IGridColumnCollection IGrid.Columns
         {
             get { return Columns; }

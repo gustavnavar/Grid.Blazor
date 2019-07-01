@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.AspNetCore.Mvc.ViewEngines;
 using Microsoft.AspNetCore.Mvc.ViewFeatures;
 using System.IO;
+using System.Threading.Tasks;
 
 namespace GridMvc.Demo.Controllers
 {
@@ -18,7 +19,7 @@ namespace GridMvc.Demo.Controllers
             _compositeViewEngine = compositeViewEngine;
         }
 
-        protected string RenderPartialViewToString(string viewName, object model)
+        protected async Task<string> RenderAsync(string viewName, object model)
         {
             if (string.IsNullOrEmpty(viewName))
                 viewName = ControllerContext.RouteData.Values["action"].ToString();
@@ -39,7 +40,7 @@ namespace GridMvc.Demo.Controllers
                     TempData,
                     sw,
                     new HtmlHelperOptions());
-                viewResult.View.RenderAsync(newViewContext).Wait();
+                await viewResult.View.RenderAsync(newViewContext);
                 return sw.ToString();
             }
         }

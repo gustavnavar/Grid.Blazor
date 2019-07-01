@@ -1,8 +1,7 @@
 ﻿@using GridBlazor.Columns
 @using GridBlazor.Resources
 
-@typeparam T
-@inherits GridTotalsComponentBase<T>
+@inherits GridTotalsComponentBase
 
 @if (Grid != null && !Grid.ComponentOptions.RenderRowsOnly)
 {
@@ -11,6 +10,10 @@
     if (Grid.IsSumEnabled)
     {
         <tr class="grid-totals-row">
+            @if (Grid.Keys != null && Grid.Keys.Length > 0)
+            {
+                <td class="grid-cell" data-name=""></td>
+            }
             @if (firstColumn != null
               && (firstColumn.IsSumEnabled || firstColumn.IsAverageEnabled
                   || firstColumn.IsMaxEnabled || firstColumn.IsMinEnabled))
@@ -43,6 +46,10 @@
     if (Grid.IsAverageEnabled)
     {
         <tr class="grid-totals-row">
+            @if (Grid.Keys != null && Grid.Keys.Length > 0)
+            {
+                <td class="grid-cell" data-name=""></td>
+            }
             @if (firstColumn != null
               && (firstColumn.IsSumEnabled || firstColumn.IsAverageEnabled
                   || firstColumn.IsMaxEnabled || firstColumn.IsMinEnabled))
@@ -74,6 +81,10 @@
     if (Grid.IsMaxEnabled)
     {
         <tr class="grid-totals-row">
+            @if (Grid.Keys != null && Grid.Keys.Length > 0)
+            {
+                <td class="grid-cell" data-name=""></td>
+            }
             @if (firstColumn != null
               && (firstColumn.IsSumEnabled || firstColumn.IsAverageEnabled
                   || firstColumn.IsMaxEnabled || firstColumn.IsMinEnabled))
@@ -105,6 +116,10 @@
     if (Grid.IsMinEnabled)
     {
         <tr class="grid-totals-row">
+            @if (Grid.Keys != null && Grid.Keys.Length > 0)
+            {
+                <td class="grid-cell" data-name=""></td>
+            }
             @if (firstColumn != null
               && (firstColumn.IsSumEnabled || firstColumn.IsAverageEnabled
                   || firstColumn.IsMaxEnabled || firstColumn.IsMinEnabled))

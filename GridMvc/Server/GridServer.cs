@@ -1,8 +1,8 @@
-﻿using GridShared;
+﻿using GridMvc.Pagination;
+using GridShared;
 using GridShared.Columns;
 using GridShared.Pagination;
 using GridShared.Utility;
-using GridMvc.Pagination;
 using Microsoft.AspNetCore.Http;
 using System;
 using System.Collections.Generic;
@@ -18,11 +18,11 @@ namespace GridMvc.Server
         private readonly SGrid<T> _source;
 
         public GridServer(IEnumerable<T> items, IQueryCollection query, bool renderOnlyRows, 
-            string viewName, Action<IGridColumnCollection<T>> columns = null, int? pageSize = null, 
+            string gridName, Action<IGridColumnCollection<T>> columns = null, int? pageSize = null, 
             string language = "", string pagerViewName = GridPager.DefaultPagerViewName)
         {
             _source = new SGrid<T>(items, query, renderOnlyRows, pagerViewName);
-            _source.RenderOptions.GridName = viewName;
+            _source.RenderOptions.GridName = gridName;
             columns?.Invoke(_source.Columns);
             if (!string.IsNullOrWhiteSpace(language))
                 _source.Language = language;
@@ -177,6 +177,15 @@ namespace GridMvc.Server
 
             _source.RenderOptions.GridCountDisplayName = gridItemsName;
             _source.RenderOptions.ShowGridItemsCount = true;
+            return this;
+        }
+
+        /// <summary>
+        ///    Allow grid to show a SubGrid
+        /// </summary>
+        public IGridServer<T> SubGrid(string[] keys)
+        {
+            _source.Keys = keys;
             return this;
         }
 

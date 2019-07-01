@@ -141,17 +141,17 @@ Method name | Description | Example
 ------------- | ----------- | -------
 Named | Setup the grid client name | Html.Grid(Model, viewEngine).Named("Product List");
 Columns | Setup the grid client name | Html.Grid(Model, viewEngine).Columns(...);
-AutoGenerateColumns | Generates columns for all properties of the model using data annotations | Html.Grid(Model, viewEngine).AutoGenerateColumns();
-Sortable | Enable or disable sorting for all columns of the grid | Html.Grid(Model, viewEngine).Sortable(true);
-Searchable | Enable or disable searching on the grid | Html.Grid(Model, viewEngine).Searchable(true, true);
-Filterable | Enable or disable filtering for all columns of the grid | Html.Grid(Model, viewEngine).Filterable(true);
-WithMultipleFilters | Allow grid to use multiple filters | Html.Grid(Model, viewEngine).WithMultipleFilters();
-Selectable | Enable or disable the client grid items selectable feature | Html.Grid(Model, viewEngine).Filterable(true);
-WithPaging | Enable paging for grid | Html.Grid(Model, viewEngine).WithPaging(10);
-SetLanguage | Setup the language of the grid | Html.Grid(Model, viewEngine).SetLanguage('fr');
-EmptyText | Setup the text displayed for all empty items in the grid | Html.Grid(Model, viewEngine).EmptyText(' - ');
-WithGridItemsCount | Allows the grid to show items count | Html.Grid(Model, viewEngine).WithGridItemsCount();
-SetRowCssClasses | Setup specific row css classes | Html.Grid(Model, viewEngine).SetRowCssClasses(item => item.Customer.IsVip ? "success" : string.Empty);
+AutoGenerateColumns | Generates columns for all properties of the model using data annotations | Html.Grid(Model).AutoGenerateColumns();
+Sortable | Enable or disable sorting for all columns of the grid | Html.Grid(Model).Sortable(true);
+Searchable | Enable or disable searching on the grid | Html.Grid(Model).Searchable(true, true);
+Filterable | Enable or disable filtering for all columns of the grid | Html.Grid(Model).Filterable(true);
+WithMultipleFilters | Allow grid to use multiple filters | Html.Grid(Model).WithMultipleFilters();
+Selectable | Enable or disable the client grid items selectable feature | Html.Grid(Model).Filterable(true);
+WithPaging | Enable paging for grid | Html.Grid(Model).WithPaging(10);
+SetLanguage | Setup the language of the grid | Html.Grid(Model).SetLanguage('fr');
+EmptyText | Setup the text displayed for all empty items in the grid | Html.Grid(Model).EmptyText(' - ');
+WithGridItemsCount | Allows the grid to show items count | Html.Grid(Model).WithGridItemsCount();
+SetRowCssClasses | Setup specific row css classes | Html.Grid(Model).SetRowCssClasses(item => item.Customer.IsVip ? "success" : string.Empty);
 
 For more documentation about column options, please see: [Custom columns](Custom_columns.md).
 

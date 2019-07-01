@@ -1,5 +1,4 @@
-﻿@using GridBlazor.Columns
-@using GridBlazor.Filtering
+﻿@using GridBlazor.Filtering
 @using GridBlazor.Pagination
 @using GridBlazor.Sorting
 @using GridShared.Columns
@@ -14,6 +13,14 @@
         if (Grid.ItemsToDisplay.Count() == 0)
         {
             <tr class="grid-empty-text">
+                @if (_hasSubGrid)
+                {
+                    <td class="grid-cell" data-name=""></td>
+                }
+                @if (_requiredTotalsColumn)
+                {
+                    <td class="grid-cell" data-name=""></td>
+                }
                 <td colspan="@Grid.Columns.Count()">
                     @Grid.EmptyGridText
                 </td>
@@ -24,45 +31,111 @@
             int i = 0;
             foreach (object item in Grid.ItemsToDisplay)
             {
-                if (Grid.ComponentOptions.Selectable)
+                int capturedI = i;
+                @if (Grid.ComponentOptions.Selectable)
                 {
-                    int j = i;
-                    <tr class="grid-row@(_selectedRow == i ? " grid-row-selected" : "") @Grid.GetRowCssClasses(item)" @onclick="@(() => RowClicked(j, item))">
+                    <tr class="grid-row@(SelectedRow == capturedI? " grid-row-selected" : "") @Grid.GetRowCssClasses(item)" @onclick="@(() => RowClicked(capturedI, item))">
+                        @if (_hasSubGrid)
+                        {
+                            <td class="grid-cell grid-subgrid" data-is-rendered="false" data-is-visible="false" data-name="" @onclick="@(() => SubGridClicked(capturedI))">
+                                @if (IsSubGridVisible[capturedI])
+                                {
+                                    <span class="subgrid-caret-down">&nbsp;</span>
+                                }
+                                else
+                                {
+                                    <span class="subgrid-caret">&nbsp;</span>
+                                }
+                            </td>
+                        }
+                        @if (_requiredTotalsColumn)
+                        {
+                            <td class="grid-cell" data-name=""></td>
+                        }
                         @foreach (IGridColumn column in Grid.Columns)
                         {
                             <GridCellComponent T="@T" Column="@column" Item="@item"></GridCellComponent>
                         }
                     </tr>
-                    i++;
+                    @if (_hasSubGrid)
+                    {
+                        int cols = 0;
+                        cols++;
+                        if (_requiredTotalsColumn)
+                        {
+                            cols++;
+                        }
+                        cols += Grid.Columns.Count() - 1;
+                        var values = Grid.GetKeyValues(item);
+                        <tr class="subgrid-row">
+                            <SubGridComponent T="@T" GridComponent="@this" GridPosition="@capturedI" Cols="@cols" Values="@values"></SubGridComponent>
+                        </tr>
+                    }
                 }
                 else
                 {
                     <tr class="grid-row @Grid.GetRowCssClasses(item)">
+                        @if (_hasSubGrid)
+                        {
+                            <td class="grid-cell grid-subgrid" data-is-rendered="false" data-is-visible="false" data-name="" @onclick="@(() => SubGridClicked(capturedI))">
+                                @if (IsSubGridVisible[capturedI])
+                                {
+                                    <span class="subgrid-caret-down">&nbsp;</span>
+                                }
+                                else
+                                {
+                                    <span class="subgrid-caret">&nbsp;</span>
+                                }
+                            </td>
+                        }
+                        @if (_requiredTotalsColumn)
+                        {
+                            <td class="grid-cell" data-name=""></td>
+                        }
                         @foreach (IGridColumn column in Grid.Columns)
                         {
                             <GridCellComponent T="@T" Column="@column" Item="@item"></GridCellComponent>
                         }
                     </tr>
+                    @if (_hasSubGrid)
+                    {
+                        int cols = 0;
+                        cols++;
+                        if (_requiredTotalsColumn)
+                        {
+                            cols++;
+                        }
+                        cols += Grid.Columns.Count() - 1;
+                        var values = Grid.GetKeyValues(item);
+                        <tr class="subgrid-row">
+                            <SubGridComponent T="@T" GridComponent="@this" GridPosition="@capturedI" Cols="@cols" Values="@values"></SubGridComponent>
+                        </tr>
+                    }
                 }
+                i++;
             }
+        }
+        @if (_hasTotals)
+        {
+            <GridTotalsComponent Grid="@Grid"></GridTotalsComponent>
         }
     }
     else
     {
-        var firstColumn = (ICGridColumn)Grid.Columns.FirstOrDefault();
         <div class="grid-mvc" data-lang="@Grid.Language" data-gridname="@Grid.ComponentOptions.GridName" data-selectable="@Grid.ComponentOptions.Selectable.ToString().ToLower()" data-multiplefilters="@Grid.ComponentOptions.AllowMultipleFilters.ToString().ToLower()">
             <div class="grid-wrap">
                 @if (Grid.SearchingEnabled)
                 {
                     <GridSearchComponent T="@T" GridComponent="@this" Grid="@Grid"></GridSearchComponent>
                 }
-                <table class="table table-striped grid-table">
+                <table class="table grid-table">
                     <thead>
                         <tr>
-                            @if ((Grid.IsSumEnabled || Grid.IsAverageEnabled || Grid.IsMaxEnabled || Grid.IsMinEnabled)
-                                && firstColumn != null 
-                                    && (firstColumn.IsSumEnabled || firstColumn.IsAverageEnabled
-                                        || firstColumn.IsMaxEnabled || firstColumn.IsMinEnabled))
+                            @if (_hasSubGrid)
+                            {
+                                <th class="grid-header" style="width:20px;"></th>
+                            }
+                            @if (_requiredTotalsColumn)
                             {
                                 <th class="grid-header" style="width:60px;"></th>
                             }
@@ -73,58 +146,114 @@
                         </tr>
                     </thead>
                     <tbody>
-                        @if (!Grid.ItemsToDisplay.Any())
+                        @if (Grid.ItemsToDisplay.Count() == 0)
                         {
-                            <tr class="grid-empty-text">
-                                @if ((Grid.IsSumEnabled || Grid.IsAverageEnabled || Grid.IsMaxEnabled || Grid.IsMinEnabled)
-                                   && firstColumn != null 
-                                    && (firstColumn.IsSumEnabled || firstColumn.IsAverageEnabled
-                                        || firstColumn.IsMaxEnabled || firstColumn.IsMinEnabled))
-                                {
-                                    <td class="grid-cell"></td>
-                                }
-                                <td colspan="@Grid.Columns.Count()">
-                                    @Grid.EmptyGridText
-                                </td>
-                            </tr>
+                        <tr class="grid-empty-text">
+                            @if (_hasSubGrid)
+                            {
+                                <td class="grid-cell" data-name=""></td>
+                            }
+                            @if (_requiredTotalsColumn)
+                            {
+                                <td class="grid-cell" data-name=""></td>
+                            }
+                            <td colspan="@Grid.Columns.Count()">
+                                @Grid.EmptyGridText
+                            </td>
+                        </tr>
                         }
                         else
                         {
-                            int i = 0;
-                            foreach (object item in Grid.ItemsToDisplay)
+                        int i = 0;
+                        foreach (object item in Grid.ItemsToDisplay)
+                        {
+                        int capturedI = i;
+                        @if (Grid.ComponentOptions.Selectable)
+                        {
+                            <tr class="grid-row@(SelectedRow == capturedI? " grid-row-selected" : "") @Grid.GetRowCssClasses(item)" @onclick="@(() => RowClicked(capturedI, item))">
+                                @if (_hasSubGrid)
+                                {
+                                    <td class="grid-cell grid-subgrid" data-is-rendered="false" data-is-visible="false" data-name="" @onclick="@(() => SubGridClicked(capturedI))">
+                                        @if (IsSubGridVisible[capturedI])
+                                        {
+                                            <span class="subgrid-caret-down">&nbsp;</span>
+                                        }
+                                        else
+                                        {
+                                            <span class="subgrid-caret">&nbsp;</span>
+                                        }
+                                    </td>
+                                }
+                                @if (_requiredTotalsColumn)
+                                {
+                                    <td class="grid-cell" data-name=""></td>
+                                }
+                                @foreach (IGridColumn column in Grid.Columns)
+                                {
+                                    <GridCellComponent T="@T" Column="@column" Item="@item"></GridCellComponent>
+                                }
+                            </tr>
+                            @if (_hasSubGrid)
                             {
-                                if (Grid.ComponentOptions.Selectable)
+                                int cols = 0;
+                                cols++;
+                                if (_requiredTotalsColumn)
                                 {
-                                    int j = i;
-                                    <tr class="grid-row@(_selectedRow == i ? " grid-row-selected" : "") @Grid.GetRowCssClasses(item)" @onclick="@(() => RowClicked(j, item))">
-                                        @if ((Grid.IsSumEnabled || Grid.IsAverageEnabled || Grid.IsMaxEnabled || Grid.IsMinEnabled)
-                                            && firstColumn != null 
-                                            && (firstColumn.IsSumEnabled || firstColumn.IsAverageEnabled
-                                                || firstColumn.IsMaxEnabled || firstColumn.IsMinEnabled))
-                                        {
-                                            <td class="grid-cell"></td>
-                                        }
-                                        @foreach (IGridColumn column in Grid.Columns)
-                                        {
-                                            <GridCellComponent T="@T" Column="@column" Item="@item"></GridCellComponent>
-                                        }
-                                    </tr>
-                                    i++;
+                                    cols++;
                                 }
-                                else
-                                {
-                                    <tr class="grid-row @Grid.GetRowCssClasses(item)">
-                                        @foreach (IGridColumn column in Grid.Columns)
-                                        {
-                                            <GridCellComponent T="@T" Column="@column" Item="@item"></GridCellComponent>
-                                        }
-                                    </tr>
-                                }
+                                cols += Grid.Columns.Count() - 1;
+                                var values = Grid.GetKeyValues(item);
+                                <tr class="subgrid-row">
+                                    <SubGridComponent T="@T" GridComponent="@this" GridPosition="@capturedI" Cols="@cols" Values="@values"></SubGridComponent>
+                                </tr>
                             }
                         }
-                        @if (Grid.IsSumEnabled || Grid.IsAverageEnabled || Grid.IsMaxEnabled || Grid.IsMinEnabled)
+                        else
                         {
-                            <GridTotalsComponent T="@T" Grid="@Grid"></GridTotalsComponent>
+                            <tr class="grid-row @Grid.GetRowCssClasses(item)">
+                                @if (_hasSubGrid)
+                                {
+                                    <td class="grid-cell grid-subgrid" data-is-rendered="false" data-is-visible="false" data-name="" @onclick="@(() => SubGridClicked(capturedI))">
+                                        @if (IsSubGridVisible[capturedI])
+                                        {
+                                            <span class="subgrid-caret-down">&nbsp;</span>
+                                        }
+                                        else
+                                        {
+                                            <span class="subgrid-caret">&nbsp;</span>
+                                        }
+                                    </td>
+                                }
+                                @if (_requiredTotalsColumn)
+                                {
+                                    <td class="grid-cell" data-name=""></td>
+                                }
+                                @foreach (IGridColumn column in Grid.Columns)
+                                {
+                                    <GridCellComponent T="@T" Column="@column" Item="@item"></GridCellComponent>
+                                }
+                            </tr>
+                            @if (_hasSubGrid)
+                            {
+                                int cols = 0;
+                                cols++;
+                                if (_requiredTotalsColumn)
+                                {
+                                    cols++;
+                                }
+                                cols += Grid.Columns.Count() - 1;
+                                var values = Grid.GetKeyValues(item);
+                                <tr class="subgrid-row">
+                                    <SubGridComponent T="@T" GridComponent="@this" GridPosition="@capturedI" Cols="@cols" Values="@values"></SubGridComponent>
+                                </tr>
+                            }
+                        }
+                        i++;
+                        }
+                        }
+                        @if (_hasTotals)
+                        {
+                            <GridTotalsComponent Grid="@Grid"></GridTotalsComponent>
                         }
                     </tbody>
                 </table>

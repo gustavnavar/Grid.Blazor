@@ -1,15 +1,10 @@
-﻿using GridBlazor.Pagination;
-using GridBlazor.Searching;
-using GridShared.Utility;
-using Microsoft.AspNetCore.Components;
-using System;
-using System.Threading.Tasks;
+﻿using Microsoft.AspNetCore.Components;
 
 namespace GridBlazor
 {
-    public class GridTotalsComponentBase<T> : ComponentBase
+    public class GridTotalsComponentBase : ComponentBase
     {
         [Parameter]
-        protected ICGrid<T> Grid { get; set; }
+        protected ICGrid Grid { get; set; }
     }
 }

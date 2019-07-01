@@ -35,7 +35,8 @@
         pageGrids.ordersGrid.addFilterWidget(new CustomersFilterWidget());
 
         pageGrids.ordersGrid.ajaxify({
-            getPagedData: "/Home/GetOrdersGridRows"
+            getPagedData: "/Home/GetOrdersGridRows",
+            getSubGridData: "/Home/GetOrderDetailsGrid"
         });
 
         pageGrids.ordersGrid.onRowSelect(function (e) {

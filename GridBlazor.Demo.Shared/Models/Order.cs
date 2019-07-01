@@ -9,6 +9,7 @@
 
 using GridShared.DataAnnotations;
 using GridShared.Sorting;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -64,6 +65,7 @@ namespace GridBlazor.Demo.Shared.Models
         public virtual Customer Customer { get; set; }
         [NotMappedColumn]
         public virtual Employee Employee { get; set; }
+        [JsonIgnore]
         [NotMappedColumn]
         public virtual ICollection<OrderDetail> OrderDetails { get; set; }
 

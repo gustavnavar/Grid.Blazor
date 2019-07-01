@@ -13,6 +13,7 @@ namespace GridMvc.TagHelpers
         [ViewContext]
         public ViewContext ViewContext { get; set; }
         public ISGrid Model { get; set; }
+        public string ViewName { get; set; } = "_Grid";
 
         public GridTagHelper(IHtmlHelper html)
         {
@@ -23,7 +24,7 @@ namespace GridMvc.TagHelpers
         {
             output.TagName = null;
             (_html as IViewContextAware).Contextualize(ViewContext);
-            var content = await _html.PartialAsync("_Grid", Model);
+            var content = await _html.PartialAsync(ViewName, Model);
             output.Content.SetHtmlContent(content);
         }
     }

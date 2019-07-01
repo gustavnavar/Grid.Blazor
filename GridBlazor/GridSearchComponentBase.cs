@@ -16,7 +16,7 @@ namespace GridBlazor
         [CascadingParameter(Name = "GridComponent")]
         protected GridComponent<T> GridComponent { get; set; }
         [Parameter]
-        protected ICGrid<T> Grid { get; set; }
+        protected ICGrid Grid { get; set; }
 
         protected override void OnParametersSet()
         {

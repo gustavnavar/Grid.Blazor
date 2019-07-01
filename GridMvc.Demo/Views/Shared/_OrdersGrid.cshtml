@@ -4,13 +4,12 @@
 @using GridShared.Filtering
 @using GridShared.Sorting
 @using Microsoft.AspNetCore.Localization
-@using Microsoft.AspNetCore.Mvc.ViewEngines
 @model SGrid<Order>
 
 @{
     Action<IGridColumnCollection<Order>> columns = c =>
     {
-        /* Adding not mapped column, that renders body, using inline Razor html helper */
+/* Adding not mapped column, that renders body, using inline Razor html helper */
         c.Add()
             .Encoded(false)
             .Sanitized(false)
@@ -18,13 +17,13 @@
             .Css("hidden-xs") //hide on phones
             .RenderValueAs(o => $"<b><a class='modal_link' href='/Home/Edit/{o.OrderID}'>Edit</a></b>");
 
-        /* Adding "OrderID" column: */
+/* Adding "OrderID" column: */
 
         c.Add(o => o.OrderID)
             .Titled("Number")
             .SetWidth(100);
 
-        /* Adding "OrderDate" column: */
+/* Adding "OrderDate" column: */
         c.Add(o => o.OrderDate, "OrderCustomDate")
             .Titled("Date")
             .SortInitialDirection(GridSortDirection.Descending)
@@ -33,7 +32,7 @@
             .SetWidth(110)
             .Max(true).Min(true);
 
-        /* Adding "CompanyName" column: */
+/* Adding "CompanyName" column: */
         c.Add(o => o.Customer.CompanyName)
             .Titled("Company")
             .SetWidth(250)
@@ -42,18 +41,18 @@
             .SetFilterWidgetType("CustomCompanyNameFilterWidget")
             .Max(true).Min(true);
 
-        /* Adding "ContactName" column: */
+/* Adding "ContactName" column: */
         c.Add(o => o.Customer.ContactName).Titled("ContactName").SetWidth(250)
             .Max(true).Min(true);
 
-        /* Adding "Freight" column: */
+/* Adding "Freight" column: */
         c.Add(o => o.Freight)
             .Titled("Freight")
             .SetWidth(100)
             .Format("{0:F}")
             .Sum(true).Average(true).Max(true).Min(true);
 
-        /* Adding "Vip customer" column: */
+/* Adding "Vip customer" column: */
         c.Add(o => o.Customer.IsVip)
             .Titled("Is Vip")
             .SetWidth(70)
@@ -64,5 +63,5 @@
     var locale = requestCulture.RequestCulture.UICulture.TwoLetterISOLanguageName;
 }
 
-@Html.Grid(Model).Named("ordersGrid").Columns(columns).SetRowCssClasses(item => item.Customer.IsVip ? "success" : string.Empty).WithPaging(10).SetLanguage(locale).Sortable().Filterable().WithMultipleFilters().Searchable(true, false).WithGridItemsCount()
+@Html.Grid(Model).Named("ordersGrid").Columns(columns).SetRowCssClasses(item => item.Customer.IsVip ? "success" : string.Empty).WithPaging(10).SetLanguage(locale).Sortable().Filterable().WithMultipleFilters().Searchable(true, false).WithGridItemsCount().SubGrid(new string[] { "OrderID" })
 

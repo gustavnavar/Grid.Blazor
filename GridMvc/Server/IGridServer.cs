@@ -116,6 +116,11 @@ namespace GridMvc.Server
         IGridServer<T> WithGridItemsCount();
 
         /// <summary>
+        ///    Allow grid to show a SubGrid
+        /// </summary>
+        IGridServer<T> SubGrid(string[] keys);
+
+        /// <summary>
         ///     Items, displaying in the grid view
         /// </summary>
         ItemsDTO<T> ItemsToDisplay { get; }

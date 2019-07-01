@@ -41,7 +41,7 @@ namespace GridBlazor.Demo.Server.Controllers
         {
             var repository = new OrdersRepository(_context);
             IGridServer<Order> server = new GridServer<Order>(repository.GetAll(), Request.Query,
-                true, "ordersGrid", GridSample.Columns)
+                true, "ordersGrid", GridSample.OrderColumns)
                     .WithPaging(10)
                     .Sortable()
                     .Filterable()
@@ -73,6 +73,22 @@ namespace GridBlazor.Demo.Server.Controllers
         {
             var repository = new CustomersRepository(_context);
             return Ok(repository.GetAll().Select(r => r.CompanyName));
+        }
+
+        [HttpGet("[action]")]
+        public ActionResult GetOrderDetailsGrid(int OrderId)
+        {
+            var orderDetails = (new OrderDetailsRepository(_context)).GetForOrder(OrderId);
+
+            var server = new GridServer<OrderDetail>(orderDetails, Request.Query,
+                    false, "orderDetailsGrid" + OrderId.ToString(), GridSample.OrderDetailColumns)
+                        .WithPaging(10)
+                        .Sortable()
+                        .Filterable()
+                        .WithMultipleFilters();
+
+            var items = server.ItemsToDisplay;
+            return Ok(items);
         }
     }
 }

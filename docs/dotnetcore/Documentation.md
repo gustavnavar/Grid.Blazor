@@ -21,3 +21,4 @@
 * [Multipile grids on the same page](Multipile_grids_on_the_same_page.md)
 * [Data annotations](Data_annotations.md)
 * [Render button, checkbox, etc. in a grid cell](Render_button_checkbox_etc_in_a_grid_cell.md)
+* [Subgrids](Subgrids.md)

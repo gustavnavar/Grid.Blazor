@@ -1,6 +1,5 @@
 ﻿using GridBlazor.Demo.Shared.Models;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Diagnostics;
 
 namespace GridComponent.Demo.Models
 {
@@ -10,6 +9,12 @@ namespace GridComponent.Demo.Models
         public NorthwindDbContext(DbContextOptions<NorthwindDbContext> options)
             : base(options)
         {
+        }
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<OrderDetail>()
+                .HasKey(c => new { c.OrderID, c.ProductID });
         }
 
         public DbSet<Category> Categories { get; set; }

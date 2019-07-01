@@ -73,7 +73,7 @@ namespace GridBlazor
                     QueryStringFilterSettings.DefaultTypeQueryParameter,
                     QueryStringFilterSettings.DefaultClearInitFilterQueryParameter
                 };
-            string pagerParameterName = GetPagerQueryParameterName(((ICGrid<T>)(Column.ParentGrid)).Pager);
+            string pagerParameterName = GetPagerQueryParameterName(((ICGrid)(Column.ParentGrid)).Pager);
             if (!string.IsNullOrEmpty(pagerParameterName))
                 exceptQueryParameters.Add(pagerParameterName);
 
@@ -121,7 +121,7 @@ namespace GridBlazor
                 builder.OpenComponent<TextFilterComponent<T>>(++_sequence);
             }
             builder.AddAttribute(++_sequence, "GridHeaderComponent", this);
-            builder.AddAttribute(++_sequence, "visible", _isVisible);
+            builder.AddAttribute(++_sequence, "Visible", _isVisible);
             builder.AddAttribute(++_sequence, "ColumnName", Column.Name);
             builder.AddAttribute(++_sequence, "FilterSettings", _filterSettings);
             builder.CloseComponent();

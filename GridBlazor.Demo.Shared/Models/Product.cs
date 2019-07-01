@@ -11,6 +11,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace GridBlazor.Demo.Shared.Models
 {
+    using Newtonsoft.Json;
     using System;
     using System.Collections.Generic;
     
@@ -33,6 +34,7 @@ namespace GridBlazor.Demo.Shared.Models
         public bool Discontinued { get; set; }
     
         public virtual Category Category { get; set; }
+        [JsonIgnore]
         public virtual ICollection<OrderDetail> Order_Details { get; set; }
         public virtual Supplier Supplier { get; set; }
     }

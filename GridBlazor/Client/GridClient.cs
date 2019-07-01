@@ -186,6 +186,16 @@ namespace GridBlazor
         }
 
         /// <summary>
+        ///    Allow grid to show a SubGrid
+        /// </summary>
+        public IGridClient<T> SubGrid(Func<object[], Task<ICGrid>> subGrids, string[] keys)
+        {
+            _source.SubGrids = subGrids;
+            _source.Keys = keys;
+            return this;
+        }
+
+        /// <summary>
         ///     Get grid object
         /// </summary>
         public CGrid<T> Grid

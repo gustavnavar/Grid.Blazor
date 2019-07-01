@@ -1,6 +1,6 @@
-﻿using GridShared;
-using GridMvc.Html;
+﻿using GridMvc.Html;
 using GridMvc.Pagination;
+using GridShared;
 using GridShared.Totals;
 
 namespace GridMvc
@@ -14,6 +14,16 @@ namespace GridMvc
         ///     Pager for the grid
         /// </summary>
         IGridPager Pager { get; }
+
+        /// <summary>
+        ///     Keys for subgrid
+        /// </summary>
+        string[] Keys { get; }
+
+        /// <summary>
+        ///     Get foreign key values for subgrid records
+        /// </summary>
+        string[] GetKeyValues(object item);
 
         IGridSettingsProvider Settings { get; }
 

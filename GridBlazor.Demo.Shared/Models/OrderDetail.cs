@@ -7,17 +7,13 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace GridBlazor.Demo.Shared.Models
 {
-    using System;
-    using System.Collections.Generic;
     [Table("Order Details")]
     public partial class OrderDetail
     {
-        [Key]
         public int OrderID { get; set; }
         public int ProductID { get; set; }
         public decimal UnitPrice { get; set; }
@@ -25,6 +21,7 @@ namespace GridBlazor.Demo.Shared.Models
         public float Discount { get; set; }
         [ForeignKey("OrderID")]
         public virtual Order Order { get; set; }
+        [ForeignKey("ProductID")]
         public virtual Product Product { get; set; }
     }
 }

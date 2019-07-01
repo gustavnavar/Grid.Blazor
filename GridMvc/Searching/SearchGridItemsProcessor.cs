@@ -34,7 +34,7 @@ namespace GridMvc.Searching
 
         public IQueryable<T> Process(IQueryable<T> items)
         {
-            if (_grid.SearchingEnabled && !string.IsNullOrWhiteSpace(_settings.SearchValue))
+            if (items.Count() > 0 && _grid.SearchingEnabled && !string.IsNullOrWhiteSpace(_settings.SearchValue))
             {
                 ParameterExpression parameter = Expression.Parameter(typeof(T), "x");
                 Expression binaryExpression = null;

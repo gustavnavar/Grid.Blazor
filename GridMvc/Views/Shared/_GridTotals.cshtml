@@ -1,7 +1,17 @@
 ﻿@using GridMvc.Columns
 @using GridMvc.Resources
 @model GridMvc.ISGrid
+
 @if (Model == null) { return; }
+
+@{
+    var firstColumn = (ISGridColumn)Model.Columns.FirstOrDefault();
+    bool hasSubGrid = Model.Keys != null && Model.Keys.Length > 0;
+    bool requiredTotalsColumn = firstColumn != null
+              && (firstColumn.IsSumEnabled || firstColumn.IsAverageEnabled
+                  || firstColumn.IsMaxEnabled || firstColumn.IsMinEnabled);
+}
+
 @if (Model.RenderOptions.RenderRowsOnly)
 {
     return;
@@ -9,20 +19,21 @@
 else
 {
     <tr class="grid-row"><td class="grid-cell" style="height:25px;border:none;background-color:white"></td></tr>
-    var firstColumn = (ISGridColumn)Model.Columns.FirstOrDefault();
     if (Model.IsSumEnabled)
     {
         <tr class="grid-totals-row">
-            @if (firstColumn != null
-               && (firstColumn.IsSumEnabled || firstColumn.IsAverageEnabled
-                   || firstColumn.IsMaxEnabled || firstColumn.IsMinEnabled))
+            @if (hasSubGrid)
+            {
+                <td class="grid-cell" data-name=""></td>
+            }
+            @if (requiredTotalsColumn)
             {
                 <td class="grid-cell"><b>@Strings.Sum</b></td>
-            }           
-            @for(int i = 0;  i < Model.Columns.Count(); i++)
+            }
+            @for (int i = 0; i < Model.Columns.Count(); i++)
             {
                 var column = (ISGridColumn)Model.Columns.ElementAt(i);
-                if(i == 0 && !column.IsSumEnabled && !column.IsAverageEnabled
+                if (i == 0 && !column.IsSumEnabled && !column.IsAverageEnabled
                    && !column.IsMaxEnabled && !column.IsMinEnabled)
                 {
                     <td class="grid-cell"><b>@Strings.Sum</b></td>
@@ -45,16 +56,18 @@ else
     if (Model.IsAverageEnabled)
     {
         <tr class="grid-totals-row">
-            @if (firstColumn != null
-               && (firstColumn.IsSumEnabled || firstColumn.IsAverageEnabled
-                   || firstColumn.IsMaxEnabled || firstColumn.IsMinEnabled))
+            @if (hasSubGrid)
+            {
+                <td class="grid-cell" data-name=""></td>
+            }
+            @if (requiredTotalsColumn)
             {
                 <td class="grid-cell"><b>@Strings.Average</b></td>
             }
-            @for(int i = 0;  i < Model.Columns.Count(); i++)
+            @for (int i = 0; i < Model.Columns.Count(); i++)
             {
                 var column = (ISGridColumn)Model.Columns.ElementAt(i);
-                if(i == 0 && !column.IsSumEnabled && !column.IsAverageEnabled
+                if (i == 0 && !column.IsSumEnabled && !column.IsAverageEnabled
                    && !column.IsMaxEnabled && !column.IsMinEnabled)
                 {
                     <td class="grid-cell"><b>@Strings.Average</b></td>
@@ -76,16 +89,18 @@ else
     if (Model.IsMaxEnabled)
     {
         <tr class="grid-totals-row">
-            @if (firstColumn != null
-               && (firstColumn.IsSumEnabled || firstColumn.IsAverageEnabled
-                   || firstColumn.IsMaxEnabled || firstColumn.IsMinEnabled))
+            @if (hasSubGrid)
+            {
+                <td class="grid-cell" data-name=""></td>
+            }
+            @if (requiredTotalsColumn)
             {
                 <td class="grid-cell"><b>@Strings.Max</b></td>
             }
-            @for(int i = 0;  i < Model.Columns.Count(); i++)
+            @for (int i = 0; i < Model.Columns.Count(); i++)
             {
                 var column = (ISGridColumn)Model.Columns.ElementAt(i);
-                if(i == 0 && !column.IsSumEnabled && !column.IsAverageEnabled
+                if (i == 0 && !column.IsSumEnabled && !column.IsAverageEnabled
                    && !column.IsMaxEnabled && !column.IsMinEnabled)
                 {
                     <td class="grid-cell"><b>@Strings.Max</b></td>
@@ -107,16 +122,18 @@ else
     if (Model.IsMinEnabled)
     {
         <tr class="grid-totals-row">
-            @if (firstColumn != null
-               && (firstColumn.IsSumEnabled || firstColumn.IsAverageEnabled
-                   || firstColumn.IsMaxEnabled || firstColumn.IsMinEnabled))
+            @if (hasSubGrid)
+            {
+                <td class="grid-cell" data-name=""></td>
+            }
+            @if (requiredTotalsColumn)
             {
                 <td class="grid-cell"><b>@Strings.Min</b></td>
-            } 
-            @for(int i = 0;  i < Model.Columns.Count(); i++)
+            }
+            @for (int i = 0; i < Model.Columns.Count(); i++)
             {
                 var column = (ISGridColumn)Model.Columns.ElementAt(i);
-                if(i == 0 && !column.IsSumEnabled && !column.IsAverageEnabled
+                if (i == 0 && !column.IsSumEnabled && !column.IsAverageEnabled
                    && !column.IsMaxEnabled && !column.IsMinEnabled)
                 {
                     <td class="grid-cell"><b>@Strings.Min</b></td>
@@ -131,7 +148,7 @@ else
                     {
                         <td class="grid-cell"></td>
                     }
-                }                
+                }
             }
         </tr>
     }

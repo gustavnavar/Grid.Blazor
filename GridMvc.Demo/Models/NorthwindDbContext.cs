@@ -10,6 +10,12 @@ namespace GridMvc.Demo.Models
         {
         }
 
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<OrderDetail>()
+                .HasKey(c => new { c.OrderID, c.ProductID });
+        }
+
         public DbSet<Category> Categories { get; set; }
         public DbSet<Customer> Customers { get; set; }
         public DbSet<Employee> Employees { get; set; }
