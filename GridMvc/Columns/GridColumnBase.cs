@@ -94,6 +94,12 @@ namespace GridMvc.Columns
             return this;
         }
 
+        public IGridColumn<T> RenderComponentAs(Type componentType)
+        {
+            // do nothing
+            return this;
+        }
+
         public IGridColumn<T> Format(string pattern)
         {
             ValuePattern = pattern;

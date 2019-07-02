@@ -62,6 +62,36 @@ All customization for columns must be done in the razor page:
                 .SetWidth(220);
     ```
 
+## Component columns
+
+Sometimes you need to add a column that renders a component. In this case you must use an empty contructor of the **Add** method to create a column and its **RenderComponentAs** method to define the content that will be rendered in it:
+
+```c#
+    Columns.Add().RenderComponentAs(typeof(ButtonCell));
+```
+
+The parameter of the **RenderComponentAs** method must be the **Type** of the Blazor component used for this column.
+You must also create a Blazor component that includes only a parameter called **Item** of the same type of the grid row element.
+The component can include any html elements as well as event handling features.
+
+This is an example of this type of component:
+
+```razor#
+    <button class='btn btn-sm btn-primary' @onclick="@MyClickHandler">Save</button>
+
+    @code {
+        [Parameter]
+        protected Order Item { get; set; }
+
+        private void MyClickHandler(UIMouseEventArgs e)
+        {
+            Console.WriteLine("Button clicked: Item " + Item.OrderID);
+        }
+    }
+```
+
+Remember that sorting and filtering will not work on component columns.
+
 ## Not connected columns
 
 Sometimes you need to add a column that renders some content, but there is no base model property. In this case you must use an empty contructor of the **Add** method to create a column and its **RenderValueAs** method to define the content that will be rendered in it:
@@ -113,6 +143,7 @@ Titled | Setup the column header text | Columns.Add(x=>x.Name).Titled("Name of p
 Encoded | Enable or disable encoding column values | Columns.Add(x=>x.Name).Encoded(false);
 Sanitized | If encoding is disabled sanitize column value from XSS attacks | Columns.Add(x=>x.Name).Encoded(false).Sanitize(false);
 SetWidth | Setup width of current column | Columns.Add(x=>x.Name).SetWidth("30%");
+RenderComponentAs | Setup delegate to render a component column | Columns.Add().RenderComponentAs(typeof(ButtonCell));
 RenderValueAs | Setup delegate to render column values | Columns.Add(x=>x.Name).RenderValueAs(o => o.Employees.FirstName + " " + o.Employees.LastName);
 Sortable | Enable or disable sorting for current column | Columns.Add(x=>x.Name).Sortable(true);
 SortInitialDirection | Setup the initial sort deirection of the column (need to enable sorting) | Columns.Add(x=>x.Name).Sortable(true).SortInitialDirection(GridSortDirection.Descending);

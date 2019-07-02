@@ -1,7 +1,7 @@
 ﻿using GridBlazor.Columns;
-using GridShared;
 using GridShared.Columns;
 using Microsoft.AspNetCore.Components;
+using System;
 
 namespace GridBlazor
 {
@@ -10,9 +10,12 @@ namespace GridBlazor
         private const string TdClass = "grid-cell";
         private const string TdStyle = "display:none;";
 
+        private int _sequence = 0;
         protected string _cssStyles;
         protected string _cssClass;
-        protected IGridCell _cell;
+        protected MarkupString _cell;
+        protected Type _componentType;
+        protected RenderFragment _cellRender;
 
         [Parameter]
         protected IGridColumn Column { get; set; }
@@ -21,7 +24,11 @@ namespace GridBlazor
 
         protected override void OnParametersSet()
         {
-            _cell = Column.GetCell(Item);
+            _componentType = ((GridColumnBase<T>)Column).ComponentType;
+            if (_componentType != null)
+                _cellRender = CreateCellComponent();
+            else
+                _cell = (MarkupString)Column.GetCell(Item).ToString();
             if (((GridColumnBase<T>)Column).Hidden)
                 _cssStyles = ((GridStyledColumn)Column).GetCssStylesString() + " " + TdStyle;
             else
@@ -31,5 +38,12 @@ namespace GridBlazor
             if(!string.IsNullOrWhiteSpace(columnCssClasses))
                 _cssClass += " " + columnCssClasses;
         }
+
+        private RenderFragment CreateCellComponent() => builder =>
+        {
+            builder.OpenComponent(++_sequence, _componentType);
+            builder.AddAttribute(++_sequence, "Item", Item);
+            builder.CloseComponent();
+        };
     }
 }

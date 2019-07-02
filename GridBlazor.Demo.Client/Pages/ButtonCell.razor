@@ -1,0 +1,13 @@
+@using GridBlazor.Demo.Shared.Models
+
+<button class='btn btn-sm btn-primary' @onclick="@MyClickHandler">Save</button>
+
+@code {
+    [Parameter]
+    protected Order Item { get; set; }
+
+    private void MyClickHandler(UIMouseEventArgs e)
+    {
+        Console.WriteLine("Button clicked: Item " + Item.OrderID);
+    }
+}

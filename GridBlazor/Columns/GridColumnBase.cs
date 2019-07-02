@@ -12,6 +12,8 @@ namespace GridBlazor.Columns
 {
     public abstract class GridColumnBase<T> : GridStyledColumn, IGridColumn<T>, ICGridColumn
     {
+        public Type ComponentType { get; private set; }
+
         protected Func<T, string> ValueConstraint;
         protected string ValuePattern;
 
@@ -83,6 +85,12 @@ namespace GridBlazor.Columns
         public IGridColumn<T> RenderValueAs(Func<T, string> constraint)
         {
             ValueConstraint = constraint;
+            return this;
+        }
+
+        public IGridColumn<T> RenderComponentAs(Type componentType)
+        {
+            ComponentType = componentType;
             return this;
         }
 

@@ -68,6 +68,11 @@ namespace GridShared.Columns
         IGridColumn<T> RenderValueAs(Func<T, string> constraint);
 
         /// <summary>
+        ///     Setup the custom render for component
+        /// </summary>
+        IGridColumn<T> RenderComponentAs(Type componentType);
+
+        /// <summary>
         ///     Format column values with specified text pattern
         /// </summary>
         IGridColumn<T> Format(string pattern);
