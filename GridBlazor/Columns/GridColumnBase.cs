@@ -94,6 +94,13 @@ namespace GridBlazor.Columns
             return this;
         }
 
+        public IGridColumn<T> RenderComponentAs<TComponent>()
+             where TComponent : ICustomGridComponent<T>
+        {
+            ComponentType = typeof(TComponent);
+            return this;
+        }
+
         public IGridColumn<T> Format(string pattern)
         {
             ValuePattern = pattern;
