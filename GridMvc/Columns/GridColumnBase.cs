@@ -100,6 +100,13 @@ namespace GridMvc.Columns
             return this;
         }
 
+        public IGridColumn<T> RenderComponentAs<TComponent>()
+            where TComponent : ICustomGridComponent<T>
+        {
+            // do nothing
+            return this;
+        }
+
         public IGridColumn<T> Format(string pattern)
         {
             ValuePattern = pattern;
