@@ -5,7 +5,7 @@
 [Index](Documentation.md)
 
 The prefered method is using a Blazor component because it allows event handling with Blazor.
-But you can also use the **RenderValueAs** method to render a custom html markup in the grid cell, as it is used on ASP.NET MVC Core projects. In this events will be managed using Javascript.
+But you can also use the **RenderValueAs** method to render a custom html markup in the grid cell, as it is used on ASP.NET MVC Core projects. In this case events will be managed using Javascript.
 
 You have to use the **RenderComponentAs** method to render a component in a cell:
 
@@ -16,8 +16,8 @@ You have to use the **RenderComponentAs** method to render a component in a cell
 The generic type used has to be the component created to render the cell.
 
 You must also create a Blazor component that implements the **ICustomGridComponent** interface.
-This interface includes only a parameter called Item of the same type of the grid row element. 
-The component can include any html elements as well as event handling feature.
+This interface includes only a parameter called **Item** of the same type of the grid row element. 
+The component can include any html elements as well as any event handling features.
 
 ## Button
 
