@@ -1,10 +1,12 @@
 @using GridBlazor.Demo.Shared.Models
+@using GridShared.Columns
+@implements ICustomGridComponent<Order>
 
 <button class='btn btn-sm btn-primary' @onclick="@MyClickHandler">Save</button>
 
 @code {
     [Parameter]
-    protected Order Item { get; set; }
+    public Order Item { get; protected set; }
 
     private void MyClickHandler(UIMouseEventArgs e)
     {

@@ -76,7 +76,7 @@ The component can include any html elements as well as event handling features.
 
 This is an example of this type of component:
 
-```razor#
+```razor
     <button class='btn btn-sm btn-primary' @onclick="@MyClickHandler">Save</button>
 
     @code {
