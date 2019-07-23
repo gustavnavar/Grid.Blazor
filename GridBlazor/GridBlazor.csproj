@@ -32,9 +32,9 @@
     <PackageReference Include="Microsoft.AspNetCore.Components.Browser" Version="3.0.0-preview6.19307.2" />
     <PackageReference Include="Microsoft.AspNetCore.Components.Build" Version="3.0.0-preview3-19153-02" />
     <PackageReference Include="Microsoft.AspNetCore.Html.Abstractions" Version="2.2.0" />
-    <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="3.0.0-preview6.19304.6" />
-    <PackageReference Include="Microsoft.Extensions.Primitives" Version="3.0.0-preview6.19304.6" />
-    <PackageReference Include="System.ComponentModel.Annotations" Version="4.6.0-preview6.19303.8" />
+    <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="3.0.0-preview7.19362.4" />
+    <PackageReference Include="Microsoft.Extensions.Primitives" Version="3.0.0-preview7.19362.4" />
+    <PackageReference Include="System.ComponentModel.Annotations" Version="4.6.0-preview7.19362.9" />
   </ItemGroup>
 
   <ItemGroup>
@@ -77,6 +77,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Update="Microsoft.AspNetCore.Components.Browser" Version="3.0.0-preview6.19307.2" />
+    <PackageReference Update="Microsoft.AspNetCore.Components.Browser" Version="3.0.0-preview7.19365.7" />
   </ItemGroup>
 </Project>

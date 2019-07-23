@@ -3,7 +3,7 @@ using GridComponent.Demo.Models;
 using GridMvc.Server;
 using GridShared;
 using GridShared.Utility;
-using Microsoft.AspNetCore.Http.Internal;
+using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Primitives;
 using System;
 
