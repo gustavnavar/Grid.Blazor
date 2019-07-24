@@ -119,7 +119,7 @@ namespace GridMvc.Html
         /// <summary>
         ///    Allow grid to show a SubGrid
         /// </summary>
-        IGridHtmlOptions<T> SubGrid(string[] keys);
+        IGridHtmlOptions<T> SubGrid(params string[] keys);
 
         /// <summary>
         ///     Obviously render Grid markup

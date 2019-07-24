@@ -13,4 +13,4 @@ You can enable sorting for all columns of a grid using the **Sortable** method o
     }).Sortable()
 ```
 
-[<- Totals](Totals.md) | [Searching ->](Searching.md)
+[<- Totals](Totals.md) | [Selecting row ->](Selecting_row.md)

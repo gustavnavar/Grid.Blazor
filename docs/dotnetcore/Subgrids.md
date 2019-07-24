@@ -20,7 +20,7 @@ You can enable subgrids for the parent grid using the **SubGrid** method of the 
         columns.Add(c => c.OrderID);
         columns.Add(c => c.Title);
         columns.Add(c => c.Date);
-    }).Named("ordersGrid").SubGrid(new string[] { "OrderID" })
+    }).Named("ordersGrid").SubGrid("OrderID")
 ```
 
 Or you can also use the **SubGrid** method of the **GridServer** object from an action controller:
@@ -36,7 +36,7 @@ Or you can also use the **SubGrid** method of the **GridServer** object from an 
             columns.Add(c => c.Date);
         };
         var server = new GridServer<Order>(items, Request.Query, false, "ordersGrid", columns)
-            .SubGrid(new string[] { "OrderID" });
+            .SubGrid("OrderID");
 
         return View(server.Grid);
     }
@@ -44,9 +44,9 @@ Or you can also use the **SubGrid** method of the **GridServer** object from an 
 
 ## SubGrid parameter
 
-Parameter | Description | Example
---------- | ----------- | -------
-keys | array of strings with the names of required columns to find records for the subgrid | SubGrid(new string[] { "OrderID" })
+Parameter | Type | Description | Example
+--------- | ---- | ----------- | -------
+keys | params string[] | variable number of strings with the names of required columns to find records for the subgrid | SubGrid(new string[] { "OrderID" })
 
 The following script on the view will enable paging, sorting, filtering and subgrids
 

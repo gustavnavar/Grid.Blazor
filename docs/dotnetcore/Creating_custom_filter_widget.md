@@ -143,7 +143,7 @@ The filter type value must contain one of the **getAssociatedTypes** array value
 
 ## Register filter widget
 
-Finnaly you have to add the custom widget in the **GridMvc** filters collection. You can do this by using **addFilterWidget** javascript function. Add the following script after **gridmvc.js** in your view:
+Finally you have to add the custom widget in the **GridMvc** filters collection. You can do this by using **addFilterWidget** javascript function. Add the following script after **gridmvc.js** in your view:
 
 ```javascript
    <script>

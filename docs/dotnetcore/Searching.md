@@ -37,4 +37,4 @@ Then you must enable query client evaluation on the ORM (EF Core). You can enabl
 Keep in mind that enabling query client evaluation on the ORM (EF Core) can have a big impact on performance.
 
 
-[<- Sorting](Sorting.md) | [Filtering ->](Filtering.md)
+[<- Selecting row](Selecting_row.md) | [Filtering ->](Filtering.md)

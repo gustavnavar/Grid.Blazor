@@ -34,10 +34,10 @@
                 int capturedI = i;
                 if (Grid.ComponentOptions.Selectable)
                 {
-                    <tr class="grid-row@(SelectedRow == capturedI? " grid-row-selected" : "") @Grid.GetRowCssClasses(item)" @onclick="@(() => RowClicked(capturedI, item))">
+                    <tr class="grid-row@(SelectedRow == capturedI? " grid-row-selected" : "") @Grid.GetRowCssClasses(item)" @onclick="() => RowClicked(capturedI, item)">
                         @if (_hasSubGrid)
                         {
-                            <td class="grid-cell grid-subgrid" data-is-rendered="false" data-is-visible="false" data-name="" @onclick="@(() => SubGridClicked(capturedI))">
+                            <td class="grid-cell grid-subgrid" data-is-rendered="false" data-is-visible="false" data-name="" @onclick="() => SubGridClicked(capturedI)">
                                 @if (IsSubGridVisible[capturedI])
                                 {
                                     <span class="subgrid-caret-down">&nbsp;</span>
@@ -63,7 +63,7 @@
                     <tr class="grid-row @Grid.GetRowCssClasses(item)">
                         @if (_hasSubGrid)
                         {
-                            <td class="grid-cell grid-subgrid" data-is-rendered="false" data-is-visible="false" data-name="" @onclick="@(() => SubGridClicked(capturedI))">
+                            <td class="grid-cell grid-subgrid" data-is-rendered="false" data-is-visible="false" data-name="" @onclick="() => SubGridClicked(capturedI)">
                                 @if (IsSubGridVisible[capturedI])
                                 {
                                     <span class="subgrid-caret-down">&nbsp;</span>
@@ -156,10 +156,10 @@
                                 int capturedI = i;
                                 if (Grid.ComponentOptions.Selectable)
                                 {
-                                    <tr class="grid-row@(SelectedRow == capturedI? " grid-row-selected" : "") @Grid.GetRowCssClasses(item)" @onclick="@(() => RowClicked(capturedI, item))">
+                                    <tr class="grid-row@(SelectedRow == capturedI? " grid-row-selected" : "") @Grid.GetRowCssClasses(item)" @onclick="() => RowClicked(capturedI, item)">
                                         @if (_hasSubGrid)
                                         {
-                                            <td class="grid-cell grid-subgrid" data-is-rendered="false" data-is-visible="false" data-name="" @onclick="@(() => SubGridClicked(capturedI))">
+                                            <td class="grid-cell grid-subgrid" data-is-rendered="false" data-is-visible="false" data-name="" @onclick="() => SubGridClicked(capturedI)">
                                                 @if (IsSubGridVisible[capturedI])
                                                 {
                                                     <span class="subgrid-caret-down">&nbsp;</span>
@@ -185,7 +185,7 @@
                                     <tr class="grid-row @Grid.GetRowCssClasses(item)">
                                         @if (_hasSubGrid)
                                         {
-                                            <td class="grid-cell grid-subgrid" data-is-rendered="false" data-is-visible="false" data-name="" @onclick="@(() => SubGridClicked(capturedI))">
+                                            <td class="grid-cell grid-subgrid" data-is-rendered="false" data-is-visible="false" data-name="" @onclick="() => SubGridClicked(capturedI)">
                                                 @if (IsSubGridVisible[capturedI])
                                                 {
                                                     <span class="subgrid-caret-down">&nbsp;</span>

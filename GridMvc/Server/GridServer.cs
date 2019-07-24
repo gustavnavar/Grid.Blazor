@@ -183,7 +183,7 @@ namespace GridMvc.Server
         /// <summary>
         ///    Allow grid to show a SubGrid
         /// </summary>
-        public IGridServer<T> SubGrid(string[] keys)
+        public IGridServer<T> SubGrid(params string[] keys)
         {
             _source.Keys = keys;
             return this;

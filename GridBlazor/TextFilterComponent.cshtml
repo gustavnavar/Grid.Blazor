@@ -16,7 +16,7 @@
                     {
                         <div class="form-group row">
                             <div class="col-md-4 col-md-offset-4 offset-md-4">
-                                <select class="grid-filter-cond form-control" @bind="@_condition">
+                                <select class="grid-filter-cond form-control" @bind="_condition">
                                     <option value="1">@Strings.And</option>
                                     <option value="2">@Strings.Or</option>
                                 </select>
@@ -41,7 +41,7 @@
                                 <label class="control-label"><b>@Strings.FilterTypeLabel:</b></label>
                             }
                             <div>
-                                <select class="grid-filter-type form-control" @bind="@_filters[j].Type">
+                                <select class="grid-filter-type form-control" @bind="_filters[j].Type">
                                     <option value="1">@Strings.Equal</option>
                                     <option value="2">@Strings.Contains</option>
                                     <option value="3">@Strings.StartsWith</option>
@@ -55,20 +55,20 @@
                                 <label class="control-label"><b>@Strings.FilterValueLabel:</b></label>
                             }
                             <div>
-                                <input type="text" class="grid-filter-input form-control" @bind="@_filters[j].Value" />
+                                <input type="text" class="grid-filter-input form-control" @bind="_filters[j].Value" />
                             </div>
                         </div>
                     </div>
                 }
                 <div class="grid-filter-buttons" style="float:right;">
-                    <button type="button" class="btn btn-primary" @onclick="@AddColumnFilterValue"><b>+</b></button>
+                    <button type="button" class="btn btn-primary" @onclick="AddColumnFilterValue"><b>+</b></button>
                     @if (_filters.Length > 1)
                     {
-                        <button type="button" class="btn btn-primary" style="margin-left:10px;" @onclick="@RemoveColumnFilterValue"><b>-</b></button>
+                        <button type="button" class="btn btn-primary" style="margin-left:10px;" @onclick="RemoveColumnFilterValue"><b>-</b></button>
                     }
                 </div>
                 <div class="grid-filter-buttons" style="margin-top:10px;">
-                    <button type="button" class="btn btn-primary" @onclick="@ApplyButtonClicked">
+                    <button type="button" class="btn btn-primary" @onclick="ApplyButtonClicked">
                         @Strings.ApplyFilterButtonText
                     </button>
                 </div>
@@ -78,7 +78,7 @@
                 {
                     <ul class="menu-list">
                         <li>
-                            <a class="grid-filter-clear" href="javascript:void(0);" @onclick="@ClearButtonClicked">
+                            <a class="grid-filter-clear" href="javascript:void(0);" @onclick="ClearButtonClicked">
                                 @Strings.ClearFilterLabel
                             </a>
                         </li>

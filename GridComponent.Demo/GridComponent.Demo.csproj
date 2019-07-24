@@ -4,7 +4,7 @@
     <TargetFramework>netcoreapp3.0</TargetFramework>
     <LangVersion>7.3</LangVersion>
     <AddRazorSupportForMvc>true</AddRazorSupportForMvc>
-    <Version>0.6.2</Version>
+    <Version>0.7.0</Version>
   </PropertyGroup>
 
   <ItemGroup>

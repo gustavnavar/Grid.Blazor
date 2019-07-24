@@ -118,7 +118,7 @@ namespace GridMvc.Server
         /// <summary>
         ///    Allow grid to show a SubGrid
         /// </summary>
-        IGridServer<T> SubGrid(string[] keys);
+        IGridServer<T> SubGrid(params string[] keys);
 
         /// <summary>
         ///     Items, displaying in the grid view

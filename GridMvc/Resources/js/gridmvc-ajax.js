@@ -366,9 +366,9 @@
                                 subGridRow.hide();
                                 // change is-visible attrib and caret
                                 $(this).attr("data-is-visible", "false");
-                                var span = $(this).find(".subgrid-caret-down");
-                                span.removeClass("subgrid-caret-down");
-                                span.addClass("subgrid-caret");
+                                var spanCaretDown = $(this).find(".subgrid-caret-down");
+                                spanCaretDown.removeClass("subgrid-caret-down");
+                                spanCaretDown.addClass("subgrid-caret");
                             }
                             else {
                                 var isRendered = $(this).attr("data-is-rendered");
@@ -387,9 +387,9 @@
                                 $(this).parent().next().show();
                                 // change is-visible attrib and caret
                                 $(this).attr("data-is-visible", "true");
-                                var span = $(this).find(".subgrid-caret");
-                                span.removeClass("subgrid-caret");
-                                span.addClass("subgrid-caret-down")
+                                var spanCaret = $(this).find(".subgrid-caret");
+                                spanCaret.removeClass("subgrid-caret");
+                                spanCaret.addClass("subgrid-caret-down");
                             }
                         }
                     });

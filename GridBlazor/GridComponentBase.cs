@@ -140,7 +140,7 @@ namespace GridBlazor
             await UpdateGrid();
         }
 
-        private async Task UpdateGrid()
+        public async Task UpdateGrid()
         {
             SelectedRow = -1;
             if (_hasSubGrid)

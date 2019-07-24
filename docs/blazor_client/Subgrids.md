@@ -70,17 +70,17 @@ Then we have to modify the **GridClient** we used to create the main grid adding
             .WithMultipleFilters()
             .Searchable(true, false)
             .WithGridItemsCount()
-            .SubGrid(subGrids, new string[] { "OrderID" });
+            .SubGrid(subGrids, "OrderID");
 
     }
 ```
 
 ## SubGrid parameters
 
-Parameter | Description
---------- | -----------
-subGrids| function that creates subgrids defined in the step before
-keys | array of strings with the names of required columns to find records for the subgrid
+Parameter | Type | Description
+--------- | ---- | -----------
+subGrids | Func<object[], Task<ICGrid>> | function that creates subgrids defined in the step before
+keys | params string[] | variable number of strings with the names of required columns to find records for the subgrid
 
 Finally we have to add an action to the back-end controller to get rows for subgrids. An example of this type of action is: 
 

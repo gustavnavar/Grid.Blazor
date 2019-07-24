@@ -193,7 +193,7 @@ namespace GridMvc.Html
         /// <summary>
         ///    Allow grid to show a SubGrid
         /// </summary>
-        public IGridHtmlOptions<T> SubGrid(string[] keys)
+        public IGridHtmlOptions<T> SubGrid(params string[] keys)
         {
             _source.Keys = keys;
             return this;
