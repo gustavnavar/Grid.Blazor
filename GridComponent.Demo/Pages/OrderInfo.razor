@@ -1,4 +1,5 @@
 ﻿@using GridBlazor.Demo.Shared.Models
+@inject IUriHelper UriHelper
 
 @if (Order == null)
 {
@@ -37,12 +38,21 @@ else
         </dt>
         <dd>@Order.Customer.CompanyName</dd>
     </dl>
+
     <div>
-        <button class='btn btn-primary'>Edit</button>
+        <button class='btn btn-sm btn-primary' @onclick="MyClickHandler">Edit</button>
     </div>
 }
 
 @code {
     [Parameter]
     private Order Order { get; set; }
+
+    [Parameter]
+    private string GridState { get; set; }
+
+    private void MyClickHandler(UIMouseEventArgs e)
+    {
+        UriHelper.NavigateTo($"/editorder/{Order.OrderID.ToString()}/{GridState}");
+    }
 }

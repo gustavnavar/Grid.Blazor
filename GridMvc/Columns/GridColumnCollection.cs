@@ -16,16 +16,20 @@ namespace GridMvc.Columns
     /// </summary>
     public class GridColumnCollection<T> : KeyedCollection<string, IGridColumn>, IGridColumnCollection<T>
     {
+        private readonly IGrid _grid;
         private readonly IColumnBuilder<T> _columnBuilder;
         private readonly IGridSortSettings _sortSettings;
 
-        public GridColumnCollection(IColumnBuilder<T> columnBuilder, IGridSortSettings sortSettings)
+        public GridColumnCollection(IGrid grid, IColumnBuilder<T> columnBuilder, IGridSortSettings sortSettings)
         {
+            _grid = grid;
             _columnBuilder = columnBuilder;
             _sortSettings = sortSettings;
         }
 
         #region IGridColumnCollection<T> Members
+
+        public IGrid Grid { get { return _grid; } }
 
         public IGridColumn<T> Add()
         {

@@ -4,7 +4,7 @@ using System.Linq;
 
 namespace GridComponent.Demo.Models
 {
-    public class OrdersRepository : SqlRepository<Order>
+    public class OrdersRepository : SqlRepository<Order>, IOrdersRepository
     {
         public OrdersRepository(NorthwindDbContext context)
             : base(context)
@@ -20,5 +20,33 @@ namespace GridComponent.Demo.Models
         {
             return GetAll().FirstOrDefault(o => o.OrderID == (int) id);
         }
+
+        public void Update(Order order)
+        {
+            var entry = Context.Entry(order);
+            if (entry.State == EntityState.Detached)
+            {
+                var attachedOrder = GetById(order.OrderID);
+                if (attachedOrder != null)
+                {
+                    Context.Entry(attachedOrder).CurrentValues.SetValues(order);
+                }
+                else
+                {
+                    entry.State = EntityState.Modified;
+                }
+            }
+        }
+
+        public void Save()
+        {
+            Context.SaveChanges();
+        }
+    }
+
+    public interface IOrdersRepository
+    {
+        void Update(Order order);
+        void Save();
     }
 }

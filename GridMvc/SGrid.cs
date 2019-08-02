@@ -13,6 +13,8 @@ using GridShared.DataAnnotations;
 using GridShared.Totals;
 using GridShared.Utility;
 using Microsoft.AspNetCore.Http;
+using Microsoft.Extensions.Primitives;
+using Newtonsoft.Json;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
@@ -95,7 +97,7 @@ namespace GridMvc
 
             //Set up column collection:
             _columnBuilder = new DefaultColumnBuilder<T>(this, _annotaions);
-            _columnsCollection = new GridColumnCollection<T>(_columnBuilder, _settings.SortSettings);
+            _columnsCollection = new GridColumnCollection<T>(this, _columnBuilder, _settings.SortSettings);
             RenderOptions = new GridRenderOptions();
 
             ApplyGridSettings();
@@ -329,6 +331,13 @@ namespace GridMvc
                 }
             
             return totals;
+        }
+
+        public string GetState()
+        {
+            var queryDictionary = QueryDictionary<StringValues>.Convert(_query);
+            string jsonQuery = JsonConvert.SerializeObject(queryDictionary, new StringValuesConverter());
+            return jsonQuery.GridStateEncode();
         }
     }
 }

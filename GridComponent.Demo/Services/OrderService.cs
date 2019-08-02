@@ -66,6 +66,19 @@ namespace GridComponent.Demo.Services
             var items = server.ItemsToDisplay;
             return items;
         }
+
+        public Order GetOrder(int OrderId)
+        {
+            var repository = new OrdersRepository(_context);
+            return repository.GetById(OrderId);
+        }
+
+        public void UpdateAndSave(Order order)
+        {
+            var repository = new OrdersRepository(_context);
+            repository.Update(order);
+            repository.Save();
+        }
     }
 
     public interface IOrderService
@@ -74,5 +87,7 @@ namespace GridComponent.Demo.Services
         ItemsDTO<Order> GetOrdersGridRows(QueryDictionary<StringValues> query);
         ItemsDTO<OrderDetail> GetOrderDetailsGridRows(Action<IGridColumnCollection<OrderDetail>> columns,
             object[] keys, QueryDictionary<StringValues> query);
+        Order GetOrder(int OrderId);
+        void UpdateAndSave(Order order);
     }
 }

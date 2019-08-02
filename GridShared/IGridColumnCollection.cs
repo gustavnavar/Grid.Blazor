@@ -97,6 +97,11 @@ namespace GridShared
         /// <param name="constraint">Member of generic class</param>
         /// <returns>Found column or NULL, if column not found</returns>
         IGridColumn<T> Get<TKey>(Expression<Func<T, TKey>> constraint);
+
+        /// <summary>
+        ///     Parent grid
+        /// </summary>
+        IGrid Grid { get; }
     }
 
     public interface IGridColumnCollection : IEnumerable<IGridColumn>

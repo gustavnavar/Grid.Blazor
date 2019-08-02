@@ -7,6 +7,7 @@
 @model SGrid<Order>
 
 @{
+    string returnUrl = (string)ViewData["returnUrl"];
     Action<IGridColumnCollection<Order>> columns = c =>
     {
 /* Adding not mapped column, that renders body, using inline Razor html helper */
@@ -15,7 +16,7 @@
             .Sanitized(false)
             .SetWidth(30)
             .Css("hidden-xs") //hide on phones
-            .RenderValueAs(o => $"<b><a class='modal_link' href='/Home/Edit/{o.OrderID}'>Edit</a></b>");
+            .RenderValueAs(o => $"<b><a class='modal_link' href='/Home/Edit/{o.OrderID}?returnUrl={returnUrl}&gridState={c.Grid.GetState()}'>Edit</a></b>");
 
 /* Adding "OrderID" column: */
 
@@ -64,4 +65,3 @@
 }
 
 @Html.Grid(Model).Named("ordersGrid").Columns(columns).SetRowCssClasses(item => item.Customer.IsVip ? "success" : string.Empty).WithPaging(10).SetLanguage(locale).Sortable().Filterable().WithMultipleFilters().Searchable(true, false).WithGridItemsCount().SubGrid("OrderID")
-

@@ -4,27 +4,49 @@ using GridMvc.Server;
 using GridShared;
 using GridShared.Filtering;
 using GridShared.Sorting;
+using GridShared.Utility;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Localization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ViewEngines;
 using System;
 using System.Linq;
+using System.Net;
 using System.Threading.Tasks;
 
 namespace GridMvc.Demo.Controllers
 {
     public class HomeController : ApplicationController
     {
-        private readonly NorthwindDbContext _context;
+        private readonly OrdersRepository _orderRepository;
+        private readonly OrderDetailsRepository _orderDetailsRepository;
+        private readonly CustomersRepository _customersRepository;
 
         public HomeController(NorthwindDbContext context, ICompositeViewEngine compositeViewEngine) : base(compositeViewEngine)
         {
-            _context = context;
+            _orderRepository = new OrdersRepository(context);
+            _orderDetailsRepository = new OrderDetailsRepository(context);
+            _customersRepository = new CustomersRepository(context);
         }
 
-        public ActionResult Index()
+        public ActionResult Index(string gridState = "")
         {
+            //string returnUrl = Request.Path;
+            string returnUrl = "/Home/Index";
+
+            IQueryCollection query = Request.Query;
+            if (!string.IsNullOrWhiteSpace(gridState))
+            {
+                try
+                {
+                    query = new QueryCollection(StringExtensions.GetQuery(gridState));
+                }
+                catch (Exception)
+                {
+                    // do nothing, gridState was not a valid state
+                }
+            }
+
             ViewBag.ActiveMenuTitle = "Demo";
 
             Action<IGridColumnCollection<Order>> columns = c =>
@@ -35,7 +57,7 @@ namespace GridMvc.Demo.Controllers
                     .Sanitized(false)
                     .SetWidth(30)
                     .Css("hidden-xs") //hide on phones
-                    .RenderValueAs(o => $"<b><a class='modal_link' href='/Home/Edit/{o.OrderID}'>Edit</a></b>");
+                    .RenderValueAs(o => $"<b><a class='modal_link' href='/Home/Edit/{o.OrderID}?returnUrl={returnUrl}&gridState={c.Grid.GetState()}'>Edit</a></b>");
 
                 /* Adding "OrderID" column: */
 
@@ -82,8 +104,7 @@ namespace GridMvc.Demo.Controllers
             var requestCulture = HttpContext.Features.Get<IRequestCultureFeature>();
             var locale = requestCulture.RequestCulture.UICulture.TwoLetterISOLanguageName;
 
-            var repository = new OrdersRepository(_context);
-            var server = new GridServer<Order>(repository.GetAll(), Request.Query, false, "ordersGrid", 
+            var server = new GridServer<Order>(_orderRepository.GetAll(), query, false, "ordersGrid", 
                 columns, 10, locale)
                 .SetRowCssClasses(item => item.Customer.IsVip ? "success" : string.Empty)
                 .Sortable()
@@ -104,8 +125,7 @@ namespace GridMvc.Demo.Controllers
         [HttpGet]
         public async Task<ActionResult> GetOrder(int id)
         {
-            var repository = new OrdersRepository(_context);
-            Order order = repository.GetById(id);
+            Order order = _orderRepository.GetById(id);
             if (order == null)
                 return Json(new { status = 0, message = "Not found" });
 
@@ -116,16 +136,31 @@ namespace GridMvc.Demo.Controllers
         [HttpGet]
         public ActionResult GetCustomersNames()
         {
-            var repository = new CustomersRepository(_context);
-            var allItems = repository.GetAll().Select(c => c.CompanyName);
+            var allItems = _customersRepository.GetAll().Select(c => c.CompanyName);
             return Json(new { items = allItems });
         }
 
         [HttpGet]
-        public ActionResult AjaxPaging()
+        public ActionResult AjaxPaging(string gridState = "")
         {
-            var repository = new OrdersRepository(_context);
-            var model = new SGrid<Order>(repository.GetAll(), Request.Query, false, GridPager.DefaultAjaxPagerViewName);
+            //string returnUrl = Request.Path;
+            string returnUrl = "/Home/AjaxPaging";
+            ViewData["returnUrl"] = returnUrl;
+
+            IQueryCollection query = Request.Query;
+            if (!string.IsNullOrWhiteSpace(gridState))
+            {
+                try
+                {
+                    query = new QueryCollection(StringExtensions.GetQuery(gridState));
+                }
+                catch (Exception)
+                {
+                    // do nothing, gridState was not a valid state
+                }
+            }       
+
+            var model = new SGrid<Order>(_orderRepository.GetAll(), query, false, GridPager.DefaultAjaxPagerViewName);
 
             ViewBag.ActiveMenuTitle = "AjaxPaging";
             return View(model);
@@ -134,8 +169,11 @@ namespace GridMvc.Demo.Controllers
         [HttpPost]
         public ActionResult GetOrdersGridRows()
         {
-            var repository = new OrdersRepository(_context);
-            var model = new SGrid<Order>(repository.GetAll(), Request.Query, false, GridPager.DefaultAjaxPagerViewName);
+            //string returnUrl = Request.Path;
+            string returnUrl = "/Home/AjaxPaging";
+            ViewData["returnUrl"] = returnUrl;
+
+            var model = new SGrid<Order>(_orderRepository.GetAll(), Request.Query, false, GridPager.DefaultAjaxPagerViewName);
 
             return PartialView("_OrdersGrid", model);
         }
@@ -178,7 +216,7 @@ namespace GridMvc.Demo.Controllers
 
             var requestCulture = HttpContext.Features.Get<IRequestCultureFeature>();
             var locale = requestCulture.RequestCulture.UICulture.TwoLetterISOLanguageName;
-            var orderDetails = (new OrderDetailsRepository(_context)).GetForOrder(OrderId);
+            var orderDetails = _orderDetailsRepository.GetForOrder(OrderId);
 
             var server = new GridServer<OrderDetail>(orderDetails, Request.Query,
                     false, "orderDetailsGrid" + OrderId.ToString(), columns, 10, locale)
@@ -192,10 +230,10 @@ namespace GridMvc.Demo.Controllers
         }
 
         [HttpGet]
-        public ActionResult AjaxPagingAntiForgery()
+        public ActionResult AjaxPagingAntiForgery(string gridState = "")
         {
             ViewBag.ActiveMenuTitle = "AjaxPagingAntiForgery";
-
+            ViewData["gridState"] = gridState;
             return View();
         }
 
@@ -206,8 +244,6 @@ namespace GridMvc.Demo.Controllers
             return ViewComponent("AjaxGrid");
         }
 
-        //
-        // POST /Account/SetLanguage
         [HttpPost]
         [ValidateAntiForgeryToken]
         public IActionResult SetLanguage(string culture, string returnUrl)
@@ -224,6 +260,46 @@ namespace GridMvc.Demo.Controllers
             {
             }
             return LocalRedirect(returnUrl);
+        }
+
+        public ActionResult Edit(int? id, string returnUrl, string gridState, string error = "")
+        {
+            if (id == null || !id.HasValue)
+            {
+                return BadRequest();
+            }
+            Order order = _orderRepository.GetById(id.Value);
+            if (order == null)
+            {
+                return NotFound();
+            };
+
+            ViewData["returnUrl"] = returnUrl;
+            ViewData["gridState"] = gridState;
+            TempData["error"] = error;
+            return View(order);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Edit(Order order, string returnUrl, string gridState)
+        {
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    _orderRepository.Update(order);
+                    _orderRepository.Save();
+
+                    return LocalRedirect(WebUtility.UrlDecode(returnUrl) + "?gridState=" + gridState);
+                }
+                catch (Exception e)
+                {
+                    return RedirectToAction("Edit", "Home", new { id = order.OrderID, returnUrl, gridState, error = e.Message.Replace('{', '(').Replace('}', ')') });
+                }
+            }
+
+            return RedirectToAction("Edit", "Home", new { id = order.OrderID, returnUrl, gridState, error = "ModelState is not valid" });
         }
 
     }

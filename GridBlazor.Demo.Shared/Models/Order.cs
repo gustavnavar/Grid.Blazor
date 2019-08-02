@@ -33,40 +33,30 @@ namespace GridBlazor.Demo.Shared.Models
         }
         [Key]
         [GridHiddenColumn]
+        [Required]
         public int OrderID { get; set; }
 
-        [NotMappedColumn]
+        [Required]
         public string CustomerID { get; set; }
-        [NotMappedColumn]
+        [Required]
         public int? EmployeeID { get; set; }
         [GridColumn(Title = "Date", Width = "120px", Format = "{0:yyyy-MM-dd}", SortEnabled = true, FilterEnabled = true, SortInitialDirection = GridSortDirection.Ascending)]
         public DateTime? OrderDate { get; set; }
-        [NotMappedColumn]
         public DateTime? RequiredDate { get; set; }
-        [NotMappedColumn]
         public DateTime? ShippedDate { get; set; }
-        [NotMappedColumn]
         public int? ShipVia { get; set; }
         [GridColumn(Title = "Freight", Width = "120px", SortEnabled = true, FilterEnabled = true)]
         public decimal? Freight { get; set; }
 
         public string ShipName { get; set; }
-        [NotMappedColumn]
         public string ShipAddress { get; set; }
-        [NotMappedColumn]
         public string ShipCity { get; set; }
-        [NotMappedColumn]
         public string ShipRegion { get; set; }
-        [NotMappedColumn]
         public string ShipPostalCode { get; set; }
-        [NotMappedColumn]
         public string ShipCountry { get; set; }
-        [NotMappedColumn]
         public virtual Customer Customer { get; set; }
-        [NotMappedColumn]
         public virtual Employee Employee { get; set; }
         [JsonIgnore]
-        [NotMappedColumn]
         public virtual ICollection<OrderDetail> OrderDetails { get; set; }
 
         //public virtual Shipper Shipper { get; set; }

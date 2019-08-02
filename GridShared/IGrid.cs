@@ -57,6 +57,11 @@ namespace GridShared
         /// </summary>
         string GetRowCssClasses(object item);
 
+        /// <summary>
+        ///     Get grid state
+        /// </summary>
+        string GetState();
+
         //void OnPreRender(); //TODO backward Compatibility
     }
 }

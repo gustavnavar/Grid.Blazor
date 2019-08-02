@@ -1,15 +1,21 @@
+@using GridBlazor
 @using GridBlazor.Demo.Shared.Models
 @using GridShared.Columns
 @implements ICustomGridComponent<Order>
+@inject IUriHelper UriHelper
 
-<button class='btn btn-sm btn-primary' @onclick="MyClickHandler">Save</button>
+<button class='btn btn-sm btn-primary' @onclick="MyClickHandler">Edit</button>
 
 @code {
     [Parameter]
     public Order Item { get; protected set; }
 
+    [Parameter]
+    public CGrid<Order> Grid { get; protected set; }
+
     private void MyClickHandler(UIMouseEventArgs e)
     {
-        Console.WriteLine("Button clicked: Item " + Item.OrderID);
+        string gridState = Grid.GetState();
+        UriHelper.NavigateTo($"/editorder/{Item.OrderID.ToString()}/{gridState}");
     }
 }

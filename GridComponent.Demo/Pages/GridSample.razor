@@ -1,11 +1,12 @@
 ﻿@page "/gridsample"
+@page "/gridsample/{GridState}"
 @using GridBlazor
 @using GridBlazor.Demo.Shared.Models
+@using GridComponent.Demo.Services
 @using GridShared
 @using GridShared.Filtering
 @using GridShared.Sorting
 @using GridShared.Utility
-@using GridComponent.Demo.Services
 @using Microsoft.Extensions.Primitives
 @using System.Globalization
 @inject IOrderService orderService
@@ -27,7 +28,7 @@
             <h4>
                 Order details
             </h4>
-            <OrderInfo Order="@_order"></OrderInfo>
+            <OrderInfo Order="@_order" GridState="@_grid.GetState()"></OrderInfo>
         </div>
     </div>
     <div class="row">
@@ -48,7 +49,15 @@ else
     private Order _order;
     private IQueryDictionary<Type> _customFilters = new QueryDictionary<Type>();
 
-    protected override async Task OnInitAsync()
+    [Parameter]
+    internal string GridState { get; set; }
+
+    protected override void OnInit()
+    {
+        CultureInfo.CurrentCulture = new CultureInfo("fr-FR");
+    }
+
+    protected override async Task OnParametersSetAsync()
     {
         Action<IGridColumnCollection<Order>> orderColumns = c =>
         {
@@ -122,8 +131,7 @@ else
                 .Format("{0:F}");
         };
 
-        //var locale = CultureInfo.CurrentCulture;
-        var locale = new CultureInfo("fr-FR");
+        var locale = CultureInfo.CurrentCulture;
 
         Func<object[], Task<ICGrid>> subGrids = async keys =>
         {
@@ -141,7 +149,17 @@ else
         };
 
         var query = new QueryDictionary<StringValues>();
-        query.Add("grid-page", "2");
+        if (!string.IsNullOrWhiteSpace(GridState))
+        {
+            try
+            {
+                query = StringExtensions.GetQuery(GridState);
+            }
+            catch (Exception)
+            {
+                // do nothing, GridState was not a valid state
+            }
+        }
         var client = new GridClient<Order>(q => orderService.GetOrdersGridRows(orderColumns, q), query, false,
             "ordersGrid", orderColumns, locale)
             .SetRowCssClasses(item => item.Customer.IsVip ? "success" : string.Empty)

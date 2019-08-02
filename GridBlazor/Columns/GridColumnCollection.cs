@@ -16,16 +16,20 @@ namespace GridBlazor.Columns
     /// </summary>
     internal class GridColumnCollection<T> : KeyedCollection<string, IGridColumn>, IGridColumnCollection<T>
     {
+        private readonly IGrid _grid;
         private readonly IColumnBuilder<T> _columnBuilder;
         public IGridSortSettings SortSettings { get; set; }
 
-        public GridColumnCollection(IColumnBuilder<T> columnBuilder, IGridSortSettings sortSettings)
+        public GridColumnCollection(IGrid grid, IColumnBuilder<T> columnBuilder, IGridSortSettings sortSettings)
         {
+            _grid = grid;
             _columnBuilder = columnBuilder;
             SortSettings = sortSettings;
         }
 
         #region IGridColumnCollection<T> Members
+
+        public IGrid Grid { get { return _grid; } }
 
         public IGridColumn<T> Add()
         {

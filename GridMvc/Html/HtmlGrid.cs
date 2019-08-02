@@ -69,5 +69,10 @@ namespace GridMvc.Html
         {
             return _source.GetRowCssClasses(item);
         }
+
+        public string GetState()
+        {
+            return _source.GetState();
+        }
     }
 }

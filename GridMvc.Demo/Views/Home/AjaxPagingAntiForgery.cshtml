@@ -1,5 +1,6 @@
 ﻿@{
     ViewBag.Title = "Home Page";
+    string gridState = (string)ViewData["gridState"];
 }
 
 <script src="~/js/gridmvc-ajax.js" type="text/javascript"></script>
@@ -27,7 +28,7 @@
         </div>
     </div>
     <div class="col-md-9 col-md-pull-3">
-        @await Component.InvokeAsync("AjaxGrid", new { page = 1 })
+        @await Component.InvokeAsync("AjaxGrid", new { gridState, page = 1 })
     </div>
 </div>
 <script>

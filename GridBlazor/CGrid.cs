@@ -10,10 +10,12 @@ using GridShared.Filtering;
 using GridShared.Utility;
 using Microsoft.AspNetCore.Components;
 using Microsoft.Extensions.Primitives;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
+using System.Net;
 using System.Net.Http;
 using System.Reflection;
 using System.Threading.Tasks;
@@ -60,7 +62,7 @@ namespace GridBlazor
 
             //Set up column collection:
             _columnBuilder = new DefaultColumnBuilder<T>(this, _annotations);
-            _columnsCollection = new GridColumnCollection<T>(_columnBuilder, _settings.SortSettings);
+            _columnsCollection = new GridColumnCollection<T>(this, _columnBuilder, _settings.SortSettings);
             ComponentOptions = new GridOptions();
 
             ApplyGridSettings();
@@ -94,7 +96,7 @@ namespace GridBlazor
 
             //Set up column collection:
             _columnBuilder = new DefaultColumnBuilder<T>(this, _annotations);
-            _columnsCollection = new GridColumnCollection<T>(_columnBuilder, _settings.SortSettings);
+            _columnsCollection = new GridColumnCollection<T>(this, _columnBuilder, _settings.SortSettings);
             ComponentOptions = new GridOptions();
 
             ApplyGridSettings();
@@ -482,6 +484,12 @@ namespace GridBlazor
             _columnsCollection.SortSettings = _settings.SortSettings;
             _columnsCollection.UpdateColumnsSorting();
             ((GridPager)_pager).Query = _query;
+        }
+
+        public string GetState()
+        {
+            string query = JsonConvert.SerializeObject(Query, new StringValuesConverter());
+            return query.GridStateEncode();
         }
 
         public async Task UpdateGrid()

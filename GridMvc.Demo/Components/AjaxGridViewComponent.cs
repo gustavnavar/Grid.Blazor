@@ -1,8 +1,11 @@
 ﻿using GridMvc.Demo.Models;
+using GridMvc.Pagination;
 using GridMvc.Server;
 using GridShared;
 using GridShared.Filtering;
 using GridShared.Sorting;
+using GridShared.Utility;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Localization;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -19,8 +22,23 @@ namespace GridMvc.Demo.Components
             _context = context;
         }
 
-        public async Task<IViewComponentResult> InvokeAsync()
-        {   
+        public async Task<IViewComponentResult> InvokeAsync(string gridState = "")
+        {
+            //string returnUrl = Request.Path;
+            string returnUrl = "/Home/AjaxPagingAntiForgery";
+            IQueryCollection query = Request.Query;
+            if (!string.IsNullOrWhiteSpace(gridState))
+            {      
+                try
+                {
+                    query = new QueryCollection(StringExtensions.GetQuery(gridState));
+                }
+                catch (Exception)
+                {
+                    // do nothing, gridState was not a valid state
+                }
+            }
+
             Action<IGridColumnCollection<Order>> columns = c =>
             {
                 /* Adding not mapped column, that renders body, using inline Razor html helper */
@@ -29,7 +47,7 @@ namespace GridMvc.Demo.Components
                     .Sanitized(false)
                     .SetWidth(30)
                     .Css("hidden-xs") //hide on phones
-                    .RenderValueAs(o => $"<b><a class='modal_link' href='/Home/Edit/{o.OrderID}'>Edit</a></b>");
+                    .RenderValueAs(o => $"<b><a class='modal_link' href='/Home/Edit/{o.OrderID}?returnUrl={returnUrl}&gridState={c.Grid.GetState()}'>Edit</a></b>");
 
                 /* Adding "OrderID" column: */
 
@@ -78,8 +96,8 @@ namespace GridMvc.Demo.Components
             var requestCulture = HttpContext.Features.Get<IRequestCultureFeature>();
             var locale = requestCulture.RequestCulture.UICulture.TwoLetterISOLanguageName;
 
-            var server = new GridServer<Order>(repository.GetAll(), Request.Query, false, "ordersGrid",
-                columns, 10, locale)
+            var server = new GridServer<Order>(repository.GetAll(), query, false, "ordersGrid",
+                columns, 10, locale, GridPager.DefaultAjaxPagerViewName)
                 .SetRowCssClasses(item => item.Customer.IsVip ? "success" : string.Empty)
                 .Sortable()
                 .Filterable()

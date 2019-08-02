@@ -5,10 +5,12 @@ namespace GridMvc.Demo.Models
 {
     public abstract class SqlRepository<T> : IRepository<T> where T : class
     {
+        protected readonly DbContext Context;
         protected readonly DbSet<T> EfDbSet;
 
         protected SqlRepository(DbContext context)
         {
+            Context = context;
             EfDbSet = context.Set<T>();
         }
 
