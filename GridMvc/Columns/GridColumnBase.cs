@@ -100,7 +100,46 @@ namespace GridMvc.Columns
             return this;
         }
 
+        public IGridColumn<T> RenderComponentAs(Type componentType, IList<Action<object>> actions)
+        {
+            // do nothing
+            return this;
+        }
+
+        public IGridColumn<T> RenderComponentAs(Type componentType, object obj)
+        {
+            // do nothing
+            return this;
+        }
+
+        public IGridColumn<T> RenderComponentAs(Type componentType, IList<Action<object>> actions, object obj)
+        {
+            // do nothing
+            return this;
+        }
+
         public IGridColumn<T> RenderComponentAs<TComponent>()
+            where TComponent : ICustomGridComponent<T>
+        {
+            // do nothing
+            return this;
+        }
+
+        public IGridColumn<T> RenderComponentAs<TComponent>(IList<Action<object>> actions)
+            where TComponent : ICustomGridComponent<T>
+        {
+            // do nothing
+            return this;
+        }
+
+        public IGridColumn<T> RenderComponentAs<TComponent>(object obj)
+            where TComponent : ICustomGridComponent<T>
+        {
+            // do nothing
+            return this;
+        }
+
+        public IGridColumn<T> RenderComponentAs<TComponent>(IList<Action<object>> actions, object obj)
             where TComponent : ICustomGridComponent<T>
         {
             // do nothing

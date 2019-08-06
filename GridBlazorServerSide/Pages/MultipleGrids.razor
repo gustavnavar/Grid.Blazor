@@ -1,0 +1,138 @@
+﻿@page "/multiplegrids"
+@page "/multiplegrids/{OrdersGridState}/{CustomersGridState}"
+@using BlazorStrap
+@using GridBlazor
+@using GridBlazorServerSide.ColumnCollections
+@using GridBlazorServerSide.Models
+@using GridBlazorServerSide.Services
+@using GridShared
+@using GridShared.Utility
+@using Microsoft.Extensions.Primitives
+@using System.Globalization
+@inject IOrderService orderService
+@inject ICustomerService customerService
+@inject IUriHelper UriHelper
+
+<h1>Multiple Grids</h1>
+
+<p>
+    This page contains 2 grids. It also allows order editing. Both grid states are passed to the order edit page, so they can be returned to this page mantaining both grid states.
+</p>
+
+<p>
+    This component demonstrates a GridBlazor server-side grid. For more documentation, please see: <a href="https://github.com/gustavnavar/Grid.Blazor">https://github.com/gustavnavar/Grid.Blazor</a>
+</p>
+
+@if (_task1.IsCompleted && _task2.IsCompleted)
+{
+    <BSTabGroup>
+        <BSTabList>
+            <BSTab>
+                <BSTabLabel>Orders</BSTabLabel>
+                <BSTabContent>
+                    <div style="margin:20px">
+                        <GridComponent T="Order" Grid="@_ordersGrid"></GridComponent>
+                    </div>
+                </BSTabContent>
+            </BSTab>
+            <BSTab>
+                <BSTabLabel>Customers</BSTabLabel>
+                <BSTabContent>
+                    <div style="margin:20px">
+                        <GridComponent T="Customer" Grid="@_customersGrid"></GridComponent>
+                    </div>
+                </BSTabContent>
+            </BSTab>
+        </BSTabList>
+        <BSTabSelectedContent />
+    </BSTabGroup>
+}
+else
+{
+    <p><em>Loading...</em></p>
+}
+
+@code
+{
+    private ICGrid _ordersGrid;
+    private ICGrid _customersGrid;
+    private Task _task1;
+    private Task _task2;
+    private Order _order;
+
+    [Parameter]
+    protected string OrdersGridState { get; set; }
+
+    [Parameter]
+    protected string CustomersGridState { get; set; }
+
+    protected override async Task OnInitAsync()
+    {
+        CultureInfo.CurrentCulture = new CultureInfo("en-US");
+    }
+
+    protected override async Task OnParametersSetAsync()
+    {
+        var locale = CultureInfo.CurrentCulture;
+
+        // build the column collection passing an action list with the action executed by the ButtonCell component
+        Action<IGridColumnCollection<Order>> orderColumns = c =>
+            ColumnCollections.OrderColumnsAllFeatures(c, new List<Action<object>>() { MyAction });
+
+        var ordersQuery = new QueryDictionary<StringValues>();
+        if (!string.IsNullOrWhiteSpace(OrdersGridState))
+        {
+            try
+            {
+                ordersQuery = StringExtensions.GetQuery(OrdersGridState);
+            }
+            catch (Exception)
+            {
+                // do nothing, GridState was not a valid state
+            }
+        }
+        var ordersClient = new GridClient<Order>(q => orderService.GetOrdersGridRows(orderColumns, q),
+            ordersQuery, false, "ordersGrid", orderColumns, locale)
+            .Sortable()
+            .Filterable()
+            .WithMultipleFilters()
+            .WithGridItemsCount();
+        _ordersGrid = ordersClient.Grid;
+
+        // Set new items to grid
+        _task1 = ordersClient.UpdateGrid();
+        await _task1;
+
+        var customersQuery = new QueryDictionary<StringValues>();
+        if (!string.IsNullOrWhiteSpace(CustomersGridState))
+        {
+            try
+            {
+                customersQuery = StringExtensions.GetQuery(CustomersGridState);
+            }
+            catch (Exception)
+            {
+                // do nothing, GridState was not a valid state
+            }
+        }
+        var customersClient = new GridClient<Customer>(q => customerService.GetCustomersGridRows(ColumnCollections.CustomersColumns, q),
+            customersQuery, false, "customersGrid", ColumnCollections.CustomersColumns, locale)
+            .Sortable()
+            .Filterable()
+            .WithMultipleFilters()
+            .WithGridItemsCount();
+        _customersGrid = customersClient.Grid;
+
+        // Set new items to grid
+        _task2 = customersClient.UpdateGrid();
+        await _task2;
+    }
+
+    private void MyAction(object item)
+    {
+        string ordersGridState = _ordersGrid.GetState();
+        string customersGridState = _customersGrid.GetState();
+        UriHelper.NavigateTo($"/editorder/{((Order)item).OrderID.ToString()}/multiplegrids/{ordersGridState}/{customersGridState}");
+    }
+}
+

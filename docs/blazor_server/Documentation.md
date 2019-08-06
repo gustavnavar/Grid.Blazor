@@ -22,3 +22,4 @@
 * [Data annotations](Data_annotations.md)
 * [Render button, checkbox, etc. in a grid cell](Render_button_checkbox_etc_in_a_grid_cell.md)
 * [Subgrids](Subgrids.md)
+* [Passing grid state as parameter](Passing_grid_state_as_parameter.md)

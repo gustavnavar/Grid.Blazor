@@ -46,6 +46,12 @@ namespace GridBlazor
             var gridProperty = _componentType.GetProperty("Grid");
             if(gridProperty != null && gridProperty.PropertyType == typeof(CGrid<T>))
                 builder.AddAttribute(++_sequence, "Grid", (CGrid<T>)Column.ParentGrid);
+            gridProperty = _componentType.GetProperty("Actions");
+            if (gridProperty != null)
+                builder.AddAttribute(++_sequence, "Actions", ((GridColumnBase<T>)Column).Actions);
+            gridProperty = _componentType.GetProperty("Object");
+            if (gridProperty != null)
+                builder.AddAttribute(++_sequence, "Object", ((GridColumnBase<T>)Column).Object);
             builder.CloseComponent();
         };
     }

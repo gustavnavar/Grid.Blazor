@@ -117,12 +117,12 @@ Sortable | Enable or disable sorting for all columns of the grid | GridServer<Or
 Searchable | Enable or disable searching on the grid | GridServer<Order>(...).Searchable(true, true);
 Filterable | Enable or disable filtering for all columns of the grid | GridServer<Order>(...).Filterable(true);
 WithMultipleFilters | Allow grid to use multiple filters | GridServer<Order>(...).WithMultipleFilters();
-Selectable | Enable or disable the client grid items selectable feature | GridClient<Order>(...).Selectable(true);
-WithPaging | Enable paging for grid | Html.Grid(Model, viewEngine).WithPaging(10);
-SetLanguage | Setup the language of the grid | Html.Grid(Model, viewEngine).SetLanguage('fr');
-EmptyText | Setup the text displayed for all empty items in the grid | GridClient<Order>(...).EmptyText(' - ');
+Selectable | Enable or disable the client grid items selectable feature | GridServer<Order>(...).Selectable(true);
+WithPaging | Enable paging for grid | GridServer<Order>(...).WithPaging(10);
+SetLanguage | Setup the language of the grid | GridServer<Order>(...).SetLanguage('fr');
+EmptyText | Setup the text displayed for all empty items in the grid | GridServer<Order>(...).EmptyText(' - ');
 WithGridItemsCount | Allows the grid to show items count | GridServer<Order>(...).WithGridItemsCount();
-SetRowCssClasses | Setup specific row css classes | GridClient<Order>(...).SetRowCssClasses(item => item.Customer.IsVip ? "success" : string.Empty);
+SetRowCssClasses | Setup specific row css classes | GridServer<Order>(...).SetRowCssClasses(item => item.Customer.IsVip ? "success" : string.Empty);
 
 ## Grid configuration
 
@@ -139,8 +139,8 @@ You can use multiple methods of the **SGrid** object to configure a grid. For ex
 
 Method name | Description | Example
 ------------- | ----------- | -------
-Named | Setup the grid client name | Html.Grid(Model, viewEngine).Named("Product List");
-Columns | Setup the grid client name | Html.Grid(Model, viewEngine).Columns(...);
+Named | Setup the grid client name | Html.Grid(Model).Named("Product List");
+Columns | Setup the grid client name | Html.Grid(Model).Columns(...);
 AutoGenerateColumns | Generates columns for all properties of the model using data annotations | Html.Grid(Model).AutoGenerateColumns();
 Sortable | Enable or disable sorting for all columns of the grid | Html.Grid(Model).Sortable(true);
 Searchable | Enable or disable searching on the grid | Html.Grid(Model).Searchable(true, true);

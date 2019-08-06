@@ -1,0 +1,59 @@
+﻿@page "/totals"
+@using GridBlazorClientSide.Client.ColumnCollections
+@using GridBlazorClientSide.Shared.Models
+@using GridShared.Utility
+@using Microsoft.Extensions.Primitives
+@using System.Globalization
+@using System.Threading.Tasks
+@inject IUriHelper UriHelper
+
+<h1>Grid with Totals</h1>
+
+<p>
+    This page contains a grid with rows at the bottom including totals.
+</p>
+
+<p>
+    This component demonstrates a GridBlazor client-side grid. For more information, please see: <a href="https://github.com/gustavnavar/Grid.Blazor">https://github.com/gustavnavar/Grid.Blazor</a>
+</p>
+
+@if (_task.IsCompleted)
+{
+    <div class="row">
+        <div class="col-md-12">
+            <GridComponent T="Order" Grid="@_grid"></GridComponent>
+        </div>
+    </div>
+}
+else
+{
+    <p><em>Loading...</em></p>
+}
+
+@code
+{
+    private CGrid<Order>
+    _grid;
+    private Task _task;
+
+    protected override async Task OnInitAsync()
+    {
+        var locale = new CultureInfo("en-US");
+
+        var query = new QueryDictionary<StringValues>
+            ();
+        query.Add("grid-page", "2");
+        string url = UriHelper.GetBaseUri() + "api/SampleData/GetOrdersGridWithTotals";
+        var client = new GridClient<Order>
+            (url, query, false, "ordersGrid", ColumnCollections.OrderColumnsWithTotals, locale)
+            .Sortable()
+            .Filterable()
+            .WithMultipleFilters()
+            .WithGridItemsCount();
+
+        _grid = client.Grid;
+        // Set new items to grid
+        _task = client.UpdateGrid();
+        await _task;
+    }
+}

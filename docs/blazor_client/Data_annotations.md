@@ -51,7 +51,7 @@ The steps to build a grid razor page using data annotations with **GridBlazor** 
             <p><em>Loading...</em></p>
         }
 
-        @functions
+        @code
         {
             private CGrid<Foo> _grid;
             private Task _task;

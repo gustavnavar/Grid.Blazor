@@ -1,0 +1,42 @@
+﻿@using GridBlazor
+@using GridBlazorClientSide.Shared.Models
+@using GridShared.Columns
+@implements ICustomGridComponent<Order>
+@inject IUriHelper UriHelper
+
+<button class='btn btn-sm btn-primary' @onclick="MyClickHandler">Edit</button>
+
+@code {
+    [Parameter]
+    public Order Item { get; protected set; }
+
+    [Parameter]
+    public IList<Action<object>> Actions { get; protected set; }
+
+    [Parameter]
+    public CGrid<Order> Grid { get; protected set; }
+
+    [Parameter]
+    public object Object { get; protected set; }
+
+    private void MyClickHandler(UIMouseEventArgs e)
+    {
+        if (Actions == null)
+        {
+            string gridState = Grid.GetState();
+            if (Object == null)
+            {
+                UriHelper.NavigateTo($"/editorder/{Item.OrderID.ToString()}/gridsample/{gridState}");
+            }
+            else
+            {
+                string returnUrl = (string)Object;
+                UriHelper.NavigateTo($"/editorder/{Item.OrderID.ToString()}/{returnUrl}/{gridState}");
+            }
+        }
+        else
+        {
+            Actions[0]?.Invoke(Item);
+        }
+    }
+}

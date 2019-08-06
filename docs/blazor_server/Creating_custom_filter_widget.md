@@ -81,7 +81,7 @@ Follow thes steps to create a custom filter widget:
             </div>
         }
 
-        @functions {
+        @code {
             private bool _clearVisible = false;
             protected string _filterValue;
 

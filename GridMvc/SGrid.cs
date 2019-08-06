@@ -158,6 +158,14 @@ namespace GridMvc
             get { return (IEnumerable<object>)GetItemsToDisplay(); }
         }
 
+        /// <summary>
+        ///     Provides query, using by the grid
+        /// </summary>
+        public IQueryCollection Query
+        {
+            get { return _query; }
+        }
+
         #region IGrid Members
 
         /// <summary>

@@ -7,6 +7,7 @@
      var error = TempData["error"];
      string returnUrl = (string)ViewData["returnUrl"];
      string gridState = (string)ViewData["gridState"];
+     string altGridState = (string)ViewData["altGridState"];
      var requestCulture = Context.Features.Get<IRequestCultureFeature>();
 }
 
@@ -129,8 +130,10 @@
             @Html.HiddenFor(r => r.EmployeeID)
             @Html.HiddenFor(r => r.ShipVia)
             @Html.Hidden("returnUrl", returnUrl)
+            @Html.Hidden("gridState", gridState)
+            @Html.Hidden("altGridState", altGridState)
             <input type="submit" value="Save" class="btn btn-default btn-md" />
-            <a href="@WebUtility.UrlDecode(returnUrl)?gridState=@gridState" class="btn btn-default btn-md">Back</a>
+            <a href="@WebUtility.UrlDecode(returnUrl)?gridState=@gridState&altGridState=@altGridState" class="btn btn-default btn-md">Back</a>
         </div>
     </div>
 </div>

@@ -109,4 +109,4 @@ Parameter | Type | Description
 subGrids | Func<object[], Task<ICGrid>> | function that creates subgrids defined in the step before
 keys | params string[] | variable number of strings with the names of required columns to find records for the subgrid
 
-[<- Render button, checkbox, etc. in a grid cell](Render_button_checkbox_etc_in_a_grid_cell.md)
+[<- Render button, checkbox, etc. in a grid cell](Render_button_checkbox_etc_in_a_grid_cell.md) | [Passing grid state as parameter ->](Passing_grid_state_as_parameter.md)

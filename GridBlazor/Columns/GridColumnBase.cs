@@ -13,6 +13,8 @@ namespace GridBlazor.Columns
     public abstract class GridColumnBase<T> : GridStyledColumn, IGridColumn<T>, ICGridColumn
     {
         public Type ComponentType { get; private set; }
+        public IList<Action<object>> Actions { get; private set; }
+        public object Object { get; private set; }
 
         protected Func<T, string> ValueConstraint;
         protected string ValuePattern;
@@ -90,15 +92,49 @@ namespace GridBlazor.Columns
 
         public IGridColumn<T> RenderComponentAs(Type componentType)
         {
+            return RenderComponentAs(componentType, null, null);
+        }
+
+        public IGridColumn<T> RenderComponentAs(Type componentType, IList<Action<object>> actions)
+        {
+            return RenderComponentAs(componentType, actions, null);
+        }
+
+        public IGridColumn<T> RenderComponentAs(Type componentType, object obj)
+        {
+            return RenderComponentAs(componentType, null, obj);
+        }
+
+        public IGridColumn<T> RenderComponentAs(Type componentType, IList<Action<object>> actions, object obj)
+        {
             ComponentType = componentType;
+            Actions = actions;
+            Object = obj;
             return this;
         }
 
         public IGridColumn<T> RenderComponentAs<TComponent>()
              where TComponent : ICustomGridComponent<T>
         {
-            ComponentType = typeof(TComponent);
-            return this;
+            return RenderComponentAs<TComponent>(null, null);
+        }
+
+        public IGridColumn<T> RenderComponentAs<TComponent>(IList<Action<object>> actions)
+            where TComponent : ICustomGridComponent<T>
+        {
+            return RenderComponentAs<TComponent>(actions, null);
+        }
+
+        public IGridColumn<T> RenderComponentAs<TComponent>(object obj)
+            where TComponent : ICustomGridComponent<T>
+        {
+            return RenderComponentAs<TComponent>(null, obj);
+        }
+
+        public IGridColumn<T> RenderComponentAs<TComponent>(IList<Action<object>> actions, object obj)
+             where TComponent : ICustomGridComponent<T>
+        {
+            return RenderComponentAs(typeof(TComponent), actions, obj);
         }
 
         public IGridColumn<T> Format(string pattern)

@@ -114,5 +114,4 @@ We use it to get the subgrid rows calling the **GetForOrder** method from the re
 
 Note that the grid name parameter we use must be unique for each subgrid. In this example we use the name **"orderDetailsGrid" + OrderId.ToString()**.
 
-
-[<- Render button, checkbox, etc. in a grid cell](Render_button_checkbox_etc_in_a_grid_cell.md) | [Front-end back-end API ->](API.md)
+[<- Render button, checkbox, etc. in a grid cell](Render_button_checkbox_etc_in_a_grid_cell.md) | [Passing grid state as parameter ->](Passing_grid_state_as_parameter.md)

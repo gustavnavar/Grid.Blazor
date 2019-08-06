@@ -1,0 +1,90 @@
+﻿@page "/selectable"
+@page "/selectable/{GridState}"
+@using GridBlazorClientSide.Client.ColumnCollections
+@using GridBlazorClientSide.Shared.Models
+@using GridShared.Utility
+@using Microsoft.Extensions.Primitives
+@using System.Globalization
+@using System.Threading.Tasks
+@inject IUriHelper UriHelper
+
+<h1>Selectable Grid</h1>
+
+<p>
+    This page contains a grid where rows can be selected. When a row is selected, the order details are shown in a component on rigth column.
+</p>
+
+<p>
+    This component demonstrates a GridBlazor client-side grid. For more information, please see: <a href="https://github.com/gustavnavar/Grid.Blazor">https://github.com/gustavnavar/Grid.Blazor</a>
+</p>
+
+@if (_task.IsCompleted)
+{
+    <div class="row">
+        <div class="col-md-9">
+            <GridComponent T="Order" Grid="@_grid" OnRowClicked="@OrderDetails"></GridComponent>
+        </div>
+        <div class="col-md-3">
+            <h4>
+                Order details
+            </h4>
+            <OrderInfo Order="@_order" ReturnUrl="selectable" GridState="@_grid.GetState()"></OrderInfo>
+        </div>
+    </div>
+}
+else
+{
+    <p><em>Loading...</em></p>
+}
+
+@code
+{
+    private CGrid<Order> _grid;
+    private Order _order;
+    private Task _task;
+
+    [Parameter]
+    internal string GridState { get; set; }
+
+    protected override async Task OnParametersSetAsync()
+    {
+        var locale = new CultureInfo("en-US");
+        var query = new QueryDictionary<StringValues>();
+        if (!string.IsNullOrWhiteSpace(GridState))
+        {
+            try
+            {
+                query = StringExtensions.GetQuery(GridState);
+            }
+            catch (Exception)
+            {
+                // do nothing, GridState was not a valid state
+            }
+        }
+        string url = UriHelper.GetBaseUri() + "api/SampleData/GetOrdersGrid";
+        var client = new GridClient<Order>
+            (url, query, false, "ordersGrid", ColumnCollections.OrderColumns, locale)
+            .Sortable()
+            .Filterable()
+            .WithMultipleFilters()
+            .WithGridItemsCount();
+
+        _grid = client.Grid;
+        // Set new items to grid
+        _task = client.UpdateGrid();
+        await _task;
+    }
+
+    protected void OrderDetails(object item)
+    {
+        if (item.GetType() == typeof(Order))
+        {
+            _order = (Order)item;
+        }
+        else
+        {
+            _order = null;
+        }
+        StateHasChanged();
+    }
+}

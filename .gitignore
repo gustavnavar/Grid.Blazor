@@ -37,3 +37,13 @@
 /GridShared/GridShared.csproj.user
 /GridShared/obj
 /GridShared/Properties/PublishProfiles
+/GridBlazorClientSide.Server/bin
+/GridBlazorClientSide.Client/bin
+/GridBlazorClientSide.Client/obj
+/GridBlazorClientSide.Client/GridBlazorClientSide.Client.csproj.user
+/GridBlazorClientSide.Server/obj
+/GridBlazorClientSide.Server/GridBlazorClientSide.Server.csproj.user
+/GridBlazorClientSide.Shared/bin
+/GridBlazorClientSide.Shared/obj
+/GridBlazorServerSide/bin/Debug/netcoreapp3.0
+/GridBlazorServerSide/obj

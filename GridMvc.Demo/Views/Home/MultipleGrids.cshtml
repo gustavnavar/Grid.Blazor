@@ -1,0 +1,94 @@
+﻿@{
+    ViewBag.Title = "Home Page";
+    string ordersGridState = (string)ViewData["ordersGridState"];
+    string customersGridState = (string)ViewData["customersGridState"];
+}
+
+<script src="~/js/gridmvc-ajax.js" type="text/javascript"></script>
+<script src="~/lib/URI.js/URI.js" type="text/javascript"></script>
+
+<div class="row">
+    <div class="col-md-12">
+        <h1>Orders administration</h1>
+        <p>
+            This page demonstrates the possibilities of GridMvcCore. For more documentation, please
+            see: <a href="https://github.com/gustavnavar/Grid.Blazor">https://github.com/gustavnavar/Grid.Blazor</a>
+        </p>
+    </div>
+</div>
+
+<div class="row">
+    <ul class="nav nav-tabs">
+        <li class="active">
+            <a data-toggle="tab" href="#orders">
+                <label class="control-label">Orders</label>
+            </a>
+        </li>
+        <li>
+            <a data-toggle="tab" href="#customers">
+                <label class="control-label">Customers</label>
+            </a>
+        </li>
+    </ul>
+    <div class="tab-content">
+        <div id="orders" class="tab-pane fade in active">
+            <div class="col-md-3 col-md-push-9">
+                <h4>
+                    Order details
+                </h4>
+                <div id="order-content">
+                    <p class="muted">
+                        Select order to display detailed infomation
+                    </p>
+                </div>
+            </div>
+            <div class="col-md-9 col-md-pull-3">
+                @await Component.InvokeAsync("Orders", new { ordersGridState })
+            </div>
+        </div>
+
+        <div id="customers" class="tab-pane fade">
+            @await Component.InvokeAsync("Customers", new { customersGridState })
+        </div>
+    </div>
+</div>
+<script>
+    function gettoken() {
+        var token = '@Html.AntiForgeryToken()';
+        token = $(token).val();
+        return token;
+    }
+
+    function editOrder(id) {
+        var returnUrl = "/Home/MultipleGrids";
+        var ordersGridState = pageGrids.ordersGrid.getState();
+        var customersGridState = pageGrids.customersGrid.getState();
+        window.location.replace("/Home/Edit/" + id + "?returnUrl=" + returnUrl + "&gridState=" + ordersGridState + "&altGridState=" + customersGridState);
+    }
+
+    $(function () {
+        var token = gettoken();
+
+        pageGrids.ordersGrid.addFilterWidget(new CustomersFilterWidget());
+
+        pageGrids.ordersGrid.ajaxify({
+            getPagedData: "/Home/GetOrdersGrid",
+            token: token
+        });
+
+        pageGrids.ordersGrid.onRowSelect(function (e) {
+            $.get("/Home/GetOrder?id=" + e.row.OrderID, function (data) {
+                if (data.status <= 0) {
+                    alert(data.message);
+                    return;
+                }
+                $("#order-content").html(data.content);
+            });
+        });
+
+        pageGrids.customersGrid.ajaxify({
+            getPagedData: "/Home/GetCustomersGrid",
+            token: token
+        });
+    });
+</script>

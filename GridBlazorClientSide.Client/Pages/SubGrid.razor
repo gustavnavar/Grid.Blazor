@@ -1,0 +1,72 @@
+﻿@page "/subgrid"
+@using GridBlazorClientSide.Client.ColumnCollections
+@using GridBlazorClientSide.Shared.Models
+@using GridShared.Utility
+@using Microsoft.Extensions.Primitives
+@using System
+@using System.Globalization
+@using System.Threading.Tasks
+@inject IUriHelper UriHelper
+
+<h1>Grid with subgrids</h1>
+
+<p>
+    This page contains a grid with subgrids enabled. When an order is seleced a subgrid shows the order lines
+</p>
+
+<p>
+    This component demonstrates a GridBlazor client-side grid. For more information, please see: <a href="https://github.com/gustavnavar/Grid.Blazor">https://github.com/gustavnavar/Grid.Blazor</a>
+</p>
+
+@if (_task.IsCompleted)
+{
+    <div class="row">
+        <div class="col-md-12">
+            <GridComponent T="Order" Grid="@_grid"></GridComponent>
+        </div>
+    </div>
+}
+else
+{
+    <p><em>Loading...</em></p>
+}
+
+@code
+{
+    private CGrid<Order> _grid;
+    private Task _task;
+
+    protected override async Task OnInitAsync()
+    {
+        var locale = new CultureInfo("en-US");
+
+        Func<object[], Task<ICGrid>> subGrids = async keys =>
+        {
+            string subGridUrl = UriHelper.GetBaseUri() + "api/SampleData/GetOrderDetailsGrid?OrderId=";
+            var subGridQuery = new QueryDictionary<StringValues>();
+            var subGridClient = new GridClient<OrderDetail>(subGridUrl + keys[0], subGridQuery, false,
+                "orderDetailsGrid" + keys[0].ToString(), ColumnCollections.OrderDetailColumns, locale)
+                    .Sortable()
+                    .Filterable()
+                    .WithMultipleFilters()
+                    .WithGridItemsCount();
+
+            await subGridClient.UpdateGrid();
+            return subGridClient.Grid;
+        };
+
+        var query = new QueryDictionary<StringValues>();
+        string url = UriHelper.GetBaseUri() + "api/SampleData/GetOrdersGridWithSubgrids";
+        var client = new GridClient<Order>(url, query, false, "ordersGrid", ColumnCollections.OrderColumnsWithSubgrids, locale)
+            .Sortable()
+            .Filterable()
+            .WithMultipleFilters()
+            .WithGridItemsCount()
+            .SubGrid(subGrids, "OrderID");
+
+        _grid = client.Grid;
+        // Set new items to grid
+        _task = client.UpdateGrid();
+        await _task;
+    }
+}

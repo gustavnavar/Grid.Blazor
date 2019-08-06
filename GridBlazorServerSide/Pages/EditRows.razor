@@ -1,0 +1,77 @@
+﻿@page "/editrows"
+@page "/editrows/{GridState}"
+@using GridBlazor
+@using GridBlazorServerSide.ColumnCollections
+@using GridBlazorServerSide.Models
+@using GridBlazorServerSide.Services
+@using GridShared
+@using GridShared.Utility
+@using Microsoft.Extensions.Primitives
+@using System.Globalization
+@using System.Threading.Tasks
+@inject IOrderService orderService
+
+<h1>Edit rows</h1>
+
+<p>
+    This page contains a grid that allows order edit. Its grid state is passed to the edit page, so it can be returned to this page mantaining the grid state.
+</p>
+
+<p>
+    This component demonstrates a GridBlazor server-side grid. For more information, please see: <a href="https://github.com/gustavnavar/Grid.Blazor">https://github.com/gustavnavar/Grid.Blazor</a>
+</p>
+
+@if (_task.IsCompleted)
+{
+    <div class="row">
+        <div class="col-md-12">
+            <GridComponent T="Order" Grid="@_grid"></GridComponent>
+        </div>
+    </div>
+}
+else
+{
+    <p><em>Loading...</em></p>
+}
+
+@code
+{
+    private CGrid<Order> _grid;
+    private Task _task;
+
+    [Parameter]
+    protected string GridState { get; set; }
+
+    protected override async Task OnParametersSetAsync()
+    {
+        var locale = new CultureInfo("en-US");
+
+        // build the column collection passing the return url string
+        Action<IGridColumnCollection<Order>> columns = c => ColumnCollections.OrderColumnsWithEdit(c, "editrows");
+
+        var query = new QueryDictionary<StringValues>();
+        if (!string.IsNullOrWhiteSpace(GridState))
+        {
+            try
+            {
+                query = StringExtensions.GetQuery(GridState);
+            }
+            catch (Exception)
+            {
+                // do nothing, GridState was not a valid state
+            }
+        }
+
+        var client = new GridClient<Order>(q => orderService.GetOrdersGridRows(columns, q),
+            query, false, "ordersGrid", columns, locale)
+            .Sortable()
+            .Filterable()
+            .WithMultipleFilters()
+            .WithGridItemsCount();
+
+        _grid = client.Grid;
+        // Set new items to grid
+        _task = client.UpdateGrid();
+        await _task;
+    }
+}

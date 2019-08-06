@@ -75,7 +75,37 @@ namespace GridShared.Columns
         /// <summary>
         ///     Setup the custom render for component
         /// </summary>
+        IGridColumn<T> RenderComponentAs(Type componentType, IList<Action<object>> actions);
+
+        /// <summary>
+        ///     Setup the custom render for component
+        /// </summary>
+        IGridColumn<T> RenderComponentAs(Type componentType, object obj);
+
+        /// <summary>
+        ///     Setup the custom render for component
+        /// </summary>
+        IGridColumn<T> RenderComponentAs(Type componentType, IList<Action<object>> actions, object obj);
+
+        /// <summary>
+        ///     Setup the custom render for component
+        /// </summary>
         IGridColumn<T> RenderComponentAs<TComponent>() where TComponent : ICustomGridComponent<T>;
+
+        /// <summary>
+        ///     Setup the custom render for component
+        /// </summary>
+        IGridColumn<T> RenderComponentAs<TComponent>(IList<Action<object>> actions) where TComponent : ICustomGridComponent<T>;
+
+        /// <summary>
+        ///     Setup the custom render for component
+        /// </summary>
+        IGridColumn<T> RenderComponentAs<TComponent>(object obj) where TComponent : ICustomGridComponent<T>;
+
+        /// <summary>
+        ///     Setup the custom render for component
+        /// </summary>
+        IGridColumn<T> RenderComponentAs<TComponent>(IList<Action<object>> actions, object obj) where TComponent : ICustomGridComponent<T>;
 
         /// <summary>
         ///     Format column values with specified text pattern

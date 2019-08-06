@@ -86,7 +86,7 @@ The steps to build a grid razor page using **GridBlazor** are:
             <p><em>Loading...</em></p>
         }
 
-        @functions
+        @code
         {
             private CGrid<Order> _grid;
             private Task _task;

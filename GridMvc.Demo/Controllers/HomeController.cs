@@ -141,10 +141,10 @@ namespace GridMvc.Demo.Controllers
         }
 
         [HttpGet]
-        public ActionResult AjaxPaging(string gridState = "")
+        public ActionResult Subgrid(string gridState = "")
         {
             //string returnUrl = Request.Path;
-            string returnUrl = "/Home/AjaxPaging";
+            string returnUrl = "/Home/Subgrid";
             ViewData["returnUrl"] = returnUrl;
 
             IQueryCollection query = Request.Query;
@@ -162,7 +162,7 @@ namespace GridMvc.Demo.Controllers
 
             var model = new SGrid<Order>(_orderRepository.GetAll(), query, false, GridPager.DefaultAjaxPagerViewName);
 
-            ViewBag.ActiveMenuTitle = "AjaxPaging";
+            ViewBag.ActiveMenuTitle = "Subgrid";
             return View(model);
         }
 
@@ -170,7 +170,7 @@ namespace GridMvc.Demo.Controllers
         public ActionResult GetOrdersGridRows()
         {
             //string returnUrl = Request.Path;
-            string returnUrl = "/Home/AjaxPaging";
+            string returnUrl = "/Home/Subgrid";
             ViewData["returnUrl"] = returnUrl;
 
             var model = new SGrid<Order>(_orderRepository.GetAll(), Request.Query, false, GridPager.DefaultAjaxPagerViewName);
@@ -179,7 +179,7 @@ namespace GridMvc.Demo.Controllers
         }
 
         [HttpPost]
-        public ActionResult GetOrderDetailsGrid(int OrderId)
+        public ActionResult GetSubgrid(int OrderId)
         {
             Action<IGridColumnCollection<OrderDetail>> columns = c =>
             {
@@ -230,18 +230,28 @@ namespace GridMvc.Demo.Controllers
         }
 
         [HttpGet]
-        public ActionResult AjaxPagingAntiForgery(string gridState = "")
-        {
-            ViewBag.ActiveMenuTitle = "AjaxPagingAntiForgery";
-            ViewData["gridState"] = gridState;
+        public ActionResult MultipleGrids(string gridState = "", string altGridState = "")
+        {        
+            ViewBag.ActiveMenuTitle = "MultipleGrids";
+
+            ViewData["ordersGridState"] = gridState;
+            ViewData["customersGridState"] = altGridState;
+
             return View();
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult GetOrdersGridRowsAntiForgery()
+        public ActionResult GetOrdersGrid()
         {
-            return ViewComponent("AjaxGrid");
+            return ViewComponent("Orders");
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult GetCustomersGrid()
+        {
+            return ViewComponent("Customers");
         }
 
         [HttpPost]
@@ -262,7 +272,7 @@ namespace GridMvc.Demo.Controllers
             return LocalRedirect(returnUrl);
         }
 
-        public ActionResult Edit(int? id, string returnUrl, string gridState, string error = "")
+        public ActionResult Edit(int? id, string returnUrl, string gridState, string altGridState = "", string error = "")
         {
             if (id == null || !id.HasValue)
             {
@@ -276,13 +286,14 @@ namespace GridMvc.Demo.Controllers
 
             ViewData["returnUrl"] = returnUrl;
             ViewData["gridState"] = gridState;
+            ViewData["altGridState"] = altGridState;
             TempData["error"] = error;
             return View(order);
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(Order order, string returnUrl, string gridState)
+        public ActionResult Edit(Order order, string returnUrl, string gridState, string altGridState = "")
         {
             if (ModelState.IsValid)
             {
@@ -291,15 +302,15 @@ namespace GridMvc.Demo.Controllers
                     _orderRepository.Update(order);
                     _orderRepository.Save();
 
-                    return LocalRedirect(WebUtility.UrlDecode(returnUrl) + "?gridState=" + gridState);
+                    return LocalRedirect(WebUtility.UrlDecode(returnUrl) + "?gridState=" + gridState + "&altGridState=" + altGridState);
                 }
                 catch (Exception e)
                 {
-                    return RedirectToAction("Edit", "Home", new { id = order.OrderID, returnUrl, gridState, error = e.Message.Replace('{', '(').Replace('}', ')') });
+                    return RedirectToAction("Edit", "Home", new { id = order.OrderID, returnUrl, gridState, altGridState, error = e.Message.Replace('{', '(').Replace('}', ')') });
                 }
             }
 
-            return RedirectToAction("Edit", "Home", new { id = order.OrderID, returnUrl, gridState, error = "ModelState is not valid" });
+            return RedirectToAction("Edit", "Home", new { id = order.OrderID, returnUrl, gridState, altGridState, error = "ModelState is not valid" });
         }
 
     }

@@ -129,8 +129,43 @@
                 self.clearInitialFilters = new Array();
             }
 
-            self.getGridParameters = function () {
-                return self.getGridUrl("", self.gridColumnFilters, self.gridSearch);
+            self.getState = function () {
+                var data = new Object();
+
+                var myColFilters = URI.parseQuery(self.gridColumnFilters)["grid-filter"]
+                if (Array.isArray(myColFilters)) {
+                    data['grid-filter'] = myColFilters.join("|");
+                }
+                else {
+                    data['grid-filter'] = myColFilters;
+                }
+
+                var mySearch = URI.parseQuery(self.gridSearch)["grid-search"];
+                if (Array.isArray(mySearch)) {
+                    data['grid-search'] = mySearch.join("|");
+                }
+                else {
+                    data['grid-search'] = mySearch;
+                }
+
+                if (self.gridSort) {
+                    var mySort = URI.parseQuery(self.gridSort);
+                    data["grid-column"] = mySort["grid-column"];
+                    data["grid-dir"] = mySort["grid-dir"];
+                }
+
+                if (self.clearInitialFilters) {
+                    data["grid-clearinitfilter"] = self.clearInitialFilters.join("|");
+                }
+
+                data["grid-page"] = self.currentPage;
+
+                var input = JSON.stringify(data);
+                var base64str = btoa(input);
+                base64str = base64str.replace('+', '.');
+                base64str = base64str.replace('/', '_');
+                base64str = base64str.replace('=', '-');
+                return base64str;
             };
 
             self.getGridUrl = function (griLoaddAction, filters, search) {

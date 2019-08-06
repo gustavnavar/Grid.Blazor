@@ -3,12 +3,6 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.28606.126
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GridBlazor.Demo.Server", "GridBlazor.Demo.Server\GridBlazor.Demo.Server.csproj", "{8608F236-A560-48F1-8E02-6521CDADD654}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GridBlazor.Demo.Client", "GridBlazor.Demo.Client\GridBlazor.Demo.Client.csproj", "{0BDE247B-C6EE-4AD8-B1E5-FE52C8F3E314}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GridBlazor.Demo.Shared", "GridBlazor.Demo.Shared\GridBlazor.Demo.Shared.csproj", "{5CAE5AA2-05A7-46D1-95B0-E317EF900EE0}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GridMvc", "GridMvc\GridMvc.csproj", "{40DA789F-0ACE-4B80-841D-A07A46A90918}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GridMvc.Demo", "GridMvc.Demo\GridMvc.Demo.csproj", "{0EF5DFF5-1E59-44E6-A7D6-31A6F7B90C56}"
@@ -21,7 +15,13 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GridShared", "GridShared\Gr
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GridBlazor.Tests", "GridBlazor.Tests\GridBlazor.Tests.csproj", "{80351E74-E7A8-4A72-8AB7-2E48E26BA139}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GridComponent.Demo", "GridComponent.Demo\GridComponent.Demo.csproj", "{14F4252A-08ED-4935-840B-DB3278C2D995}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GridBlazorServerSide", "GridBlazorServerSide\GridBlazorServerSide.csproj", "{88943E18-7CCE-4CC0-A270-09BF217077A7}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GridBlazorClientSide.Client", "GridBlazorClientSide.Client\GridBlazorClientSide.Client.csproj", "{A64E312E-5454-4063-80D5-2BDB896E3CD7}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GridBlazorClientSide.Server", "GridBlazorClientSide.Server\GridBlazorClientSide.Server.csproj", "{426FED3F-9D16-4525-ADA3-65C7E70CDF5B}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GridBlazorClientSide.Shared", "GridBlazorClientSide.Shared\GridBlazorClientSide.Shared.csproj", "{DA3EE8CA-8D1F-4014-9DE2-F341DBB12883}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -29,18 +29,6 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{8608F236-A560-48F1-8E02-6521CDADD654}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{8608F236-A560-48F1-8E02-6521CDADD654}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{8608F236-A560-48F1-8E02-6521CDADD654}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{8608F236-A560-48F1-8E02-6521CDADD654}.Release|Any CPU.Build.0 = Release|Any CPU
-		{0BDE247B-C6EE-4AD8-B1E5-FE52C8F3E314}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{0BDE247B-C6EE-4AD8-B1E5-FE52C8F3E314}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{0BDE247B-C6EE-4AD8-B1E5-FE52C8F3E314}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{0BDE247B-C6EE-4AD8-B1E5-FE52C8F3E314}.Release|Any CPU.Build.0 = Release|Any CPU
-		{5CAE5AA2-05A7-46D1-95B0-E317EF900EE0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{5CAE5AA2-05A7-46D1-95B0-E317EF900EE0}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{5CAE5AA2-05A7-46D1-95B0-E317EF900EE0}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{5CAE5AA2-05A7-46D1-95B0-E317EF900EE0}.Release|Any CPU.Build.0 = Release|Any CPU
 		{40DA789F-0ACE-4B80-841D-A07A46A90918}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{40DA789F-0ACE-4B80-841D-A07A46A90918}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{40DA789F-0ACE-4B80-841D-A07A46A90918}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -65,16 +53,28 @@ Global
 		{80351E74-E7A8-4A72-8AB7-2E48E26BA139}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{80351E74-E7A8-4A72-8AB7-2E48E26BA139}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{80351E74-E7A8-4A72-8AB7-2E48E26BA139}.Release|Any CPU.Build.0 = Release|Any CPU
-		{14F4252A-08ED-4935-840B-DB3278C2D995}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{14F4252A-08ED-4935-840B-DB3278C2D995}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{14F4252A-08ED-4935-840B-DB3278C2D995}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{14F4252A-08ED-4935-840B-DB3278C2D995}.Release|Any CPU.Build.0 = Release|Any CPU
+		{88943E18-7CCE-4CC0-A270-09BF217077A7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{88943E18-7CCE-4CC0-A270-09BF217077A7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{88943E18-7CCE-4CC0-A270-09BF217077A7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{88943E18-7CCE-4CC0-A270-09BF217077A7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A64E312E-5454-4063-80D5-2BDB896E3CD7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A64E312E-5454-4063-80D5-2BDB896E3CD7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A64E312E-5454-4063-80D5-2BDB896E3CD7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A64E312E-5454-4063-80D5-2BDB896E3CD7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{426FED3F-9D16-4525-ADA3-65C7E70CDF5B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{426FED3F-9D16-4525-ADA3-65C7E70CDF5B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{426FED3F-9D16-4525-ADA3-65C7E70CDF5B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{426FED3F-9D16-4525-ADA3-65C7E70CDF5B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DA3EE8CA-8D1F-4014-9DE2-F341DBB12883}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DA3EE8CA-8D1F-4014-9DE2-F341DBB12883}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DA3EE8CA-8D1F-4014-9DE2-F341DBB12883}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DA3EE8CA-8D1F-4014-9DE2-F341DBB12883}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
-		VisualSVNWorkingCopyRoot = .
 		SolutionGuid = {895FF79E-EBAE-48F1-BB99-DEE7E62B0DB6}
+		VisualSVNWorkingCopyRoot = .
 	EndGlobalSection
 EndGlobal

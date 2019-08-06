@@ -5,7 +5,8 @@
 [Index](Documentation.md)
 
 The prefered method is using a Blazor component because it allows event handling with Blazor.
-But you can also use the **RenderValueAs** method to render a custom html markup in the grid cell, as it is used on ASP.NET MVC Core projects. In this case events will be managed using Javascript.
+But you can also use the **RenderValueAs** method to render a custom html markup in the grid cell, as it is used on ASP.NET MVC Core projects.
+In this case events will be managed using Javascript.
 
 You have to use the **RenderComponentAs** method to render a component in a cell:
 
@@ -13,10 +14,27 @@ You have to use the **RenderComponentAs** method to render a component in a cell
     columns.Add().RenderComponentAs<ButtonCell>();
 ```
 
+**RenderComponentAs** method has 2 optional parameters:
+Parameter | Type | Description
+--------- | ---- | -----------
+Actions | IList<Action<object>> (optional) | the parent component can pass a list of Actions to be used by the component (see [Passing grid state as parameter](Passing_grid_state_as_parameter.md))
+Object| object (optional) | the parent component can pass an object to be used by the component (see [Passing grid state as parameter](Passing_grid_state_as_parameter.md))
+If you use any of these paramenters, you must use them when creating the component.
+
 The generic type used has to be the component created to render the cell.
 
 You must also create a Blazor component that implements the **ICustomGridComponent** interface.
-This interface includes only a parameter called **Item** of the same type of the grid row element. 
+This interface includes a mandatory parameter called **Item** of the same type of the grid row element, and 3 optional parameters:
+
+Parameter | Type | Description
+--------- | ---- | -----------
+Item | row element (mandatory) | the row item that will be used by the component
+Grid | CGrid<T> (optional) | Grid can be used to get the grid state (see [Passing grid state as parameter](Passing_grid_state_as_parameter.md))
+Actions | IList<Action<object>> (optional) | the parent component can pass a list of Actions to be used by the component (see [Passing grid state as parameter](Passing_grid_state_as_parameter.md))
+Object| object (optional) | the parent component can pass an object to be used by the component (see [Passing grid state as parameter](Passing_grid_state_as_parameter.md))
+
+**Actions** and **Object** must be used when calling the **RenderComponentAs** method, but **Grid** can be used without this requirement.
+ 
 The component can include any html elements as well as any event handling features.
 
 ## Button
@@ -24,18 +42,43 @@ The component can include any html elements as well as any event handling featur
 In this sample we name the component **ButtonCell.razor**:
 
 ```razor
-    @using GridShared.Columns
     @implements ICustomGridComponent<Order>
+    @inject IUriHelper UriHelper
 
-    <button class='btn btn-sm btn-primary' @onclick="@MyClickHandler">Save</button>
+    <button class='btn btn-sm btn-primary' @onclick="MyClickHandler">Edit</button>
 
     @code {
         [Parameter]
         public Order Item { get; protected set; }
 
+        [Parameter]
+        public IList<Action<object>> Actions { get; protected set; }
+
+        [Parameter]
+        public CGrid<Order> Grid { get; protected set; }
+
+        [Parameter]
+        public object Object { get; protected set; }
+
         private void MyClickHandler(UIMouseEventArgs e)
         {
-            Console.WriteLine("Button clicked: Item " + Item.OrderID);
+            if (Actions == null)
+            {
+                string gridState = Grid.GetState();
+                if (Object == null)
+                {
+                    UriHelper.NavigateTo($"/editorder/{Item.OrderID.ToString()}/gridsample/{gridState}");
+                }
+                else
+                {
+                    string returnUrl = (string)Object;
+                    UriHelper.NavigateTo($"/editorder/{Item.OrderID.ToString()}/{returnUrl}/{gridState}");
+                }
+            }
+            else
+            {
+                Actions[0]?.Invoke(Item);
+            }
         }
     }
 ```

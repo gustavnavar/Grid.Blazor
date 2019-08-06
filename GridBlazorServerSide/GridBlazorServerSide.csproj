@@ -1,0 +1,20 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp3.0</TargetFramework>
+    <LangVersion>7.3</LangVersion>
+    <Version>0.7.2</Version>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="BlazorStrap" Version="1.0.0-preview7-02" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="3.0.0-preview5.19227.1" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="3.0.0-preview5.19227.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\GridBlazor\GridBlazor.csproj" />
+    <ProjectReference Include="..\GridMvc\GridMvc.csproj" />
+  </ItemGroup>
+
+</Project>

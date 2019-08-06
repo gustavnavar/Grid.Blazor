@@ -8,6 +8,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Text.Encodings.Web;
+using Microsoft.AspNetCore.Http;
 
 namespace GridMvc
 {
@@ -20,9 +21,21 @@ namespace GridMvc
             return Grid(helper, items, DefaultPartialViewName);
         }
 
+        public static HtmlGrid<T> Grid<T>(this IHtmlHelper helper, IEnumerable<T> items, IQueryCollection query, IViewEngine viewEngine = null)
+        {
+            return Grid(helper, items, query, DefaultPartialViewName);
+        }
+
         public static HtmlGrid<T> Grid<T>(this IHtmlHelper helper, IEnumerable<T> items, string viewName, IViewEngine viewEngine = null)
         {
             var newGrid = new SGrid<T>(items, helper.ViewContext.HttpContext.Request.Query);
+            var htmlGrid = new HtmlGrid<T>(helper, newGrid, viewName);
+            return htmlGrid;
+        }
+
+        public static HtmlGrid<T> Grid<T>(this IHtmlHelper helper, IEnumerable<T> items, IQueryCollection query, string viewName, IViewEngine viewEngine = null)
+        {
+            var newGrid = new SGrid<T>(items, query);
             var htmlGrid = new HtmlGrid<T>(helper, newGrid, viewName);
             return htmlGrid;
         }
