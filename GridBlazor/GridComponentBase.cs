@@ -24,13 +24,13 @@ namespace GridBlazor
         internal ICGridColumn FirstColumn { get; set; }
 
         [Parameter]
-        internal ICGrid Grid { get; set; }
+        public ICGrid Grid { get; set; }
 
         [Parameter]
-        protected Action<object> OnRowClicked { get; set; }
+        public Action<object> OnRowClicked { get; set; }
 
         [Parameter]
-        protected IQueryDictionary<Type> CustomFilters { get; set; }
+        public IQueryDictionary<Type> CustomFilters { get; set; }
 
         protected override void OnParametersSet()
         {

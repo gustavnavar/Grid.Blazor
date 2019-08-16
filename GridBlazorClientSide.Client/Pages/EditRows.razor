@@ -39,11 +39,16 @@ else
     private Task _task;
 
     [Parameter]
-    protected string GridState { get; set; }
+    public string GridState { get; set; }
+
+    protected override void OnInitialized()
+    {
+        CultureInfo.CurrentCulture = new CultureInfo(Startup.Culture);
+    }
 
     protected override async Task OnParametersSetAsync()
     {
-        var locale = new CultureInfo("en-US");
+        var locale = CultureInfo.CurrentCulture;
 
         // build the column collection passing the return url string
         Action<IGridColumnCollection<Order>> columns = c => ColumnCollections.OrderColumnsWithEdit(c, "editrows");

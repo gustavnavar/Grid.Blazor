@@ -58,17 +58,16 @@ else
     private ICGrid _customersGrid;
     private Task _task1;
     private Task _task2;
-    private Order _order;
 
     [Parameter]
-    protected string OrdersGridState { get; set; }
+    public string OrdersGridState { get; set; }
 
     [Parameter]
-    protected string CustomersGridState { get; set; }
+    public string CustomersGridState { get; set; }
 
-    protected override async Task OnInitAsync()
+    protected override void OnInitialized()
     {
-        CultureInfo.CurrentCulture = new CultureInfo("en-US");
+        CultureInfo.CurrentCulture = new CultureInfo(Startup.Culture);
     }
 
     protected override async Task OnParametersSetAsync()

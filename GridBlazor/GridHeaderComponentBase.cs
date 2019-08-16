@@ -39,16 +39,16 @@ namespace GridBlazor
         protected RenderFragment FilterWidgetRender { get; set; }
 
         [CascadingParameter(Name = "GridComponent")]
-        protected GridComponent<T> GridComponent { get; set; }
+        private GridComponent<T> GridComponent { get; set; }
 
         [Parameter]
-        protected IGridColumn Column { get; set; }
+        public IGridColumn Column { get; set; }
         [Parameter]
-        protected QueryStringFilterSettings FilterSettings { get; set; }
+        public QueryStringFilterSettings FilterSettings { get; set; }
         [Parameter]
-        protected QueryStringSortSettings SortingSettings { get; set; }
+        public QueryStringSortSettings SortingSettings { get; set; }
         [Parameter]
-        protected IQueryDictionary<Type> Filters { get; set; }
+        public IQueryDictionary<Type> Filters { get; set; }
 
         protected override void OnParametersSet()
         {

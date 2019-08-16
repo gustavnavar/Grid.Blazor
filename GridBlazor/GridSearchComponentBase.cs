@@ -14,9 +14,9 @@ namespace GridBlazor
         protected string _searchValue;
 
         [CascadingParameter(Name = "GridComponent")]
-        protected GridComponent<T> GridComponent { get; set; }
+        private GridComponent<T> GridComponent { get; set; }
         [Parameter]
-        protected ICGrid Grid { get; set; }
+        public ICGrid Grid { get; set; }
 
         protected override void OnParametersSet()
         {

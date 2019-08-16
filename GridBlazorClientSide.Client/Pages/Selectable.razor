@@ -44,11 +44,16 @@ else
     private Task _task;
 
     [Parameter]
-    internal string GridState { get; set; }
+    public string GridState { get; set; }
+
+    protected override void OnInitialized()
+    {
+        CultureInfo.CurrentCulture = new CultureInfo(Startup.Culture);
+    }
 
     protected override async Task OnParametersSetAsync()
     {
-        var locale = new CultureInfo("en-US");
+        var locale = CultureInfo.CurrentCulture;
         var query = new QueryDictionary<StringValues>();
         if (!string.IsNullOrWhiteSpace(GridState))
         {

@@ -1,7 +1,7 @@
 ﻿@using GridBlazor.Resources
 
 @typeparam T
-@inherits DateTimeFilterComponentBase<T>
+@inherits TextFilterComponentBase<T>
 
 @if (Visible)
 {
@@ -20,18 +20,18 @@
                                     <option value="1">@Strings.And</option>
                                     <option value="2">@Strings.Or</option>
                                 </select>
-                            </div>    
+                            </div>
                         </div>
                     }
                     else if (j > 1)
                     {
-                        <div class="form-group row"> 
+                        <div class="form-group row">
                             <div class="col-md-4 col-md-offset-4 offset-md-4">
                                 <select class="grid-filter-cond form-control" disabled="disabled" value="@_condition">
                                     <option value="1">@Strings.And</option>
                                     <option value="2">@Strings.Or</option>
                                 </select>
-                            </div>  
+                            </div>
                         </div>
                     }
                     <div class="form-group row">
@@ -43,10 +43,9 @@
                             <div>
                                 <select class="grid-filter-type form-control" @bind="_filters[j].Type">
                                     <option value="1">@Strings.Equal</option>
-                                    <option value="5">@Strings.GreaterThan</option>
-                                    <option value="6">@Strings.LessThan</option>
-                                    <option value="7">@Strings.GreaterThanOrEquals</option>
-                                    <option value="8">@Strings.LessThanOrEquals</option>
+                                    <option value="2">@Strings.Contains</option>
+                                    <option value="3">@Strings.StartsWith</option>
+                                    <option value="4">@Strings.EndsWith</option>
                                 </select>
                             </div>
                         </div>
@@ -56,18 +55,18 @@
                                 <label class="control-label"><b>@Strings.FilterValueLabel:</b></label>
                             }
                             <div>
-                                <input type="date" placeholder="yyyy-mm-dd" class="grid-filter-input form-control" @bind="_filters[j].Value" />
+                                <input type="text" class="grid-filter-input form-control" @bind="_filters[j].Value" />
                             </div>
                         </div>
                     </div>
                 }
-            <div class="grid-filter-buttons" style="float:right;">
-                <button type="button" class="btn btn-primary" @onclick="AddColumnFilterValue"><b>+</b></button>
-                @if (_filters.Length > 1)
-                {
-                    <button type="button" class="btn btn-primary" style="margin-left:10px;" @onclick="RemoveColumnFilterValue"><b>-</b></button>
-                }
-            </div>
+                <div class="grid-filter-buttons" style="float:right;">
+                    <button type="button" class="btn btn-primary" @onclick="AddColumnFilterValue"><b>+</b></button>
+                    @if (_filters.Length > 1)
+                    {
+                        <button type="button" class="btn btn-primary" style="margin-left:10px;" @onclick="RemoveColumnFilterValue"><b>-</b></button>
+                    }
+                </div>
                 <div class="grid-filter-buttons" style="margin-top:10px;">
                     <button type="button" class="btn btn-primary" @onclick="ApplyButtonClicked">
                         @Strings.ApplyFilterButtonText
@@ -75,7 +74,7 @@
                 </div>
             </div>
             <div class="grid-popup-additional">
-                @if(_clearVisible)
+                @if (_clearVisible)
                 {
                     <ul class="menu-list">
                         <li>

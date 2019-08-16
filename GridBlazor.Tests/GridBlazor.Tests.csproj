@@ -3,7 +3,7 @@
   <PropertyGroup>    
     <TargetFramework>netcoreapp3.0</TargetFramework>    
     <Copyright>9Copyright ©  2019</Copyright>    
-    <Version>0.7.2</Version>
+    <Version>0.8.0</Version>
   </PropertyGroup>
 
   <ItemGroup>

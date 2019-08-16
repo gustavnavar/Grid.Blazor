@@ -48,13 +48,13 @@ else
 
 @code {
     [Parameter]
-    private Order Order { get; set; }
+    public Order Order { get; set; }
 
     [Parameter]
-    private string ReturnUrl { get; set; }
+    public string ReturnUrl { get; set; }
 
     [Parameter]
-    private string GridState { get; set; }
+    public string GridState { get; set; }
 
     private void MyClickHandler(UIMouseEventArgs e)
     {

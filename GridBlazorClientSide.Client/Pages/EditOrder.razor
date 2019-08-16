@@ -123,21 +123,16 @@ else
     private Order _order;
 
     [Parameter]
-    protected string OrderId { get; set; }
+    public string OrderId { get; set; }
 
     [Parameter]
-    protected string ReturnUrl { get; set; }
+    public string ReturnUrl { get; set; }
 
     [Parameter]
-    protected string GridState { get; set; }
+    public string GridState { get; set; }
 
     [Parameter]
-    protected string AltGridState { get; set; }
-
-    protected override void OnInit()
-    {
-        CultureInfo.CurrentCulture = new CultureInfo("en-US");
-    }
+    public string AltGridState { get; set; }
 
     protected override async Task OnParametersSetAsync()
     {

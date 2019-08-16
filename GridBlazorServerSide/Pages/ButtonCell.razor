@@ -8,16 +8,16 @@
 
 @code {
     [Parameter]
-    public Order Item { get; protected set; }
+    public Order Item { get; set; }
 
     [Parameter]
-    public IList<Action<object>> Actions { get; protected set; }
+    public IList<Action<object>> Actions { get; set; }
 
     [Parameter]
-    public CGrid<Order> Grid { get; protected set; }
+    public CGrid<Order> Grid { get; set; }
 
     [Parameter]
-    public object Object { get; protected set; }
+    public object Object { get; set; }
 
     private void MyClickHandler(UIMouseEventArgs e)
     {

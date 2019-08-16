@@ -5,6 +5,9 @@ namespace GridBlazorClientSide.Client
 {
     public class Startup
     {
+        public static string Culture //= "fr-FR";
+                                     = "en-US";
+
         public void ConfigureServices(IServiceCollection services)
         {
         }

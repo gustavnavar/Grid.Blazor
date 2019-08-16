@@ -18,9 +18,9 @@ namespace GridBlazor
         protected RenderFragment _cellRender;
 
         [Parameter]
-        protected IGridColumn Column { get; set; }
+        public IGridColumn Column { get; set; }
         [Parameter]
-        protected object Item { get; set; }
+        public object Item { get; set; }
 
         protected override void OnParametersSet()
         {

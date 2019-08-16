@@ -36,9 +36,14 @@ else
     private CGrid<Order> _grid;
     private Task _task;
 
-    protected override async Task OnInitAsync()
+    protected override void OnInitialized()
     {
-        var locale = new CultureInfo("en-US");
+        CultureInfo.CurrentCulture = new CultureInfo(Startup.Culture);
+    }
+
+    protected override async Task OnParametersSetAsync()
+    {
+        var locale = CultureInfo.CurrentCulture;
 
         Func<object[], Task<ICGrid>> subGrids = async keys =>
         {

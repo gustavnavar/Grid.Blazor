@@ -2,16 +2,10 @@
 
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
-    <OutputType>Library</OutputType>
-    <IsPackable>true</IsPackable>
-    <RestoreAdditionalProjectSources>
-      https://dotnet.myget.org/F/aspnetcore-dev/api/v3/index.json;
-      https://dotnet.myget.org/F/blazor-dev/api/v3/index.json;
-    </RestoreAdditionalProjectSources>
-    <AddRazorSupportForMvc>true</AddRazorSupportForMvc>
+    <RazorLangVersion>3.0</RazorLangVersion>
     <GenerateEmbeddedFilesManifest>True</GenerateEmbeddedFilesManifest>
     <EnableDefaultEmbeddedResourceItems>False</EnableDefaultEmbeddedResourceItems>
-    <Version>0.7.2</Version>
+    <Version>0.8.0</Version>
     <Title>GridBlazor</Title>
     <Description>Grid components for Blazor</Description>
     <Summary>Grid components for Blazor</Summary>
@@ -19,7 +13,7 @@
     <PackageTags>grid blazor</PackageTags>
     <PackageProjectUrl>https://github.com/gustavnavar/Grid.Blazor</PackageProjectUrl>
     <PackageLicenseExpression>LGPL-2.1-only</PackageLicenseExpression>
-    <PackageReleaseNotes>Supports .NET Core 3.0 Preview 7</PackageReleaseNotes>
+    <PackageReleaseNotes>Supports .NET Core 3.0 Preview 8</PackageReleaseNotes>
   </PropertyGroup>
 
   <ItemGroup>
@@ -27,14 +21,14 @@
       <_Parameter1>GridBlazor.Tests</_Parameter1>
     </AssemblyAttribute>
   </ItemGroup>
-  
+
   <ItemGroup>
-    <PackageReference Include="Microsoft.AspNetCore.Components.Browser" Version="3.0.0-preview6.19307.2" />
-    <PackageReference Include="Microsoft.AspNetCore.Components.Build" Version="3.0.0-preview3-19153-02" />
+    <PackageReference Include="Microsoft.AspNetCore.Components" Version="3.0.0-preview8.19405.7" />
+    <PackageReference Include="Microsoft.AspNetCore.Components.Web" Version="3.0.0-preview8.19405.7" />
+    <PackageReference Include="Microsoft.AspNetCore.Blazor.HttpClient" Version="3.0.0-preview8.19405.7" />
     <PackageReference Include="Microsoft.AspNetCore.Html.Abstractions" Version="2.2.0" />
-    <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="3.0.0-preview7.19362.4" />
-    <PackageReference Include="Microsoft.Extensions.Primitives" Version="3.0.0-preview7.19362.4" />
-    <PackageReference Include="System.ComponentModel.Annotations" Version="4.6.0-preview7.19362.9" />
+    <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="3.0.0-preview8.19405.4" />
+    <PackageReference Include="Microsoft.Extensions.Primitives" Version="3.0.0-preview8.19405.4" />
   </ItemGroup>
 
   <ItemGroup>
@@ -76,7 +70,4 @@
     </Compile>
   </ItemGroup>
 
-  <ItemGroup>
-    <PackageReference Update="Microsoft.AspNetCore.Components.Browser" Version="3.0.0-preview7.19365.7" />
-  </ItemGroup>
 </Project>

@@ -15,13 +15,13 @@ namespace GridBlazor
         private GridHeaderComponent<T> GridHeaderComponent { get; set; }
 
         [Parameter]
-        protected bool Visible { get; set; }
+        public bool Visible { get; set; }
 
         [Parameter]
-        protected string ColumnName { get; set; }
+        public string ColumnName { get; set; }
 
         [Parameter]
-        protected IEnumerable<ColumnFilterValue> FilterSettings { get; set; }
+        public IEnumerable<ColumnFilterValue> FilterSettings { get; set; }
 
         protected override void OnParametersSet()
         {

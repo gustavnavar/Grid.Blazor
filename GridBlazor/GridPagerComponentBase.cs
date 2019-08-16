@@ -10,7 +10,7 @@ namespace GridBlazor
         private GridComponent<T> GridComponent { get; set; }
 
         [Parameter]
-        protected GridPager GridPager { get; set; }
+        public GridPager GridPager { get; set; }
 
         protected async Task PagerButtonClicked(int page)
         {

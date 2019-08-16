@@ -5,6 +5,6 @@ namespace GridBlazor
     public class GridTotalsComponentBase : ComponentBase
     {
         [Parameter]
-        protected ICGrid Grid { get; set; }
+        public ICGrid Grid { get; set; }
     }
 }

@@ -13,16 +13,16 @@ namespace GridBlazor
         protected RenderFragment _subGridRender;
 
         [CascadingParameter(Name = "GridComponent")]
-        protected GridComponent<T> GridComponent { get; set; }
+        private GridComponent<T> GridComponent { get; set; }
 
         [Parameter]
-        protected int GridPosition { get; set; }
+        public int GridPosition { get; set; }
 
         [Parameter]
-        protected int Cols { get; set; }
+        public int Cols { get; set; }
 
         [Parameter]
-        protected object[] Values { get; set; }
+        public object[] Values { get; set; }
 
         protected override async Task OnParametersSetAsync()
         {

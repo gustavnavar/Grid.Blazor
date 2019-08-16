@@ -13,7 +13,8 @@ namespace GridBlazorServerSide
     public class Startup
     {
         public static string ConnectionString = "Server=.\\SQLEXPRESS;Database=NorthWind;Trusted_Connection=True;MultipleActiveResultSets=true";
-
+        public static string Culture = "fr-FR";
+                                     //= "en-US";
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
