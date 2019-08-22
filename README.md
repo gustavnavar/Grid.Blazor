@@ -4,11 +4,6 @@ A fork from: https://gridmvc.codeplex.com/
 
 It supports .NET Core 3.0 Preview 8
 
-**Important**:
-If you use EF Core 3.0, you can use EF Core 3.0 Preview8 as it implements almost all Linq features.
-The only missing one that I've detected is related to searches on non-text columns. 
-If you use this grid feature you should keep using EF Core 3.0 Preview5.
-
 ## Demo 
 http://gridblazor.azurewebsites.net
 

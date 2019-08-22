@@ -29,6 +29,7 @@ Parameter | Description | Example
 enable | bool to enable searching on the grid | Searchable(true, ...)
 onlyTextColumns | bool to enable searching on all collumns or just on string ones | Searchable(..., true)
 
+Searching on boolean columns has benn disabled because EF Core 3.0 is not supporting it yet.
 
 **IMPORTANT**: If you get an **InvalidOperationException** while searching with a message similar to:
 ```text

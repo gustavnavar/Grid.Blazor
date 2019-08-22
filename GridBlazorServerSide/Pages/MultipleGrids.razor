@@ -76,7 +76,7 @@ else
 
         // build the column collection passing an action list with the action executed by the ButtonCell component
         Action<IGridColumnCollection<Order>> orderColumns = c =>
-            ColumnCollections.OrderColumnsAllFeatures(c, new List<Action<object>>() { MyAction });
+            ColumnCollections.OrderColumnsMultipleGrids(c, new List<Action<object>>() { MyAction });
 
         var ordersQuery = new QueryDictionary<StringValues>();
         if (!string.IsNullOrWhiteSpace(OrdersGridState))
