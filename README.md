@@ -8,10 +8,13 @@ It supports .NET Core 3.0 Preview 8
 http://gridblazor.azurewebsites.net
 
 ## Documentation
-Native C# Grid components for:
-* [Blazor client-side](./docs/blazor_client/Documentation.md)
-* [Blazor server-side](./docs/blazor_server/Documentation.md)
-* [ASP.NET Core MVC](./docs/dotnetcore/Documentation.md)
+
+There are native C# Grid components for Blazor client-side and server-side, and for ASP.NET Core MVC.
+
+You can find the specific documentation for each environment clicking the following links:
+* [Documentation for Blazor client-side](./docs/blazor_client/Documentation.md)
+* [Documentation for Blazor server-side](./docs/blazor_server/Documentation.md)
+* [Documentation for ASP.NET Core MVC](./docs/dotnetcore/Documentation.md)
 
 This is an example of a table of items using this component:
 
