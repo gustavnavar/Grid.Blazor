@@ -56,7 +56,7 @@
                                 <label class="control-label"><b>@Strings.FilterValueLabel:</b></label>
                             }
                             <div>
-                                <input type="date" placeholder="yyyy-mm-dd" class="grid-filter-input form-control" value="@_filters[j].Value" @onchange="(UIChangeEventArgs __e) => _filters[j].Value = __e.Value.ToString()"/>
+                                <input type="date" placeholder="yyyy-mm-dd" class="grid-filter-input form-control" value="@_filters[j].Value" @onchange="(ChangeEventArgs __e) => _filters[j].Value = __e.Value.ToString()"/>
                             </div>
                         </div>
                     </div>

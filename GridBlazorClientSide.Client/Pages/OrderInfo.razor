@@ -1,5 +1,5 @@
 ﻿@using GridBlazorClientSide.Shared.Models
-@inject IUriHelper UriHelper
+@inject NavigationManager NavigationManager
 
 @if (Order == null)
 {
@@ -56,8 +56,8 @@ else
     [Parameter]
     public string GridState { get; set; }
 
-    private void MyClickHandler(UIMouseEventArgs e)
+    private void MyClickHandler(MouseEventArgs e)
     {
-        UriHelper.NavigateTo($"/editorder/{Order.OrderID.ToString()}/{ReturnUrl}/{GridState}");
+        NavigationManager.NavigateTo($"/editorder/{Order.OrderID.ToString()}/{ReturnUrl}/{GridState}");
     }
 }

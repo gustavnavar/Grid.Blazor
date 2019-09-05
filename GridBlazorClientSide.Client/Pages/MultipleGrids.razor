@@ -8,7 +8,7 @@
 @using GridShared.Utility
 @using Microsoft.Extensions.Primitives
 @using System.Globalization
-@inject IUriHelper UriHelper
+@inject NavigationManager NavigationManager
 
 <h1>Multiple Grids</h1>
 
@@ -87,7 +87,7 @@ else
                 // do nothing, GridState was not a valid state
             }
         }
-        string ordersUrl = UriHelper.GetBaseUri() + "api/SampleData/OrderColumnsWithEdit";
+        string ordersUrl = NavigationManager.BaseUri + "api/SampleData/OrderColumnsWithEdit";
         var ordersClient = new GridClient<Order>(ordersUrl, ordersQuery, false, "ordersGrid", orderColumns, locale)
             .Sortable()
             .Filterable()
@@ -111,7 +111,7 @@ else
                 // do nothing, GridState was not a valid state
             }
         }
-        string customersUrl = UriHelper.GetBaseUri() + "api/SampleData/GetCustomersGrid";
+        string customersUrl = NavigationManager.BaseUri + "api/SampleData/GetCustomersGrid";
         var customersClient = new GridClient<Customer>(customersUrl, customersQuery, false, "customersGrid",
             ColumnCollections.CustomersColumns, locale)
             .Sortable()
@@ -129,7 +129,7 @@ else
     {
         string ordersGridState = _ordersGrid.GetState();
         string customersGridState = _customersGrid.GetState();
-        UriHelper.NavigateTo($"/editorder/{((Order)item).OrderID.ToString()}/multiplegrids/{ordersGridState}/{customersGridState}");
+        NavigationManager.NavigateTo($"/editorder/{((Order)item).OrderID.ToString()}/multiplegrids/{ordersGridState}/{customersGridState}");
     }
 }
 

@@ -3,7 +3,7 @@
 @using GridBlazorClientSide.Shared.Models
 @using System.Globalization
 @inject HttpClient Http
-@inject IUriHelper UriHelper
+@inject NavigationManager NavigationManager
 
 <h1>Edit page</h1>
 
@@ -142,15 +142,15 @@ else
     private async Task UpdateOrder()
     {
         await Http.PutJsonAsync($"api/Order/{Convert.ToInt32(OrderId)}", _order);
-        UriHelper.NavigateTo($"{ReturnUrl}/{GridState}/{AltGridState}");
+        NavigationManager.NavigateTo($"{ReturnUrl}/{GridState}/{AltGridState}");
     }
 
     private void Back()
     {
-        UriHelper.NavigateTo($"{ReturnUrl}/{GridState}/{AltGridState}");
+        NavigationManager.NavigateTo($"{ReturnUrl}/{GridState}/{AltGridState}");
     }
 
-    private void ChangeOrderDate(UIChangeEventArgs e)
+    private void ChangeOrderDate(ChangeEventArgs e)
     {
         DateTime date;
         DateTime.TryParse(e.Value.ToString(), out date);
@@ -158,7 +158,7 @@ else
             _order.OrderDate = date;
     }
 
-    private void ChangeRequiredDate(UIChangeEventArgs e)
+    private void ChangeRequiredDate(ChangeEventArgs e)
     {
         DateTime date;
         DateTime.TryParse(e.Value.ToString(), out date);
@@ -166,7 +166,7 @@ else
             _order.RequiredDate = date;
     }
 
-    private void ChangeShippedDate(UIChangeEventArgs e)
+    private void ChangeShippedDate(ChangeEventArgs e)
     {
         DateTime date;
         DateTime.TryParse(e.Value.ToString(), out date);

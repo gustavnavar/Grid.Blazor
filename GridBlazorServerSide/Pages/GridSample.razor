@@ -11,7 +11,7 @@
 @using System.Globalization
 @using System.Threading.Tasks
 @inject IOrderService orderService
-@inject IUriHelper UriHelper
+@inject NavigationManager NavigationManager
 
 <h1>Grid with all features</h1>
 
@@ -126,7 +126,7 @@ else
     private void MyAction(object item)
     {
         string ordersGridState = _grid.GetState();
-        UriHelper.NavigateTo($"/editorder/{((Order)item).OrderID.ToString()}/gridsample/{ordersGridState}");
+        NavigationManager.NavigateTo($"/editorder/{((Order)item).OrderID.ToString()}/gridsample/{ordersGridState}");
     }
 }
 

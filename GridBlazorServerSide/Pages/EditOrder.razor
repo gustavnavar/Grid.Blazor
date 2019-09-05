@@ -4,7 +4,7 @@
 @using GridBlazorServerSide.Services
 @using System.Globalization
 @inject IOrderService orderService
-@inject IUriHelper UriHelper
+@inject NavigationManager NavigationManager
 
 <h1>Edit page</h1>
 
@@ -141,11 +141,11 @@
     private void UpdateOrder()
     {
         orderService.UpdateAndSave(_order);
-        UriHelper.NavigateTo($"/{ReturnUrl}/{GridState}/{AltGridState}");
+        NavigationManager.NavigateTo($"/{ReturnUrl}/{GridState}/{AltGridState}");
     }
 
     private void Back()
     {
-        UriHelper.NavigateTo($"/{ReturnUrl}/{GridState}/{AltGridState}");
+        NavigationManager.NavigateTo($"/{ReturnUrl}/{GridState}/{AltGridState}");
     }
 }

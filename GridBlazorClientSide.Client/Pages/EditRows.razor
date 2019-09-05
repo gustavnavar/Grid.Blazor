@@ -8,7 +8,7 @@
 @using Microsoft.Extensions.Primitives
 @using System.Globalization
 @using System.Threading.Tasks
-@inject IUriHelper UriHelper
+@inject NavigationManager NavigationManager
 
 <h1>Edit rows</h1>
 
@@ -65,7 +65,7 @@ else
                 // do nothing, GridState was not a valid state
             }
         }
-        string url = UriHelper.GetBaseUri() + "api/SampleData/OrderColumnsWithEdit";
+        string url = NavigationManager.BaseUri + "api/SampleData/OrderColumnsWithEdit";
         var client = new GridClient<Order>(url, query, false, "ordersGrid", columns, locale)
             .Sortable()
             .Filterable()

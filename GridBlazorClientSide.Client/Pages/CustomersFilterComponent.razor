@@ -3,7 +3,7 @@
 @using GridShared.Filtering
 @using System.Collections.Generic
 @using System.Net.Http
-@inject IUriHelper UriHelper
+@inject NavigationManager NavigationManager
 
 @typeparam T
 
@@ -63,7 +63,7 @@
 
     protected override async Task OnInitializedAsync()
     {
-        string url = UriHelper.GetBaseUri() + "api/SampleData/GetCustomersNames";
+        string url = NavigationManager.BaseUri + "api/SampleData/GetCustomersNames";
         HttpClient httpClient = new HttpClient();
         _customersNames = await httpClient.GetJsonAsync<List<string>>(url);
     }

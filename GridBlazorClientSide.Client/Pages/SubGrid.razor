@@ -6,7 +6,7 @@
 @using System
 @using System.Globalization
 @using System.Threading.Tasks
-@inject IUriHelper UriHelper
+@inject NavigationManager NavigationManager
 
 <h1>Grid with subgrids</h1>
 
@@ -47,7 +47,7 @@ else
 
         Func<object[], Task<ICGrid>> subGrids = async keys =>
         {
-            string subGridUrl = UriHelper.GetBaseUri() + "api/SampleData/GetOrderDetailsGrid?OrderId=";
+            string subGridUrl = NavigationManager.BaseUri + "api/SampleData/GetOrderDetailsGrid?OrderId=";
             var subGridQuery = new QueryDictionary<StringValues>();
             var subGridClient = new GridClient<OrderDetail>(subGridUrl + keys[0], subGridQuery, false,
                 "orderDetailsGrid" + keys[0].ToString(), ColumnCollections.OrderDetailColumns, locale)
@@ -61,7 +61,7 @@ else
         };
 
         var query = new QueryDictionary<StringValues>();
-        string url = UriHelper.GetBaseUri() + "api/SampleData/GetOrdersGridWithSubgrids";
+        string url = NavigationManager.BaseUri + "api/SampleData/GetOrdersGridWithSubgrids";
         var client = new GridClient<Order>(url, query, false, "ordersGrid", ColumnCollections.OrderColumnsWithSubgrids, locale)
             .Sortable()
             .Filterable()

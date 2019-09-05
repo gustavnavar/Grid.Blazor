@@ -2,7 +2,7 @@
 @using GridBlazorServerSide.Models
 @using GridShared.Columns
 @implements ICustomGridComponent<Order>
-@inject IUriHelper UriHelper
+@inject NavigationManager NavigationManager
 
 <button class='btn btn-sm btn-primary' @onclick="MyClickHandler">Edit</button>
 
@@ -19,19 +19,19 @@
     [Parameter]
     public object Object { get; set; }
 
-    private void MyClickHandler(UIMouseEventArgs e)
+    private void MyClickHandler(MouseEventArgs e)
     {
         if (Actions == null)
         {
             string gridState = Grid.GetState();
             if (Object == null)
             {
-                UriHelper.NavigateTo($"/editorder/{Item.OrderID.ToString()}/gridsample/{gridState}");
+                NavigationManager.NavigateTo($"/editorder/{Item.OrderID.ToString()}/gridsample/{gridState}");
             }
             else
             {
                 string returnUrl = (string)Object;
-                UriHelper.NavigateTo($"/editorder/{Item.OrderID.ToString()}/{returnUrl}/{gridState}");
+                NavigationManager.NavigateTo($"/editorder/{Item.OrderID.ToString()}/{returnUrl}/{gridState}");
             }
         }
         else

@@ -95,7 +95,9 @@
                     cols += Grid.Columns.Count() - 1;
                     var values = Grid.GetKeyValues(item);
                     <tr class="subgrid-row">
-                        <SubGridComponent T="@T" GridComponent="@this" GridPosition="@capturedI" Cols="@cols" Values="@values"></SubGridComponent>
+                        <CascadingValue Value=@this Name="GridComponent">
+                            <SubGridComponent T="@T" GridPosition="@capturedI" Cols="@cols" Values="@values"></SubGridComponent>
+                        </CascadingValue>
                     </tr>
                 }
                 i++;
@@ -112,7 +114,9 @@
             <div class="grid-wrap">
                 @if (Grid.SearchingEnabled)
                 {
-                    <GridSearchComponent T="@T" GridComponent="@this" Grid="@Grid"></GridSearchComponent>
+                    <CascadingValue Value=@this Name="GridComponent">
+                        <GridSearchComponent T="@T" Grid="@Grid"></GridSearchComponent>
+                    </CascadingValue>            
                 }
                 <table class="table grid-table">
                     <thead>
@@ -127,7 +131,9 @@
                             }
                             @foreach (IGridColumn column in Grid.Columns)
                             {
-                                <GridHeaderComponent T="@T" GridComponent="@this" Column="@column" FilterSettings="@((QueryStringFilterSettings)Grid.Settings.FilterSettings)" SortingSettings="@((QueryStringSortSettings)Grid.Settings.SortSettings)" Filters="@_filterComponents"></GridHeaderComponent>
+                                <CascadingValue Value=@this Name="GridComponent">
+                                    <GridHeaderComponent T="@T" Column="@column" FilterSettings="@((QueryStringFilterSettings)Grid.Settings.FilterSettings)" SortingSettings="@((QueryStringSortSettings)Grid.Settings.SortSettings)" Filters="@_filterComponents"></GridHeaderComponent>
+                                </CascadingValue>
                             }
                         </tr>
                     </thead>
@@ -217,7 +223,9 @@
                                     cols += Grid.Columns.Count() - 1;
                                     var values = Grid.GetKeyValues(item);
                                     <tr class="subgrid-row">
-                                        <SubGridComponent T="@T" GridComponent="@this" GridPosition="@capturedI" Cols="@cols" Values="@values"></SubGridComponent>
+                                        <CascadingValue Value=@this Name="GridComponent">
+                                            <SubGridComponent T="@T" GridPosition="@capturedI" Cols="@cols" Values="@values"></SubGridComponent>
+                                        </CascadingValue>         
                                     </tr>
                                 }
                                 i++;
@@ -239,7 +247,9 @@
                     }
                     @if (Grid.EnablePaging && Grid.Pager != null)
                     {
-                        <GridPagerComponent T="@T" GridPager="@((GridPager)Grid.Pager)" GridComponent="@this"></GridPagerComponent>
+                        <CascadingValue Value=@this Name="GridComponent">
+                            <GridPagerComponent T="@T" GridPager="@((GridPager)Grid.Pager)"></GridPagerComponent>
+                        </CascadingValue>
                     }
                 </div>
             </div>

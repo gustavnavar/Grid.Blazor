@@ -120,7 +120,6 @@ namespace GridBlazor
             {
                 builder.OpenComponent<TextFilterComponent<T>>(++_sequence);
             }
-            builder.AddAttribute(++_sequence, "GridHeaderComponent", this);
             builder.AddAttribute(++_sequence, "Visible", _isVisible);
             builder.AddAttribute(++_sequence, "ColumnName", Column.Name);
             builder.AddAttribute(++_sequence, "FilterSettings", _filterSettings);

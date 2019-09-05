@@ -11,7 +11,7 @@
 @using System.Globalization
 @inject IOrderService orderService
 @inject ICustomerService customerService
-@inject IUriHelper UriHelper
+@inject NavigationManager NavigationManager
 
 <h1>Multiple Grids</h1>
 
@@ -131,7 +131,7 @@ else
     {
         string ordersGridState = _ordersGrid.GetState();
         string customersGridState = _customersGrid.GetState();
-        UriHelper.NavigateTo($"/editorder/{((Order)item).OrderID.ToString()}/multiplegrids/{ordersGridState}/{customersGridState}");
+        NavigationManager.NavigateTo($"/editorder/{((Order)item).OrderID.ToString()}/multiplegrids/{ordersGridState}/{customersGridState}");
     }
 }
 
