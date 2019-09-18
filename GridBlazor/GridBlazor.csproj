@@ -5,7 +5,7 @@
     <RazorLangVersion>3.0</RazorLangVersion>
     <GenerateEmbeddedFilesManifest>True</GenerateEmbeddedFilesManifest>
     <EnableDefaultEmbeddedResourceItems>False</EnableDefaultEmbeddedResourceItems>
-    <Version>0.9.0</Version>
+    <Version>1.0.0-RC1</Version>
     <Title>GridBlazor</Title>
     <Description>Grid components for Blazor</Description>
     <Summary>Grid components for Blazor</Summary>
@@ -13,7 +13,7 @@
     <PackageTags>grid blazor</PackageTags>
     <PackageProjectUrl>https://github.com/gustavnavar/Grid.Blazor</PackageProjectUrl>
     <PackageLicenseExpression>LGPL-2.1-only</PackageLicenseExpression>
-    <PackageReleaseNotes>Supports .NET Core 3.0 Preview 9</PackageReleaseNotes>
+    <PackageReleaseNotes>Supports .NET Core 3.0 RC1</PackageReleaseNotes>
   </PropertyGroup>
 
   <ItemGroup>
@@ -23,12 +23,12 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Microsoft.AspNetCore.Components" Version="3.0.0-preview9.19424.4" />
-    <PackageReference Include="Microsoft.AspNetCore.Components.Web" Version="3.0.0-preview9.19424.4" />
-    <PackageReference Include="Microsoft.AspNetCore.Blazor.HttpClient" Version="3.0.0-preview9.19424.4" />
+    <PackageReference Include="Microsoft.AspNetCore.Components" Version="3.0.0-rc1.19457.4" />
+    <PackageReference Include="Microsoft.AspNetCore.Components.Web" Version="3.0.0-rc1.19457.4" />
+    <PackageReference Include="Microsoft.AspNetCore.Blazor.HttpClient" Version="3.0.0-preview9.19457.4" />
     <PackageReference Include="Microsoft.AspNetCore.Html.Abstractions" Version="2.2.0" />
-    <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="3.0.0-preview9.19423.4" />
-    <PackageReference Include="Microsoft.Extensions.Primitives" Version="3.0.0-preview9.19423.4" />
+    <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="3.0.0-rc1.19456.10" />
+    <PackageReference Include="Microsoft.Extensions.Primitives" Version="3.0.0-rc1.19456.10" />
   </ItemGroup>
 
   <ItemGroup>
