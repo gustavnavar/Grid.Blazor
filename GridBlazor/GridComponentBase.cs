@@ -72,7 +72,7 @@ namespace GridBlazor
                 && (FirstColumn.IsSumEnabled || FirstColumn.IsAverageEnabled
                     || FirstColumn.IsMaxEnabled || FirstColumn.IsMinEnabled);
 
-            if (_hasSubGrid && IsSubGridVisible == null)
+            if (_hasSubGrid && (IsSubGridVisible == null || IsSubGridVisible.Length != Grid.DisplayingItemsCount))
             {
                 IsSubGridVisible = new bool[Grid.DisplayingItemsCount];
                 for (int i = 0; i < IsSubGridVisible.Length; i++)
@@ -80,7 +80,7 @@ namespace GridBlazor
                     IsSubGridVisible[i] = false;
                 }
             }
-            if (_hasSubGrid && InitSubGrid == null)
+            if (_hasSubGrid && (InitSubGrid == null || InitSubGrid.Length != Grid.DisplayingItemsCount))
             {
                 InitSubGrid = new bool[Grid.DisplayingItemsCount];
                 for (int i = 0; i < InitSubGrid.Length; i++)
