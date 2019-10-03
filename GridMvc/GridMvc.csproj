@@ -6,7 +6,7 @@
     <EnableDefaultEmbeddedResourceItems>False</EnableDefaultEmbeddedResourceItems>
     <Product>GridMvc</Product>
     <PackageId>GridMvcCore</PackageId>
-    <Version>2.8.9</Version>
+    <Version>2.8.10</Version>
     <Title>GridMvc</Title>
     <Description>ASP.NET MVC Grid component</Description>
     <Summary>ASP.NET MVC Grid component</Summary>
@@ -55,7 +55,6 @@
     <EmbeddedResource Include="Resources\css\gridmvc.min.css" LogicalName="GridMvc.Resources.css.gridmvc.min.css" />
     <EmbeddedResource Include="Resources\js\gridmvc.js" LogicalName="GridMvc.Resources.js.gridmvc.js" />
     <EmbeddedResource Include="Resources\js\gridmvc.min.js" LogicalName="GridMvc.Resources.js.gridmvc.min.js" />
-    <EmbeddedResource Include="Resources\js\gridmvc.min.js.map" LogicalName="GridMvc.Resources.js.gridmvc.min.js.map" />
     <EmbeddedResource Include="Resources\js\gridmvc-lang-de.js" LogicalName="GridMvc.Resources.js.gridmvc-lang-de.js" />
     <EmbeddedResource Include="Resources\js\gridmvc-lang-fr.js" LogicalName="GridMvc.Resources.js.gridmvc-lang-fr.js" />
     <EmbeddedResource Include="Resources\js\gridmvc-lang-it.js" LogicalName="GridMvc.Resources.js.gridmvc-lang-it.js" />

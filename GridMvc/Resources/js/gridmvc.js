@@ -612,7 +612,7 @@ TextFilterWidget = (function ($) {
                 html +=     '<label class="control-label">' + this.lang.filterValueLabel + '</label>';
             }   
             html +=         '<div>\
-                                <input type="text" class="grid-filter-input form-control" value="' + this.filterData[columnName].values[i].filterValue + '" />\
+                                <input type="text" class="grid-filter-input form-control" value="' + decodeURIComponent((this.filterData[columnName].values[i].filterValue + '').replace(/\+/g, '%20')) + '" />\
                             </div>\
                         </div>\
                     </div > ';
@@ -808,7 +808,7 @@ NumberFilterWidget = (function ($) {
                 html +=     '<label class="control-label">' + this.lang.filterValueLabel + '</label>';
             }
             html +=         '<div>\
-                                <input type="text" class="grid-filter-input form-control" value="' + this.filterData[columnName].values[i].filterValue + '" />\
+                                <input type="text" class="grid-filter-input form-control" value="' + decodeURIComponent((this.filterData[columnName].values[i].filterValue + '').replace(/\+/g, '%20')) + '" />\
                             </div>\
                         </div>\
                     </div> ';
@@ -1024,7 +1024,7 @@ DateTimeFilterWidget = (function ($) {
                 html +=     '<label class="control-label">' + this.lang.filterValueLabel + '</label>';
             }
             html +=        '<div>\
-                                <input id="input-' + columnName + '-' + i.toString() + '" type="text" placeholder="yyyy-mm-dd" class="grid-filter-input form-control" value="' + this.filterData[columnName].values[i].filterValue + '" />\
+                                <input id="input-' + columnName + '-' + i.toString() + '" type="text" placeholder="yyyy-mm-dd" class="grid-filter-input form-control" value="' + decodeURIComponent((this.filterData[columnName].values[i].filterValue + '').replace(/\+/g, '%20')) + '" />\
                             </div>';
             html += this.datePickerIncluded ? '<div id="picker-' + columnName + '-' + i.toString() + '" class="grid-filter-datepicker"></div>' : '';
             html +=    '</div>\

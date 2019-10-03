@@ -15,7 +15,7 @@
             var opt = $.parseJSON(filterData);
             var filters = [];
             for (var i = 0; i < opt.length; i++) {
-                filters.push({ filterValue: opt[i].FilterValue, filterType: opt[i].FilterType, columnName: opt[i].ColumnName });
+                filters.push({ filterValue: this.urldecode(opt[i].FilterValue), filterType: opt[i].FilterType, columnName: opt[i].ColumnName });
             }
             return filters;
         },
@@ -129,10 +129,106 @@
                 self.clearInitialFilters = new Array();
             }
 
+            self.uint6ToB64 = function (nUint6) {
+
+                return nUint6 < 26 ?
+                    nUint6 + 65
+                    : nUint6 < 52 ?
+                        nUint6 + 71
+                        : nUint6 < 62 ?
+                            nUint6 - 4
+                            : nUint6 === 62 ?
+                                43
+                                : nUint6 === 63 ?
+                                    47
+                                    :
+                                    65;
+
+            };
+
+            self.base64EncArr = function (aBytes) {
+
+                var eqLen = (3 - (aBytes.length % 3)) % 3, sB64Enc = "";
+
+                for (var nMod3, nLen = aBytes.length, nUint24 = 0, nIdx = 0; nIdx < nLen; nIdx++) {
+                    nMod3 = nIdx % 3;
+                    /* Uncomment the following line in order to split the output in lines 76-character long: */
+                    /*
+                    if (nIdx > 0 && (nIdx * 4 / 3) % 76 === 0) { sB64Enc += "\r\n"; }
+                    */
+                    nUint24 |= aBytes[nIdx] << (16 >>> nMod3 & 24);
+                    if (nMod3 === 2 || aBytes.length - nIdx === 1) {
+                        sB64Enc += String.fromCharCode(self.uint6ToB64(nUint24 >>> 18 & 63), self.uint6ToB64(nUint24 >>> 12 & 63), self.uint6ToB64(nUint24 >>> 6 & 63), self.uint6ToB64(nUint24 & 63));
+                        nUint24 = 0;
+                    }
+                }
+
+                return eqLen === 0 ?
+                    sB64Enc
+                    :
+                    sB64Enc.substring(0, sB64Enc.length - eqLen) + (eqLen === 1 ? "=" : "==");
+
+            };
+
+            self.strToUTF8Arr = function (sDOMStr) {
+
+                var aBytes, nChr, nStrLen = sDOMStr.length, nArrLen = 0;
+
+                /* mapping... */
+
+                for (var nMapIdx = 0; nMapIdx < nStrLen; nMapIdx++) {
+                    nChr = sDOMStr.charCodeAt(nMapIdx);
+                    nArrLen += nChr < 0x80 ? 1 : nChr < 0x800 ? 2 : nChr < 0x10000 ? 3 : nChr < 0x200000 ? 4 : nChr < 0x4000000 ? 5 : 6;
+                }
+
+                aBytes = new Uint8Array(nArrLen);
+
+                /* transcription... */
+
+                for (var nIdx = 0, nChrIdx = 0; nIdx < nArrLen; nChrIdx++) {
+                    nChr = sDOMStr.charCodeAt(nChrIdx);
+                    if (nChr < 128) {
+                        /* one byte */
+                        aBytes[nIdx++] = nChr;
+                    } else if (nChr < 0x800) {
+                        /* two bytes */
+                        aBytes[nIdx++] = 192 + (nChr >>> 6);
+                        aBytes[nIdx++] = 128 + (nChr & 63);
+                    } else if (nChr < 0x10000) {
+                        /* three bytes */
+                        aBytes[nIdx++] = 224 + (nChr >>> 12);
+                        aBytes[nIdx++] = 128 + (nChr >>> 6 & 63);
+                        aBytes[nIdx++] = 128 + (nChr & 63);
+                    } else if (nChr < 0x200000) {
+                        /* four bytes */
+                        aBytes[nIdx++] = 240 + (nChr >>> 18);
+                        aBytes[nIdx++] = 128 + (nChr >>> 12 & 63);
+                        aBytes[nIdx++] = 128 + (nChr >>> 6 & 63);
+                        aBytes[nIdx++] = 128 + (nChr & 63);
+                    } else if (nChr < 0x4000000) {
+                        /* five bytes */
+                        aBytes[nIdx++] = 248 + (nChr >>> 24);
+                        aBytes[nIdx++] = 128 + (nChr >>> 18 & 63);
+                        aBytes[nIdx++] = 128 + (nChr >>> 12 & 63);
+                        aBytes[nIdx++] = 128 + (nChr >>> 6 & 63);
+                        aBytes[nIdx++] = 128 + (nChr & 63);
+                    } else /* if (nChr <= 0x7fffffff) */ {
+                        /* six bytes */
+                        aBytes[nIdx++] = 252 + (nChr >>> 30);
+                        aBytes[nIdx++] = 128 + (nChr >>> 24 & 63);
+                        aBytes[nIdx++] = 128 + (nChr >>> 18 & 63);
+                        aBytes[nIdx++] = 128 + (nChr >>> 12 & 63);
+                        aBytes[nIdx++] = 128 + (nChr >>> 6 & 63);
+                        aBytes[nIdx++] = 128 + (nChr & 63);
+                    }
+                }
+                return aBytes;
+            };
+
             self.getState = function () {
                 var data = new Object();
 
-                var myColFilters = URI.parseQuery(self.gridColumnFilters)["grid-filter"]
+                var myColFilters = URI.parseQuery(self.gridColumnFilters)["grid-filter"];
                 if (Array.isArray(myColFilters)) {
                     data['grid-filter'] = myColFilters.join("|");
                 }
@@ -161,7 +257,8 @@
                 data["grid-page"] = self.currentPage;
 
                 var input = JSON.stringify(data);
-                var base64str = btoa(input);
+                var UTF8Input = self.strToUTF8Arr(input);
+                var base64str = self.base64EncArr(UTF8Input);
                 base64str = base64str.replace('+', '.');
                 base64str = base64str.replace('/', '_');
                 base64str = base64str.replace('=', '-');
