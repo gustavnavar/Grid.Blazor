@@ -17,7 +17,7 @@ namespace GridBlazorServerSide.ColumnCollections
 
             /* Adding "OrderDate" column: */
             c.Add(o => o.OrderDate, "OrderCustomDate").Titled("Date")
-            .Format("{0:yyyy-MM-dd}").SetWidth(120);
+            .SetWidth(120).RenderComponentAs<TooltipCell>();
 
             /* Adding "CompanyName" column: */
             c.Add(o => o.Customer.CompanyName).Titled("Company")

@@ -21,10 +21,14 @@
     </environment>
     <link href="css/site.css" rel="stylesheet" />
     <link href="css/gridmvc.css" rel="stylesheet" />
+    <link rel="stylesheet" href="_content/Samplecore/css/demo.css" />
+    <link rel="stylesheet" href="_content/BlazorStrap/css/submenu.css" />
 </head>
 <body>
     <app>@(await Html.RenderComponentAsync<App>(RenderMode.ServerPrerendered))</app>
 
     <script src="_framework/blazor.server.js"></script>
+    <script src="_content/BlazorStrap/blazorStrap.js"></script>
+    <script src="_content/BlazorStrap/popper.min.js"></script>
 </body>
 </html>
