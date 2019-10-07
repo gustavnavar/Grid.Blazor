@@ -10,8 +10,6 @@
     IGridColumn column = Model.Item1;
     object item = Model.Item2;
 
-    IGridCell _cell = column.GetCell(item);
-
     string _cssStyles;
     if (column.Hidden)
     {
@@ -30,6 +28,18 @@
     }
 }
 
-<td class="@_cssClass" style="@_cssStyles" data-name="@column.Name">
-    @(new HtmlString(_cell.ToString()))
-</td>
+@if (column.ComponentType != null)
+{
+    object model = new {
+        Item = item,
+        Grid = column.ParentGrid,
+        Actions = column.Actions,
+        Object = column.Object
+    };
+    <td class="@_cssClass" style="@_cssStyles" data-name="@column.Name">@await Component.InvokeAsync(column.ComponentType, model)</td>
+}
+else
+{
+    IGridCell _cell = column.GetCell(item);
+    <td class="@_cssClass" style="@_cssStyles" data-name="@column.Name">@(new HtmlString(_cell.ToString()))</td>
+}

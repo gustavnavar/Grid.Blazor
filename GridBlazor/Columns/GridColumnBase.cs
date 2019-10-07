@@ -3,9 +3,11 @@ using GridShared.Columns;
 using GridShared.Filtering;
 using GridShared.Searching;
 using GridShared.Sorting;
+using Microsoft.AspNetCore.Components;
 using System;
 using System.Collections.Generic;
 using System.Globalization;
+using System.Linq;
 using System.Linq.Expressions;
 
 namespace GridBlazor.Columns
@@ -107,36 +109,36 @@ namespace GridBlazor.Columns
 
         public IGridColumn<T> RenderComponentAs(Type componentType, IList<Action<object>> actions, object obj)
         {
-            ComponentType = componentType;
-            Actions = actions;
-            Object = obj;
+            if(componentType.GetInterfaces().Any(r => r.Equals(typeof(ICustomGridComponent<T>)))
+                && componentType.IsSubclassOf(typeof(ComponentBase)))
+            {
+                ComponentType = componentType;
+                Actions = actions;
+                Object = obj;
+            }      
             return this;
         }
 
         public IGridColumn<T> RenderComponentAs<TComponent>()
-             where TComponent : ICustomGridComponent<T>
         {
             return RenderComponentAs<TComponent>(null, null);
         }
 
         public IGridColumn<T> RenderComponentAs<TComponent>(IList<Action<object>> actions)
-            where TComponent : ICustomGridComponent<T>
         {
             return RenderComponentAs<TComponent>(actions, null);
         }
 
         public IGridColumn<T> RenderComponentAs<TComponent>(object obj)
-            where TComponent : ICustomGridComponent<T>
         {
             return RenderComponentAs<TComponent>(null, obj);
         }
 
         public IGridColumn<T> RenderComponentAs<TComponent>(IList<Action<object>> actions, object obj)
-             where TComponent : ICustomGridComponent<T>
         {
             return RenderComponentAs(typeof(TComponent), actions, obj);
         }
-
+        
         public IGridColumn<T> Format(string pattern)
         {
             ValuePattern = pattern;

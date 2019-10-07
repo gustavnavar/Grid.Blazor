@@ -14,6 +14,9 @@ namespace GridShared.Columns
 
     public interface IGridColumn : ISortableColumn, IFilterableColumn
     {
+        Type ComponentType { get; }
+        IList<Action<object>> Actions { get; }
+        object Object { get; }
         IGrid ParentGrid { get; }
         bool Hidden { get; }
     }
@@ -90,22 +93,22 @@ namespace GridShared.Columns
         /// <summary>
         ///     Setup the custom render for component
         /// </summary>
-        IGridColumn<T> RenderComponentAs<TComponent>() where TComponent : ICustomGridComponent<T>;
+        IGridColumn<T> RenderComponentAs<TComponent>();
 
         /// <summary>
         ///     Setup the custom render for component
         /// </summary>
-        IGridColumn<T> RenderComponentAs<TComponent>(IList<Action<object>> actions) where TComponent : ICustomGridComponent<T>;
+        IGridColumn<T> RenderComponentAs<TComponent>(IList<Action<object>> actions);
 
         /// <summary>
         ///     Setup the custom render for component
         /// </summary>
-        IGridColumn<T> RenderComponentAs<TComponent>(object obj) where TComponent : ICustomGridComponent<T>;
+        IGridColumn<T> RenderComponentAs<TComponent>(object obj);
 
         /// <summary>
         ///     Setup the custom render for component
         /// </summary>
-        IGridColumn<T> RenderComponentAs<TComponent>(IList<Action<object>> actions, object obj) where TComponent : ICustomGridComponent<T>;
+        IGridColumn<T> RenderComponentAs<TComponent>(IList<Action<object>> actions, object obj);
 
         /// <summary>
         ///     Format column values with specified text pattern

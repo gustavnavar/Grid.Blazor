@@ -15,10 +15,12 @@ You have to use the **RenderComponentAs** method to render a component in a cell
 ```
 
 **RenderComponentAs** method has 2 optional parameters:
+
 Parameter | Type | Description
 --------- | ---- | -----------
 Actions | IList<Action<object>> (optional) | the parent component can pass a list of Actions to be used by the component (see [Passing grid state as parameter](Passing_grid_state_as_parameter.md))
 Object| object (optional) | the parent component can pass an object to be used by the component (see [Passing grid state as parameter](Passing_grid_state_as_parameter.md))
+
 If you use any of these paramenters, you must use them when creating the component.
 
 The generic type used has to be the component created to render the cell.

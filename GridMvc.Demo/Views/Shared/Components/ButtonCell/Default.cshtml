@@ -1,0 +1,8 @@
+﻿@model int
+
+@{
+    string gridState = (string)ViewData["gridState"];
+    string returnUrl = (string)ViewData["returnUrl"];
+}
+
+<b><a class='modal_link' href='/Home/Edit/@Model?returnUrl=@returnUrl&gridState=@gridState'>Edit</a></b>

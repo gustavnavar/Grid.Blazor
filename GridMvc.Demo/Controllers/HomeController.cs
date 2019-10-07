@@ -1,4 +1,5 @@
-﻿using GridMvc.Demo.Models;
+﻿using GridMvc.Demo.Components;
+using GridMvc.Demo.Models;
 using GridMvc.Pagination;
 using GridMvc.Server;
 using GridShared;
@@ -57,7 +58,7 @@ namespace GridMvc.Demo.Controllers
                     .Sanitized(false)
                     .SetWidth(30)
                     .Css("hidden-xs") //hide on phones
-                    .RenderValueAs(o => $"<b><a class='modal_link' href='/Home/Edit/{o.OrderID}?returnUrl={returnUrl}&gridState={c.Grid.GetState()}'>Edit</a></b>");
+                    .RenderComponentAs<ButtonCellViewComponent>(returnUrl);
 
                 /* Adding "OrderID" column: */
 

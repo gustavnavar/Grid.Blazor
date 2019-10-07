@@ -4,15 +4,21 @@ using GridShared.Filtering;
 using GridShared.Searching;
 using GridShared.Sorting;
 using GridShared.Totals;
+using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
 using System.Globalization;
+using System.Linq;
 using System.Linq.Expressions;
 
 namespace GridMvc.Columns
 {
     public abstract class GridColumnBase<T> : GridStyledColumn, IGridColumn<T>, ISGridColumn, ITotalsColumn<T>
     {
+        public Type ComponentType { get; private set; }
+        public IList<Action<object>> Actions { get; private set; }
+        public object Object { get; private set; }
+
         protected Func<T, string> ValueConstraint;
         public string ValuePattern { get; protected set; }
 
@@ -96,54 +102,48 @@ namespace GridMvc.Columns
 
         public IGridColumn<T> RenderComponentAs(Type componentType)
         {
-            // do nothing
-            return this;
+            return RenderComponentAs(componentType, null, null);
         }
 
         public IGridColumn<T> RenderComponentAs(Type componentType, IList<Action<object>> actions)
         {
-            // do nothing
-            return this;
+            return RenderComponentAs(componentType, actions, null);
         }
 
         public IGridColumn<T> RenderComponentAs(Type componentType, object obj)
         {
-            // do nothing
-            return this;
+            return RenderComponentAs(componentType, null, obj);
         }
 
         public IGridColumn<T> RenderComponentAs(Type componentType, IList<Action<object>> actions, object obj)
         {
-            // do nothing
+            if (componentType.IsSubclassOf(typeof(ViewComponent)))
+            {
+                ComponentType = componentType;
+                Actions = actions;
+                Object = obj;
+            }
             return this;
         }
 
         public IGridColumn<T> RenderComponentAs<TComponent>()
-            where TComponent : ICustomGridComponent<T>
         {
-            // do nothing
-            return this;
+            return RenderComponentAs<TComponent>(null, null);
         }
 
         public IGridColumn<T> RenderComponentAs<TComponent>(IList<Action<object>> actions)
-            where TComponent : ICustomGridComponent<T>
         {
-            // do nothing
-            return this;
+            return RenderComponentAs<TComponent>(actions, null);
         }
 
         public IGridColumn<T> RenderComponentAs<TComponent>(object obj)
-            where TComponent : ICustomGridComponent<T>
         {
-            // do nothing
-            return this;
+            return RenderComponentAs<TComponent>(null, obj);
         }
 
         public IGridColumn<T> RenderComponentAs<TComponent>(IList<Action<object>> actions, object obj)
-            where TComponent : ICustomGridComponent<T>
         {
-            // do nothing
-            return this;
+            return RenderComponentAs(typeof(TComponent), actions, obj);
         }
 
         public IGridColumn<T> Format(string pattern)
