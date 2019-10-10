@@ -59,9 +59,6 @@ namespace GridMvc.Totals
                     continue;
                 }
 
-                if (items.Count() == 0)
-                    continue;
-
                 if (isNullable)
                 {
                     if (type == typeof(Single))

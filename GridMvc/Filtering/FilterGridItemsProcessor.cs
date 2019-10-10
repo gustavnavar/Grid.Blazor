@@ -33,9 +33,6 @@ namespace GridMvc.Filtering
 
         public IQueryable<T> Process(IQueryable<T> items)
         {
-            if (items.Count() == 0)
-                return items;
-
             foreach (IGridColumn column in _grid.Columns)
             {
                 var gridColumn = column as IGridColumn<T>;

@@ -15,7 +15,7 @@
                   || firstColumn.IsMaxEnabled || firstColumn.IsMinEnabled);
 }
 
-@if (Model.ItemsToDisplay.Count() == 0)
+@if (Model.DisplayingItemsCount == 0)
 {
     <tr class="grid-empty-text">
         @if (hasSubGrid)

@@ -33,7 +33,7 @@ namespace GridMvc.Sorting
 
         public IQueryable<T> Process(IQueryable<T> items)
         {
-            if (items.Count() == 0 || string.IsNullOrEmpty(_settings.ColumnName))
+            if (string.IsNullOrEmpty(_settings.ColumnName))
                 return items;
             //determine gridColumn sortable:
             var gridColumn = _grid.Columns.FirstOrDefault(c => c.Name == _settings.ColumnName) as IGridColumn<T>;

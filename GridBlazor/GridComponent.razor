@@ -10,7 +10,7 @@
 {
     if (Grid.ComponentOptions.RenderRowsOnly)
     {
-        if (Grid.ItemsToDisplay.Count() == 0)
+        if (Grid.DisplayingItemsCount == 0)
         {
             <tr class="grid-empty-text">
                 @if (_hasSubGrid)
@@ -138,7 +138,7 @@
                         </tr>
                     </thead>
                     <tbody>
-                        @if (Grid.ItemsToDisplay.Count() == 0)
+                        @if (Grid.DisplayingItemsCount == 0)
                         {
                             <tr class="grid-empty-text">
                                 @if (_hasSubGrid)
