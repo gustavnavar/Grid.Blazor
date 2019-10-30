@@ -1,6 +1,7 @@
 ﻿using GridShared;
 using GridShared.Columns;
 using GridShared.Filtering;
+using GridShared.Grouping;
 using GridShared.Searching;
 using GridShared.Sorting;
 using GridShared.Totals;
@@ -35,6 +36,11 @@ namespace GridMvc.Columns
         ///     Totals collection for this columns
         /// </summary>
         private readonly IColumnTotals<T> _totals;
+
+        /// <summary>
+        ///     Groupers collection for this columns
+        /// </summary>
+        private readonly IColumnGroup<T> _group;
 
         /// <summary>
         ///     Expression to class, used for this column
@@ -79,6 +85,7 @@ namespace GridMvc.Columns
                 _filter = new DefaultColumnFilter<T, TDataType>(expression);
                 _search = new DefaultColumnSearch<T, TDataType>(expression);
                 _totals = new DefaultColumnTotals<T, TDataType>(expression);
+                _group = new DefaultColumnGroup<T, TDataType>(expression);
                 //Generate unique column name:
                 Name = PropertiesHelper.BuildColumnNameFromMemberExpression(expr);
                 Title = Name; //Using the same name by default
@@ -111,6 +118,11 @@ namespace GridMvc.Columns
         public override IColumnTotals<T> Totals
         {
             get { return _totals; }
+        }
+
+        public override IColumnGroup<T> Group
+        {
+            get { return _group; }
         }
 
         public override IGrid ParentGrid
@@ -205,10 +217,8 @@ namespace GridMvc.Columns
 
                 if (nullReferece || value == null)
                     textValue = string.Empty;
-                else if (!string.IsNullOrEmpty(ValuePattern))
-                    textValue = string.Format(ValuePattern, value);
                 else
-                    textValue = value.ToString();
+                    textValue = GetFormatedValue(value);
             }
             if (!EncodeEnabled && SanitizeEnabled)
             {

@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 
 namespace GridShared
 {
@@ -33,6 +34,16 @@ namespace GridShared
         bool SearchingEnabled { get; set; }
 
         /// <summary>
+        ///     Set or get default value of extended sorting
+        /// </summary>
+        bool ExtSortingEnabled { get; set; }
+
+        /// <summary>
+        ///     Set or get default value of grouping
+        /// </summary>
+        bool GroupingEnabled { get; set; }
+
+        /// <summary>
         ///     Set or get value of searching for all columns or only text ones
         /// </summary>
         bool SearchingOnlyTextColumns { get; set; }
@@ -61,6 +72,16 @@ namespace GridShared
         ///     Get grid state
         /// </summary>
         string GetState();
+
+        /// <summary>
+        ///     Get column values to display
+        /// </summary>
+        IList<object> GetValuesToDisplay(string columnName, IEnumerable<object> items);
+
+        /// <summary>
+        ///     Grid items to display
+        /// </summary>
+        IEnumerable<object> GetItemsToDisplay(IList<Tuple<string, object>> values, IEnumerable<object> items);
 
         //void OnPreRender(); //TODO backward Compatibility
     }

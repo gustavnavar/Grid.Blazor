@@ -1,6 +1,5 @@
 ﻿@using GridMvc
 @using GridMvc.Resources
-@using GridMvc.Searching
 @using GridShared.Utility
 @model ISGrid
 
@@ -9,10 +8,9 @@
     string _searchValue = Model.Settings.SearchSettings.SearchValue;
 
     //determine current url:
-    var queryBuilder = new CustomQueryStringBuilder(((QueryStringSearchSettings)Model.Settings.SearchSettings).Query);
+    var queryBuilder = new CustomQueryStringBuilder(Model.Settings.SearchSettings.Query);
     var exceptQueryParameters = new List<string>();
     _seachUrl = queryBuilder.GetQueryStringExcept(exceptQueryParameters);
-
 }
 
 <div class="row grid-search" data-search-url="@_seachUrl">

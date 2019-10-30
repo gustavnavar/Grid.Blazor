@@ -3,6 +3,7 @@ using GridBlazor.Pagination;
 using GridBlazor.Searching;
 using GridShared.Columns;
 using GridShared.Filtering;
+using GridShared.Sorting;
 using GridShared.Utility;
 using Microsoft.AspNetCore.Components;
 using System;
@@ -22,6 +23,8 @@ namespace GridBlazor
 
         internal int SelectedRow { get; set; } = -1;
         internal ICGridColumn FirstColumn { get; set; }
+
+        internal ColumnOrderValue Payload { get; set; }
 
         [Parameter]
         public ICGrid Grid { get; set; }
@@ -104,39 +107,64 @@ namespace GridBlazor
 
         public async Task GoTo(int page)
         {
-            ((CGrid<T>)Grid).AddQueryParameter(GridPager.DefaultPageQueryParameter, page.ToString());
+            Grid.AddQueryParameter(GridPager.DefaultPageQueryParameter, page.ToString());
             await UpdateGrid();
         }
 
         public async Task GetSortUrl(string columnQueryParameterName, string columnName, 
             string directionQueryParameterName, string direction)
         {
-            ((CGrid<T>)Grid).AddQueryParameter(columnQueryParameterName, columnName);
-            ((CGrid<T>)Grid).AddQueryParameter(directionQueryParameterName, direction);
+            Grid.AddQueryParameter(columnQueryParameterName, columnName);
+            Grid.AddQueryParameter(directionQueryParameterName, direction);
             await UpdateGrid();
         }
 
         public async Task AddFilter(IGridColumn column, FilterCollection filters)
         {
-            ((CGrid<T>)Grid).AddFilterParameter(column, filters);
+            Grid.AddFilterParameter(column, filters);
             await UpdateGrid();
         }
 
         public async Task RemoveFilter(IGridColumn column)
         {
-            ((CGrid<T>)Grid).RemoveFilterParameter(column);
+            Grid.RemoveFilterParameter(column);
             await UpdateGrid();
         }
 
         public async Task AddSearch(string searchValue)
         {
-            ((CGrid<T>)Grid).AddQueryParameter(QueryStringSearchSettings.DefaultSearchQueryParameter, searchValue);
+            Grid.AddQueryParameter(QueryStringSearchSettings.DefaultSearchQueryParameter, searchValue);
             await UpdateGrid();
         }
 
         public async Task RemoveSearch()
         {
-            ((CGrid<T>)Grid).RemoveQueryParameter(QueryStringSearchSettings.DefaultSearchQueryParameter);
+            Grid.RemoveQueryParameter(QueryStringSearchSettings.DefaultSearchQueryParameter);
+            await UpdateGrid();
+        }
+
+        public async Task AddExtSorting()
+        {
+            Grid.AddQueryString(ColumnOrderValue.DefaultSortingQueryParameter, Payload.ToString());
+            await UpdateGrid();
+        }
+
+        public async Task ChangeExtSorting(ColumnOrderValue column)
+        {
+            var newColumnOrderValue = new ColumnOrderValue { 
+                ColumnName = column.ColumnName,
+                Direction = column.Direction == GridSortDirection.Ascending ? GridSortDirection.Descending 
+                    : GridSortDirection.Ascending,
+                Id = column.Id
+            };
+            Grid.ChangeQueryString(ColumnOrderValue.DefaultSortingQueryParameter, column.ToString(), 
+                newColumnOrderValue.ToString());
+            await UpdateGrid();
+        }
+
+        public async Task RemoveExtSorting(ColumnOrderValue column)
+        {
+            Grid.RemoveQueryString(ColumnOrderValue.DefaultSortingQueryParameter, column.ToString());
             await UpdateGrid();
         }
 

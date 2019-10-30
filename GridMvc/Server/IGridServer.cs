@@ -68,6 +68,26 @@ namespace GridMvc.Server
         IGridServer<T> Searchable(bool enable, bool onlyTextColumns);
 
         /// <summary>
+        ///     Enable extended sorting
+        /// </summary>
+        IGridServer<T> ExtSortable();
+
+        /// <summary>
+        ///     Enable or disable extended sorting
+        /// </summary>
+        IGridServer<T> ExtSortable(bool enable);
+
+        /// <summary>
+        ///     Enable grouping
+        /// </summary>
+        IGridServer<T> Groupable();
+
+        /// <summary>
+        ///     Enable or disable grouping
+        /// </summary>
+        IGridServer<T> Groupable(bool enable);
+
+        /// <summary>
         ///     Enable or disable client grid items selectable feature
         /// </summary>
         IGridServer<T> Selectable(bool set);

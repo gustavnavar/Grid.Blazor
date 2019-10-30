@@ -4,7 +4,8 @@ using GridMvc.Sorting;
 using GridShared.Filtering;
 using GridShared.Searching;
 using GridShared.Sorting;
-using Microsoft.AspNetCore.Http;
+using GridShared.Utility;
+using Microsoft.Extensions.Primitives;
 
 namespace GridMvc
 {
@@ -17,7 +18,7 @@ namespace GridMvc
         private readonly QueryStringSortSettings _sortSettings;
         private readonly QueryStringSearchSettings _searchSettings;
 
-        public QueryStringGridSettingsProvider(IQueryCollection query)
+        public QueryStringGridSettingsProvider(IQueryDictionary<StringValues> query)
         {
             _sortSettings = new QueryStringSortSettings(query);
             //add additional header renderer for filterable columns:

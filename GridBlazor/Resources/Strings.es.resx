@@ -192,4 +192,10 @@
   <data name="Or" xml:space="preserve">
     <value>O</value>
   </data>
+  <data name="ExtSortingText" xml:space="preserve">
+    <value>Suelte las columnas aquí para la ordenación extendida de columnas</value>
+  </data>
+  <data name="GroupingText" xml:space="preserve">
+    <value>Suelte las columnas aquí para agrupar columnas</value>
+  </data>
 </root>

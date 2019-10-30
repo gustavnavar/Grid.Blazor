@@ -1,7 +1,8 @@
-﻿using System.IO;
-using GridMvc.Pagination;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using GridMvc.Pagination;
+using GridShared.Utility;
 using Microsoft.AspNetCore.Http;
+using Microsoft.Extensions.Primitives;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace GridMvc.Tests.Pagination
 {
@@ -14,7 +15,7 @@ namespace GridMvc.Tests.Pagination
         public void Init()
         {
             HttpContext context = new DefaultHttpContext();
-            _pager = new GridPager(context.Request.Query);
+            _pager = new GridPager(QueryDictionary<StringValues>.Convert(context.Request.Query));
         }
 
         [TestMethod]

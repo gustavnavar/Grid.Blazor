@@ -11,7 +11,7 @@ $.fn.extend({
         var aObj = [];
         $(this).each(function () {
             if (!$(this).data("gridmvc")) {
-                var options = { lang: $(this).attr("data-lang"), selectable: $(this).attr("data-selectable") === "true", multiplefilters: $(this).attr("data-multiplefilters") === "true", currentPage: $(this).find(".grid-pager").first().attr("data-currentpage") };
+                var options = { lang: $(this).attr("data-lang"), selectable: $(this).attr("data-selectable") === "true", extsortable: $(this).attr("data-extsortable") === "true", multiplefilters: $(this).attr("data-multiplefilters") === "true", currentPage: $(this).find(".grid-pager").first().attr("data-currentpage") };
                 var grid = new GridMvc(this, options);
                 var name = $(this).attr("data-gridname");
                 if (name.length > 0)
@@ -55,10 +55,12 @@ GridMvc = (function ($) {
         this.openedMenuBtn = null;
         this.initFilters();
         this.initSearch();
+        this.initExtSort();
+        this.initGroup();
     };
     //
     // Handle Grid row events
-    //
+    
     gridMvc.prototype.initGridRowsEvents = function () {
         var $this = this;
         this.jqContainer.on("click", ".grid-row", function () {
@@ -463,6 +465,141 @@ GridMvc = (function ($) {
             url += "grid-search=" + encodeURIComponent(searchText);
         }
         return url;
+    };
+
+    /***
+    * ============= EXT SORTING =============
+    * Methods that provides functionality for extended sorting
+    */
+    /***
+    * Method search grid-extsort elements and register event handlers:
+    */
+    gridMvc.prototype.initExtSort = function () {
+        var self = this;
+        this.jqContainer.find(".grid-extsort-draggable").each(function () {
+            $(this).on('dragstart', function (e) {
+                e.originalEvent.dataTransfer.setData("text", e.target.text);
+                e.originalEvent.dataTransfer.setData("column", e.target.dataset.column);
+                if (e.target.dataset.sorted)
+                    e.originalEvent.dataTransfer.setData("sorted", e.target.dataset.sorted);
+            });
+        });
+        this.jqContainer.find(".grid-extsort-droppable").each(function () {
+            $(this).on('dragenter', function (e) {
+                e.preventDefault();
+                e.stopPropagation();
+                $(this).addClass('folderDragOver');
+            });
+
+            $(this).on('dragover', function (e) {
+                e.preventDefault();
+                e.stopPropagation();
+                e.originalEvent.dataTransfer.dropEffect = 'move';
+            });
+
+            $(this).on('dragleave', function (e) {
+                $(this).removeClass('folderDragOver');
+            });
+
+            $(this).on('drop', function (e) {
+                $(this).removeClass('folderDragOver');
+                e.preventDefault();
+                e.stopPropagation();
+                e.stopImmediatePropagation();
+                var columnName = e.originalEvent.dataTransfer.getData("column");
+                var direction = e.originalEvent.dataTransfer.getData("sorted") === "desc" ? 1 : 0; 
+                if (columnName && columnName !== "undefined")
+                    self.applyExtSortValues(columnName, direction, 1);
+            });
+        });
+    };
+
+    //
+    // Applies selected ext sort values by redirecting to another url:
+    // operation values: 0 - remove, 1 - add, 2 - change
+    gridMvc.prototype.applyExtSortValues = function (columnName, direction, operation) {
+        var url = "";
+        var id;
+        var gridExtSort = this.jqContainer.find(".grid-extsort-droppable").first();      
+        if (gridExtSort) {
+            url = gridExtSort.attr("data-extsort-url") || "";
+            // return if column is already present in extended sorting
+            var extSortStr = "grid-sorting=" + columnName;
+            var regex = new RegExp(extSortStr, 'g');
+            id = url.match(regex);
+            if (id)
+                return;
+            // pos is count of "grid-sorting" words in the url 
+            id = url.match(/grid-sorting=/g);
+        }
+        if (url.length > 0)
+            url += "&";
+        if (id)
+            id = id.length + 1;
+        else
+            id = 1;
+        url += this.getExtSortQueryData(columnName, direction, id);
+        window.location.search = url;
+    };
+
+    gridMvc.prototype.getExtSortQueryData = function (column, sorted, pos) {
+        var url = "";
+        if (column && column !== "undefined") {
+            url += "grid-sorting=" + encodeURIComponent(column) + "__" + sorted + "__" + pos;
+        }
+        return url;
+    };
+
+    /***
+    * ============= GROUPING =============
+    * Methods that provides functionality for grouping
+    */
+    /***
+    * Method search grid-group elements and register event handlers:
+    */
+    gridMvc.prototype.initGroup = function () {
+        var self = this;
+        this.jqContainer.find(".grid-group").each(function () {
+            $(this).click(function (e) {
+                e.stopPropagation();
+                var groupId = $(this).attr("data-group-id");
+
+                if ($(this).hasClass("grid-group-caret")) {
+                    $(this).removeClass("grid-group-caret");
+                    $(this).addClass("grid-group-caret-down");
+                    self.jqContainer.find("[data-group-row-id=" + groupId + "]").show();
+                    self.jqContainer.find("[data-group-subrow-id=" + groupId + "]").each(function () {
+                        var subgridRow = $(this);
+                        var subgrid = subgridRow.prev().children(".grid-subgrid").first();
+                        if (subgrid && subgrid.attr("data-is-visible") === "true") {
+                            subgridRow.show();
+                        }
+                    });
+                    self.jqContainer.find("[data-group-parent-id=" + groupId + "]").each(function () {
+                        $(this).show();
+                        $(this).find(".grid-group").each(function () {
+                            if ($(this).hasClass("grid-group-caret")) {
+                                $(this).trigger("click");
+                            }
+                        });
+                    });
+                }
+                else if ($(this).hasClass("grid-group-caret-down")) {
+                    $(this).removeClass("grid-group-caret-down");
+                    $(this).addClass("grid-group-caret");
+                    self.jqContainer.find("[data-group-row-id=" + groupId + "]").hide();
+                    self.jqContainer.find("[data-group-subrow-id=" + groupId + "]").hide();
+                    self.jqContainer.find("[data-group-parent-id=" + groupId + "]").each(function () {
+                        $(this).hide();
+                        $(this).find(".grid-group").each(function () {
+                            if ($(this).hasClass("grid-group-caret-down")) {
+                                $(this).trigger("click");
+                            }
+                        });
+                    });
+                }
+            });
+        });     
     };
 
     return gridMvc;

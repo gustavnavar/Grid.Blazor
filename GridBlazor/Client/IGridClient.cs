@@ -68,6 +68,26 @@ namespace GridBlazor
         IGridClient<T> Searchable(bool enable, bool onlyTextColumns);
 
         /// <summary>
+        ///     Enable extended sorting
+        /// </summary>
+        IGridClient<T> ExtSortable();
+
+        /// <summary>
+        ///     Enable or disable extended sorting
+        /// </summary>
+        IGridClient<T> ExtSortable(bool enable);
+
+        /// <summary>
+        ///     Enable grouping
+        /// </summary>
+        IGridClient<T> Groupable();
+
+        /// <summary>
+        ///     Enable or disable grouping
+        /// </summary>
+        IGridClient<T> Groupable(bool enable);
+
+        /// <summary>
         ///     Enable or disable client grid items selectable feature
         /// </summary>
         IGridClient<T> Selectable(bool set);

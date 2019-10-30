@@ -1,4 +1,6 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
+using System.Linq.Expressions;
 
 namespace GridShared.Sorting
 {
@@ -10,5 +12,6 @@ namespace GridShared.Sorting
     {
         IQueryable<T> ApplyOrder(IQueryable<T> items);
         IQueryable<T> ApplyOrder(IQueryable<T> items, GridSortDirection direction);
+        IQueryable<T> ApplyThenBy(IQueryable<T> items, GridSortDirection direction);
     }
 }

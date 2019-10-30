@@ -123,8 +123,14 @@
   <data name="DefaultGridEmptyText" xml:space="preserve">
     <value>There are no items to display</value>
   </data>
+  <data name="ExtSortingText" xml:space="preserve">
+    <value>Drop columns here for column extended sorting</value>
+  </data>
   <data name="FilterButtonTooltipText" xml:space="preserve">
     <value>Filter this column</value>
+  </data>
+  <data name="GroupingText" xml:space="preserve">
+    <value>Drop columns here for column grouping</value>
   </data>
   <data name="Items" xml:space="preserve">
     <value>Items</value>

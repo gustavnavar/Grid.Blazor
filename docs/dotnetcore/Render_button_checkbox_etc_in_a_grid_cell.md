@@ -43,13 +43,13 @@ You can render any custom layout using razor @helper:
         }
     }
 
-    @Html.Grid(Model).Columns(columns =>
+    @await Html.Grid(Model).Columns(columns =>
     {
         columns.Add(o => o.Customer.IsVip)
                 .Titled("Vip customer")
                 .SetWidth(150)
                 .RenderValueAs(o => CustomRenderingOfColumn(o));
-    })
+    }).RenderAsync()
 ```
 
 ## ViewComponent

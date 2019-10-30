@@ -43,7 +43,7 @@
     _isColumnFiltered = _filterSettings.Any(r => r.FilterType != GridFilterType.Condition);
 
     //determine current url:
-    var queryBuilder = new CustomQueryStringBuilder(((QueryStringFilterSettings)_settings.FilterSettings).Query);
+    var queryBuilder = new CustomQueryStringBuilder(_settings.FilterSettings.Query);
 
     var exceptQueryParameters = new List<string>
     {
@@ -59,8 +59,7 @@
 
     _url = queryBuilder.GetQueryStringExcept(exceptQueryParameters);
 
-    _clearInitFilter = ((QueryStringFilterSettings)_settings.FilterSettings)
-        .Query[QueryStringFilterSettings.DefaultClearInitFilterQueryParameter];
+    _clearInitFilter = _settings.FilterSettings.Query.Get(QueryStringFilterSettings.DefaultClearInitFilterQueryParameter);
 
     if (Model.Hidden)
     {
@@ -112,7 +111,7 @@
             ? GridSortDirection.Descending : GridSortDirection.Ascending;
 
         //determine current url:
-        var builder = new CustomQueryStringBuilder(((QueryStringSortSettings)_settings.SortSettings).Query);
+        var builder = new CustomQueryStringBuilder(_settings.SortSettings.Query);
         string url = builder.GetQueryStringExcept(new[]
         {
             GridPager.DefaultPageQueryParameter,
@@ -141,20 +140,47 @@
             <span class="@_cssFilterClass" title="@Strings.FilterButtonTooltipText"></span>
         </div>
     }
-    <div class="@_cssSortingClass">
-        @if (Model.SortEnabled)
-        {
-            <a href="@_href">@Model.Title</a>
-        }
-        else
-        {
-            <span>@Model.Title</span>
-        }
-        @if (Model.IsSorted)
-        {
-            <span class="grid-sort-arrow"></span>
-        }
-    </div>
+    @if (Model.ParentGrid.ExtSortingEnabled)
+    {
+        <div class="grid-extsort-draggable @_cssSortingClass" draggable="true" data-column="@Model.Name">
+            @if (Model.SortEnabled)
+            {
+                if (Model.IsSorted)
+                {
+                    <a href="@_href" data-column="@Model.Name" data-sorted="@(Model.Direction == GridSortDirection.Ascending ? "asc" : "desc")">@Model.Title</a>
+                }
+                else
+                {
+                    <a href="@_href" data-column="@Model.Name">@Model.Title</a>
+                }
+            }
+            else
+            {
+                <span data-column="@Model.Name">@Model.Title</span>
+            }
+            @if (Model.IsSorted)
+            {
+                <span class="grid-sort-arrow"></span>
+            }
+        </div>
+    }
+    else
+    {
+        <div class="@_cssSortingClass">
+            @if (Model.SortEnabled)
+            {
+                <a href="@_href">@Model.Title</a>
+            }
+            else
+            {
+                <span>@Model.Title</span>
+            }
+            @if (Model.IsSorted)
+            {
+                <span class="grid-sort-arrow"></span>
+            }
+        </div>
+    }
 </th>
 
 

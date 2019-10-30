@@ -120,6 +120,29 @@ namespace GridMvc.Server
             return this;
         }
 
+        public IGridServer<T> ExtSortable()
+        {
+            return ExtSortable(true);
+        }
+
+        public IGridServer<T> ExtSortable(bool enable)
+        {
+            _source.ExtSortingEnabled = enable;
+            return this;
+        }      
+
+        public IGridServer<T> Groupable()
+        {
+            return Groupable(true);
+        }
+
+        public IGridServer<T> Groupable(bool enable)
+        {
+            _source.ExtSortingEnabled = enable;
+            _source.GroupingEnabled = enable;
+            return this;
+        }
+
         public IGridServer<T> Selectable(bool set)
         {
             _source.RenderOptions.Selectable = set;

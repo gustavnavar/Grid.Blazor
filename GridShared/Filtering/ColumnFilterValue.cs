@@ -41,6 +41,19 @@ namespace GridShared.Filtering
             return a.ColumnName == b.ColumnName && a.FilterType == b.FilterType && a.FilterValue == b.FilterValue;
         }
 
+        public override bool Equals(object obj)
+        {
+            if (obj.GetType() == typeof(ColumnFilterValue))
+                return this == (ColumnFilterValue)obj;
+            else
+                return false;
+        }
+
+        public override int GetHashCode()
+        {
+            return new { ColumnName, FilterType, FilterValue }.GetHashCode();
+        }
+
         public static bool operator !=(ColumnFilterValue a, ColumnFilterValue b)
         {
             return a.ColumnName != b.ColumnName || a.FilterType != b.FilterType || a.FilterValue != b.FilterValue;

@@ -10,11 +10,11 @@ You can call the Html helper extension with the **WithPaging** method to enable 
     @using GridMvc
     @model IEnumerable<Foo>
 
-    @Html.Grid(Model).Columns(columns =>
+    @await Html.Grid(Model).Columns(columns =>
     {
         columns.Add(foo => foo.Title);
         columns.Add(foo => foo.Description);
-    }).WithPaging(10)
+    }).WithPaging(10).RenderAsync()
 ```
 
 In complex cases, you can use your own **SGrid** object. Set the **EnablePaging** property to *true* and use the **Pager** object to configure paging options in your grid:

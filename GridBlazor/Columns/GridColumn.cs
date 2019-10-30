@@ -1,6 +1,7 @@
 ﻿using GridShared;
 using GridShared.Columns;
 using GridShared.Filtering;
+using GridShared.Grouping;
 using GridShared.Searching;
 using GridShared.Sorting;
 using GridShared.Utility;
@@ -29,6 +30,11 @@ namespace GridBlazor.Columns
         ///     Searchers collection for this columns
         /// </summary>
         private readonly IColumnSearch<T> _search;
+
+        /// <summary>
+        ///     Groupers collection for this columns
+        /// </summary>
+        private readonly IColumnGroup<T> _group;
 
         /// <summary>
         ///     Expression to class, used for this column
@@ -71,6 +77,7 @@ namespace GridBlazor.Columns
                 _orderers.Insert(0, new OrderByGridOrderer<T, TDataType>(expression));
                 _filter = new DefaultColumnFilter<T, TDataType>(expression);
                 _search = new DefaultColumnSearch<T, TDataType>(expression);
+                _group = new DefaultColumnGroup<T, TDataType>(expression);
                 //Generate unique column name:
                 Name = PropertiesHelper.BuildColumnNameFromMemberExpression(expr);
                 Title = Name; //Using the same name by default
@@ -98,6 +105,11 @@ namespace GridBlazor.Columns
         public override IColumnSearch<T> Search
         {
             get { return _search; }
+        }
+
+        public override IColumnGroup<T> Group
+        {
+            get { return _group; }
         }
 
         public override IGrid ParentGrid
@@ -188,10 +200,8 @@ namespace GridBlazor.Columns
 
                 if (nullReferece || value == null)
                     textValue = string.Empty;
-                else if (!string.IsNullOrEmpty(ValuePattern))
-                    textValue = string.Format(ValuePattern, value);
                 else
-                    textValue = value.ToString();
+                    textValue = GetFormatedValue(value);
             }
             if (!EncodeEnabled && SanitizeEnabled)
             {

@@ -40,6 +40,11 @@ namespace GridShared.Sorting
             return ApplyOrder(items);
         }
 
+        public IQueryable<T> ApplyThenBy(IQueryable<T> items, GridSortDirection direction)
+        {
+            return ApplyOrder(items);
+        }
+        
         #endregion
     }
 }

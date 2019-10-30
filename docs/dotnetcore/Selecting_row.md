@@ -6,9 +6,9 @@
 
 The **GridServer** object used to create the grid in the controller has a method called **Selectable** to configure if a row can be selected. 
 It's value can be **true** and **false**. 
-By default the **Selectable** feature is **true**. 
-So it's not required to call this method when you create the grid.
-But you can use it anyway:
+Since the version 2.9.0 of the GridMvcCore nuget package the default value of the **Selectable** feature is **false** (it was **true** for earlier versions).
+
+You can enable it as follows:
 ```c#
     var server = new GridServer<Order>(repository.GetAll(), Request.Query, false, "ordersGrid", columns)
         .Selectable(true);
@@ -30,4 +30,4 @@ In this sample an alert is shown including a line of text with de selected row i
 
 In the GridComponent.Demo project you will find another example where the order details are shown on the view when a row is selected.
 
-[<- Sorting](Sorting.md) | [Searching ->](Searching.md)
+[<- Grouping](Grouping.md) | [Searching ->](Searching.md)

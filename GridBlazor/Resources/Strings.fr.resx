@@ -192,4 +192,10 @@
   <data name="Or" xml:space="preserve">
     <value>Ou</value>
   </data>
+  <data name="ExtSortingText" xml:space="preserve">
+    <value>Déposer les colonnes ici pour le tri étendu des colonnes</value>
+  </data>
+  <data name="GroupingText" xml:space="preserve">
+    <value>Déposer les colonnes ici pour le regroupement des colonnes</value>
+  </data>
 </root>

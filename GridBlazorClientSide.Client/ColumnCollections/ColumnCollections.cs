@@ -66,6 +66,32 @@ namespace GridBlazorClientSide.Client.ColumnCollections
             .RenderValueAs(o => o.Customer.IsVip ? "Yes" : "No");
         };
 
+        public static Action<IGridColumnCollection<Order>> OrderColumnsGroupable = c =>
+        {
+            /* Adding "OrderID" column: */
+            c.Add(o => o.OrderID).Titled("Number").SetWidth(100);
+
+            /* Adding "OrderDate" column: */
+            c.Add(o => o.OrderDate, "OrderCustomDate").Titled("Date")
+            .SetWidth(120).RenderComponentAs<TooltipCell>();
+
+            /* Adding "CompanyName" column: */
+            c.Add(o => o.Customer.CompanyName).Titled("Company")
+            .SetWidth(250);
+
+            /* Adding "ContactName" column: */
+            c.Add(o => o.Customer.ContactName).Titled("ContactName").SetWidth(250);
+
+            /* Adding "Freight" column: */
+            c.Add(o => o.Freight)
+            .Titled("Freight")
+            .Format("{0:F}");
+
+            /* Adding "Vip customer" column: */
+            c.Add(o => o.Customer.IsVip).Titled("Is Vip").SetWidth(70).Css("hidden-xs") //hide on phones
+            .RenderValueAs(o => o.Customer.IsVip ? "Yes" : "No");
+        };
+
         public static Action<IGridColumnCollection<Order>, object> OrderColumnsWithEdit = (c, obj) =>
         {
             /* Adding not mapped column, that renders body, using inline Razor html helper */
@@ -77,6 +103,35 @@ namespace GridBlazorClientSide.Client.ColumnCollections
             /* Adding "OrderDate" column: */
             c.Add(o => o.OrderDate, "OrderCustomDate").Titled("Date")
             .Format("{0:yyyy-MM-dd}").SetWidth(120);
+
+            /* Adding "CompanyName" column: */
+            c.Add(o => o.Customer.CompanyName).Titled("Company")
+            .SetWidth(250);
+
+            /* Adding "ContactName" column: */
+            c.Add(o => o.Customer.ContactName).Titled("ContactName").SetWidth(250);
+
+            /* Adding "Freight" column: */
+            c.Add(o => o.Freight)
+            .Titled("Freight")
+            .Format("{0:F}");
+
+            /* Adding "Vip customer" column: */
+            c.Add(o => o.Customer.IsVip).Titled("Is Vip").SetWidth(70).Css("hidden-xs") //hide on phones
+            .RenderValueAs(o => o.Customer.IsVip ? "Yes" : "No");
+        };
+
+        public static Action<IGridColumnCollection<Order>> OrderColumnsCheckbox = c =>
+        {
+            /* Adding checkbox column: */
+            c.Add().RenderComponentAs<CheckboxCell>();
+
+            /* Adding "OrderID" column: */
+            c.Add(o => o.OrderID).Titled("Number").SetWidth(100);
+
+            /* Adding "OrderDate" column: */
+            c.Add(o => o.OrderDate, "OrderCustomDate").Titled("Date")
+            .SetWidth(120).RenderComponentAs<TooltipCell>();
 
             /* Adding "CompanyName" column: */
             c.Add(o => o.Customer.CompanyName).Titled("Company")

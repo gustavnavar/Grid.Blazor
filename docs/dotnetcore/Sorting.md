@@ -4,13 +4,34 @@
 
 [Index](Documentation.md)
 
-You can enable sorting for all columns of a grid using the **Sortable** method of the **SGrid** object:
+## Regular Sorting
+You can enable sorting for all columns of a grid using the **Sortable** method of the **Grid** object:
 ```razor
-    @Html.Grid(Model).Columns(columns =>
+    @await Html.Grid(Model).Columns(columns =>
     {
         columns.Add(foo => foo.Title);
         columns.Add(foo => foo.Description);
-    }).Sortable()
+    }).Sortable().RenderAsync()
 ```
 
-[<- Totals](Totals.md) | [Selecting row ->](Selecting_row.md)
+In this case you can select sorting pressing the column name on just one column at a time
+
+
+## Extended Sorting
+You can also configure extended sorting using the **ExtSortable** method of the **Grid** object:
+```razor
+    @await Html.Grid(Model).Columns(columns =>
+    {
+        columns.Add(foo => foo.Title);
+        columns.Add(foo => foo.Description);
+    }).ExtSortable(true).RenderAsync()
+```
+
+In this case you can drag the column title and drop it on the sorting area. You can add multiple columns at a time and select if sorting is ascending or descending column by column.
+
+This is an example of a table of items using extended sorting:
+
+![](../images/Extended_sorting.png)
+
+
+[<- Totals](Totals.md) | [Grouping ->](Grouping.md)

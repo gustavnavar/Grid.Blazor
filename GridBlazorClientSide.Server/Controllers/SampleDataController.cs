@@ -67,6 +67,23 @@ namespace GridBlazorClientSide.Server.Controllers
         }
 
         [HttpGet("[action]")]
+        public ActionResult GetOrdersGridGroupable()
+        {
+            var repository = new OrdersRepository(_context);
+            IGridServer<Order> server = new GridServer<Order>(repository.GetAll(), Request.Query,
+                true, "ordersGrid", ColumnCollections.OrderColumns)
+                    .WithPaging(10)
+                    .Sortable()
+                    .Filterable()
+                    .WithMultipleFilters()
+                    .WithGridItemsCount()
+                    .Groupable(true);
+
+            var items = server.ItemsToDisplay;
+            return Ok(items);
+        }
+
+        [HttpGet("[action]")]
         public ActionResult GetOrdersGridWithSubgrids()
         {
             var repository = new OrdersRepository(_context);

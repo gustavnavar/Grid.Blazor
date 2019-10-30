@@ -1,4 +1,5 @@
 ﻿@using GridBlazor.Resources
+@using GridShared.Sorting
 @using GridShared.Utility
 
 @typeparam T
@@ -14,20 +15,47 @@
             </CascadingValue>
         </div>
     }
-    <div class="@_cssSortingClass">
-        @if (Column.SortEnabled)
-        {
-            <button @onclick="TitleButtonClicked">@Column.Title</button>
-        }
-        else
-        {
-            <span>@Column.Title</span>
-        }
-        @if (Column.IsSorted)
-        {
-            <span class="grid-sort-arrow"></span>
-        }
-    </div>
+    @if (Column.ParentGrid.ExtSortingEnabled)
+    {
+        <div class="grid-extsort-draggable @_cssSortingClass" draggable="true" data-column="@Column.Name" @ondragstart="HandleDragStart">
+            @if (Column.SortEnabled)
+            {
+                if (Column.IsSorted)
+                {
+                    <button @onclick="TitleButtonClicked" data-column="@Column.Name" data-sorted="@(Column.Direction == GridSortDirection.Ascending ? "asc" : "desc")">@Column.Title</button>
+                }
+                else
+                {
+                    <button @onclick="TitleButtonClicked" data-column="@Column.Name">@Column.Title</button>
+                }
+            }
+            else
+            {
+                <span data-column="@Column.Name">@Column.Title</span>
+            }
+            @if (Column.IsSorted)
+            {
+                <span class="grid-sort-arrow"></span>
+            }
+        </div>
+    }
+    else
+    {
+        <div class="@_cssSortingClass">
+            @if (Column.SortEnabled)
+            {
+                <button @onclick="TitleButtonClicked">@Column.Title</button>
+            }
+            else
+            {
+                <span>@Column.Title</span>
+            }
+            @if (Column.IsSorted)
+            {
+                <span class="grid-sort-arrow"></span>
+            }
+        </div>
+    }
 </th>
 
 

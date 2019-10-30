@@ -28,10 +28,10 @@ The guiding principle is to have unique names for all colummns in all the grids 
 To resolve paging configuration conflicts you must use "unique" custom pager name for each grid (**grid1-page** in the following example):
 
 ```c#
-    @Html.Grid(Model).Columns(columns =>
+    @await Html.Grid(Model).Columns(columns =>
     {
         ...
-    })..WithPaging(15, 6,"grid1-page")
+    }).WithPaging(15, 6,"grid1-page").RenderAsync()
 ```
 
 ## Client side
@@ -40,10 +40,10 @@ If you want to use the [client side object model API](Client_side_object_model.m
 
 
 ```c#
-    @Html.Grid(Model).Named("myGrid").Columns(columns =>
+    @await Html.Grid(Model).Named("myGrid").Columns(columns =>
     {
         ...
-    })
+    }).RenderAsync()
 ```
 
 [<- Client side object model](Client_side_object_model.md) | [Data annotations ->](Data_annotations.md)

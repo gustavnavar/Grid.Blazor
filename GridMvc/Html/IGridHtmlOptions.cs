@@ -2,6 +2,7 @@
 using GridShared;
 using Microsoft.AspNetCore.Html;
 using System;
+using System.Threading.Tasks;
 
 namespace GridMvc.Html
 {
@@ -69,6 +70,26 @@ namespace GridMvc.Html
         IGridHtmlOptions<T> Searchable(bool enable, bool onlyTextColumns);
 
         /// <summary>
+        ///     Enable extended sorting
+        /// </summary>
+        IGridHtmlOptions<T> ExtSortable();
+
+        /// <summary>
+        ///     Enable or disable extended sorting
+        /// </summary>
+        IGridHtmlOptions<T> ExtSortable(bool enable);
+
+        /// <summary>
+        ///     Enable grouping
+        /// </summary>
+        IGridHtmlOptions<T> Groupable();
+
+        /// <summary>
+        ///     Enable or disable grouping
+        /// </summary>
+        IGridHtmlOptions<T> Groupable(bool enable);
+
+        /// <summary>
         ///     Enable or disable client grid items selectable feature
         /// </summary>
         IGridHtmlOptions<T> Selectable(bool set);
@@ -126,6 +147,7 @@ namespace GridMvc.Html
         /// </summary>
         /// <returns>Grid html layout</returns>
         string Render();
+        Task<IHtmlContent> RenderAsync();
 
         /// <summary>
         ///     Pager for the grid

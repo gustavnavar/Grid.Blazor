@@ -1,6 +1,7 @@
 ﻿using GridShared.Columns;
 using GridShared.Filtering;
-using Microsoft.AspNetCore.Http;
+using GridShared.Utility;
+using Microsoft.Extensions.Primitives;
 using System;
 using System.Linq;
 
@@ -15,20 +16,18 @@ namespace GridMvc.Filtering
         public const string DefaultTypeQueryParameter = "grid-filter";
         private const string FilterDataDelimeter = "__";
         public const string DefaultClearInitFilterQueryParameter = "grid-clearinitfilter";
-        public readonly IQueryCollection Query;
         private readonly DefaultFilterColumnCollection _filterValues = new DefaultFilterColumnCollection();
 
         #region Ctor's
 
-        public QueryStringFilterSettings(IQueryCollection query)
+        public QueryStringFilterSettings(IQueryDictionary<StringValues> query)
         {
             if (query == null)
                 throw new ArgumentException("No http context here!");
             Query = query;
 
-            string[] filters = Query[DefaultTypeQueryParameter].Count > 0 ? 
-                Query[DefaultTypeQueryParameter].ToArray() : null;
-            if (filters != null)
+            var filters = Query.Get(DefaultTypeQueryParameter);
+            if (filters.Count > 0)
             {
                 foreach (string filter in filters)
                 {
@@ -58,6 +57,8 @@ namespace GridMvc.Filtering
 
         #region IGridFilterSettings Members
 
+        public IQueryDictionary<StringValues> Query { get; }
+
         public IFilterColumnCollection FilteredColumns
         {
             get { return _filterValues; }
@@ -71,7 +72,7 @@ namespace GridMvc.Filtering
             }
             else
             {
-                return !Query[DefaultClearInitFilterQueryParameter].Any(r => r.Equals(column.Name));
+                return !Query.Get(DefaultClearInitFilterQueryParameter).Any(r => r.Equals(column.Name));
             }
         }
 

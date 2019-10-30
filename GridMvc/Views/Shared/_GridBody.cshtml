@@ -33,33 +33,41 @@
 }
 else
 {
-    @foreach (object item in Model.ItemsToDisplay)
+    @if (Model.GroupingEnabled)
     {
-        <tr class="grid-row @Model.GetRowCssClasses(item)">
+        @await Html.PartialAsync("_GridGroupRows", new Tuple<ISGrid, IList<Tuple<string, object>>, bool, bool, IEnumerable<object>, string>
+            (Model, new List<Tuple<string, object>>(), hasSubGrid, requiredTotalsColumn, Model.ItemsToDisplay, "0"))
+    }
+    else
+    {
+        foreach (object item in Model.ItemsToDisplay)
+        {
+            <tr class="grid-row @Model.GetRowCssClasses(item)">
+                @if (hasSubGrid)
+                {
+                    string values = "";
+                    string[] keyValues = Model.GetKeyValues(item);
+                    if (keyValues.Length == Model.Keys.Length)
+                    {
+                        values = string.Join(",", keyValues);
+                    }
+                    <td class="grid-cell grid-subgrid" data-is-rendered="false" data-is-visible="false" @(string.IsNullOrWhiteSpace(values) ? "" : "data-values=" + values) data-name="">
+                        <span class="subgrid-caret">&nbsp;</span>
+                    </td>
+                }
+                @if (requiredTotalsColumn)
+                {
+                    <td class="grid-cell" data-name=""></td>
+                }
+                @foreach (IGridColumn column in Model.Columns)
+                {
+                    @await Html.PartialAsync("_GridCell", new Tuple<IGridColumn, object>(column, item))
+                }
+            </tr>
             @if (hasSubGrid)
             {
-                string values = "";
-                string[] keyValues = Model.GetKeyValues(item);
-                if (keyValues.Length == Model.Keys.Length)
-                {
-                    values = string.Join(",", keyValues);
-                }
-                <td class="grid-cell grid-subgrid" data-is-rendered="false" data-is-visible="false" @(string.IsNullOrWhiteSpace(values) ? "" : "data-values=" + values) data-name="">
-                    <span class="subgrid-caret">&nbsp;</span>
-                </td>
+                <tr class="subgrid-row" style="display:none;"></tr>
             }
-            @if (requiredTotalsColumn)
-            {
-                <td class="grid-cell" data-name=""></td>
-            }
-            @foreach (IGridColumn column in Model.Columns)
-            {
-                @await Html.PartialAsync("_GridCell", new Tuple<IGridColumn, object>(column, item))
-            }
-        </tr>
-        @if (hasSubGrid)
-        {
-            <tr class="subgrid-row" style="display:none;"></tr>
         }
     }
 }

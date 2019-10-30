@@ -152,7 +152,6 @@ namespace GridBlazor
         {
             //switch visibility for the filter dialog:
             _isVisible = !_isVisible;
-            StateHasChanged();
         }
 
         public async Task AddFilter(FilterCollection filters)
@@ -165,6 +164,12 @@ namespace GridBlazor
         {
             _isVisible = !_isVisible;
             await GridComponent.RemoveFilter(Column);
+        }
+
+        protected void HandleDragStart()
+        {
+            GridComponent.Payload = new ColumnOrderValue(Column.Name, Column.Direction ?? GridSortDirection.Ascending,
+                GridComponent.Grid.Settings.SortSettings.SortValues.Count + 1);
         }
     }
 }

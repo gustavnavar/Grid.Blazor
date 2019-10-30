@@ -12,9 +12,9 @@ namespace GridBlazor.Sorting
     {
         public const string DefaultDirectionQueryParameter = "grid-dir";
         public const string DefaultColumnQueryParameter = "grid-column";
-        public readonly IQueryDictionary<StringValues> Query;
         private string _columnQueryParameterName;
         private string _directionQueryParameterName;
+        private readonly DefaultOrderColumnCollection _sortValues = new DefaultOrderColumnCollection();
 
         public QueryStringSortSettings(IQueryDictionary<StringValues> query)
         {
@@ -23,6 +23,18 @@ namespace GridBlazor.Sorting
             Query = query;
             ColumnQueryParameterName = DefaultColumnQueryParameter;
             DirectionQueryParameterName = DefaultDirectionQueryParameter;
+
+            string[] sortings = Query.Get(ColumnOrderValue.DefaultSortingQueryParameter).Count > 0 ?
+                Query.Get(ColumnOrderValue.DefaultSortingQueryParameter).ToArray() : null;
+            if (sortings != null)
+            {
+                foreach (string sorting in sortings)
+                {
+                    ColumnOrderValue column = CreateColumnData(sorting);
+                    if (column != ColumnOrderValue.Null)
+                        _sortValues.Add(column);
+                }
+            }
         }
 
         public string ColumnQueryParameterName
@@ -47,8 +59,16 @@ namespace GridBlazor.Sorting
 
         #region IGridSortSettings Members
 
+        public IQueryDictionary<StringValues> Query { get; }
         public string ColumnName { get; set; }
         public GridSortDirection Direction { get; set; }
+        public DefaultOrderColumnCollection SortValues
+        {
+            get
+            {
+                return _sortValues;
+            }
+        }
 
         #endregion
 
@@ -76,6 +96,23 @@ namespace GridBlazor.Sorting
             GridSortDirection dir;
             Enum.TryParse(currentDirection, true, out dir);
             Direction = dir;
+        }
+
+        private ColumnOrderValue CreateColumnData(string queryParameterValue)
+        {
+            if (string.IsNullOrEmpty(queryParameterValue))
+                return ColumnOrderValue.Null;
+
+            string[] data = queryParameterValue.Split(new[] { ColumnOrderValue.SortingDataDelimeter }, StringSplitOptions.RemoveEmptyEntries);
+            if (data.Length != 3)
+                return ColumnOrderValue.Null;
+
+            return new ColumnOrderValue
+            {
+                ColumnName = data[0],
+                Direction = (GridSortDirection)Enum.Parse(typeof(GridSortDirection), data[1]),
+                Id = int.Parse(data[2])
+            };
         }
     }
 }

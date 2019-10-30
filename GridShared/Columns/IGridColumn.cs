@@ -1,4 +1,5 @@
 ﻿using GridShared.Filtering;
+using GridShared.Grouping;
 using GridShared.Searching;
 using GridShared.Sorting;
 using GridShared.Totals;
@@ -8,8 +9,10 @@ using System.Linq.Expressions;
 
 namespace GridShared.Columns
 {
-    public interface IGridColumn<T> : IGridColumn, IColumn<T>, ISortableColumn<T>, IFilterableColumn<T>, ISearchableColumn<T>
-    {      
+    public interface IGridColumn<T> : IGridColumn, IColumn<T>, ISortableColumn<T>,
+        IFilterableColumn<T>, ISearchableColumn<T>, IGroupableColumn<T>
+    {
+        IGridCell GetValue(T instance);
     }
 
     public interface IGridColumn : ISortableColumn, IFilterableColumn
@@ -167,6 +170,12 @@ namespace GridShared.Columns
         IGridCell GetCell(object instance);
 
         /// <summary>
+        ///     Gets gridColumn formated value
+        /// </summary>
+        /// <param name="instance">Instance of the item</param>
+        string GetFormatedValue(object value);
+
+        /// <summary>
         ///     Get custom css classes mapped to the cell
         /// </summary>
         string GetCellCssClasses(object item);
@@ -289,5 +298,13 @@ namespace GridShared.Columns
         ///     Collection of current column totals
         /// </summary>
         IColumnTotals<T> Totals { get; }
+    }
+
+    public interface IGroupableColumn<T>
+    {
+        /// <summary>
+        ///     Collection of current column groups
+        /// </summary>
+        IColumnGroup<T> Group { get; }
     }
 }

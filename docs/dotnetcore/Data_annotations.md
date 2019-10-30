@@ -37,7 +37,7 @@ describes that the grid table must contain 3 columns (**Name**, **Enabled** and 
 Finnaly you can render this table in the view:
 
 ```c#
-    @Html.Grid(Model).AutoGenerateColumns()
+    @await Html.Grid(Model).AutoGenerateColumns().RenderAsync()
 ```
 
 **GridMvc** will generate columns based on your data annotations when the **AutoGenerateColumns** method is invoked. 
@@ -45,13 +45,13 @@ Finnaly you can render this table in the view:
 You can add custom columns after or before this method is called, for example:
 
 ```c#
-    @Html.Grid(Model).AutoGenerateColumns().Columns(columns=>columns.Add(foo=>foo.Child.Price))
+    @await Html.Grid(Model).AutoGenerateColumns().Columns(columns=>columns.Add(foo=>foo.Child.Price)).RenderAsync()
 ```
 
 You can also overwrite grid options. For example using the **WithPaging** method:
 
 ```c#
-    @Html.Grid(Model).AutoGenerateColumns().WithPaging(10)
+    @await Html.Grid(Model).AutoGenerateColumns().WithPaging(10).RenderAsync()
 ```
 
 

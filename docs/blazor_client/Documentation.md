@@ -13,6 +13,7 @@
 * [Custom columns](Custom_columns.md)
 * [Totals](Totals.md)
 * [Sorting](Sorting.md)
+* [Grouping](Grouping.md)
 * [Selecting row](Selecting_row.md)
 * [Searching](Searching.md)
 * [Filtering](Filtering.md)

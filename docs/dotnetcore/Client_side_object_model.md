@@ -34,11 +34,11 @@ The steps to build a grid page using the client side object model are as follows
        @using GridMvc
        @model SGrid<Order>
 
-       @Html.Grid(Model).Named("ordersGrid").Columns(columns =>
+       @await Html.Grid(Model).Named("ordersGrid").Columns(columns =>
        {
            columns.Add(o => o.OrderID).Titled("Custom column ID");
            columns.Add(o => o.OrderDate).Sortable(true);
-       }).WithPaging(10).Sortable().Filterable().WithMultipleFilters()
+       }).WithPaging(10).Sortable().Filterable().WithMultipleFilters().RenderAsync()
    ```
   
 2. Add two actions to the controller, one for the complete view and another to load the partial view:

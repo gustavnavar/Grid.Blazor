@@ -198,7 +198,7 @@ Then it's possible to create a **QueryCollection** object and pass it to the vie
             var query = (IQueryCollection)ViewData["query"];
         }
 
-        @Html.Grid(Model, query).Named("ordersGrid").Columns(columns)
+        @await Html.Grid(Model, query).Named("ordersGrid").Columns(columns).RenderAsync()
      ```
 
 [<- Subgrids](Subgrids.md)

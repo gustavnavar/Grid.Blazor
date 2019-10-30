@@ -6,7 +6,7 @@
         {
             ViewName = viewName;
             GridName = gridName;
-            Selectable = true;
+            Selectable = false;
             AllowMultipleFilters = false;
         }
 

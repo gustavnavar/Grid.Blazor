@@ -15,6 +15,7 @@ using GridShared.Utility;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Primitives;
 using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
@@ -34,7 +35,7 @@ namespace GridMvc
         private readonly SortGridItemsProcessor<T> _currentSortItemsProcessor;
         private readonly TotalsGridItemsProcessor<T> _currentTotalsItemsProcessor;
 
-        private IQueryCollection _query;
+        private IQueryDictionary<StringValues> _query;
         private int _displayingItemsCount = -1; // count of displaying items (if using pagination)
         private bool _enablePaging;
         private IGridPager _pager;
@@ -73,7 +74,7 @@ namespace GridMvc
         {
             #region init default properties
 
-            _query = query;
+            _query = QueryDictionary<StringValues>.Convert(query);
 
             //set up sort settings:
             _settings = new QueryStringGridSettingsProvider(_query);
@@ -115,6 +116,10 @@ namespace GridMvc
 
         public bool SearchingOnlyTextColumns { get; set; }
 
+        public bool ExtSortingEnabled { get; set; }
+
+        public bool GroupingEnabled { get; set; }
+
         /// <summary>
         ///     Sets or get default value of sorting for all adding columns
         /// </summary>
@@ -153,7 +158,7 @@ namespace GridMvc
         /// <summary>
         ///     Items, displaying in the grid view
         /// </summary>
-        IEnumerable<object> IGrid.ItemsToDisplay
+        public IEnumerable<object> ItemsToDisplay
         {
             get { return (IEnumerable<object>)GetItemsToDisplay(); }
         }
@@ -161,7 +166,7 @@ namespace GridMvc
         /// <summary>
         ///     Provides query, using by the grid
         /// </summary>
-        public IQueryCollection Query
+        public IQueryDictionary<StringValues> Query
         {
             get { return _query; }
         }
@@ -343,9 +348,32 @@ namespace GridMvc
 
         public string GetState()
         {
-            var queryDictionary = QueryDictionary<StringValues>.Convert(_query);
-            string jsonQuery = JsonConvert.SerializeObject(queryDictionary, new StringValuesConverter());
+            string jsonQuery = JsonConvert.SerializeObject(_query, new StringValuesConverter());
             return jsonQuery.GridStateEncode();
+        }
+
+        public IList<object> GetValuesToDisplay(string columnName, IEnumerable<object> items)
+        {
+            var column = Columns.SingleOrDefault(r => r.Name == columnName);
+            if (column == null)
+                return new List<object>();
+            return ((IGridColumn<T>)column).Group.GetColumnValues((items as IEnumerable<T>).AsQueryable()).ToList();
+        }
+
+        public IEnumerable<object> GetItemsToDisplay(IList<Tuple<string, object>> values, IEnumerable<object> items)
+        {
+            if (values.Count == 0)
+                return items;
+
+            var itms = (items as IEnumerable<T>).AsQueryable();
+            foreach (var value in values)
+            {
+                var column = Columns.SingleOrDefault(r => r.Name == value.Item1);
+                if (column == null)
+                    continue;
+                itms = ((IGridColumn<T>)column).Group.ApplyFilter(itms, value.Item2);
+            }
+            return (IEnumerable<object>)itms;
         }
     }
 }

@@ -2,10 +2,12 @@
 using GridMvc.Resources;
 using GridShared;
 using GridShared.Columns;
+using Microsoft.AspNetCore.Html;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using System;
 using System.IO;
 using System.Text.Encodings.Web;
+using System.Threading.Tasks;
 
 namespace GridMvc.Html
 {
@@ -37,7 +39,6 @@ namespace GridMvc.Html
         {
             return WithGridItemsCount(string.Empty);
         }
-
         public string Render()
         {
             using (var sw = new StringWriter())
@@ -45,6 +46,11 @@ namespace GridMvc.Html
                 WriteTo(sw, HtmlEncoder.Default);
                 return sw.ToString();
             }
+        }
+
+        public async Task<IHtmlContent> RenderAsync()
+        {
+            return await _helper.PartialAsync(GridViewName, _source);
         }
 
         public IGridHtmlOptions<T> Columns(Action<IGridColumnCollection<T>> columnBuilder)
@@ -127,6 +133,28 @@ namespace GridMvc.Html
         {
             _source.SearchingEnabled = enable;
             _source.SearchingOnlyTextColumns = onlyTextColumns;
+            return this;
+        }
+        public IGridHtmlOptions<T> ExtSortable()
+        {
+            return ExtSortable(true);
+        }
+
+        public IGridHtmlOptions<T> ExtSortable(bool enable)
+        {
+            _source.ExtSortingEnabled = enable;
+            return this;
+        }
+
+        public IGridHtmlOptions<T> Groupable()
+        {
+            return Groupable(true);
+        }
+
+        public IGridHtmlOptions<T> Groupable(bool enable)
+        {
+            _source.ExtSortingEnabled = enable;
+            _source.GroupingEnabled = enable;
             return this;
         }
 

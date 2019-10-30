@@ -147,5 +147,27 @@ namespace GridMvc.Resources
                 return Strings.ResourceManager.GetString("Sum", Strings.CultureInfo);
             }
         }
+
+        /// <summary>
+        /// Gets the resource string indexed by the GroupingText key.
+        /// </summary>
+        public static string GroupingText
+        {
+            get
+            {
+                return Strings.ResourceManager.GetString("GroupingText", Strings.CultureInfo);
+            }
+        }
+
+        /// <summary>
+        /// Gets the resource string indexed by the ExtSortingText key.
+        /// </summary>
+        public static string ExtSortingText
+        {
+            get
+            {
+                return Strings.ResourceManager.GetString("ExtSortingText", Strings.CultureInfo);
+            }
+        }
     }
 }

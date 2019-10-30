@@ -36,6 +36,20 @@ namespace GridShared.Sorting
             }
         }
 
+        public IQueryable<T> ApplyThenBy(IQueryable<T> items, GridSortDirection direction)
+        {
+            var ordered = items as IOrderedQueryable<T>;
+            switch (direction)
+            {
+                case GridSortDirection.Ascending:
+                    return ordered.ThenBy(_expression);
+                case GridSortDirection.Descending:
+                    return ordered.ThenByDescending(_expression);
+                default:
+                    throw new ArgumentOutOfRangeException("direction");
+            }
+        }
+
         #endregion
     }
 }

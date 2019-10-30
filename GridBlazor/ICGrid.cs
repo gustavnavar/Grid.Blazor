@@ -2,6 +2,9 @@
 using GridBlazor.Pagination;
 using System.Threading.Tasks;
 using System;
+using Microsoft.Extensions.Primitives;
+using GridShared.Columns;
+using GridShared.Filtering;
 
 namespace GridBlazor
 {
@@ -35,7 +38,7 @@ namespace GridBlazor
         /// <summary>
         ///     Get foreign key values for subgrid records
         /// </summary>
-        object[] GetKeyValues(object item);
+        string[] GetKeyValues(object item);
 
         IGridSettingsProvider Settings { get; }
 
@@ -43,5 +46,20 @@ namespace GridBlazor
         ///    Set items from the server api
         /// </summary>
         Task UpdateGrid();
+
+        void AddQueryParameter(string parameterName, StringValues parameterValue);
+
+        void RemoveQueryParameter(string parameterName);
+
+        void AddQueryString(string parameterName, string parameterValue);
+
+        void ChangeQueryString(string parameterName, string oldParameterValue, string newParameterValue);
+
+        void RemoveQueryString(string parameterName, string parameterValue);
+
+        void AddFilterParameter(IGridColumn column, FilterCollection filters);
+
+        void RemoveFilterParameter(IGridColumn column);
+
     }
 }

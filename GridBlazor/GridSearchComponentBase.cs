@@ -23,7 +23,7 @@ namespace GridBlazor
             _searchValue = Grid.Settings.SearchSettings.SearchValue;
 
             //determine current url:
-            var queryBuilder = new CustomQueryStringBuilder(((QueryStringSearchSettings)Grid.Settings.SearchSettings).Query);
+            var queryBuilder = new CustomQueryStringBuilder(Grid.Settings.SearchSettings.Query);
 
             var exceptQueryParameters = new List<string>
             {

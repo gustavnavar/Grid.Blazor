@@ -1,5 +1,6 @@
 ﻿using GridShared.Searching;
-using Microsoft.AspNetCore.Http;
+using GridShared.Utility;
+using Microsoft.Extensions.Primitives;
 using System;
 
 namespace GridMvc.Searching
@@ -10,20 +11,18 @@ namespace GridMvc.Searching
     public class QueryStringSearchSettings : IGridSearchSettings
     {
         public const string DefaultSearchQueryParameter = "grid-search";
-        public readonly IQueryCollection Query;
         private string _searchValue;
 
         #region Ctor's
 
-        public QueryStringSearchSettings(IQueryCollection query)
+        public QueryStringSearchSettings(IQueryDictionary<StringValues> query)
         {
             if (query == null)
                 throw new ArgumentException("No http context here!");
             Query = query;
 
-            string[] search = Query[DefaultSearchQueryParameter].Count > 0 ?
-                Query[DefaultSearchQueryParameter].ToArray() : null;
-            if (search != null && search.Length > 0)
+            var search = Query.Get(DefaultSearchQueryParameter);
+            if (search.Count > 0)
             {
                 _searchValue = search[0];
             }
@@ -33,7 +32,9 @@ namespace GridMvc.Searching
 
         #region IGridSearchSettings Members
 
-        public override string SearchValue
+        public IQueryDictionary<StringValues> Query { get; }
+
+        public string SearchValue
         {
             get { return _searchValue; }
         }

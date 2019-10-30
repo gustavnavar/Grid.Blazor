@@ -85,6 +85,58 @@
 
             self.loadPage();
         },
+        parseExtSortValues: function (extSortData) {
+            var opt = $.parseJSON(extSortData);
+            return { columnName: this.urldecode(opt.ColumnName), direction: opt.Direction, id: opt.Id };
+        },
+        // operation values: 0 - remove, 1 - add, 2 - change
+        applyExtSortValues: function (columnName, direction, operation) {
+            var self = this;
+            self.gridExtSort = null;
+            var extSorts = self.jqContainer.find(".grid-extsort-column");
+
+            self.gridExtSort = "";
+
+            var extSortData;
+            if (this.options.extsortable) { // ext sorting enabled
+                for (var i = 0; i < extSorts.length; i++) {
+                    if ($(extSorts[i]).attr("data-name") === columnName && operation === 0) {
+                        continue;
+                    }
+                    else if ($(extSorts[i]).attr("data-name") === columnName && operation === 2) {
+                        extSortData = this.parseExtSortValues($(extSorts[i]).attr("data-extsortdata"));
+                        if (self.gridExtSort.length > 0) self.gridExtSort += "&";
+                        self.gridExtSort += this.getExtSortQueryData(columnName, direction, extSortData.id);
+                    }
+                    else {
+                        extSortData = this.parseExtSortValues($(extSorts[i]).attr("data-extsortdata"));
+                        if (self.gridExtSort.length > 0) self.gridExtSort += "&";
+                        self.gridExtSort += this.getExtSortQueryData(extSortData.columnName, extSortData.direction, extSortData.id);
+                    }     
+                }
+            }
+
+            if (operation === 1) {
+                var extSortStr = "grid-sorting=" + columnName;
+                var regex = new RegExp(extSortStr, 'g');
+                var id = self.gridExtSort.match(regex);
+                if (!id) {
+                    id = self.gridExtSort.match(/grid-sorting=/g);
+                    if (self.gridExtSort.length > 0) self.gridExtSort += "&";
+                    if (id)
+                        id = id.length + 1;
+                    else
+                        id = 1;
+                    self.gridExtSort += this.getExtSortQueryData(columnName, direction, id);
+                }
+            }
+
+            if (self.gridExtSort.indexOf("?") === -1) {
+                self.gridExtSort = "?" + self.gridExtSort;
+            }
+
+            self.loadPage();
+        },
         ajaxify: function (options) {
             var self = this;
             if (this.options.currentPage) {
@@ -100,6 +152,7 @@
             self.gridSort = self.jqContainer.find("div.sorted a").attr('href');
             self.gridColumnFilters = "";
             self.gridSearch = "";
+            self.gridExtSort = "";
             var $namedGrid = $('[data-gridname="' + self.jqContainer.data("gridname") + '"]');
             self.jqContainer = $namedGrid.length === 1 ? $namedGrid : self.jqContainer;
 
@@ -109,7 +162,6 @@
                 } else {
                     self.gridSort = self.gridSort.replace("grid-dir=1", "grid-dir=0");
                 }
-                self.orginalSort = self.gridSort;
             }
 
             var initialFiltersString = self.jqContainer.attr("data-initfilters");
@@ -236,6 +288,14 @@
                     data['grid-filter'] = myColFilters;
                 }
 
+                var myExtSort = URI.parseQuery(self.gridExtSort)["grid-sorting"];
+                if (Array.isArray(myExtSort)) {
+                    data['grid-sorting'] = myExtSort.join("|");
+                }
+                else {
+                    data['grid-sorting'] = myExtSort;
+                }
+
                 var mySearch = URI.parseQuery(self.gridSearch)["grid-search"];
                 if (Array.isArray(mySearch)) {
                     data['grid-search'] = mySearch.join("|");
@@ -265,7 +325,7 @@
                 return base64str;
             };
 
-            self.getGridUrl = function (griLoaddAction, filters, search) {
+            self.getGridUrl = function (griLoaddAction, filters, extSort, search) {
                 var gridQuery = URI(griLoaddAction);
 
                 var mySearch = URI.parseQuery(search);
@@ -276,6 +336,11 @@
                 var myColFilters = URI.parseQuery(filters);
                 if (myColFilters['grid-filter']) {
                     gridQuery.addSearch("grid-filter", myColFilters["grid-filter"]);
+                }
+
+                var myColExtSort = URI.parseQuery(extSort);
+                if (myColExtSort['grid-sorting']) {
+                    gridQuery.addSearch("grid-sorting", myColExtSort["grid-sorting"]);
                 }
 
                 if (self.gridSort) {
@@ -315,31 +380,13 @@
                         self.gridSort = '';
                         e.preventDefault();
 
-                        // remove grid sort arrows
-                        self.jqContainer.find(".grid-header-title").removeClass("sorted-asc");
-                        self.jqContainer.find(".grid-header-title").removeClass("sorted-desc");
-
                         var search = $(this).attr('href');
-                        var isAscending = search.indexOf("grid-dir=1") !== -1;
                         self.gridSort = search.substr(search.match(/grid-column=\w+/).index);
 
                         // load new data
                         self.loadPage();
-
-                        // update link to sort in opposite direction
-                        if (isAscending) {
-                            $(this).attr('href', search.replace("grid-dir=1", "grid-dir=0"));
-                        } else {
-                            $(this).attr('href', search.replace("grid-dir=0", "grid-dir=1"));
-                        }
-
-                        // add new grid sort arrow
-                        var newSortClass = isAscending ? "sorted-desc" : "sorted-asc";
-                        $(this).parent(".grid-header-title").addClass(newSortClass);
-                        $(this).parent(".grid-header-title").children("span").remove();
-                        $(this).parent(".grid-header-title").append($("<span/>").addClass("grid-sort-arrow"));
                     });
-                });            
+                });
 
                 self.jqContainer.find(".grid-filter").each(function () {
                     $(this).click(function (e) {
@@ -362,6 +409,71 @@
                         return self.applySearchValues("", true);
                     });
                 });
+
+                self.jqContainer.find(".grid-extsort-draggable").each(function () {
+                    $(this).on('dragstart', function (e) {
+                        e.originalEvent.dataTransfer.setData("text", e.target.text);
+                        e.originalEvent.dataTransfer.setData("column", e.target.dataset.column);
+                        if (e.target.dataset.sorted)
+                            e.originalEvent.dataTransfer.setData("sorted", e.target.dataset.sorted);
+                    });
+                });
+
+                self.jqContainer.find(".grid-extsort-droppable").each(function () {
+                    $(this).on('dragenter', function (e) {
+                        e.preventDefault();
+                        e.stopPropagation();
+                        $(this).addClass('folderDragOver');
+                    });
+
+                    $(this).on('dragover', function (e) {
+                        e.preventDefault();
+                        e.stopPropagation();
+                        e.originalEvent.dataTransfer.dropEffect = 'move';
+                    });
+
+                    $(this).on('dragleave', function (e) {
+                        $(this).removeClass('folderDragOver');
+                    });
+
+                    $(this).on('drop', function (e) {
+                        $(this).removeClass('folderDragOver');
+                        e.preventDefault();
+                        e.stopPropagation();
+                        e.stopImmediatePropagation();
+                        var column = e.originalEvent.dataTransfer.getData("column");
+                        var sorted = e.originalEvent.dataTransfer.getData("sorted") === "desc" ? 1 : 0;
+                        if (column && column !== "undefined")
+                            self.applyExtSortValues(column, sorted, 1);
+                    });
+                }); 
+
+                self.jqContainer.find(".grid-extsort-column > span.sorted-asc > a").each(function () {
+                    $(this).click(function (e) {
+                        e.preventDefault();
+                        var column = $(this).attr('data-column');
+                        if (column)
+                            self.applyExtSortValues(column, 1, 2);
+                    });
+                });
+
+                self.jqContainer.find(".grid-extsort-column > span.sorted-desc > a").each(function () {
+                    $(this).click(function (e) {
+                        e.preventDefault();
+                        var column = $(this).attr('data-column');
+                        if (column)
+                            self.applyExtSortValues(column, 0, 2);
+                    });
+                });
+
+                self.jqContainer.find(".grid-extsort-column > a").each(function () {
+                    $(this).click(function (e) {
+                        e.preventDefault();
+                        var column = $(this).attr('data-column');
+                        if (column)
+                            self.applyExtSortValues(column, 0, 0);
+                    });
+                });
             };
 
             self.setupPagerLinkEvents = function () {
@@ -377,7 +489,7 @@
 
             self.loadPage = function () {
                 var dfd = new $.Deferred();
-                var gridUrl = self.getGridUrl(self.pagedDataAction, self.gridColumnFilters, self.gridSearch);
+                var gridUrl = self.getGridUrl(self.pagedDataAction, self.gridColumnFilters, self.gridExtSort, self.gridSearch);
 
                 $.ajax({
                     url: gridUrl,
@@ -398,6 +510,8 @@
                     self.setupPagerLinkEvents();
                     self.initFilters();
                     self.initSearch();
+                    self.initExtSort();
+                    self.initGroup();
                     self.initSubGrids();
 
                     self.jqContainer.show();
@@ -479,6 +593,25 @@
                 self.gridSearch = this.getSearchQueryData(search);
             };
 
+            self.initExtSort = function () {
+                self.gridExtSort = null;
+                var extSorts = self.jqContainer.find(".grid-extsort-column");
+
+                self.gridExtSort = "";
+
+                if (this.options.extsortable) { // extended sorting enabled
+                    for (var i = 0; i < extSorts.length; i++) {
+                        var extSortData = this.parseExtSortValues($(extSorts[i]).attr("data-extsortdata"));
+                        if (self.gridExtSort.length > 0) self.gridExtSort += "&";
+                        self.gridExtSort += this.getExtSortQueryData(extSortData.columnName, extSortData.direction, extSortData.id);
+                    }
+                }
+
+                if (self.gridExtSort.indexOf("?") === -1) {
+                    self.gridExtSort = "?" + self.gridExtSort;
+                }
+            };
+
             self.initSubGrids = function () {
                 self.keys = new Array();
                 var keysString = this.jqContainer.attr("data-keys");
@@ -532,6 +665,7 @@
             self.setupPagerLinkEvents();
             self.initFilters();
             self.initSearch();
+            self.initExtSort();
             self.initSubGrids();
         },
         onGridLoaded: function (func) {

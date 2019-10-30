@@ -29,6 +29,7 @@ namespace GridBlazorServerSide.Services
                     .WithPaging(10)
                     .Filterable()
                     .WithMultipleFilters()
+                    .Groupable(true)
                     .Searchable(true, false);
 
             // return items to displays

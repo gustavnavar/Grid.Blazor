@@ -1,0 +1,81 @@
+﻿@using GridMvc
+@using GridShared.Columns
+@model Tuple<ISGrid, IList<Tuple<string, object>>, bool, bool, IEnumerable<object>, string>
+
+@{
+    ISGrid Grid = Model.Item1;
+    IList<Tuple<string, object>> Values = Model.Item2;
+    bool HasSubGrid = Model.Item3;
+    bool RequiredTotalsColumn = Model.Item4;
+    IEnumerable<object> ItemsToDisplay = Model.Item5;
+    string groupId = Model.Item6;
+}
+
+@if (Model == null || Grid == null || !ItemsToDisplay.Any()) { return; }
+
+@if (Grid.Settings.SortSettings.SortValues.Count > Values.Count)
+{
+    string columnName = Grid.Settings.SortSettings.SortValues.OrderBy(r => r.Id).ElementAt(Values.Count).ColumnName;
+    IGridColumn column = Grid.Columns.SingleOrDefault(r => r.Name == columnName);
+    var columnValues = Grid.GetValuesToDisplay(columnName, ItemsToDisplay).Distinct();
+    foreach (object columnValue in columnValues)
+    {
+        var values = new List<Tuple<string, object>>();
+        values.AddRange(Values);
+        values.Add(new Tuple<string, object>(columnName, columnValue));
+        var itemsToDisplay = Grid.GetItemsToDisplay(values, ItemsToDisplay);
+        int count = Grid.Columns.Count();
+        if (HasSubGrid)
+        {
+            count++;
+        }
+        if (RequiredTotalsColumn)
+        {
+            count++;
+        }
+        string newGroupId = Guid.NewGuid().ToString("N");
+        <tr class="grid-group-row" data-group-parent-id="@groupId">
+            <td colspan="@count">
+                @for(int i = 0; i < Values.Count; i++)
+                {
+                    <span class="grid-group-tab"></span>
+                }
+                <span class="grid-group grid-group-caret-down" data-group-id="@newGroupId">&nbsp;</span>
+                <span>@column?.Title: @column?.GetFormatedValue(columnValue)</span>
+            </td>
+        </tr>
+        @await Html.PartialAsync("_GridGroupRows", new Tuple<ISGrid, IList<Tuple<string, object>>, bool, bool, IEnumerable<object>, string>(Grid, values, HasSubGrid, RequiredTotalsColumn, itemsToDisplay, newGroupId))
+    }
+}
+else
+{
+    foreach (object item in Grid.GetItemsToDisplay(Values, ItemsToDisplay))
+    {
+        <tr class="grid-row @Grid.GetRowCssClasses(item)" data-group-row-id="@groupId">
+            @if (HasSubGrid)
+            {
+                string values = "";
+                string[] keyValues = Grid.GetKeyValues(item);
+                if (keyValues.Length == Grid.Keys.Length)
+                {
+                    values = string.Join(",", keyValues);
+                }
+                <td class="grid-cell grid-subgrid" data-is-rendered="false" data-is-visible="false" @(string.IsNullOrWhiteSpace(values) ? "" : "data-values=" + values) data-name="">
+                    <span class="subgrid-caret">&nbsp;</span>
+                </td>
+            }
+            @if (RequiredTotalsColumn)
+            {
+                <td class="grid-cell" data-name=""></td>
+            }
+            @foreach (IGridColumn column in Grid.Columns)
+            {
+                @await Html.PartialAsync("_GridCell", new Tuple<IGridColumn, object>(column, item))
+            }
+        </tr>
+        @if (HasSubGrid)
+        {
+            <tr class="subgrid-row" data-group-subrow-id="@groupId" style="display:none;"></tr>
+        }
+    }
+}

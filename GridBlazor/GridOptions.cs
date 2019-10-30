@@ -5,7 +5,7 @@
         public GridOptions(string gridName)
         {
             GridName = gridName;
-            Selectable = true;
+            Selectable = false;
             AllowMultipleFilters = false;
             ShowGridItemsCount = false;
             RenderRowsOnly = false;

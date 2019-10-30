@@ -57,6 +57,7 @@ namespace GridMvc.Demo.Components
                 c.Add(o => o.OrderDate, "OrderCustomDate")
                     .Titled("Date")
                     .SortInitialDirection(GridSortDirection.Descending)
+                    .ThenSortByDescending(o => o.OrderID)
                     .SetCellCssClassesContraint(o => o.OrderDate.HasValue && o.OrderDate.Value >= DateTime.Parse("1997-01-01") ? "red" : "")
                     .Format("{0:yyyy-MM-dd}")
                     .SetWidth(110)
@@ -66,7 +67,6 @@ namespace GridMvc.Demo.Components
                 c.Add(o => o.Customer.CompanyName)
                     .Titled("Company")
                     .SetWidth(250)
-                    .ThenSortByDescending(o => o.OrderID)
                     .SetInitialFilter(GridFilterType.StartsWith, "a")
                     .SetFilterWidgetType("CustomCompanyNameFilterWidget")
                     .Max(true).Min(true);
@@ -101,6 +101,8 @@ namespace GridMvc.Demo.Components
                 .Filterable()
                 .WithMultipleFilters()
                 .Searchable(true, false)
+                .Groupable(true)
+                .Selectable(true)
                 .WithGridItemsCount();
             var factory = Task<IViewComponentResult>.Factory;
 

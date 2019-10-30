@@ -15,7 +15,6 @@ using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
-using System.Net;
 using System.Net.Http;
 using System.Reflection;
 using System.Threading.Tasks;
@@ -115,6 +114,10 @@ namespace GridBlazor
         public bool SearchingEnabled { get; set; }
 
         public bool SearchingOnlyTextColumns { get; set; }
+
+        public bool ExtSortingEnabled { get; set; }
+
+        public bool GroupingEnabled { get; set; }
 
         /// <summary>
         ///     Items, displaying in the grid view
@@ -282,12 +285,12 @@ namespace GridBlazor
         /// <summary>
         ///     Get foreign key values for subgrid records
         /// </summary>
-        public object[] GetKeyValues(object item)
+        public string[] GetKeyValues(object item)
         {
-            List<object> values = new List<object>();
+            List<string> values = new List<string>();
             foreach (var key in Keys)
             {
-                object value = item.GetType().GetProperty(key).GetValue(item);
+                string value = item.GetType().GetProperty(key).GetValue(item).ToString();
                 values.Add(value);
             }
             return values.ToArray();
@@ -374,12 +377,75 @@ namespace GridBlazor
                 throw new ArgumentException("parameterName");
 
             if (_query.ContainsKey(parameterName))
+            {
                 _query.Remove(parameterName);
+
+                _settings = new QueryStringGridSettingsProvider(_query);
+                _columnsCollection.SortSettings = _settings.SortSettings;
+                _columnsCollection.UpdateColumnsSorting();
+                ((GridPager)_pager).Query = _query;
+            }
+        }
+
+        public void AddQueryString(string parameterName, string parameterValue)
+        {
+            if (string.IsNullOrEmpty(parameterName))
+                throw new ArgumentException("parameterName");
+            if (parameterName.Equals(QueryStringFilterSettings.DefaultTypeQueryParameter))
+                throw new ArgumentException("parameterName cannot be " + QueryStringFilterSettings.DefaultTypeQueryParameter);
+
+            if (_query.ContainsKey(parameterName))
+            {
+                var parameterValues = _query[parameterName].ToList();
+                parameterValues.Add(parameterValue);
+                _query[parameterName] = new StringValues(parameterValues.ToArray());
+            }
+            else
+                _query.Add(parameterName, parameterValue);
 
             _settings = new QueryStringGridSettingsProvider(_query);
             _columnsCollection.SortSettings = _settings.SortSettings;
             _columnsCollection.UpdateColumnsSorting();
             ((GridPager)_pager).Query = _query;
+        }
+
+        public void ChangeQueryString(string parameterName, string oldParameterValue, string newParameterValue)
+        {
+            if (string.IsNullOrEmpty(parameterName))
+                throw new ArgumentException("parameterName");
+            if (parameterName.Equals(QueryStringFilterSettings.DefaultTypeQueryParameter))
+                throw new ArgumentException("parameterName cannot be " + QueryStringFilterSettings.DefaultTypeQueryParameter);
+
+            if (_query.ContainsKey(parameterName))
+            {
+                var parameterValues = _query[parameterName].ToList();
+                parameterValues.Remove(oldParameterValue);
+                parameterValues.Add(newParameterValue);
+                _query[parameterName] = new StringValues(parameterValues.ToArray());
+
+                _settings = new QueryStringGridSettingsProvider(_query);
+                _columnsCollection.SortSettings = _settings.SortSettings;
+                _columnsCollection.UpdateColumnsSorting();
+                ((GridPager)_pager).Query = _query;
+            }
+        }
+
+        public void RemoveQueryString(string parameterName, string parameterValue)
+        {
+            if (string.IsNullOrEmpty(parameterName))
+                throw new ArgumentException("parameterName");
+
+            if (_query.ContainsKey(parameterName))
+            {
+                var parameterValues = _query[parameterName].ToList();
+                parameterValues.Remove(parameterValue);
+                _query[parameterName] = new StringValues(parameterValues.ToArray());
+
+                _settings = new QueryStringGridSettingsProvider(_query);
+                _columnsCollection.SortSettings = _settings.SortSettings;
+                _columnsCollection.UpdateColumnsSorting();
+                ((GridPager)_pager).Query = _query;
+            }             
         }
 
         public void AddFilterParameter(IGridColumn column, FilterCollection filters)
@@ -490,6 +556,30 @@ namespace GridBlazor
         {
             string query = JsonConvert.SerializeObject(Query, new StringValuesConverter());
             return query.GridStateEncode();
+        }
+
+        public IList<object> GetValuesToDisplay(string columnName, IEnumerable<object> items)
+        {
+            var column = Columns.SingleOrDefault(r => r.Name == columnName);
+            if (column == null)
+                return new List<object>();
+            return ((IGridColumn<T>)column).Group.GetColumnValues((items as IEnumerable<T>).AsQueryable()).ToList();
+        }
+
+        public IEnumerable<object> GetItemsToDisplay(IList<Tuple<string, object>> values, IEnumerable<object> items)
+        {
+            if (values.Count == 0)
+                return items;
+
+            var itms = (items as IEnumerable<T>).AsQueryable();
+            foreach (var value in values)
+            {
+                var column = Columns.SingleOrDefault(r => r.Name == value.Item1);
+                if (column == null)
+                    continue;
+                itms = ((IGridColumn<T>)column).Group.ApplyFilter(itms, value.Item2);
+            }
+            return (IEnumerable<object>)itms;
         }
 
         public async Task UpdateGrid()

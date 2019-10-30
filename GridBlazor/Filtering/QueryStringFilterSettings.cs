@@ -16,7 +16,6 @@ namespace GridBlazor.Filtering
         public const string DefaultTypeQueryParameter = "grid-filter";
         public const string FilterDataDelimeter = "__";
         public const string DefaultClearInitFilterQueryParameter = "grid-clearinitfilter";
-        public readonly IQueryDictionary<StringValues> Query;
         private readonly DefaultFilterColumnCollection _filterValues = new DefaultFilterColumnCollection();
 
         #region Ctor's
@@ -57,6 +56,8 @@ namespace GridBlazor.Filtering
         }
 
         #region IGridFilterSettings Members
+
+        public IQueryDictionary<StringValues> Query { get; }
 
         public IFilterColumnCollection FilteredColumns
         {

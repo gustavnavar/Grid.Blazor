@@ -144,4 +144,10 @@
   <data name="Average" xml:space="preserve">
     <value>Medio</value>
   </data>
+  <data name="ExtSortingText" xml:space="preserve">
+    <value>Trascina qui le colonne per l'ordinamento esteso delle colonne</value>
+  </data>
+  <data name="GroupingText" xml:space="preserve">
+    <value>Trascina qui le colonne per raggruppare le colonne</value>
+  </data>
 </root>

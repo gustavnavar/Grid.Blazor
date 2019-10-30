@@ -46,7 +46,6 @@ namespace GridBlazor
         {
             Array.Resize(ref _filters, _filters.Length + 1);
             _filters[_filters.Length - 1] = new Filter(GridFilterType.Equals.ToString("d"), "");
-            StateHasChanged();
         }
 
         protected void RemoveColumnFilterValue()
@@ -54,7 +53,6 @@ namespace GridBlazor
             if (_filters.Length > 1)
             {
                 Array.Resize(ref _filters, _filters.Length - 1);
-                StateHasChanged();
             }
         }
 

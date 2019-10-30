@@ -1,6 +1,7 @@
 ﻿using GridShared;
 using GridShared.Columns;
 using GridShared.Filtering;
+using GridShared.Grouping;
 using GridShared.Searching;
 using GridShared.Sorting;
 using GridShared.Totals;
@@ -206,6 +207,16 @@ namespace GridMvc.Columns
 
         public abstract IGridCell GetCell(object instance);
 
+        public string GetFormatedValue(object value)
+        {
+            string textValue;
+            if (!string.IsNullOrEmpty(ValuePattern))
+                textValue = string.Format(ValuePattern, value);
+            else
+                textValue = value.ToString();
+            return textValue;
+        }
+
         public abstract bool FilterEnabled { get; set; }
 
         public ColumnFilterValue InitialFilterSettings { get; set; }
@@ -227,8 +238,10 @@ namespace GridMvc.Columns
 
         public abstract IColumnTotals<T> Totals { get; }
 
-        #endregion
+        public abstract IColumnGroup<T> Group { get; }
 
         public abstract IGridCell GetValue(T instance);
+
+        #endregion
     }
 }

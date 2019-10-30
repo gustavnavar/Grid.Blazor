@@ -16,11 +16,11 @@ After that you can filter this column.
 
 Remember that you can also enable filtering for all columns of a grid using the **Filterable** method of the **SGrid** object:
 ```razor
-    @Html.Grid(Model).Columns(columns =>
+    @await Html.Grid(Model).Columns(columns =>
     {
         columns.Add(foo => foo.Title);
         columns.Add(foo => foo.Description);
-    }).Filterable()
+    }).Filterable().RenderAsync()
 ```
 
 **GridMvc** supports several types of columns (specified in the **Add** method):

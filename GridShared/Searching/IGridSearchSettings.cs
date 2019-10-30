@@ -1,7 +1,11 @@
-﻿namespace GridShared.Searching
+﻿using GridShared.Utility;
+using Microsoft.Extensions.Primitives;
+
+namespace GridShared.Searching
 {
-    public class IGridSearchSettings
+    public interface IGridSearchSettings
     {
-        public virtual string SearchValue { get; }
+        IQueryDictionary<StringValues> Query { get; }
+        string SearchValue { get; }
     }
 }

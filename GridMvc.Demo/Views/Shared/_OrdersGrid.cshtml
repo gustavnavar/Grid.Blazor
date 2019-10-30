@@ -28,6 +28,7 @@
         c.Add(o => o.OrderDate, "OrderCustomDate")
             .Titled("Date")
             .SortInitialDirection(GridSortDirection.Descending)
+            .ThenSortByDescending(o => o.OrderID)
             .SetCellCssClassesContraint(o => o.OrderDate.HasValue && o.OrderDate.Value >= DateTime.Parse("1997-01-01") ? "red" : "")
             .Format("{0:yyyy-MM-dd}")
             .SetWidth(110)
@@ -37,7 +38,6 @@
         c.Add(o => o.Customer.CompanyName)
             .Titled("Company")
             .SetWidth(250)
-            .ThenSortByDescending(o => o.OrderID)
             .SetInitialFilter(GridFilterType.StartsWith, "a")
             .SetFilterWidgetType("CustomCompanyNameFilterWidget")
             .Max(true).Min(true);
@@ -64,4 +64,4 @@
     var locale = requestCulture.RequestCulture.UICulture.TwoLetterISOLanguageName;
 }
 
-@Html.Grid(Model).Named("ordersGrid").Columns(columns).SetRowCssClasses(item => item.Customer.IsVip ? "success" : string.Empty).WithPaging(10).SetLanguage(locale).Sortable().Filterable().WithMultipleFilters().Searchable(true, false).WithGridItemsCount().SubGrid("OrderID")
+@await Html.Grid(Model).Named("ordersGrid").Columns(columns).SetRowCssClasses(item => item.Customer.IsVip ? "success" : string.Empty).WithPaging(10).SetLanguage(locale).Sortable().Filterable().WithMultipleFilters().Searchable(true, false).Groupable(true).Selectable(true).WithGridItemsCount().SubGrid("OrderID").RenderAsync()

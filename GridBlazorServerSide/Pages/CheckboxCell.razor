@@ -1,0 +1,22 @@
+@using GridShared.Columns
+@using GridBlazorServerSide.Models
+@implements ICustomGridComponent<Order>
+
+<input type='checkbox' @bind="_value" @onclick="MyClickHandler"/>
+
+@code {
+    [Parameter]
+    public Order Item { get; set; }
+
+    private bool _value;
+
+    protected override void OnParametersSet()
+    {
+        _value = Item.Customer.IsVip;
+    }
+
+    private void MyClickHandler(MouseEventArgs e)
+    {
+        _value = !_value;
+    }
+}

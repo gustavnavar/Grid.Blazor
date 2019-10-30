@@ -16,11 +16,11 @@ Then you have to call the **SetLanguage** function with the required language va
     @using GridMvc
     @model IEnumerable<Foo>
 
-    @Html.Grid(Model).Columns(columns =>
+    @await Html.Grid(Model).Columns(columns =>
     {
         columns.Add(foo => foo.Title);
         columns.Add(foo => foo.Description);
-    }).SetLanguage("de")
+    }).SetLanguage("de").RenderAsync()
 ```
 
 ## Supported languages

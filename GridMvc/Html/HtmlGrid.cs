@@ -1,5 +1,6 @@
 ﻿using GridShared;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using System;
 using System.Collections.Generic;
 
 namespace GridMvc.Html
@@ -50,6 +51,18 @@ namespace GridMvc.Html
             set { _source.SearchingOnlyTextColumns = value; }
         }
 
+        bool IGrid.ExtSortingEnabled
+        {
+            get { return _source.ExtSortingEnabled; }
+            set { _source.ExtSortingEnabled = value; }
+        }
+
+        bool IGrid.GroupingEnabled
+        {
+            get { return _source.GroupingEnabled; }
+            set { _source.GroupingEnabled = value; }
+        }
+
         string IGrid.EmptyGridText
         {
             get { return _source.EmptyGridText; }
@@ -73,6 +86,16 @@ namespace GridMvc.Html
         public string GetState()
         {
             return _source.GetState();
+        }
+
+        public IList<object> GetValuesToDisplay(string columnName, IEnumerable<object> items)
+        {
+            return _source.GetValuesToDisplay(columnName, items);
+        }
+
+        public IEnumerable<object> GetItemsToDisplay(IList<Tuple<string, object>> values, IEnumerable<object> items)
+        {
+            return _source.GetItemsToDisplay(values, items);
         }
     }
 }

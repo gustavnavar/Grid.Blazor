@@ -70,6 +70,7 @@ namespace GridMvc.Demo.Controllers
                 c.Add(o => o.OrderDate, "OrderCustomDate")
                     .Titled("Date")
                     .SortInitialDirection(GridSortDirection.Descending)
+                    .ThenSortByDescending(o => o.OrderID)
                     .SetCellCssClassesContraint(o => o.OrderDate.HasValue && o.OrderDate.Value >= DateTime.Parse("1997-01-01") ? "red" : "")
                     .Format("{0:yyyy-MM-dd}")
                     .SetWidth(110)
@@ -79,7 +80,6 @@ namespace GridMvc.Demo.Controllers
                 c.Add(o => o.Customer.CompanyName)
                     .Titled("Company")
                     .SetWidth(250)
-                    .ThenSortByDescending(o => o.OrderID)
                     .SetInitialFilter(GridFilterType.StartsWith, "a")
                     .SetFilterWidgetType("CustomCompanyNameFilterWidget")
                     .Max(true).Min(true);
@@ -112,6 +112,8 @@ namespace GridMvc.Demo.Controllers
                 .Filterable()
                 .WithMultipleFilters()
                 .Searchable(true, false)
+                .Groupable(true)
+                .Selectable(true)
                 .WithGridItemsCount();
 
             return View(server.Grid);
@@ -188,12 +190,12 @@ namespace GridMvc.Demo.Controllers
                 c.Add(o => o.OrderID)
                     .Titled("Order Number")
                     .SortInitialDirection(GridSortDirection.Descending)
+                    .ThenSortByDescending(o => o.ProductID)
                     .SetWidth(100);
 
                 /* Adding "ProductID" column: */
                 c.Add(o => o.ProductID)
                     .Titled("Product Number")
-                    .ThenSortByDescending(o => o.ProductID)
                     .SetWidth(100);
 
                 /* Adding "ProductName" column: */

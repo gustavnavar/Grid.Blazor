@@ -15,12 +15,12 @@ We asume that you already configured the parent grid and it's working as expecte
 You can enable subgrids for the parent grid using the **SubGrid** method of the **SGrid** object on a view:
 
 ```razor
-    @Html.Grid(Model).Columns(columns =>
+    @await Html.Grid(Model).Columns(columns =>
     {
         columns.Add(c => c.OrderID);
         columns.Add(c => c.Title);
         columns.Add(c => c.Date);
-    }).Named("ordersGrid").SubGrid("OrderID")
+    }).Named("ordersGrid").SubGrid("OrderID").RenderAsync()
 ```
 
 Or you can also use the **SubGrid** method of the **GridServer** object from an action controller:

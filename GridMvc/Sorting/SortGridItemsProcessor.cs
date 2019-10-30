@@ -33,15 +33,47 @@ namespace GridMvc.Sorting
 
         public IQueryable<T> Process(IQueryable<T> items)
         {
-            if (string.IsNullOrEmpty(_settings.ColumnName))
-                return items;
-            //determine gridColumn sortable:
-            var gridColumn = _grid.Columns.FirstOrDefault(c => c.Name == _settings.ColumnName) as IGridColumn<T>;
-            if (gridColumn == null || !gridColumn.SortEnabled)
-                return items;
-            foreach (var columnOrderer in gridColumn.Orderers)
+            if (_settings.SortValues?.Count() > 0)
             {
-                items = columnOrderer.ApplyOrder(items, _settings.Direction);
+                var sortedColumns = _settings.SortValues.OrderBy(r => r.Id).ToList();
+
+                var gridColumn = _grid.Columns.FirstOrDefault(c => c.Name == sortedColumns[0].ColumnName) as IGridColumn<T>;
+                if(gridColumn == null)
+                    return items;
+                items = gridColumn.Orderers.FirstOrDefault().ApplyOrder(items, sortedColumns[0].Direction);
+
+                if(sortedColumns.Count() > 1)
+                {
+                    for(int i = 1; i < sortedColumns.Count(); i++)
+                    {
+                        gridColumn = _grid.Columns.FirstOrDefault(r => r.Name == sortedColumns[i].ColumnName) as IGridColumn<T>;
+                        items = gridColumn.Orderers.FirstOrDefault().ApplyThenBy(items, sortedColumns[i].Direction);
+                    }
+                }
+
+                if (string.IsNullOrEmpty(_settings.ColumnName))
+                    return items;
+                //determine gridColumn sortable:
+                gridColumn = _grid.Columns.FirstOrDefault(c => c.Name == _settings.ColumnName) as IGridColumn<T>;
+                if (gridColumn == null || !gridColumn.SortEnabled)
+                    return items;
+                foreach (var columnOrderer in gridColumn.Orderers)
+                {
+                    items = columnOrderer.ApplyThenBy(items, _settings.Direction);
+                }
+            }
+            else
+            {
+                if (string.IsNullOrEmpty(_settings.ColumnName))
+                    return items;
+                //determine gridColumn sortable:
+                var gridColumn = _grid.Columns.FirstOrDefault(c => c.Name == _settings.ColumnName) as IGridColumn<T>;
+                if (gridColumn == null || !gridColumn.SortEnabled)
+                    return items;
+                foreach (var columnOrderer in gridColumn.Orderers)
+                {
+                    items = columnOrderer.ApplyOrder(items, _settings.Direction);
+                }
             }
             return items;
         }

@@ -1,12 +1,12 @@
-﻿using GridShared;
+﻿using GridBlazor.Pagination;
+using GridBlazor.Resources;
+using GridShared;
 using GridShared.Columns;
 using GridShared.Utility;
-using GridBlazor.Pagination;
 using Microsoft.Extensions.Primitives;
 using System;
 using System.Globalization;
 using System.Threading.Tasks;
-using GridBlazor.Resources;
 
 namespace GridBlazor
 {
@@ -122,6 +122,29 @@ namespace GridBlazor
         {
             _source.SearchingEnabled = enable;
             _source.SearchingOnlyTextColumns = onlyTextColumns;
+            return this;
+        }
+
+        public IGridClient<T> ExtSortable()
+        {
+            return ExtSortable(true);
+        }
+
+        public IGridClient<T> ExtSortable(bool enable)
+        {
+            _source.ExtSortingEnabled = enable;
+            return this;
+        }
+
+        public IGridClient<T> Groupable()
+        {
+            return Groupable(true);
+        }
+
+        public IGridClient<T> Groupable(bool enable)
+        {
+            _source.ExtSortingEnabled = enable;
+            _source.GroupingEnabled = enable;
             return this;
         }
 

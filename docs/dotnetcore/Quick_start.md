@@ -83,7 +83,9 @@ The steps to build a Grid page are:
         }
     ```
 
-2. And finally the view has to render your items collection. You can use an html helper extension. A simple view can be as follows:
+2. And finally the view has to render your items collection. You can use an html helper extension.
+
+    For ASP.NET Core MVC 2.x a simple view can be as follows:
 
     ```razor
         @using GridMvc
@@ -94,6 +96,19 @@ The steps to build a Grid page are:
             columns.Add(foo => foo.Title);
             columns.Add(foo => foo.Description);
         })
+    ```
+    
+    **Important**: Synchronous operations are disallowed in ASP.NET Core MVC 3.x. So it´s recomended to use at least version 2.9.0 of the **GridMvcCore** nuget package and to add the asynchronuos **RenderAsync** method at the the end of the html helper to avoid **InvalidOperationException** associated with synchronous operations: 
+
+    ```razor
+        @using GridMvc
+        @model IEnumerable<Foo>
+
+        @await Html.Grid(Model).Columns(columns =>
+        {
+            columns.Add(foo => foo.Title);
+            columns.Add(foo => foo.Description);
+        }).RenderAsync()
     ```
 
 ## GridServer parameters
@@ -132,7 +147,7 @@ You can use multiple methods of the **SGrid** object to configure a grid. For ex
     {
        columns.Add(foo => foo.Title);
        columns.Add(foo => foo.Description);
-    }).WithPaging(10).SetLanguage("fr").Sortable().Filterable().WithMultipleFilters()
+    }).WithPaging(10).SetLanguage("fr").Sortable().Filterable().WithMultipleFilters().Render()
 ```
   
 ## Grid methods

@@ -11,7 +11,6 @@ namespace GridBlazor.Searching
     public class QueryStringSearchSettings : IGridSearchSettings
     {
         public const string DefaultSearchQueryParameter = "grid-search";
-        public readonly IQueryDictionary<StringValues> Query;
         private string _searchValue;
 
         #region Ctor's
@@ -33,7 +32,9 @@ namespace GridBlazor.Searching
 
         #region IGridSearchSettings Members
 
-        public override string SearchValue
+        public IQueryDictionary<StringValues> Query { get; }
+
+        public string SearchValue
         {
             get { return _searchValue; }
         }

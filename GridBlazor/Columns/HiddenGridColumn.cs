@@ -1,6 +1,7 @@
 ﻿using GridShared;
 using GridShared.Columns;
 using GridShared.Filtering;
+using GridShared.Grouping;
 using GridShared.Searching;
 using GridShared.Sorting;
 using GridShared.Utility;
@@ -61,6 +62,11 @@ namespace GridBlazor.Columns
         }
 
         public override IColumnSearch<T> Search
+        {
+            get { return null; }
+        }
+
+        public override IColumnGroup<T> Group
         {
             get { return null; }
         }
@@ -132,10 +138,8 @@ namespace GridBlazor.Columns
 
                 if (nullReferece || value == null)
                     textValue = string.Empty;
-                else if (!string.IsNullOrEmpty(ValuePattern))
-                    textValue = string.Format(ValuePattern, value);
                 else
-                    textValue = value.ToString();
+                    textValue = GetFormatedValue(value);
             }
             if (!EncodeEnabled && SanitizeEnabled)
             {

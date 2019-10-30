@@ -1,5 +1,6 @@
 ﻿using GridShared.Utility;
 using Microsoft.AspNetCore.Http;
+using Microsoft.Extensions.Primitives;
 using System;
 using System.Globalization;
 
@@ -17,7 +18,7 @@ namespace GridMvc.Pagination
         public const string DefaultPagerViewName = "_GridPager";
         public const string DefaultAjaxPagerViewName = "_AjaxGridPager";
 
-        private readonly IQueryCollection _query;
+        private readonly IQueryDictionary<StringValues> _query;
         private readonly CustomQueryStringBuilder _queryBuilder;
         private int _currentPage;
 
@@ -27,7 +28,7 @@ namespace GridMvc.Pagination
 
         #region ctor's
 
-        public GridPager(IQueryCollection query)
+        public GridPager(IQueryDictionary<StringValues> query)
         {
             if (query == null)
                 throw new Exception("No http context here!");
@@ -61,7 +62,7 @@ namespace GridMvc.Pagination
             get
             {
                 if (_currentPage >= 0) return _currentPage;
-                string currentPageString = _query[ParameterName].ToString() ?? "1";
+                string currentPageString = _query.Get(ParameterName).ToString() ?? "1";
                 if (!int.TryParse(currentPageString, out _currentPage))
                     _currentPage = 1;
                 if (_currentPage > PageCount)

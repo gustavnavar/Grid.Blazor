@@ -7,6 +7,8 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using GridMvc.Searching;
+using GridShared.Utility;
+using Microsoft.Extensions.Primitives;
 
 namespace GridMvc.Tests.Sorting
 {
@@ -18,13 +20,13 @@ namespace GridMvc.Tests.Sorting
     {
         private TestGrid _grid;
         private TestRepository _repo;
-        private IQueryCollection _query;
+        private IQueryDictionary<StringValues> _query;
 
 
         [TestInitialize]
         public void Init()
         {
-            _query = (new DefaultHttpContext()).Request.Query;
+            _query = QueryDictionary<StringValues>.Convert((new DefaultHttpContext()).Request.Query);
 
             _repo = new TestRepository();
             _grid = new TestGrid(_repo.GetAll());

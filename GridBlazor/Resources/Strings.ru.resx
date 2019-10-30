@@ -192,4 +192,10 @@
   <data name="Or" xml:space="preserve">
     <value>Или</value>
   </data>
+  <data name="ExtSortingText" xml:space="preserve">
+    <value>Удалите столбцы здесь для расширенной сортировки столбцов</value>
+  </data>
+  <data name="GroupingText" xml:space="preserve">
+    <value>Перетащите столбцы сюда для группировки столбцов</value>
+  </data>
 </root>
