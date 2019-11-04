@@ -423,6 +423,14 @@ GridMvc = (function ($) {
                 self.applySearchValues(searchText, false);
             });
         });
+        this.jqContainer.find(".grid-search-input").each(function () {
+            $(this).keyup(function (e) {
+                if (e.keyCode === 13) {
+                    var searchText = $(this).val();
+                    self.applySearchValues(searchText, false);
+                }
+            });
+        });
         this.jqContainer.find(".grid-search-clear").each(function () {
             $(this).click(function () {
                 self.applySearchValues("", true);

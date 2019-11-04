@@ -13,7 +13,7 @@ namespace GridShared.Utility
 
         public override StringValues ReadJson(JsonReader reader, Type objectType, StringValues existingValue, bool hasExistingValue, JsonSerializer serializer)
         {
-            string[] values = ((string)reader.Value).Split('|');
+            string[] values = reader.Value.ToString().Split('|');
 
             switch (values.Length)
             {

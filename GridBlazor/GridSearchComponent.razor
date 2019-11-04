@@ -9,7 +9,7 @@
             <span class="input-group-btn input-group-prepend">
                 <button class="btn btn-default btn-outline-secondary grid-search-apply" type="button" @onclick="ApplyButtonClicked"></button>
             </span>
-            <input type="text" class="form-control grid-search-input" @bind="_searchValue" placeholder="@Strings.SearchFor" />
+            <input type="text" class="form-control grid-search-input" @bind="_searchValue" @onkeyup="InputSearchKeyup" placeholder="@Strings.SearchFor" />
             <span class="input-group-btn input-group-append">
                 <button class="btn btn-default btn-outline-secondary grid-search-clear" type="button" @onclick="ClearButtonClicked"></button>
             </span>

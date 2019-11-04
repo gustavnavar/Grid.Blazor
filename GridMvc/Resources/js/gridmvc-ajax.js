@@ -403,6 +403,16 @@
                     });
                 });
 
+                self.jqContainer.find(".grid-search-input").each(function () {
+                    $(this).keyup(function (e) {
+                        if (e.keyCode === 13) {
+                            e.preventDefault();
+                            var searchText = $(this).val();
+                            self.applySearchValues(searchText, false);
+                        }
+                    });
+                });
+
                 self.jqContainer.find(".grid-search-clear").each(function () {
                     $(this).click(function (e) {
                         e.preventDefault();

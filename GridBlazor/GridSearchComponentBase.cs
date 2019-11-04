@@ -3,6 +3,7 @@ using GridBlazor.Pagination;
 using GridBlazor.Searching;
 using GridShared.Utility;
 using Microsoft.AspNetCore.Components;
+using Microsoft.AspNetCore.Components.Web;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
@@ -51,6 +52,12 @@ namespace GridBlazor
         public async Task ApplyButtonClicked()
         {
             await GridComponent.AddSearch(_searchValue);
+        }
+
+        public async Task InputSearchKeyup(KeyboardEventArgs e)
+        {
+            if(e.Key == "Enter")
+                await GridComponent.AddSearch(_searchValue);
         }
 
         public async Task ClearButtonClicked()
