@@ -8,11 +8,11 @@ namespace GridMvc.Tests.DataAnnotations
     [TestClass]
     public class DataAnnotationsProviderTests
     {
-        private IGridAnnotaionsProvider _provider;
+        private IGridAnnotationsProvider _provider;
         [TestInitialize]
         public void Init()
         {
-            _provider = new GridAnnotaionsProvider();
+            _provider = new GridAnnotationsProvider();
         }
 
         [TestMethod]

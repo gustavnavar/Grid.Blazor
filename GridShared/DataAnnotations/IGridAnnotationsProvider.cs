@@ -2,7 +2,7 @@
 
 namespace GridShared.DataAnnotations
 {
-    public interface IGridAnnotaionsProvider
+    public interface IGridAnnotationsProvider
     {
         GridColumnAttribute GetAnnotationForColumn<T>(PropertyInfo pi);
         GridHiddenColumnAttribute GetAnnotationForHiddenColumn<T>(PropertyInfo pi);

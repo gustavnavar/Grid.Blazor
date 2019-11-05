@@ -21,7 +21,7 @@ namespace GridMvc.Tests.Columns
 
             _grid = new TestGrid(items);
 
-            _columns = new GridColumnCollection<TestModel>(_grid, new DefaultColumnBuilder<TestModel>(_grid, new GridAnnotaionsProvider()), _grid.Settings.SortSettings);
+            _columns = new GridColumnCollection<TestModel>(_grid, new DefaultColumnBuilder<TestModel>(_grid, new GridAnnotationsProvider()), _grid.Settings.SortSettings);
         }
 
         [TestMethod]

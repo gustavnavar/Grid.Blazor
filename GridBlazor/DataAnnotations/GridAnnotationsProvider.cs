@@ -5,7 +5,7 @@ using System.Reflection;
 
 namespace GridBlazor.DataAnnotations
 {
-    internal class GridAnnotaionsProvider : IGridAnnotaionsProvider
+    internal class GridAnnotationsProvider : IGridAnnotationsProvider
     {
         public GridColumnAttribute GetAnnotationForColumn<T>(PropertyInfo pi)
         {

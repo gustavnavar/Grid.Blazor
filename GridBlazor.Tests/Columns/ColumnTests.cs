@@ -24,7 +24,7 @@ namespace GridBlazor.Tests.Columns
             var repo = new TestRepository();
             _grid = new TestGrid((q) => repo.GetAllService(columns, q, false, true), true, columns, Thread.CurrentThread.CurrentCulture);
 
-            _columns = new GridColumnCollection<TestModel>(_grid, new DefaultColumnBuilder<TestModel>(_grid, new GridAnnotaionsProvider()), _grid.Settings.SortSettings);
+            _columns = new GridColumnCollection<TestModel>(_grid, new DefaultColumnBuilder<TestModel>(_grid, new GridAnnotationsProvider()), _grid.Settings.SortSettings);
         }
 
         [TestMethod]

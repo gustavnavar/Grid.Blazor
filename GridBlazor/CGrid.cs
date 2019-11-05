@@ -30,7 +30,7 @@ namespace GridBlazor
 
         private IQueryDictionary<StringValues> _query;
         private IGridSettingsProvider _settings;
-        private readonly IGridAnnotaionsProvider _annotations;
+        private readonly IGridAnnotationsProvider _annotations;
         private readonly IColumnBuilder<T> _columnBuilder;
         private readonly GridColumnCollection<T> _columnsCollection;
         private int _displayingItemsCount = -1; // count of displaying items (if using pagination)
@@ -57,7 +57,7 @@ namespace GridBlazor
             EmptyGridText = Strings.DefaultGridEmptyText;
             Language = Strings.Lang;
 
-            _annotations = new GridAnnotaionsProvider();
+            _annotations = new GridAnnotationsProvider();
 
             //Set up column collection:
             _columnBuilder = new DefaultColumnBuilder<T>(this, _annotations);
@@ -91,7 +91,7 @@ namespace GridBlazor
             EmptyGridText = Strings.DefaultGridEmptyText;
             Language = Strings.Lang;
 
-            _annotations = new GridAnnotaionsProvider();
+            _annotations = new GridAnnotationsProvider();
 
             //Set up column collection:
             _columnBuilder = new DefaultColumnBuilder<T>(this, _annotations);

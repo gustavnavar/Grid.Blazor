@@ -6,7 +6,7 @@ using System.Reflection;
 
 namespace GridMvc.DataAnnotations
 {
-    internal class GridAnnotaionsProvider : IGridAnnotaionsProvider
+    internal class GridAnnotationsProvider : IGridAnnotationsProvider
     {
         public GridColumnAttribute GetAnnotationForColumn<T>(PropertyInfo pi)
         {

@@ -12,13 +12,13 @@ namespace GridBlazor.Columns
     /// </summary>
     internal class DefaultColumnBuilder<T> : IColumnBuilder<T>
     {
-        private readonly IGridAnnotaionsProvider _annotaions;
+        private readonly IGridAnnotationsProvider _annotations;
         private readonly CGrid<T> _grid;
 
-        public DefaultColumnBuilder(CGrid<T> grid, IGridAnnotaionsProvider annotaions)
+        public DefaultColumnBuilder(CGrid<T> grid, IGridAnnotationsProvider annotations)
         {
             _grid = grid;
-            _annotaions = annotaions;
+            _annotations = annotations;
         }
 
         #region IColumnBuilder<T> Members
@@ -40,11 +40,11 @@ namespace GridBlazor.Columns
         /// </summary>
         public IGridColumn<T> CreateColumn(PropertyInfo pi)
         {
-            if (!_annotaions.IsColumnMapped(pi))
+            if (!_annotations.IsColumnMapped(pi))
                 return null; //grid column not mapped
 
             IGridColumn<T> column;
-            GridColumnAttribute columnOpt = _annotaions.GetAnnotationForColumn<T>(pi);
+            GridColumnAttribute columnOpt = _annotations.GetAnnotationForColumn<T>(pi);
             if (columnOpt != null)
             {
                 column = CreateColumn(pi, false);
@@ -52,7 +52,7 @@ namespace GridBlazor.Columns
             }
             else
             {
-                GridHiddenColumnAttribute columnHiddenOpt = _annotaions.GetAnnotationForHiddenColumn<T>(pi);
+                GridHiddenColumnAttribute columnHiddenOpt = _annotations.GetAnnotationForHiddenColumn<T>(pi);
                 if (columnHiddenOpt != null)
                 {
                     column = CreateColumn(pi, true);
