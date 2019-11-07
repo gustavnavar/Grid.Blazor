@@ -2,6 +2,7 @@
 @using GridBlazor
 @using GridBlazorServerSide.ColumnCollections
 @using GridBlazorServerSide.Models
+@using GridBlazorServerSide.Resources
 @using GridBlazorServerSide.Services
 @using GridShared.Utility
 @using Microsoft.Extensions.Primitives
@@ -38,14 +39,10 @@ else
     _grid;
     private Task _task;
 
-    protected override void OnInitialized()
-    {
-        CultureInfo.CurrentCulture = new CultureInfo(Startup.Culture);
-    }
-
     protected override async Task OnParametersSetAsync()
     {
         var locale = CultureInfo.CurrentCulture;
+        SharedResource.Culture = locale;
 
         var query = new QueryDictionary<StringValues>
             ();

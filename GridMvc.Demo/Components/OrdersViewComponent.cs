@@ -1,4 +1,5 @@
 ﻿using GridMvc.Demo.Models;
+using GridMvc.Demo.Resources;
 using GridMvc.Pagination;
 using GridMvc.Server;
 using GridShared;
@@ -37,6 +38,10 @@ namespace GridMvc.Demo.Components
                 }
             }
 
+            var requestCulture = HttpContext.Features.Get<IRequestCultureFeature>();
+            var locale = requestCulture.RequestCulture.UICulture.TwoLetterISOLanguageName;
+            SharedResource.Culture = requestCulture.RequestCulture.UICulture;
+
             Action<IGridColumnCollection<Order>> columns = c =>
             {
                 /* Adding not mapped column, that renders body, using inline Razor html helper */
@@ -50,12 +55,12 @@ namespace GridMvc.Demo.Components
                 /* Adding "OrderID" column: */
 
                 c.Add(o => o.OrderID)
-                    .Titled("Number")
+                    .Titled(SharedResource.Number)
                     .SetWidth(100);
 
                 /* Adding "OrderDate" column: */
                 c.Add(o => o.OrderDate, "OrderCustomDate")
-                    .Titled("Date")
+                    .Titled(SharedResource.OrderCustomDate)
                     .SortInitialDirection(GridSortDirection.Descending)
                     .ThenSortByDescending(o => o.OrderID)
                     .SetCellCssClassesContraint(o => o.OrderDate.HasValue && o.OrderDate.Value >= DateTime.Parse("1997-01-01") ? "red" : "")
@@ -65,34 +70,32 @@ namespace GridMvc.Demo.Components
 
                 /* Adding "CompanyName" column: */
                 c.Add(o => o.Customer.CompanyName)
-                    .Titled("Company")
+                    .Titled(SharedResource.CompanyName)
                     .SetWidth(250)
                     .SetInitialFilter(GridFilterType.StartsWith, "a")
                     .SetFilterWidgetType("CustomCompanyNameFilterWidget")
                     .Max(true).Min(true);
 
                 /* Adding "ContactName" column: */
-                c.Add(o => o.Customer.ContactName).Titled("ContactName").SetWidth(250)
+                c.Add(o => o.Customer.ContactName).Titled(SharedResource.ContactName).SetWidth(250)
                     .Max(true).Min(true);
 
                 /* Adding "Freight" column: */
                 c.Add(o => o.Freight)
-                    .Titled("Freight")
+                    .Titled(SharedResource.Freight)
                     .SetWidth(100)
                     .Format("{0:F}")
                     .Sum(true).Average(true).Max(true).Min(true);
 
                 /* Adding "Vip customer" column: */
                 c.Add(o => o.Customer.IsVip)
-                    .Titled("Is Vip")
+                    .Titled(SharedResource.IsVip)
                     .SetWidth(70)
                     .Css("hidden-xs") //hide on phones
                     .RenderValueAs(o => o.Customer.IsVip ? "Yes" : "No");
             };
 
             var repository = new OrdersRepository(_context);
-            var requestCulture = HttpContext.Features.Get<IRequestCultureFeature>();
-            var locale = requestCulture.RequestCulture.UICulture.TwoLetterISOLanguageName;
 
             var server = new GridServer<Order>(repository.GetAll(), query, false, "ordersGrid",
                 columns, 10, locale, GridPager.DefaultAjaxPagerViewName)

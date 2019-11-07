@@ -2,6 +2,7 @@
 @using GridBlazor
 @using GridBlazorServerSide.ColumnCollections
 @using GridBlazorServerSide.Models
+@using GridBlazorServerSide.Resources
 @using GridBlazorServerSide.Services
 @using GridShared.Utility
 @using Microsoft.Extensions.Primitives
@@ -12,7 +13,7 @@
 <h1>Grid Sample</h1>
 
 <p>
-    This page contains a basic grid 
+    This page contains a basic grid
 </p>
 
 <p>
@@ -37,15 +38,12 @@ else
     private CGrid<Order> _grid;
     private Task _task;
 
-    protected override void OnInitialized()
-    {
-        CultureInfo.CurrentCulture = new CultureInfo(Startup.Culture);
-    }
-
     protected override async Task OnParametersSetAsync()
     {
         var locale = CultureInfo.CurrentCulture;
+        SharedResource.Culture = locale;
 
+        var columnCollections = new ColumnCollections();
         var query = new QueryDictionary<StringValues>();
         var client = new GridClient<Order>(q => orderService.GetOrdersGridRows(ColumnCollections.OrderColumns, q),
             query, false, "ordersGrid", ColumnCollections.OrderColumns, locale)

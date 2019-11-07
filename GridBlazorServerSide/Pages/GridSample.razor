@@ -3,6 +3,7 @@
 @using GridBlazor
 @using GridBlazorServerSide.ColumnCollections
 @using GridBlazorServerSide.Models
+@using GridBlazorServerSide.Resources
 @using GridBlazorServerSide.Services
 @using GridShared
 @using GridShared.Utility
@@ -53,14 +54,10 @@ else
     [Parameter]
     public string GridState { get; set; }
 
-    protected override void OnInitialized()
-    {
-        CultureInfo.CurrentCulture = new CultureInfo(Startup.Culture);
-    }
-
     protected override async Task OnParametersSetAsync()
     {
         var locale = CultureInfo.CurrentCulture;
+        SharedResource.Culture = locale;
         Func<object[], Task<ICGrid>> subGrids = async keys =>
         {
             var subGridQuery = new QueryDictionary<StringValues>();
@@ -77,7 +74,7 @@ else
         };
 
         // build the column collection passing an action list with the action executed by the ButtonCell component
-        Action<IGridColumnCollection<Order>> orderColumns = c => 
+        Action<IGridColumnCollection<Order>> orderColumns = c =>
             ColumnCollections.OrderColumnsAllFeatures(c, new List<Action<object>>() { MyAction });
 
         var query = new QueryDictionary<StringValues>();
