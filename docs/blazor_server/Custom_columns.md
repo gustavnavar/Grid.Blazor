@@ -133,7 +133,7 @@ If you pass an ordered collection of items to the Grid constructor and you want 
                 .SortInitialDirection(GridSortDirection.Descending);
 ```
 
-Remember that you can also enable [Sorting](Sorting.md) for all columns of a grid.
+Remember that you can also enable [Sorting](Sorting.md) for all columns of a grid. Sorting at grid level has precendence over sorting defined at column level.
 
 ## Column settings
 

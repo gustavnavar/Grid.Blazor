@@ -17,15 +17,23 @@ Parameter | Description | Example
 grid-page | integer to define the requested page number | grid-page=2
 grid-column | the name of the column that is used for sorting | grid-column=OrderID
 grid-dir | the direction used for sorting: 0 means ascending and 1 means descending | grid-dir=0
+grid-sorting | multiple strings used for extended sorting and grouping | grid-sorting=Customer.CompanyName__0__1
 grid-filter | multiple strings used for filtering  | grid-filter=OrderCustomDate__6__2019-06-11
 grid-clearinitfilter | the name of columns that have an initial filter but it is not used anymore | grid-clearinitfilter=Customer.CompanyName
 grid-search | word to be searched on all columns | grid-search=aro
 
 The parameters **grid-page**, **grid-column**, **grid-dir** abd **grid-search** should appear once in a query string. Their use is straightforward.
 
-But the parameters **grid-filter** and **grid-clearinitfilter** may appear multiple times in a query string. Let's see more detail about them.
+But the parameters **grid-sorting**, **grid-filter** and **grid-clearinitfilter** may appear multiple times in a query string. Let's see more detail about them.
 
-* **grid-filter** is string with 3 parts separated by "__":
+* **grid-sorting** is a string with 3 parts separated by "__":
+    * the first part is the column name that is sorted or grouped
+    * the second part is a number defining the type of sorting:
+        * **0**: Ascending
+        * **1**: Descending
+    * the third part is a number defining the column order in which sorting is applied. It starts with 1 and cannot be repeated
+
+* **grid-filter** is a string with 3 parts separated by "__":
     * the first part is the column name that is filtered
     * the second part is a number defining the type of filter:
         * **1**: Equals
@@ -57,6 +65,7 @@ The folling query string is an example:
 ```url
     /Home/GetOrdersGridRows?
         grid-page=2&
+        grid-sorting=Customer.CompanyName__0__1&
         grid-column=OrderID&
         grid-dir=0&
         grid-filter=Freight__5__50&
@@ -68,7 +77,10 @@ The folling query string is an example:
 ```
 In this example the front-end is requesting:
 * the page **2**
-* for the grid ordered by column **OrderID**
+* for the grid sorted/grouped by column **Customer.CompanyName**
+* **ascending** ordered
+* in first position
+* then ordered by column **OrderID**
 * **ascending** ordered
 * filtered by column **Freight** with a value **greater** than **50**
 * using the **and** condition for the column **Freight**

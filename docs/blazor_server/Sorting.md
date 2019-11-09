@@ -18,7 +18,9 @@ You can enable sorting for all columns of a grid using the **Sortable** method f
             .Sortable()
     ```
 
-In this case you can select sorting pressing the column name on just one column at a time
+In this case you can select sorting pressing the column name on just one column at a time.
+
+Sorting at grid level has precendence over sorting defined at column level.
 
 
 ## Extended Sorting
