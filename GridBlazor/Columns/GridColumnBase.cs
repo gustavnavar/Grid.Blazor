@@ -10,6 +10,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
 using System.Linq.Expressions;
+using System.Reflection;
 
 namespace GridBlazor.Columns
 {
@@ -228,6 +229,27 @@ namespace GridBlazor.Columns
             else
                 textValue = value.ToString();
             return textValue;
+        }
+
+        public ValueTuple<Type,object> GetTypeAndValue(T item)
+        {
+            var names = FieldName.Split('.');
+            PropertyInfo pi = null;
+            var type = item.GetType();
+            object value = item;
+            for (int i = 0; i < names.Length; i++)
+            {
+                pi = type.GetProperty(names[i]);
+                bool isNullable = pi.PropertyType.GetTypeInfo().IsGenericType &&
+                    pi.PropertyType.GetGenericTypeDefinition() == typeof(Nullable<>);
+                type = isNullable ? Nullable.GetUnderlyingType(pi.PropertyType) : pi.PropertyType;
+
+                if (value != null)
+                {
+                    value = pi.GetValue(value, null);
+                }
+            }
+            return (type, value);
         }
 
         public abstract bool FilterEnabled { get; set; }

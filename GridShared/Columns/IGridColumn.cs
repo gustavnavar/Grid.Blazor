@@ -13,6 +13,7 @@ namespace GridShared.Columns
         IFilterableColumn<T>, ISearchableColumn<T>, IGroupableColumn<T>
     {
         IGridCell GetValue(T instance);
+        ValueTuple<Type, object> GetTypeAndValue(T item);
     }
 
     public interface IGridColumn : ISortableColumn, IFilterableColumn

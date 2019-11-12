@@ -1,5 +1,5 @@
 ﻿@using GridBlazor.Resources
-@using System.Reflection
+@using GridShared.Columns
 
 @typeparam T
 @inherits GridReadComponentBase<T>
@@ -9,22 +9,9 @@
 <div class="form-horizontal">
     @foreach (var column in GridComponent.Grid.Columns)
     {
-        var names = column.FieldName.Split('.');
-        PropertyInfo pi = null;
-        var type = Item.GetType();
-        object value = Item;
-        for (int i = 0; i < names.Length; i++)
-        {
-            pi = type.GetProperty(names[i]);
-            bool isNullable = pi.PropertyType.GetTypeInfo().IsGenericType &&
-                pi.PropertyType.GetGenericTypeDefinition() == typeof(Nullable<>);
-            type = isNullable ? Nullable.GetUnderlyingType(pi.PropertyType) : pi.PropertyType;
-
-            if (value != null)
-            {
-                value = pi.GetValue(value, null);
-            }          
-        }
+        var typeAndValue = ((IGridColumn<T>)column).GetTypeAndValue(Item);
+        var type = typeAndValue.Item1;
+        object value = typeAndValue.Item2;
         <div class="form-group" style="@(column.CrudHidden?"display:none;":"")">
             <label for="@column.FieldName" class="control-label col-md-2">@column.Title</label>
             <div class="@(type == typeof(bool)?"col-md-1":"col-md-5")">
