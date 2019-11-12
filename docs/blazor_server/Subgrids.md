@@ -20,8 +20,10 @@ We have to add a service method to get rows for subgrids. An example of this typ
         public ItemsDTO<OrderDetail> GetOrderDetailsGridRows(Action<IGridColumnCollection<OrderDetail>> columns, 
             object[] keys, QueryDictionary<StringValues> query)
         {
+            int orderId;
+            int.TryParse(keys[0].ToString(), out orderId);
             var repository = new OrderDetailsRepository(_context);
-            var server = new GridServer<OrderDetail>(repository.GetForOrder((int)keys[0]), new QueryCollection(query),
+            var server = new GridServer<OrderDetail>(repository.GetForOrder(orderId), new QueryCollection(query),
                 true, "orderDetailssGrid" + keys[0].ToString(), columns)
                     .Sortable()
                     .WithPaging(10)
