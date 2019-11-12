@@ -172,6 +172,7 @@ namespace GridBlazor
 
         public async Task CreateHandler()
         {
+            _item = (T)Activator.CreateInstance(typeof(T));
             ((CGrid<T>)Grid).Mode = GridMode.Create;
             await UpdateGrid();
         }

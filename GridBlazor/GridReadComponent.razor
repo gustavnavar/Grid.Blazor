@@ -10,14 +10,21 @@
     @foreach (var column in GridComponent.Grid.Columns)
     {
         var names = column.FieldName.Split('.');
-        PropertyInfo pi;
+        PropertyInfo pi = null;
+        var type = Item.GetType();
         object value = Item;
         for (int i = 0; i < names.Length; i++)
         {
-            pi = value.GetType().GetProperty(names[i]);
-            value = pi.GetValue(value, null);
+            pi = type.GetProperty(names[i]);
+            bool isNullable = pi.PropertyType.GetTypeInfo().IsGenericType &&
+                pi.PropertyType.GetGenericTypeDefinition() == typeof(Nullable<>);
+            type = isNullable ? Nullable.GetUnderlyingType(pi.PropertyType) : pi.PropertyType;
+
+            if (value != null)
+            {
+                value = pi.GetValue(value, null);
+            }          
         }
-        var type = value.GetType();
         <div class="form-group" style="@(column.CrudHidden?"display:none;":"")">
             <label for="@column.FieldName" class="control-label col-md-2">@column.Title</label>
             <div class="@(type == typeof(bool)?"col-md-1":"col-md-5")">

@@ -220,6 +220,8 @@ namespace GridBlazor.Columns
 
         public string GetFormatedValue(object value)
         {
+            if (value == null)
+                return null;
             string textValue;
             if (!string.IsNullOrEmpty(ValuePattern))
                 textValue = string.Format(ValuePattern, value);
