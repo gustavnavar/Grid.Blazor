@@ -1,6 +1,7 @@
 ﻿using GridBlazorClientSide.Shared.Models;
 using Microsoft.EntityFrameworkCore;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace GridBlazorClientSide.Server.Models
 {
@@ -16,17 +17,22 @@ namespace GridBlazorClientSide.Server.Models
             return EfDbSet.Include("Customer");
         }
 
-        public override Order GetById(object id)
+        public override async Task<Order> GetById(object id)
         {
-            return GetAll().FirstOrDefault(o => o.OrderID == (int) id);
+            return await GetAll().SingleOrDefaultAsync(o => o.OrderID == (int)id);
         }
 
-        public void Update(Order order)
+        public async Task Insert(Order order)
+        {
+            await EfDbSet.AddAsync(order);
+        }
+
+        public async Task Update(Order order)
         {
             var entry = Context.Entry(order);
             if (entry.State == EntityState.Detached)
             {
-                var attachedOrder = GetById(order.OrderID);
+                var attachedOrder = await GetById(order.OrderID);
                 if (attachedOrder != null)
                 {
                     Context.Entry(attachedOrder).CurrentValues.SetValues(order);
@@ -38,6 +44,12 @@ namespace GridBlazorClientSide.Server.Models
             }
         }
 
+        public async Task Delete(object id)
+        {
+            var order = await GetById(id);
+            EfDbSet.Remove(order);
+        }
+
         public void Save()
         {
             Context.SaveChanges();
@@ -46,7 +58,9 @@ namespace GridBlazorClientSide.Server.Models
 
     public interface IOrdersRepository
     {
-        void Update(Order order);
+        Task Insert(Order order);
+        Task Update(Order order);
+        Task Delete(object id);
         void Save();
     }
 }

@@ -1,0 +1,107 @@
+﻿@using GridBlazor.Resources
+@using System.Reflection
+
+@typeparam T
+@inherits GridCreateComponentBase<T>
+
+<h1>@Strings.Add</h1>
+
+<EditForm Model="@Item" OnValidSubmit="@CreateItem">
+    <DataAnnotationsValidator />
+    <ValidationSummary />
+
+    <div class="form-horizontal">
+        @foreach (var column in GridComponent.Grid.Columns)
+        {
+            var names = column.FieldName.Split('.');
+            PropertyInfo pi;
+            object value = Item;
+            for (int i = 0; i < names.Length; i++)
+            {
+                pi = value.GetType().GetProperty(names[i]);
+                value = pi.GetValue(value, null);
+            }
+            var type = value.GetType();
+            <div class="form-group" style="@(column.CrudHidden?"display:none;":"")">
+                <label for="@column.FieldName" class="control-label col-md-2">@column.Title</label>
+                <div class="@(type == typeof(bool)?"col-md-1":"col-md-5")">
+                    @if (column.IsPrimaryKey)
+                    {
+                        <input id="@column.FieldName" class="form-control" readonly="readonly" value="@column.GetFormatedValue(value)" />
+                    }
+                    else if (type == typeof(string))
+                    {
+                        <input id="@column.FieldName" class="form-control" value="@column.GetFormatedValue(value)" @onchange="(e) => ChangeString(e, column)" />
+                    }
+                    else if (type == typeof(DateTime))
+                    {
+                        <input id="@column.FieldName" type="date" class="form-control" value="@column.GetFormatedValue(value)" @onchange="(e) => ChangeDateTime(e, column)" />
+                    }
+                    else if (type == typeof(System.DateTimeOffset))
+                    {
+                        <input id="@column.FieldName" type="date" class="form-control" value="@column.GetFormatedValue(value)" @onchange="(e) => ChangeDateTimeOffset(e, column)" />
+                    }
+                    else if (type == typeof(System.TimeSpan))
+                    {
+                        <input id="@column.FieldName" type="time" class="form-control" value="@column.GetFormatedValue(value)" @onchange="(e) => ChangeTimeSpan(e, column)" />
+                    }
+                    else if (type == typeof(System.Int32))
+                    {
+                        <input id="@column.FieldName" class="form-control" value="@column.GetFormatedValue(value)" @onchange="(e) => ChangeInt32(e, column)" />
+                    }
+                    else if (type == typeof(System.Double))
+                    {
+                        <input id="@column.FieldName" class="form-control" value="@column.GetFormatedValue(value)" @onchange="(e) => ChangeDouble(e, column)" />
+                    }
+                    else if (type == typeof(System.Decimal))
+                    {
+                        <input id="@column.FieldName" class="form-control" value="@column.GetFormatedValue(value)" @onchange="(e) => ChangeDecimal(e, column)" />
+                    }
+                    else if (type == typeof(System.Byte))
+                    {
+                        <input id="@column.FieldName" class="form-control" value="@column.GetFormatedValue(value)" @onchange="(e) => ChangeByte(e, column)" />
+                    }
+                    else if (type == typeof(System.Single))
+                    {
+                        <input id="@column.FieldName" class="form-control" value="@column.GetFormatedValue(value)" @onchange="(e) => ChangeSingle(e, column)" />
+                    }
+                    else if (type == typeof(System.Int64))
+                    {
+                        <input id="@column.FieldName" class="form-control" value="@column.GetFormatedValue(value)" @onchange="(e) => ChangeInt64(e, column)" />
+                    }
+                    else if (type == typeof(System.Int16))
+                    {
+                        <input id="@column.FieldName" class="form-control" value="@column.GetFormatedValue(value)" @onchange="(e) => ChangeInt16(e, column)" />
+                    }
+                    else if (type == typeof(System.UInt64))
+                    {
+                        <input id="@column.FieldName" class="form-control" value="@column.GetFormatedValue(value)" @onchange="(e) => ChangeUInt64(e, column)" />
+                    }
+                    else if (type == typeof(System.UInt32))
+                    {
+                        <input id="@column.FieldName" class="form-control" value="@column.GetFormatedValue(value)" @onchange="(e) => ChangeUInt32(e, column)" />
+                    }
+                    else if (type == typeof(System.UInt16))
+                    {
+                        <input id="@column.FieldName" class="form-control" value="@column.GetFormatedValue(value)" @onchange="(e) => ChangeUInt16(e, column)" />
+                    }
+                    else if (type == typeof(bool))
+                    {
+                        <input id="@column.FieldName" type="checkbox" class="form-control" value="@column.GetFormatedValue(value)" @onchange="(e) => ChangeBool(e, column)" />
+                    }
+                    else
+                    {
+                        <input id="@column.FieldName" class="form-control" readonly="readonly" value="@column.GetFormatedValue(value)" />
+                    }
+                </div>
+            </div>
+        }
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-5">
+                <button type="submit" class="btn btn-primary btn-md">@Strings.Save</button>
+                <button type="button" class="btn btn-primary btn-md" @onclick="BackButtonClicked">@Strings.Back</button>
+            </div>
+        </div>
+    </div>
+</EditForm>

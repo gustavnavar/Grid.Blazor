@@ -47,8 +47,8 @@
                 @if (HasSubGrid)
                 {
                     string values = "";
-                    string[] keyValues = Grid.GetKeyValues(item);
-                    if (keyValues.Length == Grid.Keys.Length)
+                    string[] keyValues = Grid.GetSubGridKeyValues(item);
+                    if (keyValues.Length == Grid.SubGridKeys.Length)
                     {
                         values = string.Join(",", keyValues);
                     }

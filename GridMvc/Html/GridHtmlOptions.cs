@@ -223,7 +223,7 @@ namespace GridMvc.Html
         /// </summary>
         public IGridHtmlOptions<T> SubGrid(params string[] keys)
         {
-            _source.Keys = keys;
+            _source.SubGridKeys = keys;
             return this;
         }
 

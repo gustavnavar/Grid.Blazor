@@ -154,6 +154,22 @@ namespace GridBlazor
             return this;
         }
 
+        public IGridClient<T> Crud(bool enabled, ICrudDataService<T> crudDataService)
+        {
+            return Crud(enabled, enabled, enabled, enabled, crudDataService);
+        }
+
+        public IGridClient<T> Crud(bool createEnabled, bool readEnabled, bool updateEnabled, bool deleteEnabled, 
+            ICrudDataService<T> crudDataService)
+        {
+            _source.CreateEnabled = createEnabled;
+            _source.ReadEnabled = readEnabled;
+            _source.UpdateEnabled = updateEnabled;
+            _source.DeleteEnabled = updateEnabled;
+            _source.CrudDataService = crudDataService;
+            return this;
+        }
+
         public IGridClient<T> EmptyText(string text)
         {
             _source.EmptyGridText = text;
@@ -214,7 +230,7 @@ namespace GridBlazor
         public IGridClient<T> SubGrid(Func<object[], Task<ICGrid>> subGrids, params string[] keys)
         {
             _source.SubGrids = subGrids;
-            _source.Keys = keys;
+            _source.SubGridKeys = keys;
             return this;
         }
 

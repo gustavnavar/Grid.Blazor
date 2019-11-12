@@ -90,7 +90,18 @@ namespace GridBlazor
         /// <summary>
         ///     Enable or disable client grid items selectable feature
         /// </summary>
-        IGridClient<T> Selectable(bool set);
+        IGridClient<T> Selectable(bool enable);
+
+        /// <summary>
+        ///     Enable or disable client grid CRUD
+        /// </summary>
+        IGridClient<T> Crud(bool enabled, ICrudDataService<T> crudDataService);
+
+        /// <summary>
+        ///     Enable or disable client grid CRUD
+        /// </summary>
+        IGridClient<T> Crud(bool createEnabled, bool readEnabled, bool updateEnabled, bool deleteEnabled, 
+            ICrudDataService<T> crudDataService);
 
         /// <summary>
         ///     Setup the text, which will displayed with empty items collection in the grid
@@ -139,7 +150,7 @@ namespace GridBlazor
         ///    Allow grid to show a SubGrid
         /// </summary>
         IGridClient<T> SubGrid(Func<object[], Task<ICGrid>> subGrids, params string[] keys);
-
+        
         /// <summary>
         ///    Get grid object
         /// </summary>

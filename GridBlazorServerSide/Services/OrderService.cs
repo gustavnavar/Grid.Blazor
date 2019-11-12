@@ -6,6 +6,7 @@ using GridShared.Utility;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Primitives;
 using System;
+using System.Threading.Tasks;
 
 namespace GridBlazorServerSide.Services
 {
@@ -55,8 +56,10 @@ namespace GridBlazorServerSide.Services
         public ItemsDTO<OrderDetail> GetOrderDetailsGridRows(Action<IGridColumnCollection<OrderDetail>> columns,
             object[] keys, QueryDictionary<StringValues> query)
         {
+            int orderId;
+            int.TryParse(keys[0].ToString(), out orderId);
             var repository = new OrderDetailsRepository(_context);
-            var server = new GridServer<OrderDetail>(repository.GetForOrder((int)keys[0]), new QueryCollection(query),
+            var server = new GridServer<OrderDetail>(repository.GetForOrder(orderId), new QueryCollection(query),
                 true, "orderDetailssGrid" + keys[0].ToString(), columns)
                     .Sortable()
                     .WithPaging(10)
@@ -68,27 +71,57 @@ namespace GridBlazorServerSide.Services
             return items;
         }
 
-        public Order GetOrder(int OrderId)
+        public async Task<Order> GetOrder(int OrderId)
         {
             var repository = new OrdersRepository(_context);
-            return repository.GetById(OrderId);
+            return await repository.GetById(OrderId);
         }
 
-        public void UpdateAndSave(Order order)
+        public async Task UpdateAndSave(Order order)
         {
             var repository = new OrdersRepository(_context);
-            repository.Update(order);
+            await repository.Update(order);
+            repository.Save();
+        }
+
+        public async Task<Order> Get(params object[] keys)
+        {
+            int orderId;
+            int.TryParse(keys[0].ToString(), out orderId);
+            var repository = new OrdersRepository(_context);
+            return await repository.GetById(orderId);
+        }
+
+        public async Task Insert(Order item)
+        {
+            var repository = new OrdersRepository(_context);
+            await repository.Insert(item);
+            repository.Save();
+        }
+
+        public async Task Update(Order item)
+        {
+            var repository = new OrdersRepository(_context);
+            await repository.Update(item);
+            repository.Save();
+        }
+
+        public async Task Delete(params object[] keys)
+        {
+            var order = Get(keys);
+            var repository = new OrdersRepository(_context);
+            await repository.Delete(order);
             repository.Save();
         }
     }
 
-    public interface IOrderService
+    public interface IOrderService : ICrudDataService<Order>
     {
         ItemsDTO<Order> GetOrdersGridRows(Action<IGridColumnCollection<Order>> columns, QueryDictionary<StringValues> query);
         ItemsDTO<Order> GetOrdersGridRows(QueryDictionary<StringValues> query);
         ItemsDTO<OrderDetail> GetOrderDetailsGridRows(Action<IGridColumnCollection<OrderDetail>> columns,
             object[] keys, QueryDictionary<StringValues> query);
-        Order GetOrder(int OrderId);
-        void UpdateAndSave(Order order);
+        Task<Order> GetOrder(int OrderId);
+        Task UpdateAndSave(Order order);
     }
 }

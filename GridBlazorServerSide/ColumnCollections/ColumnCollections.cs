@@ -151,6 +151,41 @@ namespace GridBlazorServerSide.ColumnCollections
             .RenderValueAs(o => o.Customer.IsVip ? "Yes" : "No");
         };
 
+        public static Action<IGridColumnCollection<Order>> OrderColumnsWithCrud = c =>
+        {
+            /* Adding "OrderID" column: */
+            c.Add(o => o.OrderID).SetPrimaryKey(true).Titled(SharedResource.Number).SetWidth(100);
+
+            /* Adding "CustomerID" column: */
+            c.Add(o => o.CustomerID, true).SetCrudHidden(true);
+
+            /* Adding "EmployeeID" column: */
+            c.Add(o => o.EmployeeID, true).SetCrudHidden(true);
+
+            /* Adding "ShipVia" column: */
+            c.Add(o => o.ShipVia, true).SetCrudHidden(true);
+
+            /* Adding "OrderDate" column: */
+            c.Add(o => o.OrderDate, "OrderCustomDate").Titled(SharedResource.OrderCustomDate)
+            .Format("{0:yyyy-MM-dd}").SetWidth(120);
+
+            /* Adding "CompanyName" column: */
+            c.Add(o => o.Customer.CompanyName).Titled(SharedResource.CompanyName)
+            .SetWidth(250);
+
+            /* Adding "ContactName" column: */
+            c.Add(o => o.Customer.ContactName).Titled(SharedResource.ContactName).SetWidth(250);
+
+            /* Adding "Freight" column: */
+            c.Add(o => o.Freight)
+            .Titled(SharedResource.Freight)
+            .Format("{0:F}");
+
+            /* Adding "Vip customer" column: */
+            c.Add(o => o.Customer.IsVip).Titled(SharedResource.IsVip).SetWidth(70).Css("hidden-xs") //hide on phones
+            .RenderValueAs(o => o.Customer.IsVip ? "Yes" : "No");
+        };
+
         public static Action<IGridColumnCollection<Order>> OrderColumnsWithSubgrids = c =>
         {
             /* Adding "OrderID" column: */

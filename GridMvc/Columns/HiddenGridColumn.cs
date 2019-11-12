@@ -37,7 +37,8 @@ namespace GridMvc.Columns
 
                 _constraint = expression.Compile();
 
-                Name = PropertiesHelper.BuildColumnNameFromMemberExpression(expr);
+                FieldName = PropertiesHelper.BuildColumnNameFromMemberExpression(expr);
+                Name = FieldName;
             }
         }
 

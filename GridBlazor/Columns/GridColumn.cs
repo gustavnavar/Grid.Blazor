@@ -79,7 +79,8 @@ namespace GridBlazor.Columns
                 _search = new DefaultColumnSearch<T, TDataType>(expression);
                 _group = new DefaultColumnGroup<T, TDataType>(expression);
                 //Generate unique column name:
-                Name = PropertiesHelper.BuildColumnNameFromMemberExpression(expr);
+                FieldName = PropertiesHelper.BuildColumnNameFromMemberExpression(expr);
+                Name = FieldName;
                 Title = Name; //Using the same name by default
             }
         }

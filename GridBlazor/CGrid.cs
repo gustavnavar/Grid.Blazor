@@ -38,6 +38,7 @@ namespace GridBlazor
         private IGridPager _pager;
 
         private readonly Func<QueryDictionary<StringValues>, ItemsDTO<T>> _dataService;
+        private ICrudDataService<T> _crudDataService;
 
         public CGrid(string url, IQueryDictionary<StringValues> query, bool renderOnlyRows,
             Action<IGridColumnCollection<T>> columns = null, CultureInfo cultureInfo = null)
@@ -53,7 +54,7 @@ namespace GridBlazor
             _settings = new QueryStringGridSettingsProvider(_query);
             Sanitizer = new Sanitizer();
             if(cultureInfo != null)
-                Strings.CultureInfo = cultureInfo;
+                Strings.Culture = cultureInfo;
             EmptyGridText = Strings.DefaultGridEmptyText;
             Language = Strings.Lang;
 
@@ -69,7 +70,13 @@ namespace GridBlazor
             Pager = new GridPager(query);
 
             ComponentOptions.RenderRowsOnly = renderOnlyRows;
-            columns?.Invoke(Columns);      
+            columns?.Invoke(Columns);
+
+            Mode = GridMode.Grid;
+            CreateEnabled = false;
+            ReadEnabled = false;
+            UpdateEnabled = false;
+            DeleteEnabled = false;
         }
 
         public CGrid(Func<QueryDictionary<StringValues>, ItemsDTO<T>> dataService,
@@ -87,7 +94,7 @@ namespace GridBlazor
             _settings = new QueryStringGridSettingsProvider(_query);
             Sanitizer = new Sanitizer();
             if (cultureInfo != null)
-                Strings.CultureInfo = cultureInfo;
+                Strings.Culture = cultureInfo;
             EmptyGridText = Strings.DefaultGridEmptyText;
             Language = Strings.Lang;
 
@@ -104,6 +111,12 @@ namespace GridBlazor
 
             ComponentOptions.RenderRowsOnly = renderOnlyRows;
             columns?.Invoke(Columns);
+
+            Mode = GridMode.Grid;
+            CreateEnabled = false;
+            ReadEnabled = false;
+            UpdateEnabled = false;
+            DeleteEnabled = false;
         }
 
         /// <summary>
@@ -188,9 +201,23 @@ namespace GridBlazor
         }
 
         /// <summary>
-        ///     Provides url, using by the grid
+        ///     Provides url used by the grid
         /// </summary>
         public string Url { get; set; }
+
+        /// <summary>
+        ///     Provides DataService used by the grid
+        /// </summary>
+        public Func<QueryDictionary<StringValues>, ItemsDTO<T>> DataService { get { return _dataService; } }
+
+        /// <summary>
+        ///     Provides CrudDataService used by the grid
+        /// </summary>
+        public ICrudDataService<T> CrudDataService 
+        { 
+            get { return _crudDataService; }
+            set { _crudDataService = value; }
+        }
 
         /// <summary>
         ///     Provides query, using by the grid
@@ -242,6 +269,31 @@ namespace GridBlazor
         public ISanitizer Sanitizer { get; set; }
 
         /// <summary>
+        ///     Grid mode
+        /// </summary>
+        public GridMode Mode { get; internal set; }
+
+        /// <summary>
+        ///     Get value for creating items
+        /// </summary>
+        public bool CreateEnabled { get; internal set; }
+
+        /// <summary>
+        ///     Get value for reading items
+        /// </summary>
+        public bool ReadEnabled { get; internal set; }
+
+        /// <summary>
+        ///     Get value for updating items
+        /// </summary>
+        public bool UpdateEnabled { get; internal set; }
+
+        /// <summary>
+        ///     Get value for deleting items
+        /// </summary>
+        public bool DeleteEnabled { get; internal set; }
+
+        /// <summary>
         ///     Sum enabled for some columns
         /// </summary>
         public bool IsSumEnabled { get { return Columns.Any(r => ((ICGridColumn)r).IsSumEnabled); } }
@@ -273,7 +325,7 @@ namespace GridBlazor
         /// <summary>
         ///     Keys for subgrid
         /// </summary>
-        public string[] Keys { get; set; }
+        public string[] SubGridKeys { get; set; }
 
         /// <summary>
         ///     Subgrids
@@ -285,13 +337,30 @@ namespace GridBlazor
         /// <summary>
         ///     Get foreign key values for subgrid records
         /// </summary>
-        public string[] GetKeyValues(object item)
+        public string[] GetSubGridKeyValues(object item)
         {
             List<string> values = new List<string>();
-            foreach (var key in Keys)
+            foreach (var key in SubGridKeys)
             {
                 string value = item.GetType().GetProperty(key).GetValue(item).ToString();
                 values.Add(value);
+            }
+            return values.ToArray();
+        }
+
+        /// <summary>
+        ///     Get primary key values for CRUD
+        /// </summary>
+        public object[] GetPrimaryKeyValues(object item)
+        {
+            List<object> values = new List<object>();
+            foreach (var column in Columns)
+            {
+                if (column.IsPrimaryKey)
+                {
+                    var value = item.GetType().GetProperty(column.FieldName).GetValue(item);
+                    values.Add(value);
+                }
             }
             return values.ToArray();
         }

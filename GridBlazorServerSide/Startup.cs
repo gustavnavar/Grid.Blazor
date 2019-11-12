@@ -33,13 +33,13 @@ namespace GridBlazorServerSide
             {
                 options.UseSqlServer(ConnectionString);
                 //options.ConfigureWarnings(warnings => warnings.Ignore(RelationalEventId.QueryClientEvaluationWarning));
-            });
+            }, ServiceLifetime.Transient);
 
             services.AddControllers();
             services.AddRazorPages();
             services.AddServerSideBlazor();
-            services.AddScoped<IOrderService, OrderService>();
-            services.AddScoped<ICustomerService, CustomerService>();
+            services.AddTransient<IOrderService, OrderService>();
+            services.AddTransient<ICustomerService, CustomerService>();
 
             services.AddGridMvc();
 

@@ -9,7 +9,6 @@ using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
 using System.Linq.Expressions;
 
 namespace GridMvc.Columns
@@ -36,10 +35,16 @@ namespace GridMvc.Columns
 
         public string Name { get; set; }
 
+        public string FieldName { get; protected set; }
+
         public bool IsSorted { get; set; }
         public GridSortDirection? Direction { get; set; }
 
         public bool Hidden { get; protected set; }
+
+        public bool CrudHidden { get; protected set; } = false;
+
+        public bool IsPrimaryKey { get; protected set; } = false;
 
         public bool IsSumEnabled { get; internal set; } = false;
 
@@ -174,6 +179,18 @@ namespace GridMvc.Columns
         public IGridColumn<T> Min(bool enabled)
         {
             IsMinEnabled = enabled;
+            return this;
+        }
+
+        public IGridColumn<T> SetCrudHidden(bool enabled)
+        {
+            CrudHidden = enabled;
+            return this;
+        }
+
+        public IGridColumn<T> SetPrimaryKey(bool enabled)
+        {
+            IsPrimaryKey = enabled;
             return this;
         }
 

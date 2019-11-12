@@ -26,7 +26,7 @@ namespace GridBlazor
         /// <summary>
         ///     Keys for subgrid
         /// </summary>
-        string[] Keys { get; }
+        string[] SubGridKeys { get; }
 
         /// <summary>
         ///     Subgrid clients
@@ -38,7 +38,12 @@ namespace GridBlazor
         /// <summary>
         ///     Get foreign key values for subgrid records
         /// </summary>
-        string[] GetKeyValues(object item);
+        string[] GetSubGridKeyValues(object item);
+
+        /// <summary>
+        ///     Get primary key values for CRUD
+        /// </summary>
+        object[] GetPrimaryKeyValues(object item);
 
         IGridSettingsProvider Settings { get; }
 

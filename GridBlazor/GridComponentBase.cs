@@ -1,6 +1,7 @@
 ﻿using GridBlazor.Columns;
 using GridBlazor.Pagination;
 using GridBlazor.Searching;
+using GridShared;
 using GridShared.Columns;
 using GridShared.Filtering;
 using GridShared.Sorting;
@@ -20,6 +21,7 @@ namespace GridBlazor
         internal bool[] IsSubGridVisible;
         internal bool[] InitSubGrid;
         protected IQueryDictionary<Type> _filterComponents;
+        protected T _item;
 
         internal int SelectedRow { get; set; } = -1;
         internal ICGridColumn FirstColumn { get; set; }
@@ -68,7 +70,7 @@ namespace GridBlazor
 
             FirstColumn = (ICGridColumn)Grid.Columns.FirstOrDefault();
 
-            _hasSubGrid = Grid.Keys != null && Grid.Keys.Length > 0;
+            _hasSubGrid = Grid.SubGridKeys != null && Grid.SubGridKeys.Length > 0;
             _hasTotals = Grid.IsSumEnabled || Grid.IsAverageEnabled || Grid.IsMaxEnabled || Grid.IsMinEnabled;
             _requiredTotalsColumn = _hasTotals
                 && FirstColumn != null
@@ -165,6 +167,62 @@ namespace GridBlazor
         public async Task RemoveExtSorting(ColumnOrderValue column)
         {
             Grid.RemoveQueryString(ColumnOrderValue.DefaultSortingQueryParameter, column.ToString());
+            await UpdateGrid();
+        }
+
+        public async Task CreateHandler()
+        {
+            ((CGrid<T>)Grid).Mode = GridMode.Create;
+            await UpdateGrid();
+        }
+
+        public void ReadHandler(object item)
+        {
+            _item = (T)item;
+            ((CGrid<T>)Grid).Mode = GridMode.Read;
+            StateHasChanged();
+        }
+
+        public async Task UpdateHandler(object item)
+        {
+            var keys = Grid.GetPrimaryKeyValues(item);
+            _item = await ((CGrid<T>)Grid).CrudDataService.Get(keys);
+            ((CGrid<T>)Grid).Mode = GridMode.Update;
+            StateHasChanged();
+        }
+
+        public void DeleteHandler(object item)
+        {
+            _item = (T)item;
+            ((CGrid<T>)Grid).Mode = GridMode.Delete;
+            StateHasChanged();
+        }
+
+        public void BackButton()
+        {
+            ((CGrid<T>)Grid).Mode = GridMode.Grid;
+            StateHasChanged();
+        }
+
+        public async Task CreateItem()
+        {
+            await ((CGrid<T>)Grid).CrudDataService.Insert(_item);
+            ((CGrid<T>)Grid).Mode = GridMode.Grid;
+            await UpdateGrid();
+        }
+
+        public async Task UpdateItem()
+        {
+            await ((CGrid<T>)Grid).CrudDataService.Update(_item);
+            ((CGrid<T>)Grid).Mode = GridMode.Grid;
+            await UpdateGrid();
+        }
+
+        public async Task DeleteItem()
+        {
+            var keys = Grid.GetPrimaryKeyValues(_item);
+            await ((CGrid<T>)Grid).CrudDataService.Delete(keys);
+            ((CGrid<T>)Grid).Mode = GridMode.Grid;
             await UpdateGrid();
         }
 

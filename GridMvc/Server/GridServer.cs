@@ -208,7 +208,7 @@ namespace GridMvc.Server
         /// </summary>
         public IGridServer<T> SubGrid(params string[] keys)
         {
-            _source.Keys = keys;
+            _source.SubGridKeys = keys;
             return this;
         }
 

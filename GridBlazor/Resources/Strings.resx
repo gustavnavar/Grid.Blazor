@@ -198,4 +198,22 @@
   <data name="GroupingText" xml:space="preserve">
     <value>Drop columns here for column grouping</value>
   </data>
+  <data name="Add" xml:space="preserve">
+    <value>Add</value>
+  </data>
+  <data name="Back" xml:space="preserve">
+    <value>Back</value>
+  </data>
+  <data name="Delete" xml:space="preserve">
+    <value>Delete</value>
+  </data>
+  <data name="Edit" xml:space="preserve">
+    <value>Edit</value>
+  </data>
+  <data name="Save" xml:space="preserve">
+    <value>Save</value>
+  </data>
+  <data name="View" xml:space="preserve">
+    <value>View</value>
+  </data>
 </root>

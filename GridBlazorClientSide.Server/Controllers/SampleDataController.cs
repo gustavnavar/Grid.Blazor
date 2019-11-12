@@ -116,6 +116,22 @@ namespace GridBlazorClientSide.Server.Controllers
         }
 
         [HttpGet("[action]")]
+        public ActionResult OrderColumnsWithCrud()
+        {
+            var repository = new OrdersRepository(_context);
+            IGridServer<Order> server = new GridServer<Order>(repository.GetAll(), Request.Query,
+                true, "ordersGrid", ColumnCollections.OrderColumnsWithCrud)
+                    .WithPaging(10)
+                    .Sortable()
+                    .Filterable()
+                    .WithMultipleFilters()
+                    .WithGridItemsCount();
+
+            var items = server.ItemsToDisplay;
+            return Ok(items);
+        }
+
+        [HttpGet("[action]")]
         public ActionResult GetOrdersGridAllFeatures()
         {
             var repository = new OrdersRepository(_context);
