@@ -13,9 +13,7 @@
     <div class="form-horizontal">
         @foreach (var column in GridComponent.Grid.Columns)
         {
-            var typeAndValue = ((IGridColumn<T>)column).GetTypeAndValue(Item);
-            var type = typeAndValue.Item1;
-            object value = typeAndValue.Item2;
+            var (type, value) = ((IGridColumn<T>)column).GetTypeAndValue(Item);
             <div class="form-group" style="@(column.CrudHidden?"display:none;":"")">
                 <label for="@column.FieldName" class="control-label col-md-2">@column.Title</label>
                 <div class="@(type == typeof(bool)?"col-md-1":"col-md-5")">
@@ -81,7 +79,14 @@
                     }
                     else if (type == typeof(bool))
                     {
-                        <input id="@column.FieldName" type="checkbox" class="form-control" value="@column.GetFormatedValue(value)" @onchange="(e) => ChangeBool(e, column)" />
+                        if ((bool)value == true)
+                        {
+                            <input id="@column.FieldName" type="checkbox" class="form-control" checked="checked" value="true" @onchange="(e) => ChangeBool(e, column)" />
+                        }
+                        else
+                        {
+                            <input id="@column.FieldName" type="checkbox" class="form-control" value="false" @onchange="(e) => ChangeBool(e, column)" />
+                        }
                     }
                     else
                     {
