@@ -108,7 +108,7 @@ namespace GridBlazorClientSide.Server.Controllers
 
             try
             {
-                await repository.Delete(order);
+                repository.Delete(order);
                 repository.Save();
 
                 return NoContent();

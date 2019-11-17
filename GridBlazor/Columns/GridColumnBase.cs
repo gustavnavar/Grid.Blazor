@@ -47,6 +47,8 @@ namespace GridBlazor.Columns
 
         public bool IsPrimaryKey { get; protected set; } = false;
 
+        public (bool IsSelectKey, Func<T, string> Expression, Func<IEnumerable<Tuple<string, string>>> KeyValues) IsSelectField { get; protected set; } = (false, null, null);
+
         public bool IsSumEnabled { get; internal set; } = false;
 
         public bool IsAverageEnabled { get; internal set; } = false;
@@ -189,6 +191,12 @@ namespace GridBlazor.Columns
             return this;
         }
 
+        public IGridColumn<T> SetSelectField(bool enabled, Func<T,string> expression, Func<IEnumerable<Tuple<string, string>>> keyValues)
+        {
+            IsSelectField = (enabled, expression, keyValues);
+            return this;
+        }
+
         public abstract IGrid ParentGrid { get; }
 
         public virtual IGridColumn<T> Sanitized(bool sanitize)
@@ -231,7 +239,18 @@ namespace GridBlazor.Columns
             return textValue;
         }
 
-        public ValueTuple<Type,object> GetTypeAndValue(T item)
+        public string GetFormatedValue(Func<T, string> expression, object value)
+        {
+            if (value == null)
+                return null;
+            if(typeof(T) == value.GetType())
+            {
+                return expression.Invoke((T)value);
+            }
+            return null;
+        }
+
+        public (Type Type, object Value) GetTypeAndValue(T item)
         {
             var names = FieldName.Split('.');
             PropertyInfo pi = null;

@@ -216,4 +216,7 @@
   <data name="View" xml:space="preserve">
     <value>Смотреть</value>
   </data>
+  <data name="SelectItem" xml:space="preserve">
+    <value>--- выберите предмет ---</value>
+  </data>
 </root>

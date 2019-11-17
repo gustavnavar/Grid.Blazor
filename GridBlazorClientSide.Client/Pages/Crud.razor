@@ -1,6 +1,7 @@
 ﻿@page "/crud"
 @using GridBlazor
 @using GridBlazorClientSide.Client.ColumnCollections
+@using GridBlazorClientSide.Client.Services
 @using GridBlazorClientSide.Shared.Models
 @using GridShared
 @using GridShared.Utility
@@ -8,7 +9,7 @@
 @using System.Globalization
 @using System.Threading.Tasks
 @inject NavigationManager NavigationManager
-@inject ICrudDataService<Order> crudOrderService
+@inject IOrderService orderService
 
 <h1>Grid Sample</h1>
 
@@ -44,10 +45,13 @@ else
 
         var query = new QueryDictionary<StringValues>();
         string url = NavigationManager.BaseUri + "api/SampleData/OrderColumnsWithCrud";
-        var client = new GridClient<Order>(url, query, false, "ordersGrid", ColumnCollections.OrderColumnsWithCrud, locale)
+
+        Action<IGridColumnCollection<Order>> columns = c => ColumnCollections.OrderColumnsWithCrud(c, 
+            orderService.GetAllCustomers, orderService.GetAllEmployees, orderService.GetAllShippers);
+        var client = new GridClient<Order>(url, query, false, "ordersGrid", columns, locale)
             .Sortable()
             .Filterable()
-            .Crud(true, crudOrderService)
+            .Crud(true, orderService)
             .WithMultipleFilters()
             .WithGridItemsCount();
 

@@ -12,6 +12,7 @@ using GridShared.Sorting;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Text.Json.Serialization;
 
 namespace GridBlazorServerSide.Models
@@ -54,12 +55,14 @@ namespace GridBlazorServerSide.Models
         public string ShipRegion { get; set; }
         public string ShipPostalCode { get; set; }
         public string ShipCountry { get; set; }
+        [ForeignKey("CustomerID")]
         public virtual Customer Customer { get; set; }
+        [ForeignKey("EmployeeID")]
         public virtual Employee Employee { get; set; }
         [JsonIgnore]
         public virtual ICollection<OrderDetail> OrderDetails { get; set; }
-
-        //public virtual Shipper Shipper { get; set; }
+        [ForeignKey("ShipVia")]
+        public virtual Shipper Shipper { get; set; }
     }
 
 }

@@ -13,7 +13,8 @@ namespace GridShared.Columns
         IFilterableColumn<T>, ISearchableColumn<T>, IGroupableColumn<T>
     {
         IGridCell GetValue(T instance);
-        ValueTuple<Type, object> GetTypeAndValue(T item);
+        (Type Type, object Value) GetTypeAndValue(T item);
+        (bool IsSelectKey, Func<T,string> Expression, Func<IEnumerable<Tuple<string, string>>> KeyValues) IsSelectField { get; }
     }
 
     public interface IGridColumn : ISortableColumn, IFilterableColumn
@@ -150,6 +151,11 @@ namespace GridShared.Columns
         ///     Sets the column as primary key
         /// </summary>
         IGridColumn<T> SetPrimaryKey(bool enabled);
+
+        /// <summary>
+        ///     Sets the column as select for CRUD components
+        /// </summary>
+        IGridColumn<T> SetSelectField(bool enabled, Func<T, string> expression, Func<IEnumerable<Tuple<string, string>>> keyValues);
     }
 
     public interface IColumn

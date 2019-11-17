@@ -1,4 +1,5 @@
-﻿@using GridBlazor.Resources
+﻿@using GridBlazor.Columns
+@using GridBlazor.Resources
 @using GridShared.Columns
 
 @typeparam T
@@ -9,13 +10,18 @@
 <div class="form-horizontal">
     @foreach (var column in GridComponent.Grid.Columns)
     {
-        var (type, value) = ((IGridColumn<T>)column).GetTypeAndValue(Item);
+        (Type type, object value) = ((IGridColumn<T>)column).GetTypeAndValue(Item);
         <div class="form-group" style="@(column.CrudHidden?"display:none;":"")">
             <label for="@column.FieldName" class="control-label col-md-2">@column.Title</label>
             <div class="@(type == typeof(bool)?"col-md-1":"col-md-5")">
-                @if (type == typeof(bool))
+                @if (((IGridColumn<T>)column).IsSelectField.IsSelectKey)
                 {
-                    if ((bool)value == true)
+                    string text = ((GridColumnBase<T>)column).GetFormatedValue(((IGridColumn<T>)column).IsSelectField.Expression, Item);
+                    <input id="@column.FieldName" class="form-control" readonly="readonly" value="@text" />
+                }
+                else if (type == typeof(bool))
+                {
+                    if (value != null && (bool)value == true)
                     {
                         <input id="@column.FieldName" type="checkbox" class="form-control" disabled="disabled" readonly="readonly" checked="checked" value="true" />
                     }

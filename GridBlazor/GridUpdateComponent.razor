@@ -9,88 +9,370 @@
 <EditForm Model="@Item" OnValidSubmit="@UpdateItem">
     <DataAnnotationsValidator />
     <ValidationSummary />
-
     <div class="form-horizontal">
         @foreach (var column in GridComponent.Grid.Columns)
         {
-            var (type, value) = ((IGridColumn<T>)column).GetTypeAndValue(Item);
+            (Type type, object value) = ((IGridColumn<T>)column).GetTypeAndValue(Item);
             <div class="form-group" style="@(column.CrudHidden?"display:none;":"")">
                 <label for="@column.FieldName" class="control-label col-md-2">@column.Title</label>
                 <div class="@(type == typeof(bool)?"col-md-1":"col-md-5")">
-                    @if (column.IsPrimaryKey)
+                    @if (((IGridColumn<T>)column).IsSelectField.IsSelectKey)
                     {
-                        <input id="@column.FieldName" class="form-control" readonly="readonly" value="@column.GetFormatedValue(value)" />
-                    }
-                    else if (type == typeof(string))
-                    {
-                        <input id="@column.FieldName" class="form-control" value="@column.GetFormatedValue(value)" @onchange="(e) => ChangeString(e, column)" />
-                    }
-                    else if (type == typeof(DateTime))
-                    {
-                        <input id="@column.FieldName" type="date" class="form-control" value="@column.GetFormatedValue(value)" @onchange="(e) => ChangeDateTime(e, column)" />
-                    }
-                    else if (type == typeof(System.DateTimeOffset))
-                    {
-                        <input id="@column.FieldName" type="date" class="form-control" value="@column.GetFormatedValue(value)" @onchange="(e) => ChangeDateTimeOffset(e, column)" />
-                    }
-                    else if (type == typeof(System.TimeSpan))
-                    {
-                        <input id="@column.FieldName" type="time" class="form-control" value="@column.GetFormatedValue(value)" @onchange="(e) => ChangeTimeSpan(e, column)" />
-                    }
-                    else if (type == typeof(System.Int32))
-                    {
-                        <input id="@column.FieldName" class="form-control" value="@column.GetFormatedValue(value)" @onchange="(e) => ChangeInt32(e, column)" />
-                    }
-                    else if (type == typeof(System.Double))
-                    {
-                        <input id="@column.FieldName" class="form-control" value="@column.GetFormatedValue(value)" @onchange="(e) => ChangeDouble(e, column)" />
-                    }
-                    else if (type == typeof(System.Decimal))
-                    {
-                        <input id="@column.FieldName" class="form-control" value="@column.GetFormatedValue(value)" @onchange="(e) => ChangeDecimal(e, column)" />
-                    }
-                    else if (type == typeof(System.Byte))
-                    {
-                        <input id="@column.FieldName" class="form-control" value="@column.GetFormatedValue(value)" @onchange="(e) => ChangeByte(e, column)" />
-                    }
-                    else if (type == typeof(System.Single))
-                    {
-                        <input id="@column.FieldName" class="form-control" value="@column.GetFormatedValue(value)" @onchange="(e) => ChangeSingle(e, column)" />
-                    }
-                    else if (type == typeof(System.Int64))
-                    {
-                        <input id="@column.FieldName" class="form-control" value="@column.GetFormatedValue(value)" @onchange="(e) => ChangeInt64(e, column)" />
-                    }
-                    else if (type == typeof(System.Int16))
-                    {
-                        <input id="@column.FieldName" class="form-control" value="@column.GetFormatedValue(value)" @onchange="(e) => ChangeInt16(e, column)" />
-                    }
-                    else if (type == typeof(System.UInt64))
-                    {
-                        <input id="@column.FieldName" class="form-control" value="@column.GetFormatedValue(value)" @onchange="(e) => ChangeUInt64(e, column)" />
-                    }
-                    else if (type == typeof(System.UInt32))
-                    {
-                        <input id="@column.FieldName" class="form-control" value="@column.GetFormatedValue(value)" @onchange="(e) => ChangeUInt32(e, column)" />
-                    }
-                    else if (type == typeof(System.UInt16))
-                    {
-                        <input id="@column.FieldName" class="form-control" value="@column.GetFormatedValue(value)" @onchange="(e) => ChangeUInt16(e, column)" />
-                    }
-                    else if (type == typeof(bool))
-                    {
-                        if ((bool)value == true)
+                        var keyValues = ((IGridColumn<T>)column).IsSelectField.KeyValues.Invoke();
+                        var selectedValue = column.GetFormatedValue(value);
+                        if (type == typeof(string))
                         {
-                            <input id="@column.FieldName" type="checkbox" class="form-control" checked="checked" value="true" @onchange="(e) => ChangeBool(e, column)" />
+                            <select id="@column.FieldName" name="@column.FieldName" class="form-control" value="@selectedValue" @onchange="(e) => ChangeString(e, column)">
+                                <option value="">@Strings.SelectItem</option>
+                                @foreach (var keyValue in keyValues)
+                                {
+                                    if (keyValue.Item1 == selectedValue)
+                                    {
+                                        <option value="@keyValue.Item1" selected="selected">@keyValue.Item2</option>
+                                    }
+                                    else
+                                    {
+                                        <option value="@keyValue.Item1">@keyValue.Item2</option>
+                                    }
+                                }
+                            </select>
                         }
-                        else
+                        else if (type == typeof(DateTime))
                         {
-                            <input id="@column.FieldName" type="checkbox" class="form-control" value="false" @onchange="(e) => ChangeBool(e, column)" />
+                            <select id="@column.FieldName" name="@column.FieldName" class="form-control" value="@selectedValue" @onchange="(e) => ChangeDateTime(e, column)">
+                                <option value="">@Strings.SelectItem</option>
+                                @foreach (var keyValue in keyValues)
+                                {
+                                    if (keyValue.Item1 == selectedValue)
+                                    {
+                                        <option value="@keyValue.Item1" selected="selected">@keyValue.Item2</option>
+                                    }
+                                    else
+                                    {
+                                        <option value="@keyValue.Item1">@keyValue.Item2</option>
+                                    }
+                                }
+                            </select>
+                        }
+                        else if (type == typeof(System.DateTimeOffset))
+                        {
+                            <select id="@column.FieldName" name="@column.FieldName" class="form-control" value="@selectedValue" @onchange="(e) => ChangeDateTimeOffset(e, column)">
+                                <option value="">@Strings.SelectItem</option>
+                                @foreach (var keyValue in keyValues)
+                                {
+                                    if (keyValue.Item1 == selectedValue)
+                                    {
+                                        <option value="@keyValue.Item1" selected="selected">@keyValue.Item2</option>
+                                    }
+                                    else
+                                    {
+                                        <option value="@keyValue.Item1">@keyValue.Item2</option>
+                                    }
+                                }
+                            </select>
+                        }
+                        else if (type == typeof(System.TimeSpan))
+                        {
+                            <select id="@column.FieldName" name="@column.FieldName" class="form-control" value="@selectedValue" @onchange="(e) => ChangeTimeSpan(e, column)">
+                                <option value="">@Strings.SelectItem</option>
+                                @foreach (var keyValue in keyValues)
+                                {
+                                    if (keyValue.Item1 == selectedValue)
+                                    {
+                                        <option value="@keyValue.Item1" selected="selected">@keyValue.Item2</option>
+                                    }
+                                    else
+                                    {
+                                        <option value="@keyValue.Item1">@keyValue.Item2</option>
+                                    }
+                                }
+                            </select>
+                        }
+                        else if (type == typeof(System.Int32))
+                        {
+                            <select id="@column.FieldName" name="@column.FieldName" class="form-control" value="@selectedValue" @onchange="(e) => ChangeInt32(e, column)">
+                                <option value="">@Strings.SelectItem</option>
+                                @foreach (var keyValue in keyValues)
+                                {
+                                    if (keyValue.Item1 == selectedValue)
+                                    {
+                                        <option value="@keyValue.Item1" selected="selected">@keyValue.Item2</option>
+                                    }
+                                    else
+                                    {
+                                        <option value="@keyValue.Item1">@keyValue.Item2</option>
+                                    }
+                                }
+                            </select>
+                        }
+                        else if (type == typeof(System.Double))
+                        {
+                            <select id="@column.FieldName" name="@column.FieldName" class="form-control" value="@selectedValue" @onchange="(e) => ChangeDouble(e, column)">
+                                <option value="">@Strings.SelectItem</option>
+                                @foreach (var keyValue in keyValues)
+                                {
+                                    if (keyValue.Item1 == selectedValue)
+                                    {
+                                        <option value="@keyValue.Item1" selected="selected">@keyValue.Item2</option>
+                                    }
+                                    else
+                                    {
+                                        <option value="@keyValue.Item1">@keyValue.Item2</option>
+                                    }
+                                }
+                            </select>
+                        }
+                        else if (type == typeof(System.Decimal))
+                        {
+                            <select id="@column.FieldName" name="@column.FieldName" class="form-control" value="@selectedValue" @onchange="(e) => ChangeDecimal(e, column)">
+                                <option value="">@Strings.SelectItem</option>
+                                @foreach (var keyValue in keyValues)
+                                {
+                                    if (keyValue.Item1 == selectedValue)
+                                    {
+                                        <option value="@keyValue.Item1" selected="selected">@keyValue.Item2</option>
+                                    }
+                                    else
+                                    {
+                                        <option value="@keyValue.Item1">@keyValue.Item2</option>
+                                    }
+                                }
+                            </select>
+                        }
+                        else if (type == typeof(System.Byte))
+                        {
+                            <select id="@column.FieldName" name="@column.FieldName" class="form-control" value="@selectedValue" @onchange="(e) => ChangeByte(e, column)">
+                                <option value="">@Strings.SelectItem</option>
+                                @foreach (var keyValue in keyValues)
+                                {
+                                    if (keyValue.Item1 == selectedValue)
+                                    {
+                                        <option value="@keyValue.Item1" selected="selected">@keyValue.Item2</option>
+                                    }
+                                    else
+                                    {
+                                        <option value="@keyValue.Item1">@keyValue.Item2</option>
+                                    }
+                                }
+                            </select>
+                        }
+                        else if (type == typeof(System.Single))
+                        {
+                            <select id="@column.FieldName" name="@column.FieldName" class="form-control" value="@selectedValue" @onchange="(e) => ChangeSingle(e, column)">
+                                <option value="">@Strings.SelectItem</option>
+                                @foreach (var keyValue in keyValues)
+                                {
+                                    if (keyValue.Item1 == selectedValue)
+                                    {
+                                        <option value="@keyValue.Item1" selected="selected">@keyValue.Item2</option>
+                                    }
+                                    else
+                                    {
+                                        <option value="@keyValue.Item1">@keyValue.Item2</option>
+                                    }
+                                }
+                            </select>
+                        }
+                        else if (type == typeof(System.Int64))
+                        {
+                            <select id="@column.FieldName" name="@column.FieldName" class="form-control" value="@selectedValue" @onchange="(e) => ChangeInt64(e, column)">
+                                <option value="">@Strings.SelectItem</option>
+                                @foreach (var keyValue in keyValues)
+                                {
+                                    if (keyValue.Item1 == selectedValue)
+                                    {
+                                        <option value="@keyValue.Item1" selected="selected">@keyValue.Item2</option>
+                                    }
+                                    else
+                                    {
+                                        <option value="@keyValue.Item1">@keyValue.Item2</option>
+                                    }
+                                }
+                            </select>
+                        }
+                        else if (type == typeof(System.Int16))
+                        {
+                            <select id="@column.FieldName" name="@column.FieldName" class="form-control" value="@selectedValue" @onchange="(e) => ChangeInt16(e, column)">
+                                <option value="">@Strings.SelectItem</option>
+                                @foreach (var keyValue in keyValues)
+                                {
+                                    if (keyValue.Item1 == selectedValue)
+                                    {
+                                        <option value="@keyValue.Item1" selected="selected">@keyValue.Item2</option>
+                                    }
+                                    else
+                                    {
+                                        <option value="@keyValue.Item1">@keyValue.Item2</option>
+                                    }
+                                }
+                            </select>
+                        }
+                        else if (type == typeof(System.UInt64))
+                        {
+                            <select id="@column.FieldName" name="@column.FieldName" class="form-control" value="@selectedValue" @onchange="(e) => ChangeUInt64(e, column)">
+                                <option value="">@Strings.SelectItem</option>
+                                @foreach (var keyValue in keyValues)
+                                {
+                                    if (keyValue.Item1 == selectedValue)
+                                    {
+                                        <option value="@keyValue.Item1" selected="selected">@keyValue.Item2</option>
+                                    }
+                                    else
+                                    {
+                                        <option value="@keyValue.Item1">@keyValue.Item2</option>
+                                    }
+                                }
+                            </select>
+                        }
+                        else if (type == typeof(System.UInt32))
+                        {
+                            <select id="@column.FieldName" name="@column.FieldName" class="form-control" value="@selectedValue" @onchange="(e) => ChangeUInt32(e, column)">
+                                <option value="">@Strings.SelectItem</option>
+                                @foreach (var keyValue in keyValues)
+                                {
+                                    if (keyValue.Item1 == selectedValue)
+                                    {
+                                        <option value="@keyValue.Item1" selected="selected">@keyValue.Item2</option>
+                                    }
+                                    else
+                                    {
+                                        <option value="@keyValue.Item1">@keyValue.Item2</option>
+                                    }
+                                }
+                            </select>
+                        }
+                        else if (type == typeof(System.UInt16))
+                        {
+                            <select id="@column.FieldName" name="@column.FieldName" class="form-control" value="@selectedValue" @onchange="(e) => ChangeUInt16(e, column)">
+                                <option value="">@Strings.SelectItem</option>
+                                @foreach (var keyValue in keyValues)
+                                {
+                                    if (keyValue.Item1 == selectedValue)
+                                    {
+                                        <option value="@keyValue.Item1" selected="selected">@keyValue.Item2</option>
+                                    }
+                                    else
+                                    {
+                                        <option value="@keyValue.Item1">@keyValue.Item2</option>
+                                    }
+                                }
+                            </select>
+                        }
+                        else if (type == typeof(bool))
+                        {
+                            if (value != null && (bool)value == true)
+                            {
+                                <select id="@column.FieldName" name="@column.FieldName" class="form-control" value="@selectedValue" @onchange="(e) => ChangeBool(e, column)">
+                                    <option value="">@Strings.SelectItem</option>
+                                    @foreach (var keyValue in keyValues)
+                                    {
+                                        if (keyValue.Item1 == selectedValue)
+                                        {
+                                            <option value="@keyValue.Item1" selected="selected">@keyValue.Item2</option>
+                                        }
+                                        else
+                                        {
+                                            <option value="@keyValue.Item1">@keyValue.Item2</option>
+                                        }
+                                    }
+                                </select>
+                            }
+                            else
+                            {
+                                <select id="@column.FieldName" name="@column.FieldName" class="form-control" value="@selectedValue" @onchange="(e) => ChangeBool(e, column)">
+                                    <option value="">@Strings.SelectItem</option>
+                                    @foreach (var keyValue in keyValues)
+                                    {
+                                        if (keyValue.Item1 == selectedValue)
+                                        {
+                                            <option value="@keyValue.Item1" selected="selected">@keyValue.Item2</option>
+                                        }
+                                        else
+                                        {
+                                            <option value="@keyValue.Item1">@keyValue.Item2</option>
+                                        }
+                                    }
+                                </select>
+                            }
                         }
                     }
                     else
                     {
-                        <input id="@column.FieldName" class="form-control" readonly="readonly" value="@column.GetFormatedValue(value)" />
+                        if (column.IsPrimaryKey)
+                        {
+                            <input id="@column.FieldName" name="@column.FieldName" class="form-control" readonly="readonly" value="@column.GetFormatedValue(value)" />
+                        }
+                        else if (type == typeof(string))
+                        {
+                            <input id="@column.FieldName" name="@column.FieldName" class="form-control" value="@column.GetFormatedValue(value)" @onchange="(e) => ChangeString(e, column)" />
+                        }
+                        else if (type == typeof(DateTime))
+                        {
+                            <input id="@column.FieldName" name="@column.FieldName" type="date" class="form-control" value="@column.GetFormatedValue(value)" @onchange="(e) => ChangeDateTime(e, column)" />
+                        }
+                        else if (type == typeof(System.DateTimeOffset))
+                        {
+                            <input id="@column.FieldName" name="@column.FieldName" type="date" class="form-control" value="@column.GetFormatedValue(value)" @onchange="(e) => ChangeDateTimeOffset(e, column)" />
+                        }
+                        else if (type == typeof(System.TimeSpan))
+                        {
+                            <input id="@column.FieldName" name="@column.FieldName" type="time" class="form-control" value="@column.GetFormatedValue(value)" @onchange="(e) => ChangeTimeSpan(e, column)" />
+                        }
+                        else if (type == typeof(System.Int32))
+                        {
+                            <input id="@column.FieldName" name="@column.FieldName" class="form-control" value="@column.GetFormatedValue(value)" @onchange="(e) => ChangeInt32(e, column)" />
+                        }
+                        else if (type == typeof(System.Double))
+                        {
+                            <input id="@column.FieldName" name="@column.FieldName" class="form-control" value="@column.GetFormatedValue(value)" @onchange="(e) => ChangeDouble(e, column)" />
+                        }
+                        else if (type == typeof(System.Decimal))
+                        {
+                            <input id="@column.FieldName" name="@column.FieldName" class="form-control" value="@column.GetFormatedValue(value)" @onchange="(e) => ChangeDecimal(e, column)" />
+                        }
+                        else if (type == typeof(System.Byte))
+                        {
+                            <input id="@column.FieldName" name="@column.FieldName" class="form-control" value="@column.GetFormatedValue(value)" @onchange="(e) => ChangeByte(e, column)" />
+                        }
+                        else if (type == typeof(System.Single))
+                        {
+                            <input id="@column.FieldName" name="@column.FieldName" class="form-control" value="@column.GetFormatedValue(value)" @onchange="(e) => ChangeSingle(e, column)" />
+                        }
+                        else if (type == typeof(System.Int64))
+                        {
+                            <input id="@column.FieldName" name="@column.FieldName" class="form-control" value="@column.GetFormatedValue(value)" @onchange="(e) => ChangeInt64(e, column)" />
+                        }
+                        else if (type == typeof(System.Int16))
+                        {
+                            <input id="@column.FieldName" name="@column.FieldName" class="form-control" value="@column.GetFormatedValue(value)" @onchange="(e) => ChangeInt16(e, column)" />
+                        }
+                        else if (type == typeof(System.UInt64))
+                        {
+                            <input id="@column.FieldName" name="@column.FieldName" class="form-control" value="@column.GetFormatedValue(value)" @onchange="(e) => ChangeUInt64(e, column)" />
+                        }
+                        else if (type == typeof(System.UInt32))
+                        {
+                            <input id="@column.FieldName" name="@column.FieldName" class="form-control" value="@column.GetFormatedValue(value)" @onchange="(e) => ChangeUInt32(e, column)" />
+                        }
+                        else if (type == typeof(System.UInt16))
+                        {
+                            <input id="@column.FieldName" name="@column.FieldName" class="form-control" value="@column.GetFormatedValue(value)" @onchange="(e) => ChangeUInt16(e, column)" />
+                        }
+                        else if (type == typeof(bool))
+                        {
+                            if (value != null && (bool)value == true)
+                            {
+                                <input id="@column.FieldName" name="@column.FieldName" type="checkbox" class="form-control" checked="checked" value="true" @onchange="(e) => ChangeBool(e, column)" />
+                            }
+                            else
+                            {
+                                <input id="@column.FieldName" name="@column.FieldName" type="checkbox" class="form-control" value="false" @onchange="(e) => ChangeBool(e, column)" />
+                            }
+                        }
+                        else
+                        {
+                            <input id="@column.FieldName" name="@column.FieldName" class="form-control" readonly="readonly" value="@column.GetFormatedValue(value)" />
+                        }
                     }
                 </div>
             </div>

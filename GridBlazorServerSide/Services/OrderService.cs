@@ -134,9 +134,9 @@ namespace GridBlazorServerSide.Services
         {
             using (var context = new NorthwindDbContext(_options))
             {
-                var order = Get(keys);
+                var order = await Get(keys);
                 var repository = new OrdersRepository(context);
-                await repository.Delete(order);
+                repository.Delete(order);
                 repository.Save();
             }
         }

@@ -1,12 +1,14 @@
 using GridBlazorClientSide.Shared.Models;
 using GridShared;
 using Microsoft.AspNetCore.Components;
+using System;
+using System.Collections.Generic;
 using System.Net.Http;
 using System.Threading.Tasks;
 
 namespace GridBlazorClientSide.Client.Services
 {
-    public class OrderService : ICrudDataService<Order>
+    public class OrderService : IOrderService
     {
         private readonly HttpClient _http;
 
@@ -38,5 +40,27 @@ namespace GridBlazorClientSide.Client.Services
             int.TryParse(keys[0].ToString(), out orderId);
             await _http.SendJsonAsync(HttpMethod.Delete, $"api/Order/{orderId}", null);
         }
+
+        public IEnumerable<Tuple<string, string>> GetAllCustomers()
+        {
+            return _http.GetJsonAsync<IEnumerable<Tuple<string, string>>>($"api/SampleData/GetAllCustomers").Result;
+        }
+
+        public IEnumerable<Tuple<string, string>> GetAllEmployees()
+        {
+            return _http.GetJsonAsync<IEnumerable<Tuple<string, string>>>($"api/SampleData/GetAllEmployees").Result;
+        }
+
+        public IEnumerable<Tuple<string, string>> GetAllShippers()
+        {
+            return _http.GetJsonAsync<IEnumerable<Tuple<string, string>>>($"api/SampleData/GetAllShippers").Result;
+        }
+    }
+
+    public interface IOrderService : ICrudDataService<Order>
+    {
+        IEnumerable<Tuple<string, string>> GetAllCustomers();
+        IEnumerable<Tuple<string, string>> GetAllEmployees();
+        IEnumerable<Tuple<string, string>> GetAllShippers();
     }
 }

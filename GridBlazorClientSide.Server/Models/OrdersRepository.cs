@@ -14,7 +14,7 @@ namespace GridBlazorClientSide.Server.Models
 
         public override IQueryable<Order> GetAll()
         {
-            return EfDbSet.Include("Customer");
+            return EfDbSet.Include("Customer").Include("Employee").Include("Shipper");
         }
 
         public override async Task<Order> GetById(object id)
@@ -44,9 +44,8 @@ namespace GridBlazorClientSide.Server.Models
             }
         }
 
-        public async Task Delete(object id)
+        public void Delete(Order order)
         {
-            var order = await GetById(id);
             EfDbSet.Remove(order);
         }
 
@@ -60,7 +59,7 @@ namespace GridBlazorClientSide.Server.Models
     {
         Task Insert(Order order);
         Task Update(Order order);
-        Task Delete(object id);
+        void Delete(Order order);
         void Save();
     }
 }
