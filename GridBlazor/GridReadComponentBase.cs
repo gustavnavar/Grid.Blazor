@@ -1,8 +1,9 @@
-﻿using Microsoft.AspNetCore.Components;
+﻿using GridShared.Columns;
+using Microsoft.AspNetCore.Components;
 
 namespace GridBlazor
 {
-    public class GridReadComponentBase<T> : ComponentBase
+    public class GridReadComponentBase<T> : ComponentBase, ICustomGridComponent<T>
     {
         [CascadingParameter(Name = "GridComponent")]
         protected GridComponent<T> GridComponent { get; set; }

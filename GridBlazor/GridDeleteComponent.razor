@@ -11,8 +11,8 @@
     @foreach (var column in GridComponent.Grid.Columns)
     {
         (Type type, object value) = ((IGridColumn<T>)column).GetTypeAndValue(Item);
-        <div class="form-group" style="@(column.CrudHidden?"display:none;":"")">
-            <label for="@column.FieldName" class="control-label col-md-2">@column.Title</label>
+        <div class="form-group row" style="@(column.CrudHidden?"display:none;":"")">
+            <label for="@column.FieldName" class="col-form-label col-md-2">@column.Title</label>
             <div class="@(type == typeof(bool)?"col-md-1":"col-md-5")">
                 @if (((IGridColumn<T>)column).IsSelectField.IsSelectKey)
                 {
@@ -38,8 +38,8 @@
         </div>
     }
 
-    <div class="form-group">
-        <div class="col-md-offset-2 col-md-5">
+    <div class="form-group row">
+        <div class="col-md-5">
             <button type="submit" class="btn btn-primary btn-md" @onclick="DeleteItem">@Strings.Delete</button>
             <button class="btn btn-primary btn-md" @onclick="BackButtonClicked">@Strings.Back</button>
         </div>

@@ -1,9 +1,10 @@
-﻿using Microsoft.AspNetCore.Components;
+﻿using GridShared.Columns;
+using Microsoft.AspNetCore.Components;
 using System.Threading.Tasks;
 
 namespace GridBlazor
 {
-    public class GridDeleteComponentBase<T> : ComponentBase
+    public class GridDeleteComponentBase<T> : ComponentBase, ICustomGridComponent<T>
     {
         [CascadingParameter(Name = "GridComponent")]
         protected GridComponent<T> GridComponent { get; set; }

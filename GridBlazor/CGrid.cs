@@ -294,6 +294,42 @@ namespace GridBlazor
         public bool DeleteEnabled { get; internal set; }
 
         /// <summary>
+        ///     Get and set custom create component
+        /// </summary>
+        public Type CreateComponent { get; internal set; }
+
+        /// <summary>
+        ///     Get and set custom read component
+        /// </summary>
+        public Type ReadComponent { get; internal set; }
+
+        /// <summary>
+        ///     Get and set custom update component
+        /// </summary>
+        public Type UpdateComponent { get; internal set; }
+
+        /// <summary>
+        ///     Get and set custom Delete component
+        /// </summary>
+        public Type DeleteComponent { get; internal set; }
+
+        public IList<Action<object>> CreateActions { get; internal set; }
+
+        public object CreateObject { get; internal set; }
+
+        public IList<Action<object>> ReadActions { get; internal set; }
+
+        public object ReadObject { get; internal set; }
+
+        public IList<Action<object>> UpdateActions { get; internal set; }
+
+        public object UpdateObject { get; internal set; }
+
+        public IList<Action<object>> DeleteActions { get; internal set; }
+
+        public object DeleteObject { get; internal set; }
+
+        /// <summary>
         ///     Sum enabled for some columns
         /// </summary>
         public bool IsSumEnabled { get { return Columns.Any(r => ((ICGridColumn)r).IsSumEnabled); } }

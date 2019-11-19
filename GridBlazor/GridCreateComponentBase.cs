@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace GridBlazor
 {
-    public class GridCreateComponentBase<T> : ComponentBase
+    public class GridCreateComponentBase<T> : ComponentBase, ICustomGridComponent<T>
     {
         [CascadingParameter(Name = "GridComponent")]
         protected GridComponent<T> GridComponent { get; set; }

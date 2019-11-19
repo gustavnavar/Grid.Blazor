@@ -166,7 +166,7 @@ namespace GridBlazorServerSide.ColumnCollections
             c.Add(o => o.EmployeeID, true).SetSelectField(true, o => o.Employee.EmployeeID.ToString() + " - " + o.Employee.FirstName + " " + o.Employee.LastName, g);
 
             /* Adding "ShipVia" column: */
-            c.Add(o => o.ShipVia, true).SetSelectField(true, o => o.Shipper.ShipperID.ToString() + " - " + o.Shipper.CompanyName, h);
+            c.Add(o => o.ShipVia, true).SetSelectField(true, o => o.Shipper == null ? "" : o.Shipper.ShipperID.ToString() + " - " + o.Shipper.CompanyName, h);
 
 
             /* Adding "OrderDate" column: */

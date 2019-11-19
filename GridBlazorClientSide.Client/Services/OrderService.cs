@@ -3,6 +3,7 @@ using GridShared;
 using Microsoft.AspNetCore.Components;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Net.Http;
 using System.Threading.Tasks;
 
@@ -41,26 +42,51 @@ namespace GridBlazorClientSide.Client.Services
             await _http.SendJsonAsync(HttpMethod.Delete, $"api/Order/{orderId}", null);
         }
 
-        public IEnumerable<Tuple<string, string>> GetAllCustomers()
+        public IList<Tuple<string, string>> GetAllCustomers()
         {
-            return _http.GetJsonAsync<IEnumerable<Tuple<string, string>>>($"api/SampleData/GetAllCustomers").Result;
+            try
+            {
+                var customers = _http.GetJsonAsync<Tuple<string, string>[]>($"api/SampleData/GetAllCustomers").Result;
+                return customers.ToList();
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+                return new List<Tuple<string, string>>();
+            }
         }
 
-        public IEnumerable<Tuple<string, string>> GetAllEmployees()
+        public IList<Tuple<string, string>> GetAllEmployees()
         {
-            return _http.GetJsonAsync<IEnumerable<Tuple<string, string>>>($"api/SampleData/GetAllEmployees").Result;
+            try
+            {
+                return _http.GetJsonAsync<Tuple<string, string>[]>($"api/SampleData/GetAllEmployees").Result;
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+                return new List<Tuple<string, string>>();
+            }
         }
 
-        public IEnumerable<Tuple<string, string>> GetAllShippers()
+        public IList<Tuple<string, string>> GetAllShippers()
         {
-            return _http.GetJsonAsync<IEnumerable<Tuple<string, string>>>($"api/SampleData/GetAllShippers").Result;
+            try
+            {
+                return _http.GetJsonAsync<Tuple<string, string>[]>($"api/SampleData/GetAllShippers").Result;
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+                return new List<Tuple<string, string>>();
+            }
         }
     }
 
     public interface IOrderService : ICrudDataService<Order>
     {
-        IEnumerable<Tuple<string, string>> GetAllCustomers();
-        IEnumerable<Tuple<string, string>> GetAllEmployees();
-        IEnumerable<Tuple<string, string>> GetAllShippers();
+        IList<Tuple<string, string>> GetAllCustomers();
+        IList<Tuple<string, string>> GetAllEmployees();
+        IList<Tuple<string, string>> GetAllShippers();
     }
 }

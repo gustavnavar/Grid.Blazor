@@ -5,6 +5,7 @@ using System;
 using Microsoft.Extensions.Primitives;
 using GridShared.Columns;
 using GridShared.Filtering;
+using System.Collections.Generic;
 
 namespace GridBlazor
 {
@@ -66,5 +67,64 @@ namespace GridBlazor
 
         void RemoveFilterParameter(IGridColumn column);
 
+        /// <summary>
+        ///     Get and set custom create component
+        /// </summary>
+        Type CreateComponent { get; }
+
+        /// <summary>
+        ///     Get and set custom read component
+        /// </summary>
+        Type ReadComponent { get; }
+
+        /// <summary>
+        ///     Get and set custom update component
+        /// </summary>
+        Type UpdateComponent { get; }
+
+        /// <summary>
+        ///     Get and set custom Delete component
+        /// </summary>
+        Type DeleteComponent { get; }
+
+        /// <summary>
+        ///     Get and set custom create component actions
+        /// </summary>
+        IList<Action<object>> CreateActions { get;  }
+
+        /// <summary>
+        ///     Get and set custom create component object
+        /// </summary>
+        object CreateObject { get; }
+
+        /// <summary>
+        ///     Get and set custom read component actions
+        /// </summary>
+        IList<Action<object>> ReadActions { get; }
+
+        /// <summary>
+        ///     Get and set custom read component object
+        /// </summary>
+        object ReadObject { get; }
+
+        /// <summary>
+        ///     Get and set custom update component actions
+        /// </summary>
+        IList<Action<object>> UpdateActions { get; }
+
+        /// <summary>
+        ///     Get and set custom update component object
+        /// </summary>
+        object UpdateObject { get; }
+
+        /// <summary>
+        ///     Get and set custom delete component actions
+        /// </summary>
+        IList<Action<object>> DeleteActions { get; }
+
+        /// <summary>
+        ///     Get and set custom delete component object
+        /// </summary>
+        object DeleteObject { get; }
     }
 }
