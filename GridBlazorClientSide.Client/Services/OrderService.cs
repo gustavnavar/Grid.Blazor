@@ -11,42 +11,44 @@ namespace GridBlazorClientSide.Client.Services
 {
     public class OrderService : IOrderService
     {
-        private readonly HttpClient _http;
+        private readonly HttpClient _httpClient;
+        private readonly string _baseUri;
 
-        public OrderService(HttpClient http)
+        public OrderService(HttpClient httpClient, NavigationManager navigationManager)
         {
-            _http = http;
+            _httpClient = httpClient;
+            _baseUri = navigationManager.BaseUri;
         }
 
         public async Task<Order> Get(params object[] keys)
         {
             int orderId;
             int.TryParse(keys[0].ToString(), out orderId);
-            return await _http.GetJsonAsync<Order>($"api/Order/{orderId}");
+            return await _httpClient.GetJsonAsync<Order>(_baseUri + $"api/Order/{orderId}");
         }
 
         public async Task Insert(Order item)
         {
-            await _http.PostJsonAsync($"api/Order/{item.OrderID}", item);
+            await _httpClient.PostJsonAsync(_baseUri + $"api/Order", item);
         }
 
         public async Task Update(Order item)
         {
-            await _http.PutJsonAsync($"api/Order/{item.OrderID}", item);
+            await _httpClient.PutJsonAsync(_baseUri + $"api/Order/{item.OrderID}", item);
         }
 
         public async Task Delete(params object[] keys)
         {
             int orderId;
             int.TryParse(keys[0].ToString(), out orderId);
-            await _http.SendJsonAsync(HttpMethod.Delete, $"api/Order/{orderId}", null);
+            await _httpClient.SendJsonAsync(HttpMethod.Delete, _baseUri + $"api/Order/{orderId}", null);
         }
 
         public IList<Tuple<string, string>> GetAllCustomers()
         {
             try
             {
-                var customers = _http.GetJsonAsync<Tuple<string, string>[]>($"api/SampleData/GetAllCustomers").Result;
+                var customers = _httpClient.GetJsonAsync<Tuple<string, string>[]>(_baseUri + $"api/SampleData/GetAllCustomers").Result;
                 return customers.ToList();
             }
             catch (Exception e)
@@ -60,7 +62,8 @@ namespace GridBlazorClientSide.Client.Services
         {
             try
             {
-                return _http.GetJsonAsync<Tuple<string, string>[]>($"api/SampleData/GetAllEmployees").Result;
+                var employees = _httpClient.GetJsonAsync<Tuple<string, string>[]>(_baseUri + $"api/SampleData/GetAllEmployees").Result;
+                return employees.ToList();
             }
             catch (Exception e)
             {
@@ -73,7 +76,8 @@ namespace GridBlazorClientSide.Client.Services
         {
             try
             {
-                return _http.GetJsonAsync<Tuple<string, string>[]>($"api/SampleData/GetAllShippers").Result;
+                var shippers = _httpClient.GetJsonAsync<Tuple<string, string>[]>(_baseUri + $"api/SampleData/GetAllShippers").Result;
+                return shippers.ToList();
             }
             catch (Exception e)
             {

@@ -10,9 +10,6 @@
 @using System.Globalization
 @using System.Threading.Tasks
 @inject IOrderService orderService
-@inject ICustomerService customerService
-@inject IEmployeeService employeeService
-@inject IShipperService shipperService
 
 <h1>Grid Sample</h1>
 
@@ -50,8 +47,7 @@ else
         var columnCollections = new ColumnCollections();
         var query = new QueryDictionary<StringValues>();
 
-        Action<IGridColumnCollection<Order>> columns = c => ColumnCollections.OrderColumnsWithCrud(c,
-            customerService.GetAllCustomers, employeeService.GetAllEmployees, shipperService.GetAllShippers);
+        Action<IGridColumnCollection<Order>> columns = c => ColumnCollections.OrderColumnsWithCustomCrud(c);
         var client = new GridClient<Order>(q => orderService.GetOrdersGridRows(columns, q),
             query, false, "ordersGrid", columns, locale)
             .Sortable()

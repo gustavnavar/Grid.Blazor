@@ -46,8 +46,7 @@ else
         var query = new QueryDictionary<StringValues>();
         string url = NavigationManager.BaseUri + "api/SampleData/OrderColumnsWithCrud";
 
-        Action<IGridColumnCollection<Order>> columns = c => ColumnCollections.OrderColumnsWithCrud(c,
-            orderService.GetAllCustomers, orderService.GetAllEmployees, orderService.GetAllShippers);
+        Action<IGridColumnCollection<Order>> columns = c => ColumnCollections.OrderColumnsWithCustomCrud(c);
         var client = new GridClient<Order>(url, query, false, "ordersGrid", columns, locale)
             .Sortable()
             .Filterable()

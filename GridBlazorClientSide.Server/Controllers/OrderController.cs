@@ -18,7 +18,6 @@ namespace GridBlazorClientSide.Server.Controllers
         }
 
         [HttpPost]
-        [ValidateAntiForgeryToken]
         public async Task<ActionResult> Create([FromBody] Order order)
         {
             if (ModelState.IsValid)
@@ -95,8 +94,7 @@ namespace GridBlazorClientSide.Server.Controllers
         }
 
         [HttpDelete("{id}")]
-        [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Delete(long id)
+        public async Task<ActionResult> Delete(int id)
         {
             var repository = new OrdersRepository(_context);
             Order order = await repository.GetById(id);
