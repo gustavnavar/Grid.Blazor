@@ -47,7 +47,9 @@ namespace GridBlazor.Columns
 
         public bool IsPrimaryKey { get; protected set; } = false;
 
-        public (bool IsSelectKey, Func<T, string> Expression, Func<IEnumerable<Tuple<string, string>>> KeyValues) IsSelectField { get; protected set; } = (false, null, null);
+        public (bool IsSelectKey, Func<T, string> Expression, string Url, Func<IEnumerable<SelectItem>> SelectItemExpr) IsSelectField { get; protected set; } = (false, null, null, null);
+
+        public IEnumerable<SelectItem> SelectItems { get; internal set; }
 
         public bool IsSumEnabled { get; internal set; } = false;
 
@@ -191,9 +193,15 @@ namespace GridBlazor.Columns
             return this;
         }
 
-        public IGridColumn<T> SetSelectField(bool enabled, Func<T,string> expression, Func<IEnumerable<Tuple<string, string>>> keyValues)
+        public IGridColumn<T> SetSelectField(bool enabled, Func<T,string> expression, Func<IEnumerable<SelectItem>> selectItemExpr)
         {
-            IsSelectField = (enabled, expression, keyValues);
+            IsSelectField = (enabled, expression, null, selectItemExpr);
+            return this;
+        }
+
+        public IGridColumn<T> SetSelectField(bool enabled, Func<T, string> expression, string url)
+        {
+            IsSelectField = (enabled, expression, url, null);
             return this;
         }
 

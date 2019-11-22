@@ -1,4 +1,5 @@
-﻿using GridShared.Filtering;
+﻿using GridShared;
+using GridShared.Filtering;
 using GridShared.Grouping;
 using GridShared.Searching;
 using GridShared.Sorting;
@@ -14,7 +15,8 @@ namespace GridShared.Columns
     {
         IGridCell GetValue(T instance);
         (Type Type, object Value) GetTypeAndValue(T item);
-        (bool IsSelectKey, Func<T,string> Expression, Func<IEnumerable<Tuple<string, string>>> KeyValues) IsSelectField { get; }
+        (bool IsSelectKey, Func<T,string> Expression, string Url, Func<IEnumerable<SelectItem>> SelectItemExpr) IsSelectField { get; }
+        IEnumerable<SelectItem> SelectItems { get; }
     }
 
     public interface IGridColumn : ISortableColumn, IFilterableColumn
@@ -155,7 +157,12 @@ namespace GridShared.Columns
         /// <summary>
         ///     Sets the column as select for CRUD components
         /// </summary>
-        IGridColumn<T> SetSelectField(bool enabled, Func<T, string> expression, Func<IEnumerable<Tuple<string, string>>> keyValues);
+        IGridColumn<T> SetSelectField(bool enabled, Func<T, string> expression, Func<IEnumerable<SelectItem>> selectItemExpr);
+
+        /// <summary>
+        ///     Sets the column as select for CRUD components
+        /// </summary>
+        IGridColumn<T> SetSelectField(bool enabled, Func<T, string> expression, string url);
     }
 
     public interface IColumn

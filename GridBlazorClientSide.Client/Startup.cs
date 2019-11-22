@@ -1,4 +1,6 @@
 using GridBlazorClientSide.Client.Services;
+using GridBlazorClientSide.Shared.Models;
+using GridShared;
 using Microsoft.AspNetCore.Components.Builder;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -11,7 +13,7 @@ namespace GridBlazorClientSide.Client
 
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddScoped<IOrderService, OrderService>();
+            services.AddScoped<ICrudDataService<Order>, OrderService>();
         }
 
         public void Configure(IComponentsApplicationBuilder app)

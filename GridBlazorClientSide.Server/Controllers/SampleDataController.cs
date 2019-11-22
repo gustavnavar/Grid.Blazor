@@ -2,6 +2,7 @@
 using GridBlazorClientSide.Server.Models;
 using GridBlazorClientSide.Shared.Models;
 using GridMvc.Server;
+using GridShared;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Linq;
@@ -121,7 +122,7 @@ namespace GridBlazorClientSide.Server.Controllers
         {
             var repository = new OrdersRepository(_context);
             IGridServer<Order> server = new GridServer<Order>(repository.GetAll(), Request.Query,
-                true, "ordersGrid", c => ColumnCollections.OrderColumnsWithCrud(c, null, null, null))
+                true, "ordersGrid", ColumnCollections.OrderColumnsWithCrud)
                     .WithPaging(10)
                     .Sortable()
                     .Filterable()
@@ -161,7 +162,7 @@ namespace GridBlazorClientSide.Server.Controllers
         {
             var repository = new CustomersRepository(_context);
             return Ok(repository.GetAll()
-                    .Select(r => new Tuple<string, string>(r.CustomerID, r.CustomerID + " - " + r.CompanyName))
+                    .Select(r => new SelectItem(r.CustomerID, r.CustomerID + " - " + r.CompanyName))
                     .ToList());
         }
 
@@ -170,7 +171,7 @@ namespace GridBlazorClientSide.Server.Controllers
         {
             var repository = new EmployeeRepository(_context);
             return Ok(repository.GetAll()
-                    .Select(r => new Tuple<string, string>(r.EmployeeID.ToString(), r.EmployeeID.ToString() + " - "
+                    .Select(r => new SelectItem(r.EmployeeID.ToString(), r.EmployeeID.ToString() + " - "
                         + r.FirstName + " " + r.LastName))
                     .ToList());
         }
@@ -180,7 +181,7 @@ namespace GridBlazorClientSide.Server.Controllers
         {
             var repository = new ShipperRepository(_context);
             return Ok(repository.GetAll()
-                    .Select(r => new Tuple<string, string>(r.ShipperID.ToString(), r.ShipperID.ToString() + " - "
+                    .Select(r => new SelectItem(r.ShipperID.ToString(), r.ShipperID.ToString() + " - "
                         + r.CompanyName))
                     .ToList());
         }

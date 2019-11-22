@@ -1,6 +1,6 @@
 using GridBlazorServerSide.Data;
+using GridShared;
 using Microsoft.EntityFrameworkCore;
-using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -15,13 +15,13 @@ namespace GridBlazorServerSide.Services
             _options = options;
         }
 
-        public IEnumerable<Tuple<string, string>> GetAllShippers()
+        public IEnumerable<SelectItem> GetAllShippers()
         {
             using (var context = new NorthwindDbContext(_options))
             {
                 ShipperRepository repository = new ShipperRepository(context);
                 return repository.GetAll()
-                    .Select(r => new Tuple<string, string>(r.ShipperID.ToString(), r.ShipperID.ToString() + " - " 
+                    .Select(r => new SelectItem(r.ShipperID.ToString(), r.ShipperID.ToString() + " - " 
                         + r.CompanyName))
                     .ToList();
             }
@@ -30,6 +30,6 @@ namespace GridBlazorServerSide.Services
 
     public interface IShipperService
     {
-        IEnumerable<Tuple<string, string>> GetAllShippers();
+        IEnumerable<SelectItem> GetAllShippers();
     }
 }

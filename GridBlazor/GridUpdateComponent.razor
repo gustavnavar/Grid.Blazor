@@ -18,30 +18,20 @@
                 <div class="@(type == typeof(bool)?"col-md-1":"col-md-5")">
                     @if (((IGridColumn<T>)column).IsSelectField.IsSelectKey)
                     {
-                        IEnumerable<Tuple<string, string>> keyValues;
-                        try
-                        {
-                            keyValues = ((IGridColumn<T>)column).IsSelectField.KeyValues.Invoke();
-                        }
-                        catch (Exception e)
-                        {
-                            Console.WriteLine(e.Message);
-                            keyValues = new List<Tuple<string, string>>();
-                        }
                         var selectedValue = column.GetFormatedValue(value);
                         if (type == typeof(string))
                         {
                             <select id="@column.FieldName" name="@column.FieldName" class="form-control" value="@selectedValue" @onchange="(e) => ChangeString(e, column)">
                                 <option value="">@Strings.SelectItem</option>
-                                @foreach (var keyValue in keyValues)
+                                @foreach (var selectItem in ((IGridColumn<T>)column).SelectItems)
                                 {
-                                    if (keyValue.Item1 == selectedValue)
+                                    if (selectItem.Value == selectedValue)
                                     {
-                                        <option value="@keyValue.Item1" selected="selected">@keyValue.Item2</option>
+                                        <option value="@selectItem.Value" selected="selected">@selectItem.Title</option>
                                     }
                                     else
                                     {
-                                        <option value="@keyValue.Item1">@keyValue.Item2</option>
+                                        <option value="@selectItem.Value">@selectItem.Title</option>
                                     }
                                 }
                             </select>
@@ -50,15 +40,15 @@
                         {
                             <select id="@column.FieldName" name="@column.FieldName" class="form-control" value="@selectedValue" @onchange="(e) => ChangeDateTime(e, column)">
                                 <option value="">@Strings.SelectItem</option>
-                                @foreach (var keyValue in keyValues)
+                                @foreach (var selectItem in ((IGridColumn<T>)column).SelectItems)
                                 {
-                                    if (keyValue.Item1 == selectedValue)
+                                    if (selectItem.Value == selectedValue)
                                     {
-                                        <option value="@keyValue.Item1" selected="selected">@keyValue.Item2</option>
+                                        <option value="@selectItem.Value" selected="selected">@selectItem.Title</option>
                                     }
                                     else
                                     {
-                                        <option value="@keyValue.Item1">@keyValue.Item2</option>
+                                        <option value="@selectItem.Value">@selectItem.Title</option>
                                     }
                                 }
                             </select>
@@ -67,15 +57,15 @@
                         {
                             <select id="@column.FieldName" name="@column.FieldName" class="form-control" value="@selectedValue" @onchange="(e) => ChangeDateTimeOffset(e, column)">
                                 <option value="">@Strings.SelectItem</option>
-                                @foreach (var keyValue in keyValues)
+                                @foreach (var selectItem in ((IGridColumn<T>)column).SelectItems)
                                 {
-                                    if (keyValue.Item1 == selectedValue)
+                                    if (selectItem.Value == selectedValue)
                                     {
-                                        <option value="@keyValue.Item1" selected="selected">@keyValue.Item2</option>
+                                        <option value="@selectItem.Value" selected="selected">@selectItem.Title</option>
                                     }
                                     else
                                     {
-                                        <option value="@keyValue.Item1">@keyValue.Item2</option>
+                                        <option value="@selectItem.Value">@selectItem.Title</option>
                                     }
                                 }
                             </select>
@@ -84,15 +74,15 @@
                         {
                             <select id="@column.FieldName" name="@column.FieldName" class="form-control" value="@selectedValue" @onchange="(e) => ChangeTimeSpan(e, column)">
                                 <option value="">@Strings.SelectItem</option>
-                                @foreach (var keyValue in keyValues)
+                                @foreach (var selectItem in ((IGridColumn<T>)column).SelectItems)
                                 {
-                                    if (keyValue.Item1 == selectedValue)
+                                    if (selectItem.Value == selectedValue)
                                     {
-                                        <option value="@keyValue.Item1" selected="selected">@keyValue.Item2</option>
+                                        <option value="@selectItem.Value" selected="selected">@selectItem.Title</option>
                                     }
                                     else
                                     {
-                                        <option value="@keyValue.Item1">@keyValue.Item2</option>
+                                        <option value="@selectItem.Value">@selectItem.Title</option>
                                     }
                                 }
                             </select>
@@ -101,15 +91,15 @@
                         {
                             <select id="@column.FieldName" name="@column.FieldName" class="form-control" value="@selectedValue" @onchange="(e) => ChangeInt32(e, column)">
                                 <option value="">@Strings.SelectItem</option>
-                                @foreach (var keyValue in keyValues)
+                                @foreach (var selectItem in ((IGridColumn<T>)column).SelectItems)
                                 {
-                                    if (keyValue.Item1 == selectedValue)
+                                    if (selectItem.Value == selectedValue)
                                     {
-                                        <option value="@keyValue.Item1" selected="selected">@keyValue.Item2</option>
+                                        <option value="@selectItem.Value" selected="selected">@selectItem.Title</option>
                                     }
                                     else
                                     {
-                                        <option value="@keyValue.Item1">@keyValue.Item2</option>
+                                        <option value="@selectItem.Value">@selectItem.Title</option>
                                     }
                                 }
                             </select>
@@ -118,15 +108,15 @@
                         {
                             <select id="@column.FieldName" name="@column.FieldName" class="form-control" value="@selectedValue" @onchange="(e) => ChangeDouble(e, column)">
                                 <option value="">@Strings.SelectItem</option>
-                                @foreach (var keyValue in keyValues)
+                                @foreach (var selectItem in ((IGridColumn<T>)column).SelectItems)
                                 {
-                                    if (keyValue.Item1 == selectedValue)
+                                    if (selectItem.Value == selectedValue)
                                     {
-                                        <option value="@keyValue.Item1" selected="selected">@keyValue.Item2</option>
+                                        <option value="@selectItem.Value" selected="selected">@selectItem.Title</option>
                                     }
                                     else
                                     {
-                                        <option value="@keyValue.Item1">@keyValue.Item2</option>
+                                        <option value="@selectItem.Value">@selectItem.Title</option>
                                     }
                                 }
                             </select>
@@ -135,15 +125,15 @@
                         {
                             <select id="@column.FieldName" name="@column.FieldName" class="form-control" value="@selectedValue" @onchange="(e) => ChangeDecimal(e, column)">
                                 <option value="">@Strings.SelectItem</option>
-                                @foreach (var keyValue in keyValues)
+                                @foreach (var selectItem in ((IGridColumn<T>)column).SelectItems)
                                 {
-                                    if (keyValue.Item1 == selectedValue)
+                                    if (selectItem.Value == selectedValue)
                                     {
-                                        <option value="@keyValue.Item1" selected="selected">@keyValue.Item2</option>
+                                        <option value="@selectItem.Value" selected="selected">@selectItem.Title</option>
                                     }
                                     else
                                     {
-                                        <option value="@keyValue.Item1">@keyValue.Item2</option>
+                                        <option value="@selectItem.Value">@selectItem.Title</option>
                                     }
                                 }
                             </select>
@@ -152,15 +142,15 @@
                         {
                             <select id="@column.FieldName" name="@column.FieldName" class="form-control" value="@selectedValue" @onchange="(e) => ChangeByte(e, column)">
                                 <option value="">@Strings.SelectItem</option>
-                                @foreach (var keyValue in keyValues)
+                                @foreach (var selectItem in ((IGridColumn<T>)column).SelectItems)
                                 {
-                                    if (keyValue.Item1 == selectedValue)
+                                    if (selectItem.Value == selectedValue)
                                     {
-                                        <option value="@keyValue.Item1" selected="selected">@keyValue.Item2</option>
+                                        <option value="@selectItem.Value" selected="selected">@selectItem.Title</option>
                                     }
                                     else
                                     {
-                                        <option value="@keyValue.Item1">@keyValue.Item2</option>
+                                        <option value="@selectItem.Value">@selectItem.Title</option>
                                     }
                                 }
                             </select>
@@ -169,15 +159,15 @@
                         {
                             <select id="@column.FieldName" name="@column.FieldName" class="form-control" value="@selectedValue" @onchange="(e) => ChangeSingle(e, column)">
                                 <option value="">@Strings.SelectItem</option>
-                                @foreach (var keyValue in keyValues)
+                                @foreach (var selectItem in ((IGridColumn<T>)column).SelectItems)
                                 {
-                                    if (keyValue.Item1 == selectedValue)
+                                    if (selectItem.Value == selectedValue)
                                     {
-                                        <option value="@keyValue.Item1" selected="selected">@keyValue.Item2</option>
+                                        <option value="@selectItem.Value" selected="selected">@selectItem.Title</option>
                                     }
                                     else
                                     {
-                                        <option value="@keyValue.Item1">@keyValue.Item2</option>
+                                        <option value="@selectItem.Value">@selectItem.Title</option>
                                     }
                                 }
                             </select>
@@ -186,15 +176,15 @@
                         {
                             <select id="@column.FieldName" name="@column.FieldName" class="form-control" value="@selectedValue" @onchange="(e) => ChangeInt64(e, column)">
                                 <option value="">@Strings.SelectItem</option>
-                                @foreach (var keyValue in keyValues)
+                                @foreach (var selectItem in ((IGridColumn<T>)column).SelectItems)
                                 {
-                                    if (keyValue.Item1 == selectedValue)
+                                    if (selectItem.Value == selectedValue)
                                     {
-                                        <option value="@keyValue.Item1" selected="selected">@keyValue.Item2</option>
+                                        <option value="@selectItem.Value" selected="selected">@selectItem.Title</option>
                                     }
                                     else
                                     {
-                                        <option value="@keyValue.Item1">@keyValue.Item2</option>
+                                        <option value="@selectItem.Value">@selectItem.Title</option>
                                     }
                                 }
                             </select>
@@ -203,15 +193,15 @@
                         {
                             <select id="@column.FieldName" name="@column.FieldName" class="form-control" value="@selectedValue" @onchange="(e) => ChangeInt16(e, column)">
                                 <option value="">@Strings.SelectItem</option>
-                                @foreach (var keyValue in keyValues)
+                                @foreach (var selectItem in ((IGridColumn<T>)column).SelectItems)
                                 {
-                                    if (keyValue.Item1 == selectedValue)
+                                    if (selectItem.Value == selectedValue)
                                     {
-                                        <option value="@keyValue.Item1" selected="selected">@keyValue.Item2</option>
+                                        <option value="@selectItem.Value" selected="selected">@selectItem.Title</option>
                                     }
                                     else
                                     {
-                                        <option value="@keyValue.Item1">@keyValue.Item2</option>
+                                        <option value="@selectItem.Value">@selectItem.Title</option>
                                     }
                                 }
                             </select>
@@ -220,15 +210,15 @@
                         {
                             <select id="@column.FieldName" name="@column.FieldName" class="form-control" value="@selectedValue" @onchange="(e) => ChangeUInt64(e, column)">
                                 <option value="">@Strings.SelectItem</option>
-                                @foreach (var keyValue in keyValues)
+                                @foreach (var selectItem in ((IGridColumn<T>)column).SelectItems)
                                 {
-                                    if (keyValue.Item1 == selectedValue)
+                                    if (selectItem.Value == selectedValue)
                                     {
-                                        <option value="@keyValue.Item1" selected="selected">@keyValue.Item2</option>
+                                        <option value="@selectItem.Value" selected="selected">@selectItem.Title</option>
                                     }
                                     else
                                     {
-                                        <option value="@keyValue.Item1">@keyValue.Item2</option>
+                                        <option value="@selectItem.Value">@selectItem.Title</option>
                                     }
                                 }
                             </select>
@@ -237,15 +227,15 @@
                         {
                             <select id="@column.FieldName" name="@column.FieldName" class="form-control" value="@selectedValue" @onchange="(e) => ChangeUInt32(e, column)">
                                 <option value="">@Strings.SelectItem</option>
-                                @foreach (var keyValue in keyValues)
+                                @foreach (var selectItem in ((IGridColumn<T>)column).SelectItems)
                                 {
-                                    if (keyValue.Item1 == selectedValue)
+                                    if (selectItem.Value == selectedValue)
                                     {
-                                        <option value="@keyValue.Item1" selected="selected">@keyValue.Item2</option>
+                                        <option value="@selectItem.Value" selected="selected">@selectItem.Title</option>
                                     }
                                     else
                                     {
-                                        <option value="@keyValue.Item1">@keyValue.Item2</option>
+                                        <option value="@selectItem.Value">@selectItem.Title</option>
                                     }
                                 }
                             </select>
@@ -254,15 +244,15 @@
                         {
                             <select id="@column.FieldName" name="@column.FieldName" class="form-control" value="@selectedValue" @onchange="(e) => ChangeUInt16(e, column)">
                                 <option value="">@Strings.SelectItem</option>
-                                @foreach (var keyValue in keyValues)
+                                @foreach (var selectItem in ((IGridColumn<T>)column).SelectItems)
                                 {
-                                    if (keyValue.Item1 == selectedValue)
+                                    if (selectItem.Value == selectedValue)
                                     {
-                                        <option value="@keyValue.Item1" selected="selected">@keyValue.Item2</option>
+                                        <option value="@selectItem.Value" selected="selected">@selectItem.Title</option>
                                     }
                                     else
                                     {
-                                        <option value="@keyValue.Item1">@keyValue.Item2</option>
+                                        <option value="@selectItem.Value">@selectItem.Title</option>
                                     }
                                 }
                             </select>
@@ -273,15 +263,15 @@
                             {
                                 <select id="@column.FieldName" name="@column.FieldName" class="form-control" value="@selectedValue" @onchange="(e) => ChangeBool(e, column)">
                                     <option value="">@Strings.SelectItem</option>
-                                    @foreach (var keyValue in keyValues)
+                                    @foreach (var selectItem in ((IGridColumn<T>)column).SelectItems)
                                     {
-                                        if (keyValue.Item1 == selectedValue)
+                                        if (selectItem.Value == selectedValue)
                                         {
-                                            <option value="@keyValue.Item1" selected="selected">@keyValue.Item2</option>
+                                            <option value="@selectItem.Value" selected="selected">@selectItem.Title</option>
                                         }
                                         else
                                         {
-                                            <option value="@keyValue.Item1">@keyValue.Item2</option>
+                                            <option value="@selectItem.Value">@selectItem.Title</option>
                                         }
                                     }
                                 </select>
@@ -290,15 +280,15 @@
                             {
                                 <select id="@column.FieldName" name="@column.FieldName" class="form-control" value="@selectedValue" @onchange="(e) => ChangeBool(e, column)">
                                     <option value="">@Strings.SelectItem</option>
-                                    @foreach (var keyValue in keyValues)
+                                    @foreach (var selectItem in ((IGridColumn<T>)column).SelectItems)
                                     {
-                                        if (keyValue.Item1 == selectedValue)
+                                        if (selectItem.Value == selectedValue)
                                         {
-                                            <option value="@keyValue.Item1" selected="selected">@keyValue.Item2</option>
+                                            <option value="@selectItem.Value" selected="selected">@selectItem.Title</option>
                                         }
                                         else
                                         {
-                                            <option value="@keyValue.Item1">@keyValue.Item2</option>
+                                            <option value="@selectItem.Value">@selectItem.Title</option>
                                         }
                                     }
                                 </select>

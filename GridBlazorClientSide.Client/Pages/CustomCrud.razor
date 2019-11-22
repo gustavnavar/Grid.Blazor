@@ -1,7 +1,6 @@
 ﻿@page "/customcrud"
 @using GridBlazor
 @using GridBlazorClientSide.Client.ColumnCollections
-@using GridBlazorClientSide.Client.Services
 @using GridBlazorClientSide.Shared.Models
 @using GridShared
 @using GridShared.Utility
@@ -9,7 +8,7 @@
 @using System.Globalization
 @using System.Threading.Tasks
 @inject NavigationManager NavigationManager
-@inject IOrderService orderService
+@inject ICrudDataService<Order> orderService
 
 <h1>Grid Sample</h1>
 
@@ -46,8 +45,8 @@ else
         var query = new QueryDictionary<StringValues>();
         string url = NavigationManager.BaseUri + "api/SampleData/OrderColumnsWithCrud";
 
-        Action<IGridColumnCollection<Order>> columns = c => ColumnCollections.OrderColumnsWithCustomCrud(c);
-        var client = new GridClient<Order>(url, query, false, "ordersGrid", columns, locale)
+        var client = new GridClient<Order>(url, query, false, "ordersGrid", ColumnCollections.OrderColumnsWithCustomCrud, 
+            locale)
             .Sortable()
             .Filterable()
             .Crud(true, orderService)

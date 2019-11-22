@@ -697,8 +697,10 @@ namespace GridBlazor
                     string urlParameters = ((GridPager)_pager).GetLink();
                     if (Url.Contains("?"))
                         urlParameters = urlParameters.Replace("?", "&");
-                    HttpClient httpClient = new HttpClient();
-                    response = await httpClient.GetJsonAsync<ItemsDTO<T>>(Url + urlParameters);
+                    using (HttpClient httpClient = new HttpClient())
+                    {
+                        response = await httpClient.GetJsonAsync<ItemsDTO<T>>(Url + urlParameters);
+                    }        
                 }
                 else
                 {

@@ -8,7 +8,9 @@ using GridShared.Sorting;
 using GridShared.Utility;
 using Microsoft.AspNetCore.Components;
 using System;
+using System.Collections.Generic;
 using System.Linq;
+using System.Net.Http;
 using System.Threading.Tasks;
 
 namespace GridBlazor
@@ -30,6 +32,9 @@ namespace GridBlazor
         internal ColumnOrderValue Payload { get; set; }
 
         protected RenderFragment CrudRender { get; set; }
+
+        [Inject]
+        public NavigationManager NavigationManager { get; set; }
 
         [Parameter]
         public ICGrid Grid { get; set; }
@@ -173,8 +178,9 @@ namespace GridBlazor
             await UpdateGrid();
         }
 
-        public void CreateHandler()
+        public async Task CreateHandler()
         {
+            await SetSelectFields();
             _item = (T)Activator.CreateInstance(typeof(T));
             ((CGrid<T>)Grid).Mode = GridMode.Create;
             if (Grid.CreateComponent != null)
@@ -197,6 +203,7 @@ namespace GridBlazor
 
         public async Task UpdateHandler(object item)
         {
+            await SetSelectFields();
             var keys = Grid.GetPrimaryKeyValues(item);
             try
             {
@@ -224,6 +231,37 @@ namespace GridBlazor
             else
                 CrudRender = null;
             StateHasChanged();
+        }
+
+        protected async Task SetSelectFields()
+        {
+            foreach (var column in Grid.Columns)
+            {
+                var isSelectField = ((IGridColumn<T>)column).IsSelectField;
+                if (isSelectField.IsSelectKey)
+                {
+                    try
+                    {
+                        if (isSelectField.SelectItemExpr == null)
+                        {
+                            using (HttpClient httpClient = new HttpClient())
+                            {
+                                var selectItems = await httpClient.GetJsonAsync<SelectItem[]>(NavigationManager.BaseUri + isSelectField.Url);
+                                ((GridColumnBase<T>)column).SelectItems = selectItems.ToList();
+                            }
+                        }
+                        else
+                        {
+                            ((GridColumnBase<T>)column).SelectItems = isSelectField.SelectItemExpr.Invoke();
+                        }
+                    }
+                    catch (Exception e)
+                    {
+                        Console.WriteLine(e.Message);
+                        ((GridColumnBase<T>)column).SelectItems = new List<SelectItem>();
+                    }
+                }
+            }
         }
 
         protected RenderFragment CreateCrudComponent() => builder =>

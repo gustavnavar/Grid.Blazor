@@ -30,13 +30,13 @@ namespace GridBlazorServerSide.Services
             }
         }
 
-        public IEnumerable<Tuple<string, string>> GetAllCustomers()
+        public IEnumerable<SelectItem> GetAllCustomers()
         {
             using (var context = new NorthwindDbContext(_options))
             {
                 CustomersRepository repository = new CustomersRepository(context);
                 return repository.GetAll()
-                    .Select(r => new Tuple<string, string>(r.CustomerID, r.CustomerID + " - " + r.CompanyName))
+                    .Select(r => new SelectItem(r.CustomerID, r.CustomerID + " - " + r.CompanyName))
                     .ToList();
             }
         }
@@ -65,7 +65,7 @@ namespace GridBlazorServerSide.Services
     public interface ICustomerService
     {
         IEnumerable<string> GetCustomersNames();
-        IEnumerable<Tuple<string, string>> GetAllCustomers();
+        IEnumerable<SelectItem> GetAllCustomers();
         ItemsDTO<Customer> GetCustomersGridRows(Action<IGridColumnCollection<Customer>> columns, QueryDictionary<StringValues> query);
     }
 }

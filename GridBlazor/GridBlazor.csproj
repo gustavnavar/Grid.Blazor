@@ -27,8 +27,8 @@
     <PackageReference Include="Microsoft.AspNetCore.Components.Web" Version="3.0.0" />
     <PackageReference Include="Microsoft.AspNetCore.Blazor.HttpClient" Version="3.0.0-preview9.19465.2" />
     <PackageReference Include="Microsoft.AspNetCore.Html.Abstractions" Version="2.2.0" />
-    <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="3.0.0" />
-    <PackageReference Include="Microsoft.Extensions.Primitives" Version="3.0.0" />
+    <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="3.0.1" />
+    <PackageReference Include="Microsoft.Extensions.Primitives" Version="3.0.1" />
   </ItemGroup>
 
   <ItemGroup>
