@@ -198,4 +198,25 @@
   <data name="GroupingText" xml:space="preserve">
     <value>Déposer les colonnes ici pour le regroupement des colonnes</value>
   </data>
+  <data name="Add" xml:space="preserve">
+    <value>Ajouter</value>
+  </data>
+  <data name="Back" xml:space="preserve">
+    <value>Retour</value>
+  </data>
+  <data name="Delete" xml:space="preserve">
+    <value>Effacer</value>
+  </data>
+  <data name="Edit" xml:space="preserve">
+    <value>Éditer</value>
+  </data>
+  <data name="Save" xml:space="preserve">
+    <value>Sauver</value>
+  </data>
+  <data name="View" xml:space="preserve">
+    <value>Vue</value>
+  </data>
+  <data name="SelectItem" xml:space="preserve">
+    <value>--- Sélectionnez un élément ---</value>
+  </data>
 </root>

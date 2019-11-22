@@ -78,6 +78,31 @@ namespace GridMvc.Html
             get { return _source.Sanitizer; }
         }
 
+        public GridMode Mode
+        {
+            get { return _source.Mode; }
+        }
+
+        public bool CreateEnabled
+        {
+            get { return _source.CreateEnabled; }
+        }
+
+        public bool ReadEnabled
+        {
+            get { return _source.ReadEnabled; }
+        }
+
+        public bool UpdateEnabled
+        {
+            get { return _source.UpdateEnabled; }
+        }
+
+        public bool DeleteEnabled
+        {
+            get { return _source.DeleteEnabled; }
+        }
+
         string IGrid.GetRowCssClasses(object item)
         {
             return _source.GetRowCssClasses(item);

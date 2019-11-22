@@ -2,7 +2,9 @@
 using GridBlazorClientSide.Server.Models;
 using GridBlazorClientSide.Shared.Models;
 using GridMvc.Server;
+using GridShared;
 using Microsoft.AspNetCore.Mvc;
+using System;
 using System.Linq;
 
 namespace GridBlazorClientSide.Server.Controllers
@@ -11,7 +13,7 @@ namespace GridBlazorClientSide.Server.Controllers
     public class SampleDataController : Controller
     {
         private readonly NorthwindDbContext _context;
-
+        
         public SampleDataController(NorthwindDbContext context)
         {
             _context = context;
@@ -116,6 +118,22 @@ namespace GridBlazorClientSide.Server.Controllers
         }
 
         [HttpGet("[action]")]
+        public ActionResult OrderColumnsWithCrud()
+        {
+            var repository = new OrdersRepository(_context);
+            IGridServer<Order> server = new GridServer<Order>(repository.GetAll(), Request.Query,
+                true, "ordersGrid", ColumnCollections.OrderColumnsWithCrud)
+                    .WithPaging(10)
+                    .Sortable()
+                    .Filterable()
+                    .WithMultipleFilters()
+                    .WithGridItemsCount();
+
+            var items = server.ItemsToDisplay;
+            return Ok(items);
+        }
+
+        [HttpGet("[action]")]
         public ActionResult GetOrdersGridAllFeatures()
         {
             var repository = new OrdersRepository(_context);
@@ -137,6 +155,35 @@ namespace GridBlazorClientSide.Server.Controllers
         {
             var repository = new CustomersRepository(_context);
             return Ok(repository.GetAll().Select(r => r.CompanyName));
+        }
+
+        [HttpGet("[action]")]
+        public ActionResult GetAllCustomers()
+        {
+            var repository = new CustomersRepository(_context);
+            return Ok(repository.GetAll()
+                    .Select(r => new SelectItem(r.CustomerID, r.CustomerID + " - " + r.CompanyName))
+                    .ToList());
+        }
+
+        [HttpGet("[action]")]
+        public ActionResult GetAllEmployees()
+        {
+            var repository = new EmployeeRepository(_context);
+            return Ok(repository.GetAll()
+                    .Select(r => new SelectItem(r.EmployeeID.ToString(), r.EmployeeID.ToString() + " - "
+                        + r.FirstName + " " + r.LastName))
+                    .ToList());
+        }
+
+        [HttpGet("[action]")]
+        public ActionResult GetAllShippers()
+        {
+            var repository = new ShipperRepository(_context);
+            return Ok(repository.GetAll()
+                    .Select(r => new SelectItem(r.ShipperID.ToString(), r.ShipperID.ToString() + " - "
+                        + r.CompanyName))
+                    .ToList());
         }
 
         [HttpGet("[action]")]

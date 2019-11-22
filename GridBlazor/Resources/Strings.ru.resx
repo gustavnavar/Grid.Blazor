@@ -198,4 +198,25 @@
   <data name="GroupingText" xml:space="preserve">
     <value>Перетащите столбцы сюда для группировки столбцов</value>
   </data>
+  <data name="Add" xml:space="preserve">
+    <value>Добавить</value>
+  </data>
+  <data name="Back" xml:space="preserve">
+    <value>Назад</value>
+  </data>
+  <data name="Delete" xml:space="preserve">
+    <value>Удалить</value>
+  </data>
+  <data name="Edit" xml:space="preserve">
+    <value>Редактировать</value>
+  </data>
+  <data name="Save" xml:space="preserve">
+    <value>Сохранить</value>
+  </data>
+  <data name="View" xml:space="preserve">
+    <value>Смотреть</value>
+  </data>
+  <data name="SelectItem" xml:space="preserve">
+    <value>--- выберите предмет ---</value>
+  </data>
 </root>

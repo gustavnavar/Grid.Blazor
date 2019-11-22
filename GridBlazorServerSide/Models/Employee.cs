@@ -13,13 +13,13 @@ namespace GridBlazorServerSide.Models
 {
     using System;
     using System.Collections.Generic;
-    
+
     public partial class Employee
     {
         public Employee()
         {
             this.Orders = new HashSet<Order>();
-            //this.Territories = new HashSet<Territory>();
+            this.Territories = new HashSet<EmployeeTerritories>();
         }
         [Key]
         public int EmployeeID { get; set; }
@@ -42,6 +42,6 @@ namespace GridBlazorServerSide.Models
         public string PhotoPath { get; set; }
 
         public virtual ICollection<Order> Orders { get; set; }
-        //public virtual ICollection<Territory> Territories { get; set; }
+        public virtual ICollection<EmployeeTerritories> Territories { get; set; }
     }
 }

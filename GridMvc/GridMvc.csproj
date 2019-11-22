@@ -33,7 +33,7 @@
   
   <ItemGroup>
     <EmbeddedResource Include="Resources\Strings.resx" LogicalName="GridMvc.Resources.Strings.resources">
-      <Generator>ResourceGenerator</Generator>
+      <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>Strings.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Include="Resources\Strings.de.resx" LogicalName="GridMvc.Resources.Strings.de.resources">
@@ -67,14 +67,6 @@
   <ItemGroup>
     <ProjectReference Include="..\GridShared\GridShared.csproj" />
   </ItemGroup>
-  
-  <ItemGroup>
-    <Compile Update="Resources\Strings.Designer.cs">
-      <DesignTime>True</DesignTime>
-      <AutoGen>True</AutoGen>
-      <DependentUpon>Strings.resx</DependentUpon>
-    </Compile>
-  </ItemGroup>
 
   <ItemGroup>
     <None Include="bundleconfig.json" />
@@ -82,5 +74,13 @@
 
   <ItemGroup>
     <Content Remove="bundleconfig.json" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Update="Resources\Strings.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Strings.resx</DependentUpon>
+    </Compile>
   </ItemGroup>
 </Project>

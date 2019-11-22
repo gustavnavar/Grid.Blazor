@@ -18,12 +18,12 @@ namespace GridMvc
         /// <summary>
         ///     Keys for subgrid
         /// </summary>
-        string[] Keys { get; }
+        string[] SubGridKeys { get; }
 
         /// <summary>
         ///     Get foreign key values for subgrid records
         /// </summary>
-        string[] GetKeyValues(object item);
+        string[] GetSubGridKeyValues(object item);
 
         IGridSettingsProvider Settings { get; }
 

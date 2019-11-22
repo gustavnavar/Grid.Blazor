@@ -18,7 +18,7 @@ namespace GridBlazorServerSide.Models
     {
         public Territory()
         {
-            this.Employees = new HashSet<Employee>();
+            this.Employees = new HashSet<EmployeeTerritories>();
         }
         [Key]
         public string TerritoryID { get; set; }
@@ -26,6 +26,6 @@ namespace GridBlazorServerSide.Models
         public int RegionID { get; set; }
     
         public virtual Region Region { get; set; }
-        public virtual ICollection<Employee> Employees { get; set; }
+        public virtual ICollection<EmployeeTerritories> Employees { get; set; }
     }
 }
