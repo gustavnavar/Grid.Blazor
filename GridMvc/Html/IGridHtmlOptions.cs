@@ -137,6 +137,8 @@ namespace GridMvc.Html
         /// </summary>
         IGridHtmlOptions<T> WithGridItemsCount();
 
+        IGridHtmlOptions<T> SetStriped(bool enabled);
+
         /// <summary>
         ///    Allow grid to show a SubGrid
         /// </summary>

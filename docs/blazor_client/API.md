@@ -113,4 +113,4 @@ The **GridMvcCore** package sends back a **json** reponse string with the follow
     }
 ```
 
-[<- Passing grid state as parameter](Passing_grid_state_as_parameter.md)
+[<- Passing grid state as parameter](Passing_grid_state_as_parameter.md) | [CRUD ->](Crud.md)

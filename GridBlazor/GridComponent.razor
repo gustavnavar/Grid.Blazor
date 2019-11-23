@@ -182,7 +182,7 @@
                             <GridExtSortHeaderComponent T="@T" Grid="@Grid"></GridExtSortHeaderComponent>
                         </CascadingValue>
                     }
-                    <table class="table grid-table">
+                    <table class="table @(Grid.Striped && _hasSubGrid ? "substriped" : Grid.Striped ? "striped" : "") grid-table">
                         <thead>
                             <tr>
                                 @if (_hasSubGrid)

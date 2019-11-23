@@ -19,6 +19,8 @@ table.grid-table { margin: 0; }
     /* Grid body */
     table.grid-table tr.grid-row-selected td { background: #4888C2 !important; color: white; }
     table.grid-table tr.grid-row-selected a { color: white; }
+    table.striped > tbody > tr.grid-row:nth-of-type(odd) { background-color: #f9f9f9; }
+    table.substriped > tbody > tr.grid-row:nth-of-type(4n + 1) { background-color: #f9f9f9; }
 
     /* Grid totals */
     table.grid-table tr.grid-totals-row td { border-color: #aaa; background: #eee !important;}

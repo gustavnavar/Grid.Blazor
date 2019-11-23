@@ -228,6 +228,11 @@ namespace GridBlazor
         IGridClient<T> WithGridItemsCount();
 
         /// <summary>
+        ///     Enable or disable striped grid
+        /// </summary>
+        IGridClient<T> SetStriped(bool enable);
+
+        /// <summary>
         ///    Allow grid to show a SubGrid
         /// </summary>
         IGridClient<T> SubGrid(Func<object[], Task<ICGrid>> subGrids, params string[] keys);

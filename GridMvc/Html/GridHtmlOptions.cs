@@ -218,6 +218,12 @@ namespace GridMvc.Html
             return this;
         }
 
+        public IGridHtmlOptions<T> SetStriped(bool enabled)
+        {
+            _source.Striped = enabled;
+            return this;
+        }
+
         /// <summary>
         ///    Allow grid to show a SubGrid
         /// </summary>

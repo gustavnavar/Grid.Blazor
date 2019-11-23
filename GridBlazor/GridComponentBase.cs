@@ -33,9 +33,6 @@ namespace GridBlazor
 
         protected RenderFragment CrudRender { get; set; }
 
-        [Inject]
-        public NavigationManager NavigationManager { get; set; }
-
         [Parameter]
         public ICGrid Grid { get; set; }
 
@@ -246,7 +243,7 @@ namespace GridBlazor
                         {
                             using (HttpClient httpClient = new HttpClient())
                             {
-                                var selectItems = await httpClient.GetJsonAsync<SelectItem[]>(NavigationManager.BaseUri + isSelectField.Url);
+                                var selectItems = await httpClient.GetJsonAsync<SelectItem[]>(isSelectField.Url);
                                 ((GridColumnBase<T>)column).SelectItems = selectItems.ToList();
                             }
                         }

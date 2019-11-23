@@ -370,6 +370,8 @@ namespace GridBlazor
 
         public Type Type { get { return typeof(T); } }
 
+        public bool Striped { get; internal set; } = false;
+
         /// <summary>
         ///     Get foreign key values for subgrid records
         /// </summary>

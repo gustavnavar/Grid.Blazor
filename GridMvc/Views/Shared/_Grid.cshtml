@@ -49,7 +49,7 @@ else
             {
                 @await Html.PartialAsync("_GridExtSortHeader", Model)
             }
-            <table class="table grid-table">
+            <table class="table @(Model.Striped && hasSubGrid ? "substriped" : Model.Striped ? "striped" : "") grid-table">
                 @* Draw grid header *@
                 <thead>
                     <tr>

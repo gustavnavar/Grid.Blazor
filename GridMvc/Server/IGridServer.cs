@@ -141,6 +141,11 @@ namespace GridMvc.Server
         IGridServer<T> SubGrid(params string[] keys);
 
         /// <summary>
+        ///     Enable or disable striped grid
+        /// </summary>
+        IGridServer<T> SetStriped(bool enable);
+
+        /// <summary>
         ///     Items, displaying in the grid view
         /// </summary>
         ItemsDTO<T> ItemsToDisplay { get; }

@@ -204,6 +204,15 @@ namespace GridMvc.Server
         }
 
         /// <summary>
+        ///     Enable or disable striped grid
+        /// </summary>
+        public IGridServer<T> SetStriped(bool enable)
+        {
+            _source.Striped = enable;
+            return this;
+        }
+
+        /// <summary>
         ///    Allow grid to show a SubGrid
         /// </summary>
         public IGridServer<T> SubGrid(params string[] keys)

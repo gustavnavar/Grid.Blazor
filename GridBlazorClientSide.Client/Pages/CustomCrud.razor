@@ -49,6 +49,7 @@ else
             locale)
             .Sortable()
             .Filterable()
+            .SetStriped(true)
             .Crud(true, orderService)
             .SetCreateComponent<OrderCreateComponent>()
             .SetReadComponent<OrderReadComponent>()

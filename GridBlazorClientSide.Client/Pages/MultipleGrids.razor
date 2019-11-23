@@ -91,6 +91,7 @@ else
         var ordersClient = new GridClient<Order>(ordersUrl, ordersQuery, false, "ordersGrid", orderColumns, locale)
             .Sortable()
             .Filterable()
+            .SetStriped(true)
             .WithMultipleFilters()
             .WithGridItemsCount();
         _ordersGrid = ordersClient.Grid;
@@ -116,6 +117,7 @@ else
             ColumnCollections.CustomersColumns, locale)
             .Sortable()
             .Filterable()
+            .SetStriped(true)
             .WithMultipleFilters()
             .WithGridItemsCount();
         _customersGrid = customersClient.Grid;

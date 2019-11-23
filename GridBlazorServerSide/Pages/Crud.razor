@@ -56,6 +56,7 @@ else
             query, false, "ordersGrid", columns, locale)
             .Sortable()
             .Filterable()
+            .SetStriped(true)
             .Crud(true, orderService)
             .WithMultipleFilters()
             .WithGridItemsCount();

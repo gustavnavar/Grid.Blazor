@@ -4,7 +4,6 @@ using GridBlazorClientSide.Shared.Models;
 using GridShared;
 using System;
 using System.Collections.Generic;
-using System.Threading.Tasks;
 
 namespace GridBlazorClientSide.Client.ColumnCollections
 {
@@ -152,19 +151,19 @@ namespace GridBlazorClientSide.Client.ColumnCollections
             .RenderValueAs(o => o.Customer.IsVip ? "Yes" : "No");
         };
 
-        public static Action<IGridColumnCollection<Order>> OrderColumnsWithCrud = c =>
+        public static Action<IGridColumnCollection<Order>, string> OrderColumnsWithCrud = (c, path) =>
         {
             /* Adding "OrderID" column: */
             c.Add(o => o.OrderID).SetPrimaryKey(true).Titled(SharedResource.Number).SetWidth(100);
 
             /* Adding "CustomerID" column: */
-            c.Add(o => o.CustomerID, true).SetSelectField(true, o => o.Customer.CustomerID + " - " + o.Customer.CompanyName, $"api/SampleData/GetAllCustomers");
+            c.Add(o => o.CustomerID, true).SetSelectField(true, o => o.Customer.CustomerID + " - " + o.Customer.CompanyName, path + $"api/SampleData/GetAllCustomers");
 
             /* Adding "EmployeeID" column: */
-            c.Add(o => o.EmployeeID, true).SetSelectField(true, o => o.Employee.EmployeeID.ToString() + " - " + o.Employee.FirstName + " " + o.Employee.LastName, $"api/SampleData/GetAllEmployees");
+            c.Add(o => o.EmployeeID, true).SetSelectField(true, o => o.Employee.EmployeeID.ToString() + " - " + o.Employee.FirstName + " " + o.Employee.LastName, path + $"api/SampleData/GetAllEmployees");
 
             /* Adding "ShipVia" column: */
-            c.Add(o => o.ShipVia, true).SetSelectField(true, o => o.Shipper == null ? "" : o.Shipper.ShipperID.ToString() + " - " + o.Shipper.CompanyName, $"api/SampleData/GetAllShippers");
+            c.Add(o => o.ShipVia, true).SetSelectField(true, o => o.Shipper == null ? "" : o.Shipper.ShipperID.ToString() + " - " + o.Shipper.CompanyName, path + $"api/SampleData/GetAllShippers");
 
 
             /* Adding "OrderDate" column: */

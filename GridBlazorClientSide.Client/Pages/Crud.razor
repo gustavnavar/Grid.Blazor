@@ -45,9 +45,11 @@ else
         var query = new QueryDictionary<StringValues>();
         string url = NavigationManager.BaseUri + "api/SampleData/OrderColumnsWithCrud";
 
-        var client = new GridClient<Order>(url, query, false, "ordersGrid", ColumnCollections.OrderColumnsWithCrud, locale)
+        var client = new GridClient<Order>(url, query, false, "ordersGrid", c => 
+            ColumnCollections.OrderColumnsWithCrud(c, NavigationManager.BaseUri), locale)
             .Sortable()
             .Filterable()
+            .SetStriped(true)
             .Crud(true, orderService)
             .WithMultipleFilters()
             .WithGridItemsCount();
