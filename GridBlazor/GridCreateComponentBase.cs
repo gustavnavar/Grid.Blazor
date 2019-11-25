@@ -173,6 +173,16 @@ namespace GridBlazor
             }
         }
 
+        protected void ChangeGuid(ChangeEventArgs e, IGridColumn column)
+        {
+            Guid value;
+            Guid.TryParse(e.Value.ToString(), out value);
+            if (value != default(Guid))
+            {
+                ChangeValue(value, column);
+            }
+        }
+
         protected async Task CreateItem()
         {
             await GridComponent.CreateItem();
