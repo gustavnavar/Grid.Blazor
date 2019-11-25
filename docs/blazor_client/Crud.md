@@ -202,8 +202,26 @@ The **SetSelectField** method has 3 required parameters:
 Parameter | Description
 --------- | -----------
 enabled | boolean to configure if the field is shown as a ```<select>``` html element
-expression | function to get the selected value (it must return an string value)
-url | absolute path for the web service to get the values and titles to be shown in the drop-down element (it must return an ```IEnumerable<SelectItem>```)
+expression | function to get the selected value for update and delete forms (it must return an string value)
+url | absolute path for the web service to get the values and titles to be shown in the drop-down element of create and update forms (it must return an ```IEnumerable<SelectItem>```)
+
+The type of fields currently supported as foreign keys are:
+- string
+- DateTime
+- DateTimeOffset
+- TimeSpan
+- Int16
+- Int32
+- Int64
+- UInt16
+- UInt32
+- UInt64
+- Byte
+- Single
+- Double
+- Decimal
+- bool
+- Guid
 
 This is an example of back-end web service to get values and titles for a drop-down:
 
