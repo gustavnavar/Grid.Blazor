@@ -21,8 +21,9 @@ grid-sorting | multiple strings used for extended sorting and grouping | grid-so
 grid-filter | multiple strings used for filtering  | grid-filter=OrderCustomDate__6__2019-06-11
 grid-clearinitfilter | the name of columns that have an initial filter but it is not used anymore | grid-clearinitfilter=Customer.CompanyName
 grid-search | word to be searched on all columns | grid-search=aro
+grid-pagesize | integer to dynamically change the initial grid page size | grid-pagesize=20
 
-The parameters **grid-page**, **grid-column**, **grid-dir** abd **grid-search** should appear once in a query string. Their use is straightforward.
+The parameters **grid-page**, **grid-column**, **grid-dir**, **grid-search** and **grid-pagesize** should appear once in a query string. Their use is straightforward.
 
 But the parameters **grid-sorting**, **grid-filter** and **grid-clearinitfilter** may appear multiple times in a query string. Let's see more detail about them.
 
@@ -65,6 +66,7 @@ The folling query string is an example:
 ```url
     /Home/GetOrdersGridRows?
         grid-page=2&
+        grid-pagesize=20&
         grid-sorting=Customer.CompanyName__0__1&
         grid-column=OrderID&
         grid-dir=0&
@@ -77,6 +79,7 @@ The folling query string is an example:
 ```
 In this example the front-end is requesting:
 * the page **2**
+* of pages with size **20**
 * for the grid sorted/grouped by column **Customer.CompanyName**
 * **ascending** ordered
 * in first position

@@ -7,6 +7,7 @@ using GridShared.Filtering;
 using GridShared.Sorting;
 using GridShared.Utility;
 using Microsoft.AspNetCore.Components;
+using Microsoft.AspNetCore.Components.Web;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -21,6 +22,8 @@ namespace GridBlazor
         protected bool _hasSubGrid = false;
         protected bool _hasTotals = false;
         protected bool _requiredTotalsColumn = false;
+        protected string _changePageSizeUrl;
+        protected int _pageSize;
         internal bool[] IsSubGridVisible;
         internal bool[] InitSubGrid;
         protected IQueryDictionary<Type> _filterComponents;
@@ -98,6 +101,11 @@ namespace GridBlazor
                     InitSubGrid[i] = true;
                 }
             }
+
+            var queryBuilder = new CustomQueryStringBuilder(Grid.Settings.SearchSettings.Query);
+            var exceptQueryParameters = new List<string> { GridPager.DefaultPageSizeQueryParameter };
+            _changePageSizeUrl = queryBuilder.GetQueryStringExcept(exceptQueryParameters);
+            _pageSize = Grid.Pager.ChangePageSize && Grid.Pager.QueryPageSize > 0 ? Grid.Pager.QueryPageSize : Grid.Pager.PageSize;
         }
 
         protected void RowClicked(int i, object item)
@@ -379,6 +387,15 @@ namespace GridBlazor
             catch (Exception e)
             {
                 Console.WriteLine(e.Message);
+            }
+        }
+
+        public async Task InputPageSizeKeyup(KeyboardEventArgs e)
+        {
+            if (e.Key == "Enter")
+            {
+                Grid.AddQueryParameter(GridPager.DefaultPageSizeQueryParameter, _pageSize.ToString());
+                await UpdateGrid();
             }
         }
 

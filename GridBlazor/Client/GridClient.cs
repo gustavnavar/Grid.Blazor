@@ -48,6 +48,12 @@ namespace GridBlazor
             return this;
         }
 
+        public IGridClient<T> ChangePageSize(bool enable)
+        {
+            _source.Pager.ChangePageSize = enable;
+            return this;
+        }
+
         public IGridClient<T> WithPaging(int pageSize)
         {
             return WithPaging(pageSize, 0);

@@ -340,6 +340,15 @@ namespace GridBlazor.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Show.
+        /// </summary>
+        public static string Show {
+            get {
+                return ResourceManager.GetString("Show", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Starts with.
         /// </summary>
         public static string StartsWith {

@@ -354,7 +354,7 @@ namespace GridBlazor
         /// </summary>
         public IGridPager Pager
         {
-            get { return _pager ?? (_pager = new GridPager(_query)); }
+            get { return _pager; }
             set { _pager = value; }
         }
 
@@ -712,7 +712,7 @@ namespace GridBlazor
                 {
                     Items = response.Items;
                     EnablePaging = response.Pager.EnablePaging;
-                    _pager = new GridPager(_query, response.Pager.CurrentPage);
+                    ((GridPager)_pager).CurrentPage = response.Pager.CurrentPage;
                     ((GridPager)_pager).PageSize = response.Pager.PageSize;
                     ((GridPager)_pager).ItemsCount = response.Pager.ItemsCount;
 

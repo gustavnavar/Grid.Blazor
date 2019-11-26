@@ -150,4 +150,7 @@
   <data name="GroupingText" xml:space="preserve">
     <value>Перетащите столбцы сюда для группировки столбцов</value>
   </data>
+  <data name="Show" xml:space="preserve">
+    <value>Показать</value>
+  </data>
 </root>

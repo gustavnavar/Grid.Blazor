@@ -1,5 +1,6 @@
 ﻿@using GridBlazor.Filtering
 @using GridBlazor.Pagination
+@using GridBlazor.Resources
 @using GridBlazor.Sorting
 @using GridShared
 @using GridShared.Columns
@@ -164,12 +165,24 @@
                  data-groupable="@Grid.GroupingEnabled.ToString().ToLower()"
                  data-multiplefilters="@Grid.ComponentOptions.AllowMultipleFilters.ToString().ToLower()">
                 <div class="grid-wrap">
-                    @if (Grid.SearchingEnabled)
-                    {
-                        <CascadingValue Value=@this Name="GridComponent">
-                            <GridSearchComponent T="@T" Grid="@Grid"></GridSearchComponent>
-                        </CascadingValue>
-                    }
+                    <div class="row">
+                        @if (Grid.EnablePaging && Grid.Pager.ChangePageSize)
+                        {
+                            <div class="grid-change-page-size form-group col-md-6" data-change-page-size-url="@_changePageSizeUrl">
+                                <label class="control-label col-md-2">@Strings.Show </label>
+                                <div class="col-md-3">
+                                    <input class="form-control grid-change-page-size-input" @bind="_pageSize" @onkeyup="InputPageSizeKeyup" />
+                                </div>
+                                <label class="control-label">@Strings.Items </label>
+                            </div>
+                        }
+                        @if (Grid.SearchingEnabled)
+                        {
+                            <CascadingValue Value=@this Name="GridComponent">
+                                <GridSearchComponent T="@T" Grid="@Grid"></GridSearchComponent>
+                            </CascadingValue>
+                        }
+                    </div>
                     @if (Grid.CreateEnabled)
                     {
                         <div class="row grid-crud">

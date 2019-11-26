@@ -67,6 +67,10 @@ button.grid-search-apply {height: 34px; border-color: #ccc; padding-left: 20px; 
 button.grid-search-clear {height: 34px; border-color: #ccc; padding-left: 22px; background-repeat: no-repeat; background-position-x: 6px; background-position-y: 6px; background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABcAAAAUCAYAAABmvqYOAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAADaSURBVEhL3ZMxCgIxEEW3srCy1sYj2NsIYmPlASz2ZnoD0QvYewexsRXxBPo+MhDCTpJNpw8eLGHm/7DsNn/HCLffxyxL1HwRGjziG886SLBDzV0xWzDAE2rB9Aos2LxhErU/MFyScUEcLJ84xSQa0GC8bAVe8AaL8Aq8sxX2wisIrQo2UgU6n2M1Q+x6x/KC1aSCzdx/0Ik+yVyw2avAC9Y7XuM9ODOLC/YYLyt4hmKMVQW6dbwUBhsTjAtemP1DF5gKNnQRK9Bci0Wo4IBesKECzRUH/wJN8wHtVYSZ+056IAAAAABJRU5ErkJggg=='); }
 input.grid-search-input {height: 34px; border-color: #ccc; }
 
+/* Grid change page size */
+.grid-change-page-size { margin-top: 10px; margin-bottom: 10px; }
+.grid-change-page-size label { margin-top: 6px; }
+
 /* Grid extended sorting */
 .grid-extsort-droppable { height: 42px; width: 100%; margin-top:20px; margin-bottom:10px; border: 1px solid #ccc; border-radius: 4px; }
 .grid-extsort-column { height: 28px; display: inline-block; margin: 6px 0px 6px 20px; padding: 5px; background-color:#efefef; border: 1px solid #ccc; border-radius: 4px; }

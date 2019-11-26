@@ -118,6 +118,7 @@ namespace GridMvc.Demo.Controllers
                 .Groupable(true)
                 .Selectable(true)
                 .SetStriped(true)
+                .ChangePageSize(true)
                 .WithGridItemsCount();
 
             return View(server.Grid);

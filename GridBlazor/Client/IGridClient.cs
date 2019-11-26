@@ -13,6 +13,12 @@ namespace GridBlazor
         IGridClient<T> Columns(Action<IGridColumnCollection<T>> columnBuilder);
 
         /// <summary>
+        ///     Enable change page size for grid
+        /// </summary>
+        /// <param name="enable">Enable dynamic setup the page size of the grid</param>
+        IGridClient<T> ChangePageSize(bool enable);
+
+        /// <summary>
         ///     Enable paging for grid
         /// </summary>
         /// <param name="pageSize">Setup the page size of the grid</param>

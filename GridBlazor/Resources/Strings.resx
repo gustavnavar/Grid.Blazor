@@ -219,4 +219,7 @@
   <data name="SelectItem" xml:space="preserve">
     <value>--- Select an item ---</value>
   </data>
+  <data name="Show" xml:space="preserve">
+    <value>Show</value>
+  </data>
 </root>

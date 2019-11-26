@@ -57,6 +57,7 @@ GridMvc = (function ($) {
         this.initSearch();
         this.initExtSort();
         this.initGroup();
+        this.initChangePageSize();
     };
     //
     // Handle Grid row events
@@ -608,6 +609,50 @@ GridMvc = (function ($) {
                 }
             });
         });     
+    };
+
+    /***
+    * ============= CHANGE PAGE SIZE =============
+    * Methods that provides functionality for changing page size
+    */
+    /***
+    * Method search all search buttons and register 'onclick' event handlers:
+    */
+    gridMvc.prototype.initChangePageSize = function () {
+        var self = this;
+        this.jqContainer.find(".grid-change-page-size-input").each(function () {
+            $(this).keyup(function (e) {
+                if (e.keyCode === 13) {
+                    var pageSize = $(this).val();
+                    self.changePageSize(pageSize);
+                }
+            });
+        });
+    };
+
+    //
+    // Applies selected pageSize value by redirecting to another url:
+    //
+    gridMvc.prototype.changePageSize = function (pageSize) {
+        var url = "";
+        var gridChangePageSize = this.jqContainer.find(".grid-change-page-size").first();
+        if (gridChangePageSize) {
+            url = gridChangePageSize.attr("data-change-page-size-url") || "";
+        }
+
+        if (url.length > 0)
+            url += "&";
+        url += this.getPageSizeQueryData(pageSize);
+        
+        window.location.search = url;
+    };
+
+    gridMvc.prototype.getPageSizeQueryData = function (pageSize) {
+        var url = "";
+        if (pageSize) {
+            url += "grid-pagesize=" + encodeURIComponent(pageSize);
+        }
+        return url;
     };
 
     return gridMvc;

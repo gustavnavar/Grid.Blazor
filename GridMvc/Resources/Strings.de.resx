@@ -150,4 +150,7 @@
   <data name="GroupingText" xml:space="preserve">
     <value>Fügen Sie hier Spalten zur Spaltengruppierung ein</value>
   </data>
+  <data name="Show" xml:space="preserve">
+    <value>Zeigen</value>
+  </data>
 </root>
