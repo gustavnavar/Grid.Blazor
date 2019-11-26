@@ -168,12 +168,12 @@
                     <div class="row">
                         @if (Grid.EnablePaging && Grid.Pager.ChangePageSize)
                         {
-                            <div class="grid-change-page-size form-group col-md-6" data-change-page-size-url="@_changePageSizeUrl">
-                                <label class="control-label col-md-2">@Strings.Show </label>
+                            <div class="row grid-change-page-size form-group col-md-6" data-change-page-size-url="@_changePageSizeUrl">
+                                <label class="control-label col-md-2"><b>@Strings.Show</b></label>
                                 <div class="col-md-3">
                                     <input class="form-control grid-change-page-size-input" @bind="_pageSize" @onkeyup="InputPageSizeKeyup" />
                                 </div>
-                                <label class="control-label">@Strings.Items </label>
+                                <label class="control-label"><b>@Strings.Items</b></label>
                             </div>
                         }
                         @if (Grid.SearchingEnabled)
