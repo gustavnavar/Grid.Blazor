@@ -25,10 +25,16 @@ namespace GridShared.Grouping
                               pi.PropertyType.GetGenericTypeDefinition() == typeof(Nullable<>);
             if(isNullable)
             {
+                Expression hasValueExpr = Expression.Property(expression, pi.PropertyType.GetProperty("HasValue"));
                 expression = Expression.Property(expression, pi.PropertyType.GetProperty("Value"));
-            }            
-                
-            expression = Expression.Convert(expression, typeof(object));
+                expression = Expression.Convert(expression, typeof(object));
+                expression = Expression.Condition(hasValueExpr, expression, Expression.Constant(null));
+            }
+            else
+            {
+                expression = Expression.Convert(expression, typeof(object));
+            }
+
             //return filter expression 
             return Expression.Lambda<Func<T, object>>(expression, parameter);
         }
@@ -50,10 +56,23 @@ namespace GridShared.Grouping
                               pi.PropertyType.GetGenericTypeDefinition() == typeof(Nullable<>);
             if (isNullable)
             {
-                expression = Expression.Property(expression, pi.PropertyType.GetProperty("Value"));
+                Expression hasValueExpr = Expression.Property(expression, pi.PropertyType.GetProperty("HasValue"));
+                if (value == null)
+                {
+                    expression = Expression.Not(hasValueExpr);
+                }
+                else
+                {   
+                    expression = Expression.Property(expression, pi.PropertyType.GetProperty("Value"));
+                    expression = Expression.Equal(expression, Expression.Constant(value));
+                    expression = Expression.AndAlso(hasValueExpr, expression);
+                }                 
+            }
+            else 
+            {
+                expression = Expression.Equal(expression, Expression.Constant(value));
             }
 
-            expression = Expression.Equal(expression, Expression.Constant(value));
             var lambda = Expression.Lambda<Func<T, bool>>(expression, parameter);
             return items.Where(lambda);
         }
