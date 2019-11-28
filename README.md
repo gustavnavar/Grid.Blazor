@@ -2,7 +2,7 @@
 
 A fork from: https://gridmvc.codeplex.com/
 
-It supports .NET Core 3.0.0
+It supports .NET Core 3.1 Preview3
 
 ## Demo 
 http://gridblazor.azurewebsites.net

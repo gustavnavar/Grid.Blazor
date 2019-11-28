@@ -33,4 +33,6 @@ Then you have to use the **ChangePageSize** method of the **GridClient** object 
             .ChangePageSize(true);
 ```
 
-[<- GridBlazor configuration](GridBlazor_configuration.md) | [Custom columns ->](Custom_columns.md)
+A user can change the page size writing the new size and pressing the "Tab" or "Enter" keys.
+
+[<- Keyboard navigation](Keyboard_navigation.md) | [Custom columns ->](Custom_columns.md)
