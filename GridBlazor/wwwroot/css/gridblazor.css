@@ -3,6 +3,7 @@
 *   This file contains default styles for Grid.Mvc.
 */
 /* Grid */
+.grid-mvc:focus { outline:none; }
 table.grid-table { margin: 0; }
     table.grid-table .grid-wrap { padding: 0; position: relative; }
     table.grid-table .grid-empty-text { color: #666; }

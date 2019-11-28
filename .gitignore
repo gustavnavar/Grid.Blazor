@@ -47,3 +47,4 @@
 /GridBlazorClientSide.Shared/obj
 /GridBlazorServerSide/bin/Debug/netcoreapp3.0
 /GridBlazorServerSide/obj
+/GridBlazorServerSide/bin/Debug/netcoreapp3.1

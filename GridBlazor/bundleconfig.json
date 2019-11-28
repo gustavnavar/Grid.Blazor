@@ -1,8 +1,8 @@
 [
   {
-    "outputFileName": "Content/css/gridblazor.min.css",
+    "outputFileName": "wwwroot/css/gridblazor.min.css",
     "inputFiles": [
-      "Content/css/gridblazor.css"
+      "wwwroot/css/gridblazor.css"
     ]
   }
 ]

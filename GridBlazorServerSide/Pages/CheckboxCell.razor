@@ -2,7 +2,7 @@
 @using GridBlazorServerSide.Models
 @implements ICustomGridComponent<Order>
 
-<input type='checkbox' @bind="_value" @onclick="MyClickHandler"/>
+<input type='checkbox' @bind="_value" @onclick="MyClickHandler" @onclick:stopPropagation>
 
 @code {
     [Parameter]

@@ -45,7 +45,7 @@ namespace GridMvc.Demo.Models
 
     public interface IOrdersRepository
     {
-        public void Update(Order order);
-        public void Save();
+        void Update(Order order);
+        void Save();
     }
 }

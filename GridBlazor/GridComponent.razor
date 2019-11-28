@@ -163,7 +163,11 @@
                  data-selectable="@Grid.ComponentOptions.Selectable.ToString().ToLower()"
                  data-extsortable="@Grid.ExtSortingEnabled.ToString().ToLower()"
                  data-groupable="@Grid.GroupingEnabled.ToString().ToLower()"
-                 data-multiplefilters="@Grid.ComponentOptions.AllowMultipleFilters.ToString().ToLower()">
+                 data-multiplefilters="@Grid.ComponentOptions.AllowMultipleFilters.ToString().ToLower()"
+                 tabindex="0"
+                 @ref="gridmvc"
+                 @onkeyup="GridComponentKeyup"
+                 @onclick="GridComponentClick">
                 <div class="grid-wrap">
                     <div class="row">
                         @if (Grid.EnablePaging && Grid.Pager.ChangePageSize)
@@ -171,7 +175,7 @@
                             <div class="row grid-change-page-size form-group col-md-6" data-change-page-size-url="@_changePageSizeUrl">
                                 <label class="control-label col-md-2"><b>@Strings.Show</b></label>
                                 <div class="col-md-3">
-                                    <input class="form-control grid-change-page-size-input" @bind="_pageSize" @onkeyup="InputPageSizeKeyup" />
+                                    <input class="form-control grid-change-page-size-input" @bind="_pageSize" @onkeyup="InputPageSizeKeyup" @onblur="InputPageSizeBlur" @onclick:stopPropagation />
                                 </div>
                                 <label class="control-label"><b>@Strings.Items</b></label>
                             </div>
