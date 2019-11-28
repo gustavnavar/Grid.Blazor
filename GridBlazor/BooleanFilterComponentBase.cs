@@ -1,5 +1,7 @@
 ﻿using GridShared.Filtering;
 using Microsoft.AspNetCore.Components;
+using Microsoft.AspNetCore.Components.Web;
+using Microsoft.JSInterop;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -10,6 +12,11 @@ namespace GridBlazor
     {
         protected bool _clearVisible = false;
         protected string _filterValue = "";
+
+        protected ElementReference boolFilter;
+
+        [Inject]
+        private IJSRuntime jSRuntime { get; set; }
 
         [CascadingParameter(Name = "GridHeaderComponent")]
         private GridHeaderComponent<T> GridHeaderComponent { get; set; }
@@ -27,6 +34,14 @@ namespace GridBlazor
         {
             _filterValue = FilterSettings.FirstOrDefault().FilterValue;
             _clearVisible = !string.IsNullOrWhiteSpace(_filterValue);
+        }
+
+        protected override async Task OnAfterRenderAsync(bool firstRender)
+        {
+            if (firstRender && boolFilter.Id != null)
+            {
+                await jSRuntime.InvokeVoidAsync("gridJsFunctions.focusElement", boolFilter);
+            }
         }
 
         protected async Task ApplyTrueButtonClicked()
@@ -48,6 +63,14 @@ namespace GridBlazor
         protected async Task ClearButtonClicked()
         {
             await GridHeaderComponent.RemoveFilter();
+        }
+
+        public async Task FilterKeyup(KeyboardEventArgs e)
+        {
+            if (e.Key == "Escape")
+            {
+                await GridHeaderComponent.FilterIconClicked();
+            }
         }
     }
 }

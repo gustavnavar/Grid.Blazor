@@ -114,6 +114,14 @@ namespace GridBlazor
             _pageSize = Grid.Pager.ChangePageSize && Grid.Pager.QueryPageSize > 0 ? Grid.Pager.QueryPageSize : Grid.Pager.PageSize;
         }
 
+        protected override async Task OnAfterRenderAsync(bool firstRender)
+        {
+            if (firstRender && gridmvc.Id != null)
+            {
+                await jSRuntime.InvokeVoidAsync("gridJsFunctions.focusElement", gridmvc);
+            }
+        }
+
         protected void RowClicked(int i, object item)
         {
             SelectedRow = i;
@@ -413,7 +421,10 @@ namespace GridBlazor
 
         public async Task GridComponentClick()
         {
-            await jSRuntime.InvokeVoidAsync("gridJsFunctions.focusElement", gridmvc);
+            if (gridmvc.Id != null)
+            {
+                await jSRuntime.InvokeVoidAsync("gridJsFunctions.focusElement", gridmvc);
+            }
         }
 
         public async Task GridComponentKeyup(KeyboardEventArgs e)
