@@ -4,6 +4,13 @@ A fork from: https://gridmvc.codeplex.com/
 
 It supports .NET Core 3.1 Preview3
 
+**Important:** Blazor Server App require these changes on to the **_Host.cshtml** file for .Net Core 3.1:
+    
+```
+    <link href="_content/GridBlazor/css/gridblazor.css" rel="stylesheet" />
+    <script src="_content/GridBlazor/js/gridblazor.js"></script>
+```
+
 ## Demo 
 http://gridblazor.azurewebsites.net
 
