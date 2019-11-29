@@ -10,16 +10,7 @@ The **GridBlazor** component installation is straightforward. Just follow these 
 
 2. Install [**GridBlazor**](http://nuget.org/packages/GridBlazor/) and [**GridMvcCore**](http://nuget.org/packages/GridMvcCore/) nuget packages on the project.
 
-3. Add the following code to the **Startup** class:
-    ```c#
-        public void ConfigureServices(IServiceCollection services)
-        {
-            services.AddGridMvc();
-        }
-    ```
-    It will add references to the required stylesheet from the nuget package.
-
-4. Add the following lines to the **_Host.cshtml** view or directly to the page:
+3. Add the following lines to the **_Host.cshtml** view or directly to the page:
     ```html
         <link href="_content/GridBlazor/css/gridblazor.min.css" rel="stylesheet" />
         <script src="_content/GridBlazor/js/gridblazor.js"></script>

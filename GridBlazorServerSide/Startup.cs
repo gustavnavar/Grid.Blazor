@@ -1,6 +1,5 @@
 using GridBlazorServerSide.Data;
 using GridBlazorServerSide.Services;
-using GridMvc;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Localization;
@@ -42,8 +41,6 @@ namespace GridBlazorServerSide
             services.AddScoped<ICustomerService, CustomerService>();
             services.AddScoped<IEmployeeService, EmployeeService>();
             services.AddScoped<IShipperService, ShipperService>();
-
-            services.AddGridMvc();
 
             services.Configure<RequestLocalizationOptions>(
                 options =>

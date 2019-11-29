@@ -22,11 +22,11 @@
             {
                 if (Column.IsSorted)
                 {
-                    <button @onclick="TitleButtonClicked" data-column="@Column.Name" data-sorted="@(Column.Direction == GridSortDirection.Ascending ? "asc" : "desc")">@Column.Title</button>
+                    <a href="javascript:void(0);" @onclick="TitleButtonClicked" data-column="@Column.Name" data-sorted="@(Column.Direction == GridSortDirection.Ascending ? "asc" : "desc")">@Column.Title</a>
                 }
                 else
                 {
-                    <button @onclick="TitleButtonClicked" data-column="@Column.Name">@Column.Title</button>
+                    <a href="javascript:void(0);" @onclick="TitleButtonClicked" data-column="@Column.Name">@Column.Title</a>
                 }
             }
             else
