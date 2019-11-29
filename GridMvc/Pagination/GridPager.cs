@@ -15,6 +15,7 @@ namespace GridMvc.Pagination
         public const int DefaultPageSize = 20;
 
         public const string DefaultPageQueryParameter = "grid-page";
+        public const string DefaultPageSizeQueryParameter = "grid-pagesize";
         public const string DefaultPagerViewName = "_GridPager";
         public const string DefaultAjaxPagerViewName = "_AjaxGridPager";
 
@@ -25,6 +26,7 @@ namespace GridMvc.Pagination
         private int _itemsCount;
         private int _maxDisplayedPages;
         private int _pageSize;
+        private int _queryPageSize;
 
         #region ctor's
 
@@ -40,6 +42,13 @@ namespace GridMvc.Pagination
             ParameterName = DefaultPageQueryParameter;
             TemplateName = DefaultPagerViewName;
             MaxDisplayedPages = MaxDisplayedPages;
+
+            string pageSizeParameter = query.Get(DefaultPageSizeQueryParameter);
+            int pageSize = 0;
+            if (pageSizeParameter != null)
+                int.TryParse(pageSizeParameter, out pageSize);
+            QueryPageSize = pageSize;
+
             PageSize = DefaultPageSize;
         }
 
@@ -53,6 +62,18 @@ namespace GridMvc.Pagination
             set
             {
                 _pageSize = value;
+                RecalculatePages();
+            }
+        }
+        
+        public bool ChangePageSize { get; set; }
+
+        public int QueryPageSize
+        {
+            get { return _queryPageSize; }
+            set
+            {
+                _queryPageSize = value;
                 RecalculatePages();
             }
         }
@@ -125,6 +146,8 @@ namespace GridMvc.Pagination
                 PageCount = 0;
                 return;
             }
+            if (_queryPageSize != 0)
+                _pageSize = _queryPageSize;
             PageCount = (int) (Math.Ceiling(ItemsCount/(double) PageSize));
 
             if (CurrentPage > PageCount)

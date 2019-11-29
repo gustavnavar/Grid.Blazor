@@ -7,7 +7,7 @@
 
 @{
     var firstColumn = (ISGridColumn)Model.Columns.FirstOrDefault();
-    bool hasSubGrid = Model.Keys != null && Model.Keys.Length > 0;
+    bool hasSubGrid = Model.SubGridKeys != null && Model.SubGridKeys.Length > 0;
     bool hasTotals = Model.IsSumEnabled || Model.IsAverageEnabled || Model.IsMaxEnabled || Model.IsMinEnabled;
     bool requiredTotalsColumn = hasTotals
               && firstColumn != null
@@ -46,8 +46,8 @@ else
                 @if (hasSubGrid)
                 {
                     string values = "";
-                    string[] keyValues = Model.GetKeyValues(item);
-                    if (keyValues.Length == Model.Keys.Length)
+                    string[] keyValues = Model.GetSubGridKeyValues(item);
+                    if (keyValues.Length == Model.SubGridKeys.Length)
                     {
                         values = string.Join(",", keyValues);
                     }

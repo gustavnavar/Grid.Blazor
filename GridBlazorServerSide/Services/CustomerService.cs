@@ -14,42 +14,58 @@ namespace GridBlazorServerSide.Services
 {
     public class CustomerService : ICustomerService
     {
-        private readonly NorthwindDbContext _context;
+        private readonly DbContextOptions<NorthwindDbContext> _options;
 
-        public CustomerService()
+        public CustomerService(DbContextOptions<NorthwindDbContext> options)
         {
-            var builder = new DbContextOptionsBuilder<NorthwindDbContext>();
-            builder.UseSqlServer(Startup.ConnectionString);
-            _context = new NorthwindDbContext(builder.Options);
+            _options = options;
         }
 
         public IEnumerable<string> GetCustomersNames()
         {
-            var repository = new CustomersRepository(_context);
-            return repository.GetAll().Select(r => r.CompanyName).ToList();
+            using (var context = new NorthwindDbContext(_options))
+            {
+                var repository = new CustomersRepository(context);
+                return repository.GetAll().Select(r => r.CompanyName).ToList();
+            }
+        }
+
+        public IEnumerable<SelectItem> GetAllCustomers()
+        {
+            using (var context = new NorthwindDbContext(_options))
+            {
+                CustomersRepository repository = new CustomersRepository(context);
+                return repository.GetAll()
+                    .Select(r => new SelectItem(r.CustomerID, r.CustomerID + " - " + r.CompanyName))
+                    .ToList();
+            }
         }
 
         public ItemsDTO<Customer> GetCustomersGridRows(Action<IGridColumnCollection<Customer>> columns,
             QueryDictionary<StringValues> query)
         {
-            var repository = new CustomersRepository(_context);
-            var server = new GridServer<Customer>(repository.GetAll(), new QueryCollection(query),
-                true, "customersGrid", columns)
-                    .Sortable()
-                    .WithPaging(10)
-                    .Filterable()
-                    .WithMultipleFilters()
-                    .Searchable(true, false);
+            using (var context = new NorthwindDbContext(_options))
+            {
+                var repository = new CustomersRepository(context);
+                var server = new GridServer<Customer>(repository.GetAll(), new QueryCollection(query),
+                    true, "customersGrid", columns)
+                        .Sortable()
+                        .WithPaging(10)
+                        .Filterable()
+                        .WithMultipleFilters()
+                        .Searchable(true, false);
 
-            // return items to displays
-            var items = server.ItemsToDisplay;
-            return items;
+                // return items to displays
+                var items = server.ItemsToDisplay;
+                return items;
+            }
         }
     }
 
     public interface ICustomerService
     {
         IEnumerable<string> GetCustomersNames();
+        IEnumerable<SelectItem> GetAllCustomers();
         ItemsDTO<Customer> GetCustomersGridRows(Action<IGridColumnCollection<Customer>> columns, QueryDictionary<StringValues> query);
     }
 }

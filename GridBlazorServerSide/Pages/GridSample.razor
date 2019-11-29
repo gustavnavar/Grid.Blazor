@@ -66,6 +66,7 @@ else
                     .SetRowCssClasses(item => item.Quantity > 10 ? "success" : string.Empty)
                     .Sortable()
                     .Filterable()
+                    .SetStriped(true)
                     .WithMultipleFilters()
                     .WithGridItemsCount();
 
@@ -94,6 +95,7 @@ else
             .SetRowCssClasses(item => item.Customer.IsVip ? "success" : string.Empty)
             .Sortable()
             .Filterable()
+            .SetStriped(true)
             .WithMultipleFilters()
             .Searchable(true, false)
             .Selectable(true)

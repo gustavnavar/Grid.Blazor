@@ -12,6 +12,12 @@ namespace GridMvc.Server
         IGridServer<T> Columns(Action<IGridColumnCollection<T>> columnBuilder);
 
         /// <summary>
+        ///     Enable change page size for grid
+        /// </summary>
+        /// <param name="enable">Enable dynamic setup the page size of the grid</param>
+        IGridServer<T> ChangePageSize(bool enable);
+
+        /// <summary>
         ///     Enable paging for grid
         /// </summary>
         /// <param name="pageSize">Setup the page size of the grid</param>
@@ -139,6 +145,11 @@ namespace GridMvc.Server
         ///    Allow grid to show a SubGrid
         /// </summary>
         IGridServer<T> SubGrid(params string[] keys);
+
+        /// <summary>
+        ///     Enable or disable striped grid
+        /// </summary>
+        IGridServer<T> SetStriped(bool enable);
 
         /// <summary>
         ///     Items, displaying in the grid view

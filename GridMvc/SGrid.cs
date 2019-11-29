@@ -218,6 +218,31 @@ namespace GridMvc
         public ISanitizer Sanitizer { get; set; }
 
         /// <summary>
+        ///     Grid mode
+        /// </summary>
+        public GridMode Mode { get { return GridMode.Grid; } }
+
+        /// <summary>
+        ///     Get value for creating items
+        /// </summary>
+        public bool CreateEnabled { get { return false; } }
+
+        /// <summary>
+        ///     Get value for reading items
+        /// </summary>
+        public bool ReadEnabled { get { return false; } }
+
+        /// <summary>
+        ///     Get value for updating items
+        /// </summary>
+        public bool UpdateEnabled { get { return false; } }
+
+        /// <summary>
+        ///     Get value for deleting items
+        /// </summary>
+        public bool DeleteEnabled { get { return false; }  }
+
+        /// <summary>
         ///     Manage pager properties
         /// </summary>
         public IGridPager Pager
@@ -229,21 +254,23 @@ namespace GridMvc
         /// <summary>
         ///     Keys for subgrid
         /// </summary>
-        public string[] Keys { get; set; }
+        public string[] SubGridKeys { get; set; }
 
         /// <summary>
         ///     Get foreign key values for subgrid records
         /// </summary>
-        public string[] GetKeyValues(object item)
+        public string[] GetSubGridKeyValues(object item)
         {
             List<string> values = new List<string>();
-            foreach (var key in Keys)
+            foreach (var key in SubGridKeys)
             {
                 string value = item.GetType().GetProperty(key).GetValue(item).ToString();
                 values.Add(value);
             }
             return values.ToArray();
         }
+
+        public bool Striped { get; internal set; } = false;
 
         IGridColumnCollection IGrid.Columns
         {

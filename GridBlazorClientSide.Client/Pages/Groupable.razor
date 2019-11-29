@@ -50,6 +50,7 @@ else
         var client = new GridClient<Order>(url, query, false, "ordersGrid", ColumnCollections.OrderColumnsGroupable, locale)
             .Sortable()
             .Filterable()
+            .SetStriped(true)
             .WithMultipleFilters()
             .WithGridItemsCount()
             .Groupable(true);

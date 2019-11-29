@@ -147,6 +147,9 @@
   <data name="SearchFor" xml:space="preserve">
     <value>Search for ...</value>
   </data>
+  <data name="Show" xml:space="preserve">
+    <value>Show</value>
+  </data>
   <data name="Sum" xml:space="preserve">
     <value>Sum</value>
   </data>

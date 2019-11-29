@@ -20,7 +20,7 @@ namespace GridMvc.Html
             get { return _source.Columns; }
         }
 
-        IEnumerable<object> IGrid.ItemsToDisplay
+        public IEnumerable<object> ItemsToDisplay
         {
             get { return (_source as IGrid).ItemsToDisplay; }
         }
@@ -31,12 +31,12 @@ namespace GridMvc.Html
         //    set { _source.ItemsCount = value; }
         //}
 
-        int IGrid.DisplayingItemsCount
+        public int DisplayingItemsCount
         {
             get { return _source.DisplayingItemsCount; }
         }
 
-        bool IGrid.EnablePaging
+        public bool EnablePaging
         {
             get { return _source.EnablePaging; }
         }
@@ -46,29 +46,29 @@ namespace GridMvc.Html
             set { _source.SearchingEnabled = value; }
         }
 
-        bool IGrid.SearchingOnlyTextColumns {
+        public bool SearchingOnlyTextColumns {
             get { return _source.SearchingOnlyTextColumns; }
             set { _source.SearchingOnlyTextColumns = value; }
         }
 
-        bool IGrid.ExtSortingEnabled
+        public bool ExtSortingEnabled
         {
             get { return _source.ExtSortingEnabled; }
             set { _source.ExtSortingEnabled = value; }
         }
 
-        bool IGrid.GroupingEnabled
+        public bool GroupingEnabled
         {
             get { return _source.GroupingEnabled; }
             set { _source.GroupingEnabled = value; }
         }
 
-        string IGrid.EmptyGridText
+        public string EmptyGridText
         {
             get { return _source.EmptyGridText; }
         }
 
-        string IGrid.Language
+        public string Language
         {
             get { return _source.Language; }
         }
@@ -76,6 +76,37 @@ namespace GridMvc.Html
         public ISanitizer Sanitizer
         {
             get { return _source.Sanitizer; }
+        }
+
+        public GridMode Mode
+        {
+            get { return _source.Mode; }
+        }
+
+        public bool Striped
+        {
+            get { return _source.Striped; }
+            set { _source.Striped = value; }
+        }
+
+        public bool CreateEnabled
+        {
+            get { return _source.CreateEnabled; }
+        }
+
+        public bool ReadEnabled
+        {
+            get { return _source.ReadEnabled; }
+        }
+
+        public bool UpdateEnabled
+        {
+            get { return _source.UpdateEnabled; }
+        }
+
+        public bool DeleteEnabled
+        {
+            get { return _source.DeleteEnabled; }
         }
 
         string IGrid.GetRowCssClasses(object item)

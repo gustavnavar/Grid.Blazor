@@ -3,16 +3,14 @@
 @typeparam T
 @inherits GridSearchComponentBase<T>
 
-<div class="row grid-search" data-search-url="@_seachUrl">
-    <div class="col-md-offset-6 offset-md-6 col-md-6">
-        <div class="input-group">
-            <span class="input-group-btn input-group-prepend">
-                <button class="btn btn-default btn-outline-secondary grid-search-apply" type="button" @onclick="ApplyButtonClicked"></button>
-            </span>
-            <input type="text" class="form-control grid-search-input" @bind="_searchValue" @onkeyup="InputSearchKeyup" placeholder="@Strings.SearchFor" />
-            <span class="input-group-btn input-group-append">
-                <button class="btn btn-default btn-outline-secondary grid-search-clear" type="button" @onclick="ClearButtonClicked"></button>
-            </span>
-        </div>
+<div class="grid-search col-md-6 @(Grid.EnablePaging && Grid.Pager.ChangePageSize ? "" : "col-md-offset-6 offset-md-6")" data-search-url="@_seachUrl">
+    <div class="input-group">
+        <span class="input-group-btn input-group-prepend">
+            <button class="btn btn-default btn-outline-secondary grid-search-apply" type="button" @onclick="ApplyButtonClicked"></button>
+        </span>
+        <input type="text" class="form-control grid-search-input" @bind="_searchValue" @onkeyup="InputSearchKeyup" placeholder="@Strings.SearchFor" />
+        <span class="input-group-btn input-group-append">
+            <button class="btn btn-default btn-outline-secondary grid-search-clear" type="button" @onclick="ClearButtonClicked"></button>
+        </span>
     </div>
 </div>

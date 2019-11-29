@@ -1,4 +1,5 @@
-﻿using GridShared.Filtering;
+﻿using GridShared;
+using GridShared.Filtering;
 using GridShared.Grouping;
 using GridShared.Searching;
 using GridShared.Sorting;
@@ -13,6 +14,9 @@ namespace GridShared.Columns
         IFilterableColumn<T>, ISearchableColumn<T>, IGroupableColumn<T>
     {
         IGridCell GetValue(T instance);
+        (Type Type, object Value) GetTypeAndValue(T item);
+        (bool IsSelectKey, Func<T,string> Expression, string Url, Func<IEnumerable<SelectItem>> SelectItemExpr) IsSelectField { get; }
+        IEnumerable<SelectItem> SelectItems { get; }
     }
 
     public interface IGridColumn : ISortableColumn, IFilterableColumn
@@ -22,6 +26,8 @@ namespace GridShared.Columns
         object Object { get; }
         IGrid ParentGrid { get; }
         bool Hidden { get; }
+        bool CrudHidden { get; }
+        bool IsPrimaryKey { get; }
     }
 
     /// <summary>
@@ -137,6 +143,26 @@ namespace GridShared.Columns
         ///     Calculate min of column values
         /// </summary>
         IGridColumn<T> Min(bool enabled);
+
+        /// <summary>
+        ///     Sets the column as hidden in crud views
+        /// </summary>
+        IGridColumn<T> SetCrudHidden(bool enabled);
+
+        /// <summary>
+        ///     Sets the column as primary key
+        /// </summary>
+        IGridColumn<T> SetPrimaryKey(bool enabled);
+
+        /// <summary>
+        ///     Sets the column as select for CRUD components
+        /// </summary>
+        IGridColumn<T> SetSelectField(bool enabled, Func<T, string> expression, Func<IEnumerable<SelectItem>> selectItemExpr);
+
+        /// <summary>
+        ///     Sets the column as select for CRUD components
+        /// </summary>
+        IGridColumn<T> SetSelectField(bool enabled, Func<T, string> expression, string url);
     }
 
     public interface IColumn
@@ -150,6 +176,11 @@ namespace GridShared.Columns
         ///     Internal name of the gridColumn
         /// </summary>
         string Name { get; set; }
+
+        /// <summary>
+        ///     Internal name of the field name
+        /// </summary>
+        string FieldName { get; }
 
         /// <summary>
         ///     Width of the column
