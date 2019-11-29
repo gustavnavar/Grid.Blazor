@@ -1,4 +1,4 @@
-﻿using GridBlazor.Columns;
+using GridBlazor.Columns;
 using GridBlazor.DataAnnotations;
 using GridBlazor.Filtering;
 using GridBlazor.Pagination;
@@ -33,6 +33,7 @@ namespace GridBlazor
         private readonly IGridAnnotationsProvider _annotations;
         private readonly IColumnBuilder<T> _columnBuilder;
         private readonly GridColumnCollection<T> _columnsCollection;
+        private IEnumerable<T> _items;
         private int _displayingItemsCount = -1; // count of displaying items (if using pagination)
         private bool _enablePaging;
         private IGridPager _pager;
@@ -168,7 +169,13 @@ namespace GridBlazor
         /// <summary>
         ///     items from server
         /// </summary>
-        public IEnumerable<T> Items { get; set; }
+        public IEnumerable<T> Items {
+            get => _items;
+            set {
+                _displayingItemsCount = -1;
+                _items = value;
+            }
+        }
 
         /// <summary>
         ///     Provides settings, using by the grid
