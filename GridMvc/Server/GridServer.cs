@@ -17,8 +17,8 @@ namespace GridMvc.Server
     {
         private readonly SGrid<T> _source;
 
-        public GridServer(IEnumerable<T> items, IQueryCollection query, bool renderOnlyRows, 
-            string gridName, Action<IGridColumnCollection<T>> columns = null, int? pageSize = null, 
+        public GridServer(IEnumerable<T> items, IQueryCollection query, bool renderOnlyRows,
+            string gridName, Action<IGridColumnCollection<T>> columns = null, int? pageSize = null,
             string language = "", string pagerViewName = GridPager.DefaultPagerViewName)
         {
             _source = new SGrid<T>(items, query, renderOnlyRows, pagerViewName);
@@ -129,7 +129,7 @@ namespace GridMvc.Server
         {
             _source.ExtSortingEnabled = enable;
             return this;
-        }      
+        }
 
         public IGridServer<T> Groupable()
         {

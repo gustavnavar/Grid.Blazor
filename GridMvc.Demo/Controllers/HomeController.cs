@@ -108,7 +108,7 @@ namespace GridMvc.Demo.Controllers
                     .RenderValueAs(o => o.Customer.IsVip ? "Yes" : "No");
             };
 
-            var server = new GridServer<Order>(_orderRepository.GetAll(), query, false, "ordersGrid", 
+            var server = new GridServer<Order>(_orderRepository.GetAll(), query, false, "ordersGrid",
                 columns, 10, locale)
                 .SetRowCssClasses(item => item.Customer.IsVip ? "success" : string.Empty)
                 .Sortable()
@@ -117,6 +117,7 @@ namespace GridMvc.Demo.Controllers
                 .Searchable(true, false)
                 .Groupable(true)
                 .Selectable(true)
+                .ChangePageSize(true)
                 .WithGridItemsCount();
 
             return View(server.Grid);
@@ -164,7 +165,7 @@ namespace GridMvc.Demo.Controllers
                 {
                     // do nothing, gridState was not a valid state
                 }
-            }       
+            }
 
             var model = new SGrid<Order>(_orderRepository.GetAll(), query, false, GridPager.DefaultAjaxPagerViewName);
 
@@ -237,7 +238,7 @@ namespace GridMvc.Demo.Controllers
 
         [HttpGet]
         public ActionResult MultipleGrids(string gridState = "", string altGridState = "")
-        {        
+        {
             ViewBag.ActiveMenuTitle = "MultipleGrids";
 
             ViewData["ordersGridState"] = gridState;

@@ -1,0 +1,65 @@
+﻿@page "/customcrud"
+@using GridBlazor
+@using GridBlazorClientSide.Client.ColumnCollections
+@using GridBlazorClientSide.Shared.Models
+@using GridShared
+@using GridShared.Utility
+@using Microsoft.Extensions.Primitives
+@using System.Globalization
+@using System.Threading.Tasks
+@inject NavigationManager NavigationManager
+@inject ICrudDataService<Order> orderService
+
+<h1>Grid Sample</h1>
+
+<p>
+    This page contains a grid with custom CRUD views
+</p>
+
+<p>
+    This component demonstrates a GridBlazor client-side grid. For more information, please see: <a href="https://github.com/gustavnavar/Grid.Blazor">https://github.com/gustavnavar/Grid.Blazor</a>
+</p>
+
+@if (_task.IsCompleted)
+{
+    <div class="row">
+        <div class="col-md-12">
+            <GridComponent T="Order" Grid="@_grid"></GridComponent>
+        </div>
+    </div>
+}
+else
+{
+    <p><em>Loading...</em></p>
+}
+
+@code
+{
+    private CGrid<Order> _grid;
+    private Task _task;
+
+    protected override async Task OnParametersSetAsync()
+    {
+        var locale = CultureInfo.CurrentCulture;
+
+        var query = new QueryDictionary<StringValues>();
+        string url = NavigationManager.BaseUri + "api/SampleData/OrderColumnsWithCrud";
+
+        var client = new GridClient<Order>(url, query, false, "ordersGrid", ColumnCollections.OrderColumnsWithCustomCrud,
+            locale)
+            .Sortable()
+            .Filterable()
+            .Crud(true, orderService)
+            .SetCreateComponent<OrderCreateComponent>()
+            .SetReadComponent<OrderReadComponent>()
+            .SetUpdateComponent<OrderUpdateComponent>()
+            .SetDeleteComponent<OrderDeleteComponent>()
+            .WithMultipleFilters()
+            .WithGridItemsCount();
+
+        _grid = client.Grid;
+        // Set new items to grid
+        _task = client.UpdateGrid();
+        await _task;
+    }
+}

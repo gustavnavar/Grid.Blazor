@@ -1,5 +1,6 @@
 ﻿using GridShared;
 using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace GridBlazor
@@ -10,6 +11,12 @@ namespace GridBlazor
     public interface IGridClient<T>
     {
         IGridClient<T> Columns(Action<IGridColumnCollection<T>> columnBuilder);
+
+        /// <summary>
+        ///     Enable change page size for grid
+        /// </summary>
+        /// <param name="enable">Enable dynamic setup the page size of the grid</param>
+        IGridClient<T> ChangePageSize(bool enable);
 
         /// <summary>
         ///     Enable paging for grid
@@ -90,7 +97,98 @@ namespace GridBlazor
         /// <summary>
         ///     Enable or disable client grid items selectable feature
         /// </summary>
-        IGridClient<T> Selectable(bool set);
+        IGridClient<T> Selectable(bool enable);
+
+        /// <summary>
+        ///     Enable or disable client grid CRUD
+        /// </summary>
+        IGridClient<T> Crud(bool enabled, ICrudDataService<T> crudDataService);
+
+        /// <summary>
+        ///     Enable or disable client grid CRUD
+        /// </summary>
+        IGridClient<T> Crud(bool createEnabled, bool readEnabled, bool updateEnabled, bool deleteEnabled,
+            ICrudDataService<T> crudDataService);
+
+        /// <summary>
+        ///     Setup the Create Component
+        /// </summary>
+        IGridClient<T> SetCreateComponent<TComponent>();
+
+        /// <summary>
+        ///     Setup the Create Component
+        /// </summary>
+        IGridClient<T> SetCreateComponent<TComponent>(IList<Action<object>> actions);
+
+        /// <summary>
+        ///     Setup the Create Component
+        /// </summary>
+        IGridClient<T> SetCreateComponent<TComponent>(object obj);
+
+        /// <summary>
+        ///     Setup the Create Component
+        /// </summary>
+        IGridClient<T> SetCreateComponent<TComponent>(IList<Action<object>> actions, object obj);
+
+        /// <summary>
+        ///     Setup the Read Component
+        /// </summary>
+        IGridClient<T> SetReadComponent<TComponent>();
+
+        /// <summary>
+        ///     Setup the Read Component
+        /// </summary>
+        IGridClient<T> SetReadComponent<TComponent>(IList<Action<object>> actions);
+
+        /// <summary>
+        ///     Setup the Read Component
+        /// </summary>
+        IGridClient<T> SetReadComponent<TComponent>(object obj);
+
+        /// <summary>
+        ///     Setup the Read Component
+        /// </summary>
+        IGridClient<T> SetReadComponent<TComponent>(IList<Action<object>> actions, object obj);
+
+        /// <summary>
+        ///     Setup the Update Component
+        /// </summary>
+        IGridClient<T> SetUpdateComponent<TComponent>();
+
+        /// <summary>
+        ///     Setup the Update Component
+        /// </summary>
+        IGridClient<T> SetUpdateComponent<TComponent>(IList<Action<object>> actions);
+
+        /// <summary>
+        ///     Setup the Update Component
+        /// </summary>
+        IGridClient<T> SetUpdateComponent<TComponent>(object obj);
+
+        /// <summary>
+        ///     Setup the Update Component
+        /// </summary>
+        IGridClient<T> SetUpdateComponent<TComponent>(IList<Action<object>> actions, object obj);
+
+        /// <summary>
+        ///     Setup the Delete Component
+        /// </summary>
+        IGridClient<T> SetDeleteComponent<TComponent>();
+
+        /// <summary>
+        ///     Setup the Delete Component
+        /// </summary>
+        IGridClient<T> SetDeleteComponent<TComponent>(IList<Action<object>> actions);
+
+        /// <summary>
+        ///     Setup the Delete Component
+        /// </summary>
+        IGridClient<T> SetDeleteComponent<TComponent>(object obj);
+
+        /// <summary>
+        ///     Setup the Delete Component
+        /// </summary>
+        IGridClient<T> SetDeleteComponent<TComponent>(IList<Action<object>> actions, object obj);
 
         /// <summary>
         ///     Setup the text, which will displayed with empty items collection in the grid

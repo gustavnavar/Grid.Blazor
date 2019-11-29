@@ -321,28 +321,28 @@ namespace GridMvc
                     if (column.IsSumEnabled)
                         totals.Sum.Add(((GridColumnBase<T>)column).Name, column.SumString);
                 }
-            
+
             if (IsAverageEnabled)
                 foreach(ISGridColumn column in Columns)
                 {
                     if (column.IsAverageEnabled)
                         totals.Average.Add(((GridColumnBase<T>)column).Name, column.AverageString);
                 }
-            
+
             if (IsMaxEnabled)
                 foreach(ISGridColumn column in Columns)
                 {
                     if (column.IsMaxEnabled)
                         totals.Max.Add(((GridColumnBase<T>)column).Name, column.MaxString);
                 }
-            
+
             if (IsMinEnabled)
                 foreach(ISGridColumn column in Columns)
                 {
                     if (column.IsMinEnabled)
                         totals.Min.Add(((GridColumnBase<T>)column).Name, column.MinString);
                 }
-            
+
             return totals;
         }
 

@@ -27,7 +27,7 @@ namespace GridMvc.Demo.Components
         {
             IQueryCollection query = Request.Query;
             if (!string.IsNullOrWhiteSpace(ordersGridState))
-            {      
+            {
                 try
                 {
                     query = new QueryCollection(StringExtensions.GetQuery(ordersGridState));
@@ -106,6 +106,7 @@ namespace GridMvc.Demo.Components
                 .Searchable(true, false)
                 .Groupable(true)
                 .Selectable(true)
+                .ChangePageSize(true)
                 .WithGridItemsCount();
             var factory = Task<IViewComponentResult>.Factory;
 
