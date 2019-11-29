@@ -67,4 +67,4 @@
     };
 }
 
-@await Html.Grid(Model).Named("ordersGrid").Columns(columns).SetRowCssClasses(item => item.Customer.IsVip ? "success" : string.Empty).WithPaging(10).SetLanguage(locale).Sortable().Filterable().WithMultipleFilters().Searchable(true, false).Groupable(true).Selectable(true).WithGridItemsCount().SubGrid("OrderID").RenderAsync()
+@await Html.Grid(Model).Named("ordersGrid").Columns(columns).SetRowCssClasses(item => item.Customer.IsVip ? "success" : string.Empty).WithPaging(10).SetLanguage(locale).Sortable().Filterable().WithMultipleFilters().Searchable(true, false).Groupable(true).Selectable(true).SetStriped(true).ChangePageSize(true).WithGridItemsCount().SubGrid("OrderID").RenderAsync()

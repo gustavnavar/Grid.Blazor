@@ -6,7 +6,7 @@
 
 @{
     var firstColumn = (ISGridColumn)Model.Columns.FirstOrDefault();
-    bool hasSubGrid = Model.Keys != null && Model.Keys.Length > 0;
+    bool hasSubGrid = Model.SubGridKeys != null && Model.SubGridKeys.Length > 0;
     bool requiredTotalsColumn = firstColumn != null
               && (firstColumn.IsSumEnabled || firstColumn.IsAverageEnabled
                   || firstColumn.IsMaxEnabled || firstColumn.IsMinEnabled);

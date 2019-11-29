@@ -150,4 +150,7 @@
   <data name="GroupingText" xml:space="preserve">
     <value>Suelte las columnas aquí para agrupar columnas</value>
   </data>
+  <data name="Show" xml:space="preserve">
+    <value>Mostrar</value>
+  </data>
 </root>

@@ -4,91 +4,151 @@ using GridMvc.Server;
 using GridShared;
 using GridShared.Utility;
 using Microsoft.AspNetCore.Http;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Primitives;
 using System;
+using System.Threading.Tasks;
 
 namespace GridBlazorServerSide.Services
 {
     public class OrderService : IOrderService
     {
+        private readonly DbContextOptions<NorthwindDbContext> _options;
 
-        private readonly NorthwindDbContext _context;
-
-        public OrderService(NorthwindDbContext context)
+        public OrderService(DbContextOptions<NorthwindDbContext> options)
         {
-            _context = context;
+            _options = options;
         }
 
         public ItemsDTO<Order> GetOrdersGridRows(Action<IGridColumnCollection<Order>> columns,
             QueryDictionary<StringValues> query)
         {
-            var repository = new OrdersRepository(_context);
-            var server = new GridServer<Order>(repository.GetAll(), new QueryCollection(query),
-                true, "ordersGrid", columns)
-                    .Sortable()
-                    .WithPaging(10)
-                    .Filterable()
-                    .WithMultipleFilters()
-                    .Groupable(true)
-                    .Searchable(true, false);
+            using (var context = new NorthwindDbContext(_options))
+            {
+                var repository = new OrdersRepository(context);
+                var server = new GridServer<Order>(repository.GetAll(), new QueryCollection(query),
+                    true, "ordersGrid", columns)
+                        .Sortable()
+                        .WithPaging(10)
+                        .Filterable()
+                        .WithMultipleFilters()
+                        .Groupable(true)
+                        .Searchable(true, false);
 
-            // return items to displays
-            var items = server.ItemsToDisplay;
+                // return items to displays
+                var items = server.ItemsToDisplay;
 
-            // uncomment the following lines are to test null responses
-            //items = null;
-            //items.Items = null;
-            //items.Pager = null;
-            return items;
+                // uncomment the following lines are to test null responses
+                //items = null;
+                //items.Items = null;
+                //items.Pager = null;
+                return items;
+            }
         }
 
         public ItemsDTO<Order> GetOrdersGridRows(QueryDictionary<StringValues> query)
         {
-            var repository = new OrdersRepository(_context);
-            var server = new GridServer<Order>(repository.GetAll(), new QueryCollection(query),
-                true, "ordersGrid", null).AutoGenerateColumns();
+            using (var context = new NorthwindDbContext(_options))
+            {
+                var repository = new OrdersRepository(context);
+                var server = new GridServer<Order>(repository.GetAll(), new QueryCollection(query),
+                    true, "ordersGrid", null).AutoGenerateColumns();
 
-            // return items to displays
-            return server.ItemsToDisplay;
+                // return items to displays
+                return server.ItemsToDisplay;
+            }
         }
 
         public ItemsDTO<OrderDetail> GetOrderDetailsGridRows(Action<IGridColumnCollection<OrderDetail>> columns,
             object[] keys, QueryDictionary<StringValues> query)
         {
-            var repository = new OrderDetailsRepository(_context);
-            var server = new GridServer<OrderDetail>(repository.GetForOrder((int)keys[0]), new QueryCollection(query),
-                true, "orderDetailssGrid" + keys[0].ToString(), columns)
-                    .Sortable()
-                    .WithPaging(10)
-                    .Filterable()
-                    .WithMultipleFilters();
+            using (var context = new NorthwindDbContext(_options))
+            {
+                int orderId;
+                int.TryParse(keys[0].ToString(), out orderId);
+                var repository = new OrderDetailsRepository(context);
+                var server = new GridServer<OrderDetail>(repository.GetForOrder(orderId), new QueryCollection(query),
+                    true, "orderDetailssGrid" + keys[0].ToString(), columns)
+                        .Sortable()
+                        .WithPaging(10)
+                        .Filterable()
+                        .WithMultipleFilters();
 
-            // return items to displays
-            var items = server.ItemsToDisplay;
-            return items;
+                // return items to displays
+                var items = server.ItemsToDisplay;
+                return items;
+            }
         }
 
-        public Order GetOrder(int OrderId)
+        public async Task<Order> GetOrder(int OrderId)
         {
-            var repository = new OrdersRepository(_context);
-            return repository.GetById(OrderId);
+            using (var context = new NorthwindDbContext(_options))
+            {
+                var repository = new OrdersRepository(context);
+                return await repository.GetById(OrderId);
+            }
         }
 
-        public void UpdateAndSave(Order order)
+        public async Task UpdateAndSave(Order order)
         {
-            var repository = new OrdersRepository(_context);
-            repository.Update(order);
-            repository.Save();
+            using (var context = new NorthwindDbContext(_options))
+            {
+                var repository = new OrdersRepository(context);
+                await repository.Update(order);
+                repository.Save();
+            }
+        }
+
+        public async Task<Order> Get(params object[] keys)
+        {
+            using (var context = new NorthwindDbContext(_options))
+            {
+                int orderId;
+                int.TryParse(keys[0].ToString(), out orderId);
+                var repository = new OrdersRepository(context);
+                return await repository.GetById(orderId);
+            }
+        }
+
+        public async Task Insert(Order item)
+        {
+            using (var context = new NorthwindDbContext(_options))
+            {
+                var repository = new OrdersRepository(context);
+                await repository.Insert(item);
+                repository.Save();
+            }
+        }
+
+        public async Task Update(Order item)
+        {
+            using (var context = new NorthwindDbContext(_options))
+            {
+                var repository = new OrdersRepository(context);
+                await repository.Update(item);
+                repository.Save();
+            }
+        }
+
+        public async Task Delete(params object[] keys)
+        {
+            using (var context = new NorthwindDbContext(_options))
+            {
+                var order = await Get(keys);
+                var repository = new OrdersRepository(context);
+                repository.Delete(order);
+                repository.Save();
+            }
         }
     }
 
-    public interface IOrderService
+    public interface IOrderService : ICrudDataService<Order>
     {
         ItemsDTO<Order> GetOrdersGridRows(Action<IGridColumnCollection<Order>> columns, QueryDictionary<StringValues> query);
         ItemsDTO<Order> GetOrdersGridRows(QueryDictionary<StringValues> query);
         ItemsDTO<OrderDetail> GetOrderDetailsGridRows(Action<IGridColumnCollection<OrderDetail>> columns,
             object[] keys, QueryDictionary<StringValues> query);
-        Order GetOrder(int OrderId);
-        void UpdateAndSave(Order order);
+        Task<Order> GetOrder(int OrderId);
+        Task UpdateAndSave(Order order);
     }
 }

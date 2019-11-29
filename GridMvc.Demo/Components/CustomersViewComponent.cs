@@ -77,6 +77,8 @@ namespace GridMvc.Demo.Components
                 .Filterable()
                 .WithMultipleFilters()
                 .Searchable(true, false)
+                .SetStriped(true)
+                .ChangePageSize(true)
                 .WithGridItemsCount();
             var factory = Task<IViewComponentResult>.Factory;
 

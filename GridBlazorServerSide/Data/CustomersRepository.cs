@@ -1,5 +1,7 @@
 ﻿using GridBlazorServerSide.Models;
+using Microsoft.EntityFrameworkCore;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace GridBlazorServerSide.Data
 {
@@ -15,9 +17,9 @@ namespace GridBlazorServerSide.Data
             return EfDbSet;
         }
 
-        public override Customer GetById(object id)
+        public override async Task<Customer> GetById(object id)
         {
-            return GetAll().FirstOrDefault(c => c.CustomerID == (string)id);
+            return await GetAll().SingleOrDefaultAsync(c => c.CustomerID == (string)id);
         }
     }
 }

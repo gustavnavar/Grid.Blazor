@@ -18,6 +18,16 @@
         int PageSize { get; set; }
 
         /// <summary>
+        ///     Enable changing page size on view
+        /// </summary>
+        bool ChangePageSize { get; set; }
+
+        /// <summary>
+        ///     Max grid items, displaying on the page configured on the view
+        /// </summary>
+        int QueryPageSize { get; set; }
+
+        /// <summary>
         ///     Current page index
         /// </summary>
         int CurrentPage { get; }

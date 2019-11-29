@@ -14,6 +14,7 @@ namespace GridBlazor.Pagination
         public const int DefaultPageSize = 20;
 
         public const string DefaultPageQueryParameter = "grid-page";
+        public const string DefaultPageSizeQueryParameter = "grid-pagesize";
 
         private IQueryDictionary<StringValues> _query;
         private CustomQueryStringBuilder _queryBuilder;
@@ -22,10 +23,11 @@ namespace GridBlazor.Pagination
         private int _itemsCount;
         private int _maxDisplayedPages;
         private int _pageSize;
+        private int _queryPageSize;
 
         #region ctor's
 
-        public GridPager()
+        public GridPager(IQueryDictionary<StringValues> query)
         {
             _query = new QueryDictionary<StringValues>();
             _currentPage = -1;
@@ -34,17 +36,15 @@ namespace GridBlazor.Pagination
             ParameterName = DefaultPageQueryParameter;
             MaxDisplayedPages = MaxDisplayedPages;
             PageSize = DefaultPageSize;
-        }
 
-        public GridPager(IQueryDictionary<StringValues> query) : this()
-        {
             _query = query;
             _queryBuilder = new CustomQueryStringBuilder(_query);
-        }
 
-        public GridPager(IQueryDictionary<StringValues> query, int page) : this(query)
-        {
-            CurrentPage = page;
+            string pageSizeParameter = query.Get(DefaultPageSizeQueryParameter);
+            int pageSize = 0;
+            if (pageSizeParameter != null)
+                int.TryParse(pageSizeParameter, out pageSize);
+            QueryPageSize = pageSize;
         }
         #endregion
 
@@ -66,6 +66,18 @@ namespace GridBlazor.Pagination
             set
             {
                 _pageSize = value;
+                RecalculatePages();
+            }
+        }
+
+        public bool ChangePageSize { get; set; }
+
+        public int QueryPageSize
+        {
+            get { return _queryPageSize; }
+            set
+            {
+                _queryPageSize = value;
                 RecalculatePages();
             }
         }
@@ -133,6 +145,8 @@ namespace GridBlazor.Pagination
                 PageCount = 0;
                 return;
             }
+            if (_queryPageSize != 0)
+                _pageSize = _queryPageSize;
             PageCount = (int) (Math.Ceiling(ItemsCount/(double) PageSize));
 
             if (CurrentPage > PageCount)

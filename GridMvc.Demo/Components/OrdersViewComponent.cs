@@ -106,6 +106,8 @@ namespace GridMvc.Demo.Components
                 .Searchable(true, false)
                 .Groupable(true)
                 .Selectable(true)
+                .SetStriped(true)
+                .ChangePageSize(true)
                 .WithGridItemsCount();
             var factory = Task<IViewComponentResult>.Factory;
 

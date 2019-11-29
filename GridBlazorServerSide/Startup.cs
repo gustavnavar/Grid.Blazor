@@ -40,6 +40,8 @@ namespace GridBlazorServerSide
             services.AddServerSideBlazor();
             services.AddScoped<IOrderService, OrderService>();
             services.AddScoped<ICustomerService, CustomerService>();
+            services.AddScoped<IEmployeeService, EmployeeService>();
+            services.AddScoped<IShipperService, ShipperService>();
 
             services.AddGridMvc();
 

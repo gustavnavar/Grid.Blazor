@@ -11,9 +11,9 @@ using System.ComponentModel.DataAnnotations;
 
 namespace GridBlazorClientSide.Shared.Models
 {
-    using System;
+    using Newtonsoft.Json;
     using System.Collections.Generic;
-    
+
     public partial class Shipper
     {
         public Shipper()
@@ -24,7 +24,7 @@ namespace GridBlazorClientSide.Shared.Models
         public int ShipperID { get; set; }
         public string CompanyName { get; set; }
         public string Phone { get; set; }
-    
+        [JsonIgnore]
         public virtual ICollection<Order> Orders { get; set; }
     }
 }

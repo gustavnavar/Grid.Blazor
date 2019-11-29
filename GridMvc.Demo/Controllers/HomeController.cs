@@ -117,6 +117,8 @@ namespace GridMvc.Demo.Controllers
                 .Searchable(true, false)
                 .Groupable(true)
                 .Selectable(true)
+                .SetStriped(true)
+                .ChangePageSize(true)
                 .WithGridItemsCount();
 
             return View(server.Grid);
@@ -229,6 +231,7 @@ namespace GridMvc.Demo.Controllers
                         .SetRowCssClasses(item => item.Quantity > 10 ? "success" : string.Empty)
                         .Sortable()
                         .Filterable()
+                        .SetStriped(true)
                         .WithMultipleFilters()
                         .WithGridItemsCount();
 

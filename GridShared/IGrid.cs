@@ -64,6 +64,31 @@ namespace GridShared
         ISanitizer Sanitizer { get; }
 
         /// <summary>
+        ///     Grid mode
+        /// </summary>
+        GridMode Mode { get; }
+
+        /// <summary>
+        ///     Get value for creating items
+        /// </summary>
+        bool CreateEnabled { get; }
+
+        /// <summary>
+        ///     Get value for reading items
+        /// </summary>
+        bool ReadEnabled { get; }
+
+        /// <summary>
+        ///     Get value for updating items
+        /// </summary>
+        bool UpdateEnabled { get; }
+
+        /// <summary>
+        ///     Get value for deleting items
+        /// </summary>
+        bool DeleteEnabled { get; }
+
+        /// <summary>
         ///     Get all css classes mapped to the item
         /// </summary>
         string GetRowCssClasses(object item);
@@ -84,5 +109,10 @@ namespace GridShared
         IEnumerable<object> GetItemsToDisplay(IList<Tuple<string, object>> values, IEnumerable<object> items);
 
         //void OnPreRender(); //TODO backward Compatibility
+
+        /// <summary>
+        ///     Get value for striped grid
+        /// </summary>
+        bool Striped { get; }
     }
 }
