@@ -1,4 +1,4 @@
-﻿using GridShared;
+using GridShared;
 using GridShared.Columns;
 using GridShared.Filtering;
 using GridShared.Grouping;
@@ -116,6 +116,8 @@ namespace GridBlazor.Columns
         {
             get { return _grid; }
         }
+
+        public override bool HasConstraint => _constraint != null;
 
         public override IGridColumn<T> SetFilterWidgetType(string typeName, object widgetData)
         {

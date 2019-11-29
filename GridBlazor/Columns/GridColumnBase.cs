@@ -1,4 +1,4 @@
-﻿using GridShared;
+using GridShared;
 using GridShared.Columns;
 using GridShared.Filtering;
 using GridShared.Grouping;
@@ -13,14 +13,14 @@ using System.Linq.Expressions;
 
 namespace GridBlazor.Columns
 {
-    public abstract class GridColumnBase<T> : GridStyledColumn, IGridColumn<T>, ICGridColumn
+    public abstract class GridColumnBase<T> : GridStyledColumn, IGridColumn<T>, ICGridColumn, IConstrainedGridColumn
     {
         public Type ComponentType { get; private set; }
         public IList<Action<object>> Actions { get; private set; }
         public object Object { get; private set; }
 
-        protected Func<T, string> ValueConstraint;
-        protected string ValuePattern;
+        public Func<T, string> ValueConstraint { get; private set; }
+        public string ValuePattern { get; private set; }
 
         #region IGridColumn<T> Members
 
@@ -235,5 +235,12 @@ namespace GridBlazor.Columns
         public abstract IGridCell GetValue(T instance);
 
         #endregion
+
+        #region IConstrainedGridColumn Members
+
+        public abstract bool HasConstraint { get; }
+
+        #endregion
+
     }
 }
