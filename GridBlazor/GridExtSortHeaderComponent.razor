@@ -5,7 +5,7 @@
 @inherits GridExtSortHeaderComponentBase<T>
 
 <div id="grid-extsort-@Grid.ComponentOptions.GridName" class="input-group grid-extsort-droppable @_dropClass" data-extsort-url="@_groupUrl"
-     @ondragenter="HandleDragEnter" @ondragleave="HandleDragLeave" @ondrop="HandleDrop" ondragover="event.preventDefault();">
+     @ondragenter="@(() => HandleDragEnter())" @ondragleave="@(() => HandleDragLeave())" @ondrop="HandleDrop" ondragover="event.preventDefault();">
     @if (_sortedColumns.Count() == 0)
     {
         if (Grid.GroupingEnabled)

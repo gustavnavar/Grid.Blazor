@@ -62,14 +62,14 @@
                     </div>
                 }
                 <div class="grid-filter-buttons" style="float:right;">
-                    <button type="button" class="btn btn-primary" @onclick="AddColumnFilterValue"><b>+</b></button>
+                    <button type="button" class="btn btn-primary" @onclick="@(() => AddColumnFilterValue())"><b>+</b></button>
                     @if (_filters.Length > 1)
                     {
-                        <button type="button" class="btn btn-primary" style="margin-left:10px;" @onclick="RemoveColumnFilterValue"><b>-</b></button>
+                        <button type="button" class="btn btn-primary" style="margin-left:10px;" @onclick="@(() => RemoveColumnFilterValue())"><b>-</b></button>
                     }
                 </div>
                 <div class="grid-filter-buttons" style="margin-top:10px;">
-                    <button type="button" class="btn btn-primary" @onclick="ApplyButtonClicked">
+                    <button type="button" class="btn btn-primary" @onclick="@(() => ApplyButtonClicked())">
                         @Strings.ApplyFilterButtonText
                     </button>
                 </div>

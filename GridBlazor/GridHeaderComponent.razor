@@ -9,7 +9,7 @@
     @if (Column.FilterEnabled)
     {
         <div class="grid-filter" data-type="@Column.FilterWidgetTypeName" data-name="@Column.Name" data-widgetdata="@JsonHelper.JsonSerializer(Column.FilterWidgetData)" data-filterdata="@JsonHelper.JsonSerializer(_filterSettings)" data-url="@_url" data-clearinitfilter="@_clearInitFilter.ToString()">
-            <span class="@_cssFilterClass" title="@Strings.FilterButtonTooltipText" @onclick="FilterIconClicked"></span>
+            <span class="@_cssFilterClass" title="@Strings.FilterButtonTooltipText" @onclick="@(() => FilterIconClicked())"></span>
             <CascadingValue Value=@this Name="GridHeaderComponent">
                 @FilterWidgetRender
             </CascadingValue>
@@ -17,7 +17,7 @@
     }
     @if (Column.ParentGrid.ExtSortingEnabled)
     {
-        <div class="grid-extsort-draggable @_cssSortingClass" draggable="true" data-column="@Column.Name" @ondragstart="HandleDragStart">
+        <div class="grid-extsort-draggable @_cssSortingClass" draggable="true" data-column="@Column.Name" @ondragstart="@(() => HandleDragStart())">
             @if (Column.SortEnabled)
             {
                 if (Column.IsSorted)
@@ -44,7 +44,7 @@
         <div class="@_cssSortingClass">
             @if (Column.SortEnabled)
             {
-                <button @onclick="TitleButtonClicked">@Column.Title</button>
+                <button @onclick="@(() => TitleButtonClicked())">@Column.Title</button>
             }
             else
             {
