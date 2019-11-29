@@ -2,6 +2,7 @@
 using GridBlazorClientSide.Shared.Models;
 using Microsoft.AspNetCore.Mvc;
 using System;
+using System.Threading.Tasks;
 
 namespace GridBlazorClientSide.Server.Controllers
 {
@@ -16,24 +17,12 @@ namespace GridBlazorClientSide.Server.Controllers
             _context = context;
         }
 
-        [HttpGet("{id}")]
-        public ActionResult GetOrder(int id)
-        {
-            var repository = new OrdersRepository(_context);
-            Order order = repository.GetById(id);
-            if (order == null)
-            {
-                return NotFound();
-            }
-            return Ok(order);
-        }
-
-        [HttpPut("{id}")]
-        public ActionResult UpdateOrder(int id, [FromBody] Order order)
+        [HttpPost]
+        public async Task<ActionResult> Create([FromBody] Order order)
         {
             if (ModelState.IsValid)
             {
-                if (order == null || order.OrderID != id)
+                if (order == null)
                 {
                     return BadRequest();
                 }
@@ -41,7 +30,7 @@ namespace GridBlazorClientSide.Server.Controllers
                 var repository = new OrdersRepository(_context);
                 try
                 {
-                    repository.Update(order);
+                    await repository.Insert(order);
                     repository.Save();
 
                     return NoContent();
@@ -58,6 +47,77 @@ namespace GridBlazorClientSide.Server.Controllers
             {
                 message = "ModelState is not valid"
             });
+        }
+
+        [HttpGet("{id}")]
+        public async Task<ActionResult> GetOrder(int id)
+        {
+            var repository = new OrdersRepository(_context);
+            Order order = await repository.GetById(id);
+            if (order == null)
+            {
+                return NotFound();
+            }
+            return Ok(order);
+        }
+
+        [HttpPut("{id}")]
+        public async Task<ActionResult> UpdateOrder(int id, [FromBody] Order order)
+        {
+            if (ModelState.IsValid)
+            {
+                if (order == null || order.OrderID != id)
+                {
+                    return BadRequest();
+                }
+
+                var repository = new OrdersRepository(_context);
+                try
+                {
+                    await repository.Update(order);
+                    repository.Save();
+
+                    return NoContent();
+                }
+                catch (Exception e)
+                {
+                    return BadRequest(new
+                    {
+                        message = e.Message.Replace('{', '(').Replace('}', ')')
+                    });
+                }
+            }
+            return BadRequest(new
+            {
+                message = "ModelState is not valid"
+            });
+        }
+
+        [HttpDelete("{id}")]
+        public async Task<ActionResult> Delete(int id)
+        {
+            var repository = new OrdersRepository(_context);
+            Order order = await repository.GetById(id);
+
+            if (order == null)
+            {
+                return NotFound();
+            }
+
+            try
+            {
+                repository.Delete(order);
+                repository.Save();
+
+                return NoContent();
+            }
+            catch (Exception e)
+            {
+                return BadRequest(new
+                {
+                    message = e.Message.Replace('{', '(').Replace('}', ')')
+                });
+            }
         }
     }
 }

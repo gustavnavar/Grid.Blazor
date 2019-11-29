@@ -27,6 +27,7 @@ Searchable | Enable or disable searching on the grid | GridClient<Order>(...).Se
 Filterable | Enable or disable filtering for all columns of the grid | GridClient<Order>(...).Filterable(true);
 WithMultipleFilters | Allow grid to use multiple filters | GridClient<Order>(...).WithMultipleFilters();
 Selectable | Enable or disable the client grid items selectable feature | GridClient<Order>(...).Selectable(true);
+SetStriped | Enable or disable the grid as a striped one | GridClient<Order>(...).SetStriped(true);
 EmptyText | Setup the text displayed for all empty items in the grid | GridClient<Order>(...).EmptyText(' - ');
 WithGridItemsCount | Allows the grid to show items count | GridClient<Order>(...).WithGridItemsCount();
 SetRowCssClasses | Setup specific row css classes | GridClient<Order>(...).SetRowCssClasses(item => item.Customer.IsVip ? "success" : string.Empty);

@@ -1,10 +1,11 @@
 ﻿using System.Linq;
+using System.Threading.Tasks;
 
 namespace GridBlazorServerSide.Data
 {
-    public interface IRepository<out T>
+    public interface IRepository<T>
     {
         IQueryable<T> GetAll();
-        T GetById(object id);
+        Task<T> GetById(object id);
     }
 }

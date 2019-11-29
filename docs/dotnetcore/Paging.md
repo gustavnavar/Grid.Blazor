@@ -40,4 +40,22 @@ Property name | Property type | Description
 PageSize | Int32 | Setup the page size for displaying items in the grid
 
 
+## Change page size on the grid view
+
+You can configure the grid to enable changes on page size.
+
+If you use the Html helper extension to create the grid, you have to add the **ChangePageSize** method to the helper:
+
+
+```razor
+    @using GridMvc
+    @model IEnumerable<Foo>
+
+    @await Html.Grid(Model).Columns(columns =>
+    {
+        columns.Add(foo => foo.Title);
+        columns.Add(foo => foo.Description);
+    }).WithPaging(10).ChangePageSize(true).RenderAsync()
+```
+
 [<- Quick start](Quick_start.md) | [Custom columns ->](Custom_columns.md)

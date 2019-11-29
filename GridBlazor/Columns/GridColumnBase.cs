@@ -10,6 +10,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
 using System.Linq.Expressions;
+using System.Reflection;
 
 namespace GridBlazor.Columns
 {
@@ -35,10 +36,20 @@ namespace GridBlazor.Columns
 
         public string Name { get; set; }
 
+        public string FieldName { get; protected set; }
+
         public bool IsSorted { get; set; }
         public GridSortDirection? Direction { get; set; }
 
         public bool Hidden { get; protected set; }
+
+        public bool CrudHidden { get; protected set; } = false;
+
+        public bool IsPrimaryKey { get; protected set; } = false;
+
+        public (bool IsSelectKey, Func<T, string> Expression, string Url, Func<IEnumerable<SelectItem>> SelectItemExpr) IsSelectField { get; protected set; } = (false, null, null, null);
+
+        public IEnumerable<SelectItem> SelectItems { get; internal set; }
 
         public bool IsSumEnabled { get; internal set; } = false;
 
@@ -170,6 +181,30 @@ namespace GridBlazor.Columns
             return this;
         }
 
+        public IGridColumn<T> SetCrudHidden(bool enabled)
+        {
+            CrudHidden = enabled;
+            return this;
+        }
+
+        public IGridColumn<T> SetPrimaryKey(bool enabled)
+        {
+            IsPrimaryKey = enabled;
+            return this;
+        }
+
+        public IGridColumn<T> SetSelectField(bool enabled, Func<T,string> expression, Func<IEnumerable<SelectItem>> selectItemExpr)
+        {
+            IsSelectField = (enabled, expression, null, selectItemExpr);
+            return this;
+        }
+
+        public IGridColumn<T> SetSelectField(bool enabled, Func<T, string> expression, string url)
+        {
+            IsSelectField = (enabled, expression, url, null);
+            return this;
+        }
+
         public abstract IGrid ParentGrid { get; }
 
         public virtual IGridColumn<T> Sanitized(bool sanitize)
@@ -202,12 +237,46 @@ namespace GridBlazor.Columns
 
         public string GetFormatedValue(object value)
         {
+            if (value == null)
+                return null;
             string textValue;
             if (!string.IsNullOrEmpty(ValuePattern))
                 textValue = string.Format(ValuePattern, value);
             else
                 textValue = value.ToString();
             return textValue;
+        }
+
+        public string GetFormatedValue(Func<T, string> expression, object value)
+        {
+            if (value == null)
+                return null;
+            if(typeof(T) == value.GetType())
+            {
+                return expression.Invoke((T)value);
+            }
+            return null;
+        }
+
+        public (Type Type, object Value) GetTypeAndValue(T item)
+        {
+            var names = FieldName.Split('.');
+            PropertyInfo pi = null;
+            var type = item.GetType();
+            object value = item;
+            for (int i = 0; i < names.Length; i++)
+            {
+                pi = type.GetProperty(names[i]);
+                bool isNullable = pi.PropertyType.GetTypeInfo().IsGenericType &&
+                    pi.PropertyType.GetGenericTypeDefinition() == typeof(Nullable<>);
+                type = isNullable ? Nullable.GetUnderlyingType(pi.PropertyType) : pi.PropertyType;
+
+                if (value != null)
+                {
+                    value = pi.GetValue(value, null);
+                }
+            }
+            return (type, value);
         }
 
         public abstract bool FilterEnabled { get; set; }

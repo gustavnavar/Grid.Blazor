@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace GridBlazorServerSide.Data
 {
@@ -21,7 +22,7 @@ namespace GridBlazorServerSide.Data
             return (IOrderedQueryable<T>)EfDbSet;
         }
 
-        public abstract T GetById(object id);
+        public abstract Task<T> GetById(object id);
 
         #endregion
     }

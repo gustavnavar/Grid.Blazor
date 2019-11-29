@@ -5,6 +5,7 @@ using System;
 using Microsoft.Extensions.Primitives;
 using GridShared.Columns;
 using GridShared.Filtering;
+using System.Collections.Generic;
 
 namespace GridBlazor
 {
@@ -26,7 +27,7 @@ namespace GridBlazor
         /// <summary>
         ///     Keys for subgrid
         /// </summary>
-        string[] Keys { get; }
+        string[] SubGridKeys { get; }
 
         /// <summary>
         ///     Subgrid clients
@@ -38,7 +39,12 @@ namespace GridBlazor
         /// <summary>
         ///     Get foreign key values for subgrid records
         /// </summary>
-        string[] GetKeyValues(object item);
+        string[] GetSubGridKeyValues(object item);
+
+        /// <summary>
+        ///     Get primary key values for CRUD
+        /// </summary>
+        object[] GetPrimaryKeyValues(object item);
 
         IGridSettingsProvider Settings { get; }
 
@@ -61,5 +67,64 @@ namespace GridBlazor
 
         void RemoveFilterParameter(IGridColumn column);
 
+        /// <summary>
+        ///     Get and set custom create component
+        /// </summary>
+        Type CreateComponent { get; }
+
+        /// <summary>
+        ///     Get and set custom read component
+        /// </summary>
+        Type ReadComponent { get; }
+
+        /// <summary>
+        ///     Get and set custom update component
+        /// </summary>
+        Type UpdateComponent { get; }
+
+        /// <summary>
+        ///     Get and set custom Delete component
+        /// </summary>
+        Type DeleteComponent { get; }
+
+        /// <summary>
+        ///     Get and set custom create component actions
+        /// </summary>
+        IList<Action<object>> CreateActions { get;  }
+
+        /// <summary>
+        ///     Get and set custom create component object
+        /// </summary>
+        object CreateObject { get; }
+
+        /// <summary>
+        ///     Get and set custom read component actions
+        /// </summary>
+        IList<Action<object>> ReadActions { get; }
+
+        /// <summary>
+        ///     Get and set custom read component object
+        /// </summary>
+        object ReadObject { get; }
+
+        /// <summary>
+        ///     Get and set custom update component actions
+        /// </summary>
+        IList<Action<object>> UpdateActions { get; }
+
+        /// <summary>
+        ///     Get and set custom update component object
+        /// </summary>
+        object UpdateObject { get; }
+
+        /// <summary>
+        ///     Get and set custom delete component actions
+        /// </summary>
+        IList<Action<object>> DeleteActions { get; }
+
+        /// <summary>
+        ///     Get and set custom delete component object
+        /// </summary>
+        object DeleteObject { get; }
     }
 }

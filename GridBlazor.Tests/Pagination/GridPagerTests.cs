@@ -47,5 +47,47 @@ namespace GridBlazor.Tests.Pagination
 
             Assert.AreEqual(_pager.PageCount, _pager.CurrentPage);
         }
+
+        [TestMethod]
+        public void PagerChangePageSizeCountTest()
+        {
+            _pager.ItemsCount = 1200;
+            _pager.PageSize = 13;
+
+            _pager.ChangePageSize = true;
+            _pager.QueryPageSize = 20;
+
+            Assert.AreEqual(_pager.PageCount, 60);
+        }
+
+        [TestMethod]
+        public void PagerChangePageSizeDisplayingPagesTest()
+        {
+            _pager.ItemsCount = 1200;
+            _pager.PageSize = 13;
+
+            _pager.MaxDisplayedPages = 5;
+            _pager.CurrentPage = 40;
+
+            _pager.ChangePageSize = true;
+            _pager.QueryPageSize = 20;
+
+            Assert.AreEqual(_pager.PageCount, 60);
+            Assert.AreEqual(_pager.StartDisplayedPage, 38);
+            Assert.AreEqual(_pager.EndDisplayedPage, 42);
+        }
+
+        [TestMethod]
+        public void PagerChangePageSizeCurrentPageTest()
+        {
+            _pager.ItemsCount = 1200;
+            _pager.PageSize = 13;
+            _pager.CurrentPage = 1000;
+
+            _pager.ChangePageSize = true;
+            _pager.QueryPageSize = 20;
+
+            Assert.AreEqual(_pager.PageCount, _pager.CurrentPage);
+        }
     }
 }

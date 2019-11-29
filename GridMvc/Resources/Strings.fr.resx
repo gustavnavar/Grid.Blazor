@@ -150,4 +150,7 @@
   <data name="GroupingText" xml:space="preserve">
     <value>Déposer les colonnes ici pour le regroupement des colonnes</value>
   </data>
+  <data name="Show" xml:space="preserve">
+    <value>Montrer</value>
+  </data>
 </root>

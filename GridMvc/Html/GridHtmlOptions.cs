@@ -59,6 +59,12 @@ namespace GridMvc.Html
             return this;
         }
 
+        public IGridHtmlOptions<T> ChangePageSize(bool enable)
+        {
+            _source.Pager.ChangePageSize = enable;
+            return this;
+        }
+
         public IGridHtmlOptions<T> WithPaging(int pageSize)
         {
             return WithPaging(pageSize, 0);
@@ -223,7 +229,7 @@ namespace GridMvc.Html
         /// </summary>
         public IGridHtmlOptions<T> SubGrid(params string[] keys)
         {
-            _source.Keys = keys;
+            _source.SubGridKeys = keys;
             return this;
         }
 

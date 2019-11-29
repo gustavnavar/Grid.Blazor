@@ -38,6 +38,7 @@ namespace GridBlazor
         private IGridPager _pager;
 
         private readonly Func<QueryDictionary<StringValues>, ItemsDTO<T>> _dataService;
+        private ICrudDataService<T> _crudDataService;
 
         public CGrid(string url, IQueryDictionary<StringValues> query, bool renderOnlyRows,
             Action<IGridColumnCollection<T>> columns = null, CultureInfo cultureInfo = null)
@@ -53,41 +54,7 @@ namespace GridBlazor
             _settings = new QueryStringGridSettingsProvider(_query);
             Sanitizer = new Sanitizer();
             if(cultureInfo != null)
-                Strings.CultureInfo = cultureInfo;
-            EmptyGridText = Strings.DefaultGridEmptyText;
-            Language = Strings.Lang;
-
-            _annotations = new GridAnnotationsProvider();
-
-            //Set up column collection:
-            _columnBuilder = new DefaultColumnBuilder<T>(this, _annotations);
-            _columnsCollection = new GridColumnCollection<T>(this, _columnBuilder, _settings.SortSettings);
-            ComponentOptions = new GridOptions();
-
-            ApplyGridSettings();
-
-            Pager = new GridPager(query);
-
-            ComponentOptions.RenderRowsOnly = renderOnlyRows;
-            columns?.Invoke(Columns);      
-        }
-
-        public CGrid(Func<QueryDictionary<StringValues>, ItemsDTO<T>> dataService,
-            QueryDictionary<StringValues> query, bool renderOnlyRows, 
-            Action<IGridColumnCollection<T>> columns = null, CultureInfo cultureInfo = null)
-        {
-            _dataService = dataService;
-
-            Items = new List<T>(); //response.Items;
-
-            Url = null;
-            _query = query;
-
-            //set up sort settings:
-            _settings = new QueryStringGridSettingsProvider(_query);
-            Sanitizer = new Sanitizer();
-            if (cultureInfo != null)
-                Strings.CultureInfo = cultureInfo;
+                Strings.Culture = cultureInfo;
             EmptyGridText = Strings.DefaultGridEmptyText;
             Language = Strings.Lang;
 
@@ -104,6 +71,52 @@ namespace GridBlazor
 
             ComponentOptions.RenderRowsOnly = renderOnlyRows;
             columns?.Invoke(Columns);
+
+            Mode = GridMode.Grid;
+            CreateEnabled = false;
+            ReadEnabled = false;
+            UpdateEnabled = false;
+            DeleteEnabled = false;
+        }
+
+        public CGrid(Func<QueryDictionary<StringValues>, ItemsDTO<T>> dataService,
+            QueryDictionary<StringValues> query, bool renderOnlyRows,
+            Action<IGridColumnCollection<T>> columns = null, CultureInfo cultureInfo = null)
+        {
+            _dataService = dataService;
+
+            Items = new List<T>(); //response.Items;
+
+            Url = null;
+            _query = query;
+
+            //set up sort settings:
+            _settings = new QueryStringGridSettingsProvider(_query);
+            Sanitizer = new Sanitizer();
+            if (cultureInfo != null)
+                Strings.Culture = cultureInfo;
+            EmptyGridText = Strings.DefaultGridEmptyText;
+            Language = Strings.Lang;
+
+            _annotations = new GridAnnotationsProvider();
+
+            //Set up column collection:
+            _columnBuilder = new DefaultColumnBuilder<T>(this, _annotations);
+            _columnsCollection = new GridColumnCollection<T>(this, _columnBuilder, _settings.SortSettings);
+            ComponentOptions = new GridOptions();
+
+            ApplyGridSettings();
+
+            Pager = new GridPager(query);
+
+            ComponentOptions.RenderRowsOnly = renderOnlyRows;
+            columns?.Invoke(Columns);
+
+            Mode = GridMode.Grid;
+            CreateEnabled = false;
+            ReadEnabled = false;
+            UpdateEnabled = false;
+            DeleteEnabled = false;
         }
 
         /// <summary>
@@ -188,9 +201,23 @@ namespace GridBlazor
         }
 
         /// <summary>
-        ///     Provides url, using by the grid
+        ///     Provides url used by the grid
         /// </summary>
         public string Url { get; set; }
+
+        /// <summary>
+        ///     Provides DataService used by the grid
+        /// </summary>
+        public Func<QueryDictionary<StringValues>, ItemsDTO<T>> DataService { get { return _dataService; } }
+
+        /// <summary>
+        ///     Provides CrudDataService used by the grid
+        /// </summary>
+        public ICrudDataService<T> CrudDataService
+        {
+            get { return _crudDataService; }
+            set { _crudDataService = value; }
+        }
 
         /// <summary>
         ///     Provides query, using by the grid
@@ -242,6 +269,67 @@ namespace GridBlazor
         public ISanitizer Sanitizer { get; set; }
 
         /// <summary>
+        ///     Grid mode
+        /// </summary>
+        public GridMode Mode { get; internal set; }
+
+        /// <summary>
+        ///     Get value for creating items
+        /// </summary>
+        public bool CreateEnabled { get; internal set; }
+
+        /// <summary>
+        ///     Get value for reading items
+        /// </summary>
+        public bool ReadEnabled { get; internal set; }
+
+        /// <summary>
+        ///     Get value for updating items
+        /// </summary>
+        public bool UpdateEnabled { get; internal set; }
+
+        /// <summary>
+        ///     Get value for deleting items
+        /// </summary>
+        public bool DeleteEnabled { get; internal set; }
+
+        /// <summary>
+        ///     Get and set custom create component
+        /// </summary>
+        public Type CreateComponent { get; internal set; }
+
+        /// <summary>
+        ///     Get and set custom read component
+        /// </summary>
+        public Type ReadComponent { get; internal set; }
+
+        /// <summary>
+        ///     Get and set custom update component
+        /// </summary>
+        public Type UpdateComponent { get; internal set; }
+
+        /// <summary>
+        ///     Get and set custom Delete component
+        /// </summary>
+        public Type DeleteComponent { get; internal set; }
+
+        public IList<Action<object>> CreateActions { get; internal set; }
+
+        public object CreateObject { get; internal set; }
+
+        public IList<Action<object>> ReadActions { get; internal set; }
+
+        public object ReadObject { get; internal set; }
+
+        public IList<Action<object>> UpdateActions { get; internal set; }
+
+        public object UpdateObject { get; internal set; }
+
+        public IList<Action<object>> DeleteActions { get; internal set; }
+
+        public object DeleteObject { get; internal set; }
+
+        /// <summary>
         ///     Sum enabled for some columns
         /// </summary>
         public bool IsSumEnabled { get { return Columns.Any(r => ((ICGridColumn)r).IsSumEnabled); } }
@@ -266,14 +354,14 @@ namespace GridBlazor
         /// </summary>
         public IGridPager Pager
         {
-            get { return _pager ?? (_pager = new GridPager(_query)); }
+            get { return _pager; }
             set { _pager = value; }
         }
 
         /// <summary>
         ///     Keys for subgrid
         /// </summary>
-        public string[] Keys { get; set; }
+        public string[] SubGridKeys { get; set; }
 
         /// <summary>
         ///     Subgrids
@@ -285,13 +373,30 @@ namespace GridBlazor
         /// <summary>
         ///     Get foreign key values for subgrid records
         /// </summary>
-        public string[] GetKeyValues(object item)
+        public string[] GetSubGridKeyValues(object item)
         {
             List<string> values = new List<string>();
-            foreach (var key in Keys)
+            foreach (var key in SubGridKeys)
             {
                 string value = item.GetType().GetProperty(key).GetValue(item).ToString();
                 values.Add(value);
+            }
+            return values.ToArray();
+        }
+
+        /// <summary>
+        ///     Get primary key values for CRUD
+        /// </summary>
+        public object[] GetPrimaryKeyValues(object item)
+        {
+            List<object> values = new List<object>();
+            foreach (var column in Columns)
+            {
+                if (column.IsPrimaryKey)
+                {
+                    var value = item.GetType().GetProperty(column.FieldName).GetValue(item);
+                    values.Add(value);
+                }
             }
             return values.ToArray();
         }
@@ -445,7 +550,7 @@ namespace GridBlazor
                 _columnsCollection.SortSettings = _settings.SortSettings;
                 _columnsCollection.UpdateColumnsSorting();
                 ((GridPager)_pager).Query = _query;
-            }             
+            }
         }
 
         public void AddFilterParameter(IGridColumn column, FilterCollection filters)
@@ -520,7 +625,7 @@ namespace GridBlazor
             {
                 StringValues clearInitFilters = new StringValues();
 
-                var columnsToAdd = Columns.Where(r => r.InitialFilterSettings != ColumnFilterValue.Null); 
+                var columnsToAdd = Columns.Where(r => r.InitialFilterSettings != ColumnFilterValue.Null);
                 foreach (var columnToAdd in columnsToAdd)
                 {
                     clearInitFilters = StringValues.Concat(clearInitFilters, columnToAdd.Name);
@@ -530,7 +635,7 @@ namespace GridBlazor
                     _query[QueryStringFilterSettings.DefaultClearInitFilterQueryParameter] = clearInitFilters;
                 else
                     _query.Add(QueryStringFilterSettings.DefaultClearInitFilterQueryParameter, clearInitFilters);
-            }       
+            }
         }
 
         public void RemoveFilterParameter(IGridColumn column)
@@ -544,7 +649,7 @@ namespace GridBlazor
                     new StringValues(newFilters.ToArray());
             }
 
-            AddClearInitFilters(column); 
+            AddClearInitFilters(column);
 
             _settings = new QueryStringGridSettingsProvider(_query);
             _columnsCollection.SortSettings = _settings.SortSettings;
@@ -592,8 +697,10 @@ namespace GridBlazor
                     string urlParameters = ((GridPager)_pager).GetLink();
                     if (Url.Contains("?"))
                         urlParameters = urlParameters.Replace("?", "&");
-                    HttpClient httpClient = new HttpClient();
-                    response = await httpClient.GetJsonAsync<ItemsDTO<T>>(Url + urlParameters);
+                    using (HttpClient httpClient = new HttpClient())
+                    {
+                        response = await httpClient.GetJsonAsync<ItemsDTO<T>>(Url + urlParameters);
+                    }
                 }
                 else
                 {
@@ -603,7 +710,7 @@ namespace GridBlazor
                 {
                     Items = response.Items;
                     EnablePaging = response.Pager.EnablePaging;
-                    _pager = new GridPager(_query, response.Pager.CurrentPage);
+                    ((GridPager)_pager).CurrentPage = response.Pager.CurrentPage;
                     ((GridPager)_pager).PageSize = response.Pager.PageSize;
                     ((GridPager)_pager).ItemsCount = response.Pager.ItemsCount;
 
@@ -640,7 +747,7 @@ namespace GridBlazor
                                 if (column != null && column.IsMinEnabled)
                                     column.MinString = keyValue.Value;
                             }
-                    }          
+                    }
                 }
                 else
                     Console.WriteLine("Response is null");
