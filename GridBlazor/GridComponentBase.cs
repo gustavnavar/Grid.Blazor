@@ -1,4 +1,4 @@
-﻿using GridBlazor.Columns;
+using GridBlazor.Columns;
 using GridBlazor.Pagination;
 using GridBlazor.Searching;
 using GridShared.Columns;
@@ -34,6 +34,27 @@ namespace GridBlazor
 
         [Parameter]
         public IQueryDictionary<Type> CustomFilters { get; set; }
+
+        [Parameter]
+        public string GridMvcCssClass { get; set; } = "grid-mvc";
+
+        [Parameter]
+        public string GridWrapCssClass { get; set; } = "grid-wrap";
+
+        [Parameter]
+        public string GridFooterCssClass { get; set; } = "grid-footer";
+
+        [Parameter]
+        public string TableCssClass { get; set; } = "table grid-table";
+
+        [Parameter]
+        public string GridHeaderCssClass { get; set; } = "grid-header";
+
+        [Parameter]
+        public string GridCellCssClass { get; set; } = "grid-cell";
+
+        [Parameter]
+        public string GridSubGridCssClass { get; set; } = "grid-subgrid";
 
         protected override void OnParametersSet()
         {

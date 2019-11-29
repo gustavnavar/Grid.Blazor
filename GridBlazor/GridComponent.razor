@@ -1,4 +1,4 @@
-﻿@using GridBlazor.Filtering
+@using GridBlazor.Filtering
 @using GridBlazor.Pagination
 @using GridBlazor.Sorting
 @using GridShared.Columns
@@ -15,11 +15,11 @@
             <tr class="grid-empty-text">
                 @if (_hasSubGrid)
                 {
-                    <td class="grid-cell" data-name=""></td>
+                    <td class="@GridCellCssClass" data-name=""></td>
                 }
                 @if (_requiredTotalsColumn)
                 {
-                    <td class="grid-cell" data-name=""></td>
+                    <td class="@GridCellCssClass" data-name=""></td>
                 }
                 <td colspan="@Grid.Columns.Count()">
                     @Grid.EmptyGridText
@@ -43,7 +43,7 @@
                         <tr class="grid-row@(SelectedRow == capturedI? " grid-row-selected" : "") @Grid.GetRowCssClasses(item)" @onclick="() => RowClicked(capturedI, item)">
                             @if (_hasSubGrid)
                             {
-                                <td class="grid-cell grid-subgrid" data-is-rendered="false" data-is-visible="false" data-name="" @onclick="() => SubGridClicked(capturedI)">
+                                <td class="@GridCellCssClass @GridSubGridCssClass" data-is-rendered="false" data-is-visible="false" data-name="" @onclick="() => SubGridClicked(capturedI)">
                                     @if (IsSubGridVisible[capturedI])
                                     {
                                         <span class="subgrid-caret-down">&nbsp;</span>
@@ -56,7 +56,7 @@
                             }
                             @if (_requiredTotalsColumn)
                             {
-                                <td class="grid-cell" data-name=""></td>
+                                <td class="@GridCellCssClass" data-name=""></td>
                             }
                             @foreach (IGridColumn column in Grid.Columns)
                             {
@@ -69,7 +69,7 @@
                         <tr class="grid-row @Grid.GetRowCssClasses(item)">
                             @if (_hasSubGrid)
                             {
-                                <td class="grid-cell grid-subgrid" data-is-rendered="false" data-is-visible="false" data-name="" @onclick="() => SubGridClicked(capturedI)">
+                                <td class="@GridCellCssClass @GridSubGridCssClass" data-is-rendered="false" data-is-visible="false" data-name="" @onclick="() => SubGridClicked(capturedI)">
                                     @if (IsSubGridVisible[capturedI])
                                     {
                                         <span class="subgrid-caret-down">&nbsp;</span>
@@ -82,7 +82,7 @@
                             }
                             @if (_requiredTotalsColumn)
                             {
-                                <td class="grid-cell" data-name=""></td>
+                                <td class="@GridCellCssClass" data-name=""></td>
                             }
                             @foreach (IGridColumn column in Grid.Columns)
                             {
@@ -117,14 +117,14 @@
     }
     else
     {
-        <div class="grid-mvc" 
-             data-lang="@Grid.Language" 
-             data-gridname="@Grid.ComponentOptions.GridName" 
+        <div class="@GridMvcCssClass"
+             data-lang="@Grid.Language"
+             data-gridname="@Grid.ComponentOptions.GridName"
              data-selectable="@Grid.ComponentOptions.Selectable.ToString().ToLower()"
              data-extsortable="@Grid.ExtSortingEnabled.ToString().ToLower()"
-             data-groupable="@Grid.GroupingEnabled.ToString().ToLower()" 
+             data-groupable="@Grid.GroupingEnabled.ToString().ToLower()"
              data-multiplefilters="@Grid.ComponentOptions.AllowMultipleFilters.ToString().ToLower()">
-            <div class="grid-wrap">
+            <div class="@GridWrapCssClass">
                 @if (Grid.SearchingEnabled)
                 {
                     <CascadingValue Value=@this Name="GridComponent">
@@ -137,16 +137,16 @@
                         <GridExtSortHeaderComponent T="@T" Grid="@Grid"></GridExtSortHeaderComponent>
                     </CascadingValue>
                 }
-                <table class="table grid-table">
+                <table class="@TableCssClass">
                     <thead>
                         <tr>
                             @if (_hasSubGrid)
                             {
-                                <th class="grid-header" style="width:20px;"></th>
+                                <th class="@GridHeaderCssClass" style="width:20px;"></th>
                             }
                             @if (_requiredTotalsColumn)
                             {
-                                <th class="grid-header" style="width:60px;"></th>
+                                <th class="@GridHeaderCssClass" style="width:60px;"></th>
                             }
                             @foreach (IGridColumn column in Grid.Columns)
                             {
@@ -162,11 +162,11 @@
                             <tr class="grid-empty-text">
                                 @if (_hasSubGrid)
                                 {
-                                    <td class="grid-cell" data-name=""></td>
+                                    <td class="@GridCellCssClass" data-name=""></td>
                                 }
                                 @if (_requiredTotalsColumn)
                                 {
-                                    <td class="grid-cell" data-name=""></td>
+                                    <td class="@GridCellCssClass" data-name=""></td>
                                 }
                                 <td colspan="@Grid.Columns.Count()">
                                     @Grid.EmptyGridText
@@ -190,7 +190,7 @@
                                         <tr class="grid-row@(SelectedRow == capturedI? " grid-row-selected" : "") @Grid.GetRowCssClasses(item)" @onclick="() => RowClicked(capturedI, item)">
                                             @if (_hasSubGrid)
                                             {
-                                                <td class="grid-cell grid-subgrid" data-is-rendered="false" data-is-visible="false" data-name="" @onclick="() => SubGridClicked(capturedI)">
+                                                <td class="@GridCellCssClass @GridSubGridCssClass" data-is-rendered="false" data-is-visible="false" data-name="" @onclick="() => SubGridClicked(capturedI)">
                                                     @if (IsSubGridVisible[capturedI])
                                                     {
                                                         <span class="subgrid-caret-down">&nbsp;</span>
@@ -203,7 +203,7 @@
                                             }
                                             @if (_requiredTotalsColumn)
                                             {
-                                                <td class="grid-cell" data-name=""></td>
+                                                <td class="@GridCellCssClass" data-name=""></td>
                                             }
                                             @foreach (IGridColumn column in Grid.Columns)
                                             {
@@ -216,7 +216,7 @@
                                         <tr class="grid-row @Grid.GetRowCssClasses(item)">
                                             @if (_hasSubGrid)
                                             {
-                                                <td class="grid-cell grid-subgrid" data-is-rendered="false" data-is-visible="false" data-name="" @onclick="() => SubGridClicked(capturedI)">
+                                                <td class="@GridCellCssClass @GridSubGridCssClass" data-is-rendered="false" data-is-visible="false" data-name="" @onclick="() => SubGridClicked(capturedI)">
                                                     @if (IsSubGridVisible[capturedI])
                                                     {
                                                         <span class="subgrid-caret-down">&nbsp;</span>
@@ -229,7 +229,7 @@
                                             }
                                             @if (_requiredTotalsColumn)
                                             {
-                                                <td class="grid-cell" data-name=""></td>
+                                                <td class="@GridCellCssClass" data-name=""></td>
                                             }
                                             @foreach (IGridColumn column in Grid.Columns)
                                             {
@@ -263,7 +263,7 @@
                         }
                     </tbody>
                 </table>
-                <div class="grid-footer">
+                <div class="@GridFooterCssClass">
                     @if (Grid.ComponentOptions.ShowGridItemsCount)
                     {
                         <span class="grid-itemscount">
