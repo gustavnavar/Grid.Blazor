@@ -108,8 +108,10 @@ Follow thes steps to create a custom filter widget:
             protected override async Task OnInitializedAsync()
             {
                 string url = NavigationManager.BaseUri + "api/SampleData/GetCustomersNames";
-                HttpClient httpClient = new HttpClient();
-                _customersNames = await httpClient.GetJsonAsync<List<string>>(url);
+                using (HttpClient httpClient = new HttpClient())
+                {
+                    _customersNames = await httpClient.GetJsonAsync<List<string>>(url);
+                }
             }
 
             protected override void OnParametersSet()

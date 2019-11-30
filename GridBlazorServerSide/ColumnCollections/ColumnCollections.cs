@@ -79,10 +79,15 @@ namespace GridBlazorServerSide.ColumnCollections
 
             /* Adding "CompanyName" column: */
             c.Add(o => o.Customer.CompanyName).Titled(SharedResource.CompanyName)
+            .ThenSortByDescending(o => o.ShipVia)
+            .ThenSortByDescending(o => o.Freight)
             .SetWidth(250);
 
             /* Adding "ContactName" column: */
             c.Add(o => o.Customer.ContactName).Titled(SharedResource.ContactName).SetWidth(250);
+
+            /* Adding "ShipVia" column: */
+            c.Add(o => o.ShipVia).Titled("Via");
 
             /* Adding "Freight" column: */
             c.Add(o => o.Freight)
