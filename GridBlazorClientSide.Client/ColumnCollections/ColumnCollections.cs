@@ -78,7 +78,7 @@ namespace GridBlazorClientSide.Client.ColumnCollections
 
             /* Adding "CompanyName" column: */
             c.Add(o => o.Customer.CompanyName).Titled("Company")
-            .ThenSortByDescending(o => o.ShipVia)
+            .ThenSortBy(o => o.ShipVia)
             .ThenSortByDescending(o => o.Freight)
             .SetWidth(250);
 
