@@ -41,6 +41,11 @@ namespace GridMvc.Sorting
                 if(gridColumn == null)
                     return items;
                 items = gridColumn.Orderers.FirstOrDefault().ApplyOrder(items, sortedColumns[0].Direction);
+                for (int i = 1; i < gridColumn.Orderers.Count(); i++)
+                {
+                    var orderer = gridColumn.Orderers.ElementAt(i);
+                    items = orderer.ApplyThenBy(items, GridSortDirection.Ascending);
+                }
 
                 if(sortedColumns.Count() > 1)
                 {
@@ -48,6 +53,12 @@ namespace GridMvc.Sorting
                     {
                         gridColumn = _grid.Columns.FirstOrDefault(r => r.Name == sortedColumns[i].ColumnName) as IGridColumn<T>;
                         items = gridColumn.Orderers.FirstOrDefault().ApplyThenBy(items, sortedColumns[i].Direction);
+
+                        for (int j = 1; i < gridColumn.Orderers.Count(); j++)
+                        {
+                            var orderer = gridColumn.Orderers.ElementAt(j);
+                            items = orderer.ApplyThenBy(items, GridSortDirection.Ascending);
+                        }
                     }
                 }
 

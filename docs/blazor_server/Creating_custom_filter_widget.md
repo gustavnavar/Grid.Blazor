@@ -40,19 +40,23 @@ Follow thes steps to create a custom filter widget:
         @using GridBlazor
         @using GridBlazor.Resources
         @using GridShared.Filtering
-        @using GridComponent.Demo.Services
+        @using GridBlazorServerSide.Services
+        @inject ICustomerService customerService
+        @inject IJSRuntime jSRuntime
 
         @typeparam T
 
         @if (visible)
         {
-            <div class="dropdown dropdown-menu grid-dropdown opened" style="display:block;">
+            <div class="dropdown dropdown-menu grid-dropdown opened" style="display:block;" 
+                @onkeyup="FilterKeyup" @onclick:stopPropagation @onkeyup:stopPropagation>
                 <div class="grid-dropdown-arrow"></div>
                 <div class="grid-dropdown-inner">
                     <div class="grid-popup-widget">
                         <div class="form-group">
                             <p><i>This is custom filter widget demo</i></p>
-                            <select class="grid-filter-type customerslist form-control" style="width:250px;" bind="_filterValue">
+                            <select @ref="firstSelect" class="grid-filter-type customerslist form-control" 
+                                style="width:250px;" @bind="_filterValue">
                                 @foreach (var customerName in customerService.GetCustomersNames())
                                 {
                                     <option value="@customerName">@customerName</option>
@@ -60,7 +64,7 @@ Follow thes steps to create a custom filter widget:
                             </select>
                         </div>
                         <div class="grid-filter-buttons">
-                            <button type="button" class="btn btn-primary grid-apply" onclick="@ApplyButtonClicked">
+                            <button type="button" class="btn btn-primary grid-apply" @onclick="ApplyButtonClicked">
                                 @Strings.ApplyFilterButtonText
                             </button>
                         </div>
@@ -70,7 +74,7 @@ Follow thes steps to create a custom filter widget:
                         {
                             <ul class="menu-list">
                                 <li>
-                                    <a class="grid-filter-clear" href="javascript:void(0);" onclick="@ClearButtonClicked">
+                                    <a class="grid-filter-clear" href="javascript:void(0);" @onclick="ClearButtonClicked">
                                         @Strings.ClearFilterLabel
                                     </a>
                                 </li>
@@ -85,24 +89,32 @@ Follow thes steps to create a custom filter widget:
             private bool _clearVisible = false;
             protected string _filterValue;
 
-            [Inject] private CustomerService customerService { get; set; }
-        
+            protected ElementReference firstSelect;
+
             [CascadingParameter(Name = "GridHeaderComponent")]
             private GridHeaderComponent<T> GridHeaderComponent { get; set; }
 
             [Parameter]
-            protected bool visible { get; set; }
+            public bool visible { get; set; }
 
             [Parameter]
-            protected string ColumnName { get; set; }
+            public string ColumnName { get; set; }
 
             [Parameter]
-            protected IEnumerable<ColumnFilterValue> FilterSettings { get; set; }
+            public IEnumerable<ColumnFilterValue> FilterSettings { get; set; }
 
             protected override void OnParametersSet()
             {
                 _filterValue = FilterSettings.FirstOrDefault().FilterValue;
                 _clearVisible = !string.IsNullOrWhiteSpace(_filterValue);
+            }
+
+            protected override async Task OnAfterRenderAsync(bool firstRender)
+            {
+                if (firstRender && firstSelect.Id != null)
+                {
+                    await jSRuntime.InvokeVoidAsync("gridJsFunctions.focusElement", firstSelect);
+                }
             }
 
             protected async Task ApplyButtonClicked()
@@ -114,8 +126,15 @@ Follow thes steps to create a custom filter widget:
             {
                 await GridHeaderComponent.RemoveFilter();
             }
-        }
 
+            public async Task FilterKeyup(KeyboardEventArgs e)
+            {
+                if (e.Key == "Escape")
+                {
+                    await GridHeaderComponent.FilterIconClicked();
+                }
+            }
+        }
     ```
 
     This example loads a customer's list using a singleton service. So we had to create this service in the project to get a list of clients from the database. But it is not mandatory to use a singleton. This example always uses a **filterType** with value **1** when calling the **GridHeaderComponent.AddFilter** method.

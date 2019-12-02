@@ -81,9 +81,14 @@ namespace GridMvc.Demo.Controllers
                     .SetWidth(110)
                     .Max(true).Min(true);
 
+                c.Add(o => o.ShipVia)
+                    .Titled("Via");
+
                 /* Adding "CompanyName" column: */
                 c.Add(o => o.Customer.CompanyName)
                     .Titled(SharedResource.CompanyName)
+                    .ThenSortByDescending(o => o.ShipVia)
+                    .ThenSortByDescending(o => o.Freight)
                     .SetWidth(250)
                     .SetInitialFilter(GridFilterType.StartsWith, "a")
                     .SetFilterWidgetType("CustomCompanyNameFilterWidget")

@@ -44,7 +44,7 @@ namespace GridBlazor
                 {
                     var child = new GridGroupRowsComponent<T>();
                     child.IsVisible = true;
-                    _children.Add(columnValue.ToString(), child);
+                    _children.Add(columnValue != null ? columnValue.ToString(): "", child);
                 }
             }
         }

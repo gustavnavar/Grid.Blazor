@@ -55,4 +55,4 @@ WithMultipleFilters | Allow grid to use multiple filters | GridServer<Order>(...
 WithGridItemsCount | Allows the grid to show items count | GridServer<Order>(...).WithGridItemsCount();
 
 
-[<- Quick start](Quick_start.md) | [Paging ->](Paging.md)
+[<- Quick start](Quick_start.md) | [Keyboard navigation ->](Keyboard_navigation.md)

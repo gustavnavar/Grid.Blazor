@@ -3,18 +3,19 @@
 @using GridShared.Filtering
 @using GridBlazorServerSide.Services
 @inject ICustomerService customerService
+@inject IJSRuntime jSRuntime
 
 @typeparam T
 
 @if (visible)
 {
-    <div class="dropdown dropdown-menu grid-dropdown opened" style="display:block;">
+    <div class="dropdown dropdown-menu grid-dropdown opened" style="display:block;" @onkeyup="FilterKeyup" @onclick:stopPropagation @onkeyup:stopPropagation>
         <div class="grid-dropdown-arrow"></div>
         <div class="grid-dropdown-inner">
             <div class="grid-popup-widget">
                 <div class="form-group">
                     <p><i>This is custom filter widget demo</i></p>
-                    <select class="grid-filter-type customerslist form-control" style="width:250px;" @bind="_filterValue">
+                    <select @ref="firstSelect" class="grid-filter-type customerslist form-control" style="width:250px;" @bind="_filterValue">
                         @foreach (var customerName in customerService.GetCustomersNames())
                         {
                             <option value="@customerName">@customerName</option>
@@ -47,6 +48,8 @@
     private bool _clearVisible = false;
     protected string _filterValue;
 
+    protected ElementReference firstSelect;
+
     [CascadingParameter(Name = "GridHeaderComponent")]
     private GridHeaderComponent<T> GridHeaderComponent { get; set; }
 
@@ -65,6 +68,14 @@
         _clearVisible = !string.IsNullOrWhiteSpace(_filterValue);
     }
 
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender && firstSelect.Id != null)
+        {
+            await jSRuntime.InvokeVoidAsync("gridJsFunctions.focusElement", firstSelect);
+        }
+    }
+
     protected async Task ApplyButtonClicked()
     {
         await GridHeaderComponent.AddFilter(new FilterCollection(GridFilterType.Equals.ToString("d"), _filterValue));
@@ -73,5 +84,13 @@
     protected async Task ClearButtonClicked()
     {
         await GridHeaderComponent.RemoveFilter();
+    }
+
+    public async Task FilterKeyup(KeyboardEventArgs e)
+    {
+        if (e.Key == "Escape")
+        {
+            await GridHeaderComponent.FilterIconClicked();
+        }
     }
 }

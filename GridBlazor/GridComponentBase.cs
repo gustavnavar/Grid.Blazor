@@ -8,6 +8,7 @@ using GridShared.Sorting;
 using GridShared.Utility;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Web;
+using Microsoft.JSInterop;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -28,6 +29,11 @@ namespace GridBlazor
         internal bool[] InitSubGrid;
         protected IQueryDictionary<Type> _filterComponents;
         protected T _item;
+
+        protected ElementReference gridmvc;
+
+        [Inject]
+        private IJSRuntime jSRuntime { get; set; }
 
         internal int SelectedRow { get; set; } = -1;
         internal ICGridColumn FirstColumn { get; set; }
@@ -133,6 +139,14 @@ namespace GridBlazor
             var exceptQueryParameters = new List<string> { GridPager.DefaultPageSizeQueryParameter };
             _changePageSizeUrl = queryBuilder.GetQueryStringExcept(exceptQueryParameters);
             _pageSize = Grid.Pager.ChangePageSize && Grid.Pager.QueryPageSize > 0 ? Grid.Pager.QueryPageSize : Grid.Pager.PageSize;
+        }
+
+        protected override async Task OnAfterRenderAsync(bool firstRender)
+        {
+            if (firstRender && gridmvc.Id != null)
+            {
+                await jSRuntime.InvokeVoidAsync("gridJsFunctions.focusElement", gridmvc);
+            }
         }
 
         protected void RowClicked(int i, object item)
@@ -426,6 +440,50 @@ namespace GridBlazor
             }
         }
 
+        public async Task InputPageSizeBlur()
+        {
+            Grid.AddQueryParameter(GridPager.DefaultPageSizeQueryParameter, _pageSize.ToString());
+            await UpdateGrid();
+        }
+
+        public async Task GridComponentClick()
+        {
+            if (gridmvc.Id != null)
+            {
+                await jSRuntime.InvokeVoidAsync("gridJsFunctions.focusElement", gridmvc);
+            }
+        }
+
+        public async Task GridComponentKeyup(KeyboardEventArgs e)
+        {
+            if (e.Key == "ArrowLeft" && Grid.Pager.CurrentPage > 1)
+            {
+                await GoTo(Grid.Pager.CurrentPage - 1);
+            }
+            else if (e.Key == "ArrowRight" && Grid.Pager.CurrentPage < ((GridPager)Grid.Pager).PageCount)
+            {
+                await GoTo(Grid.Pager.CurrentPage + 1);
+            }
+            else if (e.Key == "Home")
+            {
+                await GoTo(1);
+            }
+            else if (e.Key == "End")
+            {
+                await GoTo(((GridPager)Grid.Pager).PageCount);
+            }
+            else if (e.Key == "ArrowUp" && Grid.ComponentOptions.Selectable && SelectedRow > 0)
+            {
+                int selectedRow = SelectedRow - 1;
+                RowClicked(selectedRow, Grid.ItemsToDisplay.ElementAt(selectedRow));
+            }
+            else if (e.Key == "ArrowDown" && Grid.ComponentOptions.Selectable && SelectedRow != -1 && SelectedRow < Grid.Pager.PageSize - 1)
+            {
+                int selectedRow = SelectedRow + 1;
+                RowClicked(selectedRow, Grid.ItemsToDisplay.ElementAt(selectedRow));
+            }
+        }
+
         public async Task UpdateGrid()
         {
             SelectedRow = -1;
@@ -442,6 +500,7 @@ namespace GridBlazor
             }
             await Grid.UpdateGrid();
             StateHasChanged();
+            await GridComponentClick();
         }
     }
 }

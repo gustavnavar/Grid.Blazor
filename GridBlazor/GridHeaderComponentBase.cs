@@ -148,10 +148,12 @@ namespace GridBlazor
                 SortingSettings.DirectionQueryParameterName, ((int)newDir).ToString(CultureInfo.InvariantCulture));
         }
 
-        protected void FilterIconClicked()
+        public async Task FilterIconClicked()
         {
             //switch visibility for the filter dialog:
             _isVisible = !_isVisible;
+            StateHasChanged();
+            await GridComponent.GridComponentClick();
         }
 
         public async Task AddFilter(FilterCollection filters)

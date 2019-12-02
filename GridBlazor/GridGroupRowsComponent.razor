@@ -23,7 +23,7 @@
                 count++;
             }
             GridGroupRowsComponent<T> child;
-            if (_children.TryGetValue(columnValue.ToString(), out child))
+            if (_children.TryGetValue(columnValue != null ? columnValue.ToString(): "", out child))
             {
                 <tr class="grid-group-row">
                     <td colspan="@count">

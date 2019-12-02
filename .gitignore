@@ -48,3 +48,4 @@
 /GridBlazorClientSide.Shared/obj
 /GridBlazorServerSide/bin
 /GridBlazorServerSide/obj
+/GridBlazorServerSide/bin/Debug/netcoreapp3.1

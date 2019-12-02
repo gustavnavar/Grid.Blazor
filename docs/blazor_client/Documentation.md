@@ -9,6 +9,7 @@
 * [Installation](Installation.md)
 * [Quick start](Quick_start.md)
 * [GridBlazor configuration](GridBlazor_configuration.md)
+* [Keyboard navigation](Keyboard_navigation.md)
 * [Paging](Paging.md)
 * [Custom columns](Custom_columns.md)
 * [Totals](Totals.md)

@@ -5,7 +5,7 @@
 
 @if (Visible)
 {
-    <div class="dropdown dropdown-menu grid-dropdown opened" style="display:block;">
+    <div class="dropdown dropdown-menu grid-dropdown opened" style="display:block;" @ref="boolFilter" @onkeyup="FilterKeyup" @onclick:stopPropagation @onkeyup:stopPropagation tabindex="-1">
         <div class="grid-dropdown-arrow"></div>
         <div class="grid-dropdown-inner">
             <div class="grid-popup-widget">
