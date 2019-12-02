@@ -1,4 +1,4 @@
-﻿using GridShared;
+using GridShared;
 using GridShared.Columns;
 using GridShared.Filtering;
 using GridShared.Grouping;
@@ -11,9 +11,6 @@ using System.Linq.Expressions;
 
 namespace GridBlazor.Columns
 {
-    /// <summary>
-    ///     Колонка, которая выводит содержимое свойства модели
-    /// </summary>
     public class HiddenGridColumn<T, TDataType> : GridColumnBase<T>
     {
         private readonly Func<T, TDataType> _constraint;
@@ -110,6 +107,8 @@ namespace GridBlazor.Columns
         {
             return this; //Do nothing
         }
+
+        public override bool HasConstraint => _constraint != null;
 
         public override IGridCell GetValue(T instance)
         {
