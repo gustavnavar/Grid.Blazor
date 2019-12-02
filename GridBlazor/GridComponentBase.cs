@@ -1,4 +1,4 @@
-﻿using GridBlazor.Columns;
+using GridBlazor.Columns;
 using GridBlazor.Pagination;
 using GridBlazor.Searching;
 using GridShared;
@@ -50,6 +50,33 @@ namespace GridBlazor
 
         [Parameter]
         public IQueryDictionary<Type> CustomFilters { get; set; }
+
+        [Parameter]
+        public string GridMvcCssClass { get; set; } = "grid-mvc";
+
+        [Parameter]
+        public string GridWrapCssClass { get; set; } = "grid-wrap";
+
+        [Parameter]
+        public string GridFooterCssClass { get; set; } = "grid-footer";
+
+        [Parameter]
+        public string TableCssClass { get; set; } = "table grid-table";
+
+        [Parameter]
+        public string GridHeaderCssClass { get; set; } = "grid-header";
+
+        [Parameter]
+        public string GridCellCssClass { get; set; } = "grid-cell";
+
+        [Parameter]
+        public string GridButtonCellCssClass { get; set; } = "grid-button-cell";
+
+        [Parameter]
+        public string GridSubGridCssClass { get; set; } = "grid-subgrid";
+
+        [Parameter]
+        public string GridEmptyTextCssClass { get; set; } = "grid-empty-text";
 
         protected override void OnParametersSet()
         {
@@ -140,7 +167,7 @@ namespace GridBlazor
             await UpdateGrid();
         }
 
-        public async Task GetSortUrl(string columnQueryParameterName, string columnName, 
+        public async Task GetSortUrl(string columnQueryParameterName, string columnName,
             string directionQueryParameterName, string direction)
         {
             Grid.AddQueryParameter(columnQueryParameterName, columnName);
@@ -180,13 +207,13 @@ namespace GridBlazor
 
         public async Task ChangeExtSorting(ColumnOrderValue column)
         {
-            var newColumnOrderValue = new ColumnOrderValue { 
+            var newColumnOrderValue = new ColumnOrderValue {
                 ColumnName = column.ColumnName,
-                Direction = column.Direction == GridSortDirection.Ascending ? GridSortDirection.Descending 
+                Direction = column.Direction == GridSortDirection.Ascending ? GridSortDirection.Descending
                     : GridSortDirection.Ascending,
                 Id = column.Id
             };
-            Grid.ChangeQueryString(ColumnOrderValue.DefaultSortingQueryParameter, column.ToString(), 
+            Grid.ChangeQueryString(ColumnOrderValue.DefaultSortingQueryParameter, column.ToString(),
                 newColumnOrderValue.ToString());
             await UpdateGrid();
         }
@@ -237,7 +264,7 @@ namespace GridBlazor
             catch (Exception e)
             {
                 Console.WriteLine(e.Message);
-                ((CGrid<T>)Grid).Mode = GridMode.Grid;              
+                ((CGrid<T>)Grid).Mode = GridMode.Grid;
             }
         }
 
