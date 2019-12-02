@@ -270,8 +270,6 @@ namespace GridMvc
             return values.ToArray();
         }
 
-        public bool Striped { get; internal set; } = false;
-
         IGridColumnCollection IGrid.Columns
         {
             get { return Columns; }

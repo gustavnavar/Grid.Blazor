@@ -344,7 +344,7 @@ namespace GridBlazor
         /// </summary>
         public IGridClient<T> SetStriped(bool enable)
         {
-            _source.Striped = enable;
+            _source.ComponentOptions.Striped = enable;
             return this;
         }
 

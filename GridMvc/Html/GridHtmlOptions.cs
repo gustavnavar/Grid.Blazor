@@ -226,7 +226,7 @@ namespace GridMvc.Html
 
         public IGridHtmlOptions<T> SetStriped(bool enabled)
         {
-            _source.Striped = enabled;
+            _source.RenderOptions.Striped = enabled;
             return this;
         }
 

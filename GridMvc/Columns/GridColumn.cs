@@ -131,6 +131,8 @@ namespace GridMvc.Columns
             get { return _grid; }
         }
 
+        public override bool HasConstraint => _constraint != null;
+
         public override IGridColumn<T> SetFilterWidgetType(string typeName, object widgetData)
         {
             SetFilterWidgetType(typeName);

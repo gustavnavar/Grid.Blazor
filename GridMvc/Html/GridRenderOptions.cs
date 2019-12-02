@@ -8,6 +8,7 @@
             GridName = gridName;
             Selectable = false;
             AllowMultipleFilters = false;
+            Striped = false;
         }
 
         public GridRenderOptions()
@@ -52,6 +53,11 @@
         ///     - Author Jeeva J
         /// </summary>
         public string GridCountDisplayName { get; set; }
+
+        /// <summary>
+        ///     Get value for striped grid
+        /// </summary>
+        public bool Striped { get; set; }
 
         public static GridRenderOptions Create(string gridName)
         {

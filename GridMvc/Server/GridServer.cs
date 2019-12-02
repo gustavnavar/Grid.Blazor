@@ -215,7 +215,7 @@ namespace GridMvc.Server
         /// </summary>
         public IGridServer<T> SetStriped(bool enable)
         {
-            _source.Striped = enable;
+            _source.RenderOptions.Striped = enable;
             return this;
         }
 

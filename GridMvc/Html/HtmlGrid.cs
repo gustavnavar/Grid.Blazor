@@ -83,12 +83,6 @@ namespace GridMvc.Html
             get { return _source.Mode; }
         }
 
-        public bool Striped
-        {
-            get { return _source.Striped; }
-            set { _source.Striped = value; }
-        }
-
         public bool CreateEnabled
         {
             get { return _source.CreateEnabled; }

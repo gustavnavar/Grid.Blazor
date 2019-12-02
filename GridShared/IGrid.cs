@@ -109,10 +109,5 @@ namespace GridShared
         IEnumerable<object> GetItemsToDisplay(IList<Tuple<string, object>> values, IEnumerable<object> items);
 
         //void OnPreRender(); //TODO backward Compatibility
-
-        /// <summary>
-        ///     Get value for striped grid
-        /// </summary>
-        bool Striped { get; }
     }
 }

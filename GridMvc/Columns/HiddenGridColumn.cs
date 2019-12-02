@@ -116,6 +116,8 @@ namespace GridMvc.Columns
             return this; //Do nothing
         }
 
+        public override bool HasConstraint => _constraint != null;
+
         public override IGridCell GetValue(T instance)
         {
             string textValue;

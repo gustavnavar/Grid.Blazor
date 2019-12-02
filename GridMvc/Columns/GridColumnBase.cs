@@ -14,7 +14,7 @@ using System.Reflection;
 
 namespace GridMvc.Columns
 {
-    public abstract class GridColumnBase<T> : GridStyledColumn, IGridColumn<T>, ISGridColumn, ITotalsColumn<T>
+    public abstract class GridColumnBase<T> : GridStyledColumn, IGridColumn<T>, ISGridColumn, ITotalsColumn<T>, IConstrainedGridColumn
     {
         public Type ComponentType { get; private set; }
         public IList<Action<object>> Actions { get; private set; }
@@ -308,6 +308,12 @@ namespace GridMvc.Columns
         public abstract IColumnGroup<T> Group { get; }
 
         public abstract IGridCell GetValue(T instance);
+
+        #endregion
+
+        #region IConstrainedGridColumn Members
+
+        public abstract bool HasConstraint { get; }
 
         #endregion
     }
