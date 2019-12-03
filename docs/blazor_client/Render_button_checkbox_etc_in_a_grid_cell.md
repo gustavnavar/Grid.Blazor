@@ -14,28 +14,30 @@ You have to use the **RenderComponentAs** method to render a component in a cell
     columns.Add().RenderComponentAs<ButtonCell>();
 ```
 
-**RenderComponentAs** method has 2 optional parameters:
+**RenderComponentAs** method has 3 optional parameters:
 
 Parameter | Type | Description
 --------- | ---- | -----------
 Actions | IList<Action<object>> (optional) | the parent component can pass a list of Actions to be used by the component (see [Passing grid state as parameter](Passing_grid_state_as_parameter.md))
-Object| object (optional) | the parent component can pass an object to be used by the component (see [Passing grid state as parameter](Passing_grid_state_as_parameter.md))
+Functions | IList<Func<object,Task>> (optional) | the parent component can pass a list of Functions to be used by the child component
+Object | object (optional) | the parent component can pass an object to be used by the component (see [Passing grid state as parameter](Passing_grid_state_as_parameter.md))
 
 If you use any of these paramenters, you must use them when creating the component.
 
 The generic type used has to be the component created to render the cell.
 
 You must also create a Blazor component that implements the **ICustomGridComponent** interface.
-This interface includes a mandatory parameter called **Item** of the same type of the grid row element, and 3 optional parameters:
+This interface includes a mandatory parameter called **Item** of the same type of the grid row element, and 4 optional parameters:
 
 Parameter | Type | Description
 --------- | ---- | -----------
 Item | row element (mandatory) | the row item that will be used by the component
 Grid | CGrid<T> (optional) | Grid can be used to get the grid state (see [Passing grid state as parameter](Passing_grid_state_as_parameter.md))
 Actions | IList<Action<object>> (optional) | the parent component can pass a list of Actions to be used by the component (see [Passing grid state as parameter](Passing_grid_state_as_parameter.md))
-Object| object (optional) | the parent component can pass an object to be used by the component (see [Passing grid state as parameter](Passing_grid_state_as_parameter.md))
+Functions | IList<Func<object,Task>> (optional) | the parent component can pass a list of Functions to be used by the child component
+Object | object (optional) | the parent component can pass an object to be used by the component (see [Passing grid state as parameter](Passing_grid_state_as_parameter.md))
 
-**Actions** and **Object** must be used when calling the **RenderComponentAs** method, but **Grid** can be used without this requirement.
+**Actions**, **Functions** and **Object** must be used when calling the **RenderComponentAs** method, but **Grid** can be used without this requirement.
  
 The component can include any html elements as well as any event handling features.
 

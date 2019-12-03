@@ -59,7 +59,7 @@ The steps to build a grid razor page using **GridBlazor** are:
                 c.Add(o => o.Customer.IsVip);
             };
 
-            protected override async Task OnInitAsync()
+            protected override async Task OnParametersSetAsync()
             {
                 string url = UriHelper.GetBaseUri() + "api/SampleData/GetOrdersGridForSample";
 
@@ -100,7 +100,7 @@ The steps to build a grid razor page using **GridBlazor** are:
 **Notes**:
 * It is important to declare the **Columns** lamba expression as *static* in the razor page, because it will be used by the server's web service.
 
-* You must create a **GridClient** object in the **OnInitAsync** of the razor page. This object contains a parameter of **CGrid** type called **Grid**. 
+* You must create a **GridClient** object in the **OnParametersSetAsync** of the Blazor page. This object contains a parameter of **CGrid** type called **Grid**. 
 
 * You can use multiple methods of the **GridClient** object to configure a grid. For example:
     ```c#
@@ -111,11 +111,11 @@ The steps to build a grid razor page using **GridBlazor** are:
             .WithMultipleFilters();
     ```
 
-* You must call the **UpdateGrid** method of the **Grid** object at the end of the **OnInitAsync** of the razor page because it will request for the required rows to the server
+* You must call the **UpdateGrid** method of the **Grid** object at the end of the **OnParametersSetAsync** of the razor page because it will request for the required rows to the server
 
 * The **GridComponent** tag must contain at least these 2 attributes:
     * **T**: type of the model items
-    * **Grid**: grid object that has to be created in the **OnInitAsync** method of the razor page
+    * **Grid**: grid object that has to be created in the **OnParametersSetAsync** method of the razor page
 
 * You should use a **GridServer** object in the server controller action. 
 

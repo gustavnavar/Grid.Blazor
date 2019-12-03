@@ -91,7 +91,7 @@ The steps to build a grid razor page using **GridBlazor** are:
             private CGrid<Order> _grid;
             private Task _task;
 
-            protected override async Task OnInitAsync()
+            protected override async Task OnParametersSetAsync()
             {
                 Action<IGridColumnCollection<Order>> columns = c =>
                 {
@@ -115,7 +115,7 @@ The steps to build a grid razor page using **GridBlazor** are:
     ```
 
     **Notes**:
-    * You must create a **GridClient** object in the **OnInitAsync** of the razor page. This object contains a parameter of **CGrid** type called **Grid**. 
+    * You must create a **GridClient** object in the **OnParametersSetAsync** of the razor page. This object contains a parameter of **CGrid** type called **Grid**. 
 
     * You can use multiple methods of the **GridClient** object to configure a grid. For example:
         ```c#
@@ -128,11 +128,11 @@ The steps to build a grid razor page using **GridBlazor** are:
 
     * The **GridClient** object used on the razor page and the **GridServer** object on the service must have compatible settings.
 
-    * You must call the **UpdateGrid** method of the **Grid** object at the end of the **OnInitAsync** of the razor page because it will request for the required rows to the server
+    * You must call the **UpdateGrid** method of the **Grid** object at the end of the **OnParametersSetAsync** of the razor page because it will request for the required rows to the server
 
     * The **GridComponent** tag must contain at least these 2 attributes:
         * **T**: type of the model items
-        * **Grid**: grid object that has to be created in the **OnInitAsync** method of the razor page
+        * **Grid**: grid object that has to be created in the **OnParametersSetAsync** method of the razor page
 
 For more documentation about column options, please see: [Custom columns](Custom_columns.md).
 
