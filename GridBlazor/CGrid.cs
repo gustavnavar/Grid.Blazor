@@ -322,17 +322,25 @@ namespace GridBlazor
 
         public IList<Action<object>> CreateActions { get; internal set; }
 
+        public IList<Func<object,Task>> CreateFunctions { get; internal set; }
+
         public object CreateObject { get; internal set; }
 
         public IList<Action<object>> ReadActions { get; internal set; }
+
+        public IList<Func<object, Task>> ReadFunctions { get; internal set; }
 
         public object ReadObject { get; internal set; }
 
         public IList<Action<object>> UpdateActions { get; internal set; }
 
+        public IList<Func<object, Task>> UpdateFunctions { get; internal set; }
+
         public object UpdateObject { get; internal set; }
 
         public IList<Action<object>> DeleteActions { get; internal set; }
+
+        public IList<Func<object, Task>> DeleteFunctions { get; internal set; }
 
         public object DeleteObject { get; internal set; }
 

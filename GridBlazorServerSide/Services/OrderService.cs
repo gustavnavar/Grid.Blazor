@@ -99,6 +99,36 @@ namespace GridBlazorServerSide.Services
             }
         }
 
+        public async Task Add1ToFreight(int OrderId)
+        {
+            using (var context = new NorthwindDbContext(_options))
+            {
+                var repository = new OrdersRepository(context);
+                var order =  await repository.GetById(OrderId);
+                if (order.Freight.HasValue)
+                {
+                    order.Freight += 1;
+                    await repository.Update(order);
+                    repository.Save();
+                }
+            }
+        }
+
+        public async Task Subtract1ToFreight(int OrderId)
+        {
+            using (var context = new NorthwindDbContext(_options))
+            {
+                var repository = new OrdersRepository(context);
+                var order = await repository.GetById(OrderId);
+                if (order.Freight.HasValue)
+                {
+                    order.Freight -= 1;
+                    await repository.Update(order);
+                    repository.Save();
+                }
+            }
+        }
+
         public async Task<Order> Get(params object[] keys)
         {
             using (var context = new NorthwindDbContext(_options))
@@ -150,5 +180,7 @@ namespace GridBlazorServerSide.Services
             object[] keys, QueryDictionary<StringValues> query);
         Task<Order> GetOrder(int OrderId);
         Task UpdateAndSave(Order order);
+        Task Add1ToFreight(int OrderId);
+        Task Subtract1ToFreight(int OrderId);
     }
 }

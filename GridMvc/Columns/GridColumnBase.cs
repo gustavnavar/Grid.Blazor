@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Linq.Expressions;
 using System.Reflection;
+using System.Threading.Tasks;
 
 namespace GridMvc.Columns
 {
@@ -18,6 +19,7 @@ namespace GridMvc.Columns
     {
         public Type ComponentType { get; private set; }
         public IList<Action<object>> Actions { get; private set; }
+        public IList<Func<object, Task>> Functions { get; private set; }
         public object Object { get; private set; }
 
         protected Func<T, string> ValueConstraint;
@@ -121,17 +123,40 @@ namespace GridMvc.Columns
             return RenderComponentAs(componentType, actions, null);
         }
 
+        public IGridColumn<T> RenderComponentAs(Type componentType, IList<Func<object,Task>> functions)
+        {
+            return RenderComponentAs(componentType, null, functions, null);
+        }
+
+        public IGridColumn<T> RenderComponentAs(Type componentType, IList<Action<object>> actions, 
+            IList<Func<object, Task>> functions)
+        {
+            return RenderComponentAs(componentType, actions, functions, null);
+        }
+
         public IGridColumn<T> RenderComponentAs(Type componentType, object obj)
         {
-            return RenderComponentAs(componentType, null, obj);
+            return RenderComponentAs(componentType, null, null, obj);
         }
 
         public IGridColumn<T> RenderComponentAs(Type componentType, IList<Action<object>> actions, object obj)
+        {
+            return RenderComponentAs(componentType, actions, null, obj);
+        }
+
+        public IGridColumn<T> RenderComponentAs(Type componentType, IList<Func<object, Task>> functions, object obj)
+        {
+            return RenderComponentAs(componentType, null, functions, obj);
+        }
+
+        public IGridColumn<T> RenderComponentAs(Type componentType, IList<Action<object>> actions, 
+            IList<Func<object,Task>> functions, object obj)
         {
             if (componentType.IsSubclassOf(typeof(ViewComponent)))
             {
                 ComponentType = componentType;
                 Actions = actions;
+                Functions = functions;
                 Object = obj;
             }
             return this;
@@ -139,22 +164,44 @@ namespace GridMvc.Columns
 
         public IGridColumn<T> RenderComponentAs<TComponent>()
         {
-            return RenderComponentAs<TComponent>(null, null);
+            return RenderComponentAs<TComponent>(null, null, null);
         }
 
         public IGridColumn<T> RenderComponentAs<TComponent>(IList<Action<object>> actions)
         {
-            return RenderComponentAs<TComponent>(actions, null);
+            return RenderComponentAs<TComponent>(actions, null, null);
+        }
+
+        public IGridColumn<T> RenderComponentAs<TComponent>(IList<Func<object, Task>> functions)
+        {
+            return RenderComponentAs<TComponent>(null, functions, null);
+        }
+
+        public IGridColumn<T> RenderComponentAs<TComponent>(IList<Action<object>> actions,
+            IList<Func<object, Task>> functions)
+        {
+            return RenderComponentAs<TComponent>(actions, functions, null);
         }
 
         public IGridColumn<T> RenderComponentAs<TComponent>(object obj)
         {
-            return RenderComponentAs<TComponent>(null, obj);
+            return RenderComponentAs<TComponent>(null, null, obj);
         }
 
         public IGridColumn<T> RenderComponentAs<TComponent>(IList<Action<object>> actions, object obj)
         {
-            return RenderComponentAs(typeof(TComponent), actions, obj);
+            return RenderComponentAs<TComponent>(actions, null, obj);
+        }
+
+        public IGridColumn<T> RenderComponentAs<TComponent>(IList<Func<object, Task>> functions, object obj)
+        {
+            return RenderComponentAs<TComponent>(null, functions, obj);
+        }
+
+        public IGridColumn<T> RenderComponentAs<TComponent>(IList<Action<object>> actions, 
+            IList<Func<object, Task>> functions, object obj)
+        {
+            return RenderComponentAs(typeof(TComponent), actions, functions, obj);
         }
 
         public IGridColumn<T> Format(string pattern)

@@ -93,6 +93,11 @@ namespace GridBlazor
         IList<Action<object>> CreateActions { get;  }
 
         /// <summary>
+        ///     Get and set custom create component functions
+        /// </summary>
+        IList<Func<object,Task>> CreateFunctions { get; }
+
+        /// <summary>
         ///     Get and set custom create component object
         /// </summary>
         object CreateObject { get; }
@@ -101,6 +106,11 @@ namespace GridBlazor
         ///     Get and set custom read component actions
         /// </summary>
         IList<Action<object>> ReadActions { get; }
+
+        /// <summary>
+        ///     Get and set custom read component functions
+        /// </summary>
+        IList<Func<object, Task>> ReadFunctions { get; }
 
         /// <summary>
         ///     Get and set custom read component object
@@ -113,6 +123,11 @@ namespace GridBlazor
         IList<Action<object>> UpdateActions { get; }
 
         /// <summary>
+        ///     Get and set custom update component functions
+        /// </summary>
+        IList<Func<object, Task>> UpdateFunctions { get; }
+
+        /// <summary>
         ///     Get and set custom update component object
         /// </summary>
         object UpdateObject { get; }
@@ -121,6 +136,11 @@ namespace GridBlazor
         ///     Get and set custom delete component actions
         /// </summary>
         IList<Action<object>> DeleteActions { get; }
+
+        /// <summary>
+        ///     Get and set custom delete component functions
+        /// </summary>
+        IList<Func<object, Task>> DeleteFunctions { get; }
 
         /// <summary>
         ///     Get and set custom delete component object

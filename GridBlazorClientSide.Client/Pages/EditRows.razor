@@ -9,6 +9,7 @@
 @using System.Globalization
 @using System.Threading.Tasks
 @inject NavigationManager NavigationManager
+@inject HttpClient HttpClient
 
 <h1>Edit rows</h1>
 
@@ -24,7 +25,7 @@
 {
     <div class="row">
         <div class="col-md-12">
-            <GridComponent T="Order" Grid="@_grid"></GridComponent>
+            <GridComponent @ref="Component" T="Order" Grid="@_grid"></GridComponent>
         </div>
     </div>
 }
@@ -37,6 +38,7 @@ else
 {
     private CGrid<Order> _grid;
     private Task _task;
+    private GridComponent<Order> Component;
 
     [Parameter]
     public string GridState { get; set; }
@@ -51,7 +53,9 @@ else
         var locale = CultureInfo.CurrentCulture;
 
         // build the column collection passing the return url string
-        Action<IGridColumnCollection<Order>> columns = c => ColumnCollections.OrderColumnsWithEdit(c, "editrows");
+        Action<IGridColumnCollection<Order>> columns = c =>
+            ColumnCollections.OrderColumnsWithEdit(c, new List<Func<object, Task>>() { MyFirstFunction, MySecondFunction },
+                "editrows");
 
         var query = new QueryDictionary<StringValues>();
         if (!string.IsNullOrWhiteSpace(GridState))
@@ -77,5 +81,17 @@ else
         // Set new items to grid
         _task = client.UpdateGrid();
         await _task;
+    }
+
+    private async Task MyFirstFunction(object item)
+    {
+        await HttpClient.PostAsync(NavigationManager.BaseUri + $"api/SampleData/Add1ToFreight?id={((Order)item).OrderID}", null);
+        await Component.UpdateGrid();
+    }
+
+    private async Task MySecondFunction(object item)
+    {
+        await HttpClient.PostAsync(NavigationManager.BaseUri + $"api/SampleData/Subtract1ToFreight?id={((Order)item).OrderID}", null);
+        await Component.UpdateGrid();
     }
 }

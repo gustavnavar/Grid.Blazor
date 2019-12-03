@@ -99,10 +99,15 @@ namespace GridBlazorServerSide.ColumnCollections
             .RenderValueAs(o => o.Customer.IsVip ? "Yes" : "No");
         };
 
-        public static Action<IGridColumnCollection<Order>, object> OrderColumnsWithEdit = (c, obj) =>
+        public static Action<IGridColumnCollection<Order>, IList<Func<object, Task>>, object> 
+            OrderColumnsWithEdit = (c, functions, obj) =>
         {
             /* Adding not mapped column, that renders body, using inline Razor html helper */
             c.Add().Encoded(false).Sanitized(false).RenderComponentAs<ButtonCell>(obj);
+
+            /* Adding not mapped column, that renders body, using inline Razor html helper */
+            c.Add().Encoded(false).Sanitized(false).SetWidth(100).Css("hidden-xs") //hide on phones
+            .RenderComponentAs<ButtonDbUpdate>(functions);
 
             /* Adding "OrderID" column: */
             c.Add(o => o.OrderID).Titled(SharedResource.Number).SetWidth(100);
@@ -276,7 +281,8 @@ namespace GridBlazorServerSide.ColumnCollections
             .RenderValueAs(o => o.Customer.IsVip ? "Yes" : "No");
         };
 
-        public static Action<IGridColumnCollection<Order>, IList<Action<object>>> OrderColumnsAllFeatures = (c, actions) =>
+        public static Action<IGridColumnCollection<Order>, IList<Action<object>>> 
+            OrderColumnsAllFeatures = (c, actions) =>
         {
             /* Adding not mapped column, that renders body, using inline Razor html helper */
             c.Add().Encoded(false).Sanitized(false).SetWidth(30).Css("hidden-xs") //hide on phones

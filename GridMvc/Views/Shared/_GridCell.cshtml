@@ -34,6 +34,7 @@
         Item = item,
         Grid = column.ParentGrid,
         Actions = column.Actions,
+        Functions = column.Functions,
         Object = column.Object
     };
     <td class="@_cssClass" style="@_cssStyles" data-name="@column.Name">@await Component.InvokeAsync(column.ComponentType, model)</td>

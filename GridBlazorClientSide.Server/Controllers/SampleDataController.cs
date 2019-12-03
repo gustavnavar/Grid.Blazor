@@ -6,6 +6,7 @@ using GridShared;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace GridBlazorClientSide.Server.Controllers
 {
@@ -106,7 +107,7 @@ namespace GridBlazorClientSide.Server.Controllers
         {
             var repository = new OrdersRepository(_context);
             IGridServer<Order> server = new GridServer<Order>(repository.GetAll(), Request.Query,
-                true, "ordersGrid", c => ColumnCollections.OrderColumnsWithEdit(c,null))
+                true, "ordersGrid", c => ColumnCollections.OrderColumnsWithEdit(c, null, null))
                     .WithPaging(10)
                     .Sortable()
                     .Filterable()
@@ -232,6 +233,70 @@ namespace GridBlazorClientSide.Server.Controllers
 
             var items = server.ItemsToDisplay;
             return Ok(items);
+        }
+
+        [HttpPost("[action]")]
+        public async Task<ActionResult> Add1ToFreight(int id)
+        {
+            if (ModelState.IsValid)
+            {
+                var repository = new OrdersRepository(_context);
+                try
+                {
+                    var order = await repository.GetById(id);
+                    if (order.Freight.HasValue)
+                    {
+                        order.Freight += 1;
+                        await repository.Update(order);
+                        repository.Save();
+                    }
+
+                    return NoContent();
+                }
+                catch (Exception e)
+                {
+                    return BadRequest(new
+                    {
+                        message = e.Message.Replace('{', '(').Replace('}', ')')
+                    });
+                }
+            }
+            return BadRequest(new
+            {
+                message = "ModelState is not valid"
+            });
+        }
+
+        [HttpPost("[action]")]
+        public async Task<ActionResult> Subtract1ToFreight(int id)
+        {
+            if (ModelState.IsValid)
+            {
+                var repository = new OrdersRepository(_context);
+                try
+                {
+                    var order = await repository.GetById(id);
+                    if (order.Freight.HasValue)
+                    {
+                        order.Freight -= 1;
+                        await repository.Update(order);
+                        repository.Save();
+                    }
+
+                    return NoContent();
+                }
+                catch (Exception e)
+                {
+                    return BadRequest(new
+                    {
+                        message = e.Message.Replace('{', '(').Replace('}', ')')
+                    });
+                }
+            }
+            return BadRequest(new
+            {
+                message = "ModelState is not valid"
+            });
         }
     }
 }

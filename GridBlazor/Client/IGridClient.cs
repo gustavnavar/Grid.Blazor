@@ -131,6 +131,27 @@ namespace GridBlazor
         IGridClient<T> SetCreateComponent<TComponent>(IList<Action<object>> actions, object obj);
 
         /// <summary>
+        ///     Setup the Create Component
+        /// </summary>
+        IGridClient<T> SetCreateComponent<TComponent>(IList<Func<object,Task>> functions);
+
+        /// <summary>
+        ///     Setup the Create Component
+        /// </summary>
+        IGridClient<T> SetCreateComponent<TComponent>(IList<Action<object>> actions, IList<Func<object, Task>> functions);
+
+        /// <summary>
+        ///     Setup the Create Component
+        /// </summary>
+        IGridClient<T> SetCreateComponent<TComponent>(IList<Func<object, Task>> functions, object obj);
+
+        /// <summary>
+        ///     Setup the Create Component
+        /// </summary>
+        IGridClient<T> SetCreateComponent<TComponent>(IList<Action<object>> actions, IList<Func<object, Task>> functions, 
+            object obj);
+
+        /// <summary>
         ///     Setup the Read Component
         /// </summary>
         IGridClient<T> SetReadComponent<TComponent>();
@@ -149,6 +170,27 @@ namespace GridBlazor
         ///     Setup the Read Component
         /// </summary>
         IGridClient<T> SetReadComponent<TComponent>(IList<Action<object>> actions, object obj);
+
+        /// <summary>
+        ///     Setup the Read Component
+        /// </summary>
+        IGridClient<T> SetReadComponent<TComponent>(IList<Func<object, Task>> functions);
+
+        /// <summary>
+        ///     Setup the Read Component
+        /// </summary>
+        IGridClient<T> SetReadComponent<TComponent>(IList<Action<object>> actions, IList<Func<object, Task>> functions);
+
+        /// <summary>
+        ///     Setup the Read Component
+        /// </summary>
+        IGridClient<T> SetReadComponent<TComponent>(IList<Func<object, Task>> functions, object obj);
+
+        /// <summary>
+        ///     Setup the Read Component
+        /// </summary>
+        IGridClient<T> SetReadComponent<TComponent>(IList<Action<object>> actions, IList<Func<object, Task>> functions,
+            object obj);
 
         /// <summary>
         ///     Setup the Update Component
@@ -171,6 +213,27 @@ namespace GridBlazor
         IGridClient<T> SetUpdateComponent<TComponent>(IList<Action<object>> actions, object obj);
 
         /// <summary>
+        ///     Setup the Update Component
+        /// </summary>
+        IGridClient<T> SetUpdateComponent<TComponent>(IList<Func<object, Task>> functions);
+
+        /// <summary>
+        ///     Setup the Update Component
+        /// </summary>
+        IGridClient<T> SetUpdateComponent<TComponent>(IList<Action<object>> actions, IList<Func<object, Task>> functions);
+
+        /// <summary>
+        ///     Setup the Update Component
+        /// </summary>
+        IGridClient<T> SetUpdateComponent<TComponent>(IList<Func<object, Task>> functions, object obj);
+
+        /// <summary>
+        ///     Setup the Update Component
+        /// </summary>
+        IGridClient<T> SetUpdateComponent<TComponent>(IList<Action<object>> actions, IList<Func<object, Task>> functions,
+            object obj);
+
+        /// <summary>
         ///     Setup the Delete Component
         /// </summary>
         IGridClient<T> SetDeleteComponent<TComponent>();
@@ -189,6 +252,27 @@ namespace GridBlazor
         ///     Setup the Delete Component
         /// </summary>
         IGridClient<T> SetDeleteComponent<TComponent>(IList<Action<object>> actions, object obj);
+
+        /// <summary>
+        ///     Setup the Delete Component
+        /// </summary>
+        IGridClient<T> SetDeleteComponent<TComponent>(IList<Func<object, Task>> functions);
+
+        /// <summary>
+        ///     Setup the Delete Component
+        /// </summary>
+        IGridClient<T> SetDeleteComponent<TComponent>(IList<Action<object>> actions, IList<Func<object, Task>> functions);
+
+        /// <summary>
+        ///     Setup the Delete Component
+        /// </summary>
+        IGridClient<T> SetDeleteComponent<TComponent>(IList<Func<object, Task>> functions, object obj);
+
+        /// <summary>
+        ///     Setup the Delete Component
+        /// </summary>
+        IGridClient<T> SetDeleteComponent<TComponent>(IList<Action<object>> actions, IList<Func<object, Task>> functions,
+            object obj);
 
         /// <summary>
         ///     Setup the text, which will displayed with empty items collection in the grid

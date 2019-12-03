@@ -321,6 +321,9 @@ namespace GridBlazor
             gridProperty = componentType.GetProperty("Actions");
             if (gridProperty != null)
                 builder.AddAttribute(++_sequence, "Actions", Grid.CreateActions);
+            gridProperty = componentType.GetProperty("Functions");
+            if (gridProperty != null)
+                builder.AddAttribute(++_sequence, "Functions", Grid.CreateFunctions);
             gridProperty = componentType.GetProperty("Object");
             if (gridProperty != null)
                 builder.AddAttribute(++_sequence, "Object", Grid.CreateObject);
@@ -338,6 +341,9 @@ namespace GridBlazor
             gridProperty = componentType.GetProperty("Actions");
             if (gridProperty != null)
                 builder.AddAttribute(++_sequence, "Actions", Grid.ReadActions);
+            gridProperty = componentType.GetProperty("Functions");
+            if (gridProperty != null)
+                builder.AddAttribute(++_sequence, "Functions", Grid.ReadFunctions);
             gridProperty = componentType.GetProperty("Object");
             if (gridProperty != null)
                 builder.AddAttribute(++_sequence, "Object", Grid.ReadObject);
@@ -355,6 +361,9 @@ namespace GridBlazor
             gridProperty = componentType.GetProperty("Actions");
             if (gridProperty != null)
                 builder.AddAttribute(++_sequence, "Actions", Grid.UpdateActions);
+            gridProperty = componentType.GetProperty("Functions");
+            if (gridProperty != null)
+                builder.AddAttribute(++_sequence, "Functions", Grid.UpdateFunctions);
             gridProperty = componentType.GetProperty("Object");
             if (gridProperty != null)
                 builder.AddAttribute(++_sequence, "Object", Grid.UpdateObject);
@@ -372,6 +381,9 @@ namespace GridBlazor
             gridProperty = componentType.GetProperty("Actions");
             if (gridProperty != null)
                 builder.AddAttribute(++_sequence, "Actions", Grid.DeleteActions);
+            gridProperty = componentType.GetProperty("Functions");
+            if (gridProperty != null)
+                builder.AddAttribute(++_sequence, "Functions", Grid.DeleteFunctions);
             gridProperty = componentType.GetProperty("Object");
             if (gridProperty != null)
                 builder.AddAttribute(++_sequence, "Object", Grid.DeleteObject);
