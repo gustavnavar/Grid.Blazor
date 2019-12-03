@@ -29,7 +29,7 @@ You have to enable paging as shown in the section before.
 Then you have to use the **ChangePageSize** method of the **GridClient** object on the Razor page:
 
 ```c#
-    var client = new GridClient<Order>(url, query, false, "ordersGrid", ColumnCollections.OrderColumns, locale)
+    var client = new GridClient<Order>(httpClient, url, query, false, "ordersGrid", ColumnCollections.OrderColumns, locale)
             .ChangePageSize(true);
 ```
 

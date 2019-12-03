@@ -11,7 +11,7 @@ Since the version 1.1.0 of the GridBlazor nuget package the default value of the
 
 You can enable it as follows:
 ```c#
-    var client = new GridClient<Order>(url, query, false, "ordersGrid", Columns)
+    var client = new GridClient<Order>(httpClient, url, query, false, "ordersGrid", Columns)
         .Selectable(true);
 ```
 

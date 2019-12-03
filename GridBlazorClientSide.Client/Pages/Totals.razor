@@ -6,6 +6,7 @@
 @using System.Globalization
 @using System.Threading.Tasks
 @inject NavigationManager NavigationManager
+@inject HttpClient HttpClient
 
 <h1>Grid with Totals</h1>
 
@@ -50,7 +51,7 @@ else
         query.Add("grid-page", "2");
         string url = NavigationManager.BaseUri + "api/SampleData/GetOrdersGridWithTotals";
         var client = new GridClient<Order>
-            (url, query, false, "ordersGrid", ColumnCollections.OrderColumnsWithTotals, locale)
+            (HttpClient, url, query, false, "ordersGrid", ColumnCollections.OrderColumnsWithTotals, locale)
             .Sortable()
             .Filterable()
             .SetStriped(true)

@@ -40,7 +40,8 @@ The steps to build a grid razor page using data annotations with **GridBlazor** 
 
     ```razor
         @page "/gridsample"
-        @inject IUriHelper UriHelper
+        @inject NavigationManager NavigationManager
+        @inject HttpClient HttpClient
 
         @if (_task.IsCompleted)
         {
@@ -56,14 +57,14 @@ The steps to build a grid razor page using data annotations with **GridBlazor** 
             private CGrid<Foo> _grid;
             private Task _task;
 
-            protected override async Task OnInitAsync()
+            protected override async Task OnParametersSetAsync()
             {
-                string url = UriHelper.GetBaseUri() + "api/SampleData/GetFooAutoGenerateColumns";
+                string url = NavigationManager.GetBaseUri() + "api/SampleData/GetFooAutoGenerateColumns";
 
                 var query = new QueryDictionary<StringValues>();
                 query.Add("grid-page", "2");
 
-                var client = new GridClient<Foo>(url, query, false, "fooGrid", null).AutoGenerateColumns();
+                var client = new GridClient<Foo>(HttpClient, url, query, false, "fooGrid", null).AutoGenerateColumns();
                 _grid = client.Grid;
 
                 // Set new items to grid

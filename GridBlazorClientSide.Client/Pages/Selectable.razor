@@ -7,6 +7,7 @@
 @using System.Globalization
 @using System.Threading.Tasks
 @inject NavigationManager NavigationManager
+@inject HttpClient HttpClient
 
 <h1>Selectable Grid</h1>
 
@@ -68,7 +69,7 @@ else
         }
         string url = NavigationManager.BaseUri + "api/SampleData/GetOrdersGrid";
         var client = new GridClient<Order>
-            (url, query, false, "ordersGrid", ColumnCollections.OrderColumns, locale)
+            (HttpClient, url, query, false, "ordersGrid", ColumnCollections.OrderColumns, locale)
             .Sortable()
             .Filterable()
             .SetStriped(true)

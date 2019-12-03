@@ -290,11 +290,8 @@ namespace GridBlazor
                     {
                         if (isSelectField.SelectItemExpr == null)
                         {
-                            using (HttpClient httpClient = new HttpClient())
-                            {
-                                var selectItems = await httpClient.GetJsonAsync<SelectItem[]>(isSelectField.Url);
-                                ((GridColumnBase<T>)column).SelectItems = selectItems.ToList();
-                            }
+                            var selectItems = await Grid.HttpClient.GetJsonAsync<SelectItem[]>(isSelectField.Url);
+                            ((GridColumnBase<T>)column).SelectItems = selectItems.ToList();
                         }
                         else
                         {

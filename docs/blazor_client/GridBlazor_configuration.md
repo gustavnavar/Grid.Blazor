@@ -28,6 +28,7 @@ GridEmptyTextCssClass | ```string``` (optional) | Html classes used by the empty
 
 Parameter | Description | Example
 --------- | ----------- | -------
+httpClient | HttpClient from dependency injection | @inject HttpClient HttpClient
 url | string containing the url of the action of the server project that provides the grid rows | http://localhost:43550/api/SampleData/GetOrdersGridForSample
 query | dictionary containing grid parameters as the initial page | query.Add("grid-page", "2");
 renderOnlyRows | boolean to configure if only rows are renderend by the server or all the grid object | Must be **false** for Blazor solutions

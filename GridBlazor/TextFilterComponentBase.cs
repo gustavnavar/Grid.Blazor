@@ -44,7 +44,7 @@ namespace GridBlazor
                    new Filter(r.FilterType.ToString("d"), r.FilterValue)).ToList();
             _clearVisible = filterSettings.Count() > 0;
             if (filterSettings.Count() == 0)
-                filterSettings.Add(new Filter(GridFilterType.Equals.ToString("d"), ""));
+                filterSettings.Add(new Filter(GridFilterType.Contains.ToString("d"), ""));
             _filters = filterSettings.ToArray();
         }
 
@@ -59,7 +59,7 @@ namespace GridBlazor
         protected void AddColumnFilterValue()
         {
             Array.Resize(ref _filters, _filters.Length + 1);
-            _filters[_filters.Length - 1] = new Filter(GridFilterType.Equals.ToString("d"), "");
+            _filters[_filters.Length - 1] = new Filter(GridFilterType.Contains.ToString("d"), "");
         }
 
         protected void RemoveColumnFilterValue()

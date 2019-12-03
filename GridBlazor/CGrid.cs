@@ -37,10 +37,52 @@ namespace GridBlazor
         private int _displayingItemsCount = -1; // count of displaying items (if using pagination)
         private bool _enablePaging;
         private IGridPager _pager;
+        private HttpClient _httpClient;
 
         private readonly Func<QueryDictionary<StringValues>, ItemsDTO<T>> _dataService;
         private ICrudDataService<T> _crudDataService;
 
+        public CGrid(HttpClient httpClient, string url, IQueryDictionary<StringValues> query, bool renderOnlyRows,
+            Action<IGridColumnCollection<T>> columns = null, CultureInfo cultureInfo = null)
+        {
+            _dataService = null;
+
+            Items = new List<T>();
+
+            _httpClient = httpClient;
+            Url = url;
+            _query = query;
+
+            //set up sort settings:
+            _settings = new QueryStringGridSettingsProvider(_query);
+            Sanitizer = new Sanitizer();
+            if (cultureInfo != null)
+                Strings.Culture = cultureInfo;
+            EmptyGridText = Strings.DefaultGridEmptyText;
+            Language = Strings.Lang;
+
+            _annotations = new GridAnnotationsProvider();
+
+            //Set up column collection:
+            _columnBuilder = new DefaultColumnBuilder<T>(this, _annotations);
+            _columnsCollection = new GridColumnCollection<T>(this, _columnBuilder, _settings.SortSettings);
+            ComponentOptions = new GridOptions();
+
+            ApplyGridSettings();
+
+            Pager = new GridPager(query);
+
+            ComponentOptions.RenderRowsOnly = renderOnlyRows;
+            columns?.Invoke(Columns);
+
+            Mode = GridMode.Grid;
+            CreateEnabled = false;
+            ReadEnabled = false;
+            UpdateEnabled = false;
+            DeleteEnabled = false;
+        }
+
+        [Obsolete("This constructor is obsolete. Use one including an HttpClient parameter.", false)]
         public CGrid(string url, IQueryDictionary<StringValues> query, bool renderOnlyRows,
             Action<IGridColumnCollection<T>> columns = null, CultureInfo cultureInfo = null)
         {
@@ -48,13 +90,14 @@ namespace GridBlazor
 
             Items = new List<T>();
 
+            _httpClient = null;
             Url = url;
             _query = query;
 
             //set up sort settings:
             _settings = new QueryStringGridSettingsProvider(_query);
             Sanitizer = new Sanitizer();
-            if(cultureInfo != null)
+            if (cultureInfo != null)
                 Strings.Culture = cultureInfo;
             EmptyGridText = Strings.DefaultGridEmptyText;
             Language = Strings.Lang;
@@ -81,7 +124,7 @@ namespace GridBlazor
         }
 
         public CGrid(Func<QueryDictionary<StringValues>, ItemsDTO<T>> dataService,
-            QueryDictionary<StringValues> query, bool renderOnlyRows, 
+            QueryDictionary<StringValues> query, bool renderOnlyRows,
             Action<IGridColumnCollection<T>> columns = null, CultureInfo cultureInfo = null)
         {
             _dataService = dataService;
@@ -89,6 +132,7 @@ namespace GridBlazor
             Items = new List<T>(); //response.Items;
 
             Url = null;
+            _httpClient = null;
             _query = query;
 
             //set up sort settings:
@@ -210,7 +254,16 @@ namespace GridBlazor
         /// <summary>
         ///     Provides url used by the grid
         /// </summary>
-        public string Url { get; set; }
+        public string Url { get; internal set; }
+
+        public HttpClient HttpClient 
+        {
+            get {
+                if (_httpClient == null)
+                    _httpClient = new HttpClient();
+                return _httpClient; 
+            }
+        }
 
         /// <summary>
         ///     Provides DataService used by the grid
@@ -712,10 +765,7 @@ namespace GridBlazor
                     string urlParameters = ((GridPager)_pager).GetLink();
                     if (Url.Contains("?"))
                         urlParameters = urlParameters.Replace("?", "&");
-                    using (HttpClient httpClient = new HttpClient())
-                    {
-                        response = await httpClient.GetJsonAsync<ItemsDTO<T>>(Url + urlParameters);
-                    }        
+                    response = await HttpClient.GetJsonAsync<ItemsDTO<T>>(Url + urlParameters);       
                 }
                 else
                 {

@@ -7,7 +7,7 @@
 You can enable grouping for all columns of a grid using the **Groupable** method for both **GridClient** and **GridServer** objects:
 * Client project
     ```c#
-        var client = new GridClient<Order>(url, query, false, "ordersGrid", Columns, locale)
+        var client = new GridClient<Order>(httpClient, url, query, false, "ordersGrid", Columns, locale)
             .Groupable();
     ```
 

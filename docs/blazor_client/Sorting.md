@@ -8,7 +8,7 @@
 You can enable sorting for all columns of a grid using the **Sortable** method for both **GridClient** and **GridServer** objects:
 * Client project
     ```c#
-        var client = new GridClient<Order>(url, query, false, "ordersGrid", Columns, locale)
+        var client = new GridClient<Order>(httpClient, url, query, false, "ordersGrid", Columns, locale)
             .Sortable();
     ```
 
@@ -27,7 +27,7 @@ Sorting at grid level has precendence over sorting defined at column level.
 You can also configure extended sorting using the **ExtSortable** method for both **GridClient** and **GridServer** objects:
 * Client project
     ```c#
-        var client = new GridClient<Order>(url, query, false, "ordersGrid", Columns, locale)
+        var client = new GridClient<Order>(httpClient, url, query, false, "ordersGrid", Columns, locale)
             .ExtSortable();
     ```
 

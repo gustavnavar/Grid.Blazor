@@ -1,11 +1,12 @@
-﻿using GridShared;
-using GridBlazor.Pagination;
-using System.Threading.Tasks;
-using System;
-using Microsoft.Extensions.Primitives;
+﻿using GridBlazor.Pagination;
+using GridShared;
 using GridShared.Columns;
 using GridShared.Filtering;
+using Microsoft.Extensions.Primitives;
+using System;
 using System.Collections.Generic;
+using System.Net.Http;
+using System.Threading.Tasks;
 
 namespace GridBlazor
 {
@@ -35,6 +36,10 @@ namespace GridBlazor
         Func<object[], Task<ICGrid>> SubGrids { get; }
 
         Type Type { get; }
+
+        string Url { get; }
+
+        HttpClient HttpClient { get; }
 
         /// <summary>
         ///     Get foreign key values for subgrid records

@@ -18,7 +18,7 @@ You can enable filtering for all columns of a grid using the **Filterable** meth
 
 * Client project
     ```c#
-        var client = new GridClient<Order>(url, query, false, "ordersGrid", Columns, locale)
+        var client = new GridClient<Order>(httpClient, url, query, false, "ordersGrid", Columns, locale)
             .Filterable();
     ```
 

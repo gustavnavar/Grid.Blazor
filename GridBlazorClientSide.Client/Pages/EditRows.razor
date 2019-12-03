@@ -70,7 +70,7 @@ else
             }
         }
         string url = NavigationManager.BaseUri + "api/SampleData/OrderColumnsWithEdit";
-        var client = new GridClient<Order>(url, query, false, "ordersGrid", columns, locale)
+        var client = new GridClient<Order>(HttpClient, url, query, false, "ordersGrid", columns, locale)
             .Sortable()
             .Filterable()
             .SetStriped(true)

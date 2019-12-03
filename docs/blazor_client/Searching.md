@@ -12,7 +12,7 @@ You can enable searching for all columns of a grid using the **Searchable** meth
 
 * Client project
     ```c#
-        var client = new GridClient<Order>(url, query, false, "ordersGrid", Columns, locale)
+        var client = new GridClient<Order>(httpClient, url, query, false, "ordersGrid", Columns, locale)
             .Searchable(true, false);
     ```
 

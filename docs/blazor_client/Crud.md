@@ -18,7 +18,7 @@ These are the supported features:
 
 You can enable CRUD using the **Crud** method of the **GridClient** object:
 ```c#   
-    var client = new GridClient<Order>(url, query, false, "ordersGrid", c => 
+    var client = new GridClient<Order>(HttpClient, url, query, false, "ordersGrid", c => 
             ColumnCollections.OrderColumnsWithCrud(c, NavigationManager.BaseUri), locale)
         .Crud(true, orderService)
 ```
@@ -284,7 +284,7 @@ And this is an auto-genereated edit form:
 If you want to use custom forms you can enable them using the **SetCreateComponent**, **SetReadComponent**, **SetUpdateComponent** and **SetDeleteComponent**  methods of the **GridClient** object:
 
 ```c#
-    var client = new GridClient<Order>(url, query, false, "ordersGrid", ColumnCollections.OrderColumnsWithCustomCrud, locale)
+    var client = new GridClient<Order>(HttpClient, url, query, false, "ordersGrid", ColumnCollections.OrderColumnsWithCustomCrud, locale)
         .Crud(true, orderService)
         .SetCreateComponent<OrderCreateComponent>()
         .SetReadComponent<OrderReadComponent>()

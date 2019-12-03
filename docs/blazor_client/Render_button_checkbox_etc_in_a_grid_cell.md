@@ -47,7 +47,7 @@ In this sample we name the component **ButtonCell.razor**:
 
 ```razor
     @implements ICustomGridComponent<Order>
-    @inject IUriHelper UriHelper
+    @inject NavigationManager NavigationManager
 
     <button class='btn btn-sm btn-primary' @onclick="MyClickHandler">Edit</button>
 
@@ -71,12 +71,12 @@ In this sample we name the component **ButtonCell.razor**:
                 string gridState = Grid.GetState();
                 if (Object == null)
                 {
-                    UriHelper.NavigateTo($"/editorder/{Item.OrderID.ToString()}/gridsample/{gridState}");
+                    NavigationManager.NavigateTo($"/editorder/{Item.OrderID.ToString()}/gridsample/{gridState}");
                 }
                 else
                 {
                     string returnUrl = (string)Object;
-                    UriHelper.NavigateTo($"/editorder/{Item.OrderID.ToString()}/{returnUrl}/{gridState}");
+                    NavigationManager.NavigateTo($"/editorder/{Item.OrderID.ToString()}/{returnUrl}/{gridState}");
                 }
             }
             else

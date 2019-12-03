@@ -35,7 +35,8 @@ The steps to build a grid razor page using **GridBlazor** are:
         @using GridShared
         @using GridShared.Utility
         @using Microsoft.Extensions.Primitives
-        @inject IUriHelper UriHelper
+        @inject NavigationManager NavigationManager
+        @inject HttpClient HttpClient
 
         @if (_task.IsCompleted)
         {
@@ -61,12 +62,12 @@ The steps to build a grid razor page using **GridBlazor** are:
 
             protected override async Task OnParametersSetAsync()
             {
-                string url = UriHelper.GetBaseUri() + "api/SampleData/GetOrdersGridForSample";
+                string url = NavigationManager.GetBaseUri() + "api/SampleData/GetOrdersGridForSample";
 
                 var query = new QueryDictionary<StringValues>();
                 query.Add("grid-page", "2");
 
-                var client = new GridClient<Order>(url, query, false, "ordersGrid", Columns);
+                var client = new GridClient<Order>(HttpClient, url, query, false, "ordersGrid", Columns);
                 _grid = client.Grid;
 
                 // Set new items to grid
@@ -104,7 +105,7 @@ The steps to build a grid razor page using **GridBlazor** are:
 
 * You can use multiple methods of the **GridClient** object to configure a grid. For example:
     ```c#
-        var client = new GridClient<Order>(url, query, false, "ordersGrid", Columns, locale)
+        var client = new GridClient<Order>(HttpClient, url, query, false, "ordersGrid", Columns, locale)
             .SetRowCssClasses(item => item.Customer.IsVip ? "success" : string.Empty)
             .Sortable()
             .Filterable()

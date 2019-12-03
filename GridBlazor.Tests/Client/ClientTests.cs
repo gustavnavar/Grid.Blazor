@@ -27,7 +27,7 @@ namespace GridBlazor.Tests.Client
                 c.Add(r => r.UInt64Field);
             };
 
-            _client = new GridClient<TestModel>("", new QueryDictionary<StringValues>(),
+            _client = new GridClient<TestModel>(null, "", new QueryDictionary<StringValues>(),
                 false, "_Grid", columns);
         }
 

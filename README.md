@@ -2,13 +2,30 @@
 
 A fork from: https://gridmvc.codeplex.com/
 
-It supports .NET Core 3.1 Preview3
+It supports .NET Core 3.1
 
 **Important:** Blazor Server App require these changes on to the **_Host.cshtml** file for .Net Core 3.1:
     
 ```
     <link href="_content/GridBlazor/css/gridblazor.min.css" rel="stylesheet" />
     <script src="_content/GridBlazor/js/gridblazor.js"></script>
+```
+
+**Important:** Blazor WebAssembly projects require to use a new constructor of the **GridClient** object including an HttpClient object from Dependency Injection for .Net Core 3.1:
+    
+```razor
+    @page "/..."
+    @inject HttpClient httpClient
+
+    ...
+    
+    protected override async Task OnParametersSetAsync()
+    {
+        ...
+        var client = new GridClient<Order>(httpClient, url, query, false, "ordersGrid", Columns);
+        ...
+    }
+    
 ```
 
 ## Demo 

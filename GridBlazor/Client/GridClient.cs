@@ -7,6 +7,7 @@ using Microsoft.Extensions.Primitives;
 using System;
 using System.Collections.Generic;
 using System.Globalization;
+using System.Net.Http;
 using System.Threading.Tasks;
 
 namespace GridBlazor
@@ -18,6 +19,15 @@ namespace GridBlazor
     {
         private readonly CGrid<T> _source;
 
+        public GridClient(HttpClient httpClient, string url, IQueryDictionary<StringValues> query, bool renderOnlyRows,
+            string gridName, Action<IGridColumnCollection<T>> columns = null, CultureInfo cultureInfo = null)
+        {
+            _source = new CGrid<T>(httpClient, url, query, renderOnlyRows, columns, cultureInfo);
+            Named(gridName);
+            //WithPaging(_source.Pager.PageSize);
+        }
+
+        [Obsolete("This constructor is obsolete. Use one including an HttpClient parameter.", false)]
         public GridClient(string url, IQueryDictionary<StringValues> query, bool renderOnlyRows, 
             string gridName, Action<IGridColumnCollection<T>> columns = null, CultureInfo cultureInfo = null)
         {

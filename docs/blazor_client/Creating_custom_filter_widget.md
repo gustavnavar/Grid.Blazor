@@ -43,6 +43,7 @@ Follow thes steps to create a custom filter widget:
         @using System.Collections.Generic
         @using System.Net.Http
         @inject NavigationManager NavigationManager
+        @inject HttpClient HttpClient
         @inject IJSRuntime jSRuntime
 
         @typeparam T
@@ -108,10 +109,7 @@ Follow thes steps to create a custom filter widget:
             protected override async Task OnInitializedAsync()
             {
                 string url = NavigationManager.BaseUri + "api/SampleData/GetCustomersNames";
-                using (HttpClient httpClient = new HttpClient())
-                {
-                    _customersNames = await httpClient.GetJsonAsync<List<string>>(url);
-                }
+                _customersNames = await HttpClient.GetJsonAsync<List<string>>(url);
             }
 
             protected override void OnParametersSet()

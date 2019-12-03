@@ -8,6 +8,7 @@
 @using System.Globalization
 @using System.Threading.Tasks
 @inject NavigationManager NavigationManager
+@inject HttpClient HttpClient
 @inject ICrudDataService<Order> orderService
 
 <h1>Grid Sample</h1>
@@ -45,8 +46,8 @@ else
         var query = new QueryDictionary<StringValues>();
         string url = NavigationManager.BaseUri + "api/SampleData/OrderColumnsWithCrud";
 
-        var client = new GridClient<Order>(url, query, false, "ordersGrid", ColumnCollections.OrderColumnsWithCustomCrud, 
-            locale)
+        var client = new GridClient<Order>(HttpClient, url, query, false, "ordersGrid", 
+            ColumnCollections.OrderColumnsWithCustomCrud, locale)
             .Sortable()
             .Filterable()
             .SetStriped(true)

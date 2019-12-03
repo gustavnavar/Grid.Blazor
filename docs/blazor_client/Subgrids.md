@@ -30,18 +30,18 @@ We have to add the subgrid column definition on **code** section of the same raz
     }
 ```
 
-We have to add the following element on **OnInitAsync** method of the same razor page we used to render the main grid:
+We have to add the following element on **OnParametersSetAsync** method of the same razor page we used to render the main grid:
 
 ```razor
-    protected override async Task OnInitAsync()
+    protected override async Task OnParametersSetAsync()
     {
         ...
         
         Func<object[], Task<ICGrid>> subGrids = async keys =>
         {
-            string subGridUrl = UriHelper.GetBaseUri() + "api/SampleData/GetOrderDetailsGrid?OrderId=" + keys[0];
+            string subGridUrl = NavigationManager.GetBaseUri() + "api/SampleData/GetOrderDetailsGrid?OrderId=" + keys[0];
             var subGridQuery = new QueryDictionary<StringValues>();
-            var subGridClient = new GridClient<OrderDetail>(subGridUrl, subGridQuery, false, 
+            var subGridClient = new GridClient<OrderDetail>(httpClient, subGridUrl, subGridQuery, false, 
                 "orderDetailsGrid" + keys[0].ToString(), OrderDetailColumns, locale)
                     .SetRowCssClasses(item => item.Quantity > 10 ? "success" : string.Empty)
                     .Sortable()
@@ -59,11 +59,11 @@ The new element is a function to create the subgrids. The parameter **keys** mus
 Then we have to modify the **GridClient** we used to create the main grid adding a **SubGrid** method:
 
 ```razor
-    protected override async Task OnInitAsync()
+    protected override async Task OnParametersSetAsync()
     {
         ...
 
-        var client = new GridClient<Order>(url, query, false, "ordersGrid", OrderColumns, locale)
+        var client = new GridClient<Order>(httpClient, url, query, false, "ordersGrid", OrderColumns, locale)
             .SetRowCssClasses(item => item.Customer.IsVip ? "success" : string.Empty)
             .Sortable()
             .Filterable()
