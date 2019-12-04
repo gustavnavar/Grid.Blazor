@@ -45,5 +45,6 @@
 /GridBlazorClientSide.Server/GridBlazorClientSide.Server.csproj.user
 /GridBlazorClientSide.Shared/bin
 /GridBlazorClientSide.Shared/obj
+/GridBlazorServerSide/GridBlazorServerSide.csproj.user
 /GridBlazorServerSide/bin
 /GridBlazorServerSide/obj

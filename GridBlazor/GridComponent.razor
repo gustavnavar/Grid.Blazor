@@ -44,13 +44,15 @@
             }
             else
             {
-                @if (Grid.GroupingEnabled)
+                int i = 0;
+                if (Grid.GroupingEnabled)
                 {
-                    <GridGroupRowsComponent T="@T" Grid="@Grid" Values="@(new List<Tuple<string, object>>())" HasSubGrid="@_hasSubGrid" RequiredTotalsColumn="@_requiredTotalsColumn" ItemsToDisplay="@Grid.ItemsToDisplay" IsVisible="true"></GridGroupRowsComponent>
+                    <CascadingValue Value=@this Name="GridComponent">
+                        <GridGroupRowsComponent T="@T" Grid="@Grid" Values="@(new List<Tuple<string, object>>())" HasSubGrid="@_hasSubGrid" RequiredTotalsColumn="@_requiredTotalsColumn" ItemsToDisplay="@Grid.ItemsToDisplay" IsVisible="true" I="@i"></GridGroupRowsComponent>
+                    </CascadingValue>
                 }
                 else
                 {
-                    int i = 0;
                     foreach (object item in Grid.ItemsToDisplay)
                     {
                         int capturedI = i;
@@ -261,13 +263,15 @@
                             }
                             else
                             {
-                                @if (Grid.GroupingEnabled)
+                                int i = 0;
+                                if (Grid.GroupingEnabled)
                                 {
-                                    <GridGroupRowsComponent T="@T" Grid="@Grid" Values="@(new List<Tuple<string, object>>())" HasSubGrid="@_hasSubGrid" RequiredTotalsColumn="@_requiredTotalsColumn" ItemsToDisplay="@Grid.ItemsToDisplay" IsVisible="true"></GridGroupRowsComponent>
+                                    <CascadingValue Value=@this Name="GridComponent">
+                                        <GridGroupRowsComponent T="@T" Grid="@Grid" Values="@(new List<Tuple<string, object>>())" HasSubGrid="@_hasSubGrid" RequiredTotalsColumn="@_requiredTotalsColumn" ItemsToDisplay="@Grid.ItemsToDisplay" IsVisible="true" I="@i"></GridGroupRowsComponent>
+                                    </CascadingValue>
                                 }
                                 else
                                 {
-                                    int i = 0;
                                     foreach (object item in Grid.ItemsToDisplay)
                                     {
                                         int capturedI = i;

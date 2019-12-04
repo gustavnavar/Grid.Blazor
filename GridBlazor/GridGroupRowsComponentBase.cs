@@ -13,6 +13,9 @@ namespace GridBlazor
         protected IGridColumn _column;
         protected IEnumerable<object> _columnValues;
 
+        [CascadingParameter(Name = "GridComponent")]
+        protected GridComponent<T> GridComponent { get; set; }
+
         [Parameter]
         public ICGrid Grid { get; set; }
 
@@ -30,6 +33,9 @@ namespace GridBlazor
 
         [Parameter]
         public bool IsVisible { get; set; }
+
+        [Parameter]
+        public int I { get; set; }
 
         protected override void OnParametersSet()
         {

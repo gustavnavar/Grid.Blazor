@@ -105,10 +105,6 @@ namespace GridBlazorServerSide.ColumnCollections
             /* Adding not mapped column, that renders body, using inline Razor html helper */
             c.Add().Encoded(false).Sanitized(false).RenderComponentAs<ButtonCell>(obj);
 
-            /* Adding not mapped column, that renders body, using inline Razor html helper */
-            c.Add().Encoded(false).Sanitized(false).SetWidth(100).Css("hidden-xs") //hide on phones
-            .RenderComponentAs<ButtonDbUpdate>(functions);
-
             /* Adding "OrderID" column: */
             c.Add(o => o.OrderID).Titled(SharedResource.Number).SetWidth(100);
 
@@ -127,6 +123,10 @@ namespace GridBlazorServerSide.ColumnCollections
             c.Add(o => o.Freight)
             .Titled(SharedResource.Freight)
             .Format("{0:F}");
+
+            /* Adding not mapped column, that renders body, using inline Razor html helper */
+            c.Add().Encoded(false).Sanitized(false).SetWidth(100).Css("hidden-xs") //hide on phones
+            .RenderComponentAs<ButtonDbUpdate>(functions);
 
             /* Adding "Vip customer" column: */
             c.Add(o => o.Customer.IsVip).Titled(SharedResource.IsVip).SetWidth(70).Css("hidden-xs") //hide on phones

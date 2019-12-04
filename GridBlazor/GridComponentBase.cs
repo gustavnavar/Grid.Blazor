@@ -12,7 +12,6 @@ using Microsoft.JSInterop;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Net.Http;
 using System.Threading.Tasks;
 
 namespace GridBlazor
@@ -149,16 +148,17 @@ namespace GridBlazor
             }
         }
 
-        protected void RowClicked(int i, object item)
+        internal void RowClicked(int i, object item)
         {
             SelectedRow = i;
             if (OnRowClicked != null)
                 OnRowClicked.Invoke(item);
         }
 
-        protected void SubGridClicked(int i)
+        internal void SubGridClicked(int i)
         {
             IsSubGridVisible[i] = !IsSubGridVisible[i];
+            StateHasChanged();
         }
 
         public async Task GoTo(int page)

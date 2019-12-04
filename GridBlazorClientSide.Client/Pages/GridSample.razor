@@ -97,6 +97,7 @@ else
             .SetRowCssClasses(item => item.Customer.IsVip ? "success" : string.Empty)
             .Sortable()
             .Filterable()
+            .Groupable(true)
             .SetStriped(true)
             .WithMultipleFilters()
             .Searchable(true, false)
