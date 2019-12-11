@@ -28,6 +28,11 @@
         public bool Selectable { get; set; }
 
         /// <summary>
+        ///      Gets or set init selection on selectable grids 
+        /// </summary>
+        public bool InitSelection { get; set; }
+
+        /// <summary>
         ///     Specify grid Id on the client side
         /// </summary>
         public string GridName { get; set; }

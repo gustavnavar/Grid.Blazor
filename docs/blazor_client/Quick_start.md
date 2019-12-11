@@ -20,11 +20,14 @@ Imagine that you have to retrieve a collection of model items in your project. F
 
 The steps to build a grid razor page using **GridBlazor** are:
 
-1. Add a reference to **GridBlazor** in the **_Imports.razor** file of the client project's root folder
+1. Add a reference to **GridBlazor**, **GridBlazor.Pages**, **GridShared** and **GridShared.Utility** in the **_Imports.razor** file of the client project's root folder
 
     ```razor
         ...
         @using GridBlazor
+        @using GridBlazor.Pages
+        @using GridShared
+        @using GridShared.Utility
         ...
     ```
 

@@ -1,7 +1,6 @@
-﻿@using GridBlazor
-@using GridBlazor.Resources
+﻿@using GridBlazor.Resources
 @using GridBlazorClientSide.Shared.Models
-@inherits GridCreateComponentBase<Order>
+@inherits GridCreateComponent<Order>
 
 <h1>@Strings.Add Order</h1>
 <EditForm Model="@Item" OnValidSubmit="@CreateItem">

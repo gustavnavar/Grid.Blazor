@@ -1,4 +1,5 @@
-﻿using GridBlazor.Pagination;
+﻿using GridBlazor.Pages;
+using GridBlazor.Pagination;
 using GridBlazor.Resources;
 using GridShared;
 using GridShared.Columns;
@@ -41,6 +42,15 @@ namespace GridBlazor
             Action<IGridColumnCollection<T>> columns = null, CultureInfo cultureInfo = null)
         {
             _source = new CGrid<T>(dataService, query, renderOnlyRows, columns, cultureInfo);
+            Named(gridName);
+            //WithPaging(_source.Pager.PageSize);
+        }
+
+        public GridClient(Func<QueryDictionary<StringValues>, Task<ItemsDTO<T>>> dataServiceAsync,
+            QueryDictionary<StringValues> query, bool renderOnlyRows, string gridName,
+            Action<IGridColumnCollection<T>> columns = null, CultureInfo cultureInfo = null)
+        {
+            _source = new CGrid<T>(dataServiceAsync, query, renderOnlyRows, columns, cultureInfo);
             Named(gridName);
             //WithPaging(_source.Pager.PageSize);
         }
@@ -165,9 +175,15 @@ namespace GridBlazor
             return this;
         }
 
-        public IGridClient<T> Selectable(bool set)
+        public IGridClient<T> Selectable(bool enable)
         {
-            _source.ComponentOptions.Selectable = set;
+            return Selectable(enable, false);
+        }
+
+        public IGridClient<T> Selectable(bool enable, bool initSelection)
+        {
+            _source.ComponentOptions.Selectable = enable;
+            _source.ComponentOptions.InitSelection = initSelection;
             return this;
         }
 
@@ -227,7 +243,7 @@ namespace GridBlazor
             IList<Func<object, Task>> functions, object obj)
         {
             Type readComponent = typeof(TComponent);
-            if (readComponent != null && readComponent.IsSubclassOf(typeof(GridCreateComponentBase<T>)))
+            if (readComponent != null && readComponent.IsSubclassOf(typeof(GridCreateComponent<T>)))
             {
                 _source.CreateComponent = readComponent;
                 _source.CreateActions = actions;
@@ -277,7 +293,7 @@ namespace GridBlazor
             IList<Func<object, Task>> functions, object obj)
         {
             Type readComponent = typeof(TComponent);
-            if (readComponent != null && readComponent.IsSubclassOf(typeof(GridReadComponentBase<T>)))
+            if (readComponent != null && readComponent.IsSubclassOf(typeof(GridReadComponent<T>)))
             {
                 _source.ReadComponent = readComponent;
                 _source.ReadActions = actions;
@@ -327,7 +343,7 @@ namespace GridBlazor
             IList<Func<object, Task>> functions, object obj)
         {
             Type updateComponent = typeof(TComponent);
-            if (updateComponent != null && updateComponent.IsSubclassOf(typeof(GridUpdateComponentBase<T>)))
+            if (updateComponent != null && updateComponent.IsSubclassOf(typeof(GridUpdateComponent<T>)))
             {
                 _source.UpdateComponent = updateComponent;
                 _source.UpdateActions = actions;
@@ -377,7 +393,7 @@ namespace GridBlazor
             IList<Func<object, Task>> functions, object obj)
         {
             Type deleteComponent = typeof(TComponent);
-            if (deleteComponent != null && deleteComponent.IsSubclassOf(typeof(GridDeleteComponentBase<T>)))
+            if (deleteComponent != null && deleteComponent.IsSubclassOf(typeof(GridDeleteComponent<T>)))
             {
                 _source.DeleteComponent = deleteComponent;
                 _source.DeleteActions = actions;

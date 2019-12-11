@@ -67,13 +67,21 @@ The steps to build a grid razor page using **GridBlazor** are:
         }
     ```
 
-3. Create a razor page to render the grid. The page file must have a .razor extension. An example of razor page is:
+3. Add a reference to **GridBlazor**, **GridBlazor.Pages**, **GridShared** and **GridShared.Utility** in the **_Imports.razor** file of the root folder
+
+    ```razor
+        ...
+        @using GridBlazor
+        @using GridBlazor.Pages
+        @using GridShared
+        @using GridShared.Utility
+        ...
+    ```
+
+4. Create a razor page to render the grid. The page file must have a .razor extension. An example of razor page is:
 
     ```razor
         @page "/gridsample"
-        @using GridBlazor
-        @using GridShared
-        @using GridShared.Utility
         @using Microsoft.Extensions.Primitives
         @inject OrderService orderService
 

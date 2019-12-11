@@ -1,12 +1,9 @@
 ﻿@page "/gridsample"
 @page "/gridsample/{GridState}"
-@using GridBlazor
 @using GridBlazorServerSide.ColumnCollections
 @using GridBlazorServerSide.Models
 @using GridBlazorServerSide.Resources
 @using GridBlazorServerSide.Services
-@using GridShared
-@using GridShared.Utility
 @using Microsoft.Extensions.Primitives
 @using System
 @using System.Globalization
@@ -35,7 +32,7 @@
             <h4>
                 Order details
             </h4>
-            <OrderInfo Order="@_order" ReturnUrl="gridsample" GridState="@_grid.GetState()"></OrderInfo>
+            <OrderInfo @ref="_orderInfo" ReturnUrl="gridsample" GridState="@_grid.GetState()"></OrderInfo>
         </div>
     </div>
 }
@@ -48,7 +45,7 @@ else
 {
     private CGrid<Order> _grid;
     private Task _task;
-    private Order _order;
+    private OrderInfo _orderInfo;
     private IQueryDictionary<Type> _customFilters = new QueryDictionary<Type>();
 
     [Parameter]
@@ -99,8 +96,9 @@ else
             .SetStriped(true)
             .WithMultipleFilters()
             .Searchable(true, false)
-            .Selectable(true)
+            .Selectable(true, true)
             .WithGridItemsCount()
+            .ChangePageSize(true)
             .SubGrid(subGrids, "OrderID");
 
         _customFilters.Add(ColumnCollections.CompanyNameFilter, typeof(CustomersFilterComponent<Order>));
@@ -115,13 +113,13 @@ else
     {
         if (item.GetType() == typeof(Order))
         {
-            _order = (Order)item;
+            _orderInfo.Order = (Order)item;
         }
         else
         {
-            _order = null;
+            _orderInfo.Order = null;
         }
-        StateHasChanged();
+        _orderInfo.Refresh();
     }
 
     private void MyAction(object item)

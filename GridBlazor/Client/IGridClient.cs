@@ -100,6 +100,11 @@ namespace GridBlazor
         IGridClient<T> Selectable(bool enable);
 
         /// <summary>
+        ///     Enable or disable client grid items selectable feature
+        /// </summary>
+        IGridClient<T> Selectable(bool enable, bool initSelection);
+
+        /// <summary>
         ///     Enable or disable client grid CRUD
         /// </summary>
         IGridClient<T> Crud(bool enabled, ICrudDataService<T> crudDataService);

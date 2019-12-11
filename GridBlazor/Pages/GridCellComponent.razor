@@ -1,0 +1,12 @@
+﻿@typeparam T
+
+@if (_cellRender != null)
+{
+    <td class="@_cssClass" style="@_cssStyles" data-name="@Column.Name">@_cellRender</td>
+}
+else
+{
+    <td class="@_cssClass" style="@_cssStyles" data-name="@Column.Name">@_cell</td>
+}
+
+

@@ -1,11 +1,9 @@
 ﻿@page "/selectable"
 @page "/selectable/{GridState}"
-@using GridBlazor
 @using GridBlazorServerSide.ColumnCollections
 @using GridBlazorServerSide.Models
 @using GridBlazorServerSide.Resources
 @using GridBlazorServerSide.Services
-@using GridShared.Utility
 @using Microsoft.Extensions.Primitives
 @using System.Globalization
 @using System.Threading.Tasks
@@ -31,7 +29,7 @@
             <h4>
                 Order details
             </h4>
-            <OrderInfo Order="@_order" ReturnUrl="selectable" GridState="@_grid.GetState()"></OrderInfo>
+            <OrderInfo @ref="_orderInfo" ReturnUrl="selectable" GridState="@_grid.GetState()"></OrderInfo>
         </div>
     </div>
 }
@@ -43,7 +41,7 @@ else
 @code
 {
     private CGrid<Order> _grid;
-    private Order _order;
+    private OrderInfo _orderInfo;
     private Task _task;
 
     [Parameter]
@@ -70,7 +68,7 @@ else
             .Sortable()
             .Filterable()
             .SetStriped(true)
-            .Selectable(true)
+            .Selectable(true, true)
             .WithMultipleFilters()
             .WithGridItemsCount();
 
@@ -84,12 +82,12 @@ else
     {
         if (item.GetType() == typeof(Order))
         {
-            _order = (Order)item;
+            _orderInfo.Order = (Order)item;
         }
         else
         {
-            _order = null;
+            _orderInfo.Order = null;
         }
-        StateHasChanged();
+        _orderInfo.Refresh();
     }
 }

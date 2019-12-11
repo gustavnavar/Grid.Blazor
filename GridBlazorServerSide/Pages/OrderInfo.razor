@@ -47,7 +47,6 @@ else
 }
 
 @code {
-    [Parameter]
     public Order Order { get; set; }
 
     [Parameter]
@@ -59,5 +58,10 @@ else
     private void MyClickHandler(MouseEventArgs e)
     {
         NavigationManager.NavigateTo($"/editorder/{Order.OrderID.ToString()}/{ReturnUrl}/{GridState}");
+    }
+
+    public void Refresh()
+    {
+        StateHasChanged();
     }
 }
