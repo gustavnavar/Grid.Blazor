@@ -6,13 +6,16 @@
 
 The **GridClient** object has a method called **Selectable** to configure if a row can be selected. 
 It's value can be **true** and **false**. 
-By default the **Selectable** feature is **true**. 
 Since the version 1.1.0 of the GridBlazor nuget package the default value of the **Selectable** feature is **false** (it was **true** for earlier versions).
+
+There is an optional boolean parameter to control if the first row should automatically be selected when a page loads.
+It's value can be **true** and **false**. 
+By default this paramenter's value is **false**. 
 
 You can enable it as follows:
 ```c#
     var client = new GridClient<Order>(httpClient, url, query, false, "ordersGrid", Columns)
-        .Selectable(true);
+        .Selectable(true, true);
 ```
 
 You have to add the **OnRowClicked** attribute on the component. For example, the razor page can contain the following line:
