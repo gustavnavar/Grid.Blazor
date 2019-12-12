@@ -1,6 +1,6 @@
 # Grid.Blazor
 
-A fork from: https://github.com/gustavnavar/Grid.Blazor (is forked from  https://gridmvc.codeplex.com/)
+A fork from: https://gridmvc.codeplex.com/
 
 It supports .NET Core 3.1
 
