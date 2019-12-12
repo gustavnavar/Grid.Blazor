@@ -496,11 +496,11 @@ namespace GridBlazor.Pages
             {
                 await GoTo(Grid.Pager.CurrentPage + 1);
             }
-            else if (e.Key == "Home")
+            else if (e.CtrlKey && e.Key == "Home")
             {
                 await GoTo(1);
             }
-            else if (e.Key == "End")
+            else if (e.CtrlKey && e.Key == "End")
             {
                 await GoTo(((GridPager)Grid.Pager).PageCount);
             }
