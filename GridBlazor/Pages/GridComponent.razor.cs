@@ -488,19 +488,19 @@ namespace GridBlazor.Pages
 
         public async Task GridComponentKeyup(KeyboardEventArgs e)
         {
-            if (e.Key == "ArrowLeft" && Grid.Pager.CurrentPage > 1)
+            if (e.CtrlKey && e.Key == "ArrowLeft" && Grid.Pager.CurrentPage > 1)
             {
                 await GoTo(Grid.Pager.CurrentPage - 1);
             }
-            else if (e.Key == "ArrowRight" && Grid.Pager.CurrentPage < ((GridPager)Grid.Pager).PageCount)
+            else if (e.CtrlKey && e.Key == "ArrowRight" && Grid.Pager.CurrentPage < ((GridPager)Grid.Pager).PageCount)
             {
                 await GoTo(Grid.Pager.CurrentPage + 1);
             }
-            else if (e.Key == "Home")
+            else if (e.CtrlKey && e.Key == "Home")
             {
                 await GoTo(1);
             }
-            else if (e.Key == "End")
+            else if (e.CtrlKey && e.Key == "End")
             {
                 await GoTo(((GridPager)Grid.Pager).PageCount);
             }
