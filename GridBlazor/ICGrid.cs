@@ -52,6 +52,7 @@ namespace GridBlazor
         object[] GetPrimaryKeyValues(object item);
 
         IGridSettingsProvider Settings { get; }
+        IEnumerable<object> SelectedItems { get; set; }
 
         /// <summary>
         ///    Set items from the server api

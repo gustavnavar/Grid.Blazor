@@ -168,7 +168,10 @@ namespace GridBlazor.Pages
         {
             //If user clicked on a row withouth Control key, unselect all rows
             if (!args.CtrlKey)
+            {
                 SelectedRows.Clear();
+                Grid.SelectedItems = new List<object>();
+            }
             
             //If Grid is MultiSelectable, add selected row to list of rows
             if (Grid.ComponentOptions.MultiSelectable)
@@ -176,14 +179,21 @@ namespace GridBlazor.Pages
                 SelectedRow = -1;
                 //If selected row is already part of collection, remove it
                 if (SelectedRows.Contains(i))
+                {
                     SelectedRows.Remove(i);
+                    Grid.SelectedItems = Grid.SelectedItems.Except(new[] { item });
+                }
                 else
+                {
                     SelectedRows.Add(i);
+                    Grid.SelectedItems = Grid.SelectedItems.Concat(new[] { item });
+                }
                 
             }
             else
             {
-                SelectedRow = i;
+                SelectedRow = i;                
+                Grid.SelectedItems = Grid.SelectedItems.Concat(new[] {item });
             }
             if (OnRowClicked != null)
                 OnRowClicked.Invoke(item);

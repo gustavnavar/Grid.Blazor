@@ -17,7 +17,8 @@ namespace GridShared
         ///     Grid items
         /// </summary>
         IEnumerable<object> ItemsToDisplay { get; }
-
+        
+        
         /// <summary>
         ///     Displaying grid items count
         /// </summary>

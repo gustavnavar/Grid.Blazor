@@ -42,6 +42,11 @@ Then you have to add the function called by the event. In this example its name 
         Console.WriteLine("Order Id: " + (order == null ? "NULL" : order.OrderID.ToString()));
     }
 ```
+When items are selected in grid, collection of selected items are available using SelectedItems property. SelectedItems property is of type IEnumerable<object>.
+
+```c#
+    var items = client.Grid.SelectedItems.ToList<T>();
+```
 
 In this sample a line of text with de selected row id is writen on the console log.
 
