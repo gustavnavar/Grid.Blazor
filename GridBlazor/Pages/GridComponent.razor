@@ -77,15 +77,15 @@
                                 }
                                 @if (Grid.ReadEnabled)
                                 {
-                                    <td class="@GridButtonCellCssClass" data-name=""><button class='grid-button-view btn btn-sm btn-outline-secondary' @onclick="@(e => ReadHandler(item))" type="button" @onclick:stopPropagation></button></td>
+                                    <td class="@GridButtonCellCssClass" data-name=""><button class='grid-button-view btn btn-sm btn-outline-secondary' title="@Strings.ReadItem" @onclick="@(e => ReadHandler(item))" type="button" @onclick:stopPropagation></button></td>
                                 }
                                 @if (Grid.UpdateEnabled)
                                 {
-                                    <td class="@GridButtonCellCssClass" data-name=""><button class='grid-button-edit btn btn-sm btn-outline-secondary' @onclick="@(e => UpdateHandler(item))" type="button" @onclick:stopPropagation></button></td>
+                                    <td class="@GridButtonCellCssClass" data-name=""><button class='grid-button-edit btn btn-sm btn-outline-secondary' title="@Strings.UpdateItem" @onclick="@(e => UpdateHandler(item))" type="button" @onclick:stopPropagation></button></td>
                                 }
                                 @if (Grid.DeleteEnabled)
                                 {
-                                    <td class="@GridButtonCellCssClass" data-name=""><button class='grid-button-delete btn btn-sm btn-outline-secondary' @onclick="@(e => DeleteHandler(item))" type="button" @onclick:stopPropagation></button></td>
+                                    <td class="@GridButtonCellCssClass" data-name=""><button class='grid-button-delete btn btn-sm btn-outline-secondary' title="@Strings.DeleteItem" @onclick="@(e => DeleteHandler(item))" type="button" @onclick:stopPropagation></button></td>
                                 }
                                 @foreach (IGridColumn column in Grid.Columns)
                                 {
@@ -115,15 +115,15 @@
                                 }
                                 @if (Grid.ReadEnabled)
                                 {
-                                    <td class="@GridButtonCellCssClass" data-name=""><button class='grid-button-view btn btn-sm btn-outline-secondary' @onclick="@(e => ReadHandler(item))" type="button" @onclick:stopPropagation></button></td>
+                                    <td class="@GridButtonCellCssClass" data-name=""><button class='grid-button-view btn btn-sm btn-outline-secondary' title="@Strings.ReadItem" @onclick="@(e => ReadHandler(item))" type="button" @onclick:stopPropagation></button></td>
                                 }
                                 @if (Grid.UpdateEnabled)
                                 {
-                                    <td class="@GridButtonCellCssClass" data-name=""><button class='grid-button-edit btn btn-sm btn-outline-secondary' @onclick="@(e => UpdateHandler(item))" type="button" @onclick:stopPropagation></button></td>
+                                    <td class="@GridButtonCellCssClass" data-name=""><button class='grid-button-edit btn btn-sm btn-outline-secondary' title="@Strings.UpdateItem" @onclick="@(e => UpdateHandler(item))" type="button" @onclick:stopPropagation></button></td>
                                 }
                                 @if (Grid.DeleteEnabled)
                                 {
-                                    <td class="@GridButtonCellCssClass" data-name=""><button class='grid-button-delete btn btn-sm btn-outline-secondary' @onclick="@(e => DeleteHandler(item))" type="button" @onclick:stopPropagation></button></td>
+                                    <td class="@GridButtonCellCssClass" data-name=""><button class='grid-button-delete btn btn-sm btn-outline-secondary' title="@Strings.DeleteItem" @onclick="@(e => DeleteHandler(item))" type="button" @onclick:stopPropagation></button></td>
                                 }
                                 @foreach (IGridColumn column in Grid.Columns)
                                 {
@@ -159,28 +159,39 @@
         else
         {
             <div class="@GridMvcCssClass"
-                 data-lang="@Grid.Language"
-                 data-gridname="@Grid.ComponentOptions.GridName"
-                 data-selectable="@Grid.ComponentOptions.Selectable.ToString().ToLower()"
-                 data-extsortable="@Grid.ExtSortingEnabled.ToString().ToLower()"
-                 data-groupable="@Grid.GroupingEnabled.ToString().ToLower()"
-                 data-multiplefilters="@Grid.ComponentOptions.AllowMultipleFilters.ToString().ToLower()"
-                 tabindex="-1"
-                 @ref="gridmvc"
-                 @onkeyup="GridComponentKeyup"
-                 @onclick="GridComponentClick">
+                data-lang="@Grid.Language"
+                data-gridname="@Grid.ComponentOptions.GridName"
+                data-selectable="@Grid.ComponentOptions.Selectable.ToString().ToLower()"
+                data-extsortable="@Grid.ExtSortingEnabled.ToString().ToLower()"
+                data-groupable="@Grid.GroupingEnabled.ToString().ToLower()"
+                data-multiplefilters="@Grid.ComponentOptions.AllowMultipleFilters.ToString().ToLower()"
+                tabindex="-1"
+                @ref="gridmvc"
+                @onkeyup="GridComponentKeyup"
+                @onclick="GridComponentClick">
                 <div class="@GridWrapCssClass">
                     <div class="row">
-                        @if (Grid.EnablePaging && Grid.Pager.ChangePageSize)
-                        {
-                            <div class="row grid-change-page-size form-group col-md-6" data-change-page-size-url="@_changePageSizeUrl">
-                                <label class="control-label col-md-2"><b>@Strings.Show</b></label>
-                                <div class="col-md-3">
-                                    <input class="form-control grid-change-page-size-input" @bind="_pageSize" @onkeyup="InputPageSizeKeyup" @onblur="InputPageSizeBlur" @onclick:stopPropagation />
-                                </div>
-                                <label class="control-label"><b>@Strings.Items</b></label>
+                        <div class="row col-md-6">
+                            <div class="grid-all-filters-clear">
+                                <button class="grid-button-all-filters-clear btn btn-default btn-outline-secondary" type="button" title="@Strings.ClearAllFilters" @onclick="RemoveAllFilters" @onclick:stopPropagation></button>
                             </div>
-                        }
+                            @if (Grid.CreateEnabled)
+                            {
+                                <div class="row grid-crud">
+                                    <button class="grid-button-add btn btn-sm btn-outline-secondary" type="button" title="@Strings.CreateItem" @onclick="CreateHandler" @onclick:stopPropagation></button>
+                                </div>
+                            }
+                            @if (Grid.EnablePaging && Grid.Pager.ChangePageSize)
+                            {
+                                <div class="row grid-change-page-size form-group" data-change-page-size-url="@_changePageSizeUrl">
+                                    <label class="control-label"><b>@Strings.Show</b></label>
+                                    <div>
+                                        <input class="form-control grid-change-page-size-input" @bind="_pageSize" @onkeyup="InputPageSizeKeyup" @onblur="InputPageSizeBlur" @onclick:stopPropagation />
+                                    </div>
+                                    <label class="control-label"><b>@Strings.Items</b></label>
+                                </div>
+                            }
+                        </div>
                         @if (Grid.SearchingEnabled)
                         {
                             <CascadingValue Value=@this Name="GridComponent">
@@ -188,12 +199,6 @@
                             </CascadingValue>
                         }
                     </div>
-                    @if (Grid.CreateEnabled)
-                    {
-                        <div class="row grid-crud">
-                            <button class='grid-button-add btn btn-sm btn-outline-secondary' @onclick="CreateHandler" type="button" @onclick:stopPropagation></button>
-                        </div>
-                    }
                     @if (Grid.ExtSortingEnabled)
                     {
                         <CascadingValue Value=@this Name="GridComponent">
@@ -296,15 +301,15 @@
                                                 }
                                                 @if (Grid.ReadEnabled)
                                                 {
-                                                    <td class="@GridButtonCellCssClass" data-name=""><button class='grid-button-view btn btn-sm btn-outline-secondary' @onclick="@(e => ReadHandler(item))" type="button" @onclick:stopPropagation></button></td>
+                                                    <td class="@GridButtonCellCssClass" data-name=""><button class='grid-button-view btn btn-sm btn-outline-secondary' title="@Strings.ReadItem" @onclick="@(e => ReadHandler(item))" type="button" @onclick:stopPropagation></button></td>
                                                 }
                                                 @if (Grid.UpdateEnabled)
                                                 {
-                                                    <td class="@GridButtonCellCssClass" data-name=""><button class='grid-button-edit btn btn-sm btn-outline-secondary' @onclick="@(e => UpdateHandler(item))" type="button" @onclick:stopPropagation></button></td>
+                                                    <td class="@GridButtonCellCssClass" data-name=""><button class='grid-button-edit btn btn-sm btn-outline-secondary' title="@Strings.UpdateItem" @onclick="@(e => UpdateHandler(item))" type="button" @onclick:stopPropagation></button></td>
                                                 }
                                                 @if (Grid.DeleteEnabled)
                                                 {
-                                                    <td class="@GridButtonCellCssClass" data-name=""><button class='grid-button-delete btn btn-sm btn-outline-secondary' @onclick="@(e => DeleteHandler(item))" type="button" @onclick:stopPropagation></button></td>
+                                                    <td class="@GridButtonCellCssClass" data-name=""><button class='grid-button-delete btn btn-sm btn-outline-secondary' title="@Strings.DeleteItem" @onclick="@(e => DeleteHandler(item))" type="button" @onclick:stopPropagation></button></td>
                                                 }
                                                 @foreach (IGridColumn column in Grid.Columns)
                                                 {
@@ -334,15 +339,15 @@
                                                 }
                                                 @if (Grid.ReadEnabled)
                                                 {
-                                                    <td class="@GridButtonCellCssClass" data-name=""><button class='grid-button-view btn btn-sm btn-outline-secondary' @onclick="@(e => ReadHandler(item))" type="button" @onclick:stopPropagation></button></td>
+                                                    <td class="@GridButtonCellCssClass" data-name=""><button class='grid-button-view btn btn-sm btn-outline-secondary' title="@Strings.ReadItem" @onclick="@(e => ReadHandler(item))" type="button" @onclick:stopPropagation></button></td>
                                                 }
                                                 @if (Grid.UpdateEnabled)
                                                 {
-                                                    <td class="@GridButtonCellCssClass" data-name=""><button class='grid-button-edit btn btn-sm btn-outline-secondary' @onclick="@(e => UpdateHandler(item))" type="button" @onclick:stopPropagation></button></td>
+                                                    <td class="@GridButtonCellCssClass" data-name=""><button class='grid-button-edit btn btn-sm btn-outline-secondary' title="@Strings.UpdateItem" @onclick="@(e => UpdateHandler(item))" type="button" @onclick:stopPropagation></button></td>
                                                 }
                                                 @if (Grid.DeleteEnabled)
                                                 {
-                                                    <td class="@GridButtonCellCssClass" data-name=""><button class='grid-button-delete btn btn-sm btn-outline-secondary' @onclick="@(e => DeleteHandler(item))" type="button" @onclick:stopPropagation></button></td>
+                                                    <td class="@GridButtonCellCssClass" data-name=""><button class='grid-button-delete btn btn-sm btn-outline-secondary' title="@Strings.DeleteItem" @onclick="@(e => DeleteHandler(item))" type="button" @onclick:stopPropagation></button></td>
                                                 }
                                                 @foreach (IGridColumn column in Grid.Columns)
                                                 {

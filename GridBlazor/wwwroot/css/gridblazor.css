@@ -1,8 +1,4 @@
-﻿/***
-*   Grid.Mvc stylesheet http://gridmvc.codeplex.com/
-*   This file contains default styles for Grid.Mvc.
-*/
-/* Grid */
+﻿/* Grid */
 .grid-mvc:focus { outline:none; }
 table.grid-table { margin: 0; }
     table.grid-table .grid-wrap { padding: 0; position: relative; }
@@ -69,11 +65,12 @@ button.grid-search-clear {height: 34px; border-color: #ccc; padding-left: 22px; 
 input.grid-search-input {height: 34px; border-color: #ccc; }
 
 /* Grid change page size */
-.grid-change-page-size { margin-top: 10px; margin-bottom: 10px; }
-.grid-change-page-size label { margin-top: 6px; }
+.grid-change-page-size { margin-top: 10px; margin-left:20px; margin-bottom: 10px; }
+.grid-change-page-size label { margin-top: 6px; margin-left:10px; width: 60px; }
+.grid-change-page-size-input { display:inline; width: 60px; margin-left:5px;  margin-right:5px; }
 
 /* Grid extended sorting */
-.grid-extsort-droppable { height: 42px; width: 100%; margin-top:20px; margin-bottom:10px; border: 1px solid #ccc; border-radius: 4px; }
+.grid-extsort-droppable { height: 42px; width: 100%; margin-bottom:10px; border: 1px solid #ccc; border-radius: 4px; }
 .grid-extsort-column { height: 28px; display: inline-block; margin: 6px 0px 6px 20px; padding: 5px; background-color:#efefef; border: 1px solid #ccc; border-radius: 4px; }
     .grid-extsort-column .sorted-asc .grid-sort-arrow:after { content: " \2191"; }
     .grid-extsort-column .sorted-desc .grid-sort-arrow:after { content: " \2193"; }
@@ -93,9 +90,13 @@ input.grid-search-input {height: 34px; border-color: #ccc; }
 .grid-group-row { background: #eee; }
 
 /* Grid CRUD */
-.grid-crud { margin-top: 10px; margin-bottom: 10px; margin-left: 0px; }
+.grid-crud { margin-top: 10px; margin-bottom: 10px; margin-left: 0px; margin-right: 5px;}
 button.grid-button-add { height: 34px; width:32px; border-color: #ccc; margin-right: 5px; background-repeat: no-repeat; background-position-x: 5px; background-position-y: 6px;  background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABUAAAAUCAYAAABiS3YzAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAACXSURBVDhPYxgygBlKEwLiQCwKYTL8gNIUg/dA/B+KBUAC+AATlMYHOIAY2SAQHy8gxlCSwdAxlBFKw4ABEIdDmHAACsMCCBMMJgAxegrYCcQHIExMMB+IYbFMCl4PxHBAF+87AHE8hIkCEqA0CCyA0sjgIBBjE8cJQGGK7FUJIMYLRng6pUvs4wIKUPwBiC+ABIYDYGAAAFRMHrhs3ttWAAAAAElFTkSuQmCC'); }
 button.grid-button-view { height: 34px; width:36px; border-color: #ccc; margin-right: 5px; background-repeat: no-repeat; background-position-x: 5px; background-position-y: 6px; background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABcAAAAUCAYAAABmvqYOAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAF5SURBVEhL3ZSxLkRBFIYvjVahtt4AUSnEPoF4BN7AI1AotpBV6G0hkWhEqeINUEiEAoVsuSqt/b9777/Ozs5uVsmffK6ZOXPmzD8zW/xZzdTfSVoRSzXzdEjP4kE8lq1fiiT74k58T4DkhyKrXOU7oi1c5a24F+/ikw6JXWyJ1bJVaVd0qn9HRbJTQUU9cSawxGoKFuZrMe45cC1GROJLQQBWbIhULeEkXZEu8ioYu6Ej6lg4se1IdSSc3MSdMc9nRKGltgUdeIqXUV6IKrEqJoZzEUW848hbPMVGIraaS2oYS+Vie7P6M0fPGFHJOJvQV/3NiXP5WUks0BEUb0KOgbe1sHXIFnQh6EgPlOCYLEKSdWExzwfKOxkSV4iBNxFvQbxmhiTxjDhwx1yJrJW+68Dq8faQjEfEYp68KYizFSdikDj3/PdE3JafP0+f68rkhqBa75CxA8F7mUosktqRgj3EZW2Y5id3UayJ5bJVVfkiPgQ7+ncqij7L9IdyT3plAgAAAABJRU5ErkJggg=='); }
 button.grid-button-edit { height: 34px; width:32px; border-color: #ccc; margin-right: 5px; background-repeat: no-repeat; background-position-x: 5px; background-position-y: 6px; background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABcAAAAUCAYAAABmvqYOAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAGlSURBVEhLzZQ7S8NgFIZ7Sa8xWghIpShaCrVIJTg5ipM4iLi56Obk4D/QHyDFxUHEC7iIDh0csjrWRQc3F10cFLReZvl8zmdS2sk2reALD+/JafMmnJwk9JeKeh5EGViDOXiAd+iJMolE4hJXHvVwOOzID10pn8/bBF1RSug1nEtN7y2dTk9RB5PjOIOxWOyWUnkuowkRvC89qLuu2y+9jhSNRoexO/BHobLZ7CLu6wakP6OP2pVt22PYPSjDMGTWm1IL3PUybHjHdRiB9mSa5jimgwlxcT0KLrIuvSbq8Xh8CW9bk6CDU6lUFdfBvrjABebfcfOIfpUEy/6qZDJ5grcE8wy2sEDBDnf1iKtIJCKb0BJsWdYOFiwYnkHxouzijeBarcbYw3uUgYJH4RXkZLm7xs5WKhUDOwA/eAE60irIyWdgSUPEFvRhR6CDGdW89DuVv6/b+uhHA4ziGNfBxWJxVncD6BAkZKVUKpmFQmGoKfilXC5P48HEep1iCv9gWz6lFqifcrnchPynG8l3QQK/QB6sfC+qjELe0p6pZa//oUKhb+8IaSt+a8WkAAAAAElFTkSuQmCC'); }
 button.grid-button-delete { height: 34px; width:32px; border-color: #ccc; margin-right: 5px; background-repeat: no-repeat; background-position-x: 5px; background-position-y: 6px; background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABIAAAAUCAYAAACAl21KAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAADeSURBVDhP7ZS9DcIwEEYDoqFjBDpaVqBnCSYARmACRoCeghFgBDYgG8AC/HzvYltJFCchVEg86Sk5OzlfHPmSCEt5k68K57IVY0mSp7yWJBFzPNPIXvLC1qIiO8nc0aIcPXmS+RX8/d1Zxs+n7gopiR6yb2F3woKUSslTi9rBs+Ez6yrhEwbZrTGS0U2OJWI1/tLBogw2mrGJRSW67M3QXQt8u8mBf6JmfifRRc7kxqKMtWQsf1gDdRWdJQk9JGCsqiNYGwF6z0rGWkcMzh79a2GRYMB3wE+kQp3LJHkD3rM6IDtoVO0AAAAASUVORK5CYII='); }
 td.grid-button-cell { padding: 5px 0px 5px 0px; }
+
+/* Grid Clear Filters */
+.grid-all-filters-clear { margin-top: 10px; margin-bottom: 10px; margin-left: 15px; margin-right: 5px; }
+button.grid-button-all-filters-clear { height: 34px; width:32px; border-color: #ccc; margin-right: 5px; background-repeat: no-repeat; background-position-x: 10px; background-position-y: 10px; background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAoAAAAMCAYAAABbayygAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAAadEVYdFNvZnR3YXJlAFBhaW50Lk5FVCB2My41LjEwMPRyoQAAARpJREFUKFNjYGj//58o/P//fwdiMIOkpKQ/VhOQMFgNULWIh4fHYWNj4//YMEgOpIYBBI4dO2axOC/396GinP/O+vpwRVbGxl92+vluXm1kuASsEKiD5VB99aG3eTH/HxjL/A/RUPsfrqb6f7e21uutlhbRYEUwAFQskOLmun2+lND/0xxM/7dycXzd6OxoCpVGBduWLjXv4+f/v5WF+f9RbtYvfeysqlApBKhhY2Hcxsy0+xAL038nbe3/m8W4ss/Jcx2GSiPAal6uvGtczP9TFOXBHgGJ7RHlmLGOjy0UrAAGzgT7rn7urP/P3NDgv6+v73aQWAMzM+dqTtbJYAUwsNzeyuhImE8GSBHQYxpQYYYJQCcxMDAwAAB7/bt5uWh9FAAAAABJRU5ErkJggg=='); }

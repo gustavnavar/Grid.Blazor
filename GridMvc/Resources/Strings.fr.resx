@@ -153,4 +153,19 @@
   <data name="Show" xml:space="preserve">
     <value>Montrer</value>
   </data>
+  <data name="ClearAllFilters" xml:space="preserve">
+    <value>Effacer tous les filtres</value>
+  </data>
+  <data name="CreateItem" xml:space="preserve">
+    <value>Créer un élément</value>
+  </data>
+  <data name="DeleteItem" xml:space="preserve">
+    <value>Effacer l'article</value>
+  </data>
+  <data name="ReadItem" xml:space="preserve">
+    <value>Lire l'élément</value>
+  </data>
+  <data name="UpdateItem" xml:space="preserve">
+    <value>Mettre à jour l'élément</value>
+  </data>
 </root>

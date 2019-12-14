@@ -1,5 +1,6 @@
 ﻿@using GridMvc
 @using GridMvc.Columns
+@using GridMvc.Filtering
 @using GridMvc.Pagination
 @using GridMvc.Resources
 @using GridShared.Columns
@@ -34,6 +35,8 @@
     var exceptQueryParameters = new List<string> { GridPager.DefaultPageSizeQueryParameter };
     string _changePageSizeUrl = queryBuilder.GetQueryStringExcept(exceptQueryParameters);
     int _pageSize = Model.Pager.ChangePageSize && Model.Pager.QueryPageSize > 0 ? Model.Pager.QueryPageSize : Model.Pager.PageSize;
+    exceptQueryParameters = new List<string> { QueryStringFilterSettings.DefaultTypeQueryParameter, QueryStringFilterSettings.DefaultClearInitFilterQueryParameter };
+    string _removeAllFilters = queryBuilder.GetQueryStringExcept(exceptQueryParameters);
 }
 
 @if (Model.RenderOptions.RenderRowsOnly)
@@ -51,14 +54,15 @@ else
          data-initfilters="@initialFilters" @(string.IsNullOrWhiteSpace(keys) ? "" : "data-keys=" + keys)>
         <div class="grid-wrap">
             <div class="row">
+                <div class="grid-all-filters-clear col-md-1">
+                    <button class="grid-button-all-filters-clear btn btn-default btn-outline-secondary" title="@Strings.ClearAllFilters" data-all-filters-clear-url="@_removeAllFilters" type="button"></button>
+                </div>
                 @if (Model.EnablePaging && Model.Pager.ChangePageSize)
                 {
-                    <div class="grid-change-page-size form-group col-md-6" data-change-page-size-url="@_changePageSizeUrl">
-                        <label class="control-label col-md-2">@Strings.Show </label>
-                        <div class="col-md-3">
-                            <input class="form-control grid-change-page-size-input" value="@_pageSize" />
-                        </div>
-                        <label class="control-label">@Strings.Items </label>
+                    <div class="grid-change-page-size col-md-4" data-change-page-size-url="@_changePageSizeUrl">
+                        <b>@Strings.Show </b>
+                        <input class="grid-change-page-size-input form-control" value="@_pageSize" />
+                        <b> @Strings.Items</b>
                     </div>
                 }
                 @if (Model.SearchingEnabled)

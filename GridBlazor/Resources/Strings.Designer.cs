@@ -124,6 +124,15 @@ namespace GridBlazor.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Clear all filters.
+        /// </summary>
+        public static string ClearAllFilters {
+            get {
+                return ResourceManager.GetString("ClearAllFilters", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Clear filter.
         /// </summary>
         public static string ClearFilterLabel {
@@ -142,6 +151,15 @@ namespace GridBlazor.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Create item.
+        /// </summary>
+        public static string CreateItem {
+            get {
+                return ResourceManager.GetString("CreateItem", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to There are no items to display.
         /// </summary>
         public static string DefaultGridEmptyText {
@@ -156,6 +174,15 @@ namespace GridBlazor.Resources {
         public static string Delete {
             get {
                 return ResourceManager.GetString("Delete", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Delete item.
+        /// </summary>
+        public static string DeleteItem {
+            get {
+                return ResourceManager.GetString("DeleteItem", resourceCulture);
             }
         }
         
@@ -313,6 +340,15 @@ namespace GridBlazor.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Read item.
+        /// </summary>
+        public static string ReadItem {
+            get {
+                return ResourceManager.GetString("ReadItem", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Save.
         /// </summary>
         public static string Save {
@@ -363,6 +399,15 @@ namespace GridBlazor.Resources {
         public static string Sum {
             get {
                 return ResourceManager.GetString("Sum", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Update item.
+        /// </summary>
+        public static string UpdateItem {
+            get {
+                return ResourceManager.GetString("UpdateItem", resourceCulture);
             }
         }
         

@@ -90,6 +90,12 @@
             self.pageSize = this.getPageSizeQueryData(pageSize);
             self.loadPage();
         },
+        removeAllFilters: function () {
+            var self = this;
+            self.gridColumnFilters = null;
+            self.clearInitialFilters = new Array();
+            self.loadPage();
+        },
         parseExtSortValues: function (extSortData) {
             var opt = $.parseJSON(extSortData);
             return { columnName: this.urldecode(opt.ColumnName), direction: opt.Direction, id: opt.Id };
@@ -446,6 +452,13 @@
                             var pageSize = $(this).val();
                             self.changePageSize(pageSize);
                         }
+                    });
+                });
+
+                self.jqContainer.find(".grid-button-all-filters-clear").each(function () {
+                    $(this).click(function (e) {
+                        e.preventDefault();
+                        self.removeAllFilters();
                     });
                 });
 

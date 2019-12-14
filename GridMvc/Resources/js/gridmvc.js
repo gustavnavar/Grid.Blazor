@@ -58,6 +58,7 @@ GridMvc = (function ($) {
         this.initExtSort();
         this.initGroup();
         this.initChangePageSize();
+        this.initRemoveAllFilters();
     };
     //
     // Handle Grid row events
@@ -653,6 +654,34 @@ GridMvc = (function ($) {
             url += "grid-pagesize=" + encodeURIComponent(pageSize);
         }
         return url;
+    };
+
+    /***
+    * ============= REMOVE ALL FILTERS =============
+    * Methods that provides functionality for removing all filters
+    */
+    /***
+    * Method search all buttons and register 'onclick' event handlers:
+    */
+    gridMvc.prototype.initRemoveAllFilters = function () {
+        var self = this;
+        this.jqContainer.find(".grid-button-all-filters-clear").each(function () {
+            $(this).click(function () {
+                self.removeAllFilters();
+            });
+        });
+    };
+
+    //
+    // Applies selected pageSize value by redirecting to another url:
+    //
+    gridMvc.prototype.removeAllFilters = function () {
+        var url = "";
+        var gridChangePageSize = this.jqContainer.find(".grid-button-all-filters-clear").first();
+        if (gridChangePageSize) {
+            url = gridChangePageSize.attr("data-all-filters-clear-url") || "";
+        }
+        window.location.search = url;
     };
 
     return gridMvc;

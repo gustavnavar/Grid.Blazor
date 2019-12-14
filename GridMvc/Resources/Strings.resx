@@ -120,8 +120,17 @@
   <data name="Average" xml:space="preserve">
     <value>Average</value>
   </data>
+  <data name="ClearAllFilters" xml:space="preserve">
+    <value>Clear all filters</value>
+  </data>
+  <data name="CreateItem" xml:space="preserve">
+    <value>Create item</value>
+  </data>
   <data name="DefaultGridEmptyText" xml:space="preserve">
     <value>There are no items to display</value>
+  </data>
+  <data name="DeleteItem" xml:space="preserve">
+    <value>Delete item</value>
   </data>
   <data name="ExtSortingText" xml:space="preserve">
     <value>Drop columns here for column extended sorting</value>
@@ -144,6 +153,9 @@
   <data name="Min" xml:space="preserve">
     <value>Min</value>
   </data>
+  <data name="ReadItem" xml:space="preserve">
+    <value>Read item</value>
+  </data>
   <data name="SearchFor" xml:space="preserve">
     <value>Search for ...</value>
   </data>
@@ -152,5 +164,8 @@
   </data>
   <data name="Sum" xml:space="preserve">
     <value>Sum</value>
+  </data>
+  <data name="UpdateItem" xml:space="preserve">
+    <value>Update item</value>
   </data>
 </root>

@@ -9,7 +9,9 @@
 @using System.Globalization
 @using System.Threading.Tasks
 @inject IOrderService orderService
-@inject NavigationManager NavigationManager
+@inject ICustomerService customerService
+@inject IEmployeeService employeeService
+@inject IShipperService shipperService
 
 <h1>Grid with all features</h1>
 
@@ -72,8 +74,8 @@ else
         };
 
         // build the column collection passing an action list with the action executed by the ButtonCell component
-        Action<IGridColumnCollection<Order>> orderColumns = c =>
-            ColumnCollections.OrderColumnsAllFeatures(c, new List<Action<object>>() { MyAction });
+        Action<IGridColumnCollection<Order>> orderColumns = c => ColumnCollections.OrderColumnsAllFeatures(c,
+            customerService.GetAllCustomers, employeeService.GetAllEmployees, shipperService.GetAllShippers);
 
         var query = new QueryDictionary<StringValues>();
         if (!string.IsNullOrWhiteSpace(GridState))
@@ -99,7 +101,8 @@ else
             .Selectable(true, true)
             .WithGridItemsCount()
             .ChangePageSize(true)
-            .SubGrid(subGrids, "OrderID");
+            .SubGrid(subGrids, "OrderID")
+            .Crud(true, orderService);
 
         _customFilters.Add(ColumnCollections.CompanyNameFilter, typeof(CustomersFilterComponent<Order>));
 
@@ -120,12 +123,6 @@ else
             _orderInfo.Order = null;
         }
         _orderInfo.Refresh();
-    }
-
-    private void MyAction(object item)
-    {
-        string ordersGridState = _grid.GetState();
-        NavigationManager.NavigateTo($"/editorder/{((Order)item).OrderID.ToString()}/gridsample/{ordersGridState}");
     }
 }
 

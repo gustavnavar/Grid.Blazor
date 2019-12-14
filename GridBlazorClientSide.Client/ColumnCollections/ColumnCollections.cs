@@ -176,7 +176,6 @@ namespace GridBlazorClientSide.Client.ColumnCollections
             /* Adding "ShipVia" column: */
             c.Add(o => o.ShipVia, true).SetSelectField(true, o => o.Shipper == null ? "" : o.Shipper.ShipperID.ToString() + " - " + o.Shipper.CompanyName, path + $"api/SampleData/GetAllShippers");
 
-
             /* Adding "OrderDate" column: */
             c.Add(o => o.OrderDate, "OrderCustomDate").Titled(SharedResource.OrderCustomDate)
             .Format("{0:yyyy-MM-dd}").SetWidth(120);
@@ -279,45 +278,74 @@ namespace GridBlazorClientSide.Client.ColumnCollections
             .RenderValueAs(o => o.Customer.IsVip ? "Yes" : "No");
         };
 
-        public static Action<IGridColumnCollection<Order>, IList<Action<object>>> 
-            OrderColumnsAllFeatures = (c, actions) =>
+        public static Action<IGridColumnCollection<Order>, string> OrderColumnsAllFeatures = (c, path) =>
         {
-            /* Adding not mapped column, that renders body, using inline Razor html helper */
-            c.Add().Encoded(false).Sanitized(false).SetWidth(30).Css("hidden-xs") //hide on phones
-            .RenderComponentAs<ButtonCell>(actions);
-
             /* Adding "OrderID" column: */
-            c.Add(o => o.OrderID).Titled("Number").SetWidth(100);
+            c.Add(o => o.OrderID).SetPrimaryKey(true).Titled(SharedResource.Number).SetWidth(100);
+
+            /* Adding "CustomerID" column: */
+            c.Add(o => o.CustomerID, true).SetSelectField(true, o => o.Customer.CustomerID + " - " + o.Customer.CompanyName, path + $"api/SampleData/GetAllCustomers");
+
+            /* Adding "EmployeeID" column: */
+            c.Add(o => o.EmployeeID, true).SetSelectField(true, o => o.Employee.EmployeeID.ToString() + " - " + o.Employee.FirstName + " " + o.Employee.LastName, path + $"api/SampleData/GetAllEmployees");
+
+            /* Adding "ShipVia" column: */
+            c.Add(o => o.ShipVia, true).SetSelectField(true, o => o.Shipper == null ? "" : o.Shipper.ShipperID.ToString() + " - " + o.Shipper.CompanyName, path + $"api/SampleData/GetAllShippers");
 
             /* Adding "OrderDate" column: */
-            c.Add(o => o.OrderDate, "OrderCustomDate").Titled("Date")
+            c.Add(o => o.OrderDate, "OrderCustomDate").Titled(SharedResource.OrderCustomDate)
             //.SortInitialDirection(GridSortDirection.Descending)
             .SetCellCssClassesContraint(o => o.OrderDate.HasValue && o.OrderDate.Value >= DateTime.Parse("1997-01-01") ? "red" : "")
             .Format("{0:yyyy-MM-dd}").SetWidth(120)
             .Max(true).Min(true);
 
             /* Adding "CompanyName" column: */
-            c.Add(o => o.Customer.CompanyName).Titled("Company")
+            c.Add(o => o.Customer.CompanyName).Titled(SharedResource.CompanyName)
             .SetWidth(250)
+            .SetCrudHidden(true)
             //.ThenSortByDescending(o => o.OrderID)
             //.SetInitialFilter(GridFilterType.StartsWith, "a")
             .SetFilterWidgetType(CompanyNameFilter)
             .Max(true).Min(true);
 
             /* Adding "ContactName" column: */
-            c.Add(o => o.Customer.ContactName).Titled("ContactName").SetWidth(250)
+            c.Add(o => o.Customer.ContactName).Titled(SharedResource.ContactName).SetWidth(250)
+            .SetCrudHidden(true)
             .Max(true).Min(true);
 
             /* Adding "Freight" column: */
             c.Add(o => o.Freight)
-            .Titled("Freight")
+            .Titled(SharedResource.Freight)
             .Format("{0:F}")
             .Sum(true).Average(true).Max(true).Min(true);
 
-
             /* Adding "Vip customer" column: */
-            c.Add(o => o.Customer.IsVip).Titled("Is Vip").SetWidth(70).Css("hidden-xs") //hide on phones
-            .RenderValueAs(o => o.Customer.IsVip ? "Yes" : "No");
+            c.Add(o => o.Customer.IsVip).Titled(SharedResource.IsVip).SetWidth(70).Css("hidden-xs") //hide on phones
+            .RenderValueAs(o => o.Customer.IsVip ? "Yes" : "No").SetCrudHidden(true);
+
+            /* Adding hidden "RequiredDate" column: */
+            c.Add(o => o.RequiredDate, true).Format("{0:yyyy-MM-dd}");
+
+            /* Adding hidden "ShippedDate" column: */
+            c.Add(o => o.ShippedDate, true).Format("{0:yyyy-MM-dd}");
+
+            /* Adding hidden "ShipName" column: */
+            c.Add(o => o.ShipName, true);
+
+            /* Adding hidden "ShipAddress" column: */
+            c.Add(o => o.ShipAddress, true);
+
+            /* Adding hidden "ShipCity" column: */
+            c.Add(o => o.ShipCity, true);
+
+            /* Adding hidden "ShipPostalCode" column: */
+            c.Add(o => o.ShipPostalCode, true);
+
+            /* Adding hidden "ShipRegion" column: */
+            c.Add(o => o.ShipRegion, true);
+
+            /* Adding hidden "ShipCountry" column: */
+            c.Add(o => o.ShipCountry, true);
         };
 
         public static Action<IGridColumnCollection<Order>, IList<Action<object>>> OrderColumnsMultipleGrids = (c, actions) =>

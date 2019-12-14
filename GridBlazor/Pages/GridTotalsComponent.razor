@@ -1,5 +1,6 @@
 ﻿@using GridBlazor.Columns
 @using GridBlazor.Resources
+@using GridShared.Columns
 
 @if (Grid != null && !Grid.ComponentOptions.RenderRowsOnly)
 {
@@ -9,6 +10,18 @@
     {
         <tr class="grid-totals-row">
             @if (Grid.SubGridKeys != null && Grid.SubGridKeys.Length > 0)
+            {
+                <td class="grid-cell" data-name=""></td>
+            }
+            @if (Grid.ReadEnabled)
+            {
+                <td class="grid-cell" data-name=""></td>
+            }
+            @if (Grid.UpdateEnabled)
+            {
+                <td class="grid-cell" data-name=""></td>
+            }
+            @if (Grid.DeleteEnabled)
             {
                 <td class="grid-cell" data-name=""></td>
             }
@@ -34,7 +47,14 @@
                     }
                     else
                     {
-                        <td class="grid-cell"></td>
+                        if (((IGridColumn)column).Hidden)
+                        {
+                            <td class="grid-cell" style="display:none;"></td>
+                        }
+                        else
+                        {
+                            <td class="grid-cell"></td>
+                        }
                     }
                 }
 
@@ -45,6 +65,18 @@
     {
         <tr class="grid-totals-row">
             @if (Grid.SubGridKeys != null && Grid.SubGridKeys.Length > 0)
+            {
+                <td class="grid-cell" data-name=""></td>
+            }
+            @if (Grid.ReadEnabled)
+            {
+                <td class="grid-cell" data-name=""></td>
+            }
+            @if (Grid.UpdateEnabled)
+            {
+                <td class="grid-cell" data-name=""></td>
+            }
+            @if (Grid.DeleteEnabled)
             {
                 <td class="grid-cell" data-name=""></td>
             }
@@ -70,7 +102,14 @@
                     }
                     else
                     {
-                        <td class="grid-cell"></td>
+                        if (((IGridColumn)column).Hidden)
+                        {
+                            <td class="grid-cell" style="display:none;"></td>
+                        }
+                        else
+                        {
+                            <td class="grid-cell"></td>
+                        }
                     }
                 }
             }
@@ -80,6 +119,18 @@
     {
         <tr class="grid-totals-row">
             @if (Grid.SubGridKeys != null && Grid.SubGridKeys.Length > 0)
+            {
+                <td class="grid-cell" data-name=""></td>
+            }
+            @if (Grid.ReadEnabled)
+            {
+                <td class="grid-cell" data-name=""></td>
+            }
+            @if (Grid.UpdateEnabled)
+            {
+                <td class="grid-cell" data-name=""></td>
+            }
+            @if (Grid.DeleteEnabled)
             {
                 <td class="grid-cell" data-name=""></td>
             }
@@ -105,7 +156,14 @@
                     }
                     else
                     {
-                        <td class="grid-cell"></td>
+                        if (((IGridColumn)column).Hidden)
+                        {
+                            <td class="grid-cell" style="display:none;"></td>
+                        }
+                        else
+                        {
+                            <td class="grid-cell"></td>
+                        }
                     }
                 }
             }
@@ -115,6 +173,18 @@
     {
         <tr class="grid-totals-row">
             @if (Grid.SubGridKeys != null && Grid.SubGridKeys.Length > 0)
+            {
+                <td class="grid-cell" data-name=""></td>
+            }
+            @if (Grid.ReadEnabled)
+            {
+                <td class="grid-cell" data-name=""></td>
+            }
+            @if (Grid.UpdateEnabled)
+            {
+                <td class="grid-cell" data-name=""></td>
+            }
+            @if (Grid.DeleteEnabled)
             {
                 <td class="grid-cell" data-name=""></td>
             }
@@ -140,7 +210,14 @@
                     }
                     else
                     {
-                        <td class="grid-cell"></td>
+                        if (((IGridColumn)column).Hidden)
+                        {
+                            <td class="grid-cell" style="display:none;"></td>
+                        }
+                        else
+                        {
+                            <td class="grid-cell"></td>
+                        }
                     }
                 }
             }

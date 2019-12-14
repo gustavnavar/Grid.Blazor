@@ -166,6 +166,7 @@ namespace GridBlazor.Pages
             SelectedRow = i;
             if (OnRowClicked != null)
                 OnRowClicked.Invoke(item);
+            StateHasChanged();
         }
 
         internal void SubGridClicked(int i)
@@ -203,6 +204,12 @@ namespace GridBlazor.Pages
         public async Task RemoveFilter(IGridColumn column)
         {
             Grid.RemoveFilterParameter(column);
+            await UpdateGrid();
+        }
+
+        public async Task RemoveAllFilters()
+        {
+            Grid.RemoveAllFilters();
             await UpdateGrid();
         }
 
@@ -504,15 +511,19 @@ namespace GridBlazor.Pages
             {
                 await GoTo(((GridPager)Grid.Pager).PageCount);
             }
-            else if (e.Key == "ArrowUp" && Grid.ComponentOptions.Selectable && SelectedRow > 0)
+            else if (e.CtrlKey && e.Key == "ArrowUp" && Grid.ComponentOptions.Selectable && SelectedRow > 0)
             {
                 int selectedRow = SelectedRow - 1;
                 RowClicked(selectedRow, Grid.ItemsToDisplay.ElementAt(selectedRow));
             }
-            else if (e.Key == "ArrowDown" && Grid.ComponentOptions.Selectable && SelectedRow != -1 && SelectedRow < Grid.DisplayingItemsCount - 1)
+            else if (e.CtrlKey && e.Key == "ArrowDown" && Grid.ComponentOptions.Selectable && SelectedRow != -1 && SelectedRow < Grid.DisplayingItemsCount - 1)
             {
                 int selectedRow = SelectedRow + 1;
                 RowClicked(selectedRow, Grid.ItemsToDisplay.ElementAt(selectedRow));
+            }
+            else if(e.Key == "Backspace")
+            {
+                await RemoveAllFilters();
             }
         }
 

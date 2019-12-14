@@ -72,6 +72,8 @@ namespace GridBlazor
 
         void RemoveFilterParameter(IGridColumn column);
 
+        void RemoveAllFilters();
+
         /// <summary>
         ///     Get and set custom create component
         /// </summary>

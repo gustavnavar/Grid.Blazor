@@ -222,4 +222,19 @@
   <data name="Show" xml:space="preserve">
     <value>Show</value>
   </data>
+  <data name="ClearAllFilters" xml:space="preserve">
+    <value>Clear all filters</value>
+  </data>
+  <data name="CreateItem" xml:space="preserve">
+    <value>Create item</value>
+  </data>
+  <data name="DeleteItem" xml:space="preserve">
+    <value>Delete item</value>
+  </data>
+  <data name="ReadItem" xml:space="preserve">
+    <value>Read item</value>
+  </data>
+  <data name="UpdateItem" xml:space="preserve">
+    <value>Update item</value>
+  </data>
 </root>

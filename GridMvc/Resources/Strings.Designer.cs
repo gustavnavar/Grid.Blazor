@@ -70,11 +70,38 @@ namespace GridMvc.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Clear all filters.
+        /// </summary>
+        public static string ClearAllFilters {
+            get {
+                return ResourceManager.GetString("ClearAllFilters", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Create item.
+        /// </summary>
+        public static string CreateItem {
+            get {
+                return ResourceManager.GetString("CreateItem", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to There are no items to display.
         /// </summary>
         public static string DefaultGridEmptyText {
             get {
                 return ResourceManager.GetString("DefaultGridEmptyText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Delete item.
+        /// </summary>
+        public static string DeleteItem {
+            get {
+                return ResourceManager.GetString("DeleteItem", resourceCulture);
             }
         }
         
@@ -142,6 +169,15 @@ namespace GridMvc.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Read item.
+        /// </summary>
+        public static string ReadItem {
+            get {
+                return ResourceManager.GetString("ReadItem", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Search for ....
         /// </summary>
         public static string SearchFor {
@@ -165,6 +201,15 @@ namespace GridMvc.Resources {
         public static string Sum {
             get {
                 return ResourceManager.GetString("Sum", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Update item.
+        /// </summary>
+        public static string UpdateItem {
+            get {
+                return ResourceManager.GetString("UpdateItem", resourceCulture);
             }
         }
     }

@@ -773,6 +773,12 @@ namespace GridBlazor
             ((GridPager)_pager).Query = _query;
         }
 
+        public void RemoveAllFilters()
+        {
+            RemoveQueryParameter(QueryStringFilterSettings.DefaultClearInitFilterQueryParameter);
+            RemoveQueryParameter(QueryStringFilterSettings.DefaultTypeQueryParameter);
+        }
+
         public string GetState()
         {
             string query = JsonConvert.SerializeObject(Query, new StringValuesConverter());
