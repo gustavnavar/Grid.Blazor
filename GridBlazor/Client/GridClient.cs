@@ -184,6 +184,7 @@ namespace GridBlazor
         {
             return Selectable(true, false, multiSelectable);
         }
+
         public IGridClient<T> Selectable(bool enable, bool initSelection)
         {
             return Selectable(enable, initSelection, false);

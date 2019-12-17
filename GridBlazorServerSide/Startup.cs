@@ -15,7 +15,7 @@ namespace GridBlazorServerSide
 {
     public class Startup
     {
-        public static string ConnectionString = "Server=mercury\\sql2017;Database=NorthWind;Trusted_Connection=True;MultipleActiveResultSets=true";
+        public static string ConnectionString = "Server=.\\SQLEXPRESS;Database=NorthWind;Trusted_Connection=True;MultipleActiveResultSets=true";
 
         public Startup(IConfiguration configuration)
         {
@@ -52,7 +52,8 @@ namespace GridBlazorServerSide
                             new CultureInfo("it-IT"),
                             new CultureInfo("es-ES"),
                             new CultureInfo("fr-FR"),
-                            new CultureInfo("ru-RU")
+                            new CultureInfo("ru-RU"),
+                            new CultureInfo("nb-NO")
                         };
 
                     options.DefaultRequestCulture = new RequestCulture(culture: "en-US", uiCulture: "en-US");

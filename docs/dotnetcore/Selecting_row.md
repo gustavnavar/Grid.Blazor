@@ -26,7 +26,7 @@ Finally you have to add the javascript function called by the event. You can do 
 
 Note that the name of the grid used in the **GridServer** constructor must be the same than the **pageGrids** attribute used in the javascript code. In this example the name is **ordersGrid**.
 
-In this sample an alert is shown including a line of text with de selected row id.
+In this sample an alert is shown including a line of text with the selected row id.
 
 In the GridComponent.Demo project you will find another example where the order details are shown on the view when a row is selected.
 

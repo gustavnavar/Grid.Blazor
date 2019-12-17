@@ -188,7 +188,6 @@ namespace GridBlazor.Pages
                     SelectedRows.Add(i);
                     Grid.SelectedItems = Grid.SelectedItems.Concat(new[] { item });
                 }
-                
             }
             else
             {
@@ -552,7 +551,7 @@ namespace GridBlazor.Pages
                 int selectedRow = SelectedRow + 1;
                 RowClicked(selectedRow, Grid.ItemsToDisplay.ElementAt(selectedRow), new MouseEventArgs { CtrlKey = e.CtrlKey });
             }
-            else if(e.Key == "Backspace")
+            else if(e.CtrlKey && e.Key == "Backspace")
             {
                 await RemoveAllFilters();
             }
