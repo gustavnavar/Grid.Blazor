@@ -53,7 +53,7 @@
             int capturedI = I + i;
             if (Grid.ComponentOptions.Selectable)
             {
-                <tr class="grid-row@(GridComponent.SelectedRow == capturedI || (Grid.ComponentOptions.InitSelection && capturedI == 0 && GridComponent.SelectedRow == -1) ? " grid-row-selected" : "") @Grid.GetRowCssClasses(item)" @onclick="() => GridComponent.RowClicked(capturedI, item)" @onclick:stopPropagation>
+                <tr class="grid-row@(GridComponent.SelectedRow == capturedI || GridComponent.SelectedRows.Contains(capturedI) || (Grid.ComponentOptions.InitSelection && capturedI == 0 && GridComponent.SelectedRow == -1 && GridComponent.SelectedRows.Count == 0) ? " grid-row-selected" : "") @Grid.GetRowCssClasses(item)" @onclick="(args) => GridComponent.RowClicked(capturedI, item, args)" @onclick:stopPropagation>
                     @if (HasSubGrid)
                     {
                         <td class="@GridComponent.GridCellCssClass @GridComponent.GridSubGridCssClass" data-is-rendered="false" data-is-visible="false" data-name="" @onclick="() => GridComponent.SubGridClicked(capturedI)" @onclick:stopPropagation>

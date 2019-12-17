@@ -57,7 +57,7 @@
                         int capturedI = i;
                         if (Grid.ComponentOptions.Selectable)
                         {
-                            <tr class="grid-row@(SelectedRow == capturedI || (Grid.ComponentOptions.InitSelection && capturedI == 0 && SelectedRow == -1) ? " grid-row-selected" : "") @Grid.GetRowCssClasses(item)" @onclick="() => RowClicked(capturedI, item)" @onclick:stopPropagation>
+                            <tr class="grid-row@(SelectedRow == capturedI || SelectedRows.Contains(capturedI) || (Grid.ComponentOptions.InitSelection && capturedI == 0 && SelectedRow == -1 && SelectedRows.Count == 0) ? " grid-row-selected" : "") @Grid.GetRowCssClasses(item)" @onclick="(args) => RowClicked(capturedI, item, args)" @onclick:stopPropagation>
                                 @if (_hasSubGrid)
                                 {
                                     <td class="@GridCellCssClass @GridSubGridCssClass" data-is-rendered="false" data-is-visible="false" data-name="" @onclick="() => SubGridClicked(capturedI)" @onclick:stopPropagation>
@@ -281,7 +281,7 @@
                                         int capturedI = i;
                                         if (Grid.ComponentOptions.Selectable)
                                         {
-                                            <tr class="grid-row@(SelectedRow == capturedI || (Grid.ComponentOptions.InitSelection && capturedI == 0 && SelectedRow == -1) ? " grid-row-selected" : "") @Grid.GetRowCssClasses(item)" @onclick="() => RowClicked(capturedI, item)" @onclick:stopPropagation>
+                                            <tr class="grid-row@(SelectedRow == capturedI || SelectedRows.Contains(capturedI) || (Grid.ComponentOptions.InitSelection && capturedI == 0 && SelectedRow == -1 && SelectedRows.Count == 0) ? " grid-row-selected" : "") @Grid.GetRowCssClasses(item)" @onclick="(args) => RowClicked(capturedI, item, args)" @onclick:stopPropagation>
                                                 @if (_hasSubGrid)
                                                 {
                                                     <td class="@GridCellCssClass @GridSubGridCssClass" data-is-rendered="false" data-is-visible="false" data-name="" @onclick="() => SubGridClicked(capturedI)" @onclick:stopPropagation>

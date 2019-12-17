@@ -15,7 +15,7 @@ namespace GridBlazorServerSide
 {
     public class Startup
     {
-        public static string ConnectionString = "Server=.\\SQLEXPRESS;Database=NorthWind;Trusted_Connection=True;MultipleActiveResultSets=true";
+        public static string ConnectionString = "Server=mercury\\sql2017;Database=NorthWind;Trusted_Connection=True;MultipleActiveResultSets=true";
 
         public Startup(IConfiguration configuration)
         {

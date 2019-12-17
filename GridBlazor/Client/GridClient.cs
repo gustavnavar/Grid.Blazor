@@ -180,12 +180,22 @@ namespace GridBlazor
             return Selectable(enable, false);
         }
 
+        public IGridClient<T> MultiSelectable(bool multiSelectable)
+        {
+            return Selectable(true, false, multiSelectable);
+        }
         public IGridClient<T> Selectable(bool enable, bool initSelection)
+        {
+            return Selectable(enable, initSelection, false);
+        }
+
+        public IGridClient<T> Selectable(bool enable, bool initSelection, bool multiSelectable)
         {
             _source.ComponentOptions.Selectable = enable;
             _source.ComponentOptions.InitSelection = initSelection;
+            _source.ComponentOptions.MultiSelectable = multiSelectable;
             return this;
-        }
+        }       
 
         public IGridClient<T> Crud(bool enabled, ICrudDataService<T> crudDataService)
         {

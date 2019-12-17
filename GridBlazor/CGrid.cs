@@ -34,6 +34,7 @@ namespace GridBlazor
         private readonly IColumnBuilder<T> _columnBuilder;
         private readonly GridColumnCollection<T> _columnsCollection;
         private IEnumerable<T> _items;
+        private IEnumerable<object> _selectedItems;
         private int _displayingItemsCount = -1; // count of displaying items (if using pagination)
         private bool _enablePaging;
         private IGridPager _pager;
@@ -50,7 +51,7 @@ namespace GridBlazor
             _dataServiceAsync = null;
 
             Items = new List<T>();
-
+            _selectedItems = new List<object>();
             _httpClient = httpClient;
             Url = url;
             _query = query;
@@ -92,6 +93,7 @@ namespace GridBlazor
             _dataServiceAsync = null; 
 
             Items = new List<T>();
+            _selectedItems = new List<object>();
 
             _httpClient = null;
             Url = url;
@@ -132,8 +134,9 @@ namespace GridBlazor
         {
             _dataService = dataService;
             _dataServiceAsync = null;
+            _selectedItems = new List<object>();
 
-           Items = new List<T>(); //response.Items;
+            Items = new List<T>(); //response.Items;
 
             Url = null;
             _httpClient = null;
@@ -174,7 +177,7 @@ namespace GridBlazor
         {
             _dataServiceAsync = dataServiceAsync;
             _dataService = null;
-
+            _selectedItems = new List<object>();
             Items = new List<T>(); //response.Items;
 
             Url = null;
@@ -229,6 +232,12 @@ namespace GridBlazor
         public IEnumerable<object> ItemsToDisplay
         {
             get { return (IEnumerable<object>)GetItemsToDisplay(); }
+        }
+
+        public IEnumerable<object> SelectedItems
+        {
+            get { return _selectedItems; }
+            set { _selectedItems = value; }
         }
 
         /// <summary>

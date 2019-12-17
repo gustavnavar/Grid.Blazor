@@ -36,6 +36,9 @@ namespace GridBlazor.Pages
         private IJSRuntime jSRuntime { get; set; }
 
         internal int SelectedRow { get; set; } = -1;
+
+        internal List<int> SelectedRows { get; set; } = new List<int>();
+
         internal ICGridColumn FirstColumn { get; set; }
 
         internal ColumnOrderValue Payload { get; set; }
@@ -155,15 +158,43 @@ namespace GridBlazor.Pages
             }
 
             if (Grid.ComponentOptions.Selectable && Grid.ComponentOptions.InitSelection
-                && Grid.ItemsToDisplay.Count() > 0 && SelectedRow == -1)
+                && Grid.ItemsToDisplay.Count() > 0 && SelectedRow == -1 && SelectedRows.Count == 0)
             {
-                RowClicked(0, Grid.ItemsToDisplay.First());
+                RowClicked(0, Grid.ItemsToDisplay.First(), new MouseEventArgs { CtrlKey = false }) ;
             }
         }
 
-        internal void RowClicked(int i, object item)
+        internal void RowClicked(int i, object item, MouseEventArgs args)
         {
-            SelectedRow = i;
+            //If user clicked on a row withouth Control key, unselect all rows
+            if (!args.CtrlKey)
+            {
+                SelectedRows.Clear();
+                Grid.SelectedItems = new List<object>();
+            }
+            
+            //If Grid is MultiSelectable, add selected row to list of rows
+            if (Grid.ComponentOptions.MultiSelectable)
+            {
+                SelectedRow = -1;
+                //If selected row is already part of collection, remove it
+                if (SelectedRows.Contains(i))
+                {
+                    SelectedRows.Remove(i);
+                    Grid.SelectedItems = Grid.SelectedItems.Except(new[] { item });
+                }
+                else
+                {
+                    SelectedRows.Add(i);
+                    Grid.SelectedItems = Grid.SelectedItems.Concat(new[] { item });
+                }
+                
+            }
+            else
+            {
+                SelectedRow = i;                
+                Grid.SelectedItems = Grid.SelectedItems.Concat(new[] {item });
+            }
             if (OnRowClicked != null)
                 OnRowClicked.Invoke(item);
             StateHasChanged();
@@ -181,9 +212,9 @@ namespace GridBlazor.Pages
             await UpdateGrid();
 
             if (Grid.ComponentOptions.Selectable && Grid.ComponentOptions.InitSelection
-                && Grid.ItemsToDisplay.Count() > 0 && SelectedRow == -1)
+                && Grid.ItemsToDisplay.Count() > 0 && SelectedRow == -1 && SelectedRows.Count == 0)
             {
-                RowClicked(0, Grid.ItemsToDisplay.First());
+                RowClicked(0, Grid.ItemsToDisplay.First(), new MouseEventArgs { CtrlKey = false });
             }
         }
 
@@ -514,12 +545,12 @@ namespace GridBlazor.Pages
             else if (e.CtrlKey && e.Key == "ArrowUp" && Grid.ComponentOptions.Selectable && SelectedRow > 0)
             {
                 int selectedRow = SelectedRow - 1;
-                RowClicked(selectedRow, Grid.ItemsToDisplay.ElementAt(selectedRow));
+                RowClicked(selectedRow, Grid.ItemsToDisplay.ElementAt(selectedRow), new MouseEventArgs { CtrlKey = e.CtrlKey });
             }
             else if (e.CtrlKey && e.Key == "ArrowDown" && Grid.ComponentOptions.Selectable && SelectedRow != -1 && SelectedRow < Grid.DisplayingItemsCount - 1)
             {
                 int selectedRow = SelectedRow + 1;
-                RowClicked(selectedRow, Grid.ItemsToDisplay.ElementAt(selectedRow));
+                RowClicked(selectedRow, Grid.ItemsToDisplay.ElementAt(selectedRow), new MouseEventArgs { CtrlKey = e.CtrlKey });
             }
             else if(e.Key == "Backspace")
             {
@@ -531,6 +562,7 @@ namespace GridBlazor.Pages
         {
             await Grid.UpdateGrid();
             SelectedRow = -1;
+            SelectedRows.Clear();
             InitSubGridVars();
             StateHasChanged();
             await GridComponentClick();
