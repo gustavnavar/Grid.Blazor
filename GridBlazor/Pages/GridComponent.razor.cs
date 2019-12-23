@@ -20,6 +20,7 @@ namespace GridBlazor.Pages
     {
         private int _sequence = 0;
         private bool _fromCrud = false;
+        private bool _shouldRender = false;
         protected bool _hasSubGrid = false;
         protected bool _hasTotals = false;
         protected bool _requiredTotalsColumn = false;
@@ -149,6 +150,11 @@ namespace GridBlazor.Pages
             }
         }
 
+        protected override bool ShouldRender()
+        {
+            return _shouldRender;
+        }
+
         protected override async Task OnAfterRenderAsync(bool firstRender)
         {
             if ((firstRender || _fromCrud) && gridmvc.Id != null)
@@ -162,6 +168,8 @@ namespace GridBlazor.Pages
             {
                 RowClicked(0, Grid.ItemsToDisplay.First(), new MouseEventArgs { CtrlKey = false }) ;
             }
+
+            _shouldRender = false;
         }
 
         internal void RowClicked(int i, object item, MouseEventArgs args)
@@ -196,12 +204,16 @@ namespace GridBlazor.Pages
             }
             if (OnRowClicked != null)
                 OnRowClicked.Invoke(item);
+
+            _shouldRender = true;
             StateHasChanged();
         }
 
         internal void SubGridClicked(int i)
         {
             IsSubGridVisible[i] = !IsSubGridVisible[i];
+
+            _shouldRender = true;
             StateHasChanged();
         }
 
@@ -289,6 +301,8 @@ namespace GridBlazor.Pages
                 CrudRender = CreateCrudComponent();
             else
                 CrudRender = null;
+
+            _shouldRender = true;
             StateHasChanged();
         }
 
@@ -300,6 +314,8 @@ namespace GridBlazor.Pages
                 CrudRender = ReadCrudComponent();
             else
                 CrudRender = null;
+
+            _shouldRender = true;
             StateHasChanged();
         }
 
@@ -315,6 +331,8 @@ namespace GridBlazor.Pages
                     CrudRender = UpdateCrudComponent();
                 else
                     CrudRender = null;
+
+                _shouldRender = true;
                 StateHasChanged();
             }
             catch (Exception e)
@@ -332,6 +350,8 @@ namespace GridBlazor.Pages
                 CrudRender = DeleteCrudComponent();
             else
                 CrudRender = null;
+
+            _shouldRender = true;
             StateHasChanged();
         }
 
@@ -448,6 +468,8 @@ namespace GridBlazor.Pages
             ((CGrid<T>)Grid).Mode = GridMode.Grid;
             CrudRender = null;
             _fromCrud = true;
+
+            _shouldRender = true;
             StateHasChanged();
         }
 
@@ -563,7 +585,10 @@ namespace GridBlazor.Pages
             SelectedRow = -1;
             SelectedRows.Clear();
             InitSubGridVars();
+
+            _shouldRender = true;
             StateHasChanged();
+
             await GridComponentClick();
         }
     }
