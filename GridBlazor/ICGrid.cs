@@ -155,5 +155,10 @@ namespace GridBlazor
         ///     Get and set custom delete component object
         /// </summary>
         object DeleteObject { get; }
+
+        /// <summary>
+        ///     Get and set the modifier key
+        /// </summary>
+        ModifierKey ModifierKey { get; }
     }
 }

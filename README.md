@@ -36,6 +36,12 @@ It supports .NET Core 3.1
     
     ```
 
+- The button to clear all filters is disabled by default starting from ```GridBlazor``` version 1.3.6. You can enable it using the ***ClearFiltersButton*** method of the **GridClient** object:  
+
+    ```razor
+        var client = new GridClient<Order>(httpClient, url, query, false, "ordersGrid", Columns).ClearFiltersButton(true);
+    ```
+
 ## Demo 
 http://gridblazor.azurewebsites.net
 

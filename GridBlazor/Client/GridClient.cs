@@ -175,6 +175,12 @@ namespace GridBlazor
             return this;
         }
 
+        public IGridClient<T> ClearFiltersButton(bool enable)
+        {
+            _source.ClearFiltersButtonEnabled = enable;
+            return this;
+        }
+
         public IGridClient<T> Selectable(bool enable)
         {
             return Selectable(enable, false);
@@ -484,6 +490,15 @@ namespace GridBlazor
         {
             _source.SubGrids = subGrids;
             _source.SubGridKeys = keys;
+            return this;
+        }
+
+        /// <summary>
+        ///     Configure the modifier key
+        /// </summary>
+        public IGridClient<T> SetModifierKey(ModifierKey modifierKey)
+        {
+            _source.ModifierKey = modifierKey;
             return this;
         }
 

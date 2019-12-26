@@ -150,6 +150,12 @@ namespace GridMvc.Server
             return this;
         }
 
+        public IGridServer<T> ClearFiltersButton(bool enable)
+        {
+            _source.ClearFiltersButtonEnabled = enable;
+            return this;
+        }
+
         public IGridServer<T> Selectable(bool set)
         {
             _source.RenderOptions.Selectable = set;

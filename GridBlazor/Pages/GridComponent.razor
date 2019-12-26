@@ -172,9 +172,12 @@
                 <div class="@GridWrapCssClass">
                     <div class="row">
                         <div class="row col-md-6">
-                            <div class="grid-all-filters-clear">
-                                <button class="grid-button-all-filters-clear btn btn-default btn-outline-secondary" type="button" title="@Strings.ClearAllFilters" @onclick="RemoveAllFilters" @onclick:stopPropagation></button>
-                            </div>
+                            @if (Grid.ClearFiltersButtonEnabled)
+                            {
+                                <div class="grid-all-filters-clear">
+                                    <button class="grid-button-all-filters-clear btn btn-default btn-outline-secondary" type="button" title="@Strings.ClearAllFilters" @onclick="RemoveAllFilters" @onclick:stopPropagation></button>
+                                </div>
+                            }
                             @if (Grid.CreateEnabled)
                             {
                                 <div class="row grid-crud">
@@ -186,7 +189,7 @@
                                 <div class="row grid-change-page-size form-group" data-change-page-size-url="@_changePageSizeUrl">
                                     <label class="control-label"><b>@Strings.Show</b></label>
                                     <div>
-                                        <input class="form-control grid-change-page-size-input" @bind="_pageSize" @onkeyup="InputPageSizeKeyup" @onblur="InputPageSizeBlur" @onclick:stopPropagation />
+                                        <input @ref="PageSizeInput" class="form-control grid-change-page-size-input" @bind="_pageSize" @onkeyup="InputPageSizeKeyup" @onblur="InputPageSizeBlur" @onclick:stopPropagation />
                                     </div>
                                     <label class="control-label"><b>@Strings.Items</b></label>
                                 </div>
@@ -195,7 +198,7 @@
                         @if (Grid.SearchingEnabled)
                         {
                             <CascadingValue Value=@this Name="GridComponent">
-                                <GridSearchComponent T="@T" Grid="@Grid"></GridSearchComponent>
+                                <GridSearchComponent @ref="SearchComponent" T="@T" Grid="@Grid"></GridSearchComponent>
                             </CascadingValue>
                         }
                     </div>

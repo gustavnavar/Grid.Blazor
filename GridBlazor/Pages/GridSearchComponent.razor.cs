@@ -12,6 +12,7 @@ namespace GridBlazor.Pages
     {
         protected string _seachUrl;
         protected string _searchValue;
+        public ElementReference SearchInput;
 
         [CascadingParameter(Name = "GridComponent")]
         private GridComponent<T> GridComponent { get; set; }

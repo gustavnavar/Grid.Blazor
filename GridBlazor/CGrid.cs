@@ -226,6 +226,8 @@ namespace GridBlazor
 
         public bool GroupingEnabled { get; set; }
 
+        public bool ClearFiltersButtonEnabled { get; set; } = false;
+
         /// <summary>
         ///     Items, displaying in the grid view
         /// </summary>
@@ -453,6 +455,8 @@ namespace GridBlazor
         public IList<Func<object, Task>> DeleteFunctions { get; internal set; }
 
         public object DeleteObject { get; internal set; }
+
+        public ModifierKey ModifierKey { get; internal set; } = ModifierKey.CtrlKey;
 
         /// <summary>
         ///     Sum enabled for some columns

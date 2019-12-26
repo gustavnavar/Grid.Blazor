@@ -96,6 +96,11 @@ namespace GridMvc.Html
         IGridHtmlOptions<T> Groupable(bool enable);
 
         /// <summary>
+        ///     Enable or disable visibility of ClearFiltersButton
+        /// </summary>
+        IGridHtmlOptions<T> ClearFiltersButton(bool enable);
+
+        /// <summary>
         ///     Enable or disable client grid items selectable feature
         /// </summary>
         IGridHtmlOptions<T> Selectable(bool set);

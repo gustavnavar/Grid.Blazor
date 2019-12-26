@@ -63,6 +63,12 @@ namespace GridMvc.Html
             set { _source.GroupingEnabled = value; }
         }
 
+        public bool ClearFiltersButtonEnabled
+        {
+            get { return _source.ClearFiltersButtonEnabled; }
+            set { _source.ClearFiltersButtonEnabled = value; }
+        }
+
         public string EmptyGridText
         {
             get { return _source.EmptyGridText; }

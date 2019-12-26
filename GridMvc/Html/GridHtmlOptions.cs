@@ -164,6 +164,12 @@ namespace GridMvc.Html
             return this;
         }
 
+        public IGridHtmlOptions<T> ClearFiltersButton(bool enable)
+        {
+            _source.ClearFiltersButtonEnabled = enable;
+            return this;
+        }
+
         public IGridHtmlOptions<T> Selectable(bool set)
         {
             _source.RenderOptions.Selectable = set;

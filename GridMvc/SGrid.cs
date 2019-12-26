@@ -120,6 +120,8 @@ namespace GridMvc
 
         public bool GroupingEnabled { get; set; }
 
+        public bool ClearFiltersButtonEnabled { get; set; } = false;
+
         /// <summary>
         ///     Sets or get default value of sorting for all adding columns
         /// </summary>

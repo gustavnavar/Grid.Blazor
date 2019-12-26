@@ -94,6 +94,11 @@ namespace GridMvc.Server
         IGridServer<T> Groupable(bool enable);
 
         /// <summary>
+        ///     Enable or disable visibility of ClearFiltersButton
+        /// </summary>
+        IGridServer<T> ClearFiltersButton(bool enable);
+
+        /// <summary>
         ///     Enable or disable client grid items selectable feature
         /// </summary>
         IGridServer<T> Selectable(bool set);

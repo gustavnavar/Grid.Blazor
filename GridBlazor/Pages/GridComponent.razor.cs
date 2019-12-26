@@ -32,6 +32,8 @@ namespace GridBlazor.Pages
         protected T _item;
 
         protected ElementReference gridmvc;
+        public ElementReference PageSizeInput;
+        public GridSearchComponent<T> SearchComponent;
 
         [Inject]
         private IJSRuntime jSRuntime { get; set; }
@@ -160,13 +162,25 @@ namespace GridBlazor.Pages
             if ((firstRender || _fromCrud) && gridmvc.Id != null)
             {
                 _fromCrud = false;
-                await jSRuntime.InvokeVoidAsync("gridJsFunctions.focusElement", gridmvc);
+                await SetFocus(gridmvc);
             }
 
             if (Grid.ComponentOptions.Selectable && Grid.ComponentOptions.InitSelection
                 && Grid.ItemsToDisplay.Count() > 0 && SelectedRow == -1 && SelectedRows.Count == 0)
             {
-                RowClicked(0, Grid.ItemsToDisplay.First(), new MouseEventArgs { CtrlKey = false }) ;
+                MouseEventArgs mouseEventArgs;
+                if (Grid.ModifierKey == ModifierKey.CtrlKey)
+                    mouseEventArgs = new MouseEventArgs { CtrlKey = false };
+                else if (Grid.ModifierKey == ModifierKey.AltKey)
+                    mouseEventArgs = new MouseEventArgs { AltKey = false };
+                else if (Grid.ModifierKey == ModifierKey.ShiftKey)
+                    mouseEventArgs = new MouseEventArgs { ShiftKey = false };
+                else if (Grid.ModifierKey == ModifierKey.MetaKey)
+                    mouseEventArgs = new MouseEventArgs { MetaKey = false };
+                else
+                    mouseEventArgs = new MouseEventArgs { CtrlKey = false };
+
+                RowClicked(0, Grid.ItemsToDisplay.First(), mouseEventArgs) ;
             }
 
             _shouldRender = false;
@@ -175,7 +189,10 @@ namespace GridBlazor.Pages
         internal void RowClicked(int i, object item, MouseEventArgs args)
         {
             //If user clicked on a row withouth Control key, unselect all rows
-            if (!args.CtrlKey)
+            if ((Grid.ModifierKey == ModifierKey.CtrlKey && !args.CtrlKey)
+                || (Grid.ModifierKey == ModifierKey.AltKey && !args.AltKey)
+                || (Grid.ModifierKey == ModifierKey.ShiftKey && !args.ShiftKey)
+                || (Grid.ModifierKey == ModifierKey.MetaKey && !args.MetaKey))
             {
                 SelectedRows.Clear();
                 Grid.SelectedItems = new List<object>();
@@ -225,7 +242,19 @@ namespace GridBlazor.Pages
             if (Grid.ComponentOptions.Selectable && Grid.ComponentOptions.InitSelection
                 && Grid.ItemsToDisplay.Count() > 0 && SelectedRow == -1 && SelectedRows.Count == 0)
             {
-                RowClicked(0, Grid.ItemsToDisplay.First(), new MouseEventArgs { CtrlKey = false });
+                MouseEventArgs mouseEventArgs;
+                if (Grid.ModifierKey == ModifierKey.CtrlKey)
+                    mouseEventArgs = new MouseEventArgs { CtrlKey = false };
+                else if (Grid.ModifierKey == ModifierKey.AltKey)
+                    mouseEventArgs = new MouseEventArgs { AltKey = false };
+                else if (Grid.ModifierKey == ModifierKey.ShiftKey)
+                    mouseEventArgs = new MouseEventArgs { ShiftKey = false };
+                else if (Grid.ModifierKey == ModifierKey.MetaKey)
+                    mouseEventArgs = new MouseEventArgs { MetaKey = false };
+                else
+                    mouseEventArgs = new MouseEventArgs { CtrlKey = false };
+
+                RowClicked(0, Grid.ItemsToDisplay.First(), mouseEventArgs);
             }
         }
 
@@ -541,41 +570,76 @@ namespace GridBlazor.Pages
         {
             if (gridmvc.Id != null)
             {
-                await jSRuntime.InvokeVoidAsync("gridJsFunctions.focusElement", gridmvc);
+                await SetFocus(gridmvc);
             }
+        }
+
+        public async Task SetFocus(ElementReference element)
+        {
+            await jSRuntime.InvokeVoidAsync("gridJsFunctions.focusElement", element);
         }
 
         public async Task GridComponentKeyup(KeyboardEventArgs e)
         {
-            if (e.CtrlKey && e.Key == "ArrowLeft" && Grid.Pager.CurrentPage > 1)
+            if ((Grid.ModifierKey == ModifierKey.CtrlKey && e.CtrlKey)
+                || (Grid.ModifierKey == ModifierKey.AltKey && e.AltKey)
+                || (Grid.ModifierKey == ModifierKey.ShiftKey && e.ShiftKey)
+                || (Grid.ModifierKey == ModifierKey.MetaKey && e.MetaKey))
             {
-                await GoTo(Grid.Pager.CurrentPage - 1);
-            }
-            else if (e.CtrlKey && e.Key == "ArrowRight" && Grid.Pager.CurrentPage < ((GridPager)Grid.Pager).PageCount)
-            {
-                await GoTo(Grid.Pager.CurrentPage + 1);
-            }
-            else if (e.CtrlKey && e.Key == "Home")
-            {
-                await GoTo(1);
-            }
-            else if (e.CtrlKey && e.Key == "End")
-            {
-                await GoTo(((GridPager)Grid.Pager).PageCount);
-            }
-            else if (e.CtrlKey && e.Key == "ArrowUp" && Grid.ComponentOptions.Selectable && SelectedRow > 0)
-            {
-                int selectedRow = SelectedRow - 1;
-                RowClicked(selectedRow, Grid.ItemsToDisplay.ElementAt(selectedRow), new MouseEventArgs { CtrlKey = e.CtrlKey });
-            }
-            else if (e.CtrlKey && e.Key == "ArrowDown" && Grid.ComponentOptions.Selectable && SelectedRow != -1 && SelectedRow < Grid.DisplayingItemsCount - 1)
-            {
-                int selectedRow = SelectedRow + 1;
-                RowClicked(selectedRow, Grid.ItemsToDisplay.ElementAt(selectedRow), new MouseEventArgs { CtrlKey = e.CtrlKey });
-            }
-            else if(e.CtrlKey && e.Key == "Backspace")
-            {
-                await RemoveAllFilters();
+                if (e.Key == "ArrowLeft" && Grid.Pager.CurrentPage > 1)
+                {
+                    await GoTo(Grid.Pager.CurrentPage - 1);
+                }
+                else if (e.Key == "ArrowRight" && Grid.Pager.CurrentPage < ((GridPager)Grid.Pager).PageCount)
+                {
+                    await GoTo(Grid.Pager.CurrentPage + 1);
+                }
+                else if (e.Key == "Home")
+                {
+                    await GoTo(1);
+                }
+                else if (e.Key == "End")
+                {
+                    await GoTo(((GridPager)Grid.Pager).PageCount);
+                }
+                else if (e.Key == "ArrowUp" && Grid.ComponentOptions.Selectable && SelectedRow > 0)
+                {
+                    MouseEventArgs mouseEventArgs;
+                    if (Grid.ModifierKey == ModifierKey.CtrlKey)
+                        mouseEventArgs = new MouseEventArgs { CtrlKey = false };
+                    else if (Grid.ModifierKey == ModifierKey.AltKey)
+                        mouseEventArgs = new MouseEventArgs { AltKey = false };
+                    else if (Grid.ModifierKey == ModifierKey.ShiftKey)
+                        mouseEventArgs = new MouseEventArgs { ShiftKey = false };
+                    else if (Grid.ModifierKey == ModifierKey.MetaKey)
+                        mouseEventArgs = new MouseEventArgs { MetaKey = false };
+                    else
+                        mouseEventArgs = new MouseEventArgs { CtrlKey = false };
+
+                    int selectedRow = SelectedRow - 1;
+                    RowClicked(selectedRow, Grid.ItemsToDisplay.ElementAt(selectedRow), mouseEventArgs);
+                }
+                else if (e.Key == "ArrowDown" && Grid.ComponentOptions.Selectable && SelectedRow != -1 && SelectedRow < Grid.DisplayingItemsCount - 1)
+                {
+                    MouseEventArgs mouseEventArgs;
+                    if (Grid.ModifierKey == ModifierKey.CtrlKey)
+                        mouseEventArgs = new MouseEventArgs { CtrlKey = false };
+                    else if (Grid.ModifierKey == ModifierKey.AltKey)
+                        mouseEventArgs = new MouseEventArgs { AltKey = false };
+                    else if (Grid.ModifierKey == ModifierKey.ShiftKey)
+                        mouseEventArgs = new MouseEventArgs { ShiftKey = false };
+                    else if (Grid.ModifierKey == ModifierKey.MetaKey)
+                        mouseEventArgs = new MouseEventArgs { MetaKey = false };
+                    else
+                        mouseEventArgs = new MouseEventArgs { CtrlKey = false };
+
+                    int selectedRow = SelectedRow + 1;
+                    RowClicked(selectedRow, Grid.ItemsToDisplay.ElementAt(selectedRow), mouseEventArgs);
+                }
+                else if (e.Key == "Backspace" && Grid.ClearFiltersButtonEnabled)
+                {
+                    await RemoveAllFilters();
+                }
             }
         }
 

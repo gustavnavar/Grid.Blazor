@@ -95,6 +95,11 @@ namespace GridBlazor
         IGridClient<T> Groupable(bool enable);
 
         /// <summary>
+        ///     Enable or disable visibility of ClearFiltersButton
+        /// </summary>
+        IGridClient<T> ClearFiltersButton(bool enable);
+
+        /// <summary>
         ///     Enable or disable client grid items selectable feature
         /// </summary>
         IGridClient<T> Selectable(bool enable);
@@ -345,7 +350,12 @@ namespace GridBlazor
         ///    Allow grid to show a SubGrid
         /// </summary>
         IGridClient<T> SubGrid(Func<object[], Task<ICGrid>> subGrids, params string[] keys);
-        
+
+        /// <summary>
+        ///     Configure the modifier key
+        /// </summary>
+        IGridClient<T> SetModifierKey(ModifierKey modifierKey);
+
         /// <summary>
         ///    Get grid object
         /// </summary>

@@ -121,6 +121,7 @@ namespace GridMvc.Demo.Controllers
                 .WithMultipleFilters()
                 .Searchable(true, false)
                 .Groupable(true)
+                .ClearFiltersButton(true)
                 .Selectable(true)
                 .SetStriped(true)
                 .ChangePageSize(true)
