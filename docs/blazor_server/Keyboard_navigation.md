@@ -28,6 +28,6 @@ The parameter options of the ```SetModifierKey``` method are:
 - ```ModifierKey.AltKey```
 - ```ModifierKey.MetaKey```
 
-Keep in mnf that the last 2 options can collide with the modifier keys of the browser. The recomended options are ```ModifierKey.CtrlKey``` and ```ModifierKey.ShiftKey```.
+Keep in mind that the last 2 options can collide with the modifier keys of the browser. The recommended options are ```ModifierKey.CtrlKey``` and ```ModifierKey.ShiftKey```.
 
 [<- GridBlazor configuration](GridBlazor_configuration.md) | [Paging ->](Paging.md)
