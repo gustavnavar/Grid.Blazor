@@ -27,10 +27,10 @@
             }
             <span class="grid-extsort-column" data-name="@column.ColumnName" data-extsortdata="@GridShared.Utility.JsonHelper.JsonSerializer(column)">
                 <span class="@(column.Direction == GridSortDirection.Ascending ? "sorted-asc" : "sorted-desc")">
-                    <button class="btn btn-link" @onclick="() => TitleButtonClicked(column)" data-column="@column.ColumnName">@gridColumn.Title</button>
+                    <button type="button" class="btn btn-link" @onclick="() => TitleButtonClicked(column)" data-column="@column.ColumnName">@gridColumn.Title</button>
                     <span class="grid-sort-arrow"></span>
                 </span>
-                <button class="btn btn-link" @onclick="() => CancelButtonClicked(column)" data-column="@column.ColumnName">x</button>
+                <button type="button" class="btn btn-link" @onclick="() => CancelButtonClicked(column)" data-column="@column.ColumnName">x</button>
             </span>
         }
     }
