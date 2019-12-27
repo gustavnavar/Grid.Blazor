@@ -16,7 +16,7 @@
     }
     @if (Column.ParentGrid.ExtSortingEnabled)
     {
-        <div class="grid-extsort-draggable @_cssSortingClass" draggable="true" data-column="@Column.Name" @ondragstart="HandleDragStart">
+        <div class="grid-extsort-draggable @_cssSortingClass" draggable="true" data-column="@Column.Name" @ondragstart="() => HandleDragStart()">
             @if (Column.SortEnabled)
             {
                 if (Column.IsSorted)
