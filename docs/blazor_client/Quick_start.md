@@ -115,7 +115,17 @@ The steps to build a grid razor page using **GridBlazor** are:
             .WithMultipleFilters();
     ```
 
-* You must call the **UpdateGrid** method of the **Grid** object at the end of the **OnParametersSetAsync** of the razor page because it will request for the required rows to the server
+* You must call the **UpdateGrid** method of the **GridClient** object at the end of the **OnParametersSetAsync** of the razor page because it will request for the required rows to the server
+
+* If you need to update the component out of ```OnParametersSetAsync``` method you must use a reference to the component:
+    ```c#
+        <GridComponent @ref="Component" T="Order" Grid="@_grid"></GridComponent>
+    ```
+
+    and then call the ```UpdateGrid``` method:
+    ```c#
+        await Component.UpdateGrid();
+    ```
 
 * The **GridComponent** tag must contain at least these 2 attributes:
     * **T**: type of the model items
