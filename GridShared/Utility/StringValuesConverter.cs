@@ -1,19 +1,15 @@
 ﻿using Microsoft.Extensions.Primitives;
-using Newtonsoft.Json;
 using System;
+using System.Text.Json;
+using System.Text.Json.Serialization;
 
 namespace GridShared.Utility
 {
     public class StringValuesConverter : JsonConverter<StringValues>
     {
-        public override void WriteJson(JsonWriter writer, StringValues values, JsonSerializer serializer)
+        public override StringValues Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
         {
-            writer.WriteValue(string.Join("|", values.ToArray()));
-        }
-
-        public override StringValues ReadJson(JsonReader reader, Type objectType, StringValues existingValue, bool hasExistingValue, JsonSerializer serializer)
-        {
-            string[] values = reader.Value.ToString().Split('|');
+            string[] values = reader.GetString().Split('|');
 
             switch (values.Length)
             {
@@ -21,6 +17,11 @@ namespace GridShared.Utility
                 case 1: return new StringValues(values[0]);
                 default: return new StringValues(values);
             }
+        }
+
+        public override void Write(Utf8JsonWriter writer, StringValues value, JsonSerializerOptions options)
+        {
+            writer.WriteStringValue(string.Join("|", value.ToArray()));
         }
     }
 }

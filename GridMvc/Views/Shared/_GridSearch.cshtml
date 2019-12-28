@@ -13,7 +13,7 @@
     _seachUrl = queryBuilder.GetQueryStringExcept(exceptQueryParameters);
 }
 
-<div class="grid-search col-md-6 @(Model.EnablePaging && Model.Pager.ChangePageSize ? "" : "col-md-offset-4 offset-md-6")" data-search-url="@_seachUrl">
+<div class="grid-search col-md-6 @(Model.EnablePaging && Model.Pager.ChangePageSize ? (Model.ClearFiltersButtonEnabled ? "" : "col-md-offset-1 offset-md-1") : (Model.ClearFiltersButtonEnabled ? "col-md-offset-4 offset-md-4" : "col-md-offset-5 offset-md-5"))" data-search-url="@_seachUrl">
     <div class="input-group">
         <span class="input-group-btn input-group-prepend">
             <button class="btn btn-default btn-outline-secondary grid-search-apply" type="button"></button>

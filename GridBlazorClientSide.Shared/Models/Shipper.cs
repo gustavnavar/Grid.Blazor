@@ -7,13 +7,12 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.Text.Json.Serialization;
 
 namespace GridBlazorClientSide.Shared.Models
 {
-    using Newtonsoft.Json;
-    using System.Collections.Generic;
-
     public partial class Shipper
     {
         public Shipper()

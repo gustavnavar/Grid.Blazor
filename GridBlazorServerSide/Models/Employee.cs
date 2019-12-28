@@ -7,13 +7,13 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
+using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.Text.Json.Serialization;
 
 namespace GridBlazorServerSide.Models
 {
-    using System;
-    using System.Collections.Generic;
-
     public partial class Employee
     {
         public Employee()
@@ -41,6 +41,7 @@ namespace GridBlazorServerSide.Models
         public Nullable<int> ReportsTo { get; set; }
         public string PhotoPath { get; set; }
 
+        [JsonIgnore]
         public virtual ICollection<Order> Orders { get; set; }
         public virtual ICollection<EmployeeTerritories> Territories { get; set; }
     }

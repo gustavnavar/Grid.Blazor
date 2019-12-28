@@ -622,8 +622,8 @@ GridMvc = (function ($) {
     gridMvc.prototype.initChangePageSize = function () {
         var self = this;
         this.jqContainer.find(".grid-change-page-size-input").each(function () {
-            $(this).keyup(function (e) {
-                if (e.keyCode === 13) {
+            $(this).keydown(function (e) {
+                if (e.keyCode === 9 || e.keyCode === 13) {
                     var pageSize = $(this).val();
                     self.changePageSize(pageSize);
                 }

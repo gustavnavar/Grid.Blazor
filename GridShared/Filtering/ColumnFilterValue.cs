@@ -1,5 +1,6 @@
 ﻿using System.Net;
 using System.Runtime.Serialization;
+using System.Text.Json.Serialization;
 
 namespace GridShared.Filtering
 {
@@ -10,15 +11,16 @@ namespace GridShared.Filtering
     public struct ColumnFilterValue
     {
         [DataMember(Name = "ColumnName")]
-        public string ColumnName;
+        public string ColumnName { get; set; }
 
         [DataMember(Name = "FilterType")] 
-        public GridFilterType FilterType;
+        public GridFilterType FilterType { get; set; }
 
         public string FilterValue;
 
         [DataMember(Name = "FilterValue")]
-        internal string FilterValueEncoded
+        [JsonPropertyName("FilterValue")]
+        public string FilterValueEncoded
         {
             get { return WebUtility.UrlEncode(FilterValue); }
             set { FilterValue = value; }
