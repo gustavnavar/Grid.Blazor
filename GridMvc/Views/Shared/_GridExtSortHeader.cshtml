@@ -2,6 +2,7 @@
 @using GridMvc.Resources
 @using GridShared.Sorting
 @using GridShared.Utility
+@using System.Text.Json
 @model ISGrid
 
 @{
@@ -47,7 +48,7 @@
                 column.Direction == GridSortDirection.Ascending ? GridSortDirection.Descending : GridSortDirection.Ascending,
                 column.Id);
             href += ColumnOrderValue.DefaultSortingQueryParameter + "=" + newColumn.ToString();
-            <span class="grid-extsort-column" data-name="@column.ColumnName" data-extsortdata="@GridShared.Utility.JsonHelper.JsonSerializer(column)">
+            <span class="grid-extsort-column" data-name="@column.ColumnName" data-extsortdata="@JsonSerializer.Serialize(column)">
                 <span class="@(column.Direction == GridSortDirection.Ascending ? "sorted-asc" : "sorted-desc")">
                     <a href="@href" data-column="@column.ColumnName">@gridColumn.Title</a>
                     <span class="grid-sort-arrow"></span>

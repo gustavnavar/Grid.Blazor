@@ -10,13 +10,13 @@ using GridShared.Filtering;
 using GridShared.Utility;
 using Microsoft.AspNetCore.Components;
 using Microsoft.Extensions.Primitives;
-using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
 using System.Net.Http;
 using System.Reflection;
+using System.Text.Json;
 using System.Threading.Tasks;
 
 namespace GridBlazor
@@ -28,7 +28,7 @@ namespace GridBlazor
     {
         private Func<T, string> _rowCssClassesContraint;
 
-        private IQueryDictionary<StringValues> _query;
+        private QueryDictionary<StringValues> _query;
         private IGridSettingsProvider _settings;
         private readonly IGridAnnotationsProvider _annotations;
         private readonly IColumnBuilder<T> _columnBuilder;
@@ -54,7 +54,7 @@ namespace GridBlazor
             _selectedItems = new List<object>();
             _httpClient = httpClient;
             Url = url;
-            _query = query;
+            _query = query as QueryDictionary<StringValues>;
 
             //set up sort settings:
             _settings = new QueryStringGridSettingsProvider(_query);
@@ -97,7 +97,7 @@ namespace GridBlazor
 
             _httpClient = null;
             Url = url;
-            _query = query;
+            _query = query as QueryDictionary<StringValues>;
 
             //set up sort settings:
             _settings = new QueryStringGridSettingsProvider(_query);
@@ -299,7 +299,7 @@ namespace GridBlazor
             get { return _settings; }
             set
             {
-                _query = value.ToQuery();
+                _query = value.ToQuery() as QueryDictionary<StringValues>;
                 if (_pager.CurrentPage > 0)
                     _query.Add(((GridPager)_pager).ParameterName, _pager.CurrentPage.ToString());
                 _settings = new QueryStringGridSettingsProvider(_query);
@@ -341,7 +341,7 @@ namespace GridBlazor
         /// <summary>
         ///     Provides query, using by the grid
         /// </summary>
-        public IQueryDictionary<StringValues> Query
+        public QueryDictionary<StringValues> Query
         {
             get { return _query; }
             set
@@ -794,7 +794,9 @@ namespace GridBlazor
 
         public string GetState()
         {
-            string query = JsonConvert.SerializeObject(Query, new StringValuesConverter());
+            var jsonOptions = new JsonSerializerOptions();
+            jsonOptions.Converters.Add(new StringValuesConverter());
+            string query = JsonSerializer.Serialize(Query, jsonOptions);
             return query.GridStateEncode();
         }
 

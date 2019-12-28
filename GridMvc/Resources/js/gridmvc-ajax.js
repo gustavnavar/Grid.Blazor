@@ -446,8 +446,8 @@
                 });
 
                 self.jqContainer.find(".grid-change-page-size-input").each(function () {
-                    $(this).keyup(function (e) {
-                        if (e.keyCode === 13) {
+                    $(this).keydown(function (e) {
+                        if (e.keyCode === 9 || e.keyCode === 13) {
                             e.preventDefault();
                             var pageSize = $(this).val();
                             self.changePageSize(pageSize);
