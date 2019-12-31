@@ -1,4 +1,5 @@
-﻿using GridBlazorServerSide.Models;
+﻿using GridBlazor.Resources;
+using GridBlazorServerSide.Models;
 using GridBlazorServerSide.Pages;
 using GridBlazorServerSide.Resources;
 using GridShared;
@@ -35,7 +36,7 @@ namespace GridBlazorServerSide.ColumnCollections
 
             /* Adding "Vip customer" column: */
             c.Add(o => o.Customer.IsVip).Titled(SharedResource.IsVip).SetWidth(70).Css("hidden-xs") //hide on phones
-            .RenderValueAs(o => o.Customer.IsVip ? "Yes" : "No");
+            .RenderValueAs(o => o.Customer.IsVip ? Strings.BoolTrueLabel : Strings.BoolFalseLabel);
         };
 
         public static Action<IGridColumnCollection<Order>> OrderColumnsWithTotals = c =>
@@ -65,7 +66,7 @@ namespace GridBlazorServerSide.ColumnCollections
 
             /* Adding "Vip customer" column: */
             c.Add(o => o.Customer.IsVip).Titled(SharedResource.IsVip).SetWidth(70).Css("hidden-xs") //hide on phones
-            .RenderValueAs(o => o.Customer.IsVip ? "Yes" : "No");
+            .RenderValueAs(o => o.Customer.IsVip ? Strings.BoolTrueLabel : Strings.BoolFalseLabel);
         };
 
         public static Action<IGridColumnCollection<Order>> OrderColumnsGroupable = c =>
@@ -96,7 +97,7 @@ namespace GridBlazorServerSide.ColumnCollections
 
             /* Adding "Vip customer" column: */
             c.Add(o => o.Customer.IsVip).Titled(SharedResource.IsVip).SetWidth(70).Css("hidden-xs") //hide on phones
-            .RenderValueAs(o => o.Customer.IsVip ? "Yes" : "No");
+            .RenderValueAs(o => o.Customer.IsVip ? Strings.BoolTrueLabel : Strings.BoolFalseLabel);
         };
 
         public static Action<IGridColumnCollection<Order>, IList<Func<object, Task>>, object> 
@@ -130,7 +131,7 @@ namespace GridBlazorServerSide.ColumnCollections
 
             /* Adding "Vip customer" column: */
             c.Add(o => o.Customer.IsVip).Titled(SharedResource.IsVip).SetWidth(70).Css("hidden-xs") //hide on phones
-            .RenderValueAs(o => o.Customer.IsVip ? "Yes" : "No");
+            .RenderValueAs(o => o.Customer.IsVip ? Strings.BoolTrueLabel : Strings.BoolFalseLabel);
         };
 
         public static Action<IGridColumnCollection<Order>> OrderColumnsCheckbox = c =>
@@ -159,7 +160,7 @@ namespace GridBlazorServerSide.ColumnCollections
 
             /* Adding "Vip customer" column: */
             c.Add(o => o.Customer.IsVip).Titled(SharedResource.IsVip).SetWidth(70).Css("hidden-xs") //hide on phones
-            .RenderValueAs(o => o.Customer.IsVip ? "Yes" : "No");
+            .RenderValueAs(o => o.Customer.IsVip ? Strings.BoolTrueLabel : Strings.BoolFalseLabel);
         };
 
         public static Action<IGridColumnCollection<Order>, Func<IEnumerable<SelectItem>>,
@@ -196,7 +197,7 @@ namespace GridBlazorServerSide.ColumnCollections
 
             /* Adding "Vip customer" column: */
             c.Add(o => o.Customer.IsVip).Titled(SharedResource.IsVip).SetWidth(70).Css("hidden-xs") //hide on phones
-            .RenderValueAs(o => o.Customer.IsVip ? "Yes" : "No").SetCrudHidden(true);
+            .RenderValueAs(o => o.Customer.IsVip ? Strings.BoolTrueLabel : Strings.BoolFalseLabel).SetCrudHidden(true);
 
             /* Adding hidden "RequiredDate" column: */
             c.Add(o => o.RequiredDate, true).Format("{0:yyyy-MM-dd}");
@@ -246,7 +247,7 @@ namespace GridBlazorServerSide.ColumnCollections
             
             /* Adding "Vip customer" column: */
             c.Add(o => o.Customer.IsVip).Titled(SharedResource.IsVip).SetWidth(70).Css("hidden-xs") //hide on phones
-            .RenderValueAs(o => o.Customer.IsVip ? "Yes" : "No").SetCrudHidden(true);
+            .RenderValueAs(o => o.Customer.IsVip ? Strings.BoolTrueLabel : Strings.BoolFalseLabel).SetCrudHidden(true);
         };
 
         public static Action<IGridColumnCollection<Order>> OrderColumnsWithSubgrids = c =>
@@ -277,7 +278,7 @@ namespace GridBlazorServerSide.ColumnCollections
 
             /* Adding "Vip customer" column: */
             c.Add(o => o.Customer.IsVip).Titled(SharedResource.IsVip).SetWidth(70).Css("hidden-xs") //hide on phones
-            .RenderValueAs(o => o.Customer.IsVip ? "Yes" : "No");
+            .RenderValueAs(o => o.Customer.IsVip ? Strings.BoolTrueLabel : Strings.BoolFalseLabel);
         };
 
         public static Action<IGridColumnCollection<Order>, Func<IEnumerable<SelectItem>>,
@@ -325,7 +326,7 @@ namespace GridBlazorServerSide.ColumnCollections
 
             /* Adding "Vip customer" column: */
             c.Add(o => o.Customer.IsVip).Titled(SharedResource.IsVip).SetWidth(70).Css("hidden-xs") //hide on phones
-            .RenderValueAs(o => o.Customer.IsVip ? "Yes" : "No").SetCrudHidden(true);
+            .RenderValueAs(o => o.Customer.IsVip ? Strings.BoolTrueLabel : Strings.BoolFalseLabel).SetCrudHidden(true);
 
             /* Adding hidden "RequiredDate" column: */
             c.Add(o => o.RequiredDate, true).Format("{0:yyyy-MM-dd}");
@@ -373,7 +374,7 @@ namespace GridBlazorServerSide.ColumnCollections
             c.Add(o => o.Freight).Titled(SharedResource.Freight).Format("{0:F}");
 
             /* Adding "Vip customer" column: */
-            c.Add(o => o.Customer.IsVip).Titled(SharedResource.IsVip).SetWidth(70).RenderValueAs(o => o.Customer.IsVip ? "Yes" : "No");
+            c.Add(o => o.Customer.IsVip).Titled(SharedResource.IsVip).SetWidth(70).RenderValueAs(o => o.Customer.IsVip ? Strings.BoolTrueLabel : Strings.BoolFalseLabel);
         };
 
         public static Action<IGridColumnCollection<OrderDetail>> OrderDetailColumns = c =>

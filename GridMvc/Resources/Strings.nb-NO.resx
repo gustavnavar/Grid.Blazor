@@ -168,4 +168,10 @@
   <data name="UpdateItem" xml:space="preserve">
     <value>Oppdater element</value>
   </data>
+  <data name="BoolFalseLabel" xml:space="preserve">
+    <value>Nei</value>
+  </data>
+  <data name="BoolTrueLabel" xml:space="preserve">
+    <value>Ja</value>
+  </data>
 </root>

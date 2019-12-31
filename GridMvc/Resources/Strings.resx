@@ -120,6 +120,12 @@
   <data name="Average" xml:space="preserve">
     <value>Average</value>
   </data>
+  <data name="BoolFalseLabel" xml:space="preserve">
+    <value>No</value>
+  </data>
+  <data name="BoolTrueLabel" xml:space="preserve">
+    <value>Yes</value>
+  </data>
   <data name="ClearAllFilters" xml:space="preserve">
     <value>Clear all filters</value>
   </data>

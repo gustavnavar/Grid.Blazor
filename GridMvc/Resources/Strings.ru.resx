@@ -168,4 +168,10 @@
   <data name="UpdateItem" xml:space="preserve">
     <value>Обновить предмет</value>
   </data>
+  <data name="BoolFalseLabel" xml:space="preserve">
+    <value>Нет</value>
+  </data>
+  <data name="BoolTrueLabel" xml:space="preserve">
+    <value>Да</value>
+  </data>
 </root>
