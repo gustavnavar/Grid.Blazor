@@ -70,6 +70,24 @@ namespace GridMvc.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to No.
+        /// </summary>
+        public static string BoolFalseLabel {
+            get {
+                return ResourceManager.GetString("BoolFalseLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Yes.
+        /// </summary>
+        public static string BoolTrueLabel {
+            get {
+                return ResourceManager.GetString("BoolTrueLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Clear all filters.
         /// </summary>
         public static string ClearAllFilters {

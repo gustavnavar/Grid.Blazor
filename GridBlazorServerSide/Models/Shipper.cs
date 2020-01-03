@@ -7,13 +7,12 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.Text.Json.Serialization;
 
 namespace GridBlazorServerSide.Models
 {
-    using System;
-    using System.Collections.Generic;
-    
     public partial class Shipper
     {
         public Shipper()
@@ -24,7 +23,8 @@ namespace GridBlazorServerSide.Models
         public int ShipperID { get; set; }
         public string CompanyName { get; set; }
         public string Phone { get; set; }
-    
+
+        [JsonIgnore]
         public virtual ICollection<Order> Orders { get; set; }
     }
 }

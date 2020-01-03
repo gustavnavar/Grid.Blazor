@@ -7,14 +7,13 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
+using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.Text.Json.Serialization;
 
 namespace GridBlazorServerSide.Models
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Text.Json.Serialization;
-
     public partial class Product
     {
         public Product()

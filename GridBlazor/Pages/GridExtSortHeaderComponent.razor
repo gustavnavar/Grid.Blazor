@@ -25,7 +25,7 @@
             {
                 continue;
             }
-            <span class="grid-extsort-column" data-name="@column.ColumnName" data-extsortdata="@GridShared.Utility.JsonHelper.JsonSerializer(column)">
+            <span class="grid-extsort-column" data-name="@column.ColumnName" data-extsortdata="@JsonSerializer.Serialize(column)">
                 <span class="@(column.Direction == GridSortDirection.Ascending ? "sorted-asc" : "sorted-desc")">
                     <button type="button" class="btn btn-link" @onclick="() => TitleButtonClicked(column)" data-column="@column.ColumnName">@gridColumn.Title</button>
                     <span class="grid-sort-arrow"></span>

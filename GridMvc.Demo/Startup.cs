@@ -38,7 +38,6 @@ namespace GridMvc.Demo
             services.AddGridMvc();
 
             services.AddMvc()
-                .AddNewtonsoftJson()
                 .AddViewLocalization()
                 .AddDataAnnotationsLocalization()
                 .SetCompatibilityVersion(CompatibilityVersion.Version_3_0);

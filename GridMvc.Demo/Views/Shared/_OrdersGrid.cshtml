@@ -1,5 +1,6 @@
 ﻿@using GridMvc
 @using GridMvc.Demo.Models
+@using GridMvc.Resources
 @using GridShared
 @using GridShared.Filtering
 @using GridShared.Sorting
@@ -63,7 +64,7 @@
             .Titled(SharedResource.IsVip)
             .SetWidth(70)
             .Css("hidden-xs") //hide on phones
-            .RenderValueAs(o => o.Customer.IsVip ? "Yes" : "No");
+            .RenderValueAs(o => o.Customer.IsVip ? Strings.BoolTrueLabel : Strings.BoolFalseLabel);
     };
 }
 

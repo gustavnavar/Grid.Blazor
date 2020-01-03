@@ -2,6 +2,7 @@
 using GridMvc.Demo.Models;
 using GridMvc.Demo.Resources;
 using GridMvc.Pagination;
+using GridMvc.Resources;
 using GridMvc.Server;
 using GridShared;
 using GridShared.Filtering;
@@ -110,7 +111,7 @@ namespace GridMvc.Demo.Controllers
                     .Titled(SharedResource.IsVip)
                     .SetWidth(70)
                     .Css("hidden-xs") //hide on phones
-                    .RenderValueAs(o => o.Customer.IsVip ? "Yes" : "No");
+                    .RenderValueAs(o => o.Customer.IsVip ? Strings.BoolTrueLabel : Strings.BoolFalseLabel);
             };
 
             var server = new GridServer<Order>(_orderRepository.GetAll(), query, false, "ordersGrid", 
