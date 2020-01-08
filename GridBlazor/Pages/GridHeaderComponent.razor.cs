@@ -170,8 +170,9 @@ namespace GridBlazor.Pages
 
         protected void HandleDragStart()
         {
-            GridComponent.Payload = new ColumnOrderValue(Column.Name, Column.Direction ?? GridSortDirection.Ascending,
-                GridComponent.Grid.Settings.SortSettings.SortValues.Count + 1);
+            var values = GridComponent.Grid.Settings.SortSettings.SortValues;
+            var maxId = values.Any() ? values.Max(x => x.Id) + 1 : 1;
+            GridComponent.Payload = new ColumnOrderValue(Column.Name, Column.Direction ?? GridSortDirection.Ascending, maxId);
         }
     }
 }
