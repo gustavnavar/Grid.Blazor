@@ -215,7 +215,7 @@ namespace GridBlazor
             _source.CreateEnabled = createEnabled;
             _source.ReadEnabled = readEnabled;
             _source.UpdateEnabled = updateEnabled;
-            _source.DeleteEnabled = updateEnabled;
+            _source.DeleteEnabled = deleteEnabled;
             _source.CrudDataService = crudDataService;
             return this;
         }

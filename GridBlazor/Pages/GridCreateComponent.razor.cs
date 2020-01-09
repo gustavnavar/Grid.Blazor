@@ -166,8 +166,7 @@ namespace GridBlazor.Pages
         protected void ChangeBool(ChangeEventArgs e, IGridColumn column)
         {
             bool value;
-            bool.TryParse(e.Value.ToString(), out value);
-            if (value != default(bool))
+            if (bool.TryParse(e.Value.ToString(), out value))
             {
                 ChangeValue(value, column);
             }
