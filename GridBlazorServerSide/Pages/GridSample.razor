@@ -94,6 +94,7 @@ else
             .SetRowCssClasses(item => item.Customer.IsVip ? "success" : string.Empty)
             .Sortable()
             .Filterable()
+            .SetKeyboard(true)
             .Groupable(true)
             .ClearFiltersButton(true)
             .SetStriped(true)

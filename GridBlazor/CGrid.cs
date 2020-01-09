@@ -456,6 +456,8 @@ namespace GridBlazor
 
         public object DeleteObject { get; internal set; }
 
+        public bool Keyboard { get; internal set; } = false;
+
         public ModifierKey ModifierKey { get; internal set; } = ModifierKey.CtrlKey;
 
         /// <summary>

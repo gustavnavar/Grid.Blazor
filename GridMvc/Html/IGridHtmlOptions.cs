@@ -160,6 +160,7 @@ namespace GridMvc.Html
         /// </summary>
         /// <returns>Grid html layout</returns>
         string Render();
+
         Task<IHtmlContent> RenderAsync();
 
         /// <summary>

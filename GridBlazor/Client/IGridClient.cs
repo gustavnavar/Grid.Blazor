@@ -352,6 +352,11 @@ namespace GridBlazor
         IGridClient<T> SubGrid(Func<object[], Task<ICGrid>> subGrids, params string[] keys);
 
         /// <summary>
+        ///     Configure keyboard utilization
+        /// </summary>
+        IGridClient<T> SetKeyboard(bool enable);
+
+        /// <summary>
         ///     Configure the modifier key
         /// </summary>
         IGridClient<T> SetModifierKey(ModifierKey modifierKey);

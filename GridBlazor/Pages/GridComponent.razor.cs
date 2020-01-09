@@ -159,7 +159,7 @@ namespace GridBlazor.Pages
 
         protected override async Task OnAfterRenderAsync(bool firstRender)
         {
-            if ((firstRender || _fromCrud) && gridmvc.Id != null)
+            if ((firstRender || _fromCrud) && gridmvc.Id != null && Grid.Keyboard)
             {
                 _fromCrud = false;
                 await SetFocus(gridmvc);
@@ -566,9 +566,9 @@ namespace GridBlazor.Pages
             await UpdateGrid();
         }
 
-        public async Task GridComponentClick()
+        public async Task SetGridFocus()
         {
-            if (gridmvc.Id != null)
+            if (gridmvc.Id != null && Grid.Keyboard)
             {
                 await SetFocus(gridmvc);
             }
@@ -581,10 +581,11 @@ namespace GridBlazor.Pages
 
         public async Task GridComponentKeyup(KeyboardEventArgs e)
         {
-            if ((Grid.ModifierKey == ModifierKey.CtrlKey && e.CtrlKey)
+            if (Grid.Keyboard
+                && ((Grid.ModifierKey == ModifierKey.CtrlKey && e.CtrlKey)
                 || (Grid.ModifierKey == ModifierKey.AltKey && e.AltKey)
                 || (Grid.ModifierKey == ModifierKey.ShiftKey && e.ShiftKey)
-                || (Grid.ModifierKey == ModifierKey.MetaKey && e.MetaKey))
+                || (Grid.ModifierKey == ModifierKey.MetaKey && e.MetaKey)))
             {
                 if (e.Key == "ArrowLeft" && Grid.Pager.CurrentPage > 1)
                 {
@@ -653,7 +654,7 @@ namespace GridBlazor.Pages
             _shouldRender = true;
             StateHasChanged();
 
-            await GridComponentClick();
+            await SetGridFocus();
         }
     }
 }

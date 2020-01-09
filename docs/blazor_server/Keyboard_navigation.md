@@ -4,7 +4,14 @@
 
 [Index](Documentation.md)
 
-Users can navigate between pages using the mouse or using the keyboard.
+Users can enable keyboard navigation between pages using the ```SetKeyboard``` method of the ```GridClient``` object:
+
+```c#
+    var client = new GridClient<Order>(q => orderService.GetOrdersGridRows(columns, q), query, false, "ordersGrid", columns, locale)
+        .SetKeyboard(true);
+```
+
+The default value is ```false```.
 
 These are the keys to be used:
 
@@ -19,7 +26,8 @@ These are the keys to be used:
 It's possible to change the modifier key used for keyboard navigation using the ```SetModifierKey``` method of the ```GridClient``` object:
 
 ```c#
-    var client = new GridClient<Order>(HttpClient, url, query, false, "ordersGrid", Columns).SetModifierKey(ModifierKey.ShiftKey);
+    var client = new GridClient<Order>(q => orderService.GetOrdersGridRows(columns, q), query, false, "ordersGrid", columns, locale)
+        .SetKeyboard(true).SetModifierKey(ModifierKey.ShiftKey);
 ```
 
 The parameter options of the ```SetModifierKey``` method are:

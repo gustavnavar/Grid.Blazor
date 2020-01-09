@@ -39,6 +39,7 @@ namespace GridMvc.Html
         {
             return WithGridItemsCount(string.Empty);
         }
+
         public string Render()
         {
             using (var sw = new StringWriter())

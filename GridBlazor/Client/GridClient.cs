@@ -494,6 +494,15 @@ namespace GridBlazor
         }
 
         /// <summary>
+        ///     Configure keyboard utilization
+        /// </summary>
+        public IGridClient<T> SetKeyboard(bool enable)
+        {
+            _source.Keyboard = enable;
+            return this;
+        }
+
+        /// <summary>
         ///     Configure the modifier key
         /// </summary>
         public IGridClient<T> SetModifierKey(ModifierKey modifierKey)

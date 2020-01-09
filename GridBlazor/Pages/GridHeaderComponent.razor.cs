@@ -153,7 +153,7 @@ namespace GridBlazor.Pages
             //switch visibility for the filter dialog:
             _isVisible = !_isVisible;
             StateHasChanged();
-            await GridComponent.GridComponentClick();
+            await GridComponent.SetGridFocus();
         }
 
         public async Task AddFilter(FilterCollection filters)
