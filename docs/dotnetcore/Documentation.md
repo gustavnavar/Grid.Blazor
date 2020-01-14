@@ -16,6 +16,7 @@
 * [Selecting row](Selecting_row.md)
 * [Searching](Searching.md)
 * [Filtering](Filtering.md)
+	* [Using a list filter](Using_list_filter.md)
 	* [Creating custom filter widget](Creating_custom_filter_widget.md)
 	* [Setup initial column filtering](Setup_initial_column_filtering.md)
 * [Localization](Localization.md)

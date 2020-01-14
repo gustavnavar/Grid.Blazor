@@ -339,6 +339,12 @@ namespace GridShared.Columns
         /// <param name="typeName">Widget type name</param>
         /// <param name="widgetData">The data would be passed to the widget</param>
         IGridColumn<T> SetFilterWidgetType(string typeName, object widgetData);
+
+        /// <summary>
+        ///     Specify a list filter widget type for this column
+        /// </summary>
+        /// <param name="selectItems">List of selectable items</param>
+        IGridColumn<T> SetListFilter(IEnumerable<SelectItem> selectItems);
     }
 
     public interface IFilterableColumn : IColumn

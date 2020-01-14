@@ -1,8 +1,11 @@
 ﻿@using GridMvc
 @using GridMvc.Demo.Models
+@using GridShared
 @model SGrid<Order>
 @{
     ViewBag.Title = "Home Page";
+
+    IEnumerable<SelectItem> shipperList = (IEnumerable<SelectItem>)ViewData["shipperList"];
 }
 
 <script src="~/js/gridmvc-ajax.js" type="text/javascript"></script>

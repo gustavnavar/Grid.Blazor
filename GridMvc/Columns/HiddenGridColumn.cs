@@ -96,6 +96,11 @@ namespace GridMvc.Columns
             return this; //Do nothing
         }
 
+        public override IGridColumn<T> SetListFilter(IEnumerable<SelectItem> selectItems)
+        {
+            return this; //Do nothing
+        }
+
         public override IGridColumn<T> SortInitialDirection(GridSortDirection direction)
         {
             return this; //Do nothing

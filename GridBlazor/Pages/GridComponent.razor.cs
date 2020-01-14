@@ -104,15 +104,21 @@ namespace GridBlazor.Pages
             _filterComponents.Add("System.DateTimeOffset", typeof(DateTimeFilterComponent<T>));
             _filterComponents.Add("System.Boolean", typeof(BooleanFilterComponent<T>));
 
-            if (CustomFilters != null)
+            if (CustomFilters == null)
             {
-                foreach(var widget in CustomFilters)
-                {
-                    if (_filterComponents.ContainsKey(widget.Key))
-                        _filterComponents[widget.Key] = widget.Value;
-                    else
-                        _filterComponents.Add(widget);
-                }
+                CustomFilters = new QueryDictionary<Type>();
+            }
+            if (CustomFilters.Any(r => r.Key.Equals(SelectItem.ListFilter)))
+            {
+                CustomFilters.Remove(SelectItem.ListFilter);
+            }
+            CustomFilters.Add(SelectItem.ListFilter, typeof(ListFilterComponent<T>));
+            foreach (var widget in CustomFilters)
+            {
+                if (_filterComponents.ContainsKey(widget.Key))
+                    _filterComponents[widget.Key] = widget.Value;
+                else
+                    _filterComponents.Add(widget);
             }
 
             FirstColumn = (ICGridColumn)Grid.Columns.FirstOrDefault();

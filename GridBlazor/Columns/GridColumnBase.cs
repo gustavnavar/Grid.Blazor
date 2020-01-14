@@ -336,6 +336,8 @@ namespace GridBlazor.Columns
         public abstract IGridColumn<T> SetFilterWidgetType(string typeName);
         public abstract IGridColumn<T> SetFilterWidgetType(string typeName, object widgetData);
 
+        public abstract IGridColumn<T> SetListFilter(IEnumerable<SelectItem> selectItems);
+
         public abstract IGridColumn<T> SetCellCssClassesContraint(Func<T, string> contraint);
         public abstract string GetCellCssClasses(object item);
 

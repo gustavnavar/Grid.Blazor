@@ -14,6 +14,8 @@
     var locale = requestCulture.RequestCulture.UICulture.TwoLetterISOLanguageName;
     SharedResource.Culture = requestCulture.RequestCulture.UICulture;
 
+    IEnumerable<SelectItem> shipperList = (IEnumerable<SelectItem>)ViewData["shipperList"];
+
     Action<IGridColumnCollection<Order>> columns = c =>
     {
 /* Adding not mapped column, that renders body, using inline Razor html helper */
@@ -39,6 +41,13 @@
             .Format("{0:yyyy-MM-dd}")
             .SetWidth(110)
             .Max(true).Min(true);
+
+/* Adding "ShipVia" column: */
+        c.Add(o => o.ShipVia)
+                    .Titled("Via")
+                    .SetWidth(250)
+                    .RenderValueAs(o => o.Shipper.CompanyName)
+                    .SetListFilter(shipperList);
 
 /* Adding "CompanyName" column: */
         c.Add(o => o.Customer.CompanyName)

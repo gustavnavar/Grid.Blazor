@@ -51,6 +51,7 @@ GridMvc = (function ($) {
         this.addFilterWidget(new NumberFilterWidget());
         this.addFilterWidget(new DateTimeFilterWidget());
         this.addFilterWidget(new BooleanFilterWidget());
+        this.addFilterWidget(new ListFilterWidget());
 
         this.openedMenuBtn = null;
         this.initFilters();
@@ -1404,6 +1405,89 @@ BooleanFilterWidget = (function ($) {
     };
 
     return booleanFilterWidget;
+})(window.jQuery);
+
+/***
+* ListFilterWidget - Provides filter interface for list filter columns .
+* Renders two button for filter - true and false
+*/
+ListFilterWidget = (function ($) {
+
+    function listFilterWidget() { }
+
+    listFilterWidget.prototype.getAssociatedTypes = function () { return ["ListFilter"]; };
+
+    listFilterWidget.prototype.showClearFilterButton = function () { return true; };
+
+    listFilterWidget.prototype.onRender = function (container, lang, typeName, columnName, values, cb, data) {
+        this.cb = cb;
+        this.data = data;
+        this.lang = lang;
+
+        if (!this.filterData) {
+            this.filterData = new Object();
+        }
+        if (!this.filterData[columnName]) {
+            this.filterData[columnName] = new Object();
+        }
+        this.filterData[columnName].container = container;
+        this.filterData[columnName].typeName = typeName;
+        // conditions is always "OR"
+        this.filterData[columnName].condition = "2";
+        this.filterData[columnName].values = values.filter(x => x.filterType !== 9 && x.filterValue && x.columnName === columnName);
+        if (!this.filterData[columnName].values) {
+            this.filterData[columnName].values = new Array();
+        }
+        if (this.filterData[columnName].values.length === 0) {
+            this.filterData[columnName].values.push({
+                filterType: "1",
+                filterValue: "",
+                columnName: columnName
+            });
+        }
+
+        this.renderWidget(columnName);
+        this.registerEvents(columnName);
+    };
+
+    listFilterWidget.prototype.renderWidget = function (columnName) {
+        var html = '<div class="grid-filter-body">';
+        html +=        '<label>' + this.lang.filterValueLabel + '</label>\
+                        <ul class="menu-list">';
+        for (var i = 0; i < this.data.length; i++) {
+            var checked = this.filterData[columnName].values.some(x => x.filterType === 1 && x.filterValue === this.data[i].Value && x.columnName === columnName);
+            html += '<li><input type="checkbox" class="grid-filter-list" '
+                + (checked ? "checked" : "")
+                + ' value="' + this.data[i].Value + '" /> ' + this.data[i].Title + '</li >';
+        }
+        html +=        '</ul>';
+        html +=        '<div class="grid-filter-buttons" style="margin-top:10px;">\
+                            <button type="button" class="btn btn-primary grid-apply" >' + this.lang.applyFilterButtonText + '</button>\
+                        </div>\
+                    </div> ';
+        this.filterData[columnName].container.append(html);
+    };
+
+    listFilterWidget.prototype.registerEvents = function (columnName) {
+        var $context = this.filterData[columnName];
+        var self = this;
+        var applyBtn = this.filterData[columnName].container.find(".grid-apply");
+        applyBtn.click(function () {
+            var values = $context.container.find(".grid-filter-list");
+            var filters = new Array();
+            for (var i = 0; i < values.length; i++) {
+                if (values[i].checked) {
+                    filters.push({ filterType: "1", filterValue: values[i].value });
+                }             
+            }
+            if (filters.length > 1 ) {
+                filters.push({ filterType: "9", filterValue: "2" });
+            }
+            self.cb(filters);
+        });
+    };
+
+    return listFilterWidget;
 })(window.jQuery);
 
 //startup init:
