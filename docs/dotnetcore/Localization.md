@@ -31,6 +31,8 @@ Then you have to call the **SetLanguage** function with the required language va
 * Italian
 * Russian
 * Spanish
+* Norwegian
+* Turkish
 
 ## Additional languages
 
