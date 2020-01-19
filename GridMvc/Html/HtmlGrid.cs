@@ -51,6 +51,12 @@ namespace GridMvc.Html
             set { _source.SearchingOnlyTextColumns = value; }
         }
 
+        public bool SearchingHiddenColumns
+        {
+            get { return _source.SearchingHiddenColumns; }
+            set { _source.SearchingHiddenColumns = value; }
+        }
+
         public bool ExtSortingEnabled
         {
             get { return _source.ExtSortingEnabled; }

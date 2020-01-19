@@ -29,6 +29,9 @@ namespace GridBlazorServerSide.ColumnCollections
             /* Adding "ContactName" column: */
             c.Add(o => o.Customer.ContactName).Titled(SharedResource.ContactName).SetWidth(250);
 
+            /* Adding "Customer.Country" hidden column: */
+            c.Add(o => o.Customer.Country, true);
+
             /* Adding "Freight" column: */
             c.Add(o => o.Freight)
             .Titled(SharedResource.Freight)

@@ -3,7 +3,9 @@ using GridBlazor.Pagination;
 using GridBlazor.Searching;
 using GridShared;
 using GridShared.Columns;
+using GridShared.Events;
 using GridShared.Filtering;
+using GridShared.Pagination;
 using GridShared.Sorting;
 using GridShared.Utility;
 using Microsoft.AspNetCore.Components;
@@ -34,6 +36,12 @@ namespace GridBlazor.Pages
         protected ElementReference gridmvc;
         public ElementReference PageSizeInput;
         public GridSearchComponent<T> SearchComponent;
+
+        public event Func<object, SortEventArgs, Task> SortChanged;
+        public event Func<object, ExtSortEventArgs, Task> ExtSortChanged;
+        public event Func<object, FilterEventArgs, Task> FilterChanged;
+        public event Func<object, SearchEventArgs, Task> SearchChanged;
+        public event Func<object, PagerEventArgs, Task> PagerChanged;
 
         [Inject]
         private IJSRuntime jSRuntime { get; set; }
@@ -262,6 +270,21 @@ namespace GridBlazor.Pages
 
                 RowClicked(0, Grid.ItemsToDisplay.First(), mouseEventArgs);
             }
+
+            await OnPagerChanged();
+        }
+
+        protected virtual async Task OnPagerChanged()
+        {
+            PagerEventArgs args = new PagerEventArgs();
+            PagerDTO pagerDTO = new PagerDTO(Grid.EnablePaging, Grid.Pager.PageSize, Grid.Pager.CurrentPage, 
+                Grid.Pager.ItemsCount);
+            args.Pager = pagerDTO;
+
+            if (PagerChanged != null)
+            {
+                await PagerChanged.Invoke(this, args);
+            }
         }
 
         public async Task GetSortUrl(string columnQueryParameterName, string columnName,
@@ -270,47 +293,100 @@ namespace GridBlazor.Pages
             Grid.AddQueryParameter(columnQueryParameterName, columnName);
             Grid.AddQueryParameter(directionQueryParameterName, direction);
             await UpdateGrid();
+            await OnSortChanged();
+        }
+
+        protected virtual async Task OnSortChanged()
+        {
+            SortEventArgs args = new SortEventArgs();
+            args.ColumnName = Grid.Settings.SortSettings.ColumnName;
+            args.Direction = Grid.Settings.SortSettings.Direction;
+
+            if (SortChanged != null)
+            {
+                await SortChanged.Invoke(this, args);
+            }
         }
 
         public async Task AddFilter(IGridColumn column, FilterCollection filters)
         {
             Grid.AddFilterParameter(column, filters);
             await UpdateGrid();
+            await OnFilterChanged();
+        }
+
+        protected virtual async Task OnFilterChanged()
+        {
+            FilterEventArgs args = new FilterEventArgs();
+            args.FilteredColumns = Grid.Settings.FilterSettings.FilteredColumns;
+
+            if (FilterChanged != null)
+            {
+                await FilterChanged.Invoke(this, args);
+            }
         }
 
         public async Task RemoveFilter(IGridColumn column)
         {
             Grid.RemoveFilterParameter(column);
             await UpdateGrid();
+            await OnFilterChanged();
         }
 
         public async Task RemoveAllFilters()
         {
             Grid.RemoveAllFilters();
             await UpdateGrid();
+            await OnFilterChanged();
         }
 
         public async Task AddSearch(string searchValue)
         {
             Grid.AddQueryParameter(QueryStringSearchSettings.DefaultSearchQueryParameter, searchValue);
             await UpdateGrid();
+            await OnSearchChanged();
+        }
+
+        protected virtual async Task OnSearchChanged()
+        {
+            SearchEventArgs args = new SearchEventArgs();
+            args.SearchValue = Grid.Settings.SearchSettings.SearchValue;
+            
+            if (SearchChanged != null)
+            {
+                await SearchChanged.Invoke(this, args);
+            }
         }
 
         public async Task RemoveSearch()
         {
             Grid.RemoveQueryParameter(QueryStringSearchSettings.DefaultSearchQueryParameter);
             await UpdateGrid();
+            await OnSearchChanged();
         }
 
         public async Task AddExtSorting()
         {
             Grid.AddQueryString(ColumnOrderValue.DefaultSortingQueryParameter, Payload.ToString());
             await UpdateGrid();
+            await OnExtSortChanged();
+        }
+
+        protected virtual async Task OnExtSortChanged()
+        {
+            ExtSortEventArgs args = new ExtSortEventArgs();
+            args.SortValues = Grid.Settings.SortSettings.SortValues;
+            
+            if (ExtSortChanged != null)
+            {
+                await ExtSortChanged.Invoke(this, args);
+            }
         }
 
         public async Task ChangeExtSorting(ColumnOrderValue column)
         {
-            var newColumnOrderValue = new ColumnOrderValue {
+            var newColumnOrderValue = new ColumnOrderValue
+            {
                 ColumnName = column.ColumnName,
                 Direction = column.Direction == GridSortDirection.Ascending ? GridSortDirection.Descending
                     : GridSortDirection.Ascending,
@@ -319,12 +395,15 @@ namespace GridBlazor.Pages
             Grid.ChangeQueryString(ColumnOrderValue.DefaultSortingQueryParameter, column.ToString(),
                 newColumnOrderValue.ToString());
             await UpdateGrid();
+
+            await OnExtSortChanged();
         }
 
         public async Task RemoveExtSorting(ColumnOrderValue column)
         {
             Grid.RemoveQueryString(ColumnOrderValue.DefaultSortingQueryParameter, column.ToString());
             await UpdateGrid();
+            await OnExtSortChanged();
         }
 
         public async Task CreateHandler()
@@ -561,15 +640,21 @@ namespace GridBlazor.Pages
         {
             if (e.Key == "Enter")
             {
-                await InputPageSizeBlur();
+                await ChangePageSize(_pageSize);
             }
         }
 
         public async Task InputPageSizeBlur()
         {
-            Grid.Pager.PageSize = _pageSize;
-            Grid.AddQueryParameter(GridPager.DefaultPageSizeQueryParameter, _pageSize.ToString());
+            await ChangePageSize(_pageSize);
+        }
+
+        public async Task ChangePageSize(int pageSize)
+        {
+            Grid.Pager.PageSize = pageSize;
+            Grid.AddQueryParameter(GridPager.DefaultPageSizeQueryParameter, pageSize.ToString());
             await UpdateGrid();
+            await OnPagerChanged();
         }
 
         public async Task SetGridFocus()

@@ -413,4 +413,4 @@ And finally you will have to create a Blazor component for the custom form. This
 
 If you want to use a drop-down list for a field you have to define it as it was for auto-generated forms.
 
-[<- Front-end back-end API](API.md)
+[<- Front-end back-end API](API.md) | [Events ->](Events.md)

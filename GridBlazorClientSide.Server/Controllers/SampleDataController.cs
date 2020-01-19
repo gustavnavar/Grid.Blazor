@@ -63,7 +63,7 @@ namespace GridBlazorClientSide.Server.Controllers
                     .Filterable()
                     .WithMultipleFilters()
                     .WithGridItemsCount()
-                    .Searchable(true, false);
+                    .Searchable(true, false, false);
 
             var items = server.ItemsToDisplay;
             return Ok(items);

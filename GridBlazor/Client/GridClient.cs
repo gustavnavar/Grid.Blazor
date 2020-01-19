@@ -147,8 +147,14 @@ namespace GridBlazor
 
         public IGridClient<T> Searchable(bool enable, bool onlyTextColumns)
         {
+            return Searchable(enable, onlyTextColumns, false);
+        }
+
+        public IGridClient<T> Searchable(bool enable, bool onlyTextColumns, bool hiddenColumns)
+        {
             _source.SearchingEnabled = enable;
             _source.SearchingOnlyTextColumns = onlyTextColumns;
+            _source.SearchingHiddenColumns = hiddenColumns;
             return this;
         }
 

@@ -55,6 +55,11 @@ namespace GridShared
         bool SearchingOnlyTextColumns { get; set; }
 
         /// <summary>
+        ///     Set or get value of searching for all columns including hidden ones
+        /// </summary>
+        bool SearchingHiddenColumns { get; set; }
+
+        /// <summary>
         ///     Text in empty grid (no items for display)
         /// </summary>
         string EmptyGridText { get; }

@@ -13,21 +13,24 @@ You can enable searching for all columns of a grid using the **Searchable** meth
 * Client project
     ```c#
         var client = new GridClient<Order>(httpClient, url, query, false, "ordersGrid", Columns, locale)
-            .Searchable(true, false);
+            .Searchable(true, false, true);
     ```
 
 * Server project
     ```c#
         var server = new GridServer<Order>(repository.GetAll(), Request.Query, true, "ordersGrid", columns, 10)
-            .Searchable(true, false);
+            .Searchable(true, false, true);
     ```
 
 ## Searching parameters
 
 Parameter | Description | Example
 --------- | ----------- | -------
-enable | bool to enable searching on the grid | Searchable(true, ...)
-onlyTextColumns | bool to enable searching on all collumns or just on string ones | Searchable(..., true)
+enable (optional) | bool to enable searching on the grid | Searchable(true, ...)
+onlyTextColumns (optional) | bool to enable searching on all collumns or just on string ones | Searchable(..., true, ...)
+hiddenColumns (optional) | bool to enable searching on hidden columns | Searchable(..., true)
+
+```enable``` default value is ```true```, ```onlyTextColumns``` default value is ```true```, and ```hiddenColumns``` default value is ```false```.
 
 Searching on boolean columns has benn disabled because EF Core 3.0 is not supporting it yet.
 

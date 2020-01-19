@@ -222,6 +222,8 @@ namespace GridBlazor
 
         public bool SearchingOnlyTextColumns { get; set; }
 
+        public bool SearchingHiddenColumns { get; set; }
+
         public bool ExtSortingEnabled { get; set; }
 
         public bool GroupingEnabled { get; set; }
