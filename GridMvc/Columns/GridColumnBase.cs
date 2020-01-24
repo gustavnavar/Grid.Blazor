@@ -312,20 +312,23 @@ namespace GridMvc.Columns
 
         public (Type Type, object Value) GetTypeAndValue(T item)
         {
-            var names = FieldName.Split('.');
             PropertyInfo pi = null;
             var type = item.GetType();
             object value = item;
-            for (int i = 0; i < names.Length; i++)
+            if (FieldName != null)
             {
-                pi = type.GetProperty(names[i]);
-                bool isNullable = pi.PropertyType.GetTypeInfo().IsGenericType &&
-                    pi.PropertyType.GetGenericTypeDefinition() == typeof(Nullable<>);
-                type = isNullable ? Nullable.GetUnderlyingType(pi.PropertyType) : pi.PropertyType;
-
-                if (value != null)
+                var names = FieldName.Split('.');
+                for (int i = 0; i < names.Length; i++)
                 {
-                    value = pi.GetValue(value, null);
+                    pi = type.GetProperty(names[i]);
+                    bool isNullable = pi.PropertyType.GetTypeInfo().IsGenericType &&
+                        pi.PropertyType.GetGenericTypeDefinition() == typeof(Nullable<>);
+                    type = isNullable ? Nullable.GetUnderlyingType(pi.PropertyType) : pi.PropertyType;
+
+                    if (value != null)
+                    {
+                        value = pi.GetValue(value, null);
+                    }
                 }
             }
             return (type, value);
