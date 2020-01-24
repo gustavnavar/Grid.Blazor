@@ -736,7 +736,7 @@ TextFilterWidget = (function ($) {
     // This method must return type of columns that must be associated with current widget
     // If you not specify your own type name for column (see 'SetFilterWidgetType' method), GridMvc setup column type name from .Net type ("System.DateTime etc.)
     //
-    textFilterWidget.prototype.getAssociatedTypes = function () { return ["System.String"]; };
+    textFilterWidget.prototype.getAssociatedTypes = function () { return ["System.String", "System.Guid"]; };
     //
     // This method invokes when filter widget was shown on the page
     //

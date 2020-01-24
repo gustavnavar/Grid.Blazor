@@ -96,6 +96,7 @@ namespace GridBlazor.Pages
         {
             _filterComponents = new QueryDictionary<Type>();
             _filterComponents.Add("System.String", typeof(TextFilterComponent<T>));
+            _filterComponents.Add("System.Guid", typeof(TextFilterComponent<T>));
             _filterComponents.Add("System.Int32", typeof(NumberFilterComponent<T>));
             _filterComponents.Add("System.Double", typeof(NumberFilterComponent<T>));
             _filterComponents.Add("System.Decimal", typeof(NumberFilterComponent<T>));

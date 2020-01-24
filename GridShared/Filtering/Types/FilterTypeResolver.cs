@@ -23,6 +23,7 @@ namespace GridShared.Filtering.Types
             _filterCollection.Add(new UInt16FilterType());
             _filterCollection.Add(new UInt32FilterType());
             _filterCollection.Add(new UInt64FilterType());
+            _filterCollection.Add(new GuidFilterType());
         }
 
         public IFilterType GetFilterType(Type type)
