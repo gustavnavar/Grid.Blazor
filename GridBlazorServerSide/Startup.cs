@@ -37,6 +37,7 @@ namespace GridBlazorServerSide
             services.AddControllers();
             services.AddRazorPages();
             services.AddServerSideBlazor();
+            //.AddCircuitOptions(options => { options.DetailedErrors = true; });
             services.AddScoped<IOrderService, OrderService>();
             services.AddScoped<ICustomerService, CustomerService>();
             services.AddScoped<IEmployeeService, EmployeeService>();

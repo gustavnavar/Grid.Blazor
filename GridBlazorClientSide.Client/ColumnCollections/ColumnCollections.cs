@@ -295,7 +295,7 @@ namespace GridBlazorClientSide.Client.ColumnCollections
 
             /* Adding "ShipVia" column: */
             c.Add(o => o.ShipVia).Titled("Via")
-            .SetWidth(250).RenderValueAs(o => o.Shipper.CompanyName)
+            .SetWidth(250).RenderValueAs(o => o.Shipper == null ? "" : o.Shipper.CompanyName)
             .SetSelectField(true, o => o.Shipper == null ? "" : o.Shipper.ShipperID.ToString() + " - " + o.Shipper.CompanyName, path + $"api/SampleData/GetAllShippers")
             .SetListFilter(list);
 

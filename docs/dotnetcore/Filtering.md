@@ -33,6 +33,7 @@ You can enable a button to clear all selected filters using the ***ClearFiltersB
 **GridMvc** supports several types of columns (specified in the **Add** method):
 
 * System.String
+* System.Guid
 * System.Int32
 * System.Int64
 * System.Boolean
