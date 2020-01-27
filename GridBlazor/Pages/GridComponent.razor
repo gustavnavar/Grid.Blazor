@@ -89,7 +89,7 @@
                                 }
                                 @foreach (IGridColumn column in Grid.Columns)
                                 {
-                                    <GridCellComponent T="@T" Column="@column" Item="@item"></GridCellComponent>
+                                    <GridCellComponent T="@T" Column="@column" Item="@item" TdClass="@GridCellCssClass"></GridCellComponent>
                                 }
                             </tr>
                         }
@@ -127,7 +127,7 @@
                                 }
                                 @foreach (IGridColumn column in Grid.Columns)
                                 {
-                                    <GridCellComponent T="@T" Column="@column" Item="@item"></GridCellComponent>
+                                    <GridCellComponent T="@T" Column="@column" Item="@item" TdClass="@GridCellCssClass"></GridCellComponent>
                                 }
                             </tr>
                         }
@@ -315,7 +315,7 @@
                                                 }
                                                 @foreach (IGridColumn column in Grid.Columns)
                                                 {
-                                                    <GridCellComponent T="@T" Column="@column" Item="@item"></GridCellComponent>
+                                                    <GridCellComponent T="@T" Column="@column" Item="@item" TdClass="@GridCellCssClass"></GridCellComponent>
                                                 }
                                             </tr>
                                         }
@@ -353,7 +353,7 @@
                                                 }
                                                 @foreach (IGridColumn column in Grid.Columns)
                                                 {
-                                                    <GridCellComponent T="@T" Column="@column" Item="@item"></GridCellComponent>
+                                                    <GridCellComponent T="@T" Column="@column" Item="@item" TdClass="@GridCellCssClass"></GridCellComponent>
                                                 }
                                             </tr>
                                         }
@@ -386,7 +386,7 @@
                     <div class="@GridFooterCssClass">
                         @if (Grid.ComponentOptions.ShowGridItemsCount)
                         {
-                            <span class="grid-itemscount">
+                            <span class="@GridItemsCountCssClass">
                                 <span class="grid-itemscount-label">@Grid.ComponentOptions.GridCountDisplayName:</span>
                                 <span class="grid-itemscount-caption"><b>@Grid.ItemsCount</b></span>
                             </span>
