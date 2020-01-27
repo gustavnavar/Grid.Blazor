@@ -305,4 +305,4 @@ And finally you will have to create a Blazor component for the custom form. This
 
 If you want to use a drop-down list for a field you have to define it as it was for auto-generated forms.
 
-[<- Passing grid state as parameter](Passing_grid_state_as_parameter.md)
+[<- Passing grid state as parameter](Passing_grid_state_as_parameter.md) | [Events ->](Events.md)

@@ -4,7 +4,9 @@ using GridShared.Filtering;
 using GridShared.Grouping;
 using GridShared.Searching;
 using GridShared.Sorting;
+
 using Microsoft.AspNetCore.Components;
+
 using System;
 using System.Collections.Generic;
 using System.Globalization;
@@ -19,7 +21,7 @@ namespace GridBlazor.Columns
     {
         public Type ComponentType { get; private set; }
         public IList<Action<object>> Actions { get; private set; }
-        public IList<Func<object,Task>> Functions { get; private set; }
+        public IList<Func<object, Task>> Functions { get; private set; }
         public object Object { get; private set; }
 
         public Func<T, string> ValueConstraint { get; private set; }
@@ -145,14 +147,14 @@ namespace GridBlazor.Columns
         public IGridColumn<T> RenderComponentAs(Type componentType, IList<Action<object>> actions,
             IList<Func<object, Task>> functions, object obj)
         {
-            if(componentType.GetInterfaces().Any(r => r.Equals(typeof(ICustomGridComponent<T>)))
+            if (componentType.GetInterfaces().Any(r => r.Equals(typeof(ICustomGridComponent<T>)))
                 && componentType.IsSubclassOf(typeof(ComponentBase)))
             {
                 ComponentType = componentType;
                 Actions = actions;
                 Functions = functions;
                 Object = obj;
-            }      
+            }
             return this;
         }
 
@@ -240,7 +242,7 @@ namespace GridBlazor.Columns
             return this;
         }
 
-        public IGridColumn<T> SetSelectField(bool enabled, Func<T,string> expression, Func<IEnumerable<SelectItem>> selectItemExpr)
+        public IGridColumn<T> SetSelectField(bool enabled, Func<T, string> expression, Func<IEnumerable<SelectItem>> selectItemExpr)
         {
             IsSelectField = (enabled, expression, null, selectItemExpr);
             return this;
@@ -263,11 +265,11 @@ namespace GridBlazor.Columns
         public IGridColumn<T> SetInitialFilter(GridFilterType type, string value)
         {
             var filter = new ColumnFilterValue
-                {
-                    FilterType = type,
-                    FilterValue = value,
-                    ColumnName = Name
-                };
+            {
+                FilterType = type,
+                FilterValue = value,
+                ColumnName = Name
+            };
             InitialFilterSettings = filter;
             return this;
         }
@@ -298,7 +300,7 @@ namespace GridBlazor.Columns
         {
             if (value == null)
                 return null;
-            if(typeof(T) == value.GetType())
+            if (typeof(T) == value.GetType())
             {
                 return expression.Invoke((T)value);
             }
@@ -307,20 +309,23 @@ namespace GridBlazor.Columns
 
         public (Type Type, object Value) GetTypeAndValue(T item)
         {
-            var names = FieldName.Split('.');
             PropertyInfo pi = null;
             var type = item.GetType();
             object value = item;
-            for (int i = 0; i < names.Length; i++)
+            if (FieldName != null)
             {
-                pi = type.GetProperty(names[i]);
-                bool isNullable = pi.PropertyType.GetTypeInfo().IsGenericType &&
-                    pi.PropertyType.GetGenericTypeDefinition() == typeof(Nullable<>);
-                type = isNullable ? Nullable.GetUnderlyingType(pi.PropertyType) : pi.PropertyType;
-
-                if (value != null)
+                var names = FieldName.Split('.');
+                for (int i = 0; i < names.Length; i++)
                 {
-                    value = pi.GetValue(value, null);
+                    pi = type.GetProperty(names[i]);
+                    bool isNullable = pi.PropertyType.GetTypeInfo().IsGenericType &&
+                        pi.PropertyType.GetGenericTypeDefinition() == typeof(Nullable<>);
+                    type = isNullable ? Nullable.GetUnderlyingType(pi.PropertyType) : pi.PropertyType;
+
+                    if (value != null)
+                    {
+                        value = pi.GetValue(value, null);
+                    }
                 }
             }
             return (type, value);
@@ -335,6 +340,8 @@ namespace GridBlazor.Columns
 
         public abstract IGridColumn<T> SetFilterWidgetType(string typeName);
         public abstract IGridColumn<T> SetFilterWidgetType(string typeName, object widgetData);
+
+        public abstract IGridColumn<T> SetListFilter(IEnumerable<SelectItem> selectItems);
 
         public abstract IGridColumn<T> SetCellCssClassesContraint(Func<T, string> contraint);
         public abstract string GetCellCssClasses(object item);

@@ -33,7 +33,7 @@ namespace GridBlazorServerSide.Services
                         .Filterable()
                         .WithMultipleFilters()
                         .Groupable(true)                        
-                        .Searchable(true, false);
+                        .Searchable(true, false, false);
 
                 // return items to displays
                 var items = server.ItemsToDisplay;

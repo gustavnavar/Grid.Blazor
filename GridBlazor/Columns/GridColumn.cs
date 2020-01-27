@@ -135,6 +135,11 @@ namespace GridBlazor.Columns
             return this;
         }
 
+        public override IGridColumn<T> SetListFilter(IEnumerable<SelectItem> selectItems)
+        {
+            return SetFilterWidgetType(SelectItem.ListFilter, selectItems);
+        }
+
         public override IGridColumn<T> SortInitialDirection(GridSortDirection direction)
         {
             if (string.IsNullOrEmpty(_grid.Settings.SortSettings.ColumnName))

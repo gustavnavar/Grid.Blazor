@@ -37,6 +37,7 @@ You can enable a button to clear all selected filters using the ***ClearFiltersB
 **GridBlazor** supports several types of columns (specified in the **Add** method):
 
 * System.String
+* System.Guid
 * System.Int32
 * System.Int64
 * System.Boolean
@@ -73,4 +74,4 @@ Pressing the **+** and **-** buttons you can add multiple options to filter. You
 
 You can also create your own filter widgets.
 
-[<- Searching](Searching.md) | [Creating custom filter widget ->](Creating_custom_filter_widget.md)
+[<- Searching](Searching.md) | [Using a list filter->](Using_list_filter.md)

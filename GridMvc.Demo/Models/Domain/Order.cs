@@ -13,6 +13,7 @@ using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace GridMvc.Demo.Models
 {
@@ -53,7 +54,8 @@ namespace GridMvc.Demo.Models
         public virtual Employee Employee { get; set; }
         public virtual ICollection<OrderDetail> OrderDetails { get; set; }
 
-        //public virtual Shipper Shipper { get; set; }
+        [ForeignKey("ShipVia")]
+        public virtual Shipper Shipper { get; set; }
     }
 
 }

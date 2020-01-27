@@ -217,6 +217,78 @@ namespace GridBlazor.Tests.Filtering
         }
 
         [TestMethod]
+        public void TestGuidFilteringEquals()
+        {
+            var filterOption = new ColumnFilterValue
+            {
+                ColumnName = "GuidField",
+                FilterType = GridFilterType.Equals,
+                FilterValue = "6e4fe7c4-a5cb-4e29-8041-a80ce17ea727"
+            };
+            var filterOptions = new List<ColumnFilterValue>();
+            filterOptions.Add(filterOption);
+            var filter = new DefaultColumnFilter<TestModel, Guid>(m => m.GuidField);
+
+            var filtered = filter.ApplyFilter(_repo.GetAll().AsQueryable(), filterOptions);
+
+            var original = _repo.GetAll().AsQueryable().Where(t => t.GuidField == new Guid("6e4fe7c4-a5cb-4e29-8041-a80ce17ea727"));
+
+            for (int i = 0; i < filtered.Count(); i++)
+            {
+                if (filtered.ElementAt(i).Id != original.ElementAt(i).Id)
+                    Assert.Fail("Filtering not works");
+            }
+        }
+
+        [TestMethod]
+        public void TestGuidFilterContains()
+        {
+            var filterOption = new ColumnFilterValue
+            {
+                ColumnName = "GuidField",
+                FilterType = GridFilterType.Contains,
+                FilterValue = "0ce17ea"
+            };
+            var filterOptions = new List<ColumnFilterValue>();
+            filterOptions.Add(filterOption);
+            var filter = new DefaultColumnFilter<TestModel, Guid>(m => m.GuidField);
+
+            var filtered = filter.ApplyFilter(_repo.GetAll().AsQueryable(), filterOptions);
+
+            var original = _repo.GetAll().AsQueryable().Where(t => t.GuidField.ToString().ToUpper().Contains("0ce17ea".ToUpper()));
+
+            for (int i = 0; i < filtered.Count(); i++)
+            {
+                if (filtered.ElementAt(i).Id != original.ElementAt(i).Id)
+                    Assert.Fail("Filtering not works");
+            }
+        }
+
+        [TestMethod]
+        public void TestGuidFilterStartsWith()
+        {
+            var filterOption = new ColumnFilterValue
+            {
+                ColumnName = "GuidField",
+                FilterType = GridFilterType.StartsWith,
+                FilterValue = "6e4fe7c4"
+            };
+            var filterOptions = new List<ColumnFilterValue>();
+            filterOptions.Add(filterOption);
+            var filter = new DefaultColumnFilter<TestModel, Guid>(m => m.GuidField);
+
+            var filtered = filter.ApplyFilter(_repo.GetAll().AsQueryable(), filterOptions);
+
+            var original = _repo.GetAll().AsQueryable().Where(t => t.GuidField.ToString().ToUpper().StartsWith("6e4fe7c4".ToUpper()));
+
+            for (int i = 0; i < filtered.Count(); i++)
+            {
+                if (filtered.ElementAt(i).Id != original.ElementAt(i).Id)
+                    Assert.Fail("Filtering not works");
+            }
+        }
+
+        [TestMethod]
         public void TestFilteringDateTimeLessThan()
         {
             var filterValue = new DateTime(2005, 5, 10);

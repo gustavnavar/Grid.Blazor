@@ -11,6 +11,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Localization;
 using Microsoft.AspNetCore.Mvc;
 using System;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace GridMvc.Demo.Components
@@ -43,6 +44,11 @@ namespace GridMvc.Demo.Components
             var locale = requestCulture.RequestCulture.UICulture.TwoLetterISOLanguageName;
             SharedResource.Culture = requestCulture.RequestCulture.UICulture;
 
+            var shippersRepository = new ShippersRepository(_context);
+            var shipperList = shippersRepository.GetAll()
+                .Select(s => new SelectItem(s.ShipperID.ToString(), s.CompanyName))
+                .ToList();
+
             Action<IGridColumnCollection<Order>> columns = c =>
             {
                 /* Adding not mapped column, that renders body, using inline Razor html helper */
@@ -68,6 +74,12 @@ namespace GridMvc.Demo.Components
                     .Format("{0:yyyy-MM-dd}")
                     .SetWidth(110)
                     .Max(true).Min(true);
+
+                c.Add(o => o.ShipVia)
+                    .Titled("Via")
+                    .SetWidth(250)
+                    .RenderValueAs(o => o.Shipper.CompanyName)
+                    .SetListFilter(shipperList);
 
                 /* Adding "CompanyName" column: */
                 c.Add(o => o.Customer.CompanyName)

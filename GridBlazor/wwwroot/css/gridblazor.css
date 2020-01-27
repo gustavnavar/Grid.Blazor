@@ -44,6 +44,7 @@ table.grid-table .grid-popup-additional { padding: 3px 0 0 0; }
         .grid-dropdown ul.menu-list li a:hover { background-color: #EEE; text-decoration: none; }
 .grid-dropdown input.grid-filter-input { width: 100%; }
 .grid-dropdown select.grid-filter-type { width: 100%; }
+.grid-dropdown input.grid-filter-list { margin: 5px 10px 5px 20px; }
 
 /*Grid footer*/
 .grid-itemscount { float:right; margin-top: 10px;}

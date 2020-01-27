@@ -184,4 +184,4 @@ Follow thes steps to create a custom filter widget:
     ```
     You have to use the same unique name used on the step 2.
 
-[<- Filtering](Filtering.md) | [Setup initial column filtering ->](Setup_initial_column_filtering.md)
+[<- Using a list filter](Using_list_filter.md) | [Setup initial column filtering ->](Setup_initial_column_filtering.md)

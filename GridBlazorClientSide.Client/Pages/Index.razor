@@ -45,6 +45,8 @@ else
         var locale = CultureInfo.CurrentCulture;
 
         var query = new QueryDictionary<StringValues>();
+        //query.Add("grid-filter", "Customer.Country__1__usa");
+
         string url = NavigationManager.BaseUri + "api/SampleData/GetOrdersGrid";
         var client = new GridClient<Order>(HttpClient, url, query, false, "ordersGrid", ColumnCollections.OrderColumns, locale)
             .Sortable()

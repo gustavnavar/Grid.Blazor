@@ -222,6 +222,8 @@ namespace GridBlazor
 
         public bool SearchingOnlyTextColumns { get; set; }
 
+        public bool SearchingHiddenColumns { get; set; }
+
         public bool ExtSortingEnabled { get; set; }
 
         public bool GroupingEnabled { get; set; }
@@ -455,6 +457,8 @@ namespace GridBlazor
         public IList<Func<object, Task>> DeleteFunctions { get; internal set; }
 
         public object DeleteObject { get; internal set; }
+
+        public bool Keyboard { get; internal set; } = false;
 
         public ModifierKey ModifierKey { get; internal set; } = ModifierKey.CtrlKey;
 

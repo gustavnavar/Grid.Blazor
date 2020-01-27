@@ -19,6 +19,8 @@ English is the default laguage. But you can use other languages. You have to cre
 * Italian
 * Russian
 * Spanish
+* Norwegian
+* Turkish
 
 ## Additional languages
 

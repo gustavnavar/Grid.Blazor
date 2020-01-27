@@ -12,7 +12,7 @@ namespace GridMvc.Demo.Models
 
         public override IQueryable<Order> GetAll()
         {
-            return EfDbSet.Include("Customer");
+            return EfDbSet.Include("Customer").Include("Shipper");
         }
 
         public override Order GetById(object id)

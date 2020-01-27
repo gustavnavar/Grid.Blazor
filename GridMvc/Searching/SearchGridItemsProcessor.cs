@@ -44,6 +44,7 @@ namespace GridMvc.Searching
                     IGridColumn<T> gridColumn = column as IGridColumn<T>;
                     if (gridColumn == null) continue;
                     if (gridColumn.Search == null) continue;
+                    if (!_grid.SearchingHiddenColumns && gridColumn.Hidden) continue;
 
                     if (binaryExpression == null)
                     {

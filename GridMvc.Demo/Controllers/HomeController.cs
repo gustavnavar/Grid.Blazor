@@ -24,12 +24,14 @@ namespace GridMvc.Demo.Controllers
         private readonly OrdersRepository _orderRepository;
         private readonly OrderDetailsRepository _orderDetailsRepository;
         private readonly CustomersRepository _customersRepository;
+        private readonly ShippersRepository _shippersRepository;
 
         public HomeController(NorthwindDbContext context, ICompositeViewEngine compositeViewEngine) : base(compositeViewEngine)
         {
             _orderRepository = new OrdersRepository(context);
             _orderDetailsRepository = new OrderDetailsRepository(context);
             _customersRepository = new CustomersRepository(context);
+            _shippersRepository = new ShippersRepository(context);
         }
 
         public ActionResult Index(string gridState = "")
@@ -55,6 +57,10 @@ namespace GridMvc.Demo.Controllers
             var requestCulture = HttpContext.Features.Get<IRequestCultureFeature>();
             var locale = requestCulture.RequestCulture.UICulture.TwoLetterISOLanguageName;
             SharedResource.Culture = requestCulture.RequestCulture.UICulture;
+
+            var shipperList = _shippersRepository.GetAll()
+                .Select(s => new SelectItem(s.ShipperID.ToString(), s.CompanyName))
+                .ToList();
 
             Action<IGridColumnCollection<Order>> columns = c =>
             {
@@ -83,7 +89,10 @@ namespace GridMvc.Demo.Controllers
                     .Max(true).Min(true);
 
                 c.Add(o => o.ShipVia)
-                    .Titled("Via");
+                    .Titled("Via")
+                    .SetWidth(250)
+                    .RenderValueAs(o => o.Shipper.CompanyName)
+                    .SetListFilter(shipperList);
 
                 /* Adding "CompanyName" column: */
                 c.Add(o => o.Customer.CompanyName)
@@ -98,6 +107,9 @@ namespace GridMvc.Demo.Controllers
                 /* Adding "ContactName" column: */
                 c.Add(o => o.Customer.ContactName).Titled(SharedResource.ContactName).SetWidth(250)
                     .Max(true).Min(true);
+
+                /* Adding "Customer.Country" hidden column: */
+                c.Add(o => o.Customer.Country, true);
 
                 /* Adding "Freight" column: */
                 c.Add(o => o.Freight)
@@ -162,6 +174,11 @@ namespace GridMvc.Demo.Controllers
             string returnUrl = "/Home/Subgrid";
             ViewData["returnUrl"] = returnUrl;
 
+            var shipperList = _shippersRepository.GetAll()
+                .Select(s => new SelectItem(s.ShipperID.ToString(), s.CompanyName))
+                .ToList();
+            ViewData["shipperList"] = shipperList;
+
             IQueryCollection query = Request.Query;
             if (!string.IsNullOrWhiteSpace(gridState))
             {
@@ -187,6 +204,11 @@ namespace GridMvc.Demo.Controllers
             //string returnUrl = Request.Path;
             string returnUrl = "/Home/Subgrid";
             ViewData["returnUrl"] = returnUrl;
+
+            var shipperList = _shippersRepository.GetAll()
+                .Select(s => new SelectItem(s.ShipperID.ToString(), s.CompanyName))
+                .ToList();
+            ViewData["shipperList"] = shipperList;
 
             var model = new SGrid<Order>(_orderRepository.GetAll(), Request.Query, false, GridPager.DefaultAjaxPagerViewName);
 

@@ -76,6 +76,11 @@ namespace GridMvc.Html
         IGridHtmlOptions<T> Searchable(bool enable, bool onlyTextColumns);
 
         /// <summary>
+        ///     Enable or disable searching for all columns
+        /// </summary>
+        IGridHtmlOptions<T> Searchable(bool enable, bool onlyTextColumns, bool hiddenColumns);
+
+        /// <summary>
         ///     Enable extended sorting
         /// </summary>
         IGridHtmlOptions<T> ExtSortable();
@@ -160,6 +165,7 @@ namespace GridMvc.Html
         /// </summary>
         /// <returns>Grid html layout</returns>
         string Render();
+
         Task<IHtmlContent> RenderAsync();
 
         /// <summary>

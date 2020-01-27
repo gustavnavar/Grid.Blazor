@@ -20,7 +20,7 @@
     This component demonstrates a GridBlazor client-side grid. For more information, please see: <a href="https://github.com/gustavnavar/Grid.Blazor">https://github.com/gustavnavar/Grid.Blazor</a>
 </p>
 
-@if (_task.IsCompleted)
+@if (_task1.IsCompleted && _task2.IsCompleted)
 {
     <div class="row">
         <div class="col-md-9">
@@ -43,8 +43,10 @@ else
 @code
 {
     private CGrid<Order> _grid;
-    private Task _task;
+    private Task<SelectItem[]> _task1;
+    private Task _task2;
     private OrderInfo _orderInfo;
+    private IEnumerable<SelectItem> _shippers;
     private IQueryDictionary<Type> _customFilters = new QueryDictionary<Type>();
 
     [Parameter]
@@ -58,6 +60,10 @@ else
     protected override async Task OnParametersSetAsync()
     {
         var locale = CultureInfo.CurrentCulture;
+        _task1 = HttpClient.GetJsonAsync<SelectItem[]>(NavigationManager.BaseUri + $"api/SampleData/GetAllShippers");
+        var shippers = await _task1;
+        _shippers = shippers.ToList();
+
         Func<object[], Task<ICGrid>> subGrids = async keys =>
         {
             string subGridUrl = NavigationManager.BaseUri + "api/SampleData/GetOrderDetailsGridAllFeatures?OrderId=";
@@ -77,7 +83,7 @@ else
 
         // build the column collection passing an action list with the action executed by the ButtonCell component
         Action<IGridColumnCollection<Order>> orderColumns = c =>
-            ColumnCollections.OrderColumnsAllFeatures(c, NavigationManager.BaseUri);
+        ColumnCollections.OrderColumnsAllFeatures(c, NavigationManager.BaseUri, _shippers);
 
         var query = new QueryDictionary<StringValues>();
         if (!string.IsNullOrWhiteSpace(GridState))
@@ -96,6 +102,7 @@ else
             .SetRowCssClasses(item => item.Customer.IsVip ? "success" : string.Empty)
             .Sortable()
             .Filterable()
+            .SetKeyboard(true)
             .Groupable(true)
             .ClearFiltersButton(true)
             .SetStriped(true)
@@ -111,8 +118,8 @@ else
 
         _grid = client.Grid;
         // Set new items to grid
-        _task = client.UpdateGrid();
-        await _task;
+        _task2 = client.UpdateGrid();
+        await _task2;
     }
 
     protected void OrderDetails(object item)

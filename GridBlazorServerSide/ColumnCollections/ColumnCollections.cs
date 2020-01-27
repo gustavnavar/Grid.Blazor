@@ -29,6 +29,9 @@ namespace GridBlazorServerSide.ColumnCollections
             /* Adding "ContactName" column: */
             c.Add(o => o.Customer.ContactName).Titled(SharedResource.ContactName).SetWidth(250);
 
+            /* Adding "Customer.Country" hidden column: */
+            c.Add(o => o.Customer.Country, true);
+
             /* Adding "Freight" column: */
             c.Add(o => o.Freight)
             .Titled(SharedResource.Freight)
@@ -295,7 +298,10 @@ namespace GridBlazorServerSide.ColumnCollections
             c.Add(o => o.EmployeeID, true).SetSelectField(true, o => o.Employee.EmployeeID.ToString() + " - " + o.Employee.FirstName + " " + o.Employee.LastName, g);
 
             /* Adding "ShipVia" column: */
-            c.Add(o => o.ShipVia, true).SetSelectField(true, o => o.Shipper == null ? "" : o.Shipper.ShipperID.ToString() + " - " + o.Shipper.CompanyName, h);
+            c.Add(o => o.ShipVia).Titled("Via")
+            .SetWidth(250).RenderValueAs(o => o.Shipper == null ? "" : o.Shipper.CompanyName)
+            .SetSelectField(true, o => o.Shipper == null ? "" : o.Shipper.ShipperID.ToString() + " - " + o.Shipper.CompanyName, h)
+            .SetListFilter(h.Invoke());
 
             /* Adding "OrderDate" column: */
             c.Add(o => o.OrderDate, "OrderCustomDate").Titled(SharedResource.OrderCustomDate)

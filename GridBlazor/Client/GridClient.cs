@@ -147,8 +147,14 @@ namespace GridBlazor
 
         public IGridClient<T> Searchable(bool enable, bool onlyTextColumns)
         {
+            return Searchable(enable, onlyTextColumns, false);
+        }
+
+        public IGridClient<T> Searchable(bool enable, bool onlyTextColumns, bool hiddenColumns)
+        {
             _source.SearchingEnabled = enable;
             _source.SearchingOnlyTextColumns = onlyTextColumns;
+            _source.SearchingHiddenColumns = hiddenColumns;
             return this;
         }
 
@@ -215,7 +221,7 @@ namespace GridBlazor
             _source.CreateEnabled = createEnabled;
             _source.ReadEnabled = readEnabled;
             _source.UpdateEnabled = updateEnabled;
-            _source.DeleteEnabled = updateEnabled;
+            _source.DeleteEnabled = deleteEnabled;
             _source.CrudDataService = crudDataService;
             return this;
         }
@@ -490,6 +496,15 @@ namespace GridBlazor
         {
             _source.SubGrids = subGrids;
             _source.SubGridKeys = keys;
+            return this;
+        }
+
+        /// <summary>
+        ///     Configure keyboard utilization
+        /// </summary>
+        public IGridClient<T> SetKeyboard(bool enable)
+        {
+            _source.Keyboard = enable;
             return this;
         }
 

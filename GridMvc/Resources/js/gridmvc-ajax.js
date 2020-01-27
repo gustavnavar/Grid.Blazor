@@ -415,7 +415,8 @@
 
                 self.jqContainer.find(".grid-filter").each(function () {
                     $(this).click(function (e) {
-                        e.preventDefault();
+                        // ListFilterWidget imput click not working when adding preventDefault
+                        //e.preventDefault();
                         return self.openFilterPopup.call(this, self, self.filterMenuHtml());
                     });
                 });

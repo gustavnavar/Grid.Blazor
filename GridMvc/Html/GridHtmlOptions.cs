@@ -39,6 +39,7 @@ namespace GridMvc.Html
         {
             return WithGridItemsCount(string.Empty);
         }
+
         public string Render()
         {
             using (var sw = new StringWriter())
@@ -137,10 +138,17 @@ namespace GridMvc.Html
 
         public IGridHtmlOptions<T> Searchable(bool enable, bool onlyTextColumns)
         {
+            return Searchable(enable, onlyTextColumns, false);
+        }
+
+        public IGridHtmlOptions<T> Searchable(bool enable, bool onlyTextColumns, bool hiddenColumns)
+        {
             _source.SearchingEnabled = enable;
             _source.SearchingOnlyTextColumns = onlyTextColumns;
+            _source.SearchingHiddenColumns = hiddenColumns;
             return this;
         }
+
         public IGridHtmlOptions<T> ExtSortable()
         {
             return ExtSortable(true);

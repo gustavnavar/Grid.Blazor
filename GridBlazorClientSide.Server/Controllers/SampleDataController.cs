@@ -63,7 +63,7 @@ namespace GridBlazorClientSide.Server.Controllers
                     .Filterable()
                     .WithMultipleFilters()
                     .WithGridItemsCount()
-                    .Searchable(true, false);
+                    .Searchable(true, false, false);
 
             var items = server.ItemsToDisplay;
             return Ok(items);
@@ -139,7 +139,7 @@ namespace GridBlazorClientSide.Server.Controllers
         {
             var repository = new OrdersRepository(_context);
             IGridServer<Order> server = new GridServer<Order>(repository.GetAll(), Request.Query,
-                true, "ordersGrid", c => ColumnCollections.OrderColumnsAllFeatures(c, null))
+                true, "ordersGrid", c => ColumnCollections.OrderColumnsAllFeatures(c, null, null))
                     .WithPaging(10)
                     .Sortable()
                     .Filterable()

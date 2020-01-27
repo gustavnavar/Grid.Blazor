@@ -160,5 +160,10 @@ namespace GridBlazor
         ///     Get and set the modifier key
         /// </summary>
         ModifierKey ModifierKey { get; }
+
+        /// <summary>
+        ///     Get and set keyboard utilization
+        /// </summary>
+        bool Keyboard { get; }
     }
 }

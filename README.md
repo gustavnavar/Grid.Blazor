@@ -6,6 +6,12 @@ It supports .NET Core 3.1
 
 ## Notes
 
+- Versions before GridBlazor 1.3.9 had the keyboard navigation enabled by default. This feature requires to focus on the grid element, but it can create problems when used on pages with 2 or more grids. As a consequence, starting with version 1.3.9 it has to be explicitly configured for each grid that requires keyboard navigation. Users can enable keyboard navigation between pages using the ```SetKeyboard``` method of the ```GridClient``` object:
+
+    ```c#
+        var client = new GridClient<Order>( ... ).SetKeyboard(true);
+    ```
+
 - Grid components have been moved to ```GridBlazor.Pages``` folder in GridBlazor 1.3.2. You must add a reference to this namespace in the ```_Imports.razor```: 
 
     ```razor

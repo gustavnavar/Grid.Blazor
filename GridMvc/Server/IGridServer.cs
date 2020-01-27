@@ -74,6 +74,11 @@ namespace GridMvc.Server
         IGridServer<T> Searchable(bool enable, bool onlyTextColumns);
 
         /// <summary>
+        ///     Enable or disable searching for all columns
+        /// </summary>
+        IGridServer<T> Searchable(bool enable, bool onlyTextColumns, bool hiddenColumns);
+
+        /// <summary>
         ///     Enable extended sorting
         /// </summary>
         IGridServer<T> ExtSortable();

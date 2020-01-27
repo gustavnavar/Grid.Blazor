@@ -17,6 +17,8 @@ namespace GridMvc.Tests
         public UInt32 UInt32Field { get; set; }
         public UInt64 UInt64Field { get; set; }
 
+        public Guid GuidField { get; set; }
+
         public override bool Equals(object obj)
         {
             var compareObject = obj as TestModel;
@@ -30,12 +32,13 @@ namespace GridMvc.Tests
                    && compareObject.Int16Field == Int16Field
                    && compareObject.UInt16Field == UInt16Field
                    && compareObject.UInt32Field == UInt32Field
-                   && compareObject.UInt64Field == UInt64Field;
+                   && compareObject.UInt64Field == UInt64Field
+                   && compareObject.GuidField == GuidField;
         }
 
         public override int GetHashCode()
         {
-            return new { Id, Title, Child.ChildCreated, Child.ChildTitle, Int16Field, UInt16Field, UInt32Field, UInt64Field }.GetHashCode();
+            return new { Id, Title, Child.ChildCreated, Child.ChildTitle, Int16Field, UInt16Field, UInt32Field, UInt64Field, GuidField }.GetHashCode();
         }
     } 
 

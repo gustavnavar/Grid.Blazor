@@ -28,6 +28,9 @@ namespace GridBlazorClientSide.Client.ColumnCollections
             /* Adding "ContactName" column: */
             c.Add(o => o.Customer.ContactName).Titled("ContactName").SetWidth(250);
 
+            /* Adding "Customer.Country" hidden column: */
+            c.Add(o => o.Customer.Country, true);
+
             /* Adding "Freight" column: */
             c.Add(o => o.Freight)
             .Titled("Freight")
@@ -278,7 +281,8 @@ namespace GridBlazorClientSide.Client.ColumnCollections
             .RenderValueAs(o => o.Customer.IsVip ? "Yes" : "No");
         };
 
-        public static Action<IGridColumnCollection<Order>, string> OrderColumnsAllFeatures = (c, path) =>
+        public static Action<IGridColumnCollection<Order>, string, IEnumerable<SelectItem>> 
+            OrderColumnsAllFeatures = (c, path, list) =>
         {
             /* Adding "OrderID" column: */
             c.Add(o => o.OrderID).SetPrimaryKey(true).Titled(SharedResource.Number).SetWidth(100);
@@ -290,7 +294,10 @@ namespace GridBlazorClientSide.Client.ColumnCollections
             c.Add(o => o.EmployeeID, true).SetSelectField(true, o => o.Employee.EmployeeID.ToString() + " - " + o.Employee.FirstName + " " + o.Employee.LastName, path + $"api/SampleData/GetAllEmployees");
 
             /* Adding "ShipVia" column: */
-            c.Add(o => o.ShipVia, true).SetSelectField(true, o => o.Shipper == null ? "" : o.Shipper.ShipperID.ToString() + " - " + o.Shipper.CompanyName, path + $"api/SampleData/GetAllShippers");
+            c.Add(o => o.ShipVia).Titled("Via")
+            .SetWidth(250).RenderValueAs(o => o.Shipper == null ? "" : o.Shipper.CompanyName)
+            .SetSelectField(true, o => o.Shipper == null ? "" : o.Shipper.ShipperID.ToString() + " - " + o.Shipper.CompanyName, path + $"api/SampleData/GetAllShippers")
+            .SetListFilter(list);
 
             /* Adding "OrderDate" column: */
             c.Add(o => o.OrderDate, "OrderCustomDate").Titled(SharedResource.OrderCustomDate)

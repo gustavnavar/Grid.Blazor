@@ -15,15 +15,18 @@ You can enable searching for all columns of a grid using the **Searchable** meth
     {
         columns.Add(foo => foo.Title);
         columns.Add(foo => foo.Description);
-    }).Searchable().RenderAsync()
+    }).Searchable(true, false, true).RenderAsync()
 ```
 
 ## Searching parameters
 
 Parameter | Description | Example
 --------- | ----------- | -------
-enable | bool to enable searching on the grid | Searchable(true, ...)
-onlyTextColumns | bool to enable searching on all collumns or just on string ones | Searchable(..., true)
+enable (optional) | bool to enable searching on the grid | Searchable(true, ...)
+onlyTextColumns (optional) | bool to enable searching on all collumns or just on string ones | Searchable(..., true, ...)
+hiddenColumns (optional) | bool to enable searching on hidden columns | Searchable(..., true)
+
+```enable``` default value is ```true```, ```onlyTextColumns``` default value is ```true```, and ```hiddenColumns``` default value is ```false```.
 
 Searching on boolean columns has benn disabled because EF Core 3.0 is not supporting it yet.
 

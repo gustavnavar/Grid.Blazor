@@ -188,7 +188,8 @@ namespace GridBlazor.Tests
                             new TestModelChild { ChildTitle = "E1 - 1", ChildCreated = new DateTime(2002, 6, 7) },
                             new TestModelChild { ChildTitle = "E1 - 2", ChildCreated = new DateTime(2002, 7, 7) },
                             new TestModelChild { ChildTitle = "E1 - 3", ChildCreated = new DateTime(2002, 8, 7) }
-                        }
+                        },
+                    GuidField = new Guid("6e4fe7c4-a5cb-4e29-8041-a80ce17ea727")
                 };
             yield return
                 new TestModel
@@ -201,7 +202,8 @@ namespace GridBlazor.Tests
                             new TestModelChild { ChildTitle = "E3 - 1", ChildCreated = new DateTime(2002, 6, 8) },
                             new TestModelChild { ChildTitle = "E3 - 2", ChildCreated = new DateTime(2002, 7, 8) },
                             new TestModelChild { ChildTitle = "E3 - 3", ChildCreated = new DateTime(2002, 8, 8) }
-                        }
+                        },
+                    GuidField = new Guid("e7c6e4f4-a5cb-4e29-8041-a80ce17ea727")
                 };
             yield return
                 new TestModel
@@ -214,7 +216,8 @@ namespace GridBlazor.Tests
                             new TestModelChild { ChildTitle = "A1 - 1", ChildCreated = new DateTime(2002, 6, 9) },
                             new TestModelChild { ChildTitle = "A1 - 2", ChildCreated = new DateTime(2002, 7, 9) },
                             new TestModelChild { ChildTitle = "A1 - 3", ChildCreated = new DateTime(2002, 8, 9) }
-                        }
+                        },
+                    GuidField = new Guid("22c6e4f4-a5cb-4e29-8041-a80ce17ea727")
                 };
             yield return
                 new TestModel

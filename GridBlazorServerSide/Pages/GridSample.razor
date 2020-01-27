@@ -4,6 +4,7 @@
 @using GridBlazorServerSide.Models
 @using GridBlazorServerSide.Resources
 @using GridBlazorServerSide.Services
+@using GridShared.Events
 @using Microsoft.Extensions.Primitives
 @using System
 @using System.Globalization
@@ -27,7 +28,7 @@
 {
     <div class="row">
         <div class="col-md-9">
-            <GridComponent T="Order" Grid="@_grid" OnRowClicked="@OrderDetails"
+            <GridComponent @ref="_gridComponent" T="Order" Grid="@_grid" OnRowClicked="@OrderDetails"
                            CustomFilters="@_customFilters"></GridComponent>
         </div>
         <div class="col-md-3">
@@ -46,6 +47,7 @@ else
 @code
 {
     private CGrid<Order> _grid;
+    private GridComponent<Order> _gridComponent;
     private Task _task;
     private OrderInfo _orderInfo;
     private IQueryDictionary<Type> _customFilters = new QueryDictionary<Type>();
@@ -94,6 +96,7 @@ else
             .SetRowCssClasses(item => item.Customer.IsVip ? "success" : string.Empty)
             .Sortable()
             .Filterable()
+            .SetKeyboard(true)
             .Groupable(true)
             .ClearFiltersButton(true)
             .SetStriped(true)
@@ -113,6 +116,18 @@ else
         await _task;
     }
 
+    protected override void OnAfterRender(bool firstRender)
+    {
+        if (firstRender)
+        {
+            _gridComponent.PagerChanged += PagerChanged;
+            _gridComponent.SortChanged += SortChanged;
+            _gridComponent.ExtSortChanged += ExtSortChanged;
+            _gridComponent.FilterChanged += FilterChanged;
+            _gridComponent.SearchChanged += SearchChanged;
+        }
+    }
+
     protected void OrderDetails(object item)
     {
         if (item.GetType() == typeof(Order))
@@ -124,6 +139,48 @@ else
             _orderInfo.Order = null;
         }
         _orderInfo.Refresh();
+    }
+
+    private async Task PagerChanged(object sender, PagerEventArgs e)
+    {
+        Console.WriteLine("The pager has changed: EnablePaging: {0}, CurrentPage: {1}, ItemsCount: {2}, PageSize: {3}.",
+            e.Pager.EnablePaging, e.Pager.CurrentPage, e.Pager.ItemsCount, e.Pager.PageSize);
+        await Task.CompletedTask;
+    }
+
+    private async Task SortChanged(object sender, SortEventArgs e)
+    {
+        Console.WriteLine("Sorting has changed: ColumnName: {0}, Direction: {1}.",
+            e.ColumnName, e.Direction);
+        await Task.CompletedTask;
+    }
+
+    private async Task ExtSortChanged(object sender, ExtSortEventArgs e)
+    {
+        Console.WriteLine("Extended sorting has changed:");
+        foreach (var sortValues in e.SortValues)
+        {
+            Console.WriteLine(" - ColumnName: {0}, Direction: {1}, Id: {2}.",
+                sortValues.ColumnName, sortValues.Direction, sortValues.Id);
+        }
+        await Task.CompletedTask;
+    }
+
+    private async Task FilterChanged(object sender, FilterEventArgs e)
+    {
+        Console.WriteLine("Filters have changed:");
+        foreach (var filteredColumn in e.FilteredColumns)
+        {
+            Console.WriteLine(" - ColumnName: {0}, FilterType: {1}, FilterValue: {2}.",
+                filteredColumn.ColumnName, filteredColumn.FilterType, filteredColumn.FilterValue);
+        }
+        await Task.CompletedTask;
+    }
+
+    private async Task SearchChanged(object sender, SearchEventArgs e)
+    {
+        Console.WriteLine("Search has changed: SearchValue: {0}.", e.SearchValue);
+        await Task.CompletedTask;
     }
 }
 

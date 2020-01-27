@@ -75,6 +75,11 @@ namespace GridBlazor
         IGridClient<T> Searchable(bool enable, bool onlyTextColumns);
 
         /// <summary>
+        ///     Enable or disable searching for all columns
+        /// </summary>
+        IGridClient<T> Searchable(bool enable, bool onlyTextColumns, bool hiddenColumns);
+
+        /// <summary>
         ///     Enable extended sorting
         /// </summary>
         IGridClient<T> ExtSortable();
@@ -350,6 +355,11 @@ namespace GridBlazor
         ///    Allow grid to show a SubGrid
         /// </summary>
         IGridClient<T> SubGrid(Func<object[], Task<ICGrid>> subGrids, params string[] keys);
+
+        /// <summary>
+        ///     Configure keyboard utilization
+        /// </summary>
+        IGridClient<T> SetKeyboard(bool enable);
 
         /// <summary>
         ///     Configure the modifier key
