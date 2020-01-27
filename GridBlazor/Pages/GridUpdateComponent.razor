@@ -21,7 +21,7 @@
                         if (column.ReadOnlyOnUpdate)
                         {
                             string text = ((GridColumnBase<T>)column).GetFormatedValue(((IGridColumn<T>)column).IsSelectField.Expression, Item);
-                            <input id="@column.FieldName" class="form-control" readonly="readonly" value="@text" />
+                            <input id="@column.FieldName" name="@column.FieldName" class="form-control" readonly="readonly" value="@text" />
                         }
                         else
                         {
@@ -328,16 +328,16 @@
                             {
                                 if (value != null && (bool)value == true)
                                 {
-                                    <input id="@column.FieldName" type="checkbox" class="form-control" disabled="disabled" readonly="readonly" checked="checked" value="true" />
+                                    <input id="@column.FieldName" name="@column.FieldName" type="checkbox" class="form-control" disabled="disabled" readonly="readonly" checked="checked" value="true" />
                                 }
                                 else
                                 {
-                                    <input id="@column.FieldName" type="checkbox" class="form-control" disabled="disabled" readonly="readonly" value="false" />
+                                    <input id="@column.FieldName" name="@column.FieldName" type="checkbox" class="form-control" disabled="disabled" readonly="readonly" value="false" />
                                 }
                             }
                             else
                             {
-                                <input id="@column.FieldName" class="form-control" readonly="readonly" value="@column.GetFormatedValue(value)" />
+                                <input id="@column.FieldName" name="@column.FieldName" class="form-control" readonly="readonly" value="@column.GetFormatedValue(value)" />
                             }
                         }
                         else

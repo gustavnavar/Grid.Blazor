@@ -133,6 +133,8 @@ Other fields that you want to be shown as dropdowns with a closed list can also 
 
 All fields to be included in the CRUD forms but not in the grid as columns should be configured as hidden (e.g. **Add(o => o.RequiredDate, true)**).
 
+All columns required to be included in the CRUD forms as **read only** should be configured using the **SetReadOnlyOnUpdate(true)** method.
+
 And finally all columns included in the grid but not in the CRUD forms should be configured as "CRUD hidden" using the **SetCrudHidden(true)** method.
 
 This is an example of column definition:
@@ -148,7 +150,7 @@ This is an example of column definition:
         c.Add(o => o.ShipVia, true).SetSelectField(true, o => o.Shipper == null ? "" : o.Shipper.ShipperID.ToString() 
             + " - " + o.Shipper.CompanyName, shipperService.GetAllShippers);
         c.Add(o => o.OrderDate, "OrderCustomDate").Titled(SharedResource.OrderCustomDate).Format("{0:yyyy-MM-dd}");
-        c.Add(o => o.Customer.CompanyName).Titled(SharedResource.CompanyName).SetCrudHidden(true);
+        c.Add(o => o.Customer.CompanyName).Titled(SharedResource.CompanyName).SetReadOnlyOnUpdate(true);
         c.Add(o => o.Customer.ContactName).Titled(SharedResource.ContactName).SetCrudHidden(true);
         c.Add(o => o.Freight).Titled(SharedResource.Freight).Format("{0:F}");
         c.Add(o => o.Customer.IsVip).Titled(SharedResource.IsVip).RenderValueAs(o => o.Customer.IsVip ? "Yes" : "No").SetCrudHidden(true);
