@@ -28,6 +28,7 @@ namespace GridShared.Columns
         IGrid ParentGrid { get; }
         bool Hidden { get; }
         bool CrudHidden { get; }
+        bool ReadOnlyOnUpdate { get; }
         bool IsPrimaryKey { get; }
     }
 
@@ -191,6 +192,11 @@ namespace GridShared.Columns
         ///     Sets the column as hidden in crud views
         /// </summary>
         IGridColumn<T> SetCrudHidden(bool enabled);
+
+        /// <summary>
+        ///     Sets the column as readonly on update.
+        /// </summary>
+        IGridColumn<T> SetReadOnlyOnUpdate(bool enabled);
 
         /// <summary>
         ///     Sets the column as primary key

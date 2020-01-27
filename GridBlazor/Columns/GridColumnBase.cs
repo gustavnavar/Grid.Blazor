@@ -49,6 +49,8 @@ namespace GridBlazor.Columns
 
         public bool CrudHidden { get; protected set; } = false;
 
+        public bool ReadOnlyOnUpdate { get; protected set; } = false;
+
         public bool IsPrimaryKey { get; protected set; } = false;
 
         public (bool IsSelectKey, Func<T, string> Expression, string Url, Func<IEnumerable<SelectItem>> SelectItemExpr) IsSelectField { get; protected set; } = (false, null, null, null);
@@ -233,6 +235,12 @@ namespace GridBlazor.Columns
         public IGridColumn<T> SetCrudHidden(bool enabled)
         {
             CrudHidden = enabled;
+            return this;
+        }
+
+        public IGridColumn<T> SetReadOnlyOnUpdate(bool enabled)
+        {
+            ReadOnlyOnUpdate = enabled;
             return this;
         }
 
