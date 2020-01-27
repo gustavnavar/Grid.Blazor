@@ -75,6 +75,9 @@ namespace GridBlazor.Pages
         public string GridFooterCssClass { get; set; } = "grid-footer";
 
         [Parameter]
+        public string GridItemsCountCssClass { get; set; } = "grid-itemscount";
+
+        [Parameter]
         public string TableCssClass { get; set; } = "table grid-table";
 
         [Parameter]

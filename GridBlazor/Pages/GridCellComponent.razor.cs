@@ -7,7 +7,6 @@ namespace GridBlazor.Pages
 {
     public partial class GridCellComponent<T>
     {
-        private const string TdClass = "grid-cell";
         private const string TdStyle = "display:none;";
 
         private int _sequence = 0;
@@ -19,8 +18,12 @@ namespace GridBlazor.Pages
 
         [Parameter]
         public IGridColumn Column { get; set; }
+
         [Parameter]
         public object Item { get; set; }
+
+        [Parameter]
+        public string TdClass { get; set; } = "grid-cell";
 
         protected override void OnParametersSet()
         {
