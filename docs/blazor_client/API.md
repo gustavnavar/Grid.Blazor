@@ -46,6 +46,7 @@ But the parameters **grid-sorting**, **grid-filter** and **grid-clearinitfilter*
         * **7**: GreaterThanOrEquals
         * **8**: LessThanOrEquals
         * **9**: Special type to define the type of condition for multiple filtering
+        * **10**: NotEquals
     * the third part is  the **filterValue**, a string for the value of the filter. 
 
     In the special case of multiple filtering the possible values of a **grid-filter** represents the condition used to combine filter for the specified column:

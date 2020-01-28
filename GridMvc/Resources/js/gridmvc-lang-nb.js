@@ -9,6 +9,7 @@ GridMvc.lang.de = {
     applyFilterButtonText: "Aktiver",
     filterSelectTypes: {
         Equals: "Er lik",
+        NotEquals: "Ikke lik",
         StartsWith: "Starter med",
         Contains: "Inneholder",
         EndsWith: "Slutter med",

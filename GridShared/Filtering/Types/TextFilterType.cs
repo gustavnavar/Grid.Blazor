@@ -19,6 +19,7 @@ namespace GridShared.Filtering.Types
             switch (type)
             {
                 case GridFilterType.Equals:
+                case GridFilterType.NotEquals:
                 case GridFilterType.Contains:
                 case GridFilterType.StartsWith:
                 case GridFilterType.EndsWidth:
@@ -47,16 +48,19 @@ namespace GridShared.Filtering.Types
             switch (filterType)
             {
                 case GridFilterType.Equals:
-                    binaryExpression = GetCaseInsensitiveСompartion(string.Empty, leftExpr, valueExpr);
+                    binaryExpression = GetCaseInsensitiveСomparation(string.Empty, leftExpr, valueExpr);
+                    break;
+                case GridFilterType.NotEquals:
+                    binaryExpression = GetCaseInsensitiveСomparation("NotEquals", leftExpr, valueExpr);
                     break;
                 case GridFilterType.Contains:
-                    binaryExpression = GetCaseInsensitiveСompartion("Contains", leftExpr, valueExpr);
+                    binaryExpression = GetCaseInsensitiveСomparation("Contains", leftExpr, valueExpr);
                     break;
                 case GridFilterType.StartsWith:
-                    binaryExpression = GetCaseInsensitiveСompartion("StartsWith", leftExpr, valueExpr);
+                    binaryExpression = GetCaseInsensitiveСomparation("StartsWith", leftExpr, valueExpr);
                     break;
                 case GridFilterType.EndsWidth:
-                    binaryExpression = GetCaseInsensitiveСompartion("EndsWith", leftExpr, valueExpr);
+                    binaryExpression = GetCaseInsensitiveСomparation("EndsWith", leftExpr, valueExpr);
                     break;
                 default:
                     throw new ArgumentOutOfRangeException();
@@ -64,7 +68,7 @@ namespace GridShared.Filtering.Types
             return binaryExpression;
         }
 
-        private Expression GetCaseInsensitiveСompartion(string methodName, Expression leftExpr, Expression rightExpr)
+        private Expression GetCaseInsensitiveСomparation(string methodName, Expression leftExpr, Expression rightExpr)
         {
             Type targetType = TargetType;
             //case insensitive compartion:
@@ -74,10 +78,17 @@ namespace GridShared.Filtering.Types
 
             if (!string.IsNullOrEmpty(methodName))
             {
-                MethodInfo mi = targetType.GetMethod(methodName, new[] {typeof (string)});
-                if (mi == null)
-                    throw new MissingMethodException("There is no method - " + methodName);
-                return Expression.Call(upperFirstExpr, mi, upperValueExpr);
+                if (methodName == "NotEquals")
+                {
+                    return Expression.NotEqual(upperFirstExpr, upperValueExpr);
+                }
+                else
+                {
+                    MethodInfo mi = targetType.GetMethod(methodName, new[] { typeof(string) });
+                    if (mi == null)
+                        throw new MissingMethodException("There is no method - " + methodName);
+                    return Expression.Call(upperFirstExpr, mi, upperValueExpr);
+                }
             }
             return Expression.Equal(upperFirstExpr, upperValueExpr);
         }

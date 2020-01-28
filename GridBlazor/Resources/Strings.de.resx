@@ -237,4 +237,7 @@
   <data name="UpdateItem" xml:space="preserve">
     <value>Artikel aktualisieren</value>
   </data>
+  <data name="NotEqual" xml:space="preserve">
+    <value>Nicht gleich</value>
+  </data>
 </root>

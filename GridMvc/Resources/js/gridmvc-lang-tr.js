@@ -9,6 +9,7 @@ GridMvc.lang.tr = {
     applyFilterButtonText: "Uygula",
     filterSelectTypes: {
         Equals: "Eşit",
+        NotEquals: "Eşit değil",
         StartsWith: "İle Başlar",
         Contains: "İçinde Geçen",
         EndsWith: "İle Biten",

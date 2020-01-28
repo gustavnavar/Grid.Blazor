@@ -40,8 +40,9 @@
                                 <label class="control-label"><b>@Strings.FilterTypeLabel:</b></label>
                                 <div>
                                     <select @ref="firstSelect" class="grid-filter-type form-control" @bind="_filters[j].Type">
+                                        <option value="2">@Strings.Contains</option>
                                         <option value="1">@Strings.Equal</option>
-                                        <option value="2" selected="selected">@Strings.Contains</option>
+                                        <option value="10">@Strings.NotEqual</option>
                                         <option value="3">@Strings.StartsWith</option>
                                         <option value="4">@Strings.EndsWith</option>
                                     </select>
@@ -51,8 +52,9 @@
                             {
                                 <div>
                                     <select class="grid-filter-type form-control" @bind="_filters[j].Type">
+                                        <option value="2">@Strings.Contains</option>
                                         <option value="1">@Strings.Equal</option>
-                                        <option value="2" selected="selected">@Strings.Contains</option>
+                                        <option value="10">@Strings.NotEqual</option>
                                         <option value="3">@Strings.StartsWith</option>
                                         <option value="4">@Strings.EndsWith</option>
                                     </select>

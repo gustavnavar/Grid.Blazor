@@ -236,4 +236,7 @@
   <data name="UpdateItem" xml:space="preserve">
     <value>Öğe Güncelle</value>
   </data>
+  <data name="NotEqual" xml:space="preserve">
+    <value>Eşit değil</value>
+  </data>
 </root>

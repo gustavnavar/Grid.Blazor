@@ -702,6 +702,7 @@ GridMvc.lang.en = {
     applyFilterButtonText: "Apply",
     filterSelectTypes: {
         Equals: "Equals",
+        NotEquals: "Not Equals",
         StartsWith: "Starts with",
         Contains: "Contains",
         EndsWith: "Ends with",
@@ -778,7 +779,7 @@ TextFilterWidget = (function ($) {
         }
         if (this.filterData[columnName].values.length === 0) {
             this.filterData[columnName].values.push({
-                filterType: "1",
+                filterType: "2",
                 filterValue: "",
                 columnName: columnName
             });
@@ -820,8 +821,9 @@ TextFilterWidget = (function ($) {
             }         
             html +=         '<div>\
                                 <select class="grid-filter-type form-control">\
+                                    <option value="2" ' + (this.filterData[columnName].values[i].filterType.toString() === "2" ? "selected=\"selected\"" : "") + ' > ' + this.lang.filterSelectTypes.Contains + '</option >\
                                     <option value="1" ' + (this.filterData[columnName].values[i].filterType.toString() === "1" ? "selected=\"selected\"" : "") + '>' + this.lang.filterSelectTypes.Equals + '</option>\
-                                    <option value="2" ' + (this.filterData[columnName].values[i].filterType.toString() === "2" ? "selected=\"selected\"" : "") + '>' + this.lang.filterSelectTypes.Contains + '</option>\
+                                    <option value="10" ' + (this.filterData[columnName].values[i].filterType.toString() === "10" ? "selected=\"selected\"" : "") + '>' + this.lang.filterSelectTypes.NotEquals + '</option>\
                                     <option value="3" ' + (this.filterData[columnName].values[i].filterType.toString() === "3" ? "selected=\"selected\"" : "") + '>' + this.lang.filterSelectTypes.StartsWith + '</option>\
                                     <option value="4" ' + (this.filterData[columnName].values[i].filterType.toString() === "4" ? "selected=\"selected\"" : "") + '>' + this.lang.filterSelectTypes.EndsWith + '</option>\
                                 </select>\
@@ -898,7 +900,7 @@ TextFilterWidget = (function ($) {
                 for (var i = 0; i < types.length; i++) {
                     $context.values.push({ filterType: types[i].value, filterValue: values[i].value, columnName: columnName });
                 }
-                $context.values.push({ filterType: "1", filterValue: "", columnName: columnName });
+                $context.values.push({ filterType: "2", filterValue: "", columnName: columnName });
                 self.renderWidget(columnName);
                 self.registerEvents(columnName);
                 self.onShow(columnName);
@@ -1016,6 +1018,7 @@ NumberFilterWidget = (function ($) {
             html +=         '<div>\
                                 <select class="grid-filter-type form-control">\
                                     <option value="1" ' + (this.filterData[columnName].values[i].filterType.toString() === "1" ? "selected=\"selected\"" : "") + '>' + this.lang.filterSelectTypes.Equals + '</option>\
+                                    <option value="10" ' + (this.filterData[columnName].values[i].filterType.toString() === "10" ? "selected=\"selected\"" : "") + '>' + this.lang.filterSelectTypes.NotEquals + '</option>\
                                     <option value="5" ' + (this.filterData[columnName].values[i].filterType.toString() === "5" ? "selected=\"selected\"" : "") + '>' + this.lang.filterSelectTypes.GreaterThan + '</option>\
                                     <option value="6" ' + (this.filterData[columnName].values[i].filterType.toString() === "6" ? "selected=\"selected\"" : "") + '>' + this.lang.filterSelectTypes.LessThan + '</option>\
                                     <option value="7" ' + (this.filterData[columnName].values[i].filterType.toString() === "7" ? "selected=\"selected\"" : "") + '>' + this.lang.filterSelectTypes.GreaterThanOrEquals + '</option>\
@@ -1232,6 +1235,7 @@ DateTimeFilterWidget = (function ($) {
             html +=         '<div>\
                                 <select class="grid-filter-type form-control">\
                                     <option value="1" ' + (this.filterData[columnName].values[i].filterType.toString() === "1" ? "selected=\"selected\"" : "") + '>' + this.lang.filterSelectTypes.Equals + '</option>\
+                                    <option value="10" ' + (this.filterData[columnName].values[i].filterType.toString() === "10" ? "selected=\"selected\"" : "") + '>' + this.lang.filterSelectTypes.NotEquals + '</option>\
                                     <option value="5" ' + (this.filterData[columnName].values[i].filterType.toString() === "5" ? "selected=\"selected\"" : "") + '>' + this.lang.filterSelectTypes.GreaterThan + '</option>\
                                     <option value="6" ' + (this.filterData[columnName].values[i].filterType.toString() === "6" ? "selected=\"selected\"" : "") + '>' + this.lang.filterSelectTypes.LessThan + '</option>\
                                     <option value="7" ' + (this.filterData[columnName].values[i].filterType.toString() === "7" ? "selected=\"selected\"" : "") + '>' + this.lang.filterSelectTypes.GreaterThanOrEquals + '</option>\

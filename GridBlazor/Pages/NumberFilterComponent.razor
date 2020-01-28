@@ -41,6 +41,7 @@
                                 <div>
                                     <select @ref="firstSelect" class="grid-filter-type form-control" @bind="_filters[j].Type">
                                         <option value="1">@Strings.Equal</option>
+                                        <option value="10">@Strings.NotEqual</option>
                                         <option value="5">@Strings.GreaterThan</option>
                                         <option value="6">@Strings.LessThan</option>
                                         <option value="7">@Strings.GreaterThanOrEquals</option>
@@ -51,14 +52,15 @@
                             else
                             {
                                 <div>
-                                <select class="grid-filter-type form-control" @bind="_filters[j].Type">
-                                    <option value="1">@Strings.Equal</option>
-                                    <option value="5">@Strings.GreaterThan</option>
-                                    <option value="6">@Strings.LessThan</option>
-                                    <option value="7">@Strings.GreaterThanOrEquals</option>
-                                    <option value="8">@Strings.LessThanOrEquals</option>
-                                </select>
-                            </div>
+                                    <select class="grid-filter-type form-control" @bind="_filters[j].Type">
+                                        <option value="1">@Strings.Equal</option>
+                                        <option value="10">@Strings.NotEqual</option>
+                                        <option value="5">@Strings.GreaterThan</option>
+                                        <option value="6">@Strings.LessThan</option>
+                                        <option value="7">@Strings.GreaterThanOrEquals</option>
+                                        <option value="8">@Strings.LessThanOrEquals</option>
+                                    </select>
+                                </div>
                             }
                         </div>
                         <div class="col-md-6">
