@@ -69,7 +69,7 @@
                 self.currentPage = this.options.currentPage;
             }
             else {
-                self.currentPage = 1;
+                self.currentPage = "1";
             }
 
             self.loadPage();
@@ -154,7 +154,7 @@
                 self.currentPage = this.options.currentPage;
             }
             else {
-                self.currentPage = 1;
+                self.currentPage = "1";
             }
             self.pagedDataAction = options.getPagedData;
             self.subGridDataAction = options.getSubGridData;
