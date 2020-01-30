@@ -1,5 +1,6 @@
 ﻿@using GridBlazor.Resources
 @using GridBlazorServerSide.Models
+@using GridShared.Columns
 @inherits GridUpdateComponent<Order>
 
 <h1>@Strings.Add Order</h1>
@@ -18,7 +19,20 @@
         <div class="form-group">
             <label for="CustomerID" class="control-label col-md-2">Customer Id: </label>
             <div class="col-md-5">
-                <InputText id="CustomerID" class="form-control" @bind-Value="Item.CustomerID" />
+                <select id="CustomerID" name="CustomerID" class="form-control" @bind="Item.CustomerID">
+                    <option value="">@Strings.SelectItem</option>
+                    @foreach (var selectItem in customerIdColumn.SelectItems)
+                    {
+                        if (selectItem.Value == Item.CustomerID)
+                        {
+                            <option value="@selectItem.Value" selected="selected">@selectItem.Title</option>
+                        }
+                        else
+                        {
+                            <option value="@selectItem.Value">@selectItem.Title</option>
+                        }
+                    }
+                </select>
             </div>
         </div>
 
@@ -107,3 +121,13 @@
         </div>
     </div>
 </EditForm>
+
+@code
+{
+    private IGridColumn<Order> customerIdColumn;
+
+    protected override void OnParametersSet()
+    {
+        customerIdColumn = (IGridColumn<Order>)GridComponent.Grid.Columns.GetByName("CustomerID");
+    }
+}

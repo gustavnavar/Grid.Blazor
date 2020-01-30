@@ -224,10 +224,13 @@ namespace GridBlazorClientSide.Client.ColumnCollections
             c.Add(o => o.ShipCountry, true);
         };
 
-        public static Action<IGridColumnCollection<Order>> OrderColumnsWithCustomCrud = c =>
+        public static Action<IGridColumnCollection<Order>, string> OrderColumnsWithCustomCrud = (c, path) =>
         {
             /* Adding "OrderID" column: */
             c.Add(o => o.OrderID).SetPrimaryKey(true).Titled(SharedResource.Number).SetWidth(100);
+
+            /* Adding "CustomerID" column: */
+            c.Add(o => o.CustomerID, true).SetSelectField(true, o => o.Customer.CustomerID + " - " + o.Customer.CompanyName, path + $"api/SampleData/GetAllCustomers");
 
             /* Adding "OrderDate" column: */
             c.Add(o => o.OrderDate, "OrderCustomDate").Titled(SharedResource.OrderCustomDate)

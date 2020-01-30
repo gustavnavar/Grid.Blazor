@@ -43,8 +43,8 @@ else
         var query = new QueryDictionary<StringValues>();
         string url = NavigationManager.BaseUri + "api/SampleData/OrderColumnsWithCrud";
 
-        var client = new GridClient<Order>(HttpClient, url, query, false, "ordersGrid", 
-            ColumnCollections.OrderColumnsWithCustomCrud, locale)
+        var client = new GridClient<Order>(HttpClient, url, query, false, "ordersGrid", c =>
+            ColumnCollections.OrderColumnsWithCustomCrud(c, NavigationManager.BaseUri), locale)
             .Sortable()
             .Filterable()
             .SetStriped(true)
