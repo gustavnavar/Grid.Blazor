@@ -43,6 +43,8 @@ namespace GridBlazor.Pages
         public event Func<object, SearchEventArgs, Task> SearchChanged;
         public event Func<object, PagerEventArgs, Task> PagerChanged;
 
+        internal event Action FilterButtonClicked;
+
         [Inject]
         private IJSRuntime jSRuntime { get; set; }
 
@@ -408,6 +410,11 @@ namespace GridBlazor.Pages
             Grid.RemoveQueryString(ColumnOrderValue.DefaultSortingQueryParameter, column.ToString());
             await UpdateGrid();
             await OnExtSortChanged();
+        }
+
+        internal void FilterIconClicked()
+        {
+            FilterButtonClicked.Invoke();
         }
 
         public async Task CreateHandler()

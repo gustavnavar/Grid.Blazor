@@ -126,6 +126,14 @@ namespace GridBlazor.Pages
             builder.CloseComponent();
         };
 
+        protected override void OnAfterRender(bool firstRender)
+        {
+            if (firstRender)
+            {
+                GridComponent.FilterButtonClicked += HideFilter;
+            }
+        }
+
         /// <summary>
         ///     Extract query string parameter name from default grid pager (if using)
         /// </summary>
@@ -150,8 +158,12 @@ namespace GridBlazor.Pages
 
         public async Task FilterIconClicked()
         {
+            var isVisible = _isVisible;
+            GridComponent.FilterIconClicked();
+
             //switch visibility for the filter dialog:
-            _isVisible = !_isVisible;
+            _isVisible = !isVisible;
+                
             StateHasChanged();
             await GridComponent.SetGridFocus();
         }
@@ -173,6 +185,15 @@ namespace GridBlazor.Pages
             var values = GridComponent.Grid.Settings.SortSettings.SortValues;
             var maxId = values.Any() ? values.Max(x => x.Id) + 1 : 1;
             GridComponent.Payload = new ColumnOrderValue(Column.Name, Column.Direction ?? GridSortDirection.Ascending, maxId);
+        }
+
+        private void HideFilter()
+        {
+            if (_isVisible)
+            {
+                _isVisible = false;
+                StateHasChanged();
+            }
         }
     }
 }
