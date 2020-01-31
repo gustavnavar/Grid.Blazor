@@ -227,14 +227,21 @@ namespace GridBlazorServerSide.ColumnCollections
             c.Add(o => o.ShipCountry, true);
         };
 
-        public static Action<IGridColumnCollection<Order>, Func<IEnumerable<SelectItem>>>
-            OrderColumnsWithCustomCrud = (c, f) =>
+        public static Action<IGridColumnCollection<Order>, Func<IEnumerable<SelectItem>>,
+            Func<IEnumerable<SelectItem>>, Func<IEnumerable<SelectItem>>>
+            OrderColumnsWithCustomCrud = (c, f, g, h) =>
         {
             /* Adding "OrderID" column: */
             c.Add(o => o.OrderID).SetPrimaryKey(true).Titled(SharedResource.Number).SetWidth(100);
 
             /* Adding "CustomerID" column: */
             c.Add(o => o.CustomerID, true).SetSelectField(true, o => o.Customer.CustomerID + " - " + o.Customer.CompanyName, f);
+
+            /* Adding "EmployeeID" column: */
+            c.Add(o => o.EmployeeID, true).SetSelectField(true, o => o.Employee.EmployeeID.ToString() + " - " + o.Employee.FirstName + " " + o.Employee.LastName, g);
+
+            /* Adding "ShipVia" column: */
+            c.Add(o => o.ShipVia, true).SetSelectField(true, o => o.Shipper == null ? "" : o.Shipper.ShipperID.ToString() + " - " + o.Shipper.CompanyName, h);
 
             /* Adding "OrderDate" column: */
             c.Add(o => o.OrderDate, "OrderCustomDate").Titled(SharedResource.OrderCustomDate)
