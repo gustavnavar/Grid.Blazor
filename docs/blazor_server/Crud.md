@@ -133,7 +133,7 @@ Other fields that you want to be shown as dropdowns with a closed list can also 
 
 All fields to be included in the CRUD forms but not in the grid as columns should be configured as hidden (e.g. **Add(o => o.RequiredDate, true)**).
 
-All columns required to be included in the CRUD forms as **read only** should be configured using the **SetReadOnlyOnUpdate(true)** method.
+All columns required to be included in the Update form as **read only** should be configured using the **SetReadOnlyOnUpdate(true)** method.
 
 And finally all columns included in the grid but not in the CRUD forms should be configured as "CRUD hidden" using the **SetCrudHidden(true)** method.
 
