@@ -188,7 +188,7 @@ namespace GridBlazorServerSide.ColumnCollections
 
             /* Adding "CompanyName" column: */
             c.Add(o => o.Customer.CompanyName).Titled(SharedResource.CompanyName)
-            .SetWidth(250).SetReadOnlyOnUpdate(true);
+            .SetWidth(250).SetCrudHidden(true).SetReadOnlyOnUpdate(true);
 
             /* Adding "ContactName" column: */
             c.Add(o => o.Customer.ContactName).Titled(SharedResource.ContactName).SetWidth(250).SetCrudHidden(true);
@@ -249,7 +249,7 @@ namespace GridBlazorServerSide.ColumnCollections
             
             /* Adding "CompanyName" column: */
             c.Add(o => o.Customer.CompanyName).Titled(SharedResource.CompanyName)
-            .SetWidth(250).SetReadOnlyOnUpdate(true);
+            .SetWidth(250).SetCrudHidden(true).SetReadOnlyOnUpdate(true);
             
             /* Adding "ContactName" column: */
             c.Add(o => o.Customer.ContactName).Titled(SharedResource.ContactName).SetWidth(250).SetCrudHidden(true);
@@ -324,7 +324,7 @@ namespace GridBlazorServerSide.ColumnCollections
             /* Adding "CompanyName" column: */
             c.Add(o => o.Customer.CompanyName).Titled(SharedResource.CompanyName)
             .SetWidth(250)
-            .SetReadOnlyOnUpdate(true)
+            .SetCrudHidden(true).SetReadOnlyOnUpdate(true)
             //.ThenSortByDescending(o => o.OrderID)
             //.SetInitialFilter(GridFilterType.StartsWith, "a")
             .SetFilterWidgetType(CompanyNameFilter)
