@@ -37,7 +37,7 @@ else
 
     protected override void OnInitialized()
     {
-        CultureInfo.CurrentCulture = new CultureInfo(Startup.Culture);
+        CultureInfo.CurrentCulture = new CultureInfo(Program.Culture);
     }
 
     protected override async Task OnParametersSetAsync()

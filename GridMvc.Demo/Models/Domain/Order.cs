@@ -14,6 +14,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Text.Json.Serialization;
 
 namespace GridMvc.Demo.Models
 {
@@ -52,8 +53,9 @@ namespace GridMvc.Demo.Models
         public string ShipCountry { get; set; }
         public virtual Customer Customer { get; set; }
         public virtual Employee Employee { get; set; }
+        [JsonIgnore]
         public virtual ICollection<OrderDetail> OrderDetails { get; set; }
-
+        
         [ForeignKey("ShipVia")]
         public virtual Shipper Shipper { get; set; }
     }

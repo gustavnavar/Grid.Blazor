@@ -2,7 +2,7 @@
 
 A fork from: https://gridmvc.codeplex.com/
 
-It supports .NET Core 3.1
+It supports .NET Core 3.1 and Blazor WebAssembly 3.2.0 Preview 1
 
 ## Notes
 
@@ -19,6 +19,13 @@ It supports .NET Core 3.1
     ```
 
 - Blazor Server App require these changes on to the **_Host.cshtml** file for .Net Core 3.1:
+    
+    ```html
+        <link href="_content/GridBlazor/css/gridblazor.min.css" rel="stylesheet" />
+        <script src="_content/GridBlazor/js/gridblazor.js"></script>
+    ```
+
+- Blazor WebAssembly projects require these changes on to the **wwwroot/index.html** file for version 3.2.0 Preview 1:
     
     ```html
         <link href="_content/GridBlazor/css/gridblazor.min.css" rel="stylesheet" />
