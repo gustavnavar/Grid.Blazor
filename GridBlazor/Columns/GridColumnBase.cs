@@ -149,8 +149,15 @@ namespace GridBlazor.Columns
         public IGridColumn<T> RenderComponentAs(Type componentType, IList<Action<object>> actions,
             IList<Func<object, Task>> functions, object obj)
         {
-            if (componentType.GetInterfaces().Any(r => r.Equals(typeof(ICustomGridComponent<T>)))
-                && componentType.IsSubclassOf(typeof(ComponentBase)))
+            /// Get type arguments from any <see cref="ICustomGridComponent<>"/> interface 
+            /// in <paramref name="componentType"/> to make sure <see cref="T"/> is assignable to it
+            List<Type> typeArgs = (from iType in componentType.GetInterfaces()
+                                   where iType.IsGenericType && 
+                                   iType.GetGenericTypeDefinition() == typeof(ICustomGridComponent<>)
+                                   select iType.GetGenericArguments()[0]).ToList();
+            
+            if (typeArgs.Any(t => t.IsAssignableFrom(typeof(T))) &&
+                componentType.IsSubclassOf(typeof(ComponentBase)))
             {
                 ComponentType = componentType;
                 Actions = actions;
