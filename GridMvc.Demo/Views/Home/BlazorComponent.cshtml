@@ -4,6 +4,8 @@
     ViewBag.Title = "Blazor component";
 }
 
+<link rel="stylesheet" href="~/_content/GridBlazor/css/gridblazor.css" />
+
 <div class="row">
     <div class="col-md-12">
         <p>Orders administration with a Blazor component in ASP.NET Core MVC</p>
@@ -18,4 +20,13 @@
     @(await Html.RenderComponentAsync<OrdersComponent>(RenderMode.ServerPrerendered))
 </div>
 
+<script src="~/_content/GridBlazor/js/gridblazor.js"></script>
+<script src="~/_framework/blazor.server.js" autostart="false"></script>
 
+<script type="text/javascript">
+    Blazor.start({
+        configureSignalR: function (builder) {
+            builder.withUrl("/_blazor");
+        }
+    });
+</script>

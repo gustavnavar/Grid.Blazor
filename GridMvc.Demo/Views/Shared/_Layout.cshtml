@@ -4,7 +4,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@ViewData["Title"] - GridMvc</title>
-    <base href="/" />
+
     <link rel="stylesheet" href="~/css/bootstrap/bootstrap.min.css" />
     <environment names="Development">
         <link href="~/css/gridmvc.css" rel="stylesheet" type="text/css" />
@@ -61,7 +61,6 @@
         <script src="~/lib/bootstrap-datepicker/locales/bootstrap-datepicker.tr.min.js"></script>
         <script src="~/js/site.min.js"></script>
     </environment>
-    <script src="~/_content/GridBlazor/css/gridblazor.css"></script>
 </head>
 <body>
     <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-dark box-shadow mb-3">
@@ -94,9 +93,6 @@
             <p>&copy; 2017 - GridMvc.Demo</p>
         </footer>
     </div>
-
-    <script src="_framework/blazor.server.js"></script>
-    <script src="~/_content/GridBlazor/js/gridblazor.js"></script>
 
     @RenderSection("Scripts", required: false)
 </body>
