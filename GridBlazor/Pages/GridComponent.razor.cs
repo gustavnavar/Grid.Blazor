@@ -510,6 +510,15 @@ namespace GridBlazor.Pages
 
         protected RenderFragment CreateCrudComponent() => builder =>
         {
+            builder.OpenComponent<CascadingValue<GridComponent<T>>>(++_sequence);
+            builder.AddAttribute(++_sequence, "Value", this);
+            builder.AddAttribute(++_sequence, "Name", "GridComponent");
+            builder.AddAttribute(++_sequence, "ChildContent", CreateCrudChildComponent());
+            builder.CloseComponent();
+        };
+
+        private RenderFragment CreateCrudChildComponent() => builder =>
+        {
             var componentType = Grid.CreateComponent;
             builder.OpenComponent(++_sequence, componentType);
             builder.AddAttribute(++_sequence, "Item", _item);
@@ -528,7 +537,16 @@ namespace GridBlazor.Pages
             builder.CloseComponent();
         };
 
-        private RenderFragment ReadCrudComponent() => builder =>
+        protected RenderFragment ReadCrudComponent() => builder =>
+        {
+            builder.OpenComponent<CascadingValue<GridComponent<T>>>(++_sequence);
+            builder.AddAttribute(++_sequence, "Value", this);
+            builder.AddAttribute(++_sequence, "Name", "GridComponent");
+            builder.AddAttribute(++_sequence, "ChildContent", ReadCrudChildComponent());
+            builder.CloseComponent();
+        };
+
+        private RenderFragment ReadCrudChildComponent() => builder =>
         {
             var componentType = Grid.ReadComponent;
             builder.OpenComponent(++_sequence, componentType);
@@ -548,7 +566,16 @@ namespace GridBlazor.Pages
             builder.CloseComponent();
         };
 
-        private RenderFragment UpdateCrudComponent() => builder =>
+        protected RenderFragment UpdateCrudComponent() => builder =>
+        {
+            builder.OpenComponent<CascadingValue<GridComponent<T>>>(++_sequence);
+            builder.AddAttribute(++_sequence, "Value", this);
+            builder.AddAttribute(++_sequence, "Name", "GridComponent");
+            builder.AddAttribute(++_sequence, "ChildContent", UpdateCrudChildComponent());
+            builder.CloseComponent();
+        };
+
+        private RenderFragment UpdateCrudChildComponent() => builder =>
         {
             var componentType = Grid.UpdateComponent;
             builder.OpenComponent(++_sequence, componentType);
@@ -568,7 +595,16 @@ namespace GridBlazor.Pages
             builder.CloseComponent();
         };
 
-        private RenderFragment DeleteCrudComponent() => builder =>
+        protected RenderFragment DeleteCrudComponent() => builder =>
+        {
+            builder.OpenComponent<CascadingValue<GridComponent<T>>>(++_sequence);
+            builder.AddAttribute(++_sequence, "Value", this);
+            builder.AddAttribute(++_sequence, "Name", "GridComponent");
+            builder.AddAttribute(++_sequence, "ChildContent", DeleteCrudChildComponent());
+            builder.CloseComponent();
+        };
+
+        private RenderFragment DeleteCrudChildComponent() => builder =>
         {
             var componentType = Grid.DeleteComponent;
             builder.OpenComponent(++_sequence, componentType);

@@ -111,6 +111,15 @@ namespace GridBlazor.Pages
 
         private RenderFragment CreateFilterWidgetComponent() => builder =>
         {
+            builder.OpenComponent<CascadingValue<GridHeaderComponent<T>>>(++_sequence);
+            builder.AddAttribute(++_sequence, "Value", this);
+            builder.AddAttribute(++_sequence, "Name", "GridHeaderComponent");
+            builder.AddAttribute(++_sequence, "ChildContent", CreateFilterChildContent());
+            builder.CloseComponent();
+        };
+
+        private RenderFragment CreateFilterChildContent() => builder =>
+        {
             try
             {
                 Type filterWidget = Filters[Column.FilterWidgetTypeName];
