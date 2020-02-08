@@ -54,7 +54,7 @@ namespace GridMvc.Sorting
                         gridColumn = _grid.Columns.FirstOrDefault(r => r.Name == sortedColumns[i].ColumnName) as IGridColumn<T>;
                         items = gridColumn.Orderers.FirstOrDefault().ApplyThenBy(items, sortedColumns[i].Direction);
 
-                        for (int j = 1; i < gridColumn.Orderers.Count(); j++)
+                        for (int j = 1; j < gridColumn.Orderers.Count(); j++)
                         {
                             var orderer = gridColumn.Orderers.ElementAt(j);
                             items = orderer.ApplyThenBy(items, GridSortDirection.Ascending);

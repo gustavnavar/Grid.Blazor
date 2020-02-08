@@ -1,44 +1,161 @@
-﻿body {
-    padding-top: 50px;
-    padding-bottom: 20px;
+﻿@import url('open-iconic/font/css/open-iconic-bootstrap.min.css');
+
+html, body {
+    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    font-size: 0.9rem;
 }
 
-/* Wrapping element */
-/* Set some basic padding to keep content from hitting the edges */
 .body-content {
     padding-left: 15px;
     padding-right: 15px;
 }
 
-/* Carousel */
-.carousel-caption p {
-    font-size: 20px;
-    line-height: 1.4;
+a {
+    color: #0366d6;
 }
 
-/* Make .svg files in the carousel display properly in older browsers */
-.carousel-inner .item img[src$=".svg"] {
-    width: 100%;
+app {
+    position: relative;
+    display: flex;
+    flex-direction: column;
 }
 
-/* Hide/rearrange for smaller screens */
-@media screen and (max-width: 767px) {
-    /* Hide captions */
-    .carousel-caption {
+.top-row {
+    height: 3.5rem;
+    display: flex;
+    align-items: center;
+}
+
+.main {
+    flex: 1;
+}
+
+    .main .top-row {
+        background-color: #e6e6e6;
+        border-bottom: 1px solid #d6d5d5;
+        justify-content: flex-end;
+    }
+
+        .main .top-row > a {
+            margin-left: 1.5rem;
+        }
+
+.sidebar {
+    background-image: linear-gradient(180deg, rgb(5, 39, 103) 0%, #3a0647 70%);
+}
+
+    .sidebar .top-row {
+        background-color: rgba(0,0,0,0.4);
+    }
+
+    .sidebar .navbar-brand {
+        font-size: 1.1rem;
+    }
+
+    .sidebar .oi {
+        width: 2rem;
+        font-size: 1.1rem;
+        vertical-align: text-top;
+        top: -2px;
+    }
+
+li.nav-item {
+    font-size: 0.9rem;
+    padding-bottom: 0.5rem;
+}
+
+    li.nav-item a {
+        color: #d7d7d7;
+        border-radius: 4px;
+        height: 3rem;
+        display: flex;
+        align-items: center;
+        line-height: 3rem;
+    }
+
+        li.nav-item a.active {
+            background-color: rgba(255,255,255,0.25);
+            color: white;
+        }
+
+        li.nav-item a:hover {
+            background-color: rgba(255,255,255,0.1);
+            color: white;
+        }
+
+.content {
+    padding-top: 1.1rem;
+}
+
+.navbar-toggler {
+    background-color: rgba(255, 255, 255, 0.1);
+}
+
+.valid.modified:not([type=checkbox]) {
+    outline: 1px solid #26b050;
+}
+
+.invalid {
+    outline: 1px solid red;
+}
+
+.validation-message {
+    color: red;
+}
+
+table.table tr.success {
+    background-color: #dff0d8;
+}
+
+@media (max-width: 767.98px) {
+    .main .top-row {
         display: none;
     }
 }
 
-h2 {
-    color:white;
-    font-weight: 600;
-}
+@media (min-width: 768px) {
+    app {
+        flex-direction: row;
+    }
 
-.nav-link {
-    font-size: 20px;
-    font-weight: 600;
+    .sidebar {
+        width: 180px;
+        height: 100vh;
+        position: sticky;
+        top: 0;
+    }
+
+    .main .top-row {
+        position: sticky;
+        top: 0;
+    }
+
+    .main > div {
+        padding-left: 2rem !important;
+        padding-right: 1.5rem !important;
+    }
+
+    .navbar-toggler {
+        display: none;
+    }
+
+    .sidebar .collapse {
+        /* Never collapse the sidebar for wide screens */
+        display: block;
+    }
 }
 
 .red {
     color: red;
+}
+
+h2 {
+    color:white;
+    font-weight: 400;
+}
+
+.nav-link {
+    font-size: 18px;
+    font-weight: 400;
+    margin-right:20px;
 }
