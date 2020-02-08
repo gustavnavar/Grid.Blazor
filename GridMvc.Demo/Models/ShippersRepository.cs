@@ -1,4 +1,6 @@
-﻿using System.Linq;
+﻿using Microsoft.EntityFrameworkCore;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace GridMvc.Demo.Models
 {
@@ -14,9 +16,9 @@ namespace GridMvc.Demo.Models
             return EfDbSet;
         }
 
-        public override Shipper GetById(object id)
+        public override async Task<Shipper> GetById(object id)
         {
-            return GetAll().FirstOrDefault(c => c.ShipperID == (int)id);
+            return await GetAll().SingleOrDefaultAsync(c => c.ShipperID == (int)id);
         }
     }
 }

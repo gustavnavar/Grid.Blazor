@@ -13,7 +13,6 @@
 
 <div class="row">
     <div class="col-md-12">
-        <h1>Orders administration</h1>
         <p>
             This page demonstrates the possibilities of GridMvcCore. For more documentation, please
             see: <a href="https://github.com/gustavnavar/Grid.Blazor">https://github.com/gustavnavar/Grid.Blazor</a>
@@ -22,7 +21,10 @@
 </div>
 
 <div class="row">
-    <div class="col-md-3 col-md-push-9">
+    <div class="col-md-9">
+        @await Html.PartialAsync("_OrdersGrid", Model)
+    </div>
+    <div class="col-md-3">
         <h4>
             Order details
         </h4>
@@ -31,9 +33,6 @@
                 Select order to display detailed infomation
             </p>
         </div>
-    </div>
-    <div class="col-md-9 col-md-pull-3">
-        @await Html.PartialAsync("_OrdersGrid", Model)
     </div>
 </div>
 

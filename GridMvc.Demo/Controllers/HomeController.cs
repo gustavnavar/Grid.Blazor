@@ -152,7 +152,7 @@ namespace GridMvc.Demo.Controllers
         [HttpGet]
         public async Task<ActionResult> GetOrder(int id)
         {
-            Order order = _orderRepository.GetById(id);
+            Order order = await _orderRepository.GetById(id);
             if (order == null)
                 return Json(new { status = 0, message = "Not found" });
 
@@ -310,13 +310,13 @@ namespace GridMvc.Demo.Controllers
             return LocalRedirect(returnUrl);
         }
 
-        public ActionResult Edit(int? id, string returnUrl, string gridState, string altGridState = "", string error = "")
+        public async Task<ActionResult> Edit(int? id, string returnUrl, string gridState, string altGridState = "", string error = "")
         {
             if (id == null || !id.HasValue)
             {
                 return BadRequest();
             }
-            Order order = _orderRepository.GetById(id.Value);
+            Order order = await _orderRepository.GetById(id.Value);
             if (order == null)
             {
                 return NotFound();
@@ -331,13 +331,13 @@ namespace GridMvc.Demo.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(Order order, string returnUrl, string gridState, string altGridState = "")
+        public async Task<ActionResult> Edit(Order order, string returnUrl, string gridState, string altGridState = "")
         {
             if (ModelState.IsValid)
             {
                 try
                 {
-                    _orderRepository.Update(order);
+                    await _orderRepository.Update(order);
                     _orderRepository.Save();
 
                     return LocalRedirect(WebUtility.UrlDecode(returnUrl) + "?gridState=" + gridState + "&altGridState=" + altGridState);
@@ -351,5 +351,9 @@ namespace GridMvc.Demo.Controllers
             return RedirectToAction("Edit", "Home", new { id = order.OrderID, returnUrl, gridState, altGridState, error = "ModelState is not valid" });
         }
 
+        public ActionResult BlazorComponent()
+        {
+            return View();
+        }
     }
 }

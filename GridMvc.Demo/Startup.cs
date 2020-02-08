@@ -1,5 +1,6 @@
 ﻿using GridMvc.Demo.Filters;
 using GridMvc.Demo.Models;
+using GridMvc.Demo.Services;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Localization;
@@ -37,12 +38,19 @@ namespace GridMvc.Demo
 
             services.AddGridMvc();
 
+            services.AddRazorPages();
+            services.AddServerSideBlazor();
+
             services.AddMvc()
                 .AddViewLocalization()
                 .AddDataAnnotationsLocalization()
                 .SetCompatibilityVersion(CompatibilityVersion.Version_3_0);
 
             services.AddScoped<LanguageFilter>();
+            services.AddScoped<IOrderService, OrderService>();
+            services.AddScoped<ICustomerService, CustomerService>();
+            services.AddScoped<IEmployeeService, EmployeeService>();
+            services.AddScoped<IShipperService, ShipperService>();
 
             services.Configure<RequestLocalizationOptions>(
                 options =>
@@ -89,6 +97,7 @@ namespace GridMvc.Demo
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapDefaultControllerRoute();
+                endpoints.MapBlazorHub();
             });
         }
     }

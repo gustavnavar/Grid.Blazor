@@ -14,6 +14,19 @@ namespace GridMvc.Demo.Models
         {
             modelBuilder.Entity<OrderDetail>()
                 .HasKey(c => new { c.OrderID, c.ProductID });
+
+            modelBuilder.Entity<EmployeeTerritories>()
+                .HasKey(r => new { r.EmployeeID, r.TerritoryID });
+
+            modelBuilder.Entity<EmployeeTerritories>()
+                .HasOne(r => r.Employee)
+                .WithMany(s => s.Territories)
+                .HasForeignKey(t => t.EmployeeID);
+
+            modelBuilder.Entity<EmployeeTerritories>()
+                .HasOne(r => r.Territory)
+                .WithMany(s => s.Employees)
+                .HasForeignKey(t => t.TerritoryID);
         }
 
         public DbSet<Category> Categories { get; set; }

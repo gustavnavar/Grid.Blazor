@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace GridMvc.Demo.Models
 {
@@ -21,7 +22,7 @@ namespace GridMvc.Demo.Models
             return EfDbSet;
         }
 
-        public abstract T GetById(object id);
+        public abstract Task<T> GetById(object id);
 
         #endregion
     }

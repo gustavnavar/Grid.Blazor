@@ -9,43 +9,43 @@
     <ul class="pagination">
         @if (Model.CurrentPage > 1)
         {
-            <li>
-                <a href="@Model.GetLinkForPage(Model.CurrentPage - 1)">«</a>
+            <li class="page-item">
+                <a class="page-link grid-page-link" href="@Model.GetLinkForPage(Model.CurrentPage - 1)">«</a>
             </li>
         }
 
         @if (Model.StartDisplayedPage > 1)
         {
-            <li>
-                <a href="@Model.GetLinkForPage(1)">1</a>
+            <li class="page-item">
+                <a class="page-link grid-page-link" href="@Model.GetLinkForPage(1)">1</a>
             </li>
             if (Model.StartDisplayedPage > 2)
             {
-                <li><a href="@Model.GetLinkForPage(Model.StartDisplayedPage - 1)">...</a></li>
+                <li class="page-item"><a class="page-link grid-page-link" href="@Model.GetLinkForPage(Model.StartDisplayedPage - 1)">...</a></li>
             }
         }
         @for (int i = Model.StartDisplayedPage; i <= Model.EndDisplayedPage; i++)
         {
             if (i == Model.CurrentPage)
             {
-                <li class="active"><span>@i</span></li>
+                <li class="page-item active"><span type="button" class="page-link grid-page-link">@i</span></li>
             }
             else
             {
-                <li><a href="@Model.GetLinkForPage(i)">@i</a></li>
+                <li class="page-item"><a class="page-link grid-page-link" href="@Model.GetLinkForPage(i)">@i</a></li>
             }
         }
         @if (Model.EndDisplayedPage < Model.PageCount)
         {
             if (Model.EndDisplayedPage < Model.PageCount - 1)
             {
-                <li><a href="@Model.GetLinkForPage(Model.EndDisplayedPage + 1)">...</a></li>
+                <li class="page-item"><a class="page-link grid-page-link" href="@Model.GetLinkForPage(Model.EndDisplayedPage + 1)">...</a></li>
             }
-            <li><a href="@Model.GetLinkForPage(Model.PageCount)">@Model.PageCount</a></li>
+            <li><a class="page-link grid-page-link" href="@Model.GetLinkForPage(Model.PageCount)">@Model.PageCount</a></li>
         }
         @if (Model.CurrentPage < Model.PageCount)
         {
-            <li><a href="@Model.GetLinkForPage(Model.CurrentPage + 1)">»</a></li>
+            <li class="page-item"><a class="page-link grid-page-link" href="@Model.GetLinkForPage(Model.CurrentPage + 1)">»</a></li>
         }
     </ul>
 </nav>

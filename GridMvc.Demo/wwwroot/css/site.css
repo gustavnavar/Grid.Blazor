@@ -29,6 +29,16 @@
     }
 }
 
+h2 {
+    color:white;
+    font-weight: 600;
+}
+
+.nav-link {
+    font-size: 20px;
+    font-weight: 600;
+}
+
 .red {
     color: red;
 }

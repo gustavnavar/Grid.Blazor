@@ -74,18 +74,18 @@
                         </div>
                     </div>
                 }
-                <div class="form-group row">
-                    <div class="grid-filter-buttons" style="margin-left:15px">
+                <div class="form-group row" style="display:block;">
+                    <div class="grid-filter-buttons" style="float:left;margin-left:15px;">
+                        <button type="button" class="btn btn-primary" @onclick="ApplyButtonClicked">
+                            @Strings.ApplyFilterButtonText
+                        </button>
+                    </div>
+                    <div class="grid-filter-buttons" style="float:right;margin-right:15px;">
                         <button type="button" class="btn btn-primary" @onclick="() => AddColumnFilterValue()"><b>+</b></button>
                         @if (_filters.Length > 1)
                         {
                             <button type="button" class="btn btn-primary" style="margin-left:10px;" @onclick="() => RemoveColumnFilterValue()"><b>-</b></button>
                         }
-                    </div>
-                    <div class="grid-filter-buttons" style="margin-left:@(_filters.Length > 1? "200px;" : "245px;")">
-                        <button type="button" class="btn btn-primary" @onclick="ApplyButtonClicked">
-                            @Strings.ApplyFilterButtonText
-                        </button>
                     </div>
                 </div>
             </div>

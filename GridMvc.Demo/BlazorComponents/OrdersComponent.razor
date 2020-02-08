@@ -1,0 +1,139 @@
+﻿@using GridBlazor.Resources
+@using GridMvc.Demo.Models
+@using GridMvc.Demo.Resources
+@using GridMvc.Demo.Services
+@using Microsoft.Extensions.Primitives
+@using System.Globalization
+@using System.Threading.Tasks
+@inject IOrderService orderService
+@inject ICustomerService customerService
+@inject IEmployeeService employeeService
+@inject IShipperService shipperService
+
+@if (_task.IsCompleted)
+{
+    <div class="row">
+        <div class="col-md-12">
+            <GridComponent T="Order" Grid="@_grid"></GridComponent>
+        </div>
+    </div>
+}
+else
+{
+    <p><em>Loading...</em></p>
+}
+
+@code
+{
+    private CGrid<Order> _grid;
+    private GridComponent<Order> _gridComponent;
+    private Task _task;
+    private IQueryDictionary<Type> _customFilters = new QueryDictionary<Type>();
+
+    protected override async Task OnParametersSetAsync()
+    {
+        var locale = CultureInfo.CurrentCulture;
+        SharedResource.Culture = locale;
+
+        var query = new QueryDictionary<StringValues>();
+
+        Action<IGridColumnCollection<Order>> orderColumns = c =>
+        {
+            /* Adding "OrderID" column: */
+            c.Add(o => o.OrderID).SetPrimaryKey(true).Titled(SharedResource.Number).SetWidth(100);
+
+            /* Adding "CustomerID" column: */
+            c.Add(o => o.CustomerID, true)
+                .SetSelectField(true, o => o.Customer.CustomerID + " - " + o.Customer.CompanyName,
+                    customerService.GetAllCustomers);
+
+            /* Adding "EmployeeID" column: */
+            c.Add(o => o.EmployeeID, true)
+                .SetSelectField(true, o => o.Employee.EmployeeID.ToString() + " - " + o.Employee.FirstName + " " + o.Employee.LastName,
+                    employeeService.GetAllEmployees);
+
+            /* Adding "ShipVia" column: */
+            c.Add(o => o.ShipVia).Titled("Via")
+                .SetWidth(250).RenderValueAs(o => o.Shipper == null ? "" : o.Shipper.CompanyName)
+                .SetSelectField(true, o => o.Shipper == null ? "" : o.Shipper.ShipperID.ToString() + " - " + o.Shipper.CompanyName,
+                    shipperService.GetAllShippers)
+                .SetListFilter(shipperService.GetAllShippers());
+
+            /* Adding "OrderDate" column: */
+            c.Add(o => o.OrderDate, "OrderCustomDate").Titled(SharedResource.OrderCustomDate)
+                //.SortInitialDirection(GridSortDirection.Descending)
+                .SetCellCssClassesContraint(o => o.OrderDate.HasValue && o.OrderDate.Value >= DateTime.Parse("1997-01-01") ? "red" : "")
+                .Format("{0:yyyy-MM-dd}").SetWidth(120)
+                .Max(true).Min(true);
+
+            /* Adding "CompanyName" column: */
+            c.Add(o => o.Customer.CompanyName).Titled(SharedResource.CompanyName)
+                .SetWidth(250)
+                .SetCrudHidden(true).SetReadOnlyOnUpdate(true)
+                //.ThenSortByDescending(o => o.OrderID)
+                //.SetInitialFilter(GridFilterType.StartsWith, "a")
+                .SetFilterWidgetType("CompanyNameFilter")
+                .Max(true).Min(true);
+
+            /* Adding "ContactName" column: */
+            c.Add(o => o.Customer.ContactName).Titled(SharedResource.ContactName).SetWidth(250)
+               .SetCrudHidden(true)
+               .Max(true).Min(true);
+
+            /* Adding "Freight" column: */
+            c.Add(o => o.Freight)
+               .Titled(SharedResource.Freight)
+               .Format("{0:F}")
+               .Sum(true).Average(true).Max(true).Min(true);
+
+            /* Adding "Vip customer" column: */
+            c.Add(o => o.Customer.IsVip).Titled(SharedResource.IsVip).SetWidth(70).Css("hidden-xs") //hide on phones
+                .RenderValueAs(o => o.Customer.IsVip ? Strings.BoolTrueLabel : Strings.BoolFalseLabel).SetCrudHidden(true);
+
+            /* Adding hidden "RequiredDate" column: */
+            c.Add(o => o.RequiredDate, true).Format("{0:yyyy-MM-dd}");
+
+            /* Adding hidden "ShippedDate" column: */
+            c.Add(o => o.ShippedDate, true).Format("{0:yyyy-MM-dd}");
+
+            /* Adding hidden "ShipName" column: */
+            c.Add(o => o.ShipName, true);
+
+            /* Adding hidden "ShipAddress" column: */
+            c.Add(o => o.ShipAddress, true);
+
+            /* Adding hidden "ShipCity" column: */
+            c.Add(o => o.ShipCity, true);
+
+            /* Adding hidden "ShipPostalCode" column: */
+            c.Add(o => o.ShipPostalCode, true);
+
+            /* Adding hidden "ShipRegion" column: */
+            c.Add(o => o.ShipRegion, true);
+
+            /* Adding hidden "ShipCountry" column: */
+            c.Add(o => o.ShipCountry, true);
+        };
+
+        var client = new GridClient<Order>(q => orderService.GetOrdersGridRows(orderColumns, q),
+            query, false, "ordersGrid", orderColumns, locale)
+            .SetRowCssClasses(item => item.Customer.IsVip ? "success" : string.Empty)
+            .Sortable()
+            .Filterable()
+            .SetKeyboard(true)
+            .Groupable(true)
+            .ClearFiltersButton(true)
+            .SetStriped(true)
+            .WithMultipleFilters()
+            .Searchable(true, false)
+            .WithGridItemsCount()
+            .ChangePageSize(true)
+            .Crud(true, orderService);
+
+        _grid = client.Grid;
+
+        // Set new items to grid
+        _task = client.UpdateGrid();
+        await _task;
+    }
+}

@@ -3,7 +3,7 @@
 */
 window.GridMvc = window.GridMvc || {};
 window.GridMvc.lang = window.GridMvc.lang || {};
-GridMvc.lang.de = {
+GridMvc.lang.nb = {
     filterTypeLabel: "Type: ",
     filterValueLabel: "Verdi:",
     applyFilterButtonText: "Aktiver",
