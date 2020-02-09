@@ -464,6 +464,7 @@ namespace GridBlazor.Pages
             {
                 Console.WriteLine(e.Message);
                 ((CGrid<T>)Grid).Mode = GridMode.Grid;
+                throw;
             }
         }
 
@@ -647,6 +648,7 @@ namespace GridBlazor.Pages
             catch (Exception e)
             {
                 Console.WriteLine(e.Message);
+                throw;
             }
         }
 
@@ -663,6 +665,7 @@ namespace GridBlazor.Pages
             catch (Exception e)
             {
                 Console.WriteLine(e.Message);
+                throw;
             }
         }
 
@@ -680,6 +683,7 @@ namespace GridBlazor.Pages
             catch (Exception e)
             {
                 Console.WriteLine(e.Message);
+                throw;
             }
         }
 

@@ -67,7 +67,10 @@
     <None Include="bundleconfig.json" />
     <None Include="wwwroot\css\gridblazor.css" />
     <None Include="wwwroot\css\gridblazor.min.css" />
+    <None Include="wwwroot\css\gridblazor-bootstrap3.css" />
+    <None Include="wwwroot\css\gridblazor-bootstrap3.min.css" />
     <None Include="wwwroot\js\gridblazor.js" />
+    <None Include="wwwroot\js\gridblazor.min.js" />
   </ItemGroup>
 
   <ItemGroup>

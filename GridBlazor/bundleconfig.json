@@ -4,5 +4,17 @@
     "inputFiles": [
       "wwwroot/css/gridblazor.css"
     ]
+  },
+  {
+    "outputFileName": "wwwroot/css/gridblazor-bootsrap3.min.css",
+    "inputFiles": [
+      "wwwroot/css/gridblazor-bootsrap3.css"
+    ]
+  },
+  {
+    "outputFileName": "wwwroot/js/gridblazor.min.js",
+    "inputFiles": [
+      "wwwroot/js/gridblazor.js"
+    ]
   }
 ]
