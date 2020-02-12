@@ -21,6 +21,7 @@ English is the default laguage. But you can use other languages. You have to cre
 * Spanish
 * Norwegian
 * Turkish
+* Czech
 
 ## Additional languages
 
@@ -54,6 +55,7 @@ If you need to support other languages, please send me the translation of the fo
 * Less than or equals
 * Max
 * Min
+* Not equals
 * Or
 * Read item
 * Save

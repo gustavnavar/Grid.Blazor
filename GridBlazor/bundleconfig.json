@@ -6,9 +6,9 @@
     ]
   },
   {
-    "outputFileName": "wwwroot/css/gridblazor-bootsrap3.min.css",
+    "outputFileName": "wwwroot/css/gridblazor-bootstrap3.min.css",
     "inputFiles": [
-      "wwwroot/css/gridblazor-bootsrap3.css"
+      "wwwroot/css/gridblazor-bootstrap3.css"
     ]
   },
   {

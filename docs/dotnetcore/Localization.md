@@ -33,6 +33,7 @@ Then you have to call the **SetLanguage** function with the required language va
 * Spanish
 * Norwegian
 * Turkish
+* Czech
 
 ## Additional languages
 
@@ -66,6 +67,7 @@ If you need to support other languages, please send me the translation of the fo
 * Less than or equals
 * Max
 * Min
+* Not equals
 * Or
 * Read item
 * Save
