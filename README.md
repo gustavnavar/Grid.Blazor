@@ -80,6 +80,7 @@ You can find the specific documentation for each environment clicking the follow
 * [Documentation for Blazor client-side](./docs/blazor_client/Documentation.md)
 * [Documentation for Blazor server-side](./docs/blazor_server/Documentation.md)
 * [Documentation for ASP.NET Core MVC](./docs/dotnetcore/Documentation.md)
+* [Using GridBlazor component for ASP.NET Core MVC](./docs/dotnetcore_blazor/Documentation.md)
 
 This is an example of a table of items using this component:
 

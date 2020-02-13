@@ -17,4 +17,9 @@ The **GridBlazor** component installation is straightforward. Just follow these 
     ```
     These files will be loaded from the **GridBlazor** nuget package, so it is not necessary to copy it to you project.
  
+4. If you are using Boostrap 3.x you will also need this line in the **_Host.cshtml** view or directly to the page:
+    ```html
+        <link href="~/_content/GridBlazor/css/gridblazor-bootstrap3.min.css" rel="stylesheet" />
+     ```
+ 
 [Quick start ->](Quick_start.md)

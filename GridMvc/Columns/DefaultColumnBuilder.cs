@@ -2,6 +2,7 @@
 using GridShared.DataAnnotations;
 using GridShared.Sorting;
 using System;
+using System.Collections.Generic;
 using System.Linq.Expressions;
 using System.Reflection;
 
@@ -25,12 +26,18 @@ namespace GridMvc.Columns
 
         public IGridColumn<T> CreateColumn<TDataType>(Expression<Func<T, TDataType>> constraint, bool hidden)
         {
+            return CreateColumn(constraint, null, hidden);
+        }
+
+        public IGridColumn<T> CreateColumn<TDataType>(Expression<Func<T, TDataType>> constraint, IComparer<TDataType> comparer,
+            bool hidden)
+        {
             bool isExpressionOk = constraint == null || constraint.Body as MemberExpression != null;
             if (isExpressionOk)
             {
                 if (!hidden)
-                    return new GridColumn<T, TDataType>(constraint, _grid);
-                return new HiddenGridColumn<T, TDataType>(constraint, _grid);
+                    return new GridColumn<T, TDataType>(constraint, comparer, _grid);
+                return new HiddenGridColumn<T, TDataType>(constraint, comparer, _grid);
             }
             throw new NotSupportedException(string.Format("Expression '{0}' not supported by grid", constraint));
         }

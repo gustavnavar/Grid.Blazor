@@ -32,7 +32,8 @@ namespace GridBlazor.Tests.Sorting
             };
             var grid = new TestGrid((q) => _repo.GetAllService(columns, q, false, true), true, columns, Thread.CurrentThread.CurrentCulture);
             if (
-                !ValidateSorting<string,  object>(grid, x => x.Title,  "Title", GridSortDirection.Descending, null, null))
+                !ValidateSorting<string,  object>(grid, x => x.Title,  "Title", GridSortDirection.Descending, 
+                    null, null, null, null))
             {
                 Assert.Fail("Sort works incorrect");
             }
@@ -48,7 +49,7 @@ namespace GridBlazor.Tests.Sorting
             var grid = new TestGrid((q) => _repo.GetAllService(columns, q, false, true), true, columns, Thread.CurrentThread.CurrentCulture);
             if (
                 !ValidateSorting<string,  object>(grid, x => x.Title, "someid",
-                                                         GridSortDirection.Descending, null, null))
+                                                         GridSortDirection.Descending, null, null, null, null))
             {
                 Assert.Fail("Sort works incorrect");
             }
@@ -64,7 +65,7 @@ namespace GridBlazor.Tests.Sorting
             var grid = new TestGrid((q) => _repo.GetAllService(columns, q, false, true), true, columns, Thread.CurrentThread.CurrentCulture);
             if (
                 !ValidateSorting<string,  object>(grid, x => x.Title, "Title",
-                                                         GridSortDirection.Ascending, null, null))
+                                                         GridSortDirection.Ascending, null, null, null, null))
             {
                 Assert.Fail("Sort works incorrect");
             }
@@ -80,7 +81,7 @@ namespace GridBlazor.Tests.Sorting
             var grid = new TestGrid((q) => _repo.GetAllService(columns, q, false, true), true, columns, Thread.CurrentThread.CurrentCulture);
             if (
                 !ValidateSorting<string,  object>(grid, x => x.Title, "someid",
-                                                         GridSortDirection.Ascending, null, null))
+                                                         GridSortDirection.Ascending, null, null, null, null))
             {
                 Assert.Fail("Sort works incorrect");
             }
@@ -96,7 +97,7 @@ namespace GridBlazor.Tests.Sorting
             var grid = new TestGrid((q) => _repo.GetAllService(columns, q, false, true), true, columns, Thread.CurrentThread.CurrentCulture);
             if (
                 !ValidateSorting<int,  object>(grid, x => x.Id,"Id", GridSortDirection.Ascending, null,
-                                                   null))
+                                                   null, null, null))
             {
                 Assert.Fail("Sort works incorrect");
             }
@@ -112,7 +113,7 @@ namespace GridBlazor.Tests.Sorting
             var grid = new TestGrid((q) => _repo.GetAllService(columns, q, false, true), true, columns, Thread.CurrentThread.CurrentCulture);
             if (
                 !ValidateSorting<int,  object>(grid, x => x.Id, "Id", GridSortDirection.Descending, null,
-                                                   null))
+                                                   null, null, null))
             {
                 Assert.Fail("Sort works incorrect");
             }
@@ -127,7 +128,8 @@ namespace GridBlazor.Tests.Sorting
             };
             var grid = new TestGrid((q) => _repo.GetAllService(columns, q, false, true), true, columns, Thread.CurrentThread.CurrentCulture);
             if (
-                !ValidateSorting<string,  object>(grid, x => x.Child.ChildTitle, "Child.ChildTitle", GridSortDirection.Ascending, null, null))
+                !ValidateSorting<string,  object>(grid, x => x.Child.ChildTitle, "Child.ChildTitle", GridSortDirection.Ascending, 
+                    null, null, null, null))
             {
                 Assert.Fail("Sort works incorrect");
             }
@@ -143,7 +145,8 @@ namespace GridBlazor.Tests.Sorting
             var grid = new TestGrid((q) => _repo.GetAllService(columns, q, false, true), true, columns, Thread.CurrentThread.CurrentCulture);
             if (
                 !ValidateSorting<string, object>(grid, x => x.Child.ChildTitle, 
-                                                         "Child.ChildTitle", GridSortDirection.Descending, null, null))
+                                                         "Child.ChildTitle", GridSortDirection.Descending, 
+                                                         null, null, null, null))
             {
                 Assert.Fail("Sort works incorrect");
             }
@@ -160,7 +163,7 @@ namespace GridBlazor.Tests.Sorting
             if (
                 !ValidateSorting<DateTime,  object>(grid, x => x.Child.ChildCreated, 
                                                              "Child.ChildCreated", GridSortDirection.Descending, null,
-                                                             null))
+                                                             null, null, null))
             {
                 Assert.Fail("Sort works incorrect");
             }
@@ -177,7 +180,7 @@ namespace GridBlazor.Tests.Sorting
             if (
                 !ValidateSorting<DateTime, object>(grid, x => x.Child.ChildCreated,
                                                              "someid", GridSortDirection.Descending, null,
-                                                             null))
+                                                             null, null, null))
             {
                 Assert.Fail("Sort works incorrect");
             }
@@ -194,7 +197,7 @@ namespace GridBlazor.Tests.Sorting
             if (
                 !ValidateSorting<DateTime, object>(grid, x => x.Child.ChildCreated,
                                                              "Child.ChildCreated", GridSortDirection.Ascending, null,
-                                                             null))
+                                                             null, null, null))
             {
                 Assert.Fail("Sort works incorrect");
             }
@@ -210,7 +213,8 @@ namespace GridBlazor.Tests.Sorting
             var grid = new TestGrid((q) => _repo.GetAllService(columns, q, false, true), true, columns, Thread.CurrentThread.CurrentCulture);
             if (
                 !ValidateSorting(grid, x => x.Child.ChildCreated,"Child.ChildCreated",
-                                 GridSortDirection.Ascending, x => x.Title, GridSortDirection.Ascending))
+                                 GridSortDirection.Ascending, x => x.Title, GridSortDirection.Ascending,
+                                 null, null))
             {
                 Assert.Fail("Sort works incorrect");
             }
@@ -226,7 +230,42 @@ namespace GridBlazor.Tests.Sorting
             var grid = new TestGrid((q) => _repo.GetAllService(columns, q, false, true), true, columns, Thread.CurrentThread.CurrentCulture);
             if (
                 !ValidateSorting(grid, x => x.Child.ChildCreated, "Child.ChildCreated",
-                                 GridSortDirection.Ascending, x => x.Title, GridSortDirection.Descending))
+                                 GridSortDirection.Ascending, x => x.Title, GridSortDirection.Descending,
+                                 null, null))
+            {
+                Assert.Fail("Sort works incorrect");
+            }
+        }
+
+        [TestMethod]
+        public void TestSortingStringComparerAscending()
+        {
+            var comparer = new SampleComparer(StringComparer.OrdinalIgnoreCase);
+            Action<IGridColumnCollection<TestModel>> columns = c =>
+            {
+                c.Add(x => x.Title, comparer).Sortable(true);
+            };
+            var grid = new TestGrid((q) => _repo.GetAllService(columns, q, false, true), true, columns, Thread.CurrentThread.CurrentCulture);
+            if (
+                !ValidateSorting<string, object>(grid, x => x.Title, "Title", GridSortDirection.Ascending,
+                    null, null, comparer, null))
+            {
+                Assert.Fail("Sort works incorrect");
+            }
+        }
+
+        [TestMethod]
+        public void TestSortingStringComparerDescending()
+        {
+            var comparer = new SampleComparer(StringComparer.OrdinalIgnoreCase);
+            Action<IGridColumnCollection<TestModel>> columns = c =>
+            {
+                c.Add(x => x.Title, comparer).Sortable(true);
+            };
+            var grid = new TestGrid((q) => _repo.GetAllService(columns, q, false, true), true, columns, Thread.CurrentThread.CurrentCulture);
+            if (
+                !ValidateSorting<string, object>(grid, x => x.Title, "Title", GridSortDirection.Descending,
+                    null, null, comparer, null))
             {
                 Assert.Fail("Sort works incorrect");
             }
@@ -236,7 +275,9 @@ namespace GridBlazor.Tests.Sorting
                                                         string columnName,
                                                         GridSortDirection direction,
                                                         Func<TestModel, TNext> thenByExpression,
-                                                        GridSortDirection? thenByDirection)
+                                                        GridSortDirection? thenByDirection,
+                                                        IComparer<T> comparer,
+                                                        IComparer<TNext> nextComparer)
         {
             grid.AddQueryParameter(((QueryStringSortSettings)grid.Settings.SortSettings)
                 .ColumnQueryParameterName, columnName);
@@ -249,10 +290,16 @@ namespace GridBlazor.Tests.Sorting
             switch (direction)
             {
                 case GridSortDirection.Ascending:
-                    etalonCollection = _repo.GetAll().OrderBy(orderExpression);
+                    if (comparer == null)
+                        etalonCollection = _repo.GetAll().OrderBy(orderExpression);
+                    else
+                        etalonCollection = _repo.GetAll().OrderBy(orderExpression, comparer);
                     break;
                 case GridSortDirection.Descending:
-                    etalonCollection = _repo.GetAll().OrderByDescending(orderExpression);
+                    if (comparer == null)
+                        etalonCollection = _repo.GetAll().OrderByDescending(orderExpression);
+                    else
+                        etalonCollection = _repo.GetAll().OrderByDescending(orderExpression, comparer);
                     break;
                 default:
                     throw new ArgumentOutOfRangeException("direction");
@@ -262,10 +309,16 @@ namespace GridBlazor.Tests.Sorting
                 switch (thenByDirection)
                 {
                     case GridSortDirection.Ascending:
-                        etalonCollection = etalonCollection.ThenBy(thenByExpression);
+                        if (nextComparer == null)
+                            etalonCollection = etalonCollection.ThenBy(thenByExpression);
+                        else
+                            etalonCollection = etalonCollection.ThenBy(thenByExpression, nextComparer);
                         break;
                     case GridSortDirection.Descending:
-                        etalonCollection = etalonCollection.ThenByDescending(thenByExpression);
+                        if (nextComparer == null)
+                            etalonCollection = etalonCollection.ThenByDescending(thenByExpression);
+                        else
+                            etalonCollection = etalonCollection.ThenByDescending(thenByExpression, nextComparer);
                         break;
                     default:
                         throw new ArgumentOutOfRangeException("thenByDirection");

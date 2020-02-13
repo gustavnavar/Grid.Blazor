@@ -1,6 +1,4 @@
-﻿using System;
-using System.Linq;
-using System.Linq.Expressions;
+﻿using System.Linq;
 
 namespace GridShared.Sorting
 {
@@ -10,7 +8,6 @@ namespace GridShared.Sorting
     /// <typeparam name="T"></typeparam>
     public interface IColumnOrderer<T>
     {
-        IQueryable<T> ApplyOrder(IQueryable<T> items);
         IQueryable<T> ApplyOrder(IQueryable<T> items, GridSortDirection direction);
         IQueryable<T> ApplyThenBy(IQueryable<T> items, GridSortDirection direction);
     }

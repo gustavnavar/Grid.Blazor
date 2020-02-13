@@ -288,7 +288,9 @@ namespace GridMvc.Columns
         public abstract IGridColumn<T> SortInitialDirection(GridSortDirection direction);
 
         public abstract IGridColumn<T> ThenSortBy<TKey>(Expression<Func<T, TKey>> expression);
+        public abstract IGridColumn<T> ThenSortBy<TKey>(Expression<Func<T, TKey>> expression, IComparer<TKey> comparer);
         public abstract IGridColumn<T> ThenSortByDescending<TKey>(Expression<Func<T, TKey>> expression);
+        public abstract IGridColumn<T> ThenSortByDescending<TKey>(Expression<Func<T, TKey>> expression, IComparer<TKey> comparer);
 
         public abstract IEnumerable<IColumnOrderer<T>> Orderers { get; }
         public abstract IGridColumn<T> Sortable(bool sort);

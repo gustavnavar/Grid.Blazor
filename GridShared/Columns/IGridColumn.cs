@@ -290,9 +290,19 @@ namespace GridShared.Columns
         IGridColumn<T> ThenSortBy<TKey>(Expression<Func<T, TKey>> expression);
 
         /// <summary>
+        ///     Setup ThenBy sorting of current column
+        /// </summary>
+        IGridColumn<T> ThenSortBy<TKey>(Expression<Func<T, TKey>> expression, IComparer<TKey> comparer);
+
+        /// <summary>
         ///     Setup ThenByDescending sorting of current column
         /// </summary>
         IGridColumn<T> ThenSortByDescending<TKey>(Expression<Func<T, TKey>> expression);
+
+        /// <summary>
+        ///     Setup ThenByDescending sorting of current column
+        /// </summary>
+        IGridColumn<T> ThenSortByDescending<TKey>(Expression<Func<T, TKey>> expression, IComparer<TKey> comparer);
     }
 
     public interface ISortableColumn : IColumn

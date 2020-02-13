@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Primitives;
 using System;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace GridBlazorServerSide.Services
@@ -56,6 +57,27 @@ namespace GridBlazorServerSide.Services
 
                 // return items to displays
                 return server.ItemsToDisplay;
+            }
+        }
+
+        public ItemsDTO<Order> GetOrdersGridRowsInMemory(Action<IGridColumnCollection<Order>> columns,
+            QueryDictionary<StringValues> query)
+        {
+            using (var context = new NorthwindDbContext(_options))
+            {
+                var repository = new OrdersRepository(context);
+                var server = new GridServer<Order>(repository.GetAll().ToList(), new QueryCollection(query),
+                    true, "ordersGrid", columns)
+                        .Sortable()
+                        .WithPaging(10)
+                        .Filterable()
+                        .WithMultipleFilters()
+                        .Groupable(true)
+                        .Searchable(true, false, false);
+
+                // return items to displays
+                var items = server.ItemsToDisplay;
+                return items;
             }
         }
 
@@ -176,6 +198,7 @@ namespace GridBlazorServerSide.Services
     {
         ItemsDTO<Order> GetOrdersGridRows(Action<IGridColumnCollection<Order>> columns, QueryDictionary<StringValues> query);
         ItemsDTO<Order> GetOrdersGridRows(QueryDictionary<StringValues> query);
+        ItemsDTO<Order> GetOrdersGridRowsInMemory(Action<IGridColumnCollection<Order>> columns, QueryDictionary<StringValues> query);
         ItemsDTO<OrderDetail> GetOrderDetailsGridRows(Action<IGridColumnCollection<OrderDetail>> columns,
             object[] keys, QueryDictionary<StringValues> query);
         Task<Order> GetOrder(int OrderId);

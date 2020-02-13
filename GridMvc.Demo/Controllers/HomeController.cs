@@ -351,9 +351,115 @@ namespace GridMvc.Demo.Controllers
             return RedirectToAction("Edit", "Home", new { id = order.OrderID, returnUrl, gridState, altGridState, error = "ModelState is not valid" });
         }
 
-        public ActionResult BlazorComponent()
+        public ActionResult BlazorComponentView()
         {
             return View();
+        }
+
+        public ActionResult Comparer(string gridState = "")
+        {
+            //string returnUrl = Request.Path;
+            string returnUrl = "/Home/Comparer";
+
+            IQueryCollection query = Request.Query;
+            if (!string.IsNullOrWhiteSpace(gridState))
+            {
+                try
+                {
+                    query = new QueryCollection(StringExtensions.GetQuery(gridState));
+                }
+                catch (Exception)
+                {
+                    // do nothing, gridState was not a valid state
+                }
+            }
+
+            ViewBag.ActiveMenuTitle = "Demo";
+
+            var requestCulture = HttpContext.Features.Get<IRequestCultureFeature>();
+            var locale = requestCulture.RequestCulture.UICulture.TwoLetterISOLanguageName;
+            SharedResource.Culture = requestCulture.RequestCulture.UICulture;
+
+            var shipperList = _shippersRepository.GetAll()
+                .Select(s => new SelectItem(s.ShipperID.ToString(), s.CompanyName))
+                .ToList();
+
+            var comparer = new SampleComparer(StringComparer.OrdinalIgnoreCase);
+
+            Action<IGridColumnCollection<Order>> columns = c =>
+            {
+                /* Adding not mapped column, that renders body, using inline Razor html helper */
+                c.Add()
+                    .Encoded(false)
+                    .Sanitized(false)
+                    .SetWidth(30)
+                    .Css("hidden-xs") //hide on phones
+                    .RenderComponentAs<ButtonCellViewComponent>(returnUrl);
+
+                /* Adding "OrderID" column: */
+
+                c.Add(o => o.OrderID)
+                    .Titled(SharedResource.Number)
+                    .SetWidth(100);
+
+                /* Adding "OrderDate" column: */
+                c.Add(o => o.OrderDate, "OrderCustomDate")
+                    .Titled(SharedResource.OrderCustomDate)
+                    .SetCellCssClassesContraint(o => o.OrderDate.HasValue && o.OrderDate.Value >= DateTime.Parse("1997-01-01") ? "red" : "")
+                    .Format("{0:yyyy-MM-dd}")
+                    .SetWidth(110)
+                    .Max(true).Min(true);
+
+                c.Add(o => o.ShipVia)
+                    .Titled("Via")
+                    .SetWidth(250)
+                    .RenderValueAs(o => o.Shipper.CompanyName)
+                    .SetListFilter(shipperList);
+
+                /* Adding "CompanyName" column: */
+                c.Add(o => o.Customer.CompanyName, comparer)
+                    .Titled(SharedResource.CompanyName)
+                    .SetWidth(250)
+                    .SetFilterWidgetType("CustomCompanyNameFilterWidget")
+                    .Max(true).Min(true);
+
+                /* Adding "ContactName" column: */
+                c.Add(o => o.Customer.ContactName).Titled(SharedResource.ContactName).SetWidth(250)
+                    .Max(true).Min(true);
+
+                /* Adding "Customer.Country" hidden column: */
+                c.Add(o => o.Customer.Country, true);
+
+                /* Adding "Freight" column: */
+                c.Add(o => o.Freight)
+                    .Titled(SharedResource.Freight)
+                    .SetWidth(100)
+                    .Format("{0:F}")
+                    .Sum(true).Average(true).Max(true).Min(true);
+
+                /* Adding "Vip customer" column: */
+                c.Add(o => o.Customer.IsVip)
+                    .Titled(SharedResource.IsVip)
+                    .SetWidth(70)
+                    .Css("hidden-xs") //hide on phones
+                    .RenderValueAs(o => o.Customer.IsVip ? Strings.BoolTrueLabel : Strings.BoolFalseLabel);
+            };
+
+            var server = new GridServer<Order>(_orderRepository.GetAll().ToList(), query, false, "ordersGrid",
+                columns, 10, locale)
+                .SetRowCssClasses(item => item.Customer.IsVip ? "success" : string.Empty)
+                .Sortable()
+                .Filterable()
+                .WithMultipleFilters()
+                .Searchable(true, false)
+                .Groupable(true)
+                .ClearFiltersButton(true)
+                .Selectable(true)
+                .SetStriped(true)
+                .ChangePageSize(true)
+                .WithGridItemsCount();
+
+            return View(server.Grid);
         }
     }
 }

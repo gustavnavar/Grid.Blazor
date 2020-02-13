@@ -238,6 +238,19 @@ namespace GridMvc.Tests
                             new TestModelChild { ChildTitle = "B3 - 3", ChildCreated = new DateTime(2002, 8, 12) }
                         }
                     };
+            yield return
+                new TestModel
+                {
+                    Id = 1,
+                    Title = "B10",
+                    Created = new DateTime(2002, 3, 2),
+                    Child = new TestModelChild { ChildTitle = "B10", ChildCreated = new DateTime(2002, 3, 5) },
+                    List = new TestModelChild[] {
+                            new TestModelChild { ChildTitle = "B10 - 1", ChildCreated = new DateTime(2002, 2, 10) },
+                            new TestModelChild { ChildTitle = "B10 - 2", ChildCreated = new DateTime(2002, 3, 10) },
+                            new TestModelChild { ChildTitle = "B19 - 3", ChildCreated = new DateTime(2002, 4, 10) }
+                        }
+                };
         }
     }
 }

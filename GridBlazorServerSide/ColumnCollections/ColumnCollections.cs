@@ -42,6 +42,35 @@ namespace GridBlazorServerSide.ColumnCollections
             .RenderValueAs(o => o.Customer.IsVip ? Strings.BoolTrueLabel : Strings.BoolFalseLabel);
         };
 
+        public static Action<IGridColumnCollection<Order>, IComparer<string>> OrderColumnsWithComparer = (c, comparer) =>
+        {
+            /* Adding "OrderID" column: */
+            c.Add(o => o.OrderID).Titled(SharedResource.Number).SetWidth(100);
+
+            /* Adding "OrderDate" column: */
+            c.Add(o => o.OrderDate, "OrderCustomDate").Titled(SharedResource.OrderCustomDate)
+            .SetWidth(120).RenderComponentAs<TooltipCell>();
+
+            /* Adding "CompanyName" column: */
+            c.Add(o => o.Customer.CompanyName, comparer).Titled(SharedResource.CompanyName)
+            .SetWidth(250);
+
+            /* Adding "ContactName" column: */
+            c.Add(o => o.Customer.ContactName).Titled(SharedResource.ContactName).SetWidth(250);
+
+            /* Adding "Customer.Country" hidden column: */
+            c.Add(o => o.Customer.Country, true);
+
+            /* Adding "Freight" column: */
+            c.Add(o => o.Freight)
+            .Titled(SharedResource.Freight)
+            .Format("{0:F}");
+
+            /* Adding "Vip customer" column: */
+            c.Add(o => o.Customer.IsVip).Titled(SharedResource.IsVip).SetWidth(70).Css("hidden-xs") //hide on phones
+            .RenderValueAs(o => o.Customer.IsVip ? Strings.BoolTrueLabel : Strings.BoolFalseLabel);
+        };
+
         public static Action<IGridColumnCollection<Order>> OrderColumnsWithTotals = c =>
         {
             /* Adding "OrderID" column: */
@@ -318,6 +347,7 @@ namespace GridBlazorServerSide.ColumnCollections
             c.Add(o => o.OrderDate, "OrderCustomDate").Titled(SharedResource.OrderCustomDate)
             //.SortInitialDirection(GridSortDirection.Descending)
             .SetCellCssClassesContraint(o => o.OrderDate.HasValue && o.OrderDate.Value >= DateTime.Parse("1997-01-01") ? "red" : "")
+            .SetFilterWidgetType("DateTimeLocal")
             .Format("{0:yyyy-MM-dd}").SetWidth(120)
             .Max(true).Min(true);
 

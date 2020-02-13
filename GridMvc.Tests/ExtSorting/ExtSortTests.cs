@@ -1,7 +1,4 @@
 ﻿using GridShared.Sorting;
-using GridShared.Utility;
-using Microsoft.AspNetCore.Http;
-using Microsoft.Extensions.Primitives;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.Collections.Generic;
@@ -31,7 +28,8 @@ namespace GridMvc.Tests.ExtSorting
             _grid.Columns.Add(x => x.Title);
             _grid.ExtSortingEnabled = true;
             if (
-                !ValidateSorting<string,  object>(_grid, x => x.Title,  "Title", GridSortDirection.Descending, null, null, null))
+                !ValidateSorting<string,  object>(_grid, x => x.Title,  "Title", GridSortDirection.Descending, null, null, 
+                    null, null, null))
             {
                 Assert.Fail("Extended sort works incorrect");
             }
@@ -44,7 +42,7 @@ namespace GridMvc.Tests.ExtSorting
             _grid.ExtSortingEnabled = true;
             if (
                 !ValidateSorting<string,  object>(_grid, x => x.Title, "someid",
-                                                         GridSortDirection.Descending, null, null, null))
+                                                         GridSortDirection.Descending, null, null, null, null, null))
             {
                 Assert.Fail("Extended sort works incorrect");
             }
@@ -57,7 +55,7 @@ namespace GridMvc.Tests.ExtSorting
             _grid.ExtSortingEnabled = true;
             if (
                 !ValidateSorting<string,  object>(_grid, x => x.Title, "Title",
-                                                         GridSortDirection.Ascending, null, null, null))
+                                                         GridSortDirection.Ascending, null, null, null, null, null))
             {
                 Assert.Fail("Extended sort  works incorrect");
             }
@@ -70,7 +68,7 @@ namespace GridMvc.Tests.ExtSorting
             _grid.ExtSortingEnabled = true;
             if (
                 !ValidateSorting<string,  object>(_grid, x => x.Title, "someid",
-                                                         GridSortDirection.Ascending, null, null, null))
+                                                         GridSortDirection.Ascending, null, null, null, null, null))
             {
                 Assert.Fail("Extended sort works incorrect");
             }
@@ -83,7 +81,7 @@ namespace GridMvc.Tests.ExtSorting
             _grid.ExtSortingEnabled = true;
             if (
                 !ValidateSorting<int,  object>(_grid, x => x.Id,"Id", GridSortDirection.Ascending, null,
-                                                   null, null))
+                                                   null, null, null, null))
             {
                 Assert.Fail("Extended sort works incorrect");
             }
@@ -96,7 +94,7 @@ namespace GridMvc.Tests.ExtSorting
             _grid.ExtSortingEnabled = true;
             if (
                 !ValidateSorting<int,  object>(_grid, x => x.Id, "Id", GridSortDirection.Descending, null,
-                                                   null, null))
+                                                   null, null, null, null))
             {
                 Assert.Fail("Extended sort works incorrect");
             }
@@ -108,7 +106,8 @@ namespace GridMvc.Tests.ExtSorting
             _grid.Columns.Add(x => x.Child.ChildTitle);
             _grid.ExtSortingEnabled = true;
             if (
-                !ValidateSorting<string,  object>(_grid, x => x.Child.ChildTitle, "Child.ChildTitle", GridSortDirection.Ascending, null, null, null))
+                !ValidateSorting<string,  object>(_grid, x => x.Child.ChildTitle, "Child.ChildTitle", GridSortDirection.Ascending, 
+                    null, null, null, null, null))
             {
                 Assert.Fail("Extended sort works incorrect");
             }
@@ -121,7 +120,8 @@ namespace GridMvc.Tests.ExtSorting
             _grid.ExtSortingEnabled = true;
             if (
                 !ValidateSorting<string, object>(_grid, x => x.Child.ChildTitle, 
-                                                         "Child.ChildTitle", GridSortDirection.Descending, null, null, null))
+                                                         "Child.ChildTitle", GridSortDirection.Descending, 
+                                                         null, null, null, null, null))
             {
                 Assert.Fail("Extended sort works incorrect");
             }
@@ -135,7 +135,7 @@ namespace GridMvc.Tests.ExtSorting
             if (
                 !ValidateSorting<DateTime,  object>(_grid, x => x.Child.ChildCreated, 
                                                              "Child.ChildCreated", GridSortDirection.Descending, null,
-                                                             null, null))
+                                                             null, null, null, null))
             {
                 Assert.Fail("Extended sort works incorrect");
             }
@@ -149,7 +149,7 @@ namespace GridMvc.Tests.ExtSorting
             if (
                 !ValidateSorting<DateTime, object>(_grid, x => x.Child.ChildCreated,
                                                              "someid", GridSortDirection.Descending, null,
-                                                             null, null))
+                                                             null, null, null, null))
             {
                 Assert.Fail("Extended sort works incorrect");
             }
@@ -163,7 +163,7 @@ namespace GridMvc.Tests.ExtSorting
             if (
                 !ValidateSorting<DateTime, object>(_grid, x => x.Child.ChildCreated,
                                                              "Child.ChildCreated", GridSortDirection.Ascending, null,
-                                                             null, null))
+                                                             null, null, null, null))
             {
                 Assert.Fail("Extended sort works incorrect");
             }
@@ -177,7 +177,8 @@ namespace GridMvc.Tests.ExtSorting
             _grid.ExtSortingEnabled = true;
             if (
                 !ValidateSorting(_grid, x => x.Child.ChildCreated,"Child.ChildCreated",
-                                 GridSortDirection.Ascending, x => x.Title, "Title", GridSortDirection.Ascending))
+                                 GridSortDirection.Ascending, x => x.Title, "Title", GridSortDirection.Ascending, 
+                                 null, null))
             {
                 Assert.Fail("Extended sort works incorrect");
             }
@@ -191,7 +192,36 @@ namespace GridMvc.Tests.ExtSorting
             _grid.ExtSortingEnabled = true;
             if (
                 !ValidateSorting(_grid, x => x.Child.ChildCreated, "Child.ChildCreated",
-                                 GridSortDirection.Ascending, x => x.Title, "Title", GridSortDirection.Descending))
+                                 GridSortDirection.Ascending, x => x.Title, "Title", GridSortDirection.Descending, 
+                                 null, null))
+            {
+                Assert.Fail("Extended sort works incorrect");
+            }
+        }
+
+        [TestMethod]
+        public void TestExtSortingStringComparerAscending()
+        {
+            var comparer = new SampleComparer(StringComparer.OrdinalIgnoreCase);
+            _grid.Columns.Add(x => x.Title, comparer);
+            _grid.ExtSortingEnabled = true;
+            if (
+                !ValidateSorting<string, object>(_grid, x => x.Title, "Title", GridSortDirection.Ascending, 
+                    null, null, null, comparer, null))
+            {
+                Assert.Fail("Extended sort works incorrect");
+            }
+        }
+
+        [TestMethod]
+        public void TestExtSortingStringComparerDescending()
+        {
+            var comparer = new SampleComparer(StringComparer.OrdinalIgnoreCase);
+            _grid.Columns.Add(x => x.Title, comparer);
+            _grid.ExtSortingEnabled = true;
+            if (
+                !ValidateSorting<string, object>(_grid, x => x.Title, "Title", GridSortDirection.Descending,
+                    null, null, null, comparer, null))
             {
                 Assert.Fail("Extended sort works incorrect");
             }
@@ -202,7 +232,9 @@ namespace GridMvc.Tests.ExtSorting
                                                         GridSortDirection direction,
                                                         Func<TestModel, TNext> orderExpression2,
                                                         string columnName2,
-                                                        GridSortDirection? direction2)
+                                                        GridSortDirection? direction2,
+                                                        IComparer<T> comparer,
+                                                        IComparer<TNext> nextComparer)
         {
             var payload = new ColumnOrderValue(columnName, direction,
                 grid.Settings.SortSettings.SortValues.Count + 1);
@@ -213,10 +245,16 @@ namespace GridMvc.Tests.ExtSorting
             switch (direction)
             {
                 case GridSortDirection.Ascending:
-                    etalonCollection = _repo.GetAll().OrderBy(orderExpression);
+                    if (comparer == null)
+                        etalonCollection = _repo.GetAll().OrderBy(orderExpression);
+                    else
+                        etalonCollection = _repo.GetAll().OrderBy(orderExpression, comparer);
                     break;
                 case GridSortDirection.Descending:
-                    etalonCollection = _repo.GetAll().OrderByDescending(orderExpression);
+                    if (comparer == null)
+                        etalonCollection = _repo.GetAll().OrderByDescending(orderExpression);
+                    else
+                        etalonCollection = _repo.GetAll().OrderByDescending(orderExpression, comparer);
                     break;
                 default:
                     throw new ArgumentOutOfRangeException("direction");
@@ -232,10 +270,16 @@ namespace GridMvc.Tests.ExtSorting
                 switch (direction2.Value)
                 {
                     case GridSortDirection.Ascending:
-                        etalonCollection = _repo.GetAll().OrderBy(orderExpression2);
+                        if (comparer == null)
+                            etalonCollection = _repo.GetAll().OrderBy(orderExpression2);
+                        else
+                            etalonCollection = _repo.GetAll().OrderBy(orderExpression2, nextComparer);
                         break;
                     case GridSortDirection.Descending:
-                        etalonCollection = _repo.GetAll().OrderByDescending(orderExpression2);
+                        if (comparer == null)
+                            etalonCollection = _repo.GetAll().OrderByDescending(orderExpression2);
+                        else
+                            etalonCollection = _repo.GetAll().OrderByDescending(orderExpression2, nextComparer);
                         break;
                     default:
                         throw new ArgumentOutOfRangeException("direction");

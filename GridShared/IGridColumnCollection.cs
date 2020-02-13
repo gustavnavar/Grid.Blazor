@@ -52,6 +52,29 @@ namespace GridShared
         IGridColumn<T> Add<TKey>(Expression<Func<T, TKey>> constraint, bool hidden);
 
         /// <summary>
+        ///     Add new column to the grid
+        /// </summary>
+        /// <param name="constraint">Member of generic class</param>
+        /// <returns>Added column</returns>
+        IGridColumn<T> Add<TKey>(Expression<Func<T, TKey>> constraint, IComparer<TKey> comparer);
+
+        /// <summary>
+        ///     Add new column to the grid
+        /// </summary>
+        /// <param name="constraint">Member of generic class</param>
+        /// <param name="columnName">Specify column internal static name, used for sorting and filtering</param>
+        /// <returns>Added column</returns>
+        IGridColumn<T> Add<TKey>(Expression<Func<T, TKey>> constraint, IComparer<TKey> comparer, string columnName);
+
+        /// <summary>
+        ///     Add new column to the grid
+        /// </summary>
+        /// <param name="constraint">Member of generic class</param>
+        /// <param name="hidden">Hidden column not display in grid, but you can get values from client side</param>
+        /// <returns>Added column</returns>
+        IGridColumn<T> Add<TKey>(Expression<Func<T, TKey>> constraint, IComparer<TKey> comparer,  bool hidden);
+
+        /// <summary>
         ///     Add new column based on property info, using reflection
         /// </summary>
         /// <returns>Added column</returns>
@@ -90,6 +113,32 @@ namespace GridShared
         /// <param name="hidden">Hidden column not display in grid, but you can get values from client side</param>
         /// <returns>Added column</returns>
         IGridColumn<T> Insert<TKey>(int position, Expression<Func<T, TKey>> constraint, bool hidden);
+
+        /// <summary>
+        ///     Add new column to the grid
+        /// </summary>
+        /// <param name="position">Position to insert</param>
+        /// <param name="constraint">Member of generic class</param>
+        /// <returns>Added column</returns>
+        IGridColumn<T> Insert<TKey>(int position, Expression<Func<T, TKey>> constraint, IComparer<TKey> comparer);
+
+        /// <summary>
+        ///     Add new column to the grid
+        /// </summary>
+        /// <param name="position">Position to insert</param>
+        /// <param name="constraint">Member of generic class</param>
+        /// <param name="columnName">Specify column internal static name, used for sorting and filtering</param>
+        /// <returns>Added column</returns>
+        IGridColumn<T> Insert<TKey>(int position, Expression<Func<T, TKey>> constraint, IComparer<TKey> comparer, string columnName);
+
+        /// <summary>
+        ///     Add new column to the grid
+        /// </summary>
+        /// <param name="position">Position to insert</param>
+        /// <param name="constraint">Member of generic class</param>
+        /// <param name="hidden">Hidden column not display in grid, but you can get values from client side</param>
+        /// <returns>Added column</returns>
+        IGridColumn<T> Insert<TKey>(int position, Expression<Func<T, TKey>> constraint, IComparer<TKey> comparer, bool hidden);
 
         /// <summary>
         ///     Get added column by member expression

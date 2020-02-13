@@ -32,6 +32,7 @@ namespace GridBlazor.Pages
         internal bool[] InitSubGrid;
         protected IQueryDictionary<Type> _filterComponents;
         protected T _item;
+        internal bool _isDateTimeLocalSupported = false;
 
         protected ElementReference gridmvc;
         public ElementReference PageSizeInput;
@@ -116,6 +117,7 @@ namespace GridBlazor.Pages
             _filterComponents.Add("System.DateTime", typeof(DateTimeFilterComponent<T>));
             _filterComponents.Add("System.Date", typeof(DateTimeFilterComponent<T>));
             _filterComponents.Add("System.DateTimeOffset", typeof(DateTimeFilterComponent<T>));
+            _filterComponents.Add("DateTimeLocal", typeof(DateTimeLocalFilterComponent<T>));
             _filterComponents.Add("System.Boolean", typeof(BooleanFilterComponent<T>));
 
             if (CustomFilters == null)
@@ -179,6 +181,11 @@ namespace GridBlazor.Pages
 
         protected override async Task OnAfterRenderAsync(bool firstRender)
         {
+            if (firstRender)
+            {
+                _isDateTimeLocalSupported = await jSRuntime.InvokeAsync<bool>("gridJsFunctions.isDateTimeLocalSupported");
+            }
+            
             if ((firstRender || _fromCrud) && gridmvc.Id != null && Grid.Keyboard)
             {
                 _fromCrud = false;

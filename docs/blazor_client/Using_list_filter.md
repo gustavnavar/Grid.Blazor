@@ -29,4 +29,4 @@ Then you have to add the column using the ```SetListFilter``` method of the ```G
         .SetListFilter(_shippers);
 ``` 
 
-[<- Filtering](Filtering.md) | [Creating custom filter widget ->](Creating_custom_filter_widget.md)
+[<- Filtering](Filtering.md) | [Using a date time filter ->](Using_datetime_filter.md)

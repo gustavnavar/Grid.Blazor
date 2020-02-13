@@ -91,7 +91,7 @@ namespace GridMvc.Tests.Searching
                 if (searched.ElementAt(i).Id != original.ElementAt(i).Id)
                     Assert.Fail("Searching not works");
             }
-            Assert.AreEqual(_grid.ItemsCount, 7);
+            Assert.AreEqual(_grid.ItemsCount, 8);
         }
     }
 }

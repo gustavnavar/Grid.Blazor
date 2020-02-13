@@ -12,4 +12,17 @@ The **GridBlazor** component installation is straightforward. Just follow these 
 
 3. Install the [**GridMvcCore**](http://nuget.org/packages/GridMvcCore/) nuget package on the server project.
 
+4. Add the following lines to the **wwwroot/index.html** file:
+    ```html
+        <link href="_content/GridBlazor/css/gridblazor.min.css" rel="stylesheet" />
+        <script src="_content/GridBlazor/js/gridblazor.js"></script>
+    ```
+    These files will be loaded from the **GridBlazor** nuget package, so it is not necessary to copy it to you project.
+
+
+5. If you are using Boostrap 3.x you will also need this line in the **wwwroot/index.html** file:
+    ```html
+        <link href="~/_content/GridBlazor/css/gridblazor-bootstrap3.min.css" rel="stylesheet" />
+     ```
+ 
 [Quick start ->](Quick_start.md)
