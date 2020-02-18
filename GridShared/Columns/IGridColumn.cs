@@ -212,6 +212,11 @@ namespace GridShared.Columns
         ///     Sets the column as select for CRUD components
         /// </summary>
         IGridColumn<T> SetSelectField(bool enabled, Func<T, string> expression, string url);
+
+        /// <summary>
+        ///    Allow grid to show a SubGrid
+        /// </summary>
+        IGridColumn<T> SubGrid(Func<object[], bool, bool, bool, bool, Task<IGrid>> subGrids, params string[] keys);
     }
 
     public interface IColumn

@@ -240,4 +240,13 @@
   <data name="NotEqual" xml:space="preserve">
     <value>Nicht gleich</value>
   </data>
+  <data name="CreateError" xml:space="preserve">
+    <value>Beim Erstellen des neuen Elements ist ein Fehler aufgetreten</value>
+  </data>
+  <data name="DeleteError" xml:space="preserve">
+    <value>Beim Löschen dieses Elements ist ein Fehler aufgetreten</value>
+  </data>
+  <data name="UpdateError" xml:space="preserve">
+    <value>Beim Aktualisieren dieses Elements ist ein Fehler aufgetreten</value>
+  </data>
 </root>

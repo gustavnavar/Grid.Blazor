@@ -239,4 +239,13 @@
   <data name="NotEqual" xml:space="preserve">
     <value>Eşit değil</value>
   </data>
+  <data name="CreateError" xml:space="preserve">
+    <value>Yeni öğe oluşturulurken bir hata oluştu</value>
+  </data>
+  <data name="DeleteError" xml:space="preserve">
+    <value>Bu öğe silinirken bir hata oluştu</value>
+  </data>
+  <data name="UpdateError" xml:space="preserve">
+    <value>Bu öğe güncellenirken bir hata oluştu</value>
+  </data>
 </root>

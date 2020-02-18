@@ -4,9 +4,8 @@ using GridShared.Filtering;
 using GridShared.Grouping;
 using GridShared.Searching;
 using GridShared.Sorting;
-
+using GridShared.Utility;
 using Microsoft.AspNetCore.Components;
-
 using System;
 using System.Collections.Generic;
 using System.Globalization;
@@ -73,6 +72,9 @@ namespace GridBlazor.Columns
 
         public string MinString { get; set; }
 
+        public string[] SubGridKeys { get; set; }
+
+        public Func<object[], bool, bool, bool, bool, Task<IGrid>> SubGrids { get; set; }
 
         public IGridColumn<T> Titled(string title)
         {
@@ -373,6 +375,24 @@ namespace GridBlazor.Columns
         public abstract IColumnGroup<T> Group { get; }
 
         public abstract IGridCell GetValue(T instance);
+
+        public IGridColumn<T> SubGrid(Func<object[], bool, bool, bool, bool, Task<IGrid>> subGrids, params string[] keys)
+        {
+            SubGrids = subGrids;
+            SubGridKeys = keys;
+            return this;
+        }
+
+        public QueryDictionary<object> GetSubGridKeyValues(object item)
+        {
+            QueryDictionary<object> values = new QueryDictionary<object>();
+            foreach (var key in SubGridKeys)
+            {
+                var value = item.GetType().GetProperty(key).GetValue(item);
+                values.Add(key, value);
+            }
+            return values;
+        }
 
         #endregion
 

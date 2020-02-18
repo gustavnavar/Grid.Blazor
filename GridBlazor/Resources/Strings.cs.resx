@@ -240,4 +240,13 @@
   <data name="View" xml:space="preserve">
     <value>Zobrazit</value>
   </data>
+  <data name="CreateError" xml:space="preserve">
+    <value>Při vytváření nové položky došlo k chybě</value>
+  </data>
+  <data name="DeleteError" xml:space="preserve">
+    <value>Při mazání této položky došlo k chybě</value>
+  </data>
+  <data name="UpdateError" xml:space="preserve">
+    <value>Při aktualizaci této položky došlo k chybě</value>
+  </data>
 </root>

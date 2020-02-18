@@ -240,4 +240,13 @@
   <data name="NotEqual" xml:space="preserve">
     <value>Ikke lik</value>
   </data>
+  <data name="CreateError" xml:space="preserve">
+    <value>Det oppstod en feil ved oppretting av den nye varen</value>
+  </data>
+  <data name="DeleteError" xml:space="preserve">
+    <value>Det oppsto en feil ved sletting av dette elementet</value>
+  </data>
+  <data name="UpdateError" xml:space="preserve">
+    <value>Det oppstod en feil ved oppdatering av dette elementet</value>
+  </data>
 </root>

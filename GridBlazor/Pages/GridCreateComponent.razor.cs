@@ -1,4 +1,5 @@
-﻿using GridShared.Columns;
+﻿using GridBlazor.Resources;
+using GridShared.Columns;
 using Microsoft.AspNetCore.Components;
 using System;
 using System.Reflection;
@@ -8,6 +9,8 @@ namespace GridBlazor.Pages
 {
     public partial class GridCreateComponent<T> : ICustomGridComponent<T>
     {
+        private string _error = "";
+
         [CascadingParameter(Name = "GridComponent")]
         protected GridComponent<T> GridComponent { get; set; }
 
@@ -184,7 +187,14 @@ namespace GridBlazor.Pages
 
         protected async Task CreateItem()
         {
-            await GridComponent.CreateItem();
+            try
+            {
+                await GridComponent.CreateItem();
+            }
+            catch (Exception)
+            {
+                _error = Strings.CreateError;
+            } 
         }
 
         protected void BackButtonClicked()

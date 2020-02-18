@@ -81,27 +81,6 @@ namespace GridBlazorServerSide.Services
             }
         }
 
-        public ItemsDTO<OrderDetail> GetOrderDetailsGridRows(Action<IGridColumnCollection<OrderDetail>> columns,
-            object[] keys, QueryDictionary<StringValues> query)
-        {
-            using (var context = new NorthwindDbContext(_options))
-            {
-                int orderId;
-                int.TryParse(keys[0].ToString(), out orderId);
-                var repository = new OrderDetailsRepository(context);
-                var server = new GridServer<OrderDetail>(repository.GetForOrder(orderId), new QueryCollection(query),
-                    true, "orderDetailssGrid" + keys[0].ToString(), columns)
-                        .Sortable()
-                        .WithPaging(10)
-                        .Filterable()
-                        .WithMultipleFilters();
-
-                // return items to displays
-                var items = server.ItemsToDisplay;
-                return items;
-            }
-        }
-
         public async Task<Order> GetOrder(int OrderId)
         {
             using (var context = new NorthwindDbContext(_options))
@@ -199,8 +178,6 @@ namespace GridBlazorServerSide.Services
         ItemsDTO<Order> GetOrdersGridRows(Action<IGridColumnCollection<Order>> columns, QueryDictionary<StringValues> query);
         ItemsDTO<Order> GetOrdersGridRows(QueryDictionary<StringValues> query);
         ItemsDTO<Order> GetOrdersGridRowsInMemory(Action<IGridColumnCollection<Order>> columns, QueryDictionary<StringValues> query);
-        ItemsDTO<OrderDetail> GetOrderDetailsGridRows(Action<IGridColumnCollection<OrderDetail>> columns,
-            object[] keys, QueryDictionary<StringValues> query);
         Task<Order> GetOrder(int OrderId);
         Task UpdateAndSave(Order order);
         Task Add1ToFreight(int OrderId);

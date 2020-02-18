@@ -2,6 +2,7 @@
 using GridShared;
 using GridShared.Columns;
 using GridShared.Filtering;
+using GridShared.Utility;
 using Microsoft.Extensions.Primitives;
 using System;
 using System.Collections.Generic;
@@ -165,5 +166,10 @@ namespace GridBlazor
         ///     Get and set keyboard utilization
         /// </summary>
         bool Keyboard { get; }
+
+        /// <summary>
+        ///     Fixed column values for the grid
+        /// </summary>
+        QueryDictionary<object> FixedValues { get; set; }
     }
 }

@@ -7,6 +7,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace GridBlazorClientSide.Shared.Models
@@ -18,6 +19,7 @@ namespace GridBlazorClientSide.Shared.Models
         public int ProductID { get; set; }
         public decimal UnitPrice { get; set; }
         public short Quantity { get; set; }
+        [Range(0, 1, ErrorMessage = "Discount must be between 0 and 1.")]
         public float Discount { get; set; }
         [ForeignKey("OrderID")]
         public virtual Order Order { get; set; }

@@ -151,6 +151,15 @@ namespace GridBlazor.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to There was an error creating the new item.
+        /// </summary>
+        public static string CreateError {
+            get {
+                return ResourceManager.GetString("CreateError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Create item.
         /// </summary>
         public static string CreateItem {
@@ -174,6 +183,15 @@ namespace GridBlazor.Resources {
         public static string Delete {
             get {
                 return ResourceManager.GetString("Delete", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to There was an error deleting this item.
+        /// </summary>
+        public static string DeleteError {
+            get {
+                return ResourceManager.GetString("DeleteError", resourceCulture);
             }
         }
         
@@ -408,6 +426,15 @@ namespace GridBlazor.Resources {
         public static string Sum {
             get {
                 return ResourceManager.GetString("Sum", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to There was an error updating this item.
+        /// </summary>
+        public static string UpdateError {
+            get {
+                return ResourceManager.GetString("UpdateError", resourceCulture);
             }
         }
         

@@ -135,6 +135,22 @@ namespace GridBlazorClientSide.Server.Controllers
         }
 
         [HttpGet("[action]")]
+        public ActionResult OrderColumnsWithSubgridCrud()
+        {
+            var repository = new OrdersRepository(_context);
+            IGridServer<Order> server = new GridServer<Order>(repository.GetAll(), Request.Query,
+                true, "ordersGrid", c => ColumnCollections.OrderColumnsWithSubgridCrud(c, null, null))
+                    .WithPaging(10)
+                    .Sortable()
+                    .Filterable()
+                    .WithMultipleFilters()
+                    .WithGridItemsCount();
+
+            var items = server.ItemsToDisplay;
+            return Ok(items);
+        }
+
+        [HttpGet("[action]")]
         public ActionResult GetOrdersGridAllFeatures()
         {
             var repository = new OrdersRepository(_context);
@@ -188,12 +204,38 @@ namespace GridBlazorClientSide.Server.Controllers
         }
 
         [HttpGet("[action]")]
+        public ActionResult GetAllProducts()
+        {
+            var repository = new ProductRepository(_context);
+            return Ok(repository.GetAll()
+                    .Select(r => new SelectItem(r.ProductID.ToString(), r.ProductID.ToString() + " - "
+                        + r.ProductName))
+                    .ToList());
+        }
+
+        [HttpGet("[action]")]
         public ActionResult GetOrderDetailsGrid(int OrderId)
         {
             var orderDetails = (new OrderDetailsRepository(_context)).GetForOrder(OrderId);
 
             var server = new GridServer<OrderDetail>(orderDetails, Request.Query,
                     false, "orderDetailsGrid" + OrderId.ToString(), ColumnCollections.OrderDetailColumns)
+                        .WithPaging(10)
+                        .Sortable()
+                        .Filterable()
+                        .WithMultipleFilters();
+
+            var items = server.ItemsToDisplay;
+            return Ok(items);
+        }
+
+        [HttpGet("[action]")]
+        public ActionResult GetOrderDetailsGridWithCrud(int OrderId)
+        {
+            var orderDetails = (new OrderDetailsRepository(_context)).GetForOrder(OrderId);
+
+            var server = new GridServer<OrderDetail>(orderDetails, Request.Query,
+                    false, "orderDetailsGrid" + OrderId.ToString(), c => ColumnCollections.OrderDetailColumnsCrud(c, null))
                         .WithPaging(10)
                         .Sortable()
                         .Filterable()

@@ -535,6 +535,11 @@ namespace GridBlazor
         }
 
         /// <summary>
+        ///     Fixed column values for the grid
+        /// </summary>
+        public QueryDictionary<object> FixedValues { get; set; } = null;
+
+        /// <summary>
         ///     Applies data annotations settings
         /// </summary>
         private void ApplyGridSettings()

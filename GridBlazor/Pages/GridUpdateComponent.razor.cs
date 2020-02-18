@@ -1,6 +1,10 @@
-﻿using GridShared.Columns;
+﻿using GridBlazor.Columns;
+using GridBlazor.Resources;
+using GridShared.Columns;
+using GridShared.Utility;
 using Microsoft.AspNetCore.Components;
 using System;
+using System.Linq;
 using System.Reflection;
 using System.Threading.Tasks;
 
@@ -8,11 +12,38 @@ namespace GridBlazor.Pages
 {
     public partial class GridUpdateComponent<T> : ICustomGridComponent<T>
     {
+        private int _sequence = 0;
+        private QueryDictionary<RenderFragment> _grids;
+        private string _error = "";
+
         [CascadingParameter(Name = "GridComponent")]
         protected GridComponent<T> GridComponent { get; set; }
 
         [Parameter]
         public T Item { get; set; }
+
+        protected override async Task OnParametersSetAsync()
+        {
+            _grids = new QueryDictionary<RenderFragment>();
+            foreach (var column in GridComponent.Grid.Columns)
+            {
+                if (((ICGridColumn)column).SubGrids != null)
+                {
+                    var values = ((ICGridColumn)column).GetSubGridKeyValues(Item);
+                    var grid = await ((ICGridColumn)column).SubGrids(values.Values.ToArray(), true, true, true, true) as ICGrid;
+                    grid.FixedValues = values;
+                    _grids.Add(column.Name, CreateSubGridComponent(grid));
+                }
+            }
+        }
+
+        private RenderFragment CreateSubGridComponent(ICGrid grid) => builder =>
+        {
+            Type gridComponentType = typeof(GridComponent<>).MakeGenericType(grid.Type);
+            builder.OpenComponent(++_sequence, gridComponentType);
+            builder.AddAttribute(++_sequence, "Grid", grid);
+            builder.CloseComponent();
+        };
 
         private void ChangeValue(object value, IGridColumn column)
         {
@@ -184,7 +215,14 @@ namespace GridBlazor.Pages
 
         protected async Task UpdateItem()
         {
-            await GridComponent.UpdateItem();
+            try
+            {
+                await GridComponent.UpdateItem();
+            }
+            catch (Exception)
+            {
+                _error = Strings.UpdateError;
+            }
         }
 
         protected void BackButtonClicked()

@@ -9,19 +9,19 @@ namespace GridBlazorClientSide.Server.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class OrderController : Controller
+    public class OrderDetailController : Controller
     {
         private readonly NorthwindDbContext _context;
 
-        public OrderController(NorthwindDbContext context)
+        public OrderDetailController(NorthwindDbContext context)
         {
             _context = context;
         }
 
         [HttpGet]
-        public ActionResult GetAllOrders()
+        public ActionResult GetAllOrderDetails()
         {
-            var repository = new OrdersRepository(_context);
+            var repository = new OrderDetailsRepository(_context);
             var orders = repository.GetAll().ToList();
             if (orders == null)
             {
@@ -31,19 +31,19 @@ namespace GridBlazorClientSide.Server.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult> Create([FromBody] Order order)
+        public async Task<ActionResult> Create([FromBody] OrderDetail orderDetail)
         {
             if (ModelState.IsValid)
             {
-                if (order == null)
+                if (orderDetail == null)
                 {
                     return BadRequest();
                 }
 
-                var repository = new OrdersRepository(_context);
+                var repository = new OrderDetailsRepository(_context);
                 try
                 {
-                    await repository.Insert(order);
+                    await repository.Insert(orderDetail);
                     repository.Save();
 
                     return NoContent();
@@ -62,32 +62,32 @@ namespace GridBlazorClientSide.Server.Controllers
             });
         }
 
-        [HttpGet("{id}")]
-        public async Task<ActionResult> GetOrder(int id)
+        [HttpGet("{orderId}/{productId}")]
+        public async Task<ActionResult> GetOrderDetail(int orderId, int productId)
         {
-            var repository = new OrdersRepository(_context);
-            Order order = await repository.GetById(id);
-            if (order == null)
+            var repository = new OrderDetailsRepository(_context);
+            OrderDetail orderDetail = await repository.GetById(new { OrderID = orderId, ProductID = productId });
+            if (orderDetail == null)
             {
                 return NotFound();
             }
-            return Ok(order);
+            return Ok(orderDetail);
         }
 
-        [HttpPut("{id}")]
-        public async Task<ActionResult> UpdateOrder(int id, [FromBody] Order order)
+        [HttpPut("{orderId}/{productId}")]
+        public async Task<ActionResult> UpdateOrderDetail(int orderId, int productId, [FromBody] OrderDetail orderDetail)
         {
             if (ModelState.IsValid)
             {
-                if (order == null || order.OrderID != id)
+                if (orderDetail == null || orderDetail.OrderID != orderId  || orderDetail.ProductID != productId)
                 {
                     return BadRequest();
                 }
 
-                var repository = new OrdersRepository(_context);
+                var repository = new OrderDetailsRepository(_context);
                 try
                 {
-                    await repository.Update(order);
+                    await repository.Update(orderDetail);
                     repository.Save();
 
                     return NoContent();
@@ -106,20 +106,20 @@ namespace GridBlazorClientSide.Server.Controllers
             });
         }
 
-        [HttpDelete("{id}")]
-        public async Task<ActionResult> Delete(int id)
+        [HttpDelete("{orderId}/{productId}")]
+        public async Task<ActionResult> Delete(int orderId, int productId)
         {
-            var repository = new OrdersRepository(_context);
-            Order order = await repository.GetById(id);
+            var repository = new OrderDetailsRepository(_context);
+            OrderDetail orderDetail = await repository.GetById(new { OrderID = orderId, ProductID = productId });
 
-            if (order == null)
+            if (orderDetail == null)
             {
                 return NotFound();
             }
 
             try
             {
-                repository.Delete(order);
+                repository.Delete(orderDetail);
                 repository.Save();
 
                 return NoContent();
