@@ -44,9 +44,9 @@ namespace GridBlazor.Pages
         public event Func<object, SearchEventArgs, Task> SearchChanged;
         public event Func<object, PagerEventArgs, Task> PagerChanged;
 
-        public event Func<object, T, Task> BeforeInsert;
-        public event Func<object, T, Task> BeforeUpdate;
-        public event Func<object, T, Task> BeforeDelete;
+        public event Func<GridCreateComponent<T>, T, Task<bool>> BeforeInsert;
+        public event Func<GridUpdateComponent<T>, T, Task<bool>> BeforeUpdate;
+        public event Func<GridDeleteComponent<T>, T, Task<bool>> BeforeDelete;
 
         internal event Action FilterButtonClicked;
 
@@ -653,16 +653,19 @@ namespace GridBlazor.Pages
             StateHasChanged();
         }
 
-        public async Task CreateItem()
+        public async Task CreateItem(GridCreateComponent<T> component)
         {
             try
             {
-                await OnBeforeInsert();
-                await ((CGrid<T>)Grid).CrudDataService.Insert(_item);
-                ((CGrid<T>)Grid).Mode = GridMode.Grid;
-                CrudRender = null;
-                _fromCrud = true;
-                await UpdateGrid();
+                bool isValid = await OnBeforeInsert(component);
+                if (isValid)
+                {
+                    await ((CGrid<T>)Grid).CrudDataService.Insert(_item);
+                    ((CGrid<T>)Grid).Mode = GridMode.Grid;
+                    CrudRender = null;
+                    _fromCrud = true;
+                    await UpdateGrid();
+                }     
             }
             catch (Exception e)
             {
@@ -671,24 +674,28 @@ namespace GridBlazor.Pages
             }
         }
 
-        protected virtual async Task OnBeforeInsert()
+        protected virtual async Task<bool> OnBeforeInsert(GridCreateComponent<T> component)
         {
             if (BeforeInsert != null)
             {
-                await BeforeInsert.Invoke(this, _item);
+                return await BeforeInsert.Invoke(component, _item);
             }
+            return true;
         }
 
-        public async Task UpdateItem()
+        public async Task UpdateItem(GridUpdateComponent<T> component)
         {
             try
             {
-                await OnBeforeUpdate();
-                await ((CGrid<T>)Grid).CrudDataService.Update(_item);
-                ((CGrid<T>)Grid).Mode = GridMode.Grid;
-                CrudRender = null;
-                _fromCrud = true;
-                await UpdateGrid();
+                bool isValid = await OnBeforeUpdate(component);
+                if (isValid)
+                {
+                    await ((CGrid<T>)Grid).CrudDataService.Update(_item);
+                    ((CGrid<T>)Grid).Mode = GridMode.Grid;
+                    CrudRender = null;
+                    _fromCrud = true;
+                    await UpdateGrid();
+                }
             }
             catch (Exception e)
             {
@@ -697,25 +704,29 @@ namespace GridBlazor.Pages
             }
         }
 
-        protected virtual async Task OnBeforeUpdate()
+        protected virtual async Task<bool> OnBeforeUpdate(GridUpdateComponent<T> component)
         {
             if (BeforeUpdate != null)
             {
-                await BeforeUpdate.Invoke(this, _item);
+                return await BeforeUpdate.Invoke(component, _item);
             }
+            return true;
         }
 
-        public async Task DeleteItem()
+        public async Task DeleteItem(GridDeleteComponent<T> component)
         {
             try
             {
-                await OnBeforeDelete();
-                var keys = Grid.GetPrimaryKeyValues(_item);
-                await ((CGrid<T>)Grid).CrudDataService.Delete(keys);
-                ((CGrid<T>)Grid).Mode = GridMode.Grid;
-                CrudRender = null;
-                _fromCrud = true;
-                await UpdateGrid();
+                bool isValid = await OnBeforeDelete(component);
+                if (isValid)
+                {
+                    var keys = Grid.GetPrimaryKeyValues(_item);
+                    await ((CGrid<T>)Grid).CrudDataService.Delete(keys);
+                    ((CGrid<T>)Grid).Mode = GridMode.Grid;
+                    CrudRender = null;
+                    _fromCrud = true;
+                    await UpdateGrid();
+                }
             }
             catch (Exception e)
             {
@@ -724,12 +735,13 @@ namespace GridBlazor.Pages
             }
         }
 
-        protected virtual async Task OnBeforeDelete()
+        protected virtual async Task<bool> OnBeforeDelete(GridDeleteComponent<T> component)
         {
             if (BeforeDelete != null)
             {
-                await BeforeDelete.Invoke(this, _item);
+                return await BeforeDelete.Invoke(component, _item);
             }
+            return true;
         }
 
         public async Task InputPageSizeKeyup(KeyboardEventArgs e)

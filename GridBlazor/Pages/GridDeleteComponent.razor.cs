@@ -12,8 +12,9 @@ namespace GridBlazor.Pages
     public partial class GridDeleteComponent<T> : ICustomGridComponent<T>
     {
         private int _sequence = 0;
-        private QueryDictionary<RenderFragment> _grids;
-        private string _error = "";
+        private QueryDictionary<RenderFragment> _grids;    
+        
+        public string Error { get; set; } = "";
 
         [CascadingParameter(Name = "GridComponent")]
         protected GridComponent<T> GridComponent { get; set; }
@@ -47,11 +48,11 @@ namespace GridBlazor.Pages
         {
             try
             {
-                await GridComponent.DeleteItem();
+                await GridComponent.DeleteItem(this);
             }
             catch (Exception)
             {
-                _error = Strings.DeleteError;
+                Error = Strings.DeleteError;
             }
         }
 

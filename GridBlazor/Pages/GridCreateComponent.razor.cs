@@ -9,7 +9,7 @@ namespace GridBlazor.Pages
 {
     public partial class GridCreateComponent<T> : ICustomGridComponent<T>
     {
-        private string _error = "";
+        public string Error { get; set; } = "";
 
         [CascadingParameter(Name = "GridComponent")]
         protected GridComponent<T> GridComponent { get; set; }
@@ -189,11 +189,11 @@ namespace GridBlazor.Pages
         {
             try
             {
-                await GridComponent.CreateItem();
+                await GridComponent.CreateItem(this);
             }
             catch (Exception)
             {
-                _error = Strings.CreateError;
+                Error = Strings.CreateError;
             } 
         }
 

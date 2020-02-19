@@ -25,7 +25,7 @@
 {
     <div class="row">
         <div class="col-md-12">
-            <GridComponent T="Order" Grid="@_grid"></GridComponent>
+            <GridComponent T="Order" @ref="_gridComponent" Grid="@_grid"></GridComponent>
         </div>
     </div>
 }
@@ -37,6 +37,7 @@ else
 @code
 {
     private CGrid<Order> _grid;
+    private GridComponent<Order> _gridComponent;
     private Task _task;
 
     protected override async Task OnParametersSetAsync()
@@ -62,5 +63,54 @@ else
         // Set new items to grid
         _task = client.UpdateGrid();
         await _task;
+    }
+
+    protected override void OnAfterRender(bool firstRender)
+    {
+        if (firstRender)
+        {
+            _gridComponent.BeforeInsert += BeforeInsert;
+            _gridComponent.BeforeUpdate += BeforeUpdate;
+            _gridComponent.BeforeDelete += BeforeDelete;
+        }
+    }
+
+    private async Task<bool> BeforeInsert(GridCreateComponent<Order> component, Order item)
+    {
+        var orderValidator = new OrderValidator();
+        var valid = await orderValidator.ValidateAsync(item);
+
+        if (!valid.IsValid)
+        {
+            component.Error = valid.ToString();
+        }
+
+        return valid.IsValid;
+    }
+
+    private async Task<bool> BeforeUpdate(GridUpdateComponent<Order> component, Order item)
+    {
+        var orderValidator = new OrderValidator();
+        var valid = await orderValidator.ValidateAsync(item);
+
+        if (!valid.IsValid)
+        {
+            component.Error = valid.ToString();
+        }
+
+        return valid.IsValid;
+    }
+
+    private async Task<bool> BeforeDelete(GridDeleteComponent<Order> component, Order item)
+    {
+        var orderValidator = new OrderValidator();
+        var valid = await orderValidator.ValidateAsync(item);
+
+        if (!valid.IsValid)
+        {
+            component.Error = valid.ToString();
+        }
+
+        return valid.IsValid;
     }
 }

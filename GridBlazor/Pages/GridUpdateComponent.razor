@@ -9,7 +9,7 @@
 <EditForm Model="@Item" OnValidSubmit="@UpdateItem">
     <DataAnnotationsValidator />
     <ValidationSummary />
-    <p id="error" style="color:red;">@_error</p>
+    <p id="error" style="color:red;">@Error</p>
     <div class="form-horizontal">
         @foreach (var column in GridComponent.Grid.Columns)
         {

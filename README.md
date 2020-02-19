@@ -73,6 +73,16 @@ http://gridblazor.azurewebsites.net
 
 The SQL Server database for all demos can be downloaded from [here](./GridMvc.Demo/App_Data)
 
+Alternatively, if you prefer to install a fresh version of the database you can perform the following steps:
+- run this script from Microsoft web to create a new database: https://github.com/microsoft/sql-server-samples/blob/master/samples/databases/northwind-pubs/instnwnd.sql
+- add a column to the Customers table with the name IsVip of type bit (NOT NULL) and default value 0:
+    ```sql
+        USE Northwind;
+        ALTER TABLE dbo.Customers ADD IsVip bit NOT NULL DEFAULT 0 WITH VALUES;
+        GO
+    ```
+- change manually some values of the new IsVip column to True
+
 ## Documentation
 There are native C# Grid components for Blazor client-side and server-side, and for ASP.NET Core MVC.
 

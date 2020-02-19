@@ -14,7 +14,8 @@ namespace GridBlazor.Pages
     {
         private int _sequence = 0;
         private QueryDictionary<RenderFragment> _grids;
-        private string _error = "";
+
+        public string Error { get; set; } = "";
 
         [CascadingParameter(Name = "GridComponent")]
         protected GridComponent<T> GridComponent { get; set; }
@@ -217,11 +218,11 @@ namespace GridBlazor.Pages
         {
             try
             {
-                await GridComponent.UpdateItem();
+                await GridComponent.UpdateItem(this);
             }
             catch (Exception)
             {
-                _error = Strings.UpdateError;
+                Error = Strings.UpdateError;
             }
         }
 
