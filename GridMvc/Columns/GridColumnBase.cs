@@ -45,7 +45,7 @@ namespace GridMvc.Columns
 
         public bool Hidden { get; protected set; }
 
-        public bool CrudHidden { get; protected set; } = false;
+        public CrudHidden CrudHidden { get; protected set; } = CrudHidden.NONE;
 
         public bool ReadOnlyOnUpdate { get; protected set; } = false;
 
@@ -236,10 +236,19 @@ namespace GridMvc.Columns
             return this;
         }
 
-        public IGridColumn<T> SetCrudHidden(bool enabled)
+        public IGridColumn<T> SetCrudHidden(bool insert, bool update, bool detail, bool delete)
         {
-            CrudHidden = enabled;
+            if (insert) CrudHidden |= CrudHidden.INSERT;
+            if (update) CrudHidden |= CrudHidden.UPDATE;
+            if (detail) CrudHidden |= CrudHidden.DETAIL;
+            if (delete) CrudHidden |= CrudHidden.DELETE;
+
             return this;
+        }
+
+        public IGridColumn<T> SetCrudHidden(bool all)
+        {
+            return SetCrudHidden(true,true,true,true);
         }
 
         public IGridColumn<T> SetReadOnlyOnUpdate(bool enabled)
