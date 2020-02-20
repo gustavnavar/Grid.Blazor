@@ -22,6 +22,7 @@ English is the default laguage. But you can use other languages. You have to cre
 * Norwegian
 * Turkish
 * Czech
+* Slovenian
 
 ## Additional languages
 
