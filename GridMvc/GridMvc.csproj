@@ -54,6 +54,9 @@
     <EmbeddedResource Include="Resources\Strings.nb-NO.resx" LogicalName="GridMvc.Resources.Strings.nb-NO.resources">
       <Generator></Generator>
     </EmbeddedResource>
+    <EmbeddedResource Include="Resources\Strings.sl.resx" LogicalName="GridMvc.Resources.Strings.sl.resources">
+      <Generator></Generator>
+    </EmbeddedResource>
     <EmbeddedResource Include="Resources\Strings.tr.resx" LogicalName="GridMvc.Resources.Strings.tr.resources">
       <Generator></Generator>
     </EmbeddedResource>
