@@ -18,7 +18,7 @@ You can enable filtering for all columns of a grid using the **Filterable** meth
 
 * Client project
     ```c#
-        var client = new GridClient<Order>(url, query, false, "ordersGrid", Columns, locale)
+        var client = new GridClient<Order>(httpClient, url, query, false, "ordersGrid", Columns, locale)
             .Filterable();
     ```
 
@@ -28,9 +28,16 @@ You can enable filtering for all columns of a grid using the **Filterable** meth
             .Filterable();
     ```
 
+You can enable a button to clear all selected filters using the ***ClearFiltersButton*** method of the **GridClient** object:  
+
+    ```razor
+        var client = new GridClient<Order>(httpClient, url, query, false, "ordersGrid", Columns).ClearFiltersButton(true);
+    ```
+
 **GridBlazor** supports several types of columns (specified in the **Add** method):
 
 * System.String
+* System.Guid
 * System.Int32
 * System.Int64
 * System.Boolean
@@ -67,4 +74,4 @@ Pressing the **+** and **-** buttons you can add multiple options to filter. You
 
 You can also create your own filter widgets.
 
-[<- Searching](Searching.md) | [Creating custom filter widget ->](Creating_custom_filter_widget.md)
+[<- Searching](Searching.md) | [Using a list filter->](Using_list_filter.md)

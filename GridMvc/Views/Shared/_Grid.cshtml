@@ -1,7 +1,11 @@
 ﻿@using GridMvc
 @using GridMvc.Columns
+@using GridMvc.Filtering
+@using GridMvc.Pagination
+@using GridMvc.Resources
 @using GridShared.Columns
 @using GridShared.Filtering
+@using GridShared.Utility
 @model ISGrid
 
 @if (Model == null) { return; }
@@ -25,6 +29,14 @@
               && firstColumn != null
               && (firstColumn.IsSumEnabled || firstColumn.IsAverageEnabled
                   || firstColumn.IsMaxEnabled || firstColumn.IsMinEnabled);
+
+    //determine current url:
+    var queryBuilder = new CustomQueryStringBuilder(Model.Settings.SearchSettings.Query);
+    var exceptQueryParameters = new List<string> { GridPager.DefaultPageSizeQueryParameter };
+    string _changePageSizeUrl = queryBuilder.GetQueryStringExcept(exceptQueryParameters);
+    int _pageSize = Model.Pager.ChangePageSize && Model.Pager.QueryPageSize > 0 ? Model.Pager.QueryPageSize : Model.Pager.PageSize;
+    exceptQueryParameters = new List<string> { QueryStringFilterSettings.DefaultTypeQueryParameter, QueryStringFilterSettings.DefaultClearInitFilterQueryParameter };
+    string _removeAllFilters = queryBuilder.GetQueryStringExcept(exceptQueryParameters);
 }
 
 @if (Model.RenderOptions.RenderRowsOnly)
@@ -33,23 +45,39 @@
 }
 else
 {
-    <div class="grid-mvc" data-lang="@Model.Language" 
-         data-gridname="@Model.RenderOptions.GridName" 
-         data-selectable="@Model.RenderOptions.Selectable.ToString().ToLower()" 
+    <div class="grid-mvc" data-lang="@Model.Language"
+         data-gridname="@Model.RenderOptions.GridName"
+         data-selectable="@Model.RenderOptions.Selectable.ToString().ToLower()"
          data-extsortable="@Model.ExtSortingEnabled.ToString().ToLower()"
-         data-groupable="@Model.GroupingEnabled.ToString().ToLower()" 
-         data-multiplefilters="@Model.RenderOptions.AllowMultipleFilters.ToString().ToLower()" 
+         data-groupable="@Model.GroupingEnabled.ToString().ToLower()"
+         data-multiplefilters="@Model.RenderOptions.AllowMultipleFilters.ToString().ToLower()"
          data-initfilters="@initialFilters" @(string.IsNullOrWhiteSpace(keys) ? "" : "data-keys=" + keys)>
         <div class="grid-wrap">
-            @if (Model.SearchingEnabled)
-            {
-                @await Html.PartialAsync("_GridSearch", Model)
-            }
+            <div class="row">
+                @if (Model.ClearFiltersButtonEnabled)
+                { 
+                    <div class="grid-all-filters-clear col-md-1">
+                        <button class="grid-button-all-filters-clear btn btn-default btn-outline-secondary" title="@Strings.ClearAllFilters" data-all-filters-clear-url="@_removeAllFilters" type="button"></button>
+                    </div>
+                }
+                @if (Model.EnablePaging && Model.Pager.ChangePageSize)
+                {
+                    <div class="grid-change-page-size col-md-4" data-change-page-size-url="@_changePageSizeUrl">
+                        <b>@Strings.Show </b>
+                        <input class="grid-change-page-size-input form-control" value="@_pageSize" />
+                        <b> @Strings.Items</b>
+                    </div>
+                }
+                @if (Model.SearchingEnabled)
+                {
+                    @await Html.PartialAsync("_GridSearch", Model)
+                }
+            </div>
             @if (Model.ExtSortingEnabled)
             {
                 @await Html.PartialAsync("_GridExtSortHeader", Model)
             }
-            <table class="table grid-table">
+            <table class="table @(Model.RenderOptions.Striped && hasSubGrid ? "substriped" : Model.RenderOptions.Striped ? "striped" : "") grid-table">
                 @* Draw grid header *@
                 <thead>
                     <tr>

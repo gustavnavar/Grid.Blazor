@@ -1,7 +1,7 @@
-﻿@using GridBlazor
-@using GridBlazor.Resources
+﻿@using GridBlazor.Resources
 @using GridBlazorServerSide.Models
-@inherits GridCreateComponentBase<Order>
+@using GridShared.Columns
+@inherits GridCreateComponent<Order>
 
 <h1>@Strings.Add Order</h1>
 <EditForm Model="@Item" OnValidSubmit="@CreateItem">
@@ -19,21 +19,60 @@
         <div class="form-group">
             <label for="CustomerID" class="control-label col-md-2">Customer Id: </label>
             <div class="col-md-5">
-                <InputText id="CustomerID" class="form-control" @bind-Value="Item.CustomerID" />
+                <select id="CustomerID" name="CustomerID" class="form-control" @bind="Item.CustomerID">
+                    <option value="">@Strings.SelectItem</option>
+                    @foreach (var selectItem in customerIdColumn.SelectItems)
+                    {
+                        if (selectItem.Value == Item.CustomerID)
+                        {
+                            <option value="@selectItem.Value" selected="selected">@selectItem.Title</option>
+                        }
+                        else
+                        {
+                            <option value="@selectItem.Value">@selectItem.Title</option>
+                        }
+                    }
+                </select>
             </div>
         </div>
 
         <div class="form-group">
             <label for="EmployeeID" class="control-label col-md-2">Employee Id: </label>
             <div class="col-md-5">
-                <InputNumber id="EmployeeID" class="form-control" @bind-Value="Item.EmployeeID" />
+                <select id="EmployeeID" name="EmployeeID" class="form-control" @bind="Item.EmployeeID">
+                    <option value="">@Strings.SelectItem</option>
+                    @foreach (var selectItem in employeeIdColumn.SelectItems)
+                    {
+                        if (selectItem.Value == Item.EmployeeID.ToString())
+                        {
+                            <option value="@selectItem.Value" selected="selected">@selectItem.Title</option>
+                        }
+                        else
+                        {
+                            <option value="@selectItem.Value">@selectItem.Title</option>
+                        }
+                    }
+                </select>
             </div>
         </div>
 
         <div class="form-group">
             <label for="ShipVia" class="control-label col-md-2">Ship Via: </label>
             <div class="col-md-5">
-                <InputNumber id="ShipVia" class="form-control" @bind-Value="Item.ShipVia" />
+                <select id="ShipVia" name="ShipVia" class="form-control" @bind="Item.ShipVia">
+                    <option value="">@Strings.SelectItem</option>
+                    @foreach (var selectItem in shipViaColumn.SelectItems)
+                    {
+                        if (selectItem.Value == Item.ShipVia.ToString())
+                        {
+                            <option value="@selectItem.Value" selected="selected">@selectItem.Title</option>
+                        }
+                        else
+                        {
+                            <option value="@selectItem.Value">@selectItem.Title</option>
+                        }
+                    }
+                </select>
             </div>
         </div>
 
@@ -108,3 +147,17 @@
         </div>
     </div>
 </EditForm>
+
+@code
+{
+    private IGridColumn<Order> customerIdColumn;
+    private IGridColumn<Order> employeeIdColumn;
+    private IGridColumn<Order> shipViaColumn;
+
+    protected override void OnParametersSet()
+    {
+        customerIdColumn = (IGridColumn<Order>) GridComponent.Grid.Columns.GetByName("CustomerID");
+        employeeIdColumn = (IGridColumn<Order>)GridComponent.Grid.Columns.GetByName("EmployeeID");
+        shipViaColumn = (IGridColumn<Order>)GridComponent.Grid.Columns.GetByName("ShipVia");
+    }
+ }

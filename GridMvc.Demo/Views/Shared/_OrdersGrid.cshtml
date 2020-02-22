@@ -1,5 +1,6 @@
 ﻿@using GridMvc
 @using GridMvc.Demo.Models
+@using GridMvc.Resources
 @using GridShared
 @using GridShared.Filtering
 @using GridShared.Sorting
@@ -12,6 +13,8 @@
     var requestCulture = Context.Features.Get<IRequestCultureFeature>();
     var locale = requestCulture.RequestCulture.UICulture.TwoLetterISOLanguageName;
     SharedResource.Culture = requestCulture.RequestCulture.UICulture;
+
+    IEnumerable<SelectItem> shipperList = (IEnumerable<SelectItem>)ViewData["shipperList"];
 
     Action<IGridColumnCollection<Order>> columns = c =>
     {
@@ -39,6 +42,13 @@
             .SetWidth(110)
             .Max(true).Min(true);
 
+/* Adding "ShipVia" column: */
+        c.Add(o => o.ShipVia)
+                    .Titled("Via")
+                    .SetWidth(250)
+                    .RenderValueAs(o => o.Shipper.CompanyName)
+                    .SetListFilter(shipperList);
+
 /* Adding "CompanyName" column: */
         c.Add(o => o.Customer.CompanyName)
             .Titled(SharedResource.CompanyName)
@@ -63,8 +73,8 @@
             .Titled(SharedResource.IsVip)
             .SetWidth(70)
             .Css("hidden-xs") //hide on phones
-            .RenderValueAs(o => o.Customer.IsVip ? "Yes" : "No");
+            .RenderValueAs(o => o.Customer.IsVip ? Strings.BoolTrueLabel : Strings.BoolFalseLabel);
     };
 }
 
-@await Html.Grid(Model).Named("ordersGrid").Columns(columns).SetRowCssClasses(item => item.Customer.IsVip ? "success" : string.Empty).WithPaging(10).SetLanguage(locale).Sortable().Filterable().WithMultipleFilters().Searchable(true, false).Groupable(true).Selectable(true).WithGridItemsCount().SubGrid("OrderID").RenderAsync()
+@await Html.Grid(Model).Named("ordersGrid").Columns(columns).SetRowCssClasses(item => item.Customer.IsVip ? "success" : string.Empty).WithPaging(10).SetLanguage(locale).Sortable().Filterable().WithMultipleFilters().Searchable(true, false).Groupable(true).ClearFiltersButton(true).Selectable(true).SetStriped(true).ChangePageSize(true).WithGridItemsCount().SubGrid("OrderID").RenderAsync()

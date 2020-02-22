@@ -1,0 +1,53 @@
+﻿@using GridMvc
+@addTagHelper *, GridMvc
+
+@model ISGrid
+
+@{
+    ViewBag.Title = "Sorting Comparer";
+}
+
+<div class="row">
+    <div class="col-md-12">
+        <p>
+            It's possible to use a custom comparer just in the case that all the  grid items are in memory.
+        </p>
+        <p>
+            In this sample the first letter of the company name is removed and the rest of the word is sorted.
+        </p>
+        <p>
+            See: <a href="https://github.com/gustavnavar/Grid.Blazor">https://github.com/gustavnavar/Grid.Blazor</a>
+        </p>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-9">
+        <grid model="@Model" />
+    </div>
+    <div class="col-md-3">
+        <h4>
+            Order details
+        </h4>
+        <div id="order-content">
+            <p class="muted">
+                Select order to display detailed infomation
+            </p>
+        </div>
+    </div>
+</div>
+<script>
+    $(function () {
+        pageGrids.ordersGrid.addFilterWidget(new CustomersFilterWidget());
+
+        pageGrids.ordersGrid.onRowSelect(function (e) {
+            $.get("/Home/GetOrder?id=" + e.row.OrderID, function (data) {
+                if (data.status <= 0) {
+                    alert(data.message);
+                    return;
+                }
+                $("#order-content").html(data.content);
+            });
+        });
+    });
+</script>

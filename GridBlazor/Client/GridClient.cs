@@ -1,4 +1,5 @@
-﻿using GridBlazor.Pagination;
+﻿using GridBlazor.Pages;
+using GridBlazor.Pagination;
 using GridBlazor.Resources;
 using GridShared;
 using GridShared.Columns;
@@ -7,6 +8,7 @@ using Microsoft.Extensions.Primitives;
 using System;
 using System.Collections.Generic;
 using System.Globalization;
+using System.Net.Http;
 using System.Threading.Tasks;
 
 namespace GridBlazor
@@ -18,6 +20,15 @@ namespace GridBlazor
     {
         private readonly CGrid<T> _source;
 
+        public GridClient(HttpClient httpClient, string url, IQueryDictionary<StringValues> query, bool renderOnlyRows,
+            string gridName, Action<IGridColumnCollection<T>> columns = null, CultureInfo cultureInfo = null)
+        {
+            _source = new CGrid<T>(httpClient, url, query, renderOnlyRows, columns, cultureInfo);
+            Named(gridName);
+            //WithPaging(_source.Pager.PageSize);
+        }
+
+        [Obsolete("This constructor is obsolete. Use one including an HttpClient parameter.", false)]
         public GridClient(string url, IQueryDictionary<StringValues> query, bool renderOnlyRows, 
             string gridName, Action<IGridColumnCollection<T>> columns = null, CultureInfo cultureInfo = null)
         {
@@ -35,6 +46,15 @@ namespace GridBlazor
             //WithPaging(_source.Pager.PageSize);
         }
 
+        public GridClient(Func<QueryDictionary<StringValues>, Task<ItemsDTO<T>>> dataServiceAsync,
+            QueryDictionary<StringValues> query, bool renderOnlyRows, string gridName,
+            Action<IGridColumnCollection<T>> columns = null, CultureInfo cultureInfo = null)
+        {
+            _source = new CGrid<T>(dataServiceAsync, query, renderOnlyRows, columns, cultureInfo);
+            Named(gridName);
+            //WithPaging(_source.Pager.PageSize);
+        }
+
         #region IGridHtmlOptions<T> Members
 
         public IGridClient<T> WithGridItemsCount()
@@ -45,6 +65,12 @@ namespace GridBlazor
         public IGridClient<T> Columns(Action<IGridColumnCollection<T>> columnBuilder)
         {
             columnBuilder((IGridColumnCollection<T>)_source.Columns);
+            return this;
+        }
+
+        public IGridClient<T> ChangePageSize(bool enable)
+        {
+            _source.Pager.ChangePageSize = enable;
             return this;
         }
 
@@ -121,8 +147,14 @@ namespace GridBlazor
 
         public IGridClient<T> Searchable(bool enable, bool onlyTextColumns)
         {
+            return Searchable(enable, onlyTextColumns, false);
+        }
+
+        public IGridClient<T> Searchable(bool enable, bool onlyTextColumns, bool hiddenColumns)
+        {
             _source.SearchingEnabled = enable;
             _source.SearchingOnlyTextColumns = onlyTextColumns;
+            _source.SearchingHiddenColumns = hiddenColumns;
             return this;
         }
 
@@ -149,11 +181,34 @@ namespace GridBlazor
             return this;
         }
 
-        public IGridClient<T> Selectable(bool set)
+        public IGridClient<T> ClearFiltersButton(bool enable)
         {
-            _source.ComponentOptions.Selectable = set;
+            _source.ClearFiltersButtonEnabled = enable;
             return this;
         }
+
+        public IGridClient<T> Selectable(bool enable)
+        {
+            return Selectable(enable, false);
+        }
+
+        public IGridClient<T> MultiSelectable(bool multiSelectable)
+        {
+            return Selectable(true, false, multiSelectable);
+        }
+
+        public IGridClient<T> Selectable(bool enable, bool initSelection)
+        {
+            return Selectable(enable, initSelection, false);
+        }
+
+        public IGridClient<T> Selectable(bool enable, bool initSelection, bool multiSelectable)
+        {
+            _source.ComponentOptions.Selectable = enable;
+            _source.ComponentOptions.InitSelection = initSelection;
+            _source.ComponentOptions.MultiSelectable = multiSelectable;
+            return this;
+        }       
 
         public IGridClient<T> Crud(bool enabled, ICrudDataService<T> crudDataService)
         {
@@ -166,33 +221,56 @@ namespace GridBlazor
             _source.CreateEnabled = createEnabled;
             _source.ReadEnabled = readEnabled;
             _source.UpdateEnabled = updateEnabled;
-            _source.DeleteEnabled = updateEnabled;
+            _source.DeleteEnabled = deleteEnabled;
             _source.CrudDataService = crudDataService;
             return this;
         }
 
         public IGridClient<T> SetCreateComponent<TComponent>()
         {
-            return SetCreateComponent<TComponent>(null, null);
+            return SetCreateComponent<TComponent>(null, null, null);
         }
 
         public IGridClient<T> SetCreateComponent<TComponent>(IList<Action<object>> actions)
         {
-            return SetCreateComponent<TComponent>(actions, null);
+            return SetCreateComponent<TComponent>(actions, null, null);
         }
 
         public IGridClient<T> SetCreateComponent<TComponent>(object obj)
         {
-            return SetCreateComponent<TComponent>(null, obj);
+            return SetCreateComponent<TComponent>(null, null, obj);
         }
 
-        public IGridClient<T> SetCreateComponent<TComponent>(IList<Action<object>> actions, object obj)
+        public IGridClient<T> SetCreateComponent<TComponent>(IList<Action<object>> actions, Object obj)
+        {
+            return SetCreateComponent<TComponent>(actions, null, obj);
+        }
+
+        public IGridClient<T> SetCreateComponent<TComponent>(IList<Func<object, Task>> functions)
+        {
+            return SetCreateComponent<TComponent>(null, functions, null);
+        }
+
+        public IGridClient<T> SetCreateComponent<TComponent>(IList<Action<object>> actions, 
+            IList<Func<object, Task>> functions)
+        {
+            return SetCreateComponent<TComponent>(actions, functions, null);
+        }
+
+        public IGridClient<T> SetCreateComponent<TComponent>(IList<Func<object, Task>> functions, object obj)
+        {
+            return SetCreateComponent<TComponent>(null, functions, obj);
+        }
+
+        public IGridClient<T> SetCreateComponent<TComponent>(IList<Action<object>> actions, 
+            IList<Func<object, Task>> functions, object obj)
         {
             Type readComponent = typeof(TComponent);
-            if (readComponent != null && readComponent.IsSubclassOf(typeof(GridCreateComponentBase<T>)))
+            if (readComponent != null && readComponent.IsSubclassOf(typeof(GridCreateComponent<T>)))
             {
                 _source.CreateComponent = readComponent;
                 _source.CreateActions = actions;
+                _source.CreateFunctions = functions;
                 _source.CreateObject = obj;
             }
             return this;
@@ -200,26 +278,49 @@ namespace GridBlazor
 
         public IGridClient<T> SetReadComponent<TComponent>()
         {
-            return SetReadComponent<TComponent>(null, null);
+            return SetReadComponent<TComponent>(null, null, null);
         }
 
         public IGridClient<T> SetReadComponent<TComponent>(IList<Action<object>> actions)
         {
-            return SetReadComponent<TComponent>(actions, null);
+            return SetReadComponent<TComponent>(actions, null, null);
         }
 
         public IGridClient<T> SetReadComponent<TComponent>(object obj)
         {
-            return SetReadComponent<TComponent>(null, obj);
+            return SetReadComponent<TComponent>(null, null, obj);
         }
 
         public IGridClient<T> SetReadComponent<TComponent>(IList<Action<object>> actions, object obj)
         {
+            return SetReadComponent<TComponent>(actions, null, obj);
+        }
+
+        public IGridClient<T> SetReadComponent<TComponent>(IList<Func<object, Task>> functions)
+        {
+            return SetReadComponent<TComponent>(null, functions, null);
+        }
+
+        public IGridClient<T> SetReadComponent<TComponent>(IList<Func<object, Task>> functions, object obj)
+        {
+            return SetReadComponent<TComponent>(null, functions, obj);
+        }
+
+        public IGridClient<T> SetReadComponent<TComponent>(IList<Action<object>> actions,
+            IList<Func<object, Task>> functions)
+        {
+            return SetReadComponent<TComponent>(actions, functions, null);
+        }
+
+        public IGridClient<T> SetReadComponent<TComponent>(IList<Action<object>> actions, 
+            IList<Func<object, Task>> functions, object obj)
+        {
             Type readComponent = typeof(TComponent);
-            if (readComponent != null && readComponent.IsSubclassOf(typeof(GridReadComponentBase<T>)))
+            if (readComponent != null && readComponent.IsSubclassOf(typeof(GridReadComponent<T>)))
             {
                 _source.ReadComponent = readComponent;
                 _source.ReadActions = actions;
+                _source.ReadFunctions = functions;
                 _source.ReadObject = obj;
             }
             return this;
@@ -227,26 +328,49 @@ namespace GridBlazor
 
         public IGridClient<T> SetUpdateComponent<TComponent>()
         {
-            return SetUpdateComponent<TComponent>(null, null);
+            return SetUpdateComponent<TComponent>(null, null, null);
         }
 
         public IGridClient<T> SetUpdateComponent<TComponent>(IList<Action<object>> actions)
         {
-            return SetUpdateComponent<TComponent>(actions, null);
+            return SetUpdateComponent<TComponent>(actions, null, null);
         }
 
         public IGridClient<T> SetUpdateComponent<TComponent>(object obj)
         {
-            return SetUpdateComponent<TComponent>(null, obj);
+            return SetUpdateComponent<TComponent>(null, null, obj);
+        }
+
+        public IGridClient<T> SetUpdateComponent<TComponent>(IList<Func<object, Task>> functions)
+        {
+            return SetUpdateComponent<TComponent>(null, functions, null);
+        }
+
+        public IGridClient<T> SetUpdateComponent<TComponent>(IList<Action<object>> actions,
+            IList<Func<object, Task>> functions)
+        {
+            return SetUpdateComponent<TComponent>(actions, functions, null);
+        }
+
+        public IGridClient<T> SetUpdateComponent<TComponent>(IList<Func<object, Task>> functions, object obj)
+        {
+            return SetUpdateComponent<TComponent>(null, functions, obj);
         }
 
         public IGridClient<T> SetUpdateComponent<TComponent>(IList<Action<object>> actions, object obj)
         {
+            return SetUpdateComponent<TComponent>(actions, null, obj);
+        }
+
+        public IGridClient<T> SetUpdateComponent<TComponent>(IList<Action<object>> actions,
+            IList<Func<object, Task>> functions, object obj)
+        {
             Type updateComponent = typeof(TComponent);
-            if (updateComponent != null && updateComponent.IsSubclassOf(typeof(GridUpdateComponentBase<T>)))
+            if (updateComponent != null && updateComponent.IsSubclassOf(typeof(GridUpdateComponent<T>)))
             {
                 _source.UpdateComponent = updateComponent;
                 _source.UpdateActions = actions;
+                _source.UpdateFunctions = functions;
                 _source.UpdateObject = obj;
             }
             return this;
@@ -254,26 +378,49 @@ namespace GridBlazor
 
         public IGridClient<T> SetDeleteComponent<TComponent>()
         {
-            return SetDeleteComponent<TComponent>(null, null);
+            return SetDeleteComponent<TComponent>(null, null, null);
         }
 
         public IGridClient<T> SetDeleteComponent<TComponent>(IList<Action<object>> actions)
         {
-            return SetDeleteComponent<TComponent>(actions, null);
+            return SetDeleteComponent<TComponent>(actions, null, null);
         }
 
         public IGridClient<T> SetDeleteComponent<TComponent>(object obj)
         {
-            return SetDeleteComponent<TComponent>(null, obj);
+            return SetDeleteComponent<TComponent>(null, null, obj);
+        }
+
+        public IGridClient<T> SetDeleteComponent<TComponent>(IList<Func<object, Task>> functions)
+        {
+            return SetDeleteComponent<TComponent>(null, functions, null);
+        }
+
+        public IGridClient<T> SetDeleteComponent<TComponent>(IList<Action<object>> actions,
+            IList<Func<object, Task>> functions)
+        {
+            return SetDeleteComponent<TComponent>(actions, functions, null);
+        }
+
+        public IGridClient<T> SetDeleteComponent<TComponent>(IList<Func<object, Task>> functions, object obj)
+        {
+            return SetDeleteComponent<TComponent>(null, functions, obj);
         }
 
         public IGridClient<T> SetDeleteComponent<TComponent>(IList<Action<object>> actions, object obj)
         {
+            return SetDeleteComponent<TComponent>(actions, null, obj);
+        }
+
+        public IGridClient<T> SetDeleteComponent<TComponent>(IList<Action<object>> actions,
+            IList<Func<object, Task>> functions, object obj)
+        {
             Type deleteComponent = typeof(TComponent);
-            if (deleteComponent != null && deleteComponent.IsSubclassOf(typeof(GridDeleteComponentBase<T>)))
+            if (deleteComponent != null && deleteComponent.IsSubclassOf(typeof(GridDeleteComponent<T>)))
             {
                 _source.DeleteComponent = deleteComponent;
                 _source.DeleteActions = actions;
+                _source.DeleteFunctions = functions;
                 _source.DeleteObject = obj;
             }
             return this;
@@ -334,12 +481,39 @@ namespace GridBlazor
         }
 
         /// <summary>
+        ///     Enable or disable striped grid
+        /// </summary>
+        public IGridClient<T> SetStriped(bool enable)
+        {
+            _source.ComponentOptions.Striped = enable;
+            return this;
+        }
+
+        /// <summary>
         ///    Allow grid to show a SubGrid
         /// </summary>
         public IGridClient<T> SubGrid(Func<object[], Task<ICGrid>> subGrids, params string[] keys)
         {
             _source.SubGrids = subGrids;
             _source.SubGridKeys = keys;
+            return this;
+        }
+
+        /// <summary>
+        ///     Configure keyboard utilization
+        /// </summary>
+        public IGridClient<T> SetKeyboard(bool enable)
+        {
+            _source.Keyboard = enable;
+            return this;
+        }
+
+        /// <summary>
+        ///     Configure the modifier key
+        /// </summary>
+        public IGridClient<T> SetModifierKey(ModifierKey modifierKey)
+        {
+            _source.ModifierKey = modifierKey;
             return this;
         }
 

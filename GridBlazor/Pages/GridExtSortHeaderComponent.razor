@@ -1,0 +1,37 @@
+﻿@using GridBlazor.Resources
+@using GridShared.Sorting
+
+@typeparam T
+
+<div id="grid-extsort-@Grid.ComponentOptions.GridName" class="input-group grid-extsort-droppable @_dropClass" data-extsort-url="@_groupUrl"
+     @ondragenter="@(() => HandleDragEnter())" @ondragleave="@(() => HandleDragLeave())" @ondrop="HandleDrop" ondragover="event.preventDefault();">
+    @if (_sortedColumns.Count() == 0)
+    {
+        if (Grid.GroupingEnabled)
+        {
+            <div class="grid-extsort-empty">@Strings.GroupingText</div>
+        }
+        else
+        {
+            <div class="grid-extsort-empty">@Strings.ExtSortingText</div>
+        }
+    }
+    else
+    {
+        foreach (var column in _sortedColumns.OrderBy(r => r.Id))
+        {
+            var gridColumn = Grid.Columns.SingleOrDefault(r => r.Name == column.ColumnName);
+            if (gridColumn == null)
+            {
+                continue;
+            }
+            <span class="grid-extsort-column" data-name="@column.ColumnName" data-extsortdata="@JsonSerializer.Serialize(column)">
+                <span class="@(column.Direction == GridSortDirection.Ascending ? "sorted-asc" : "sorted-desc")">
+                    <button type="button" class="btn btn-link" @onclick="() => TitleButtonClicked(column)" data-column="@column.ColumnName">@gridColumn.Title</button>
+                    <span class="grid-sort-arrow"></span>
+                </span>
+                <button type="button" class="btn btn-link" @onclick="() => CancelButtonClicked(column)" data-column="@column.ColumnName">x</button>
+            </span>
+        }
+    }
+</div>

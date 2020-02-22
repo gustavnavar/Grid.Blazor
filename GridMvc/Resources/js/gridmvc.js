@@ -51,12 +51,15 @@ GridMvc = (function ($) {
         this.addFilterWidget(new NumberFilterWidget());
         this.addFilterWidget(new DateTimeFilterWidget());
         this.addFilterWidget(new BooleanFilterWidget());
+        this.addFilterWidget(new ListFilterWidget());
 
         this.openedMenuBtn = null;
         this.initFilters();
         this.initSearch();
         this.initExtSort();
         this.initGroup();
+        this.initChangePageSize();
+        this.initRemoveAllFilters();
     };
     //
     // Handle Grid row events
@@ -610,6 +613,78 @@ GridMvc = (function ($) {
         });     
     };
 
+    /***
+    * ============= CHANGE PAGE SIZE =============
+    * Methods that provides functionality for changing page size
+    */
+    /***
+    * Method search all search buttons and register 'onclick' event handlers:
+    */
+    gridMvc.prototype.initChangePageSize = function () {
+        var self = this;
+        this.jqContainer.find(".grid-change-page-size-input").each(function () {
+            $(this).keydown(function (e) {
+                if (e.keyCode === 9 || e.keyCode === 13) {
+                    var pageSize = $(this).val();
+                    self.changePageSize(pageSize);
+                }
+            });
+        });
+    };
+
+    //
+    // Applies selected pageSize value by redirecting to another url:
+    //
+    gridMvc.prototype.changePageSize = function (pageSize) {
+        var url = "";
+        var gridChangePageSize = this.jqContainer.find(".grid-change-page-size").first();
+        if (gridChangePageSize) {
+            url = gridChangePageSize.attr("data-change-page-size-url") || "";
+        }
+
+        if (url.length > 0)
+            url += "&";
+        url += this.getPageSizeQueryData(pageSize);
+        
+        window.location.search = url;
+    };
+
+    gridMvc.prototype.getPageSizeQueryData = function (pageSize) {
+        var url = "";
+        if (pageSize) {
+            url += "grid-pagesize=" + encodeURIComponent(pageSize);
+        }
+        return url;
+    };
+
+    /***
+    * ============= REMOVE ALL FILTERS =============
+    * Methods that provides functionality for removing all filters
+    */
+    /***
+    * Method search all buttons and register 'onclick' event handlers:
+    */
+    gridMvc.prototype.initRemoveAllFilters = function () {
+        var self = this;
+        this.jqContainer.find(".grid-button-all-filters-clear").each(function () {
+            $(this).click(function () {
+                self.removeAllFilters();
+            });
+        });
+    };
+
+    //
+    // Applies selected pageSize value by redirecting to another url:
+    //
+    gridMvc.prototype.removeAllFilters = function () {
+        var url = "";
+        var gridChangePageSize = this.jqContainer.find(".grid-button-all-filters-clear").first();
+        if (gridChangePageSize) {
+            url = gridChangePageSize.attr("data-all-filters-clear-url") || "";
+        }
+        window.location.search = url;
+    };
+
     return gridMvc;
 })(window.jQuery);
 
@@ -627,6 +702,7 @@ GridMvc.lang.en = {
     applyFilterButtonText: "Apply",
     filterSelectTypes: {
         Equals: "Equals",
+        NotEquals: "Not Equals",
         StartsWith: "Starts with",
         Contains: "Contains",
         EndsWith: "Ends with",
@@ -661,7 +737,7 @@ TextFilterWidget = (function ($) {
     // This method must return type of columns that must be associated with current widget
     // If you not specify your own type name for column (see 'SetFilterWidgetType' method), GridMvc setup column type name from .Net type ("System.DateTime etc.)
     //
-    textFilterWidget.prototype.getAssociatedTypes = function () { return ["System.String"]; };
+    textFilterWidget.prototype.getAssociatedTypes = function () { return ["System.String", "System.Guid"]; };
     //
     // This method invokes when filter widget was shown on the page
     //
@@ -703,7 +779,7 @@ TextFilterWidget = (function ($) {
         }
         if (this.filterData[columnName].values.length === 0) {
             this.filterData[columnName].values.push({
-                filterType: "1",
+                filterType: "2",
                 filterValue: "",
                 columnName: columnName
             });
@@ -745,8 +821,9 @@ TextFilterWidget = (function ($) {
             }         
             html +=         '<div>\
                                 <select class="grid-filter-type form-control">\
+                                    <option value="2" ' + (this.filterData[columnName].values[i].filterType.toString() === "2" ? "selected=\"selected\"" : "") + ' > ' + this.lang.filterSelectTypes.Contains + '</option >\
                                     <option value="1" ' + (this.filterData[columnName].values[i].filterType.toString() === "1" ? "selected=\"selected\"" : "") + '>' + this.lang.filterSelectTypes.Equals + '</option>\
-                                    <option value="2" ' + (this.filterData[columnName].values[i].filterType.toString() === "2" ? "selected=\"selected\"" : "") + '>' + this.lang.filterSelectTypes.Contains + '</option>\
+                                    <option value="10" ' + (this.filterData[columnName].values[i].filterType.toString() === "10" ? "selected=\"selected\"" : "") + '>' + this.lang.filterSelectTypes.NotEquals + '</option>\
                                     <option value="3" ' + (this.filterData[columnName].values[i].filterType.toString() === "3" ? "selected=\"selected\"" : "") + '>' + this.lang.filterSelectTypes.StartsWith + '</option>\
                                     <option value="4" ' + (this.filterData[columnName].values[i].filterType.toString() === "4" ? "selected=\"selected\"" : "") + '>' + this.lang.filterSelectTypes.EndsWith + '</option>\
                                 </select>\
@@ -823,7 +900,7 @@ TextFilterWidget = (function ($) {
                 for (var i = 0; i < types.length; i++) {
                     $context.values.push({ filterType: types[i].value, filterValue: values[i].value, columnName: columnName });
                 }
-                $context.values.push({ filterType: "1", filterValue: "", columnName: columnName });
+                $context.values.push({ filterType: "2", filterValue: "", columnName: columnName });
                 self.renderWidget(columnName);
                 self.registerEvents(columnName);
                 self.onShow(columnName);
@@ -941,6 +1018,7 @@ NumberFilterWidget = (function ($) {
             html +=         '<div>\
                                 <select class="grid-filter-type form-control">\
                                     <option value="1" ' + (this.filterData[columnName].values[i].filterType.toString() === "1" ? "selected=\"selected\"" : "") + '>' + this.lang.filterSelectTypes.Equals + '</option>\
+                                    <option value="10" ' + (this.filterData[columnName].values[i].filterType.toString() === "10" ? "selected=\"selected\"" : "") + '>' + this.lang.filterSelectTypes.NotEquals + '</option>\
                                     <option value="5" ' + (this.filterData[columnName].values[i].filterType.toString() === "5" ? "selected=\"selected\"" : "") + '>' + this.lang.filterSelectTypes.GreaterThan + '</option>\
                                     <option value="6" ' + (this.filterData[columnName].values[i].filterType.toString() === "6" ? "selected=\"selected\"" : "") + '>' + this.lang.filterSelectTypes.LessThan + '</option>\
                                     <option value="7" ' + (this.filterData[columnName].values[i].filterType.toString() === "7" ? "selected=\"selected\"" : "") + '>' + this.lang.filterSelectTypes.GreaterThanOrEquals + '</option>\
@@ -1157,6 +1235,7 @@ DateTimeFilterWidget = (function ($) {
             html +=         '<div>\
                                 <select class="grid-filter-type form-control">\
                                     <option value="1" ' + (this.filterData[columnName].values[i].filterType.toString() === "1" ? "selected=\"selected\"" : "") + '>' + this.lang.filterSelectTypes.Equals + '</option>\
+                                    <option value="10" ' + (this.filterData[columnName].values[i].filterType.toString() === "10" ? "selected=\"selected\"" : "") + '>' + this.lang.filterSelectTypes.NotEquals + '</option>\
                                     <option value="5" ' + (this.filterData[columnName].values[i].filterType.toString() === "5" ? "selected=\"selected\"" : "") + '>' + this.lang.filterSelectTypes.GreaterThan + '</option>\
                                     <option value="6" ' + (this.filterData[columnName].values[i].filterType.toString() === "6" ? "selected=\"selected\"" : "") + '>' + this.lang.filterSelectTypes.LessThan + '</option>\
                                     <option value="7" ' + (this.filterData[columnName].values[i].filterType.toString() === "7" ? "selected=\"selected\"" : "") + '>' + this.lang.filterSelectTypes.GreaterThanOrEquals + '</option>\
@@ -1330,6 +1409,89 @@ BooleanFilterWidget = (function ($) {
     };
 
     return booleanFilterWidget;
+})(window.jQuery);
+
+/***
+* ListFilterWidget - Provides filter interface for list filter columns .
+* Renders two button for filter - true and false
+*/
+ListFilterWidget = (function ($) {
+
+    function listFilterWidget() { }
+
+    listFilterWidget.prototype.getAssociatedTypes = function () { return ["ListFilter"]; };
+
+    listFilterWidget.prototype.showClearFilterButton = function () { return true; };
+
+    listFilterWidget.prototype.onRender = function (container, lang, typeName, columnName, values, cb, data) {
+        this.cb = cb;
+        this.data = data;
+        this.lang = lang;
+
+        if (!this.filterData) {
+            this.filterData = new Object();
+        }
+        if (!this.filterData[columnName]) {
+            this.filterData[columnName] = new Object();
+        }
+        this.filterData[columnName].container = container;
+        this.filterData[columnName].typeName = typeName;
+        // conditions is always "OR"
+        this.filterData[columnName].condition = "2";
+        this.filterData[columnName].values = values.filter(x => x.filterType !== 9 && x.filterValue && x.columnName === columnName);
+        if (!this.filterData[columnName].values) {
+            this.filterData[columnName].values = new Array();
+        }
+        if (this.filterData[columnName].values.length === 0) {
+            this.filterData[columnName].values.push({
+                filterType: "1",
+                filterValue: "",
+                columnName: columnName
+            });
+        }
+
+        this.renderWidget(columnName);
+        this.registerEvents(columnName);
+    };
+
+    listFilterWidget.prototype.renderWidget = function (columnName) {
+        var html = '<div class="grid-filter-body">';
+        html +=        '<label>' + this.lang.filterValueLabel + '</label>\
+                        <ul class="menu-list">';
+        for (var i = 0; i < this.data.length; i++) {
+            var checked = this.filterData[columnName].values.some(x => x.filterType === 1 && x.filterValue === this.data[i].Value && x.columnName === columnName);
+            html += '<li><input type="checkbox" class="grid-filter-list" '
+                + (checked ? "checked" : "")
+                + ' value="' + this.data[i].Value + '" /> ' + this.data[i].Title + '</li >';
+        }
+        html +=        '</ul>';
+        html +=        '<div class="grid-filter-buttons" style="margin-top:10px;">\
+                            <button type="button" class="btn btn-primary grid-apply" >' + this.lang.applyFilterButtonText + '</button>\
+                        </div>\
+                    </div> ';
+        this.filterData[columnName].container.append(html);
+    };
+
+    listFilterWidget.prototype.registerEvents = function (columnName) {
+        var $context = this.filterData[columnName];
+        var self = this;
+        var applyBtn = this.filterData[columnName].container.find(".grid-apply");
+        applyBtn.click(function () {
+            var values = $context.container.find(".grid-filter-list");
+            var filters = new Array();
+            for (var i = 0; i < values.length; i++) {
+                if (values[i].checked) {
+                    filters.push({ filterType: "1", filterValue: values[i].value });
+                }             
+            }
+            if (filters.length > 1 ) {
+                filters.push({ filterType: "9", filterValue: "2" });
+            }
+            self.cb(filters);
+        });
+    };
+
+    return listFilterWidget;
 })(window.jQuery);
 
 //startup init:

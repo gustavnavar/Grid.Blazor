@@ -14,6 +14,12 @@ namespace GridMvc.Html
         IGridHtmlOptions<T> Columns(Action<IGridColumnCollection<T>> columnBuilder);
 
         /// <summary>
+        ///     Enable change page size for grid
+        /// </summary>
+        /// <param name="enable">Enable dynamic setup the page size of the grid</param>
+        IGridHtmlOptions<T> ChangePageSize(bool enable);
+
+        /// <summary>
         ///     Enable paging for grid
         /// </summary>
         /// <param name="pageSize">Setup the page size of the grid</param>
@@ -70,6 +76,11 @@ namespace GridMvc.Html
         IGridHtmlOptions<T> Searchable(bool enable, bool onlyTextColumns);
 
         /// <summary>
+        ///     Enable or disable searching for all columns
+        /// </summary>
+        IGridHtmlOptions<T> Searchable(bool enable, bool onlyTextColumns, bool hiddenColumns);
+
+        /// <summary>
         ///     Enable extended sorting
         /// </summary>
         IGridHtmlOptions<T> ExtSortable();
@@ -88,6 +99,11 @@ namespace GridMvc.Html
         ///     Enable or disable grouping
         /// </summary>
         IGridHtmlOptions<T> Groupable(bool enable);
+
+        /// <summary>
+        ///     Enable or disable visibility of ClearFiltersButton
+        /// </summary>
+        IGridHtmlOptions<T> ClearFiltersButton(bool enable);
 
         /// <summary>
         ///     Enable or disable client grid items selectable feature
@@ -137,6 +153,8 @@ namespace GridMvc.Html
         /// </summary>
         IGridHtmlOptions<T> WithGridItemsCount();
 
+        IGridHtmlOptions<T> SetStriped(bool enabled);
+
         /// <summary>
         ///    Allow grid to show a SubGrid
         /// </summary>
@@ -147,6 +165,7 @@ namespace GridMvc.Html
         /// </summary>
         /// <returns>Grid html layout</returns>
         string Render();
+
         Task<IHtmlContent> RenderAsync();
 
         /// <summary>

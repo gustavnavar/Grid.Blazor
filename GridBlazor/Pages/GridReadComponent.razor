@@ -1,0 +1,52 @@
+﻿@using GridBlazor.Columns
+@using GridBlazor.Resources
+@using GridShared.Columns
+
+@typeparam T
+
+<h1>@Strings.View</h1>
+
+<div class="form-horizontal">
+    @foreach (var column in GridComponent.Grid.Columns)
+    {
+        (Type type, object value) = ((IGridColumn<T>)column).GetTypeAndValue(Item);
+        <div class="form-group row" style="@(column.CrudHidden.HasFlag(CrudHidden.DETAIL)?"display:none;":"")">
+            <label for="@column.FieldName" class="col-form-label col-md-2">@column.Title</label>
+            @if (((ICGridColumn)column).SubGrids == null)
+            {
+                <div class="@(type == typeof(bool)?"col-md-1":"col-md-5")">
+                    @if (((IGridColumn<T>)column).IsSelectField.IsSelectKey)
+                    {
+                        string text = ((GridColumnBase<T>)column).GetFormatedValue(((IGridColumn<T>)column).IsSelectField.Expression, Item);
+                        <input id="@column.FieldName" class="form-control" readonly="readonly" value="@text" />
+                    }
+                    else if (type == typeof(bool))
+                    {
+                        if (value != null && (bool)value == true)
+                        {
+                            <input id="@column.FieldName" type="checkbox" class="form-control" disabled="disabled" readonly="readonly" checked="checked" value="true" />
+                        }
+                        else
+                        {
+                            <input id="@column.FieldName" type="checkbox" class="form-control" disabled="disabled" readonly="readonly" value="false" />
+                        }
+                    }
+                    else
+                    {
+                        <input id="@column.FieldName" class="form-control" readonly="readonly" value="@column.GetFormatedValue(value)" />
+                    }
+                </div>
+            }
+            else
+            {
+                <div class="col-md-10">@_grids.Get(column.Name)</div>
+            }
+        </div>
+    }
+
+    <div class="form-group row">
+        <div class="col-md-5">
+            <button type="button" class="btn btn-primary btn-md" @onclick="() => BackButtonClicked()">@Strings.Back</button>
+        </div>
+    </div>
+</div>

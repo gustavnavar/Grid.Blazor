@@ -1,14 +1,12 @@
 ﻿@page "/multiplegrids"
 @page "/multiplegrids/{OrdersGridState}/{CustomersGridState}"
 @using BlazorStrap
-@using GridBlazor
 @using GridBlazorClientSide.Client.ColumnCollections
 @using GridBlazorClientSide.Shared.Models
-@using GridShared
-@using GridShared.Utility
 @using Microsoft.Extensions.Primitives
 @using System.Globalization
 @inject NavigationManager NavigationManager
+@inject HttpClient HttpClient
 
 <h1>Multiple Grids</h1>
 
@@ -64,7 +62,7 @@ else
 
     protected override void OnInitialized()
     {
-        CultureInfo.CurrentCulture = new CultureInfo(Startup.Culture);
+        CultureInfo.CurrentCulture = new CultureInfo(Program.Culture);
     }
 
     protected override async Task OnParametersSetAsync()
@@ -88,9 +86,11 @@ else
             }
         }
         string ordersUrl = NavigationManager.BaseUri + "api/SampleData/OrderColumnsWithEdit";
-        var ordersClient = new GridClient<Order>(ordersUrl, ordersQuery, false, "ordersGrid", orderColumns, locale)
+        var ordersClient = new GridClient<Order>(HttpClient, ordersUrl, ordersQuery, false, "ordersGrid", 
+            orderColumns, locale)
             .Sortable()
             .Filterable()
+            .SetStriped(true)
             .WithMultipleFilters()
             .WithGridItemsCount();
         _ordersGrid = ordersClient.Grid;
@@ -112,10 +112,11 @@ else
             }
         }
         string customersUrl = NavigationManager.BaseUri + "api/SampleData/GetCustomersGrid";
-        var customersClient = new GridClient<Customer>(customersUrl, customersQuery, false, "customersGrid",
+        var customersClient = new GridClient<Customer>(HttpClient, customersUrl, customersQuery, false, "customersGrid",
             ColumnCollections.CustomersColumns, locale)
             .Sortable()
             .Filterable()
+            .SetStriped(true)
             .WithMultipleFilters()
             .WithGridItemsCount();
         _customersGrid = customersClient.Grid;

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 
@@ -10,26 +11,34 @@ namespace GridShared.Sorting
     public class ThenByColumnOrderer<T, TKey> : IColumnOrderer<T>
     {
         private readonly Expression<Func<T, TKey>> _expression;
+        private readonly IComparer<TKey> _comparer;
         private readonly GridSortDirection _initialDirection;
 
-        public ThenByColumnOrderer(Expression<Func<T, TKey>> expression, GridSortDirection initialDirection)
+        public ThenByColumnOrderer(Expression<Func<T, TKey>> expression, IComparer<TKey> comparer, GridSortDirection initialDirection)
         {
             _expression = expression;
+            _comparer = comparer;
             _initialDirection = initialDirection;
         }
 
         #region IColumnOrderer<T> Members
 
-        public IQueryable<T> ApplyOrder(IQueryable<T> items)
+        private IQueryable<T> Apply(IQueryable<T> items)
         {
             var ordered = items as IOrderedQueryable<T>;
             if (ordered == null) return items; //not ordered collection
             switch (_initialDirection)
             {
                 case GridSortDirection.Ascending:
-                    return ordered.ThenBy(_expression);
+                    if (_comparer == null)
+                        return ordered.ThenBy(_expression);
+                    else
+                        return ordered.ThenBy(_expression, _comparer);
                 case GridSortDirection.Descending:
-                    return ordered.ThenByDescending(_expression);
+                    if (_comparer == null)
+                        return ordered.ThenByDescending(_expression);
+                    else
+                        return ordered.ThenByDescending(_expression, _comparer);
                 default:
                     throw new ArgumentOutOfRangeException();
             }
@@ -37,12 +46,12 @@ namespace GridShared.Sorting
 
         public IQueryable<T> ApplyOrder(IQueryable<T> items, GridSortDirection direction)
         {
-            return ApplyOrder(items);
+            return Apply(items);
         }
 
         public IQueryable<T> ApplyThenBy(IQueryable<T> items, GridSortDirection direction)
         {
-            return ApplyOrder(items);
+            return Apply(items);
         }
         
         #endregion

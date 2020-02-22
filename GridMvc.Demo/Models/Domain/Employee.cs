@@ -13,13 +13,14 @@ namespace GridMvc.Demo.Models
 {
     using System;
     using System.Collections.Generic;
-    
+    using System.Text.Json.Serialization;
+
     public partial class Employee
     {
         public Employee()
         {
             this.Orders = new HashSet<Order>();
-            //this.Territories = new HashSet<Territory>();
+            this.Territories = new HashSet<EmployeeTerritories>();
         }
         [Key]
         public int EmployeeID { get; set; }
@@ -36,12 +37,14 @@ namespace GridMvc.Demo.Models
         public string Country { get; set; }
         public string HomePhone { get; set; }
         public string Extension { get; set; }
+        [JsonIgnore]
         public byte[] Photo { get; set; }
         public string Notes { get; set; }
         public Nullable<int> ReportsTo { get; set; }
         public string PhotoPath { get; set; }
 
+        [JsonIgnore]
         public virtual ICollection<Order> Orders { get; set; }
-        //public virtual ICollection<Territory> Territories { get; set; }
+        public virtual ICollection<EmployeeTerritories> Territories { get; set; }
     }
 }

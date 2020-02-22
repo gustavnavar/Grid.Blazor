@@ -39,6 +39,7 @@ namespace GridMvc.Html
         {
             return WithGridItemsCount(string.Empty);
         }
+
         public string Render()
         {
             using (var sw = new StringWriter())
@@ -56,6 +57,12 @@ namespace GridMvc.Html
         public IGridHtmlOptions<T> Columns(Action<IGridColumnCollection<T>> columnBuilder)
         {
             columnBuilder(_source.Columns);
+            return this;
+        }
+
+        public IGridHtmlOptions<T> ChangePageSize(bool enable)
+        {
+            _source.Pager.ChangePageSize = enable;
             return this;
         }
 
@@ -131,10 +138,17 @@ namespace GridMvc.Html
 
         public IGridHtmlOptions<T> Searchable(bool enable, bool onlyTextColumns)
         {
+            return Searchable(enable, onlyTextColumns, false);
+        }
+
+        public IGridHtmlOptions<T> Searchable(bool enable, bool onlyTextColumns, bool hiddenColumns)
+        {
             _source.SearchingEnabled = enable;
             _source.SearchingOnlyTextColumns = onlyTextColumns;
+            _source.SearchingHiddenColumns = hiddenColumns;
             return this;
         }
+
         public IGridHtmlOptions<T> ExtSortable()
         {
             return ExtSortable(true);
@@ -155,6 +169,12 @@ namespace GridMvc.Html
         {
             _source.ExtSortingEnabled = enable;
             _source.GroupingEnabled = enable;
+            return this;
+        }
+
+        public IGridHtmlOptions<T> ClearFiltersButton(bool enable)
+        {
+            _source.ClearFiltersButtonEnabled = enable;
             return this;
         }
 
@@ -215,6 +235,12 @@ namespace GridMvc.Html
 
             _source.RenderOptions.GridCountDisplayName = gridItemsName;
             _source.RenderOptions.ShowGridItemsCount = true;
+            return this;
+        }
+
+        public IGridHtmlOptions<T> SetStriped(bool enabled)
+        {
+            _source.RenderOptions.Striped = enabled;
             return this;
         }
 

@@ -2,6 +2,7 @@
 using GridBlazorClientSide.Shared.Models;
 using Microsoft.AspNetCore.Mvc;
 using System;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace GridBlazorClientSide.Server.Controllers
@@ -15,6 +16,18 @@ namespace GridBlazorClientSide.Server.Controllers
         public OrderController(NorthwindDbContext context)
         {
             _context = context;
+        }
+
+        [HttpGet]
+        public ActionResult GetAllOrders()
+        {
+            var repository = new OrdersRepository(_context);
+            var orders = repository.GetAll().ToList();
+            if (orders == null)
+            {
+                return NotFound();
+            }
+            return Ok(orders);
         }
 
         [HttpPost]

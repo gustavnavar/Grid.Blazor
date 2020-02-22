@@ -19,31 +19,55 @@ English is the default laguage. But you can use other languages. You have to cre
 * Italian
 * Russian
 * Spanish
+* Norwegian
+* Turkish
+* Czech
 
 ## Additional languages
 
 If you need to support other languages, please send me the translation of the following expressions and I will updete the component:
+* Add
+* And
+* Apply
+* Average
+* Back
+* No
+* Yes
+* Clear all filters
+* Clear filter
+* Contains
+* Create item
 * There are no items to display
+* Delete
+* Delete item
+* Edit
+* Ends with
+* Equals
+* Drop columns here for column extended sorting
 * Filter this column
 * Type
 * Value
-* Apply
-* Clear filter
-* Equals
-* Starts with
-* Contains
-* Ends with
 * Greater than
-* Less than
 * Greater than or equals
-* Less than or equals
-* Yes
-* No
+* Drop columns here for column grouping
 * Items
-* Search for ...
-* Sum
-* Average
+* Less than
+* Less than or equals
 * Max
 * Min
+* Not equals
+* Or
+* Read item
+* Save
+* Search for ...
+* --- Select an item ---
+* Show
+* Starts with
+* Sum
+* Update item
+* View
+* There was an error creating the new item
+* There was an error deleting this item
+* There was an error updating this item
 
 [<- Setup initial column filtering](Setup_initial_column_filtering.md) | [Data annotations ->](Data_annotations.md)

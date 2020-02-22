@@ -21,7 +21,8 @@ Some of these examples are showed in the [GridBlazorClientSide project](https://
         @using GridShared
         @using GridShared.Utility
         @using Microsoft.Extensions.Primitives
-        @inject IUriHelper UriHelper
+        @inject NavigationManager NavigationManager
+        @inject HttpClient HttpClient
 
         @if (_task.IsCompleted)
         {
@@ -37,7 +38,7 @@ Some of these examples are showed in the [GridBlazorClientSide project](https://
             private CGrid<Order> _grid;
             private Task _task;
 
-            protected override async Task OnInitAsync()
+            protected override async Task OnParametersSetAsync()
             {
                 Action<IGridColumnCollection<Order>> columns = c =>
                 {
@@ -48,8 +49,8 @@ Some of these examples are showed in the [GridBlazorClientSide project](https://
                     c.Add(o => o.Customer.IsVip);
                 };
 
-                string url = UriHelper.GetBaseUri() + "api/SampleData/OrderColumnsWithEdit";
-                var client = new GridClient<Order>(url, query, false, "ordersGrid", columns)
+                string url = NavigationManager.GetBaseUri() + "api/SampleData/OrderColumnsWithEdit";
+                var client = new GridClient<Order>(HttpClient, url, query, false, "ordersGrid", columns)
                 _grid = client.Grid;
 
                 // Set new items to grid
@@ -66,7 +67,7 @@ The **GetState** method of the optional **Grid** parameter must be called to get
         @using GridBlazorServerSide.Models
         @using GridShared.Columns
         @implements ICustomGridComponent<Order>
-        @inject IUriHelper UriHelper
+        @inject NavigationManager NavigationManager
 
         <button class='btn btn-sm btn-primary' @onclick="MyClickHandler">Edit</button>
 
@@ -80,7 +81,7 @@ The **GetState** method of the optional **Grid** parameter must be called to get
             private void MyClickHandler(UIMouseEventArgs e)
             {
                 string gridState = Grid.GetState();
-                UriHelper.NavigateTo($"/editorder/{Item.OrderID.ToString()}/gridsample/{gridState}");          
+                NavigationManager.NavigateTo($"/editorder/{Item.OrderID.ToString()}/gridsample/{gridState}");          
             }
         }
     ```
@@ -107,7 +108,7 @@ The call of the **RenderComponentAs** method must contain a list of Actions incl
                     c.Add(o => o.Customer.IsVip);
                 };
 
-                var oClient = new GridClient<Order>(oUrl, query, false, "ordersGrid", oColumns)
+                var oClient = new GridClient<Order>(HttpClient, oUrl, query, false, "ordersGrid", oColumns)
                 _grid = oClient.Grid;
 
                 // Set new items to grid
@@ -119,7 +120,7 @@ The call of the **RenderComponentAs** method must contain a list of Actions incl
             {
                 string ordersGridState = _ordersGrid.GetState();
                 string customersGridState = _customersGrid.GetState();
-                UriHelper.NavigateTo($"/editorder/{((Order)item).OrderID.ToString()}/multiplegrids/{ordersGridState}/{customersGridState}");
+                NavigationManager.NavigateTo($"/editorder/{((Order)item).OrderID.ToString()}/multiplegrids/{ordersGridState}/{customersGridState}");
             }
         }
     ```
@@ -167,7 +168,7 @@ The static method **StringExtensions.GetQuery** will convert the string to a **D
     {
         ...
 
-        protected override async Task OnInitAsync()
+        protected override async Task OnParametersSetAsync()
         {
             ...
             var query = new QueryDictionary<StringValues>();
@@ -183,8 +184,8 @@ The static method **StringExtensions.GetQuery** will convert the string to a **D
                 }
             }
 
-            string url = UriHelper.GetBaseUri() + "api/SampleData/OrderColumnsWithEdit";
-            var client = new GridClient<Order>(url, query, false, "ordersGrid", columns, locale)
+            string url = NavigationManager.GetBaseUri() + "api/SampleData/OrderColumnsWithEdit";
+            var client = new GridClient<Order>(HttpClient, url, query, false, "ordersGrid", columns, locale)
             ...
         }
     }

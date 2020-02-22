@@ -1,6 +1,7 @@
 ﻿using GridMvc.Demo.Models;
 using GridMvc.Demo.Resources;
 using GridMvc.Pagination;
+using GridMvc.Resources;
 using GridMvc.Server;
 using GridShared;
 using GridShared.Filtering;
@@ -10,6 +11,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Localization;
 using Microsoft.AspNetCore.Mvc;
 using System;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace GridMvc.Demo.Components
@@ -42,6 +44,11 @@ namespace GridMvc.Demo.Components
             var locale = requestCulture.RequestCulture.UICulture.TwoLetterISOLanguageName;
             SharedResource.Culture = requestCulture.RequestCulture.UICulture;
 
+            var shippersRepository = new ShippersRepository(_context);
+            var shipperList = shippersRepository.GetAll()
+                .Select(s => new SelectItem(s.ShipperID.ToString(), s.CompanyName))
+                .ToList();
+
             Action<IGridColumnCollection<Order>> columns = c =>
             {
                 /* Adding not mapped column, that renders body, using inline Razor html helper */
@@ -68,6 +75,12 @@ namespace GridMvc.Demo.Components
                     .SetWidth(110)
                     .Max(true).Min(true);
 
+                c.Add(o => o.ShipVia)
+                    .Titled("Via")
+                    .SetWidth(250)
+                    .RenderValueAs(o => o.Shipper.CompanyName)
+                    .SetListFilter(shipperList);
+
                 /* Adding "CompanyName" column: */
                 c.Add(o => o.Customer.CompanyName)
                     .Titled(SharedResource.CompanyName)
@@ -92,7 +105,7 @@ namespace GridMvc.Demo.Components
                     .Titled(SharedResource.IsVip)
                     .SetWidth(70)
                     .Css("hidden-xs") //hide on phones
-                    .RenderValueAs(o => o.Customer.IsVip ? "Yes" : "No");
+                    .RenderValueAs(o => o.Customer.IsVip ? Strings.BoolTrueLabel : Strings.BoolFalseLabel);
             };
 
             var repository = new OrdersRepository(_context);
@@ -106,6 +119,8 @@ namespace GridMvc.Demo.Components
                 .Searchable(true, false)
                 .Groupable(true)
                 .Selectable(true)
+                .SetStriped(true)
+                .ChangePageSize(true)
                 .WithGridItemsCount();
             var factory = Task<IViewComponentResult>.Factory;
 

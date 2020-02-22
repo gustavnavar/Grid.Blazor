@@ -12,13 +12,13 @@ namespace GridShared.Sorting
         public const string SortingDataDelimeter = "__";
 
         [DataMember(Name = "ColumnName")]
-        public string ColumnName;
+        public string ColumnName { get; set; }
 
         [DataMember(Name = "Direction")] 
-        public GridSortDirection Direction;
+        public GridSortDirection Direction { get; set; }
 
         [DataMember(Name = "Id")]
-        public int Id;
+        public int Id { get; set; }
 
         public ColumnOrderValue(string name, GridSortDirection direction, int id)
         {

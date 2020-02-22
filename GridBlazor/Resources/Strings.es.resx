@@ -171,7 +171,7 @@
   <data name="SearchFor" xml:space="preserve">
     <value>Buscar ...</value>
   </data>
-  <data name="Itmes" xml:space="preserve">
+  <data name="Items" xml:space="preserve">
     <value>Artículos</value>
   </data>
   <data name="Max" xml:space="preserve">
@@ -218,5 +218,35 @@
   </data>
   <data name="SelectItem" xml:space="preserve">
     <value>--- Selecciona un elemento ---</value>
+  </data>
+  <data name="Show" xml:space="preserve">
+    <value>Mostrar</value>
+  </data>
+  <data name="ClearAllFilters" xml:space="preserve">
+    <value>Eliminar todos los filtros</value>
+  </data>
+  <data name="CreateItem" xml:space="preserve">
+    <value>Crear artículo</value>
+  </data>
+  <data name="DeleteItem" xml:space="preserve">
+    <value>Borrar artículo</value>
+  </data>
+  <data name="ReadItem" xml:space="preserve">
+    <value>Leer artículo</value>
+  </data>
+  <data name="UpdateItem" xml:space="preserve">
+    <value>Actualizar artículo</value>
+  </data>
+  <data name="NotEqual" xml:space="preserve">
+    <value>No es igual</value>
+  </data>
+  <data name="CreateError" xml:space="preserve">
+    <value>Se produjo  un error al crear el nuevo artículo</value>
+  </data>
+  <data name="DeleteError" xml:space="preserve">
+    <value>Se produjo un error al borrar el artículo</value>
+  </data>
+  <data name="UpdateError" xml:space="preserve">
+    <value>Se produjo un error al actualizar el artículo</value>
   </data>
 </root>

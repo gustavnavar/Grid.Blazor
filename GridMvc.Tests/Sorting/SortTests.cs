@@ -37,7 +37,8 @@ namespace GridMvc.Tests.Sorting
         {
             _grid.Columns.Add(x => x.Title).Sortable(true);
             if (
-                !ValidateSorting<string,  object>(_grid, x => x.Title,  "Title", GridSortDirection.Descending, null, null))
+                !ValidateSorting<string,  object>(_grid, x => x.Title,  "Title", GridSortDirection.Descending, null, null,
+                    null, null))
             {
                 Assert.Fail("Sort works incorrect");
             }
@@ -49,7 +50,7 @@ namespace GridMvc.Tests.Sorting
             _grid.Columns.Add(x => x.Title, "someid").Sortable(true);
             if (
                 !ValidateSorting<string,  object>(_grid, x => x.Title, "someid",
-                                                         GridSortDirection.Descending, null, null))
+                                                         GridSortDirection.Descending, null, null, null, null))
             {
                 Assert.Fail("Sort works incorrect");
             }
@@ -61,7 +62,7 @@ namespace GridMvc.Tests.Sorting
             _grid.Columns.Add(x => x.Title).Sortable(true);
             if (
                 !ValidateSorting<string,  object>(_grid, x => x.Title, "Title",
-                                                         GridSortDirection.Ascending, null, null))
+                                                         GridSortDirection.Ascending, null, null, null, null))
             {
                 Assert.Fail("Sort works incorrect");
             }
@@ -73,7 +74,7 @@ namespace GridMvc.Tests.Sorting
             _grid.Columns.Add(x => x.Title, "someid").Sortable(true);
             if (
                 !ValidateSorting<string,  object>(_grid, x => x.Title, "someid",
-                                                         GridSortDirection.Ascending, null, null))
+                                                         GridSortDirection.Ascending, null, null, null, null))
             {
                 Assert.Fail("Sort works incorrect");
             }
@@ -85,7 +86,7 @@ namespace GridMvc.Tests.Sorting
             _grid.Columns.Add(x => x.Id).Sortable(true);
             if (
                 !ValidateSorting<int,  object>(_grid, x => x.Id,"Id", GridSortDirection.Ascending, null,
-                                                   null))
+                                                   null, null, null))
             {
                 Assert.Fail("Sort works incorrect");
             }
@@ -97,7 +98,7 @@ namespace GridMvc.Tests.Sorting
             _grid.Columns.Add(x => x.Id).Sortable(true);
             if (
                 !ValidateSorting<int,  object>(_grid, x => x.Id, "Id", GridSortDirection.Descending, null,
-                                                   null))
+                                                   null, null, null))
             {
                 Assert.Fail("Sort works incorrect");
             }
@@ -108,7 +109,8 @@ namespace GridMvc.Tests.Sorting
         {
             _grid.Columns.Add(x => x.Child.ChildTitle).Sortable(true);
             if (
-                !ValidateSorting<string,  object>(_grid, x => x.Child.ChildTitle, "Child.ChildTitle", GridSortDirection.Ascending, null, null))
+                !ValidateSorting<string,  object>(_grid, x => x.Child.ChildTitle, "Child.ChildTitle", GridSortDirection.Ascending,
+                    null, null, null, null))
             {
                 Assert.Fail("Sort works incorrect");
             }
@@ -120,7 +122,8 @@ namespace GridMvc.Tests.Sorting
             _grid.Columns.Add(x => x.Child.ChildTitle).Sortable(true);
             if (
                 !ValidateSorting<string, object>(_grid, x => x.Child.ChildTitle, 
-                                                         "Child.ChildTitle", GridSortDirection.Descending, null, null))
+                                                         "Child.ChildTitle", GridSortDirection.Descending, 
+                                                         null, null, null, null))
             {
                 Assert.Fail("Sort works incorrect");
             }
@@ -133,7 +136,7 @@ namespace GridMvc.Tests.Sorting
             if (
                 !ValidateSorting<DateTime,  object>(_grid, x => x.Child.ChildCreated, 
                                                              "Child.ChildCreated", GridSortDirection.Descending, null,
-                                                             null))
+                                                             null, null, null))
             {
                 Assert.Fail("Sort works incorrect");
             }
@@ -146,7 +149,7 @@ namespace GridMvc.Tests.Sorting
             if (
                 !ValidateSorting<DateTime, object>(_grid, x => x.Child.ChildCreated,
                                                              "someid", GridSortDirection.Descending, null,
-                                                             null))
+                                                             null, null, null))
             {
                 Assert.Fail("Sort works incorrect");
             }
@@ -159,7 +162,7 @@ namespace GridMvc.Tests.Sorting
             if (
                 !ValidateSorting<DateTime, object>(_grid, x => x.Child.ChildCreated,
                                                              "Child.ChildCreated", GridSortDirection.Ascending, null,
-                                                             null))
+                                                             null, null, null))
             {
                 Assert.Fail("Sort works incorrect");
             }
@@ -171,7 +174,8 @@ namespace GridMvc.Tests.Sorting
             _grid.Columns.Add(x => x.Child.ChildCreated).Sortable(true).ThenSortBy(x => x.Title);
             if (
                 !ValidateSorting(_grid, x => x.Child.ChildCreated,"Child.ChildCreated",
-                                 GridSortDirection.Ascending, x => x.Title, GridSortDirection.Ascending))
+                                 GridSortDirection.Ascending, x => x.Title, GridSortDirection.Ascending, 
+                                 null, null))
             {
                 Assert.Fail("Sort works incorrect");
             }
@@ -183,7 +187,32 @@ namespace GridMvc.Tests.Sorting
             _grid.Columns.Add(x => x.Child.ChildCreated).Sortable(true).ThenSortByDescending(x => x.Title);
             if (
                 !ValidateSorting(_grid, x => x.Child.ChildCreated, "Child.ChildCreated",
-                                 GridSortDirection.Ascending, x => x.Title, GridSortDirection.Descending))
+                                 GridSortDirection.Ascending, x => x.Title, GridSortDirection.Descending, 
+                                 null, null))
+            {
+                Assert.Fail("Sort works incorrect");
+            }
+        }
+
+        public void TestSortingStringComparerAscending()
+        {
+            var comparer = new SampleComparer(StringComparer.OrdinalIgnoreCase);
+            _grid.Columns.Add(x => x.Title, comparer).Sortable(true);
+            if (
+                !ValidateSorting<string, object>(_grid, x => x.Title, "Title", GridSortDirection.Ascending, null,
+                    null, comparer, null))
+            {
+                Assert.Fail("Sort works incorrect");
+            }
+        }
+
+        public void TestSortingStringComparerDescending()
+        {
+            var comparer = new SampleComparer(StringComparer.OrdinalIgnoreCase);
+            _grid.Columns.Add(x => x.Title, comparer).Sortable(true);
+            if (
+                !ValidateSorting<string, object>(_grid, x => x.Title, "Title", GridSortDirection.Descending, null, 
+                    null, comparer, null))
             {
                 Assert.Fail("Sort works incorrect");
             }
@@ -193,7 +222,9 @@ namespace GridMvc.Tests.Sorting
                                                         string columnName,
                                                         GridSortDirection direction,
                                                         Func<TestModel, TNext> thenByExpression,
-                                                        GridSortDirection? thenByDirection)
+                                                        GridSortDirection? thenByDirection,
+                                                        IComparer<T> comparer,
+                                                        IComparer<TNext> nextComparer)
         {
             var settingsMock = new Mock<IGridSettingsProvider>();
             settingsMock.Setup(s => s.SortSettings.ColumnName).Returns(columnName);
@@ -207,10 +238,16 @@ namespace GridMvc.Tests.Sorting
             switch (direction)
             {
                 case GridSortDirection.Ascending:
-                    etalonCollection = _repo.GetAll().OrderBy(orderExpression);
+                    if(comparer == null)
+                        etalonCollection = _repo.GetAll().OrderBy(orderExpression);
+                    else
+                        etalonCollection = _repo.GetAll().OrderBy(orderExpression, comparer);
                     break;
                 case GridSortDirection.Descending:
-                    etalonCollection = _repo.GetAll().OrderByDescending(orderExpression);
+                    if (comparer == null)
+                        etalonCollection = _repo.GetAll().OrderByDescending(orderExpression);
+                    else
+                        etalonCollection = _repo.GetAll().OrderByDescending(orderExpression, comparer);
                     break;
                 default:
                     throw new ArgumentOutOfRangeException("direction");
@@ -220,10 +257,16 @@ namespace GridMvc.Tests.Sorting
                 switch (thenByDirection)
                 {
                     case GridSortDirection.Ascending:
-                        etalonCollection = etalonCollection.ThenBy(thenByExpression);
+                        if (nextComparer == null)
+                            etalonCollection = etalonCollection.ThenBy(thenByExpression);
+                        else
+                            etalonCollection = etalonCollection.ThenBy(thenByExpression, nextComparer);
                         break;
                     case GridSortDirection.Descending:
-                        etalonCollection = etalonCollection.ThenByDescending(thenByExpression);
+                        if (nextComparer == null)
+                            etalonCollection = etalonCollection.ThenByDescending(thenByExpression);
+                        else
+                            etalonCollection = etalonCollection.ThenByDescending(thenByExpression, nextComparer);
                         break;
                     default:
                         throw new ArgumentOutOfRangeException("thenByDirection");

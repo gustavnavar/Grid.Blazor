@@ -14,11 +14,11 @@ using GridShared.Totals;
 using GridShared.Utility;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Primitives;
-using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
+using System.Text.Json;
 
 namespace GridMvc
 {
@@ -34,8 +34,6 @@ namespace GridMvc
         private readonly FilterGridItemsProcessor<T> _currentFilterItemsProcessor;
         private readonly SortGridItemsProcessor<T> _currentSortItemsProcessor;
         private readonly TotalsGridItemsProcessor<T> _currentTotalsItemsProcessor;
-
-        private IQueryDictionary<StringValues> _query;
         private int _displayingItemsCount = -1; // count of displaying items (if using pagination)
         private bool _enablePaging;
         private IGridPager _pager;
@@ -74,10 +72,10 @@ namespace GridMvc
         {
             #region init default properties
 
-            _query = QueryDictionary<StringValues>.Convert(query);
+            Query = QueryDictionary<StringValues>.Convert(query);
 
             //set up sort settings:
-            _settings = new QueryStringGridSettingsProvider(_query);
+            _settings = new QueryStringGridSettingsProvider(Query);
 
             Sanitizer = new Sanitizer();
             EmptyGridText = Strings.DefaultGridEmptyText;
@@ -116,9 +114,13 @@ namespace GridMvc
 
         public bool SearchingOnlyTextColumns { get; set; }
 
+        public bool SearchingHiddenColumns { get; set; }
+
         public bool ExtSortingEnabled { get; set; }
 
         public bool GroupingEnabled { get; set; }
+
+        public bool ClearFiltersButtonEnabled { get; set; } = false;
 
         /// <summary>
         ///     Sets or get default value of sorting for all adding columns
@@ -166,10 +168,7 @@ namespace GridMvc
         /// <summary>
         ///     Provides query, using by the grid
         /// </summary>
-        public IQueryDictionary<StringValues> Query
-        {
-            get { return _query; }
-        }
+        public QueryDictionary<StringValues> Query { get; }
 
         #region IGrid Members
 
@@ -247,7 +246,7 @@ namespace GridMvc
         /// </summary>
         public IGridPager Pager
         {
-            get { return _pager ?? (_pager = new GridPager(_query)); }
+            get { return _pager ?? (_pager = new GridPager(Query)); }
             set { _pager = value; }
         }
 
@@ -373,7 +372,9 @@ namespace GridMvc
 
         public string GetState()
         {
-            string jsonQuery = JsonConvert.SerializeObject(_query, new StringValuesConverter());
+            var jsonOptions = new JsonSerializerOptions();
+            jsonOptions.Converters.Add(new StringValuesConverter());
+            string jsonQuery = JsonSerializer.Serialize(Query, jsonOptions);
             return jsonQuery.GridStateEncode();
         }
 

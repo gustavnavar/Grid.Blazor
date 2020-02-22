@@ -81,7 +81,7 @@ namespace GridBlazor.Tests.Searching
                 if (searched.ElementAt(i).Id != original.ElementAt(i).Id)
                     Assert.Fail("Searching not works");
             }
-            Assert.AreEqual(_gridClient.Grid.ItemsCount, 7);
+            Assert.AreEqual(_gridClient.Grid.ItemsCount, 8);
         }
     }
 }

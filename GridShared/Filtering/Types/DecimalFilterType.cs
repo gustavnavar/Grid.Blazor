@@ -17,6 +17,7 @@ namespace GridShared.Filtering.Types
             switch (type)
             {
                 case GridFilterType.Equals:
+                case GridFilterType.NotEquals:
                 case GridFilterType.GreaterThan:
                 case GridFilterType.LessThan:
                 case GridFilterType.GreaterThanOrEquals:

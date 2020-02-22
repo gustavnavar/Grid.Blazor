@@ -13,13 +13,13 @@ You can enable searching for all columns of a grid using the **Searchable** meth
 * razor page
     ```c#
         var client = new GridClient<Order>(q => orderService.GetOrdersGridRows(columns, q), query, false, "ordersGrid", Columns, locale)
-            .Searchable()
+            .Searchable(true, false, true)
     ```
 
 * service method
     ```c#
         var server = new GridServer<Order>(repository.GetAll(), Request.Query, true, "ordersGrid", columns, 10)
-            .Searchable()
+            .Searchable(true, false, true)
     ```
 
 
@@ -27,20 +27,12 @@ You can enable searching for all columns of a grid using the **Searchable** meth
 
 Parameter | Description | Example
 --------- | ----------- | -------
-enable | bool to enable searching on the grid | Searchable(true, ...)
-onlyTextColumns | bool to enable searching on all collumns or just on string ones | Searchable(..., true)
+enable (optional) | bool to enable searching on the grid | Searchable(true, ...)
+onlyTextColumns (optional) | bool to enable searching on all collumns or just on string ones | Searchable(..., true, ...)
+hiddenColumns (optional) | bool to enable searching on hidden columns | Searchable(..., true)
+
+```enable``` default value is ```true```, ```onlyTextColumns``` default value is ```true```, and ```hiddenColumns``` default value is ```false```.
 
 Searching on boolean columns has benn disabled because EF Core 3.0 is not supporting it yet.
-
-**IMPORTANT**: If you get an **InvalidOperationException** while searching with a message similar to:
-```text
-Error generated for warning 'Microsoft.EntityFrameworkCore.Query.QueryClientEvaluationWarning: The LINQ expression 'where ...' could not be translated and will be evaluated locally.'. This exception can be suppressed or logged by passing event ID 'RelationalEventId.QueryClientEvaluationWarning' to the 'ConfigureWarnings' method in 'DbContext.OnConfiguring' or 'AddDbContext'.
-``` 
-Then you must enable query client evaluation on the ORM (EF Core). You can enable it adding the following line to the **Startup.cs** file:
-```c#
-    options.ConfigureWarnings(warnings => warnings.Ignore(RelationalEventId.QueryClientEvaluationWarning)); 
-```
-Keep in mind that enabling query client evaluation on the ORM (EF Core) can have a big impact on performance.
-
 
 [<- Selecting row](Selecting_row.md) | [Filtering ->](Filtering.md)

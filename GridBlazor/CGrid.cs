@@ -1,4 +1,4 @@
-﻿using GridBlazor.Columns;
+using GridBlazor.Columns;
 using GridBlazor.DataAnnotations;
 using GridBlazor.Filtering;
 using GridBlazor.Pagination;
@@ -10,13 +10,13 @@ using GridShared.Filtering;
 using GridShared.Utility;
 using Microsoft.AspNetCore.Components;
 using Microsoft.Extensions.Primitives;
-using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
 using System.Net.Http;
 using System.Reflection;
+using System.Text.Json;
 using System.Threading.Tasks;
 
 namespace GridBlazor
@@ -28,32 +28,81 @@ namespace GridBlazor
     {
         private Func<T, string> _rowCssClassesContraint;
 
-        private IQueryDictionary<StringValues> _query;
+        private QueryDictionary<StringValues> _query;
         private IGridSettingsProvider _settings;
         private readonly IGridAnnotationsProvider _annotations;
         private readonly IColumnBuilder<T> _columnBuilder;
         private readonly GridColumnCollection<T> _columnsCollection;
+        private IEnumerable<T> _items;
+        private IEnumerable<object> _selectedItems;
         private int _displayingItemsCount = -1; // count of displaying items (if using pagination)
         private bool _enablePaging;
         private IGridPager _pager;
+        private HttpClient _httpClient;
 
         private readonly Func<QueryDictionary<StringValues>, ItemsDTO<T>> _dataService;
+        private readonly Func<QueryDictionary<StringValues>, Task<ItemsDTO<T>>> _dataServiceAsync;
         private ICrudDataService<T> _crudDataService;
 
-        public CGrid(string url, IQueryDictionary<StringValues> query, bool renderOnlyRows,
+        public CGrid(HttpClient httpClient, string url, IQueryDictionary<StringValues> query, bool renderOnlyRows,
             Action<IGridColumnCollection<T>> columns = null, CultureInfo cultureInfo = null)
         {
             _dataService = null;
+            _dataServiceAsync = null;
 
             Items = new List<T>();
-
+            _selectedItems = new List<object>();
+            _httpClient = httpClient;
             Url = url;
-            _query = query;
+            _query = query as QueryDictionary<StringValues>;
 
             //set up sort settings:
             _settings = new QueryStringGridSettingsProvider(_query);
             Sanitizer = new Sanitizer();
-            if(cultureInfo != null)
+            if (cultureInfo != null)
+                Strings.Culture = cultureInfo;
+            EmptyGridText = Strings.DefaultGridEmptyText;
+            Language = Strings.Lang;
+
+            _annotations = new GridAnnotationsProvider();
+
+            //Set up column collection:
+            _columnBuilder = new DefaultColumnBuilder<T>(this, _annotations);
+            _columnsCollection = new GridColumnCollection<T>(this, _columnBuilder, _settings.SortSettings);
+            ComponentOptions = new GridOptions();
+
+            ApplyGridSettings();
+
+            Pager = new GridPager(query);
+
+            ComponentOptions.RenderRowsOnly = renderOnlyRows;
+            columns?.Invoke(Columns);
+
+            Mode = GridMode.Grid;
+            CreateEnabled = false;
+            ReadEnabled = false;
+            UpdateEnabled = false;
+            DeleteEnabled = false;
+        }
+
+        [Obsolete("This constructor is obsolete. Use one including an HttpClient parameter.", false)]
+        public CGrid(string url, IQueryDictionary<StringValues> query, bool renderOnlyRows,
+            Action<IGridColumnCollection<T>> columns = null, CultureInfo cultureInfo = null)
+        {
+            _dataService = null;
+            _dataServiceAsync = null; 
+
+            Items = new List<T>();
+            _selectedItems = new List<object>();
+
+            _httpClient = null;
+            Url = url;
+            _query = query as QueryDictionary<StringValues>;
+
+            //set up sort settings:
+            _settings = new QueryStringGridSettingsProvider(_query);
+            Sanitizer = new Sanitizer();
+            if (cultureInfo != null)
                 Strings.Culture = cultureInfo;
             EmptyGridText = Strings.DefaultGridEmptyText;
             Language = Strings.Lang;
@@ -80,14 +129,59 @@ namespace GridBlazor
         }
 
         public CGrid(Func<QueryDictionary<StringValues>, ItemsDTO<T>> dataService,
-            QueryDictionary<StringValues> query, bool renderOnlyRows, 
+            QueryDictionary<StringValues> query, bool renderOnlyRows,
             Action<IGridColumnCollection<T>> columns = null, CultureInfo cultureInfo = null)
         {
             _dataService = dataService;
+            _dataServiceAsync = null;
+            _selectedItems = new List<object>();
 
             Items = new List<T>(); //response.Items;
 
             Url = null;
+            _httpClient = null;
+            _query = query;
+
+            //set up sort settings:
+            _settings = new QueryStringGridSettingsProvider(_query);
+            Sanitizer = new Sanitizer();
+            if (cultureInfo != null)
+                Strings.Culture = cultureInfo;
+            EmptyGridText = Strings.DefaultGridEmptyText;
+            Language = Strings.Lang;
+
+            _annotations = new GridAnnotationsProvider();
+
+            //Set up column collection:
+            _columnBuilder = new DefaultColumnBuilder<T>(this, _annotations);
+            _columnsCollection = new GridColumnCollection<T>(this, _columnBuilder, _settings.SortSettings);
+            ComponentOptions = new GridOptions();
+
+            ApplyGridSettings();
+
+            Pager = new GridPager(query);
+
+            ComponentOptions.RenderRowsOnly = renderOnlyRows;
+            columns?.Invoke(Columns);
+
+            Mode = GridMode.Grid;
+            CreateEnabled = false;
+            ReadEnabled = false;
+            UpdateEnabled = false;
+            DeleteEnabled = false;
+        }
+
+        public CGrid(Func<QueryDictionary<StringValues>, Task<ItemsDTO<T>>> dataServiceAsync,
+            QueryDictionary<StringValues> query, bool renderOnlyRows,
+            Action<IGridColumnCollection<T>> columns = null, CultureInfo cultureInfo = null)
+        {
+            _dataServiceAsync = dataServiceAsync;
+            _dataService = null;
+            _selectedItems = new List<object>();
+            Items = new List<T>(); //response.Items;
+
+            Url = null;
+            _httpClient = null;
             _query = query;
 
             //set up sort settings:
@@ -128,9 +222,13 @@ namespace GridBlazor
 
         public bool SearchingOnlyTextColumns { get; set; }
 
+        public bool SearchingHiddenColumns { get; set; }
+
         public bool ExtSortingEnabled { get; set; }
 
         public bool GroupingEnabled { get; set; }
+
+        public bool ClearFiltersButtonEnabled { get; set; } = false;
 
         /// <summary>
         ///     Items, displaying in the grid view
@@ -138,6 +236,12 @@ namespace GridBlazor
         public IEnumerable<object> ItemsToDisplay
         {
             get { return (IEnumerable<object>)GetItemsToDisplay(); }
+        }
+
+        public IEnumerable<object> SelectedItems
+        {
+            get { return _selectedItems; }
+            set { _selectedItems = value; }
         }
 
         /// <summary>
@@ -181,7 +285,13 @@ namespace GridBlazor
         /// <summary>
         ///     items from server
         /// </summary>
-        public IEnumerable<T> Items { get; set; }
+        public IEnumerable<T> Items {
+            get => _items;
+            set {
+                _displayingItemsCount = -1;
+                _items = value;
+            }
+        }
 
         /// <summary>
         ///     Provides settings, using by the grid
@@ -191,7 +301,7 @@ namespace GridBlazor
             get { return _settings; }
             set
             {
-                _query = value.ToQuery();
+                _query = value.ToQuery() as QueryDictionary<StringValues>;
                 if (_pager.CurrentPage > 0)
                     _query.Add(((GridPager)_pager).ParameterName, _pager.CurrentPage.ToString());
                 _settings = new QueryStringGridSettingsProvider(_query);
@@ -203,12 +313,23 @@ namespace GridBlazor
         /// <summary>
         ///     Provides url used by the grid
         /// </summary>
-        public string Url { get; set; }
+        public string Url { get; internal set; }
+
+        public HttpClient HttpClient 
+        {
+            get {
+                if (_httpClient == null)
+                    _httpClient = new HttpClient();
+                return _httpClient; 
+            }
+        }
 
         /// <summary>
         ///     Provides DataService used by the grid
         /// </summary>
         public Func<QueryDictionary<StringValues>, ItemsDTO<T>> DataService { get { return _dataService; } }
+
+        public Func<QueryDictionary<StringValues>, Task<ItemsDTO<T>>> DataServiceAsync { get { return _dataServiceAsync; } }
 
         /// <summary>
         ///     Provides CrudDataService used by the grid
@@ -222,7 +343,7 @@ namespace GridBlazor
         /// <summary>
         ///     Provides query, using by the grid
         /// </summary>
-        public IQueryDictionary<StringValues> Query
+        public QueryDictionary<StringValues> Query
         {
             get { return _query; }
             set
@@ -315,19 +436,31 @@ namespace GridBlazor
 
         public IList<Action<object>> CreateActions { get; internal set; }
 
+        public IList<Func<object,Task>> CreateFunctions { get; internal set; }
+
         public object CreateObject { get; internal set; }
 
         public IList<Action<object>> ReadActions { get; internal set; }
+
+        public IList<Func<object, Task>> ReadFunctions { get; internal set; }
 
         public object ReadObject { get; internal set; }
 
         public IList<Action<object>> UpdateActions { get; internal set; }
 
+        public IList<Func<object, Task>> UpdateFunctions { get; internal set; }
+
         public object UpdateObject { get; internal set; }
 
         public IList<Action<object>> DeleteActions { get; internal set; }
 
+        public IList<Func<object, Task>> DeleteFunctions { get; internal set; }
+
         public object DeleteObject { get; internal set; }
+
+        public bool Keyboard { get; internal set; } = false;
+
+        public ModifierKey ModifierKey { get; internal set; } = ModifierKey.CtrlKey;
 
         /// <summary>
         ///     Sum enabled for some columns
@@ -354,7 +487,7 @@ namespace GridBlazor
         /// </summary>
         public IGridPager Pager
         {
-            get { return _pager ?? (_pager = new GridPager(_query)); }
+            get { return _pager; }
             set { _pager = value; }
         }
 
@@ -400,6 +533,11 @@ namespace GridBlazor
             }
             return values.ToArray();
         }
+
+        /// <summary>
+        ///     Fixed column values for the grid
+        /// </summary>
+        public QueryDictionary<object> FixedValues { get; set; } = null;
 
         /// <summary>
         ///     Applies data annotations settings
@@ -657,9 +795,17 @@ namespace GridBlazor
             ((GridPager)_pager).Query = _query;
         }
 
+        public void RemoveAllFilters()
+        {
+            RemoveQueryParameter(QueryStringFilterSettings.DefaultClearInitFilterQueryParameter);
+            RemoveQueryParameter(QueryStringFilterSettings.DefaultTypeQueryParameter);
+        }
+
         public string GetState()
         {
-            string query = JsonConvert.SerializeObject(Query, new StringValuesConverter());
+            var jsonOptions = new JsonSerializerOptions();
+            jsonOptions.Converters.Add(new StringValuesConverter());
+            string query = JsonSerializer.Serialize(Query, jsonOptions);
             return query.GridStateEncode();
         }
 
@@ -692,25 +838,26 @@ namespace GridBlazor
             try
             {
                 ItemsDTO<T> response;
-                if (_dataService == null)
+                if (_dataService != null)
+                {
+                    response = _dataService((QueryDictionary<StringValues>)_query);
+                }
+                else if (_dataServiceAsync != null)
+                {
+                    response = await _dataServiceAsync((QueryDictionary<StringValues>)_query);
+                }
+                else
                 {
                     string urlParameters = ((GridPager)_pager).GetLink();
                     if (Url.Contains("?"))
                         urlParameters = urlParameters.Replace("?", "&");
-                    using (HttpClient httpClient = new HttpClient())
-                    {
-                        response = await httpClient.GetJsonAsync<ItemsDTO<T>>(Url + urlParameters);
-                    }        
-                }
-                else
-                {
-                    response = _dataService((QueryDictionary<StringValues>)_query);
+                    response = await HttpClient.GetJsonAsync<ItemsDTO<T>>(Url + urlParameters);       
                 }
                 if (response != null && response.Items != null && response.Pager != null)
                 {
                     Items = response.Items;
                     EnablePaging = response.Pager.EnablePaging;
-                    _pager = new GridPager(_query, response.Pager.CurrentPage);
+                    ((GridPager)_pager).CurrentPage = response.Pager.CurrentPage;
                     ((GridPager)_pager).PageSize = response.Pager.PageSize;
                     ((GridPager)_pager).ItemsCount = response.Pager.ItemsCount;
 

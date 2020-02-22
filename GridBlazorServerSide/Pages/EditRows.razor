@@ -1,12 +1,9 @@
 ﻿@page "/editrows"
 @page "/editrows/{GridState}"
-@using GridBlazor
 @using GridBlazorServerSide.ColumnCollections
 @using GridBlazorServerSide.Models
 @using GridBlazorServerSide.Resources
 @using GridBlazorServerSide.Services
-@using GridShared
-@using GridShared.Utility
 @using Microsoft.Extensions.Primitives
 @using System.Globalization
 @using System.Threading.Tasks
@@ -26,7 +23,7 @@
 {
     <div class="row">
         <div class="col-md-12">
-            <GridComponent T="Order" Grid="@_grid"></GridComponent>
+            <GridComponent @ref="Component" T="Order" Grid="@_grid"></GridComponent>
         </div>
     </div>
 }
@@ -39,6 +36,7 @@ else
 {
     private CGrid<Order> _grid;
     private Task _task;
+    private GridComponent<Order> Component;
 
     [Parameter]
     public string GridState { get; set; }
@@ -49,7 +47,9 @@ else
         SharedResource.Culture = locale;
 
         // build the column collection passing the return url string
-        Action<IGridColumnCollection<Order>> columns = c => ColumnCollections.OrderColumnsWithEdit(c, "editrows");
+        Action<IGridColumnCollection<Order>> columns = c => 
+            ColumnCollections.OrderColumnsWithEdit(c, new List<Func<object,Task>>() { MyFirstFunction,  MySecondFunction},
+                "editrows");
 
         var query = new QueryDictionary<StringValues>();
         if (!string.IsNullOrWhiteSpace(GridState))
@@ -68,6 +68,7 @@ else
             query, false, "ordersGrid", columns, locale)
             .Sortable()
             .Filterable()
+            .SetStriped(true)
             .WithMultipleFilters()
             .WithGridItemsCount();
 
@@ -75,5 +76,17 @@ else
         // Set new items to grid
         _task = client.UpdateGrid();
         await _task;
+    }
+    
+    private async Task MyFirstFunction(object item)
+    {
+        await orderService.Add1ToFreight(((Order)item).OrderID);
+        await Component.UpdateGrid();
+    }
+
+    private async Task MySecondFunction(object item)
+    {
+        await orderService.Subtract1ToFreight(((Order)item).OrderID);
+        await Component.UpdateGrid();
     }
 }

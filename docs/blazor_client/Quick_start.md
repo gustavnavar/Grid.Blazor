@@ -20,11 +20,14 @@ Imagine that you have to retrieve a collection of model items in your project. F
 
 The steps to build a grid razor page using **GridBlazor** are:
 
-1. Add a reference to **GridBlazor** in the **_Imports.razor** file of the client project's root folder
+1. Add a reference to **GridBlazor**, **GridBlazor.Pages**, **GridShared** and **GridShared.Utility** in the **_Imports.razor** file of the client project's root folder
 
     ```razor
         ...
         @using GridBlazor
+        @using GridBlazor.Pages
+        @using GridShared
+        @using GridShared.Utility
         ...
     ```
 
@@ -35,7 +38,8 @@ The steps to build a grid razor page using **GridBlazor** are:
         @using GridShared
         @using GridShared.Utility
         @using Microsoft.Extensions.Primitives
-        @inject IUriHelper UriHelper
+        @inject NavigationManager NavigationManager
+        @inject HttpClient HttpClient
 
         @if (_task.IsCompleted)
         {
@@ -59,14 +63,14 @@ The steps to build a grid razor page using **GridBlazor** are:
                 c.Add(o => o.Customer.IsVip);
             };
 
-            protected override async Task OnInitAsync()
+            protected override async Task OnParametersSetAsync()
             {
-                string url = UriHelper.GetBaseUri() + "api/SampleData/GetOrdersGridForSample";
+                string url = NavigationManager.GetBaseUri() + "api/SampleData/GetOrdersGridForSample";
 
                 var query = new QueryDictionary<StringValues>();
                 query.Add("grid-page", "2");
 
-                var client = new GridClient<Order>(url, query, false, "ordersGrid", Columns);
+                var client = new GridClient<Order>(HttpClient, url, query, false, "ordersGrid", Columns);
                 _grid = client.Grid;
 
                 // Set new items to grid
@@ -100,22 +104,32 @@ The steps to build a grid razor page using **GridBlazor** are:
 **Notes**:
 * It is important to declare the **Columns** lamba expression as *static* in the razor page, because it will be used by the server's web service.
 
-* You must create a **GridClient** object in the **OnInitAsync** of the razor page. This object contains a parameter of **CGrid** type called **Grid**. 
+* You must create a **GridClient** object in the **OnParametersSetAsync** of the Blazor page. This object contains a parameter of **CGrid** type called **Grid**. 
 
 * You can use multiple methods of the **GridClient** object to configure a grid. For example:
     ```c#
-        var client = new GridClient<Order>(url, query, false, "ordersGrid", Columns, locale)
+        var client = new GridClient<Order>(HttpClient, url, query, false, "ordersGrid", Columns, locale)
             .SetRowCssClasses(item => item.Customer.IsVip ? "success" : string.Empty)
             .Sortable()
             .Filterable()
             .WithMultipleFilters();
     ```
 
-* You must call the **UpdateGrid** method of the **Grid** object at the end of the **OnInitAsync** of the razor page because it will request for the required rows to the server
+* You must call the **UpdateGrid** method of the **GridClient** object at the end of the **OnParametersSetAsync** of the razor page because it will request for the required rows to the server
+
+* If you need to update the component out of ```OnParametersSetAsync``` method you must use a reference to the component:
+    ```c#
+        <GridComponent @ref="Component" T="Order" Grid="@_grid"></GridComponent>
+    ```
+
+    and then call the ```UpdateGrid``` method:
+    ```c#
+        await Component.UpdateGrid();
+    ```
 
 * The **GridComponent** tag must contain at least these 2 attributes:
     * **T**: type of the model items
-    * **Grid**: grid object that has to be created in the **OnInitAsync** method of the razor page
+    * **Grid**: grid object that has to be created in the **OnParametersSetAsync** method of the razor page
 
 * You should use a **GridServer** object in the server controller action. 
 

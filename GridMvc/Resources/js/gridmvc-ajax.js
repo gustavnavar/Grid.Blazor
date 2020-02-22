@@ -69,7 +69,7 @@
                 self.currentPage = this.options.currentPage;
             }
             else {
-                self.currentPage = 1;
+                self.currentPage = "1";
             }
 
             self.loadPage();
@@ -83,6 +83,17 @@
                 self.gridSearch = this.getSearchQueryData(searchText);
             }
 
+            self.loadPage();
+        },
+        changePageSize: function(pageSize) {
+            var self = this;
+            self.pageSize = this.getPageSizeQueryData(pageSize);
+            self.loadPage();
+        },
+        removeAllFilters: function () {
+            var self = this;
+            self.gridColumnFilters = null;
+            self.clearInitialFilters = new Array();
             self.loadPage();
         },
         parseExtSortValues: function (extSortData) {
@@ -143,7 +154,7 @@
                 self.currentPage = this.options.currentPage;
             }
             else {
-                self.currentPage = 1;
+                self.currentPage = "1";
             }
             self.pagedDataAction = options.getPagedData;
             self.subGridDataAction = options.getSubGridData;
@@ -152,6 +163,7 @@
             self.gridSort = self.jqContainer.find("div.sorted a").attr('href');
             self.gridColumnFilters = "";
             self.gridSearch = "";
+            self.pageSize = "";
             self.gridExtSort = "";
             var $namedGrid = $('[data-gridname="' + self.jqContainer.data("gridname") + '"]');
             self.jqContainer = $namedGrid.length === 1 ? $namedGrid : self.jqContainer;
@@ -304,6 +316,14 @@
                     data['grid-search'] = mySearch;
                 }
 
+                var myPageSize = URI.parseQuery(self.pageSize)["grid-pagesize"];
+                if (Array.isArray(myPageSize)) {
+                    data['grid-pagesize'] = myPageSize.join("|");
+                }
+                else {
+                    data['grid-pagesize'] = myPageSize;
+                }
+
                 if (self.gridSort) {
                     var mySort = URI.parseQuery(self.gridSort);
                     data["grid-column"] = mySort["grid-column"];
@@ -325,12 +345,17 @@
                 return base64str;
             };
 
-            self.getGridUrl = function (griLoaddAction, filters, extSort, search) {
+            self.getGridUrl = function (griLoaddAction, filters, extSort, search, pageSize) {
                 var gridQuery = URI(griLoaddAction);
 
                 var mySearch = URI.parseQuery(search);
                 if (mySearch['grid-search']) {
                     gridQuery.addSearch("grid-search", mySearch["grid-search"]);
+                }
+
+                var myPageSize = URI.parseQuery(pageSize);
+                if (myPageSize['grid-pagesize']) {
+                    gridQuery.addSearch("grid-pagesize", myPageSize["grid-pagesize"]);
                 }
 
                 var myColFilters = URI.parseQuery(filters);
@@ -390,7 +415,8 @@
 
                 self.jqContainer.find(".grid-filter").each(function () {
                     $(this).click(function (e) {
-                        e.preventDefault();
+                        // ListFilterWidget imput click not working when adding preventDefault
+                        //e.preventDefault();
                         return self.openFilterPopup.call(this, self, self.filterMenuHtml());
                     });
                 });
@@ -417,6 +443,23 @@
                     $(this).click(function (e) {
                         e.preventDefault();
                         return self.applySearchValues("", true);
+                    });
+                });
+
+                self.jqContainer.find(".grid-change-page-size-input").each(function () {
+                    $(this).keydown(function (e) {
+                        if (e.keyCode === 9 || e.keyCode === 13) {
+                            e.preventDefault();
+                            var pageSize = $(this).val();
+                            self.changePageSize(pageSize);
+                        }
+                    });
+                });
+
+                self.jqContainer.find(".grid-button-all-filters-clear").each(function () {
+                    $(this).click(function (e) {
+                        e.preventDefault();
+                        self.removeAllFilters();
                     });
                 });
 
@@ -499,7 +542,7 @@
 
             self.loadPage = function () {
                 var dfd = new $.Deferred();
-                var gridUrl = self.getGridUrl(self.pagedDataAction, self.gridColumnFilters, self.gridExtSort, self.gridSearch);
+                var gridUrl = self.getGridUrl(self.pagedDataAction, self.gridColumnFilters, self.gridExtSort, self.gridSearch, self.pageSize);
 
                 $.ajax({
                     url: gridUrl,
@@ -520,8 +563,9 @@
                     self.setupPagerLinkEvents();
                     self.initFilters();
                     self.initSearch();
+                    self.initChangePageSize();
                     self.initExtSort();
-                    self.initGroup();
+                    self.initGroup();             
                     self.initSubGrids();
 
                     self.jqContainer.show();
@@ -603,6 +647,12 @@
                 self.gridSearch = this.getSearchQueryData(search);
             };
 
+            self.initChangePageSize = function () {
+                self.pageSize = null;
+                var size = self.jqContainer.find(".grid-change-page-size-input").first().val();
+                self.pageSize = this.getPageSizeQueryData(size);
+            };
+
             self.initExtSort = function () {
                 self.gridExtSort = null;
                 var extSorts = self.jqContainer.find(".grid-extsort-column");
@@ -675,7 +725,8 @@
             self.setupPagerLinkEvents();
             self.initFilters();
             self.initSearch();
-            self.initExtSort();
+            self.initChangePageSize();
+            self.initExtSort();      
             self.initSubGrids();
         },
         onGridLoaded: function (func) {

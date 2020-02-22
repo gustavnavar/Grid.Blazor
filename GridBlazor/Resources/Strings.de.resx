@@ -219,4 +219,34 @@
   <data name="SelectItem" xml:space="preserve">
     <value>--- Wähle einen Artikel aus ---</value>
   </data>
+  <data name="Show" xml:space="preserve">
+    <value>Zeigen</value>
+  </data>
+  <data name="ClearAllFilters" xml:space="preserve">
+    <value>Alle Filter löschen</value>
+  </data>
+  <data name="CreateItem" xml:space="preserve">
+    <value>Artikel erstellen</value>
+  </data>
+  <data name="DeleteItem" xml:space="preserve">
+    <value>Artikel löschen</value>
+  </data>
+  <data name="ReadItem" xml:space="preserve">
+    <value>Artikel lesen</value>
+  </data>
+  <data name="UpdateItem" xml:space="preserve">
+    <value>Artikel aktualisieren</value>
+  </data>
+  <data name="NotEqual" xml:space="preserve">
+    <value>Nicht gleich</value>
+  </data>
+  <data name="CreateError" xml:space="preserve">
+    <value>Beim Erstellen des neuen Elements ist ein Fehler aufgetreten</value>
+  </data>
+  <data name="DeleteError" xml:space="preserve">
+    <value>Beim Löschen dieses Elements ist ein Fehler aufgetreten</value>
+  </data>
+  <data name="UpdateError" xml:space="preserve">
+    <value>Beim Aktualisieren dieses Elements ist ein Fehler aufgetreten</value>
+  </data>
 </root>

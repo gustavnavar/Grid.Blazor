@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace GridMvc.Demo.Models
 {
@@ -16,9 +17,9 @@ namespace GridMvc.Demo.Models
             return EfDbSet.Include(r => r.Product);
         }
 
-        public override OrderDetail GetById(object id)
+        public override async Task<OrderDetail> GetById(object id)
         {
-            return GetAll().FirstOrDefault(o => o.OrderID == (int)id);
+            return await GetAll().SingleOrDefaultAsync(o => o.OrderID == (int)id);
         }
 
         public IEnumerable<OrderDetail> GetForOrder(int id)

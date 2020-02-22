@@ -2,11 +2,11 @@
 @page "/selectable/{GridState}"
 @using GridBlazorClientSide.Client.ColumnCollections
 @using GridBlazorClientSide.Shared.Models
-@using GridShared.Utility
 @using Microsoft.Extensions.Primitives
 @using System.Globalization
 @using System.Threading.Tasks
 @inject NavigationManager NavigationManager
+@inject HttpClient HttpClient
 
 <h1>Selectable Grid</h1>
 
@@ -28,7 +28,7 @@
             <h4>
                 Order details
             </h4>
-            <OrderInfo Order="@_order" ReturnUrl="selectable" GridState="@_grid.GetState()"></OrderInfo>
+            <OrderInfo @ref="_orderInfo" ReturnUrl="selectable" GridState="@_grid.GetState()"></OrderInfo>
         </div>
     </div>
 }
@@ -40,7 +40,7 @@ else
 @code
 {
     private CGrid<Order> _grid;
-    private Order _order;
+    private OrderInfo _orderInfo;
     private Task _task;
 
     [Parameter]
@@ -48,7 +48,7 @@ else
 
     protected override void OnInitialized()
     {
-        CultureInfo.CurrentCulture = new CultureInfo(Startup.Culture);
+        CultureInfo.CurrentCulture = new CultureInfo(Program.Culture);
     }
 
     protected override async Task OnParametersSetAsync()
@@ -68,10 +68,11 @@ else
         }
         string url = NavigationManager.BaseUri + "api/SampleData/GetOrdersGrid";
         var client = new GridClient<Order>
-            (url, query, false, "ordersGrid", ColumnCollections.OrderColumns, locale)
+            (HttpClient, url, query, false, "ordersGrid", ColumnCollections.OrderColumns, locale)
             .Sortable()
             .Filterable()
-            .Selectable(true)
+            .SetStriped(true)
+            .Selectable(true, true)
             .WithMultipleFilters()
             .WithGridItemsCount();
 
@@ -85,12 +86,12 @@ else
     {
         if (item.GetType() == typeof(Order))
         {
-            _order = (Order)item;
+            _orderInfo.Order = (Order)item;
         }
         else
         {
-            _order = null;
+            _orderInfo.Order = null;
         }
-        StateHasChanged();
+        _orderInfo.Refresh();
     }
 }

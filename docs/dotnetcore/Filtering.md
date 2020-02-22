@@ -23,9 +23,17 @@ Remember that you can also enable filtering for all columns of a grid using the 
     }).Filterable().RenderAsync()
 ```
 
+You can enable a button to clear all selected filters using the ***ClearFiltersButton*** method of the **GridClient** object:  
+
+```razor
+    var client = new GridServer<Order>(_orderRepository.GetAll(), query, false, "ordersGrid", columns, 10, locale)
+        .ClearFiltersButton(true);
+```
+
 **GridMvc** supports several types of columns (specified in the **Add** method):
 
 * System.String
+* System.Guid
 * System.Int32
 * System.Int64
 * System.Boolean
@@ -62,4 +70,4 @@ Pressing the **+** and **-** buttons you can add multiple options to filter. You
 
 You can also create your own filter widgets.
 
-[<- Searching](Searching.md) | [Creating custom filter widget ->](Creating_custom_filter_widget.md)
+[<- Searching](Searching.md) | [Using a list filter ->](Using_list_filter.md)

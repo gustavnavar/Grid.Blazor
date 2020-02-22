@@ -56,8 +56,10 @@ namespace GridMvc.Columns
 
         private string _filterWidgetTypeName;
 
+        public GridColumn(Expression<Func<T, TDataType>> expression, ISGrid grid) : this(expression, null, grid)
+        { }
 
-        public GridColumn(Expression<Func<T, TDataType>> expression, ISGrid grid)
+        public GridColumn(Expression<Func<T, TDataType>> expression, IComparer<TDataType> comparer, ISGrid grid)
         {
             #region Setup defaults
 
@@ -81,7 +83,7 @@ namespace GridMvc.Columns
                         "expression");
 
                 _constraint = expression.Compile();
-                _orderers.Insert(0, new OrderByGridOrderer<T, TDataType>(expression));
+                _orderers.Insert(0, new OrderByGridOrderer<T, TDataType>(expression, comparer));
                 _filter = new DefaultColumnFilter<T, TDataType>(expression);
                 _search = new DefaultColumnSearch<T, TDataType>(expression);
                 _totals = new DefaultColumnTotals<T, TDataType>(expression);
@@ -131,6 +133,8 @@ namespace GridMvc.Columns
             get { return _grid; }
         }
 
+        public override bool HasConstraint => _constraint != null;
+
         public override IGridColumn<T> SetFilterWidgetType(string typeName, object widgetData)
         {
             SetFilterWidgetType(typeName);
@@ -144,6 +148,11 @@ namespace GridMvc.Columns
             if (!string.IsNullOrEmpty(typeName))
                 _filterWidgetTypeName = typeName;
             return this;
+        }
+
+        public override IGridColumn<T> SetListFilter(IEnumerable<SelectItem> selectItems)
+        {
+            return SetFilterWidgetType(SelectItem.ListFilter, selectItems);
         }
 
         public override IGridColumn<T> SortInitialDirection(GridSortDirection direction)
@@ -162,13 +171,23 @@ namespace GridMvc.Columns
 
         public override IGridColumn<T> ThenSortBy<TKey>(Expression<Func<T, TKey>> expression)
         {
-            _orderers.Add(new ThenByColumnOrderer<T, TKey>(expression, GridSortDirection.Ascending));
+            return ThenSortBy<TKey>(expression, null);
+        }
+
+        public override IGridColumn<T> ThenSortBy<TKey>(Expression<Func<T, TKey>> expression, IComparer<TKey> comparer)
+        {
+            _orderers.Add(new ThenByColumnOrderer<T, TKey>(expression, comparer, GridSortDirection.Ascending));
             return this;
         }
 
         public override IGridColumn<T> ThenSortByDescending<TKey>(Expression<Func<T, TKey>> expression)
         {
-            _orderers.Add(new ThenByColumnOrderer<T, TKey>(expression, GridSortDirection.Descending));
+            return ThenSortByDescending<TKey>(expression, null);
+        }
+
+        public override IGridColumn<T> ThenSortByDescending<TKey>(Expression<Func<T, TKey>> expression, IComparer<TKey> comparer = null)
+        {
+            _orderers.Add(new ThenByColumnOrderer<T, TKey>(expression, comparer, GridSortDirection.Descending));
             return this;
         }
 

@@ -1,11 +1,8 @@
 ﻿@page "/crud"
-@using GridBlazor
 @using GridBlazorServerSide.ColumnCollections
 @using GridBlazorServerSide.Models
 @using GridBlazorServerSide.Resources
 @using GridBlazorServerSide.Services
-@using GridShared
-@using GridShared.Utility
 @using Microsoft.Extensions.Primitives
 @using System.Globalization
 @using System.Threading.Tasks
@@ -56,6 +53,7 @@ else
             query, false, "ordersGrid", columns, locale)
             .Sortable()
             .Filterable()
+            .SetStriped(true)
             .Crud(true, orderService)
             .WithMultipleFilters()
             .WithGridItemsCount();

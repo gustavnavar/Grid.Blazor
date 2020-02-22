@@ -1,21 +1,22 @@
-﻿@using GridBlazor
-@using GridBlazor.Resources
+﻿@using GridBlazor.Resources
 @using GridShared.Filtering
 @using System.Collections.Generic
 @using System.Net.Http
 @inject NavigationManager NavigationManager
+@inject HttpClient HttpClient
+@inject IJSRuntime jSRuntime
 
 @typeparam T
 
 @if (visible)
 {
-    <div class="dropdown dropdown-menu grid-dropdown opened" style="display:block;">
+    <div class="dropdown dropdown-menu grid-dropdown opened" style="display:block;" @onkeyup="FilterKeyup" @onclick:stopPropagation @onkeyup:stopPropagation>
         <div class="grid-dropdown-arrow"></div>
         <div class="grid-dropdown-inner">
             <div class="grid-popup-widget">
                 <div class="form-group">
                     <p><i>This is custom filter widget demo</i></p>
-                    <select class="grid-filter-type customerslist form-control" style="width:250px;" @bind="_filterValue">
+                    <select @ref="firstSelect" class="grid-filter-type customerslist form-control" style="width:250px;" @bind="_filterValue">
                         @foreach (var customerName in _customersNames)
                         {
                             <option value="@customerName">@customerName</option>
@@ -49,6 +50,8 @@
     protected string _filterValue;
     private List<string> _customersNames = new List<string>();
 
+    protected ElementReference firstSelect;
+
     [CascadingParameter(Name = "GridHeaderComponent")]
     private GridHeaderComponent<T> GridHeaderComponent { get; set; }
 
@@ -64,14 +67,21 @@
     protected override async Task OnInitializedAsync()
     {
         string url = NavigationManager.BaseUri + "api/SampleData/GetCustomersNames";
-        HttpClient httpClient = new HttpClient();
-        _customersNames = await httpClient.GetJsonAsync<List<string>>(url);
+        _customersNames = await HttpClient.GetJsonAsync<List<string>>(url);
     }
 
     protected override void OnParametersSet()
     {
         _filterValue = FilterSettings.FirstOrDefault().FilterValue;
         _clearVisible = !string.IsNullOrWhiteSpace(_filterValue);
+    }
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender && firstSelect.Id != null)
+        {
+            await jSRuntime.InvokeVoidAsync("gridJsFunctions.focusElement", firstSelect);
+        }
     }
 
     protected async Task ApplyButtonClicked()
@@ -82,5 +92,13 @@
     protected async Task ClearButtonClicked()
     {
         await GridHeaderComponent.RemoveFilter();
+    }
+
+    public async Task FilterKeyup(KeyboardEventArgs e)
+    {
+        if (e.Key == "Escape")
+        {
+            await GridHeaderComponent.FilterIconClicked();
+        }
     }
 }

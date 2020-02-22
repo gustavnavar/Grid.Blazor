@@ -17,7 +17,8 @@ namespace GridShared
         ///     Grid items
         /// </summary>
         IEnumerable<object> ItemsToDisplay { get; }
-
+        
+        
         /// <summary>
         ///     Displaying grid items count
         /// </summary>
@@ -44,9 +45,19 @@ namespace GridShared
         bool GroupingEnabled { get; set; }
 
         /// <summary>
+        ///     Set or get visibility of ClearFiltersButton 
+        /// </summary>
+        bool ClearFiltersButtonEnabled { get; set; }
+
+        /// <summary>
         ///     Set or get value of searching for all columns or only text ones
         /// </summary>
         bool SearchingOnlyTextColumns { get; set; }
+
+        /// <summary>
+        ///     Set or get value of searching for all columns including hidden ones
+        /// </summary>
+        bool SearchingHiddenColumns { get; set; }
 
         /// <summary>
         ///     Text in empty grid (no items for display)

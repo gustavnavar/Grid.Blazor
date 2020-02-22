@@ -45,5 +45,7 @@
 /GridBlazorClientSide.Server/GridBlazorClientSide.Server.csproj.user
 /GridBlazorClientSide.Shared/bin
 /GridBlazorClientSide.Shared/obj
-/GridBlazorServerSide/bin/Debug/netcoreapp3.0
+/GridBlazorServerSide/GridBlazorServerSide.csproj.user
+/GridBlazorServerSide/bin
 /GridBlazorServerSide/obj
+/docs/.vscode

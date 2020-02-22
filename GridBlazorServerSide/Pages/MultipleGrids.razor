@@ -1,13 +1,10 @@
 ﻿@page "/multiplegrids"
 @page "/multiplegrids/{OrdersGridState}/{CustomersGridState}"
 @using BlazorStrap
-@using GridBlazor
 @using GridBlazorServerSide.ColumnCollections
 @using GridBlazorServerSide.Models
 @using GridBlazorServerSide.Resources
 @using GridBlazorServerSide.Services
-@using GridShared
-@using GridShared.Utility
 @using Microsoft.Extensions.Primitives
 @using System.Globalization
 @inject IOrderService orderService
@@ -91,6 +88,7 @@ else
             ordersQuery, false, "ordersGrid", orderColumns, locale)
             .Sortable()
             .Filterable()
+            .SetStriped(true)
             .WithMultipleFilters()
             .WithGridItemsCount();
         _ordersGrid = ordersClient.Grid;
@@ -115,6 +113,7 @@ else
             customersQuery, false, "customersGrid", ColumnCollections.CustomersColumns, locale)
             .Sortable()
             .Filterable()
+            .SetStriped(true)
             .WithMultipleFilters()
             .WithGridItemsCount();
         _customersGrid = customersClient.Grid;

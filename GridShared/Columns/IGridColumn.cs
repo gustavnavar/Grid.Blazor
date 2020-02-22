@@ -1,5 +1,4 @@
-﻿using GridShared;
-using GridShared.Filtering;
+﻿using GridShared.Filtering;
 using GridShared.Grouping;
 using GridShared.Searching;
 using GridShared.Sorting;
@@ -7,6 +6,7 @@ using GridShared.Totals;
 using System;
 using System.Collections.Generic;
 using System.Linq.Expressions;
+using System.Threading.Tasks;
 
 namespace GridShared.Columns
 {
@@ -23,10 +23,12 @@ namespace GridShared.Columns
     {
         Type ComponentType { get; }
         IList<Action<object>> Actions { get; }
+        IList<Func<object, Task>> Functions { get; }
         object Object { get; }
         IGrid ParentGrid { get; }
         bool Hidden { get; }
-        bool CrudHidden { get; }
+        CrudHidden CrudHidden { get; }
+        bool ReadOnlyOnUpdate { get; }
         bool IsPrimaryKey { get; }
     }
 
@@ -92,12 +94,33 @@ namespace GridShared.Columns
         /// <summary>
         ///     Setup the custom render for component
         /// </summary>
+        IGridColumn<T> RenderComponentAs(Type componentType, IList<Func<object,Task>> functions);
+        /// <summary>
+        ///     Setup the custom render for component
+        /// </summary>
+        IGridColumn<T> RenderComponentAs(Type componentType, IList<Action<object>> actions,
+            IList<Func<object, Task>> functions);
+
+        /// <summary>
+        ///     Setup the custom render for component
+        /// </summary>
         IGridColumn<T> RenderComponentAs(Type componentType, object obj);
 
         /// <summary>
         ///     Setup the custom render for component
         /// </summary>
         IGridColumn<T> RenderComponentAs(Type componentType, IList<Action<object>> actions, object obj);
+
+        /// <summary>
+        ///     Setup the custom render for component
+        /// </summary>
+        IGridColumn<T> RenderComponentAs(Type componentType, IList<Func<object, Task>> functions, object obj);
+
+        /// <summary>
+        ///     Setup the custom render for component
+        /// </summary>
+        IGridColumn<T> RenderComponentAs(Type componentType, IList<Action<object>> actions, 
+            IList<Func<object, Task>> functions, object obj);
 
         /// <summary>
         ///     Setup the custom render for component
@@ -112,12 +135,33 @@ namespace GridShared.Columns
         /// <summary>
         ///     Setup the custom render for component
         /// </summary>
+        IGridColumn<T> RenderComponentAs<TComponent>(IList<Func<object, Task>> functions);
+
+        /// <summary>
+        ///     Setup the custom render for component
+        /// </summary>
+        IGridColumn<T> RenderComponentAs<TComponent>(IList<Action<object>> actions, IList<Func<object, Task>> functions);
+
+        /// <summary>
+        ///     Setup the custom render for component
+        /// </summary>
         IGridColumn<T> RenderComponentAs<TComponent>(object obj);
 
         /// <summary>
         ///     Setup the custom render for component
         /// </summary>
         IGridColumn<T> RenderComponentAs<TComponent>(IList<Action<object>> actions, object obj);
+
+        /// <summary>
+        ///     Setup the custom render for component
+        /// </summary>
+        IGridColumn<T> RenderComponentAs<TComponent>(IList<Func<object, Task>> functions, object obj);
+
+        /// <summary>
+        ///     Setup the custom render for component
+        /// </summary>
+        IGridColumn<T> RenderComponentAs<TComponent>(IList<Action<object>> actions, IList<Func<object, Task>> functions, 
+            object obj);
 
         /// <summary>
         ///     Format column values with specified text pattern
@@ -147,7 +191,17 @@ namespace GridShared.Columns
         /// <summary>
         ///     Sets the column as hidden in crud views
         /// </summary>
-        IGridColumn<T> SetCrudHidden(bool enabled);
+        IGridColumn<T> SetCrudHidden(bool insert, bool update, bool detail, bool delete);
+
+        /// <summary>
+        ///     Sets the column as hidden in all crud views
+        /// </summary>
+        IGridColumn<T> SetCrudHidden(bool all);
+
+        /// <summary>
+        ///     Sets the column as readonly on update.
+        /// </summary>
+        IGridColumn<T> SetReadOnlyOnUpdate(bool enabled);
 
         /// <summary>
         ///     Sets the column as primary key
@@ -163,6 +217,11 @@ namespace GridShared.Columns
         ///     Sets the column as select for CRUD components
         /// </summary>
         IGridColumn<T> SetSelectField(bool enabled, Func<T, string> expression, string url);
+
+        /// <summary>
+        ///    Allow grid to show a SubGrid
+        /// </summary>
+        IGridColumn<T> SubGrid(Func<object[], bool, bool, bool, bool, Task<IGrid>> subGrids, params string[] keys);
     }
 
     public interface IColumn
@@ -241,9 +300,19 @@ namespace GridShared.Columns
         IGridColumn<T> ThenSortBy<TKey>(Expression<Func<T, TKey>> expression);
 
         /// <summary>
+        ///     Setup ThenBy sorting of current column
+        /// </summary>
+        IGridColumn<T> ThenSortBy<TKey>(Expression<Func<T, TKey>> expression, IComparer<TKey> comparer);
+
+        /// <summary>
         ///     Setup ThenByDescending sorting of current column
         /// </summary>
         IGridColumn<T> ThenSortByDescending<TKey>(Expression<Func<T, TKey>> expression);
+
+        /// <summary>
+        ///     Setup ThenByDescending sorting of current column
+        /// </summary>
+        IGridColumn<T> ThenSortByDescending<TKey>(Expression<Func<T, TKey>> expression, IComparer<TKey> comparer);
     }
 
     public interface ISortableColumn : IColumn
@@ -296,6 +365,12 @@ namespace GridShared.Columns
         /// <param name="typeName">Widget type name</param>
         /// <param name="widgetData">The data would be passed to the widget</param>
         IGridColumn<T> SetFilterWidgetType(string typeName, object widgetData);
+
+        /// <summary>
+        ///     Specify a list filter widget type for this column
+        /// </summary>
+        /// <param name="selectItems">List of selectable items</param>
+        IGridColumn<T> SetListFilter(IEnumerable<SelectItem> selectItems);
     }
 
     public interface IFilterableColumn : IColumn

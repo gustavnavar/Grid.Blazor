@@ -1,6 +1,5 @@
 using GridBlazorServerSide.Data;
 using GridBlazorServerSide.Services;
-using GridMvc;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Localization;
@@ -38,12 +37,13 @@ namespace GridBlazorServerSide
             services.AddControllers();
             services.AddRazorPages();
             services.AddServerSideBlazor();
+            //.AddCircuitOptions(options => { options.DetailedErrors = true; });
             services.AddScoped<IOrderService, OrderService>();
+            services.AddScoped<IOrderDetailService, OrderDetailService>();
             services.AddScoped<ICustomerService, CustomerService>();
             services.AddScoped<IEmployeeService, EmployeeService>();
             services.AddScoped<IShipperService, ShipperService>();
-
-            services.AddGridMvc();
+            services.AddScoped<IProductService, ProductService>();
 
             services.Configure<RequestLocalizationOptions>(
                 options =>
@@ -55,7 +55,10 @@ namespace GridBlazorServerSide
                             new CultureInfo("it-IT"),
                             new CultureInfo("es-ES"),
                             new CultureInfo("fr-FR"),
-                            new CultureInfo("ru-RU")
+                            new CultureInfo("ru-RU"),
+                            new CultureInfo("nb-NO"),
+                            new CultureInfo("tr-TR"),
+                            new CultureInfo("cs-CZ")
                         };
 
                     options.DefaultRequestCulture = new RequestCulture(culture: "en-US", uiCulture: "en-US");

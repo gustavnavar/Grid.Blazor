@@ -152,4 +152,4 @@ Finally you have to add the custom widget in the **GridMvc** filters collection.
 ```
 where **CustomersFilterWidget** is the javascript object defined in step 1.
 
-[<- Filtering](Filtering.md) | [Setup initial column filtering ->](Setup_initial_column_filtering.md)
+[<- Using a list filter](Using_list_filter.md) | [Setup initial column filtering ->](Setup_initial_column_filtering.md)

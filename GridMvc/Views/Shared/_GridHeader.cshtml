@@ -9,6 +9,7 @@
 @using GridShared.Utility
 @using Microsoft.Extensions.Primitives
 @using System.Globalization
+@using System.Text.Json
 
 @model IGridColumn
 
@@ -46,7 +47,7 @@
     var queryBuilder = new CustomQueryStringBuilder(_settings.FilterSettings.Query);
 
     var exceptQueryParameters = new List<string>
-    {
+{
         QueryStringFilterSettings.DefaultTypeQueryParameter,
         QueryStringFilterSettings.DefaultClearInitFilterQueryParameter
     };
@@ -136,7 +137,7 @@
 <th class="@_cssClass" style="@_cssStyles">
     @if (Model.FilterEnabled)
     {
-        <div class="grid-filter" data-type="@Model.FilterWidgetTypeName" data-name="@Model.Name" data-widgetdata="@GridShared.Utility.JsonHelper.JsonSerializer(Model.FilterWidgetData)" data-filterdata="@GridShared.Utility.JsonHelper.JsonSerializer(_filterSettings)" data-url="@_url" data-clearinitfilter="@_clearInitFilter.ToString()">
+        <div class="grid-filter" data-type="@Model.FilterWidgetTypeName" data-name="@Model.Name" data-widgetdata="@JsonSerializer.Serialize(Model.FilterWidgetData)" data-filterdata="@JsonSerializer.Serialize(_filterSettings)" data-url="@_url" data-clearinitfilter="@_clearInitFilter.ToString()">
             <span class="@_cssFilterClass" title="@Strings.FilterButtonTooltipText"></span>
         </div>
     }

@@ -9,6 +9,7 @@ GridMvc.lang.ru = {
     applyFilterButtonText: "Применить",
     filterSelectTypes: {
         Equals: "Равно",
+        NotEquals: "Не равно",
         StartsWith: "Начинается с",
         Contains: "Содержит",
         EndsWith: "Оканчивается",

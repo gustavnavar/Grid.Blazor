@@ -219,4 +219,34 @@
   <data name="SelectItem" xml:space="preserve">
     <value>--- выберите предмет ---</value>
   </data>
+  <data name="Show" xml:space="preserve">
+    <value>Показать</value>
+  </data>
+  <data name="ClearAllFilters" xml:space="preserve">
+    <value>Очистить все фильтры</value>
+  </data>
+  <data name="CreateItem" xml:space="preserve">
+    <value>Создать предмет</value>
+  </data>
+  <data name="DeleteItem" xml:space="preserve">
+    <value>Удалить предмет</value>
+  </data>
+  <data name="ReadItem" xml:space="preserve">
+    <value>Читать предмет</value>
+  </data>
+  <data name="UpdateItem" xml:space="preserve">
+    <value>Обновить предмет</value>
+  </data>
+  <data name="NotEqual" xml:space="preserve">
+    <value>Не равно</value>
+  </data>
+  <data name="CreateError" xml:space="preserve">
+    <value>Произошла ошибка при создании нового элемента</value>
+  </data>
+  <data name="DeleteError" xml:space="preserve">
+    <value>При удалении этого элемента произошла ошибка</value>
+  </data>
+  <data name="UpdateError" xml:space="preserve">
+    <value>При обновлении этого элемента произошла ошибка</value>
+  </data>
 </root>

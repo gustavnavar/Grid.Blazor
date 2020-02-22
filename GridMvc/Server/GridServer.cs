@@ -1,4 +1,5 @@
 ﻿using GridMvc.Pagination;
+using GridMvc.Resources;
 using GridShared;
 using GridShared.Columns;
 using GridShared.Pagination;
@@ -40,6 +41,12 @@ namespace GridMvc.Server
         public IGridServer<T> Columns(Action<IGridColumnCollection<T>> columnBuilder)
         {
             columnBuilder(_source.Columns);
+            return this;
+        }
+
+        public IGridServer<T> ChangePageSize(bool enable)
+        {
+            _source.Pager.ChangePageSize = enable;
             return this;
         }
 
@@ -115,8 +122,14 @@ namespace GridMvc.Server
 
         public IGridServer<T> Searchable(bool enable, bool onlyTextColumns)
         {
+            return Searchable(enable, onlyTextColumns, false);
+        }
+
+        public IGridServer<T> Searchable(bool enable, bool onlyTextColumns, bool hiddenColumns)
+        {
             _source.SearchingEnabled = enable;
             _source.SearchingOnlyTextColumns = onlyTextColumns;
+            _source.SearchingHiddenColumns = hiddenColumns;
             return this;
         }
 
@@ -140,6 +153,12 @@ namespace GridMvc.Server
         {
             _source.ExtSortingEnabled = enable;
             _source.GroupingEnabled = enable;
+            return this;
+        }
+
+        public IGridServer<T> ClearFiltersButton(bool enable)
+        {
+            _source.ClearFiltersButtonEnabled = enable;
             return this;
         }
 
@@ -196,10 +215,19 @@ namespace GridMvc.Server
         public IGridServer<T> WithGridItemsCount(string gridItemsName)
         {
             if (string.IsNullOrWhiteSpace(gridItemsName))
-                gridItemsName = "Items count";
+                gridItemsName = Strings.Items;
 
             _source.RenderOptions.GridCountDisplayName = gridItemsName;
             _source.RenderOptions.ShowGridItemsCount = true;
+            return this;
+        }
+
+        /// <summary>
+        ///     Enable or disable striped grid
+        /// </summary>
+        public IGridServer<T> SetStriped(bool enable)
+        {
+            _source.RenderOptions.Striped = enable;
             return this;
         }
 

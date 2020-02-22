@@ -7,14 +7,13 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
+using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.Text.Json.Serialization;
 
 namespace GridBlazorClientSide.Shared.Models
 {
-    using Newtonsoft.Json;
-    using System;
-    using System.Collections.Generic;
-
     public partial class Employee
     {
         public Employee()
@@ -37,6 +36,7 @@ namespace GridBlazorClientSide.Shared.Models
         public string Country { get; set; }
         public string HomePhone { get; set; }
         public string Extension { get; set; }
+        [JsonIgnore]
         public byte[] Photo { get; set; }
         public string Notes { get; set; }
         public Nullable<int> ReportsTo { get; set; }

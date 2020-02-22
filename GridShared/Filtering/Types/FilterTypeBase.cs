@@ -48,6 +48,8 @@ namespace GridShared.Filtering.Types
             {
                 case GridFilterType.Equals:
                     return Expression.Equal(leftExpr, valueExpr);
+                case GridFilterType.NotEquals:
+                    return Expression.NotEqual(leftExpr, valueExpr);
                 case GridFilterType.Contains:
                     MethodInfo miContains = TargetType.GetMethod("Contains", new[] {typeof (string)});
                     return Expression.Call(leftExpr, miContains, valueExpr);

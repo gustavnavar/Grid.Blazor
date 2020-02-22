@@ -4,14 +4,14 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@ViewData["Title"] - GridMvc</title>
+
+    <link rel="stylesheet" href="~/css/bootstrap/bootstrap.min.css" />
     <environment names="Development">
-        <link rel="stylesheet" href="~/css/bootstrap/css/bootstrap.css" />
         <link href="~/css/gridmvc.css" rel="stylesheet" type="text/css" />
         <link href="~/lib/bootstrap-datepicker/css/bootstrap-datepicker.css" rel="stylesheet" />
         <link rel="stylesheet" href="~/css/site.css" />
     </environment>
     <environment names="Staging,Production">
-        <link rel="stylesheet" href="~/css/bootstrap/css/bootstrap.min.css" />
         <link href="~/css/gridmvc.min.css" rel="stylesheet" type="text/css" />
         <link href="~/lib/bootstrap-datepicker/css/bootstrap-datepicker.min.css" rel="stylesheet" />
         <link rel="stylesheet" href="~/css/site.min.css" />
@@ -19,13 +19,16 @@
 
     <environment names="Development">
         <script src="~/lib/jquery/jquery.js"></script>
-        <script src="~/css/bootstrap/js/bootstrap.js"></script>
+        <script src="~/js/bootstrap.min.js"></script>
         <script src="~/js/gridmvc.js" type="text/javascript"></script>
         <script src="~/js/gridmvc-lang-de.js"></script>
         <script src="~/js/gridmvc-lang-fr.js"></script>
         <script src="~/js/gridmvc-lang-it.js"></script>
         <script src="~/js/gridmvc-lang-ru.js"></script>
         <script src="~/js/gridmvc-lang-es.js"></script>
+        <script src="~/js/gridmvc-lang-nb.js"></script>
+        <script src="~/js/gridmvc-lang-tr.js"></script>
+        <script src="~/js/gridmvc-lang-cs.js"></script>
         <script src="~/js/gridmvc.customwidgets.js" type="text/javascript"></script>
         <!-- referencing datepicker control -->
         <script src="~/lib/bootstrap-datepicker/js/bootstrap-datepicker.js"></script>
@@ -34,17 +37,22 @@
         <script src="~/lib/bootstrap-datepicker/locales/bootstrap-datepicker.it.min.js"></script>
         <script src="~/lib/bootstrap-datepicker/locales/bootstrap-datepicker.ru.min.js"></script>
         <script src="~/lib/bootstrap-datepicker/locales/bootstrap-datepicker.es.min.js"></script>
+        <script src="~/lib/bootstrap-datepicker/locales/bootstrap-datepicker.tr.min.js"></script>
+        <script src="~/lib/bootstrap-datepicker/locales/bootstrap-datepicker.cs.min.js"></script>
         <script src="~/js/site.js"></script>
     </environment>
     <environment names="Staging,Production">
         <script src="~/lib/jquery/jquery.min.js"></script>
-        <script src="~/css/bootstrap/js/bootstrap.min.js"></script>
+        <script src="~/js/bootstrap.min.js"></script>
         <script src="~/js/gridmvc.min.js" type="text/javascript"></script>
         <script src="~/js/gridmvc-lang-de.js"></script>
         <script src="~/js/gridmvc-lang-fr.js"></script>
         <script src="~/js/gridmvc-lang-it.js"></script>
         <script src="~/js/gridmvc-lang-ru.js"></script>
         <script src="~/js/gridmvc-lang-es.js"></script>
+        <script src="~/js/gridmvc-lang-nb.js"></script>
+        <script src="~/js/gridmvc-lang-tr.js"></script>
+        <script src="~/js/gridmvc-lang-cs.js"></script>
         <script src="~/js/gridmvc.customwidgets.js" type="text/javascript"></script>
         <!-- referencing datepicker control -->
         <script src="~/lib/bootstrap-datepicker/js/bootstrap-datepicker.min.js"></script>
@@ -53,34 +61,39 @@
         <script src="~/lib/bootstrap-datepicker/locales/bootstrap-datepicker.it.min.js"></script>
         <script src="~/lib/bootstrap-datepicker/locales/bootstrap-datepicker.ru.min.js"></script>
         <script src="~/lib/bootstrap-datepicker/locales/bootstrap-datepicker.es.min.js"></script>
+        <script src="~/lib/bootstrap-datepicker/locales/bootstrap-datepicker.tr.min.js"></script>
+        <script src="~/lib/bootstrap-datepicker/locales/bootstrap-datepicker.cs.min.js"></script>
         <script src="~/js/site.min.js"></script>
     </environment>
-
 </head>
 <body>
-    <nav class="navbar navbar-inverse navbar-fixed-top">
+    <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-dark box-shadow mb-3">
+        <h2>GridMvc</h2>
         <div class="container">
-            <div class="navbar-header">
-                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-                    <span class="sr-only">Toggle navigation</span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
-                <a asp-area="" asp-controller="Home" asp-action="Index" class="navbar-brand">GridMvc</a>
-            </div>
-            <div class="navbar-collapse navbar-ex5-collapse collapse">
-                <ul class="nav navbar-nav">
-                    <li class="@(ViewBag.ActiveMenuTitle == "Demo" ? "active" : string.Empty)">@Html.ActionLink("Demo", "Index", "Home")</li>
-                    <li class="@(ViewBag.ActiveMenuTitle == "Subgrid" ? "active" : string.Empty)">@Html.ActionLink("Subgrid", "Subgrid", "Home")</li>
-                    <li class="@(ViewBag.ActiveMenuTitle == "MultipleGrids" ? "active" : string.Empty)">@Html.ActionLink("Multiple grids", "MultipleGrids", "Home")</li>
-                    <li class="@(ViewBag.ActiveMenuTitle == "About" ? "active" : string.Empty)">@Html.ActionLink("About", "About", "Home")</li>
+            <div class="navbar-collapse collapse d-sm-inline-flex flex-sm-row-reverse">
+                <ul class="navbar-nav flex-grow-1">
+                    <li class="nav-item">
+                        <a class="nav-link" style="color:white;" asp-area="" asp-controller="Home" asp-action="Index">Demo</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" style="color:white;" asp-area="" asp-controller="Home" asp-action="Subgrid">Subgrid</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" style="color:white;" asp-area="" asp-controller="Home" asp-action="MultipleGrids">Multiple grids</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" style="color:white;" asp-area="" asp-controller="Home" asp-action="BlazorComponentView">Blazor component</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" style="color:white;" asp-area="" asp-controller="Home" asp-action="Comparer">Sort comparer</a>
+                    </li>
                 </ul>
-                @await Html.PartialAsync("_LanguagePartial")
             </div>
+            @await Html.PartialAsync("_LanguagePartial")
         </div>
     </nav>
-    <div class="container body-content">
+     
+    <div class="body-content">
         @RenderBody()
         <hr />
         <footer>

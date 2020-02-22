@@ -135,6 +135,20 @@ If you pass an ordered collection of items to the Grid constructor and you want 
 
 Remember that you can also enable [Sorting](Sorting.md) for all columns of a grid. Sorting at grid level has precendence over sorting defined at column level.
 
+## Sorting with a custom comparer
+
+You can enable sorting using a custom comparer. This feature only works for grids where all items are in memory. 
+Grids where items are in a database and EF Core is used to get them don't support custom comparers and will throw an exception if the are configured in this way.
+
+If you want to use a custom comparer for a column yo can do it by calling the **Columns.Add** method in the **IGridColumnCollection** interface using an ```IComparer<TKey>``` as a parameter:
+```c#
+    var comparer = new ....;
+
+    .... 
+
+    c.Add(o => o.Customer.CompanyName, comparer)
+```
+
 ## Column settings
 
 Method name | Description | Example

@@ -2,6 +2,7 @@
 using GridMvc.Demo.Models;
 using GridMvc.Demo.Resources;
 using GridMvc.Pagination;
+using GridMvc.Resources;
 using GridMvc.Server;
 using GridShared;
 using GridShared.Filtering;
@@ -23,12 +24,14 @@ namespace GridMvc.Demo.Controllers
         private readonly OrdersRepository _orderRepository;
         private readonly OrderDetailsRepository _orderDetailsRepository;
         private readonly CustomersRepository _customersRepository;
+        private readonly ShippersRepository _shippersRepository;
 
         public HomeController(NorthwindDbContext context, ICompositeViewEngine compositeViewEngine) : base(compositeViewEngine)
         {
             _orderRepository = new OrdersRepository(context);
             _orderDetailsRepository = new OrderDetailsRepository(context);
             _customersRepository = new CustomersRepository(context);
+            _shippersRepository = new ShippersRepository(context);
         }
 
         public ActionResult Index(string gridState = "")
@@ -54,6 +57,10 @@ namespace GridMvc.Demo.Controllers
             var requestCulture = HttpContext.Features.Get<IRequestCultureFeature>();
             var locale = requestCulture.RequestCulture.UICulture.TwoLetterISOLanguageName;
             SharedResource.Culture = requestCulture.RequestCulture.UICulture;
+
+            var shipperList = _shippersRepository.GetAll()
+                .Select(s => new SelectItem(s.ShipperID.ToString(), s.CompanyName))
+                .ToList();
 
             Action<IGridColumnCollection<Order>> columns = c =>
             {
@@ -81,9 +88,17 @@ namespace GridMvc.Demo.Controllers
                     .SetWidth(110)
                     .Max(true).Min(true);
 
+                c.Add(o => o.ShipVia)
+                    .Titled("Via")
+                    .SetWidth(250)
+                    .RenderValueAs(o => o.Shipper.CompanyName)
+                    .SetListFilter(shipperList);
+
                 /* Adding "CompanyName" column: */
                 c.Add(o => o.Customer.CompanyName)
                     .Titled(SharedResource.CompanyName)
+                    .ThenSortByDescending(o => o.ShipVia)
+                    .ThenSortByDescending(o => o.Freight)
                     .SetWidth(250)
                     .SetInitialFilter(GridFilterType.StartsWith, "a")
                     .SetFilterWidgetType("CustomCompanyNameFilterWidget")
@@ -92,6 +107,9 @@ namespace GridMvc.Demo.Controllers
                 /* Adding "ContactName" column: */
                 c.Add(o => o.Customer.ContactName).Titled(SharedResource.ContactName).SetWidth(250)
                     .Max(true).Min(true);
+
+                /* Adding "Customer.Country" hidden column: */
+                c.Add(o => o.Customer.Country, true);
 
                 /* Adding "Freight" column: */
                 c.Add(o => o.Freight)
@@ -105,7 +123,7 @@ namespace GridMvc.Demo.Controllers
                     .Titled(SharedResource.IsVip)
                     .SetWidth(70)
                     .Css("hidden-xs") //hide on phones
-                    .RenderValueAs(o => o.Customer.IsVip ? "Yes" : "No");
+                    .RenderValueAs(o => o.Customer.IsVip ? Strings.BoolTrueLabel : Strings.BoolFalseLabel);
             };
 
             var server = new GridServer<Order>(_orderRepository.GetAll(), query, false, "ordersGrid", 
@@ -116,7 +134,10 @@ namespace GridMvc.Demo.Controllers
                 .WithMultipleFilters()
                 .Searchable(true, false)
                 .Groupable(true)
+                .ClearFiltersButton(true)
                 .Selectable(true)
+                .SetStriped(true)
+                .ChangePageSize(true)
                 .WithGridItemsCount();
 
             return View(server.Grid);
@@ -131,7 +152,7 @@ namespace GridMvc.Demo.Controllers
         [HttpGet]
         public async Task<ActionResult> GetOrder(int id)
         {
-            Order order = _orderRepository.GetById(id);
+            Order order = await _orderRepository.GetById(id);
             if (order == null)
                 return Json(new { status = 0, message = "Not found" });
 
@@ -152,6 +173,11 @@ namespace GridMvc.Demo.Controllers
             //string returnUrl = Request.Path;
             string returnUrl = "/Home/Subgrid";
             ViewData["returnUrl"] = returnUrl;
+
+            var shipperList = _shippersRepository.GetAll()
+                .Select(s => new SelectItem(s.ShipperID.ToString(), s.CompanyName))
+                .ToList();
+            ViewData["shipperList"] = shipperList;
 
             IQueryCollection query = Request.Query;
             if (!string.IsNullOrWhiteSpace(gridState))
@@ -178,6 +204,11 @@ namespace GridMvc.Demo.Controllers
             //string returnUrl = Request.Path;
             string returnUrl = "/Home/Subgrid";
             ViewData["returnUrl"] = returnUrl;
+
+            var shipperList = _shippersRepository.GetAll()
+                .Select(s => new SelectItem(s.ShipperID.ToString(), s.CompanyName))
+                .ToList();
+            ViewData["shipperList"] = shipperList;
 
             var model = new SGrid<Order>(_orderRepository.GetAll(), Request.Query, false, GridPager.DefaultAjaxPagerViewName);
 
@@ -229,6 +260,7 @@ namespace GridMvc.Demo.Controllers
                         .SetRowCssClasses(item => item.Quantity > 10 ? "success" : string.Empty)
                         .Sortable()
                         .Filterable()
+                        .SetStriped(true)
                         .WithMultipleFilters()
                         .WithGridItemsCount();
 
@@ -278,13 +310,13 @@ namespace GridMvc.Demo.Controllers
             return LocalRedirect(returnUrl);
         }
 
-        public ActionResult Edit(int? id, string returnUrl, string gridState, string altGridState = "", string error = "")
+        public async Task<ActionResult> Edit(int? id, string returnUrl, string gridState, string altGridState = "", string error = "")
         {
             if (id == null || !id.HasValue)
             {
                 return BadRequest();
             }
-            Order order = _orderRepository.GetById(id.Value);
+            Order order = await _orderRepository.GetById(id.Value);
             if (order == null)
             {
                 return NotFound();
@@ -299,13 +331,13 @@ namespace GridMvc.Demo.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(Order order, string returnUrl, string gridState, string altGridState = "")
+        public async Task<ActionResult> Edit(Order order, string returnUrl, string gridState, string altGridState = "")
         {
             if (ModelState.IsValid)
             {
                 try
                 {
-                    _orderRepository.Update(order);
+                    await _orderRepository.Update(order);
                     _orderRepository.Save();
 
                     return LocalRedirect(WebUtility.UrlDecode(returnUrl) + "?gridState=" + gridState + "&altGridState=" + altGridState);
@@ -319,5 +351,115 @@ namespace GridMvc.Demo.Controllers
             return RedirectToAction("Edit", "Home", new { id = order.OrderID, returnUrl, gridState, altGridState, error = "ModelState is not valid" });
         }
 
+        public ActionResult BlazorComponentView()
+        {
+            return View();
+        }
+
+        public ActionResult Comparer(string gridState = "")
+        {
+            //string returnUrl = Request.Path;
+            string returnUrl = "/Home/Comparer";
+
+            IQueryCollection query = Request.Query;
+            if (!string.IsNullOrWhiteSpace(gridState))
+            {
+                try
+                {
+                    query = new QueryCollection(StringExtensions.GetQuery(gridState));
+                }
+                catch (Exception)
+                {
+                    // do nothing, gridState was not a valid state
+                }
+            }
+
+            ViewBag.ActiveMenuTitle = "Demo";
+
+            var requestCulture = HttpContext.Features.Get<IRequestCultureFeature>();
+            var locale = requestCulture.RequestCulture.UICulture.TwoLetterISOLanguageName;
+            SharedResource.Culture = requestCulture.RequestCulture.UICulture;
+
+            var shipperList = _shippersRepository.GetAll()
+                .Select(s => new SelectItem(s.ShipperID.ToString(), s.CompanyName))
+                .ToList();
+
+            var comparer = new SampleComparer(StringComparer.OrdinalIgnoreCase);
+
+            Action<IGridColumnCollection<Order>> columns = c =>
+            {
+                /* Adding not mapped column, that renders body, using inline Razor html helper */
+                c.Add()
+                    .Encoded(false)
+                    .Sanitized(false)
+                    .SetWidth(30)
+                    .Css("hidden-xs") //hide on phones
+                    .RenderComponentAs<ButtonCellViewComponent>(returnUrl);
+
+                /* Adding "OrderID" column: */
+
+                c.Add(o => o.OrderID)
+                    .Titled(SharedResource.Number)
+                    .SetWidth(100);
+
+                /* Adding "OrderDate" column: */
+                c.Add(o => o.OrderDate, "OrderCustomDate")
+                    .Titled(SharedResource.OrderCustomDate)
+                    .SetCellCssClassesContraint(o => o.OrderDate.HasValue && o.OrderDate.Value >= DateTime.Parse("1997-01-01") ? "red" : "")
+                    .Format("{0:yyyy-MM-dd}")
+                    .SetWidth(110)
+                    .Max(true).Min(true);
+
+                c.Add(o => o.ShipVia)
+                    .Titled("Via")
+                    .SetWidth(250)
+                    .RenderValueAs(o => o.Shipper.CompanyName)
+                    .SetListFilter(shipperList);
+
+                /* Adding "CompanyName" column: */
+                c.Add(o => o.Customer.CompanyName, comparer)
+                    .Titled(SharedResource.CompanyName)
+                    .SetWidth(250)
+                    .SetFilterWidgetType("CustomCompanyNameFilterWidget")
+                    .Max(true).Min(true);
+
+                /* Adding "ContactName" column: */
+                c.Add(o => o.Customer.ContactName).Titled(SharedResource.ContactName).SetWidth(250)
+                    .Max(true).Min(true);
+
+                /* Adding "Customer.Country" hidden column: */
+                c.Add(o => o.Customer.Country, true);
+
+                /* Adding "Freight" column: */
+                c.Add(o => o.Freight)
+                    .Titled(SharedResource.Freight)
+                    .SetWidth(100)
+                    .Format("{0:F}")
+                    .Sum(true).Average(true).Max(true).Min(true);
+
+                /* Adding "Vip customer" column: */
+                c.Add(o => o.Customer.IsVip)
+                    .Titled(SharedResource.IsVip)
+                    .SetWidth(70)
+                    .Css("hidden-xs") //hide on phones
+                    .RenderValueAs(o => o.Customer.IsVip ? Strings.BoolTrueLabel : Strings.BoolFalseLabel);
+            };
+
+            var server = new GridServer<Order>(_orderRepository.GetAll().ToList(), query, false, "ordersGrid",
+                columns, 10, locale)
+                .SetRowCssClasses(item => item.Customer.IsVip ? "success" : string.Empty)
+                .Sortable()
+                .Filterable()
+                .WithMultipleFilters()
+                .Searchable(true, false)
+                .Groupable(true)
+                .ClearFiltersButton(true)
+                .Selectable(true)
+                .SetStriped(true)
+                .ChangePageSize(true)
+                .WithGridItemsCount();
+
+            return View(server.Grid);
+        }
     }
 }

@@ -14,6 +14,19 @@ namespace GridMvc.Demo.Models
         {
             modelBuilder.Entity<OrderDetail>()
                 .HasKey(c => new { c.OrderID, c.ProductID });
+
+            modelBuilder.Entity<EmployeeTerritories>()
+                .HasKey(r => new { r.EmployeeID, r.TerritoryID });
+
+            modelBuilder.Entity<EmployeeTerritories>()
+                .HasOne(r => r.Employee)
+                .WithMany(s => s.Territories)
+                .HasForeignKey(t => t.EmployeeID);
+
+            modelBuilder.Entity<EmployeeTerritories>()
+                .HasOne(r => r.Territory)
+                .WithMany(s => s.Employees)
+                .HasForeignKey(t => t.TerritoryID);
         }
 
         public DbSet<Category> Categories { get; set; }
@@ -23,7 +36,7 @@ namespace GridMvc.Demo.Models
         public DbSet<Order> Orders { get; set; }
         public DbSet<Product> Products { get; set; }
         public DbSet<Region> Region { get; set; }
-        //public DbSet<Shipper> Shippers { get; set; }
+        public DbSet<Shipper> Shippers { get; set; }
         public DbSet<Supplier> Suppliers { get; set; }
         public DbSet<Territory> Territories { get; set; }
 

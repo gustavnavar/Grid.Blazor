@@ -1,7 +1,7 @@
 ﻿using Microsoft.Extensions.Primitives;
-using Newtonsoft.Json;
 using System;
 using System.Text;
+using System.Text.Json;
 
 namespace GridShared.Utility
 {
@@ -10,7 +10,9 @@ namespace GridShared.Utility
         public static QueryDictionary<StringValues> GetQuery(string gridState)
         {
             string queryString = gridState.GridStateDecode();
-            return JsonConvert.DeserializeObject<QueryDictionary<StringValues>>(queryString, new StringValuesConverter());
+            var jsonOptions = new JsonSerializerOptions();
+            jsonOptions.Converters.Add(new StringValuesConverter());
+            return JsonSerializer.Deserialize<QueryDictionary<StringValues>>(queryString, jsonOptions);
         }
 
         public static string GridStateEncode(this string text)

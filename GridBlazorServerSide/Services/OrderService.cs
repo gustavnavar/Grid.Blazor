@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Primitives;
 using System;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace GridBlazorServerSide.Services
@@ -32,8 +33,8 @@ namespace GridBlazorServerSide.Services
                         .WithPaging(10)
                         .Filterable()
                         .WithMultipleFilters()
-                        .Groupable(true)
-                        .Searchable(true, false);
+                        .Groupable(true)                        
+                        .Searchable(true, false, false);
 
                 // return items to displays
                 var items = server.ItemsToDisplay;
@@ -59,20 +60,20 @@ namespace GridBlazorServerSide.Services
             }
         }
 
-        public ItemsDTO<OrderDetail> GetOrderDetailsGridRows(Action<IGridColumnCollection<OrderDetail>> columns,
-            object[] keys, QueryDictionary<StringValues> query)
+        public ItemsDTO<Order> GetOrdersGridRowsInMemory(Action<IGridColumnCollection<Order>> columns,
+            QueryDictionary<StringValues> query)
         {
             using (var context = new NorthwindDbContext(_options))
             {
-                int orderId;
-                int.TryParse(keys[0].ToString(), out orderId);
-                var repository = new OrderDetailsRepository(context);
-                var server = new GridServer<OrderDetail>(repository.GetForOrder(orderId), new QueryCollection(query),
-                    true, "orderDetailssGrid" + keys[0].ToString(), columns)
+                var repository = new OrdersRepository(context);
+                var server = new GridServer<Order>(repository.GetAll().ToList(), new QueryCollection(query),
+                    true, "ordersGrid", columns)
                         .Sortable()
                         .WithPaging(10)
                         .Filterable()
-                        .WithMultipleFilters();
+                        .WithMultipleFilters()
+                        .Groupable(true)
+                        .Searchable(true, false, false);
 
                 // return items to displays
                 var items = server.ItemsToDisplay;
@@ -96,6 +97,36 @@ namespace GridBlazorServerSide.Services
                 var repository = new OrdersRepository(context);
                 await repository.Update(order);
                 repository.Save();
+            }
+        }
+
+        public async Task Add1ToFreight(int OrderId)
+        {
+            using (var context = new NorthwindDbContext(_options))
+            {
+                var repository = new OrdersRepository(context);
+                var order =  await repository.GetById(OrderId);
+                if (order.Freight.HasValue)
+                {
+                    order.Freight += 1;
+                    await repository.Update(order);
+                    repository.Save();
+                }
+            }
+        }
+
+        public async Task Subtract1ToFreight(int OrderId)
+        {
+            using (var context = new NorthwindDbContext(_options))
+            {
+                var repository = new OrdersRepository(context);
+                var order = await repository.GetById(OrderId);
+                if (order.Freight.HasValue)
+                {
+                    order.Freight -= 1;
+                    await repository.Update(order);
+                    repository.Save();
+                }
             }
         }
 
@@ -146,9 +177,10 @@ namespace GridBlazorServerSide.Services
     {
         ItemsDTO<Order> GetOrdersGridRows(Action<IGridColumnCollection<Order>> columns, QueryDictionary<StringValues> query);
         ItemsDTO<Order> GetOrdersGridRows(QueryDictionary<StringValues> query);
-        ItemsDTO<OrderDetail> GetOrderDetailsGridRows(Action<IGridColumnCollection<OrderDetail>> columns,
-            object[] keys, QueryDictionary<StringValues> query);
+        ItemsDTO<Order> GetOrdersGridRowsInMemory(Action<IGridColumnCollection<Order>> columns, QueryDictionary<StringValues> query);
         Task<Order> GetOrder(int OrderId);
         Task UpdateAndSave(Order order);
+        Task Add1ToFreight(int OrderId);
+        Task Subtract1ToFreight(int OrderId);
     }
 }

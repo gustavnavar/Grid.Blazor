@@ -132,9 +132,11 @@ Sortable | Enable or disable sorting for all columns of the grid | GridServer<Or
 Searchable | Enable or disable searching on the grid | GridServer<Order>(...).Searchable(true, true);
 Filterable | Enable or disable filtering for all columns of the grid | GridServer<Order>(...).Filterable(true);
 WithMultipleFilters | Allow grid to use multiple filters | GridServer<Order>(...).WithMultipleFilters();
+ClearFiltersButton | Enable or disable the ClearFilters button | GridClient<Order>(...).ClearFiltersButton(true);
 Selectable | Enable or disable the client grid items selectable feature | GridServer<Order>(...).Selectable(true);
 WithPaging | Enable paging for grid | GridServer<Order>(...).WithPaging(10);
 SetLanguage | Setup the language of the grid | GridServer<Order>(...).SetLanguage('fr');
+SetStriped | Configure the grid as striped | GridServer<Order>(...).SetStriped(true);
 EmptyText | Setup the text displayed for all empty items in the grid | GridServer<Order>(...).EmptyText(' - ');
 WithGridItemsCount | Allows the grid to show items count | GridServer<Order>(...).WithGridItemsCount();
 SetRowCssClasses | Setup specific row css classes | GridServer<Order>(...).SetRowCssClasses(item => item.Customer.IsVip ? "success" : string.Empty);
@@ -164,6 +166,7 @@ WithMultipleFilters | Allow grid to use multiple filters | Html.Grid(Model).With
 Selectable | Enable or disable the client grid items selectable feature | Html.Grid(Model).Filterable(true);
 WithPaging | Enable paging for grid | Html.Grid(Model).WithPaging(10);
 SetLanguage | Setup the language of the grid | Html.Grid(Model).SetLanguage('fr');
+SetStriped | Configure the grid as striped | Html.Grid(Model).SetStriped(true);
 EmptyText | Setup the text displayed for all empty items in the grid | Html.Grid(Model).EmptyText(' - ');
 WithGridItemsCount | Allows the grid to show items count | Html.Grid(Model).WithGridItemsCount();
 SetRowCssClasses | Setup specific row css classes | Html.Grid(Model).SetRowCssClasses(item => item.Customer.IsVip ? "success" : string.Empty);

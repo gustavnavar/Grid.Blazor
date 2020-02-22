@@ -9,6 +9,7 @@ GridMvc.lang.it = {
     applyFilterButtonText: "Applicare",
     filterSelectTypes: {
         Equals: "Uguale",
+        NotEquals: "Non uguale",
         StartsWith: "Inizia con",
         Contains: "Contiene",
         EndsWith: "Finisce con",

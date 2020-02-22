@@ -1,10 +1,8 @@
 ﻿@page "/totals"
-@using GridBlazor
 @using GridBlazorServerSide.ColumnCollections
 @using GridBlazorServerSide.Models
 @using GridBlazorServerSide.Resources
 @using GridBlazorServerSide.Services
-@using GridShared.Utility
 @using Microsoft.Extensions.Primitives
 @using System.Globalization
 @using System.Threading.Tasks
@@ -44,13 +42,12 @@ else
         var locale = CultureInfo.CurrentCulture;
         SharedResource.Culture = locale;
 
-        var query = new QueryDictionary<StringValues>
-            ();
-        query.Add("grid-page", "2");
+        var query = new QueryDictionary<StringValues>();
         var client = new GridClient<Order>(q => orderService.GetOrdersGridRows(ColumnCollections.OrderColumnsWithTotals, q),
             query, false, "ordersGrid", ColumnCollections.OrderColumnsWithTotals, locale)
             .Sortable()
             .Filterable()
+            .SetStriped(true)
             .WithMultipleFilters()
             .WithGridItemsCount();
 

@@ -191,4 +191,4 @@ The static method **StringExtensions.GetQuery** will convert the string to a **D
 
 If the page contains more than one grid you have to use 2 parameters, one for each grid.
 
-[<- Subgrids](Subgrids.md)
+[<- Subgrids](Subgrids.md) | [CRUD ->](Crud.md)

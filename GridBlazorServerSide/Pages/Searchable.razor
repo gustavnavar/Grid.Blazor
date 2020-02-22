@@ -1,10 +1,8 @@
 ﻿@page "/searchable"
-@using GridBlazor
 @using GridBlazorServerSide.ColumnCollections
 @using GridBlazorServerSide.Models
 @using GridBlazorServerSide.Resources
 @using GridBlazorServerSide.Services
-@using GridShared.Utility
 @using Microsoft.Extensions.Primitives
 @using System.Globalization
 @using System.Threading.Tasks
@@ -49,9 +47,11 @@ else
             query, false, "ordersGrid", ColumnCollections.OrderColumns, locale)
             .Sortable()
             .Filterable()
+            .ClearFiltersButton(true)
+            .SetStriped(true)
             .WithMultipleFilters()
             .WithGridItemsCount()
-            .Searchable(true, false);
+            .Searchable(true, false, false);
 
         _grid = client.Grid;
         // Set new items to grid

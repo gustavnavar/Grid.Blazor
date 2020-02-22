@@ -58,6 +58,23 @@ namespace GridBlazor.Columns
             return Add(newColumn);
         }
 
+        public IGridColumn<T> Add<TKey>(Expression<Func<T, TKey>> constraint, IComparer<TKey> comparer)
+        {
+            return Add(constraint, comparer, false);
+        }
+
+        public IGridColumn<T> Add<TKey>(Expression<Func<T, TKey>> constraint, IComparer<TKey> comparer, string columnName)
+        {
+            IGridColumn<T> newColumn = CreateColumn(constraint, comparer, false, columnName);
+            return Add(newColumn);
+        }
+
+        public IGridColumn<T> Add<TKey>(Expression<Func<T, TKey>> constraint, IComparer<TKey> comparer, bool hidden)
+        {
+            IGridColumn<T> newColumn = CreateColumn(constraint, comparer, hidden, string.Empty);
+            return Add(newColumn);
+        }
+
         public IGridColumn<T> Add(PropertyInfo pi)
         {
             IGridColumn<T> newColumn = _columnBuilder.CreateColumn(pi);
@@ -107,6 +124,26 @@ namespace GridBlazor.Columns
             return Insert(position, newColumn);
         }
 
+        public IGridColumn<T> Insert<TKey>(int position, Expression<Func<T, TKey>> constraint, IComparer<TKey> comparer)
+        {
+            return Insert(position, constraint, comparer, false);
+        }
+
+
+        public IGridColumn<T> Insert<TKey>(int position, Expression<Func<T, TKey>> constraint, IComparer<TKey> comparer,
+            string columnName)
+        {
+            IGridColumn<T> newColumn = CreateColumn(constraint, comparer, false, columnName);
+            return Insert(position, newColumn);
+        }
+
+        public IGridColumn<T> Insert<TKey>(int position, Expression<Func<T, TKey>> constraint, IComparer<TKey> comparer, 
+            bool hidden)
+        {
+            IGridColumn<T> newColumn = CreateColumn(constraint, comparer, hidden, string.Empty);
+            return Insert(position, newColumn);
+        }
+
         public new IEnumerator<IGridColumn> GetEnumerator()
         {
             return base.GetEnumerator();
@@ -142,6 +179,15 @@ namespace GridBlazor.Columns
         private IGridColumn<T> CreateColumn<TKey>(Expression<Func<T, TKey>> constraint, bool hidden, string columnName)
         {
             IGridColumn<T> newColumn = _columnBuilder.CreateColumn(constraint, hidden);
+            if (!string.IsNullOrEmpty(columnName))
+                newColumn.Name = columnName;
+            return newColumn;
+        }
+
+        private IGridColumn<T> CreateColumn<TKey>(Expression<Func<T, TKey>> constraint, IComparer<TKey> comparer, 
+            bool hidden, string columnName)
+        {
+            IGridColumn<T> newColumn = _columnBuilder.CreateColumn(constraint, comparer, hidden);
             if (!string.IsNullOrEmpty(columnName))
                 newColumn.Name = columnName;
             return newColumn;

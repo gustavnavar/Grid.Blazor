@@ -9,7 +9,6 @@
 
 <div class="row">
     <div class="col-md-12">
-        <h1>Orders administration</h1>
         <p>
             This page demonstrates the possibilities of GridMvcCore. For more documentation, please
             see: <a href="https://github.com/gustavnavar/Grid.Blazor">https://github.com/gustavnavar/Grid.Blazor</a>
@@ -18,40 +17,49 @@
 </div>
 
 <div class="row">
-    <ul class="nav nav-tabs">
-        <li class="active">
-            <a data-toggle="tab" href="#orders">
-                <label class="control-label">Orders</label>
-            </a>
-        </li>
-        <li>
-            <a data-toggle="tab" href="#customers">
-                <label class="control-label">Customers</label>
-            </a>
-        </li>
-    </ul>
-    <div class="tab-content">
-        <div id="orders" class="tab-pane fade in active">
-            <div class="col-md-3 col-md-push-9">
-                <h4>
-                    Order details
-                </h4>
-                <div id="order-content">
-                    <p class="muted">
-                        Select order to display detailed infomation
-                    </p>
+    <div class="col-md-12">
+        <ul class="nav nav-tabs" id="nav-tab" role="tablist">
+            <li class="nav-item">
+                <a class="nav-link active" id="orders-tab" data-toggle="tab" href="#orders" role="tab" aria-controls="orders" aria-selected="true">
+                    <label class="control-label">Orders</label>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" id="customers-tab" data-toggle="tab" href="#customers" role="tab" aria-controls="customers" aria-selected="false">
+                    <label class="control-label">Customers</label>
+                </a>
+            </li>
+        </ul>
+        <div class="tab-content" id="nav-tabContent" style="margin-top:10px;">
+            <div class="tab-pane fade show active" id="orders" role="tabpanel" aria-labelledby="orders-tab">
+                <div class="row">
+                    <div class="col-md-9">
+                        @await Component.InvokeAsync("Orders", new { ordersGridState })
+                    </div>
+                    <div class="col-md-3">
+                        <h4>
+                            Order details
+                        </h4>
+                        <div id="order-content">
+                            <p class="muted">
+                                Select order to display detailed infomation
+                            </p>
+                        </div>
+                    </div>
                 </div>
             </div>
-            <div class="col-md-9 col-md-pull-3">
-                @await Component.InvokeAsync("Orders", new { ordersGridState })
-            </div>
-        </div>
 
-        <div id="customers" class="tab-pane fade">
-            @await Component.InvokeAsync("Customers", new { customersGridState })
+            <div class="tab-pane fade" id="customers" role="tabpanel" aria-labelledby="customers-tab">
+                <div class="row">
+                    <div class="col-md-12">
+                        @await Component.InvokeAsync("Customers", new { customersGridState })
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 </div>
+
 <script>
     function gettoken() {
         var token = '@Html.AntiForgeryToken()';

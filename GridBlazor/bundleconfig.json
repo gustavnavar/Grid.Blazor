@@ -1,8 +1,20 @@
 [
   {
-    "outputFileName": "Content/css/gridblazor.min.css",
+    "outputFileName": "wwwroot/css/gridblazor.min.css",
     "inputFiles": [
-      "Content/css/gridblazor.css"
+      "wwwroot/css/gridblazor.css"
+    ]
+  },
+  {
+    "outputFileName": "wwwroot/css/gridblazor-bootstrap3.min.css",
+    "inputFiles": [
+      "wwwroot/css/gridblazor-bootstrap3.css"
+    ]
+  },
+  {
+    "outputFileName": "wwwroot/js/gridblazor.min.js",
+    "inputFiles": [
+      "wwwroot/js/gridblazor.js"
     ]
   }
 ]
