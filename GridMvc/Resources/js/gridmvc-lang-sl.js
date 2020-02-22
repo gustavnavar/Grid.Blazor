@@ -1,5 +1,5 @@
 ﻿/***
-* Grid.Mvc turkish language (tr-TR)
+* Grid.Mvc Slovenian language (sl-SL)
 */
 window.GridMvc = window.GridMvc || {};
 window.GridMvc.lang = window.GridMvc.lang || {};
