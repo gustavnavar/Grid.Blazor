@@ -112,7 +112,7 @@ The steps to build a grid razor page using **GridBlazor** are:
                 var query = new QueryDictionary<StringValues>();
                 query.Add("grid-page", "2");
 
-                var client = new GridClient<Order>(q => orderService.GetOrdersGridRows(columns, q), query, false, "ordersGrid", columns)
+                var client = new GridClient<Order>(q => orderService.GetOrdersGridRows(columns, q), query, false, "ordersGrid", columns);
                 _grid = client.Grid;
 
                 // Set new items to grid
