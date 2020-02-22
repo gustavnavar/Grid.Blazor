@@ -83,32 +83,52 @@ namespace GridShared.Filtering
             //get target type:
             Type targetType = isNullable ? Nullable.GetUnderlyingType(pi.PropertyType) : pi.PropertyType;
 
-            IFilterType filterType = _typeResolver.GetFilterType(targetType);
+            List<string> names = new List<string>();
+            Expression expression = _expression.Body;
+            while (expression.NodeType != ExpressionType.Parameter)
+            {
+                names.Add(((MemberExpression)expression).Member.Name);
+                expression = ((MemberExpression)expression).Expression;
+            }
 
+            Expression binaryExpression = null;
+            for (int i = names.Count - 1; i >= 0; i--)
+            {
+                expression = Expression.Property(expression, names[i]);
+
+                // Check for null on nested properties and target object if it's a string
+                // It's ok for ORM, but throw exception in linq to objects
+                if (i > 0 || (i == 0 && targetType == typeof(string)))
+                {
+                    binaryExpression = binaryExpression == null ?
+                        Expression.NotEqual(expression, Expression.Constant(null)) :
+                        Expression.AndAlso(binaryExpression, Expression.NotEqual(expression, Expression.Constant(null)));
+                }
+            }
+
+            IFilterType filterType = _typeResolver.GetFilterType(targetType);
             
             //support nullable types:
             Expression firstExpr = isNullable
                                        ? Expression.Property(_expression.Body, pi.PropertyType.GetProperty("Value"))
                                        : _expression.Body;
 
-            Expression binaryExpression = filterType.GetFilterExpression(firstExpr, value.FilterValue, value.FilterType);
-            if (binaryExpression == null) return null;
+            var filterExpression = filterType.GetFilterExpression(firstExpr, value.FilterValue, value.FilterType);
 
-            if (targetType == typeof(string))
-            {
-                //check for strings, they may be NULL
-                //It's ok for ORM, but throw exception in linq to objects. Additional check string on null
-                Expression nullExpr = Expression.NotEqual(_expression.Body, Expression.Constant(null));
-                binaryExpression = Expression.AndAlso(nullExpr, binaryExpression);
-            }
-            else if (isNullable)
+            if (filterExpression == null) return null;
+
+            if (isNullable && targetType != typeof(string))
             {
                 //add additional filter condition for check items on NULL with invoring "HasValue" method.
                 //for example: result of this expression will like - c=> c.HasValue && c.Value = 3
                 MemberExpression hasValueExpr = Expression.Property(_expression.Body,
                                                                     pi.PropertyType.GetProperty("HasValue"));
-                binaryExpression = Expression.AndAlso(hasValueExpr, binaryExpression);
+                filterExpression = Expression.AndAlso(hasValueExpr, filterExpression);
             }
+
+            binaryExpression = binaryExpression == null ? filterExpression :
+                Expression.AndAlso(binaryExpression, filterExpression);
+
             //return filter expression
             return binaryExpression;
         }
