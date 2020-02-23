@@ -9,28 +9,30 @@
         <div class="grid-dropdown-arrow"></div>
         <div class="grid-dropdown-inner">
             <div class="grid-popup-widget">
-                <label><b>@Strings.FilterValueLabel:</b></label>
-                <ul class="menu-list">
-                    @foreach (var data in GridHeaderComponent.Column.FilterWidgetData as IEnumerable<SelectItem>)
-                    {
-                        bool isChecked = _filters.Any(x => x.Type.Equals("1") && x.Value.Equals(data.Value));
-                        <li>
-                            @if (isChecked)
-                            {
-                                <input type="checkbox" class="grid-filter-list" checked value="@isChecked" @onclick="e => MyClickHandler(e, isChecked, data.Value)" />
-                            }
-                            else
-                            {
-                                <input type="checkbox" class="grid-filter-list" value="@isChecked" @onclick="e => MyClickHandler(e, isChecked, data.Value)" />
-                            }
-                            @data.Title
-                        </li>
-                    }
-                </ul>
-                <div class="grid-filter-buttons" style="margin-top:5px;">
-                    <button type="button" class="btn btn-primary" @onclick="ApplyButtonClicked">
-                        @Strings.ApplyFilterButtonText
-                    </button>
+                <div class="grid-filter-body">
+                    <label><b>@Strings.FilterValueLabel:</b></label>
+                    <ul class="menu-list">
+                        @foreach (var data in GridHeaderComponent.Column.FilterWidgetData as IEnumerable<SelectItem>)
+                        {
+                            bool isChecked = _filters.Any(x => x.Type.Equals("1") && x.Value.Equals(data.Value));
+                            <li>
+                                @if (isChecked)
+                                {
+                                    <input type="checkbox" class="grid-filter-list" checked value="@isChecked" @onclick="e => MyClickHandler(e, isChecked, data.Value)" />
+                                }
+                                else
+                                {
+                                    <input type="checkbox" class="grid-filter-list" value="@isChecked" @onclick="e => MyClickHandler(e, isChecked, data.Value)" />
+                                }
+                                @data.Title
+                            </li>
+                        }
+                    </ul>
+                    <div class="grid-filter-buttons" style="margin-top:5px;">
+                        <button type="button" class="btn btn-primary" @onclick="ApplyButtonClicked">
+                            @Strings.ApplyFilterButtonText
+                        </button>
+                    </div>
                 </div>
             </div>
             <div class="grid-popup-additional">

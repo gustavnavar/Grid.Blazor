@@ -45,7 +45,6 @@ else
         var locale = CultureInfo.CurrentCulture;
         SharedResource.Culture = locale;
 
-        var columnCollections = new ColumnCollections();
         var query = new QueryDictionary<StringValues>();
 
         Action<IGridColumnCollection<Order>> columns = c => ColumnCollections.OrderColumnsWithCrud(c,

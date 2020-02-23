@@ -41,7 +41,6 @@ else
         var locale = CultureInfo.CurrentCulture;
         SharedResource.Culture = locale;
 
-        var columnCollections = new ColumnCollections();
         var query = new QueryDictionary<StringValues>();
         var client = new GridClient<Order>(q => orderService.GetOrdersGridRows(ColumnCollections.OrderColumns, q),
             query, false, "ordersGrid", ColumnCollections.OrderColumns, locale)
