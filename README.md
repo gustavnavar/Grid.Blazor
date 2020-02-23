@@ -82,6 +82,11 @@ Alternatively, if you prefer to install a fresh version of the database you can 
         GO
     ```
 - change manually some values of the new IsVip column to True
+- review the datetime columns. Any missmatch between EF Core model and database definitions will produce an exception and filtering will not work as expected. If database columns are defined as ```datetime``` you must modify the ```NorthwindDbContext``` class including:
+    ```c#
+        modelBuilder.Entity<Order>().Property(r => r.OrderDate).HasColumnType("datetime");
+    ```
+    for each datetime column. Or you can change all database columns' type to ```datetime2(7)```.
 
 ## Documentation
 There are native C# Grid components for Blazor client-side and server-side, and for ASP.NET Core MVC.
