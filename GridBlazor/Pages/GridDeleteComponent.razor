@@ -11,7 +11,7 @@
     @foreach (var column in GridComponent.Grid.Columns)
     {
         (Type type, object value) = ((IGridColumn<T>)column).GetTypeAndValue(Item);
-        <div class="form-group row" style="@(column.CrudHidden?"display:none;":"")">
+        <div class="form-group row" style="@(column.CrudHidden.HasFlag(CrudHidden.DELETE)?"display:none;":"")">
             <label for="@column.FieldName" class="col-form-label col-md-2">@column.Title</label>
             @if (((ICGridColumn)column).SubGrids == null)
             {
