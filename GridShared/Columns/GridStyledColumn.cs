@@ -28,5 +28,17 @@ namespace GridShared.Columns
             if (!_styles.Contains(styleString))
                 _styles.Add(styleString);
         }
+
+        public void RemoveCssClass(string className)
+        {
+            if (_classes.Contains(className))
+                _classes.Remove(className);
+        }
+
+        public void RemoveCssStyle(string styleString)
+        {
+            if (_styles.Contains(styleString))
+                _styles.Remove(styleString);
+        }
     }
 }
