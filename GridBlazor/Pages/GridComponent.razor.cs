@@ -843,9 +843,9 @@ namespace GridBlazor.Pages
             }
         }
 
-        public async Task UpdateGrid()
+        public async Task UpdateGrid(bool ReloadData = true)
         {
-            await Grid.UpdateGrid();
+            if (ReloadData) await Grid.UpdateGrid();
             SelectedRow = -1;
             SelectedRows.Clear();
             InitSubGridVars();
