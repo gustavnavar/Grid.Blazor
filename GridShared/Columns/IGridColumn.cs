@@ -26,7 +26,7 @@ namespace GridShared.Columns
         IList<Func<object, Task>> Functions { get; }
         object Object { get; }
         IGrid ParentGrid { get; }
-        bool Hidden { get; }
+        bool Hidden { get; set; }
         CrudHidden CrudHidden { get; }
         bool ReadOnlyOnUpdate { get; }
         bool IsPrimaryKey { get; }

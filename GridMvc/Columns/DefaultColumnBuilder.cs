@@ -35,9 +35,9 @@ namespace GridMvc.Columns
             bool isExpressionOk = constraint == null || constraint.Body as MemberExpression != null;
             if (isExpressionOk)
             {
-                if (!hidden)
-                    return new GridColumn<T, TDataType>(constraint, comparer, _grid);
-                return new HiddenGridColumn<T, TDataType>(constraint, comparer, _grid);
+                var column = new GridColumn<T, TDataType>(constraint, comparer, _grid);
+                column.Hidden = hidden;
+                return column;
             }
             throw new NotSupportedException(string.Format("Expression '{0}' not supported by grid", constraint));
         }
@@ -82,12 +82,7 @@ namespace GridMvc.Columns
         private IGridColumn<T> CreateColumn(PropertyInfo pi, bool hidden)
         {
             Type entityType = typeof (T);
-            Type columnType;
-
-            if (!hidden)
-                columnType = typeof (GridColumn<,>).MakeGenericType(entityType, pi.PropertyType);
-            else
-                columnType = typeof (HiddenGridColumn<,>).MakeGenericType(entityType, pi.PropertyType);
+            Type columnType = typeof(GridColumn<,>).MakeGenericType(entityType, pi.PropertyType);
 
             //Build expression
 
@@ -98,8 +93,9 @@ namespace GridMvc.Columns
             LambdaExpression lambda = Expression.Lambda(funcType, expressionProperty, parameter);
 
             var column = Activator.CreateInstance(columnType, lambda, _grid) as IGridColumn<T>;
-            if (!hidden && column != null)
+            if (column != null)
             {
+                column.Hidden = hidden;
                 column.Sortable(DefaultSortEnabled);
                 column.Filterable(DefaultFilteringEnabled);
             }

@@ -43,7 +43,7 @@ namespace GridMvc.Columns
         public bool IsSorted { get; set; }
         public GridSortDirection? Direction { get; set; }
 
-        public bool Hidden { get; protected set; }
+        public bool Hidden { get; set; }
 
         public CrudHidden CrudHidden { get; protected set; } = CrudHidden.NONE;
 
