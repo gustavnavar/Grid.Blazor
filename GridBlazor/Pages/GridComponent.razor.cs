@@ -228,7 +228,7 @@ namespace GridBlazor.Pages
                 SelectedRows.Clear();
                 Grid.SelectedItems = new List<object>();
             }
-            
+
             //If Grid is MultiSelectable, add selected row to list of rows
             if (Grid.ComponentOptions.MultiSelectable)
             {
@@ -247,14 +247,31 @@ namespace GridBlazor.Pages
             }
             else
             {
-                SelectedRow = i;                
-                Grid.SelectedItems = Grid.SelectedItems.Concat(new[] {item });
+                SelectedRow = i;
+                Grid.SelectedItems = Grid.SelectedItems.Concat(new[] { item });
             }
             if (OnRowClicked != null)
                 OnRowClicked.Invoke(item);
 
             _shouldRender = true;
             StateHasChanged();
+        }
+
+        public void SetRowClicked(int i)
+        {
+            MouseEventArgs mouseEventArgs;
+            if (Grid.ModifierKey == ModifierKey.CtrlKey)
+                mouseEventArgs = new MouseEventArgs { CtrlKey = false };
+            else if (Grid.ModifierKey == ModifierKey.AltKey)
+                mouseEventArgs = new MouseEventArgs { AltKey = false };
+            else if (Grid.ModifierKey == ModifierKey.ShiftKey)
+                mouseEventArgs = new MouseEventArgs { ShiftKey = false };
+            else if (Grid.ModifierKey == ModifierKey.MetaKey)
+                mouseEventArgs = new MouseEventArgs { MetaKey = false };
+            else
+                mouseEventArgs = new MouseEventArgs { CtrlKey = false };
+
+            RowClicked(i, Grid.ItemsToDisplay.ElementAt(i), mouseEventArgs);
         }
 
         internal void SubGridClicked(int i)
