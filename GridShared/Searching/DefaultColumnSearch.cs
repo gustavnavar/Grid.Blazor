@@ -53,9 +53,17 @@ namespace GridShared.Searching
                 {
                     firstExpression = Expression.Property(firstExpression, names[i]);
 
+                    var nestedPi = (PropertyInfo)((MemberExpression)firstExpression).Member;
+
+                    //detect nullable
+                    bool nestedIsNullable = nestedPi.PropertyType.GetTypeInfo().IsGenericType &&
+                                      nestedPi.PropertyType.GetGenericTypeDefinition() == typeof(Nullable<>);
+                    //get target type:
+                    Type nestedTargetType = nestedIsNullable ? Nullable.GetUnderlyingType(nestedPi.PropertyType) : nestedPi.PropertyType;
+
                     // Check for null on nested properties and target object if it's a string
                     // It's ok for ORM, but throw exception in linq to objects
-                    if (i > 0 || (i == 0 && targetType == typeof(string)))
+                    if (nestedIsNullable || nestedTargetType == typeof(string))
                     {
                         binaryExpression = binaryExpression == null ?
                             Expression.NotEqual(firstExpression, Expression.Constant(null)) :

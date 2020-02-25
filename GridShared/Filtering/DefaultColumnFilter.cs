@@ -27,7 +27,7 @@ namespace GridShared.Filtering
             if (values == null && values.Where(r => r != ColumnFilterValue.Null).Count() <= 0)
                 throw new ArgumentNullException("values");
 
-            var pi = (PropertyInfo) ((MemberExpression) _expression.Body).Member;
+            var pi = (PropertyInfo)((MemberExpression)_expression.Body).Member;
 
             GridFilterCondition condition;
             var cond = values.SingleOrDefault(r => r != ColumnFilterValue.Null
@@ -36,7 +36,7 @@ namespace GridShared.Filtering
                 condition = GridFilterCondition.And;
 
             values = values.Where(r => r != ColumnFilterValue.Null && r.FilterType != GridFilterType.Condition);
-            
+
             Expression<Func<T, bool>> expr = GetFilterExpression(pi, values, condition);
             if (expr == null)
                 return items;
@@ -55,7 +55,7 @@ namespace GridShared.Filtering
                     continue;
 
                 Expression expression = GetExpression(pi, value);
-                if(expression != null)
+                if (expression != null)
                 {
                     if (binaryExpression == null)
                         binaryExpression = expression;
@@ -96,9 +96,17 @@ namespace GridShared.Filtering
             {
                 expression = Expression.Property(expression, names[i]);
 
+                var nestedPi = (PropertyInfo)((MemberExpression)expression).Member;
+
+                //detect nullable
+                bool nestedIsNullable = nestedPi.PropertyType.GetTypeInfo().IsGenericType &&
+                                  nestedPi.PropertyType.GetGenericTypeDefinition() == typeof(Nullable<>);
+                //get target type:
+                Type nestedTargetType = nestedIsNullable ? Nullable.GetUnderlyingType(nestedPi.PropertyType) : nestedPi.PropertyType;
+
                 // Check for null on nested properties and target object if it's a string
                 // It's ok for ORM, but throw exception in linq to objects
-                if (i > 0 || (i == 0 && targetType == typeof(string)))
+                if (nestedIsNullable || nestedTargetType == typeof(string))
                 {
                     binaryExpression = binaryExpression == null ?
                         Expression.NotEqual(expression, Expression.Constant(null)) :
