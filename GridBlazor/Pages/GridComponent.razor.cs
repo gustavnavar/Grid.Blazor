@@ -257,7 +257,7 @@ namespace GridBlazor.Pages
             StateHasChanged();
         }
 
-        public void SetRowClicked(int i)
+        public void SelectRow(int i)
         {
             MouseEventArgs mouseEventArgs;
             if (Grid.ModifierKey == ModifierKey.CtrlKey)
