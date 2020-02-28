@@ -19,6 +19,8 @@ namespace GridBlazor.Tests
 
         public Guid GuidField { get; set; }
 
+        public TestEnum EnumField { get; set; }
+
         public override bool Equals(object obj)
         {
             var compareObject = obj as TestModel;
@@ -33,12 +35,13 @@ namespace GridBlazor.Tests
                    && compareObject.UInt16Field == UInt16Field
                    && compareObject.UInt32Field == UInt32Field
                    && compareObject.UInt64Field == UInt64Field
-                   && compareObject.GuidField == GuidField;
+                   && compareObject.GuidField == GuidField
+                   && compareObject.EnumField == EnumField;
         }
 
         public override int GetHashCode()
         {
-            return  new { Id, Title, Child.ChildCreated, Child.ChildTitle, Int16Field, UInt16Field, UInt32Field, UInt64Field, GuidField }.GetHashCode();
+            return new { Id, Title, Child.ChildCreated, Child.ChildTitle, Int16Field, UInt16Field, UInt32Field, UInt64Field, GuidField, EnumField }.GetHashCode();
         }
     } 
 
@@ -46,5 +49,12 @@ namespace GridBlazor.Tests
     {
         public string ChildTitle { get; set; }
         public DateTime ChildCreated { get; set; }
+    }
+
+    public enum TestEnum
+    {
+        Foo,
+        Bar,
+        Baz,
     }
 }

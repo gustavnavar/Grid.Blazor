@@ -241,6 +241,30 @@ namespace GridBlazor.Tests.Filtering
         }
 
         [TestMethod]
+        public void TestEnumFilteringEquals()
+        {
+            var filterOption = new ColumnFilterValue
+            {
+                ColumnName = "EnumField",
+                FilterType = GridFilterType.Equals,
+                FilterValue = "Foo"
+            };
+            var filterOptions = new List<ColumnFilterValue>();
+            filterOptions.Add(filterOption);
+            var filter = new DefaultColumnFilter<TestModel, TestEnum>(m => m.EnumField);
+
+            var filtered = filter.ApplyFilter(_repo.GetAll().AsQueryable(), filterOptions);
+
+            var original = _repo.GetAll().AsQueryable().Where(t => t.EnumField == TestEnum.Foo);
+
+            for (int i = 0; i < filtered.Count(); i++)
+            {
+                if (filtered.ElementAt(i).Id != original.ElementAt(i).Id)
+                    Assert.Fail("Filtering not works");
+            }
+        }
+
+        [TestMethod]
         public void TestGuidFilterContains()
         {
             var filterOption = new ColumnFilterValue
