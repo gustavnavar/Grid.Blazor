@@ -1,4 +1,5 @@
 ﻿using GridShared.Filtering;
+using GridShared.Utility;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Web;
 using Microsoft.JSInterop;
@@ -12,6 +13,7 @@ namespace GridBlazor.Pages
     {
         protected bool _clearVisible = false;
         protected List<Filter> _filters;
+        protected int _offset = 0;
 
         protected ElementReference listFilter;
 
@@ -44,6 +46,12 @@ namespace GridBlazor.Pages
             if (firstRender && listFilter.Id != null)
             {
                 await jSRuntime.InvokeVoidAsync("gridJsFunctions.focusElement", listFilter);
+                ScreenPosition sp = await jSRuntime.InvokeAsync<ScreenPosition>("gridJsFunctions.getPosition", listFilter);
+                if (sp != null && sp.X + sp.Width > sp.ScreenWidth)
+                {
+                    _offset = sp.X + sp.Width - sp.ScreenWidth + 25;
+                    StateHasChanged();
+                }
             }
         }
 

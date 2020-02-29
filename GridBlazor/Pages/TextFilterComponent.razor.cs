@@ -1,4 +1,5 @@
 ﻿using GridShared.Filtering;
+using GridShared.Utility;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Web;
 using Microsoft.JSInterop;
@@ -14,7 +15,9 @@ namespace GridBlazor.Pages
         protected bool _clearVisible = false;
         protected Filter[] _filters;
         protected string _condition;
+        protected int _offset = 0;
 
+        protected ElementReference textFilter;
         protected ElementReference firstSelect;
 
         [Inject]
@@ -50,9 +53,15 @@ namespace GridBlazor.Pages
 
         protected override async Task OnAfterRenderAsync(bool firstRender)
         {
-            if (firstRender && firstSelect.Id != null)
+            if (firstRender && firstSelect.Id != null && textFilter.Id != null)
             {
                 await jSRuntime.InvokeVoidAsync("gridJsFunctions.focusElement", firstSelect);
+                ScreenPosition sp = await jSRuntime.InvokeAsync<ScreenPosition>("gridJsFunctions.getPosition", textFilter);
+                if (sp != null && sp.X + sp.Width > sp.ScreenWidth)
+                {
+                    _offset = sp.X + sp.Width - sp.ScreenWidth + 25;
+                    StateHasChanged();
+                }
             }
         }
 

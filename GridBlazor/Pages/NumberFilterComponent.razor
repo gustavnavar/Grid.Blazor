@@ -4,8 +4,8 @@
 
 @if (Visible)
 {
-    <div class="dropdown dropdown-menu grid-dropdown opened" style="display:block;" @onkeyup="FilterKeyup" @onclick:stopPropagation @onkeyup:stopPropagation>
-        <div class="grid-dropdown-arrow"></div>
+    <div class="dropdown dropdown-menu grid-dropdown opened" style="display:block;@(_offset > 0 ? "margin-left:-" + _offset.ToString() + "px;" : "")" @ref="numberFilter" @onkeyup="FilterKeyup" @onclick:stopPropagation @onkeyup:stopPropagation>
+        <div class="grid-dropdown-arrow" style="@(_offset > 0 ? "margin-left:" + _offset.ToString() + "px" : "")"></div>
         <div class="grid-dropdown-inner">
             <div class="grid-popup-widget">
                 <div class="grid-filter-body">
