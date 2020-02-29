@@ -28,6 +28,9 @@ namespace GridShared.Filtering.Types
 
         public IFilterType GetFilterType(Type type)
         {
+            if (type.IsEnum)
+                return new EnumFilterType(type);
+
             foreach (IFilterType filterType in _filterCollection)
             {
                 if (filterType.TargetType.FullName == type.FullName)
