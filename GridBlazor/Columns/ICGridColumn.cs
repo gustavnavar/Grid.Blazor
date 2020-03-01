@@ -26,7 +26,7 @@ namespace GridBlazor.Columns
         /// <summary>
         ///     Keys for subgrid
         /// </summary>
-        string[] SubGridKeys { get; }
+        (string,string)[] SubGridKeys { get; }
 
         /// <summary>
         ///     Subgrid clients

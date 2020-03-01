@@ -1,5 +1,7 @@
-﻿using Microsoft.AspNetCore.Components;
+﻿using GridShared.Utility;
+using Microsoft.AspNetCore.Components;
 using System;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace GridBlazor.Pages
@@ -22,7 +24,7 @@ namespace GridBlazor.Pages
         public int Cols { get; set; }
 
         [Parameter]
-        public object[] Values { get; set; }
+        public QueryDictionary<object> Values { get; set; }
 
         protected override async Task OnParametersSetAsync()
         {
@@ -35,7 +37,8 @@ namespace GridBlazor.Pages
                 if (_visible && (_grid == null || _init))
                 {
                     GridComponent.InitSubGrid[GridPosition] = false;
-                    _grid = await GridComponent.Grid.SubGrids(Values);
+                    _grid = await GridComponent.Grid.SubGrids(Values.Values.ToArray());
+                    _grid.FixedValues = Values;
                     _subGridRender = CreateSubGridComponent();
                 }
             }

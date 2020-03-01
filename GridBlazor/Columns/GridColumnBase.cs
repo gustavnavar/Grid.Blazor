@@ -72,7 +72,7 @@ namespace GridBlazor.Columns
 
         public string MinString { get; set; }
 
-        public string[] SubGridKeys { get; set; }
+        public (string,string)[] SubGridKeys { get; set; }
 
         public Func<object[], bool, bool, bool, bool, Task<IGrid>> SubGrids { get; set; }
 
@@ -385,8 +385,9 @@ namespace GridBlazor.Columns
 
         public abstract IGridCell GetValue(T instance);
 
-        public IGridColumn<T> SubGrid(Func<object[], bool, bool, bool, bool, Task<IGrid>> subGrids, params string[] keys)
+        public IGridColumn<T> SubGrid(Func<object[], bool, bool, bool, bool, Task<IGrid>> subGrids, params (string,string)[] keys)
         {
+            Hidden = true;
             SubGrids = subGrids;
             SubGridKeys = keys;
             return this;
@@ -397,8 +398,8 @@ namespace GridBlazor.Columns
             QueryDictionary<object> values = new QueryDictionary<object>();
             foreach (var key in SubGridKeys)
             {
-                var value = item.GetType().GetProperty(key).GetValue(item);
-                values.Add(key, value);
+                var value = item.GetType().GetProperty(key.Item1).GetValue(item);
+                values.Add(key.Item2, value);
             }
             return values;
         }

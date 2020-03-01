@@ -221,7 +221,7 @@ namespace GridShared.Columns
         /// <summary>
         ///    Allow grid to show a SubGrid
         /// </summary>
-        IGridColumn<T> SubGrid(Func<object[], bool, bool, bool, bool, Task<IGrid>> subGrids, params string[] keys);
+        IGridColumn<T> SubGrid(Func<object[], bool, bool, bool, bool, Task<IGrid>> subGrids, params (string,string)[] keys);
     }
 
     public interface IColumn

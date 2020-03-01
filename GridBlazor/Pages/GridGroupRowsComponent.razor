@@ -130,12 +130,23 @@
             if (HasSubGrid)
             {
                 int cols = 0;
-                cols++;
                 if (RequiredTotalsColumn)
                 {
                     cols++;
                 }
-                cols += Grid.Columns.Count() - 1;
+                if (Grid.ReadEnabled)
+                {
+                    cols++;
+                }
+                if (Grid.UpdateEnabled)
+                {
+                    cols++;
+                }
+                if (Grid.DeleteEnabled)
+                {
+                    cols++;
+                }
+                cols += Grid.Columns.Count();
                 var values = Grid.GetSubGridKeyValues(item);
                 <tr class="subgrid-row">
                     <CascadingValue Value=@this Name="GridComponent">

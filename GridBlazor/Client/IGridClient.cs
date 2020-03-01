@@ -354,7 +354,13 @@ namespace GridBlazor
         /// <summary>
         ///    Allow grid to show a SubGrid
         /// </summary>
+        [Obsolete("This method is obsolete. Use one including an '(string,string)[]' keys parameter.", false)]
         IGridClient<T> SubGrid(Func<object[], Task<ICGrid>> subGrids, params string[] keys);
+
+        /// <summary>
+        ///    Allow grid to show a SubGrid
+        /// </summary>
+        IGridClient<T> SubGrid(Func<object[], Task<ICGrid>> subGrids, params (string,string)[] keys);
 
         /// <summary>
         ///     Configure keyboard utilization

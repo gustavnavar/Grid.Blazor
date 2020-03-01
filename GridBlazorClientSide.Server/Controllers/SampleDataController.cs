@@ -155,7 +155,7 @@ namespace GridBlazorClientSide.Server.Controllers
         {
             var repository = new OrdersRepository(_context);
             IGridServer<Order> server = new GridServer<Order>(repository.GetAll(), Request.Query,
-                true, "ordersGrid", c => ColumnCollections.OrderColumnsAllFeatures(c, null, null))
+                true, "ordersGrid", c => ColumnCollections.OrderColumnsAllFeatures(c, null, null, null))
                     .WithPaging(10)
                     .Sortable()
                     .Filterable()
@@ -251,7 +251,7 @@ namespace GridBlazorClientSide.Server.Controllers
             var orderDetails = (new OrderDetailsRepository(_context)).GetForOrder(OrderId);
 
             var server = new GridServer<OrderDetail>(orderDetails, Request.Query,
-                    false, "orderDetailsGrid" + OrderId.ToString(), ColumnCollections.OrderDetailColumnsAllFeatures)
+                    false, "orderDetailsGrid" + OrderId.ToString(), c => ColumnCollections.OrderDetailColumnsAllFeatures(c, null))
                         .WithPaging(10)
                         .Sortable()
                         .Filterable()

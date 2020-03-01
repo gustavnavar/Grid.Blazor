@@ -317,7 +317,7 @@ namespace GridBlazorServerSide.ColumnCollections
             c.Add(o => o.ShipCountry, true);
 
             /* Adding hidden "OrderDetails" column for a CRUD subgrid: */
-            c.Add(o => o.OrderDetails, true).SubGrid(s, "OrderID");
+            c.Add(o => o.OrderDetails).SubGrid(s, ("OrderID", "OrderID"));
         };
 
         public static Action<IGridColumnCollection<Order>, Func<IEnumerable<SelectItem>>,
@@ -389,8 +389,9 @@ namespace GridBlazorServerSide.ColumnCollections
         };
 
         public static Action<IGridColumnCollection<Order>, Func<IEnumerable<SelectItem>>,
-            Func<IEnumerable<SelectItem>>, Func<IEnumerable<SelectItem>>> 
-            OrderColumnsAllFeatures = (c, f, g, h) =>
+            Func<IEnumerable<SelectItem>>, Func<IEnumerable<SelectItem>>,
+            Func<object[], bool, bool, bool, bool, Task<IGrid>>> 
+            OrderColumnsAllFeatures = (c, f, g, h, s) =>
         {
             /* Adding "OrderID" column: */
             c.Add(o => o.OrderID).SetPrimaryKey(true).Titled(SharedResource.Number).SetWidth(100);
@@ -462,6 +463,9 @@ namespace GridBlazorServerSide.ColumnCollections
 
             /* Adding hidden "ShipCountry" column: */
             c.Add(o => o.ShipCountry, true);
+
+            /* Adding hidden "OrderDetails" column for a CRUD subgrid: */
+            c.Add(o => o.OrderDetails).SubGrid(s, ("OrderID", "OrderID"));
         };
 
         public static Action<IGridColumnCollection<Order>, IList<Action<object>>> OrderColumnsMultipleGrids = (c, actions) =>
@@ -565,16 +569,20 @@ namespace GridBlazorServerSide.ColumnCollections
                 .Format("{0:F}");
         };
 
-        public static Action<IGridColumnCollection<OrderDetail>> OrderDetailColumnsAllFeatures = c =>
+        public static Action<IGridColumnCollection<OrderDetail>, Func<IEnumerable<SelectItem>>> 
+            OrderDetailColumnsAllFeatures = (c, f) =>
         {
             /* Adding "OrderID" column: */
             c.Add(o => o.OrderID)
+                .SetPrimaryKey(true)
                 .Titled("Order Number")
                 //.SortInitialDirection(GridSortDirection.Descending)
                 .SetWidth(100);
 
             /* Adding "ProductID" column: */
             c.Add(o => o.ProductID)
+                .SetPrimaryKey(true)
+                .SetSelectField(true, o => o.Product.ProductID + " - " + o.Product.ProductName, f)
                 .Titled("Product Number")
                 //.ThenSortByDescending(o => o.ProductID)
                 .SetWidth(100);
@@ -582,6 +590,7 @@ namespace GridBlazorServerSide.ColumnCollections
             /* Adding "ProductName" column: */
             c.Add(o => o.Product.ProductName)
                 .Titled("Product Name")
+                .SetCrudHidden(true)
                 .SetWidth(250);
 
             /* Adding "Quantity" column: */

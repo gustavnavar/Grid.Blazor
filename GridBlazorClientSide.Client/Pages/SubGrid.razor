@@ -70,7 +70,7 @@ else
             .SetStriped(true)
             .WithMultipleFilters()
             .WithGridItemsCount()
-            .SubGrid(subGrids, "OrderID");
+            .SubGrid(subGrids, ("OrderID","OrderID"));
 
         _grid = client.Grid;
         // Set new items to grid

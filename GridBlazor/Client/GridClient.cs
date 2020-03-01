@@ -492,7 +492,21 @@ namespace GridBlazor
         /// <summary>
         ///    Allow grid to show a SubGrid
         /// </summary>
+        [Obsolete("This method is obsolete. Use one including an '(string,string)[]' keys parameter.", false)]
         public IGridClient<T> SubGrid(Func<object[], Task<ICGrid>> subGrids, params string[] keys)
+        {
+            var tupleKeys = new (string, string)[keys.Length];
+            for (int i = 0; i < keys.Length; i++)
+            {
+                tupleKeys[i] = (keys[i], keys[i]);
+            }
+            return SubGrid(subGrids, tupleKeys);
+        }
+
+        /// <summary>
+        ///    Allow grid to show a SubGrid
+        /// </summary>
+        public IGridClient<T> SubGrid(Func<object[], Task<ICGrid>> subGrids, params (string, string)[] keys)
         {
             _source.SubGrids = subGrids;
             _source.SubGridKeys = keys;

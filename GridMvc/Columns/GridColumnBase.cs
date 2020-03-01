@@ -380,7 +380,7 @@ namespace GridMvc.Columns
 
         public abstract IGridCell GetValue(T instance);
 
-        public IGridColumn<T> SubGrid(Func<object[], bool, bool, bool, bool, Task<IGrid>> subGrids, params string[] keys)
+        public IGridColumn<T> SubGrid(Func<object[], bool, bool, bool, bool, Task<IGrid>> subGrids, params (string,string)[] keys)
         {
             return this;
         }

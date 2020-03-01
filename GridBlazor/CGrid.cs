@@ -494,7 +494,7 @@ namespace GridBlazor
         /// <summary>
         ///     Keys for subgrid
         /// </summary>
-        public string[] SubGridKeys { get; set; }
+        public (string, string)[] SubGridKeys { get; set; }
 
         /// <summary>
         ///     Subgrids
@@ -506,15 +506,15 @@ namespace GridBlazor
         /// <summary>
         ///     Get foreign key values for subgrid records
         /// </summary>
-        public string[] GetSubGridKeyValues(object item)
+        public QueryDictionary<object> GetSubGridKeyValues(object item)
         {
-            List<string> values = new List<string>();
+            QueryDictionary<object> values = new QueryDictionary<object>();
             foreach (var key in SubGridKeys)
             {
-                string value = item.GetType().GetProperty(key).GetValue(item).ToString();
-                values.Add(value);
+                var value = item.GetType().GetProperty(key.Item1).GetValue(item);
+                values.Add(key.Item2, value);
             }
-            return values.ToArray();
+            return values;
         }
 
         /// <summary>
