@@ -430,7 +430,11 @@
                 }
                 else
                 {
-                    <div class="col-md-10">@_grids.Get(column.Name)</div>
+                    <div class="col-md-10">
+                        <div class="card panel panel-default">
+                            <div class="card-body panel-body">@_grids.Get(column.Name)</div>
+                        </div>
+                    </div>
                 }
             </div>
         }

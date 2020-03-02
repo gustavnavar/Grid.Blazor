@@ -57,9 +57,9 @@ namespace GridBlazor.Pages
             {
                 await jSRuntime.InvokeVoidAsync("gridJsFunctions.focusElement", firstSelect);
                 ScreenPosition sp = await jSRuntime.InvokeAsync<ScreenPosition>("gridJsFunctions.getPosition", textFilter);
-                if (sp != null && sp.X + sp.Width > sp.ScreenWidth)
+                if (sp != null && sp.X + sp.Width > sp.InnerWidth)
                 {
-                    _offset = sp.X + sp.Width - sp.ScreenWidth + 25;
+                    _offset = sp.X + sp.Width - sp.InnerWidth + 25;
                     StateHasChanged();
                 }
             }

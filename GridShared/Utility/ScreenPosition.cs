@@ -8,6 +8,8 @@
         public int Height { get; set; }
         public int ScreenWidth { get; set; }
         public int ScreenHeight { get; set; }
+        public int InnerWidth { get; set; }
+        public int InnerHeight { get; set; }
 
         public ScreenPosition()
         { }

@@ -495,23 +495,22 @@ namespace GridBlazorServerSide.ColumnCollections
         public static Action<IGridColumnCollection<OrderDetail>> OrderDetailColumns = c =>
         {
             /* Adding "OrderID" column: */
-            c.Add(o => o.OrderID)
-                .Titled("Order Number")
+            c.Add(o => o.OrderID, true)
                 .SetWidth(100);
 
             /* Adding "ProductID" column: */
             c.Add(o => o.ProductID)
-                .Titled("Product Number")
+                .Titled("ProdId")
                 .SetWidth(100);
 
             /* Adding "ProductName" column: */
             c.Add(o => o.Product.ProductName)
-                .Titled("Product Name")
+                .Titled("ProdName")
                 .SetWidth(250);
 
             /* Adding "Quantity" column: */
             c.Add(o => o.Quantity)
-                .Titled("Quantity")
+                .Titled("Quant")
                 .SetWidth(100)
                 .Format("{0:F}");
 
@@ -523,7 +522,7 @@ namespace GridBlazorServerSide.ColumnCollections
 
             /* Adding "Discount" column: */
             c.Add(o => o.Discount)
-                .Titled("Discount")
+                .Titled("Disc")
                 .SetWidth(100)
                 .Format("{0:F}");
         };
@@ -532,27 +531,26 @@ namespace GridBlazorServerSide.ColumnCollections
             OrderDetailColumnsCrud = (c, f) =>
         {
             /* Adding "OrderID" column: */
-            c.Add(o => o.OrderID)
+            c.Add(o => o.OrderID, true)
                 .SetPrimaryKey(true)
-                .Titled("Order Number")
                 .SetWidth(100);
 
             /* Adding "ProductID" column: */
             c.Add(o => o.ProductID)
                 .SetPrimaryKey(true)
                 .SetSelectField(true, o => o.Product.ProductID + " - " + o.Product.ProductName, f)
-                .Titled("Product Number")
+                .Titled("ProdId")
                 .SetWidth(100);
 
             /* Adding "ProductName" column: */
             c.Add(o => o.Product.ProductName)
-                .Titled("Product Name")
+                .Titled("ProdName")
                 .SetCrudHidden(true)
                 .SetWidth(250);
 
             /* Adding "Quantity" column: */
             c.Add(o => o.Quantity)
-                .Titled("Quantity")
+                .Titled("Quant")
                 .SetWidth(100)
                 .Format("{0:F}");
 
@@ -564,7 +562,7 @@ namespace GridBlazorServerSide.ColumnCollections
 
             /* Adding "Discount" column: */
             c.Add(o => o.Discount)
-                .Titled("Discount")
+                .Titled("Disc")
                 .SetWidth(100)
                 .Format("{0:F}");
         };
@@ -573,9 +571,8 @@ namespace GridBlazorServerSide.ColumnCollections
             OrderDetailColumnsAllFeatures = (c, f) =>
         {
             /* Adding "OrderID" column: */
-            c.Add(o => o.OrderID)
+            c.Add(o => o.OrderID, true)
                 .SetPrimaryKey(true)
-                .Titled("Order Number")
                 //.SortInitialDirection(GridSortDirection.Descending)
                 .SetWidth(100);
 
@@ -583,19 +580,19 @@ namespace GridBlazorServerSide.ColumnCollections
             c.Add(o => o.ProductID)
                 .SetPrimaryKey(true)
                 .SetSelectField(true, o => o.Product.ProductID + " - " + o.Product.ProductName, f)
-                .Titled("Product Number")
+                .Titled("ProdId")
                 //.ThenSortByDescending(o => o.ProductID)
                 .SetWidth(100);
 
             /* Adding "ProductName" column: */
             c.Add(o => o.Product.ProductName)
-                .Titled("Product Name")
+                .Titled("ProdName")
                 .SetCrudHidden(true)
                 .SetWidth(250);
 
             /* Adding "Quantity" column: */
             c.Add(o => o.Quantity)
-                .Titled("Quantity")
+                .Titled("Quant")
                 .SetCellCssClassesContraint(o => o.Quantity >= 50 ? "red" : "")
                 .SetWidth(100)
                 .Format("{0:F}");
@@ -608,7 +605,7 @@ namespace GridBlazorServerSide.ColumnCollections
 
             /* Adding "Discount" column: */
             c.Add(o => o.Discount)
-                .Titled("Discount")
+                .Titled("Disc")
                 .SetWidth(100)
                 .Format("{0:F}");
         };

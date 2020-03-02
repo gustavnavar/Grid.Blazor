@@ -77,15 +77,15 @@
                                 }
                                 @if (Grid.ReadEnabled)
                                 {
-                                    <td class="@GridButtonCellCssClass" data-name=""><button class='grid-button-view btn btn-sm btn-outline-secondary' title="@Strings.ReadItem" @onclick="@(e => ReadHandler(item))" type="button" @onclick:stopPropagation></button></td>
+                                    <td class="@GridButtonCellCssClass" data-name=""><button class='grid-button grid-button-view btn btn-sm btn-outline-secondary' title="@Strings.ReadItem" @onclick="@(e => ReadHandler(item))" type="button" @onclick:stopPropagation></button></td>
                                 }
                                 @if (Grid.UpdateEnabled)
                                 {
-                                    <td class="@GridButtonCellCssClass" data-name=""><button class='grid-button-edit btn btn-sm btn-outline-secondary' title="@Strings.UpdateItem" @onclick="@(e => UpdateHandler(item))" type="button" @onclick:stopPropagation></button></td>
+                                    <td class="@GridButtonCellCssClass" data-name=""><button class='grid-button grid-button-edit btn btn-sm btn-outline-secondary' title="@Strings.UpdateItem" @onclick="@(e => UpdateHandler(item))" type="button" @onclick:stopPropagation></button></td>
                                 }
                                 @if (Grid.DeleteEnabled)
                                 {
-                                    <td class="@GridButtonCellCssClass" data-name=""><button class='grid-button-delete btn btn-sm btn-outline-secondary' title="@Strings.DeleteItem" @onclick="@(e => DeleteHandler(item))" type="button" @onclick:stopPropagation></button></td>
+                                    <td class="@GridButtonCellCssClass" data-name=""><button class='grid-button grid-button-delete btn btn-sm btn-outline-secondary' title="@Strings.DeleteItem" @onclick="@(e => DeleteHandler(item))" type="button" @onclick:stopPropagation></button></td>
                                 }
                                 @foreach (IGridColumn column in Grid.Columns)
                                 {
@@ -115,15 +115,15 @@
                                 }
                                 @if (Grid.ReadEnabled)
                                 {
-                                    <td class="@GridButtonCellCssClass" data-name=""><button class='grid-button-view btn btn-sm btn-outline-secondary' title="@Strings.ReadItem" @onclick="@(e => ReadHandler(item))" type="button" @onclick:stopPropagation></button></td>
+                                    <td class="@GridButtonCellCssClass" data-name=""><button class='grid-button grid-button-view btn btn-sm btn-outline-secondary' title="@Strings.ReadItem" @onclick="@(e => ReadHandler(item))" type="button" @onclick:stopPropagation></button></td>
                                 }
                                 @if (Grid.UpdateEnabled)
                                 {
-                                    <td class="@GridButtonCellCssClass" data-name=""><button class='grid-button-edit btn btn-sm btn-outline-secondary' title="@Strings.UpdateItem" @onclick="@(e => UpdateHandler(item))" type="button" @onclick:stopPropagation></button></td>
+                                    <td class="@GridButtonCellCssClass" data-name=""><button class='grid-button grid-button-edit btn btn-sm btn-outline-secondary' title="@Strings.UpdateItem" @onclick="@(e => UpdateHandler(item))" type="button" @onclick:stopPropagation></button></td>
                                 }
                                 @if (Grid.DeleteEnabled)
                                 {
-                                    <td class="@GridButtonCellCssClass" data-name=""><button class='grid-button-delete btn btn-sm btn-outline-secondary' title="@Strings.DeleteItem" @onclick="@(e => DeleteHandler(item))" type="button" @onclick:stopPropagation></button></td>
+                                    <td class="@GridButtonCellCssClass" data-name=""><button class='grid-button grid-button-delete btn btn-sm btn-outline-secondary' title="@Strings.DeleteItem" @onclick="@(e => DeleteHandler(item))" type="button" @onclick:stopPropagation></button></td>
                                 }
                                 @foreach (IGridColumn column in Grid.Columns)
                                 {
@@ -185,13 +185,13 @@
                             @if (Grid.ClearFiltersButtonEnabled)
                             {
                                 <div class="grid-all-filters-clear">
-                                    <button class="grid-button-all-filters-clear btn btn-default btn-outline-secondary" type="button" title="@Strings.ClearAllFilters" @onclick="RemoveAllFilters" @onclick:stopPropagation></button>
+                                    <button class="grid-button grid-button-all-filters-clear btn btn-default btn-outline-secondary" type="button" title="@Strings.ClearAllFilters" @onclick="RemoveAllFilters" @onclick:stopPropagation></button>
                                 </div>
                             }
                             @if (Grid.CreateEnabled)
                             {
                                 <div class="row grid-crud">
-                                    <button class="grid-button-add btn btn-sm btn-outline-secondary" type="button" title="@Strings.CreateItem" @onclick="CreateHandler" @onclick:stopPropagation></button>
+                                    <button class="grid-button grid-button-add btn btn-sm btn-outline-secondary" type="button" title="@Strings.CreateItem" @onclick="CreateHandler" @onclick:stopPropagation></button>
                                 </div>
                             }
                             @if (Grid.EnablePaging && Grid.Pager.ChangePageSize)
@@ -314,15 +314,15 @@
                                                 }
                                                 @if (Grid.ReadEnabled)
                                                 {
-                                                    <td class="@GridButtonCellCssClass" data-name=""><button class='grid-button-view btn btn-sm btn-outline-secondary' title="@Strings.ReadItem" @onclick="@(e => ReadHandler(item))" type="button" @onclick:stopPropagation></button></td>
+                                                    <td class="@GridButtonCellCssClass" data-name=""><button class='grid-button grid-button-view btn btn-sm btn-outline-secondary' title="@Strings.ReadItem" @onclick="@(e => ReadHandler(item))" type="button" @onclick:stopPropagation></button></td>
                                                 }
                                                 @if (Grid.UpdateEnabled)
                                                 {
-                                                    <td class="@GridButtonCellCssClass" data-name=""><button class='grid-button-edit btn btn-sm btn-outline-secondary' title="@Strings.UpdateItem" @onclick="@(e => UpdateHandler(item))" type="button" @onclick:stopPropagation></button></td>
+                                                    <td class="@GridButtonCellCssClass" data-name=""><button class='grid-button grid-button-edit btn btn-sm btn-outline-secondary' title="@Strings.UpdateItem" @onclick="@(e => UpdateHandler(item))" type="button" @onclick:stopPropagation></button></td>
                                                 }
                                                 @if (Grid.DeleteEnabled)
                                                 {
-                                                    <td class="@GridButtonCellCssClass" data-name=""><button class='grid-button-delete btn btn-sm btn-outline-secondary' title="@Strings.DeleteItem" @onclick="@(e => DeleteHandler(item))" type="button" @onclick:stopPropagation></button></td>
+                                                    <td class="@GridButtonCellCssClass" data-name=""><button class='grid-button grid-button-delete btn btn-sm btn-outline-secondary' title="@Strings.DeleteItem" @onclick="@(e => DeleteHandler(item))" type="button" @onclick:stopPropagation></button></td>
                                                 }
                                                 @foreach (IGridColumn column in Grid.Columns)
                                                 {
@@ -352,15 +352,15 @@
                                                 }
                                                 @if (Grid.ReadEnabled)
                                                 {
-                                                    <td class="@GridButtonCellCssClass" data-name=""><button class='grid-button-view btn btn-sm btn-outline-secondary' title="@Strings.ReadItem" @onclick="@(e => ReadHandler(item))" type="button" @onclick:stopPropagation></button></td>
+                                                    <td class="@GridButtonCellCssClass" data-name=""><button class='grid-button grid-button-view btn btn-sm btn-outline-secondary' title="@Strings.ReadItem" @onclick="@(e => ReadHandler(item))" type="button" @onclick:stopPropagation></button></td>
                                                 }
                                                 @if (Grid.UpdateEnabled)
                                                 {
-                                                    <td class="@GridButtonCellCssClass" data-name=""><button class='grid-button-edit btn btn-sm btn-outline-secondary' title="@Strings.UpdateItem" @onclick="@(e => UpdateHandler(item))" type="button" @onclick:stopPropagation></button></td>
+                                                    <td class="@GridButtonCellCssClass" data-name=""><button class='grid-button grid-button-edit btn btn-sm btn-outline-secondary' title="@Strings.UpdateItem" @onclick="@(e => UpdateHandler(item))" type="button" @onclick:stopPropagation></button></td>
                                                 }
                                                 @if (Grid.DeleteEnabled)
                                                 {
-                                                    <td class="@GridButtonCellCssClass" data-name=""><button class='grid-button-delete btn btn-sm btn-outline-secondary' title="@Strings.DeleteItem" @onclick="@(e => DeleteHandler(item))" type="button" @onclick:stopPropagation></button></td>
+                                                    <td class="@GridButtonCellCssClass" data-name=""><button class='grid-button grid-button-delete btn btn-sm btn-outline-secondary' title="@Strings.DeleteItem" @onclick="@(e => DeleteHandler(item))" type="button" @onclick:stopPropagation></button></td>
                                                 }
                                                 @foreach (IGridColumn column in Grid.Columns)
                                                 {
