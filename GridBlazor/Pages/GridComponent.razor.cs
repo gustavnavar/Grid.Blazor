@@ -48,6 +48,10 @@ namespace GridBlazor.Pages
         public event Func<GridUpdateComponent<T>, T, Task<bool>> BeforeUpdate;
         public event Func<GridDeleteComponent<T>, T, Task<bool>> BeforeDelete;
 
+        public event Func<GridCreateComponent<T>, T, Task> AfterInsert;
+        public event Func<GridUpdateComponent<T>, T, Task> AfterUpdate;
+        public event Func<GridDeleteComponent<T>, T, Task> AfterDelete;
+
         internal event Action FilterButtonClicked;
 
         [Inject]
@@ -678,6 +682,7 @@ namespace GridBlazor.Pages
                 if (isValid)
                 {
                     await ((CGrid<T>)Grid).CrudDataService.Insert(_item);
+                    await OnAfterInsert(component);
                     ((CGrid<T>)Grid).Mode = GridMode.Grid;
                     CrudRender = null;
                     _fromCrud = true;
@@ -700,6 +705,11 @@ namespace GridBlazor.Pages
             return true;
         }
 
+        protected virtual async Task OnAfterInsert(GridCreateComponent<T> component)
+        {
+            await AfterInsert?.Invoke(component, _item);
+        }
+
         public async Task UpdateItem(GridUpdateComponent<T> component)
         {
             try
@@ -708,6 +718,7 @@ namespace GridBlazor.Pages
                 if (isValid)
                 {
                     await ((CGrid<T>)Grid).CrudDataService.Update(_item);
+                    await OnAfterUpdate(component);
                     ((CGrid<T>)Grid).Mode = GridMode.Grid;
                     CrudRender = null;
                     _fromCrud = true;
@@ -730,6 +741,11 @@ namespace GridBlazor.Pages
             return true;
         }
 
+        protected virtual async Task OnAfterUpdate(GridUpdateComponent<T> component)
+        {
+            await AfterUpdate?.Invoke(component, _item);
+        }
+
         public async Task DeleteItem(GridDeleteComponent<T> component)
         {
             try
@@ -739,6 +755,7 @@ namespace GridBlazor.Pages
                 {
                     var keys = Grid.GetPrimaryKeyValues(_item);
                     await ((CGrid<T>)Grid).CrudDataService.Delete(keys);
+                    await OnAfterDelete(component);
                     ((CGrid<T>)Grid).Mode = GridMode.Grid;
                     CrudRender = null;
                     _fromCrud = true;
@@ -759,6 +776,11 @@ namespace GridBlazor.Pages
                 return await BeforeDelete.Invoke(component, _item);
             }
             return true;
+        }
+
+        protected virtual async Task OnAfterDelete(GridDeleteComponent<T> component)
+        {
+            await AfterDelete?.Invoke(component, _item);
         }
 
         public async Task InputPageSizeKeyup(KeyboardEventArgs e)
