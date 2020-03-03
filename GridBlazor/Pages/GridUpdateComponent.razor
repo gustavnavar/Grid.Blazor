@@ -443,19 +443,22 @@
             }
         }
 
-        @foreach (var tabGruop in _tabGroups)
+        @if (_tabGroups != null)
         {
-            var tabLabels = GridComponent.Grid.Columns.Where(r => r.TabGroup != null && r.TabGroup.Equals(tabGruop))
-                .Select(r => new SelectItem(r.Name, r.Title));
-            <div class="form-group row">
-                <div class="col-md-offset-2 offset-md-2 col-md-10">
-                    <div class="card panel panel-default">
-                        <div class="card-body panel-body">
-                            <GridTabComponent TabLabels="@tabLabels" TabContent="@_grids" />
+            foreach (var tabGruop in _tabGroups)
+            {
+                var tabLabels = GridComponent.Grid.Columns.Where(r => r.TabGroup != null && r.TabGroup.Equals(tabGruop))
+                    .Select(r => new SelectItem(r.Name, r.Title));
+                <div class="form-group row">
+                    <div class="col-md-offset-2 offset-md-2 col-md-10">
+                        <div class="card panel panel-default">
+                            <div class="card-body panel-body">
+                                <GridTabComponent TabLabels="@tabLabels" TabContent="@_grids" />
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
+            }
         }
 
         <div class="form-group row">
