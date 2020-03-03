@@ -707,7 +707,10 @@ namespace GridBlazor.Pages
 
         protected virtual async Task OnAfterInsert(GridCreateComponent<T> component)
         {
-            await AfterInsert?.Invoke(component, _item);
+            if (AfterInsert != null)
+            {
+                await AfterInsert.Invoke(component, _item);
+            }
         }
 
         public async Task UpdateItem(GridUpdateComponent<T> component)
@@ -743,7 +746,10 @@ namespace GridBlazor.Pages
 
         protected virtual async Task OnAfterUpdate(GridUpdateComponent<T> component)
         {
-            await AfterUpdate?.Invoke(component, _item);
+            if (AfterUpdate != null)
+            {
+                await AfterUpdate.Invoke(component, _item);
+            }
         }
 
         public async Task DeleteItem(GridDeleteComponent<T> component)
@@ -780,7 +786,10 @@ namespace GridBlazor.Pages
 
         protected virtual async Task OnAfterDelete(GridDeleteComponent<T> component)
         {
-            await AfterDelete?.Invoke(component, _item);
+            if (AfterDelete != null)
+            {
+                await AfterDelete.Invoke(component, _item);
+            }
         }
 
         public async Task InputPageSizeKeyup(KeyboardEventArgs e)
