@@ -45,18 +45,18 @@ app {
         top: -2px;
     }
 
-li.nav-item {
-    font-size: 0.9rem;
-    padding-bottom: 0.1rem;
-}
-
-    li.nav-item:first-of-type {
-        padding-top: 0.5rem;
+    .sidebar li.nav-item {
+        font-size: 0.9rem;
+        padding-bottom: 0.1rem;
     }
 
-    li.nav-item:last-of-type {
-        padding-bottom: 0.5rem;
-    }
+        .sidebar li.nav-item:first-of-type {
+            padding-top: 0.5rem;
+        }
+
+        .sidebar li.nav-item:last-of-type {
+            padding-bottom: 0.5rem;
+        }
 
     li.nav-item a {
         color: #d7d7d7;

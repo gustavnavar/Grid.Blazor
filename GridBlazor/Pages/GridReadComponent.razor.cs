@@ -3,6 +3,7 @@ using GridShared.Columns;
 using GridShared.Utility;
 using Microsoft.AspNetCore.Components;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -12,6 +13,7 @@ namespace GridBlazor.Pages
     {
         private int _sequence = 0;
         private QueryDictionary<RenderFragment> _grids;
+        private IEnumerable<string> _tabGroups;
 
         [CascadingParameter(Name = "GridComponent")]
         protected GridComponent<T> GridComponent { get; set; }
@@ -31,6 +33,8 @@ namespace GridBlazor.Pages
                     _grids.Add(column.Name, CreateSubGridComponent(grid));
                 }
             }
+            _tabGroups = GridComponent.Grid.Columns.Where(r => !string.IsNullOrWhiteSpace(r.TabGroup))
+                .Select(r => r.TabGroup).Distinct();
         }
         
         private RenderFragment CreateSubGridComponent(ICGrid grid) => builder =>

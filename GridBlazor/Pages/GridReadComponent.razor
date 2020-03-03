@@ -1,5 +1,6 @@
 ﻿@using GridBlazor.Columns
 @using GridBlazor.Resources
+@using GridShared
 @using GridShared.Columns
 
 @typeparam T
@@ -9,11 +10,11 @@
 <div class="form-horizontal">
     @foreach (var column in GridComponent.Grid.Columns)
     {
-        (Type type, object value) = ((IGridColumn<T>)column).GetTypeAndValue(Item);
-        <div class="form-group row" style="@(column.CrudHidden.HasFlag(CrudHidden.DETAIL)?"display:none;":"")">
-            <label for="@column.FieldName" class="col-form-label col-md-2">@column.Title</label>
-            @if (((ICGridColumn)column).SubGrids == null)
-            {
+        if (((ICGridColumn)column).SubGrids == null)
+        {
+            (Type type, object value) = ((IGridColumn<T>)column).GetTypeAndValue(Item);
+            <div class="form-group row" style="@(column.CrudHidden.HasFlag(CrudHidden.DETAIL)?"display:none;":"")">
+                <label for="@column.FieldName" class="col-form-label col-md-2">@column.Title</label>
                 <div class="@(type == typeof(bool)?"col-md-1":"col-md-5")">
                     @if (((IGridColumn<T>)column).IsSelectField.IsSelectKey)
                     {
@@ -36,15 +37,33 @@
                         <input id="@column.FieldName" class="form-control" readonly="readonly" value="@column.GetFormatedValue(value)" />
                     }
                 </div>
-            }
-            else
-            {
+            </div>
+        }
+        else if (string.IsNullOrWhiteSpace(column.TabGroup))
+        {
+            <div class="form-group row" style="@(column.CrudHidden.HasFlag(CrudHidden.DETAIL)?"display:none;":"")">
+                <label for="@column.FieldName" class="col-form-label col-md-2">@column.Title</label>
                 <div class="col-md-10">
                     <div class="card panel panel-default">
                         <div class="card-body panel-body">@_grids.Get(column.Name)</div>
                     </div>
                 </div>
-            }
+            </div>
+        }
+    }
+
+    @foreach (var tabGruop in _tabGroups)
+    {
+        var tabLabels = GridComponent.Grid.Columns.Where(r => r.TabGroup != null && r.TabGroup.Equals(tabGruop))
+            .Select(r => new SelectItem(r.Name, r.Title));
+        <div class="form-group row">
+            <div class="col-md-offset-2 offset-md-2 col-md-10">
+                <div class="card panel panel-default">
+                    <div class="card-body panel-body">
+                        <GridTabComponent TabLabels="@tabLabels" TabContent="@_grids" />
+                    </div>
+                </div>
+            </div>
         </div>
     }
 

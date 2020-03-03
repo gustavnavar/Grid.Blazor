@@ -223,23 +223,23 @@
                             <tr>
                                 @if (_hasSubGrid)
                                 {
-                                    <th class="@GridHeaderCssClass" style="width:20px;"></th>
+                                    <th class="@GridHeaderCssClass" style="width:1%;"></th>
                                 }
                                 @if (_requiredTotalsColumn)
                                 {
-                                    <th class="@GridHeaderCssClass" style="width:60px;"></th>
+                                    <th class="@GridHeaderCssClass" style="width:3%;"></th>
                                 }
                                 @if (Grid.ReadEnabled)
                                 {
-                                    <th class="@GridHeaderCssClass" style="width:30px;"></th>
+                                    <th class="@GridHeaderCssClass" style="width:1%;"></th>
                                 }
                                 @if (Grid.UpdateEnabled)
                                 {
-                                    <th class="@GridHeaderCssClass" style="width:30px;"></th>
+                                    <th class="@GridHeaderCssClass" style="width:1%;"></th>
                                 }
                                 @if (Grid.DeleteEnabled)
                                 {
-                                    <th class="@GridHeaderCssClass" style="width:30px;"></th>
+                                    <th class="@GridHeaderCssClass" style="width:1%;"></th>
                                 }
                                 @foreach (IGridColumn column in Grid.Columns)
                                 {

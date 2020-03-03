@@ -314,7 +314,7 @@ namespace GridBlazorClientSide.Client.ColumnCollections
             c.Add(o => o.ShipCountry, true);
 
             /* Adding hidden "OrderDetails" column for a CRUD subgrid: */
-            c.Add(o => o.OrderDetails).SubGrid(s, ("OrderID", "OrderID"));
+            c.Add(o => o.OrderDetails).Titled("Order Details").SubGrid("tabGroup1", s, ("OrderID", "OrderID"));
         };
 
         public static Action<IGridColumnCollection<Order>, string> OrderColumnsWithCustomCrud = (c, path) =>
@@ -459,7 +459,7 @@ namespace GridBlazorClientSide.Client.ColumnCollections
             c.Add(o => o.ShipCountry, true);
 
             /* Adding hidden "OrderDetails" column for a CRUD subgrid: */
-            c.Add(o => o.OrderDetails).SubGrid(s, ("OrderID", "OrderID"));
+            c.Add(o => o.OrderDetails).Titled("Order Details").SubGrid("tabGroup1", s, ("OrderID", "OrderID"));
         };
 
         public static Action<IGridColumnCollection<Order>, IList<Action<object>>> OrderColumnsMultipleGrids = (c, actions) =>

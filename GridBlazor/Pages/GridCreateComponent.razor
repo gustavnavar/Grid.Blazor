@@ -13,7 +13,7 @@
     <div class="form-horizontal">
         @foreach (var column in GridComponent.Grid.Columns)
         {
-            @if (((ICGridColumn)column).SubGrids == null)
+            if (((ICGridColumn)column).SubGrids == null)
             {
                 (Type type, object value) = ((IGridColumn<T>)column).GetTypeAndValue(Item);
                 <div class="form-group row" style="@(column.CrudHidden.HasFlag(CrudHidden.INSERT)?"display:none;":"")">

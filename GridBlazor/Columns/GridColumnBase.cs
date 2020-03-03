@@ -52,6 +52,8 @@ namespace GridBlazor.Columns
 
         public bool IsPrimaryKey { get; protected set; } = false;
 
+        public string TabGroup { get; protected set; } = null;
+
         public (bool IsSelectKey, Func<T, string> Expression, string Url, Func<IEnumerable<SelectItem>> SelectItemExpr) IsSelectField { get; protected set; } = (false, null, null, null);
 
         public IEnumerable<SelectItem> SelectItems { get; internal set; }
@@ -387,7 +389,13 @@ namespace GridBlazor.Columns
 
         public IGridColumn<T> SubGrid(Func<object[], bool, bool, bool, bool, Task<IGrid>> subGrids, params (string,string)[] keys)
         {
+            return SubGrid(null, subGrids, keys);
+        }
+
+        public IGridColumn<T> SubGrid(string tabGroup, Func<object[], bool, bool, bool, bool, Task<IGrid>> subGrids, params (string, string)[] keys)
+        {
             Hidden = true;
+            TabGroup = tabGroup;
             SubGrids = subGrids;
             SubGridKeys = keys;
             return this;

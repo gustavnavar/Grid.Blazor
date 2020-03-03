@@ -1,0 +1,20 @@
+﻿<ul class="nav nav-tabs" @onclick:stopPropagation>
+    @for (int i = 0; i < TabLabels.Count(); i++)
+    {
+        var tab = TabLabels.ElementAt(i);
+        int capturedI = i;
+        <li class="nav-item@(i == selectedTab ? " active" : "")">
+            <a class="nav-link@(i == selectedTab ? " active" : "")" href="javascript:void(0);" @onclick="e => TabClicked(e, capturedI)">@tab.Title</a>
+        </li>
+    }
+</ul>
+<div class="tab-content">
+    @for (int i = 0; i < TabLabels.Count(); i++)
+    {
+        var tab = TabLabels.ElementAt(i);
+        <div class="tab-pane@(i == selectedTab ? " active" : "")" id="@tab.Value.ToLower()">
+            @TabContent.Get(tab.Value)
+        </div>
+    }
+</div>
+
