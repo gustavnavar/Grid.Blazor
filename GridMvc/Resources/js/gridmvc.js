@@ -626,7 +626,13 @@ GridMvc = (function ($) {
             $(this).keydown(function (e) {
                 if (e.keyCode === 9 || e.keyCode === 13) {
                     var pageSize = $(this).val();
-                    self.changePageSize(pageSize);
+                    var x = parseInt(pageSize, 10);
+                    if (x > 0) {
+                        self.changePageSize(pageSize);
+                    }
+                    else {
+                        $(this).val(this.defaultValue);
+                    }
                 }
             });
         });
@@ -636,6 +642,10 @@ GridMvc = (function ($) {
     // Applies selected pageSize value by redirecting to another url:
     //
     gridMvc.prototype.changePageSize = function (pageSize) {
+        var x = parseInt(pageSize, 10);
+        if (x <= 0) {
+            return;
+        }
         var url = "";
         var gridChangePageSize = this.jqContainer.find(".grid-change-page-size").first();
         if (gridChangePageSize) {

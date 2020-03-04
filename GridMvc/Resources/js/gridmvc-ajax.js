@@ -451,7 +451,13 @@
                         if (e.keyCode === 9 || e.keyCode === 13) {
                             e.preventDefault();
                             var pageSize = $(this).val();
-                            self.changePageSize(pageSize);
+                            var x = parseInt(pageSize, 10);
+                            if (x > 0) {
+                                self.changePageSize(pageSize);
+                            }
+                            else {
+                                $(this).val(this.defaultValue);
+                            }
                         }
                     });
                 });

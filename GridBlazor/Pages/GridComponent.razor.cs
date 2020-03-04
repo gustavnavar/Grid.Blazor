@@ -796,21 +796,37 @@ namespace GridBlazor.Pages
         {
             if (e.Key == "Enter")
             {
-                await ChangePageSize(_pageSize);
+                await InputPageSizeBlur();
             }
         }
 
         public async Task InputPageSizeBlur()
         {
-            await ChangePageSize(_pageSize);
+            if (_pageSize > 0)
+            {
+                Grid.Pager.PageSize = _pageSize;
+                Grid.AddQueryParameter(GridPager.DefaultPageSizeQueryParameter, _pageSize.ToString());
+                await UpdateGrid();
+                await OnPagerChanged();
+            }
+            else
+            {
+                _pageSize = Grid.Pager.PageSize;
+                _shouldRender = true;
+                StateHasChanged();
+            }
         }
 
         public async Task ChangePageSize(int pageSize)
         {
-            Grid.Pager.PageSize = pageSize;
-            Grid.AddQueryParameter(GridPager.DefaultPageSizeQueryParameter, pageSize.ToString());
-            await UpdateGrid();
-            await OnPagerChanged();
+            if (pageSize > 0)
+            {
+                _pageSize = pageSize;
+                Grid.Pager.PageSize = pageSize;
+                Grid.AddQueryParameter(GridPager.DefaultPageSizeQueryParameter, pageSize.ToString());
+                await UpdateGrid();
+                await OnPagerChanged();
+            }
         }
 
         public async Task SetGridFocus()

@@ -71,150 +71,301 @@ namespace GridBlazor.Pages
 
         protected void ChangeDateTime(ChangeEventArgs e, IGridColumn column)
         {
-            DateTime value;
-            DateTime.TryParse(e.Value.ToString(), out value);
-            if (value != null && value != default(DateTime))
+            if (string.IsNullOrWhiteSpace(e.Value.ToString()))
             {
-                ChangeValue(value, column);
+                ChangeValue(null, column);
+            }
+            else
+            {
+                DateTime value;
+                if (DateTime.TryParse(e.Value.ToString(), out value))
+                {
+                    ChangeValue(value, column);
+                }
+                else
+                {
+                    ChangeValue(null, column);
+                }
             }
         }
 
         protected void ChangeDateTimeOffset(ChangeEventArgs e, IGridColumn column)
         {
-            DateTimeOffset value;
-            DateTimeOffset.TryParse(e.Value.ToString(), out value);
-            if (value != null && value != default(DateTimeOffset))
+            if (string.IsNullOrWhiteSpace(e.Value.ToString()))
             {
-                ChangeValue(value, column);
+                ChangeValue(null, column);
+            }
+            else
+            {
+                DateTimeOffset value;
+                if (DateTimeOffset.TryParse(e.Value.ToString(), out value))
+                {
+                    ChangeValue(value, column);
+                }
+                else
+                {
+                    ChangeValue(null, column);
+                }
             }
         }
 
         protected void ChangeTimeSpan(ChangeEventArgs e, IGridColumn column)
         {
-            TimeSpan value;
-            TimeSpan.TryParse(e.Value.ToString(), out value);
-            if (value != null && value != default(TimeSpan))
+            if (string.IsNullOrWhiteSpace(e.Value.ToString()))
             {
-                ChangeValue(value, column);
+                ChangeValue(null, column);
+            }
+            else
+            {
+                TimeSpan value;
+                if (TimeSpan.TryParse(e.Value.ToString(), out value))
+                {
+                    ChangeValue(value, column);
+                }
+                else
+                {
+                    ChangeValue(null, column);
+                }
             }
         }
 
         protected void ChangeInt32(ChangeEventArgs e, IGridColumn column)
         {
-            Int32 value;
-            Int32.TryParse(e.Value.ToString(), out value);
-            if (value != default(Int32))
+            if (string.IsNullOrWhiteSpace(e.Value.ToString()))
             {
-                ChangeValue(value, column);
+                ChangeValue(null, column);
+            }
+            else
+            {
+                Int32 value;
+                if (Int32.TryParse(e.Value.ToString(), out value))
+                {
+                    ChangeValue(value, column);
+                }
+                else
+                {
+                    ChangeValue(null, column);
+                }
             }
         }
 
         protected void ChangeDouble(ChangeEventArgs e, IGridColumn column)
         {
-            Double value;
-            Double.TryParse(e.Value.ToString(), out value);
-            if (value != default(Double))
+            if (string.IsNullOrWhiteSpace(e.Value.ToString()))
             {
-                ChangeValue(value, column);
+                ChangeValue(null, column);
+            }
+            else
+            {
+                Double value;
+                if (Double.TryParse(e.Value.ToString(), out value))
+                {
+                    ChangeValue(value, column);
+                }
+                else
+                {
+                    ChangeValue(null, column);
+                }
             }
         }
 
         protected void ChangeDecimal(ChangeEventArgs e, IGridColumn column)
         {
-            Decimal value;
-            Decimal.TryParse(e.Value.ToString(), out value);
-            if (value != default(Decimal))
+            if (string.IsNullOrWhiteSpace(e.Value.ToString()))
             {
-                ChangeValue(value, column);
+                ChangeValue(null, column);
+            }
+            else
+            {
+                Decimal value;
+                if (Decimal.TryParse(e.Value.ToString(), out value))
+                {
+                    ChangeValue(value, column);
+                }
+                else
+                {
+                    ChangeValue(null, column);
+                }
             }
         }
 
         protected void ChangeByte(ChangeEventArgs e, IGridColumn column)
         {
-            Byte value;
-            Byte.TryParse(e.Value.ToString(), out value);
-            if (value != default(Byte))
+            if (string.IsNullOrWhiteSpace(e.Value.ToString()))
             {
-                ChangeValue(value, column);
+                ChangeValue(null, column);
+            }
+            else
+            {
+                Byte value;
+                if (Byte.TryParse(e.Value.ToString(), out value))
+                {
+                    ChangeValue(value, column);
+                }
+                else
+                {
+                    ChangeValue(null, column);
+                }
             }
         }
 
         protected void ChangeSingle(ChangeEventArgs e, IGridColumn column)
         {
-            Single value;
-            Single.TryParse(e.Value.ToString(), out value);
-            if (value != default(Single))
+            if (string.IsNullOrWhiteSpace(e.Value.ToString()))
             {
-                ChangeValue(value, column);
+                ChangeValue(null, column);
+            }
+            else
+            {
+                Single value;
+                if (Single.TryParse(e.Value.ToString(), out value))
+                {
+                    ChangeValue(value, column);
+                }
+                else
+                {
+                    ChangeValue(null, column);
+                }
             }
         }
 
         protected void ChangeInt64(ChangeEventArgs e, IGridColumn column)
         {
-            Int64 value;
-            Int64.TryParse(e.Value.ToString(), out value);
-            if (value != default(Int64))
+            if (string.IsNullOrWhiteSpace(e.Value.ToString()))
             {
-                ChangeValue(value, column);
+                ChangeValue(null, column);
+            }
+            else
+            {
+                Int64 value;
+                if (Int64.TryParse(e.Value.ToString(), out value))
+                {
+                    ChangeValue(value, column);
+                }
+                else
+                {
+                    ChangeValue(null, column);
+                }
             }
         }
 
         protected void ChangeInt16(ChangeEventArgs e, IGridColumn column)
         {
-            Int16 value;
-            Int16.TryParse(e.Value.ToString(), out value);
-            if (value != default(Int16))
+            if (string.IsNullOrWhiteSpace(e.Value.ToString()))
             {
-                ChangeValue(value, column);
+                ChangeValue(null, column);
+            }
+            else
+            {
+                Int16 value;
+                if (Int16.TryParse(e.Value.ToString(), out value))
+                {
+                    ChangeValue(value, column);
+                }
+                else
+                {
+                    ChangeValue(null, column);
+                }
             }
         }
 
         protected void ChangeUInt64(ChangeEventArgs e, IGridColumn column)
         {
-            UInt64 value;
-            UInt64.TryParse(e.Value.ToString(), out value);
-            if (value != default(UInt64))
+            if (string.IsNullOrWhiteSpace(e.Value.ToString()))
             {
-                ChangeValue(value, column);
+                ChangeValue(null, column);
+            }
+            else
+            {
+                UInt64 value;
+                if (UInt64.TryParse(e.Value.ToString(), out value))
+                {
+                    ChangeValue(value, column);
+                }
+                else
+                {
+                    ChangeValue(null, column);
+                }
             }
         }
 
         protected void ChangeUInt32(ChangeEventArgs e, IGridColumn column)
         {
-            UInt32 value;
-            UInt32.TryParse(e.Value.ToString(), out value);
-            if (value != default(UInt32))
+            if (string.IsNullOrWhiteSpace(e.Value.ToString()))
             {
-                ChangeValue(value, column);
+                ChangeValue(null, column);
+            }
+            else
+            {
+                UInt32 value;
+                if (UInt32.TryParse(e.Value.ToString(), out value))
+                {
+                    ChangeValue(value, column);
+                }
+                else
+                {
+                    ChangeValue(null, column);
+                }
             }
         }
 
         protected void ChangeUInt16(ChangeEventArgs e, IGridColumn column)
         {
-            UInt16 value;
-            UInt16.TryParse(e.Value.ToString(), out value);
-            if (value != default(UInt16))
+            if (string.IsNullOrWhiteSpace(e.Value.ToString()))
             {
-                ChangeValue(value, column);
+                ChangeValue(null, column);
+            }
+            else
+            {
+                UInt16 value;
+                if (UInt16.TryParse(e.Value.ToString(), out value))
+                {
+                    ChangeValue(value, column);
+                }
+                else
+                {
+                    ChangeValue(null, column);
+                }
             }
         }
 
         protected void ChangeBool(ChangeEventArgs e, IGridColumn column)
         {
-            bool value;
-            if (bool.TryParse(e.Value.ToString(), out value))
+            if (string.IsNullOrWhiteSpace(e.Value.ToString()))
             {
-                ChangeValue(value, column);
+                ChangeValue(null, column);
+            }
+            else
+            {
+                bool value;
+                if (bool.TryParse(e.Value.ToString(), out value))
+                {
+                    ChangeValue(value, column);
+                }
+                else
+                {
+                    ChangeValue(null, column);
+                }
             }
         }
 
         protected void ChangeGuid(ChangeEventArgs e, IGridColumn column)
         {
-            Guid value;
-            Guid.TryParse(e.Value.ToString(), out value);
-            if (value != default(Guid))
+            if (string.IsNullOrWhiteSpace(e.Value.ToString()))
             {
-                ChangeValue(value, column);
+                ChangeValue(null, column);
+            }
+            else
+            {
+                Guid value;
+                if (Guid.TryParse(e.Value.ToString(), out value))
+                {
+                    ChangeValue(value, column);
+                }
+                else
+                {
+                    ChangeValue(null, column);
+                }
             }
         }
 
