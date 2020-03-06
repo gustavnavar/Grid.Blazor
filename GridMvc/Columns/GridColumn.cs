@@ -215,30 +215,31 @@ namespace GridMvc.Columns
             }
             else
             {
-                if (_constraint == null)
+                if (_constraint != null)
                 {
-                    throw new InvalidOperationException("You need to specify render expression using RenderValueAs");
+                    TDataType value = default(TDataType);
+
+                    var nullReferece = false;
+                    try
+                    {
+                        value = _constraint(instance);
+                    }
+                    catch (NullReferenceException)
+                    {
+                        nullReferece = true;
+                        // specified expression throws NullReferenceException
+                        // example: x=>x.Child.Property, when Child is NULL
+                    }
+
+                    if (nullReferece || value == null)
+                        textValue = string.Empty;
+                    else
+                        textValue = GetFormatedValue(value);
                 }
-
-
-                TDataType value = default(TDataType);
-
-                var nullReferece = false;
-                try
-                {
-                    value = _constraint(instance);
-                }
-                catch (NullReferenceException)
-                {
-                    nullReferece = true;
-                    // specified expression throws NullReferenceException
-                    // example: x=>x.Child.Property, when Child is NULL
-                }
-
-                if (nullReferece || value == null)
-                    textValue = string.Empty;
                 else
-                    textValue = GetFormatedValue(value);
+                {
+                    textValue = string.Empty;
+                }
             }
             if (!EncodeEnabled && SanitizeEnabled)
             {

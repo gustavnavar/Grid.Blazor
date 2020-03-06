@@ -30,5 +30,17 @@
         }
         else
             return null;
-    }
+    },
+    setActive: function (element, i) {
+        if (element) {
+            var elements = element.querySelectorAll('[data-grid="tab"]');
+            [].forEach.call(elements, function (el) {
+                el.classList.remove("active");
+            });
+            elements = element.querySelectorAll('[data-grid-id="' + i + '"]');
+            [].forEach.call(elements, function (el) {
+                el.classList.add("active");
+            });
+        }
+    },
 }

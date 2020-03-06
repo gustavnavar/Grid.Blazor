@@ -25,6 +25,15 @@ namespace GridShared.Columns
         IList<Action<object>> Actions { get; }
         IList<Func<object, Task>> Functions { get; }
         object Object { get; }
+
+        Type CreateComponentType { get; }
+        Type UpdateComponentType { get; }
+        Type ReadComponentType { get; }
+        Type DeleteComponentType { get; }
+        IList<Action<object>> CrudActions { get; }
+        IList<Func<object, Task>> CrudFunctions { get; }
+        object CrudObject { get; }
+
         IGrid ParentGrid { get; }
         bool Hidden { get; set; }
         CrudHidden CrudHidden { get; }
@@ -76,6 +85,11 @@ namespace GridShared.Columns
         ///     Setup the custom classes for cells
         /// </summary>
         IGridColumn<T> SetCellCssClassesContraint(Func<T, string> contraint);
+
+        /// <summary>
+        ///     Specify the tab group for the column
+        /// </summary>
+        IGridColumn<T> SetTabGroup(string tabGroup);
 
         /// <summary>
         ///     Setup the custom rendere for property
@@ -162,6 +176,88 @@ namespace GridShared.Columns
         ///     Setup the custom render for component
         /// </summary>
         IGridColumn<T> RenderComponentAs<TComponent>(IList<Action<object>> actions, IList<Func<object, Task>> functions, 
+            object obj);
+        
+        /// <summary>
+        ///     Setup the custom render for component
+        /// </summary>
+        IGridColumn<T> RenderCrudComponentAs<TComponent>();
+
+        /// <summary>
+        ///     Setup the custom render for component
+        /// </summary>
+        IGridColumn<T> RenderCrudComponentAs<TComponent>(IList<Action<object>> actions);
+
+        /// <summary>
+        ///     Setup the custom render for component
+        /// </summary>
+        IGridColumn<T> RenderCrudComponentAs<TComponent>(IList<Func<object, Task>> functions);
+
+        /// <summary>
+        ///     Setup the custom render for component
+        /// </summary>
+        IGridColumn<T> RenderCrudComponentAs<TComponent>(IList<Action<object>> actions, IList<Func<object, Task>> functions);
+
+        /// <summary>
+        ///     Setup the custom render for component
+        /// </summary>
+        IGridColumn<T> RenderCrudComponentAs<TComponent>(object obj);
+
+        /// <summary>
+        ///     Setup the custom render for component
+        /// </summary>
+        IGridColumn<T> RenderCrudComponentAs<TComponent>(IList<Action<object>> actions, object obj);
+
+        /// <summary>
+        ///     Setup the custom render for component
+        /// </summary>
+        IGridColumn<T> RenderCrudComponentAs<TComponent>(IList<Func<object, Task>> functions, object obj);
+
+        /// <summary>
+        ///     Setup the custom render for component
+        /// </summary>
+        IGridColumn<T> RenderCrudComponentAs<TComponent>(IList<Action<object>> actions, IList<Func<object, Task>> functions,
+            object obj);
+
+        /// <summary>
+        ///     Setup the custom render for component
+        /// </summary>
+        IGridColumn<T> RenderCrudComponentAs<TCreateComponent, TReadComponent, TUpdateComponent, TDeleteComponent>();
+
+        /// <summary>
+        ///     Setup the custom render for component
+        /// </summary>
+        IGridColumn<T> RenderCrudComponentAs<TCreateComponent, TReadComponent, TUpdateComponent, TDeleteComponent>(IList<Action<object>> actions);
+
+        /// <summary>
+        ///     Setup the custom render for component
+        /// </summary>
+        IGridColumn<T> RenderCrudComponentAs<TCreateComponent, TReadComponent, TUpdateComponent, TDeleteComponent>(IList<Func<object, Task>> functions);
+
+        /// <summary>
+        ///     Setup the custom render for component
+        /// </summary>
+        IGridColumn<T> RenderCrudComponentAs<TCreateComponent, TReadComponent, TUpdateComponent, TDeleteComponent>(IList<Action<object>> actions, IList<Func<object, Task>> functions);
+
+        /// <summary>
+        ///     Setup the custom render for component
+        /// </summary>
+        IGridColumn<T> RenderCrudComponentAs<TCreateComponent, TReadComponent, TUpdateComponent, TDeleteComponent>(object obj);
+
+        /// <summary>
+        ///     Setup the custom render for component
+        /// </summary>
+        IGridColumn<T> RenderCrudComponentAs<TCreateComponent, TReadComponent, TUpdateComponent, TDeleteComponent>(IList<Action<object>> actions, object obj);
+
+        /// <summary>
+        ///     Setup the custom render for component
+        /// </summary>
+        IGridColumn<T> RenderCrudComponentAs<TCreateComponent, TReadComponent, TUpdateComponent, TDeleteComponent>(IList<Func<object, Task>> functions, object obj);
+
+        /// <summary>
+        ///     Setup the custom render for component
+        /// </summary>
+        IGridColumn<T> RenderCrudComponentAs<TCreateComponent, TReadComponent, TUpdateComponent, TDeleteComponent>(IList<Action<object>> actions, IList<Func<object, Task>> functions,
             object obj);
 
         /// <summary>

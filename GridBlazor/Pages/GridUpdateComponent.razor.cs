@@ -14,7 +14,7 @@ namespace GridBlazor.Pages
     public partial class GridUpdateComponent<T> : ICustomGridComponent<T>
     {
         private int _sequence = 0;
-        private QueryDictionary<RenderFragment> _grids;
+        private QueryDictionary<RenderFragment> _renderFragments;
         private IEnumerable<string> _tabGroups;
 
         public string Error { get; set; } = "";
@@ -27,18 +27,28 @@ namespace GridBlazor.Pages
 
         protected override async Task OnParametersSetAsync()
         {
-            _grids = new QueryDictionary<RenderFragment>();
+            _renderFragments = new QueryDictionary<RenderFragment>();
             foreach (var column in GridComponent.Grid.Columns)
             {
+                // Name must have a non empty value
+                if (string.IsNullOrWhiteSpace(column.Name))
+                    column.Name = Guid.NewGuid().ToString();
+
                 if (((ICGridColumn)column).SubGrids != null)
                 {
                     var values = ((ICGridColumn)column).GetSubGridKeyValues(Item);
                     var grid = await ((ICGridColumn)column).SubGrids(values.Values.ToArray(), true, true, true, true) as ICGrid;
                     grid.FixedValues = values;
-                    _grids.Add(column.Name, CreateSubGridComponent(grid));
+                    _renderFragments.Add(column.Name, CreateSubGridComponent(grid));
+                }
+                else if (column.UpdateComponentType != null)
+                {
+                    _renderFragments.Add(column.Name, GridCellComponent<T>.CreateComponent(_sequence,
+                        column.UpdateComponentType, column, Item));
                 }
             }
-            _tabGroups = GridComponent.Grid.Columns.Where(r => !string.IsNullOrWhiteSpace(r.TabGroup))
+            _tabGroups = GridComponent.Grid.Columns
+                .Where(r => !string.IsNullOrWhiteSpace(r.TabGroup) && _renderFragments.Keys.Any(s => s.Equals(r.Name)))
                 .Select(r => r.TabGroup).Distinct();
         }
 

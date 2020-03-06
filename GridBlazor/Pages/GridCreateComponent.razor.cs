@@ -1,7 +1,10 @@
 ﻿using GridBlazor.Resources;
 using GridShared.Columns;
+using GridShared.Utility;
 using Microsoft.AspNetCore.Components;
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Reflection;
 using System.Threading.Tasks;
 
@@ -9,6 +12,10 @@ namespace GridBlazor.Pages
 {
     public partial class GridCreateComponent<T> : ICustomGridComponent<T>
     {
+        private int _sequence = 0;
+        private QueryDictionary<RenderFragment> _renderFragments;
+        private IEnumerable<string> _tabGroups;
+
         public string Error { get; set; } = "";
 
         [CascadingParameter(Name = "GridComponent")]
@@ -16,6 +23,26 @@ namespace GridBlazor.Pages
 
         [Parameter]
         public T Item { get; set; }
+
+        protected override void OnParametersSet()
+        {
+            _renderFragments = new QueryDictionary<RenderFragment>();
+            foreach (var column in GridComponent.Grid.Columns)
+            {
+                // Name must have a non empty value
+                if (string.IsNullOrWhiteSpace(column.Name))
+                    column.Name = Guid.NewGuid().ToString();
+
+                if (column.CreateComponentType != null)
+                {
+                    _renderFragments.Add(column.Name, GridCellComponent<T>.CreateComponent(_sequence,
+                        column.CreateComponentType, column, Item));
+                }
+            }
+            _tabGroups = GridComponent.Grid.Columns
+                .Where(r => !string.IsNullOrWhiteSpace(r.TabGroup) && _renderFragments.Keys.Any(s => s.Equals(r.Name)))
+                .Select(r => r.TabGroup).Distinct();
+        }
 
         private void ChangeValue(object value, IGridColumn column)
         {

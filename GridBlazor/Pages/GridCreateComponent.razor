@@ -1,5 +1,6 @@
 ﻿@using GridBlazor.Columns
 @using GridBlazor.Resources
+@using GridShared
 @using GridShared.Columns
 
 @typeparam T
@@ -13,7 +14,9 @@
     <div class="form-horizontal">
         @foreach (var column in GridComponent.Grid.Columns)
         {
-            if (((ICGridColumn)column).SubGrids == null)
+            if (((ICGridColumn)column).SubGrids == null && column.ComponentType == null
+                && column.CreateComponentType == null && column.ReadComponentType == null
+                && column.UpdateComponentType == null && column.DeleteComponentType == null)
             {
                 (Type type, object value) = ((IGridColumn<T>)column).GetTypeAndValue(Item);
                 <div class="form-group row" style="@(column.CrudHidden.HasFlag(CrudHidden.INSERT)?"display:none;":"")">
@@ -397,6 +400,36 @@
                                 <input id="@column.FieldName" name="@column.FieldName" class="form-control" readonly="readonly" value="@column.GetFormatedValue(value)" />
                             }
                         }
+                    </div>
+                </div>
+            }
+            else if (column.CreateComponentType != null && string.IsNullOrWhiteSpace(column.TabGroup))
+            {
+                <div class="form-group row" style="@(column.CrudHidden.HasFlag(CrudHidden.INSERT) ? "display:none;" : "")">
+                    <label for="@column.FieldName" class="col-form-label col-md-2">@column.Title</label>
+                    <div class="col-md-10">
+                        <div class="card panel panel-default">
+                            <div class="card-body panel-body">@_renderFragments.Get(column.Name)</div>
+                        </div>
+                    </div>
+                </div>
+            }
+        }
+
+        @if (_tabGroups != null)
+        {
+            foreach (var tabGruop in _tabGroups)
+            {
+                var tabLabels = GridComponent.Grid.Columns
+                    .Where(r => r.TabGroup != null && r.TabGroup.Equals(tabGruop) && _renderFragments.Keys.Any(s => s.Equals(r.Name)))
+                    .Select(r => new SelectItem(r.Name, r.Title));
+                <div class="form-group row">
+                    <div class="col-md-offset-2 offset-md-2 col-md-10">
+                        <div class="card panel panel-default">
+                            <div class="card-body panel-body">
+                                <GridTabComponent TabLabels="@tabLabels" TabContent="@_renderFragments" />
+                            </div>
+                        </div>
                     </div>
                 </div>
             }

@@ -1,0 +1,20 @@
+@using GridBlazorClientSide.Shared.Models
+@using GridShared.Columns
+@implements ICustomGridComponent<Order>
+@inject NavigationManager NavigationManager
+
+<button class='btn btn-sm btn-primary' @onclick="MyClickHandler">Edit</button>
+
+@code {
+    [Parameter]
+    public Order Item { get; set; }
+
+    [Parameter]
+    public IList<Action<object>> Actions { get; set; }
+
+
+    private void MyClickHandler(MouseEventArgs e)
+    {
+        Actions[0]?.Invoke(Item);
+    }
+}

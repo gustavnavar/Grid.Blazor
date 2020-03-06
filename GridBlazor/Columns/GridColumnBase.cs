@@ -23,6 +23,14 @@ namespace GridBlazor.Columns
         public IList<Func<object, Task>> Functions { get; private set; }
         public object Object { get; private set; }
 
+        public Type CreateComponentType { get; private set; }
+        public Type ReadComponentType { get; private set; }
+        public Type UpdateComponentType { get; private set; }
+        public Type DeleteComponentType { get; private set; }
+        public IList<Action<object>> CrudActions { get; private set; }
+        public IList<Func<object, Task>> CrudFunctions { get; private set; }
+        public object CrudObject { get; private set; }
+
         public Func<T, string> ValueConstraint { get; private set; }
         public string ValuePattern { get; private set; }
 
@@ -105,6 +113,12 @@ namespace GridBlazor.Columns
         public IGridColumn<T> Css(string cssClasses)
         {
             AddCssClass(cssClasses);
+            return this;
+        }
+
+        public IGridColumn<T> SetTabGroup(string tabGroup)
+        {
+            TabGroup = tabGroup;
             return this;
         }
 
@@ -211,6 +225,150 @@ namespace GridBlazor.Columns
             IList<Func<object, Task>> functions, object obj)
         {
             return RenderComponentAs(typeof(TComponent), actions, functions, obj);
+        }
+
+        public IGridColumn<T> RenderCrudComponentAs<TComponent>()
+        {
+            return RenderCrudComponentAs<TComponent>(null, null, null);
+        }
+
+        public IGridColumn<T> RenderCrudComponentAs<TComponent>(IList<Action<object>> actions)
+        {
+            return RenderCrudComponentAs<TComponent>(actions, null, null);
+        }
+
+        public IGridColumn<T> RenderCrudComponentAs<TComponent>(IList<Func<object, Task>> functions)
+        {
+            return RenderCrudComponentAs<TComponent>(null, functions, null);
+        }
+
+        public IGridColumn<T> RenderCrudComponentAs<TComponent>(IList<Action<object>> actions,
+            IList<Func<object, Task>> functions)
+        {
+            return RenderCrudComponentAs<TComponent>(actions, functions, null);
+        }
+
+        public IGridColumn<T> RenderCrudComponentAs<TComponent>(object obj)
+        {
+            return RenderCrudComponentAs<TComponent>(null, null, obj);
+        }
+
+        public IGridColumn<T> RenderCrudComponentAs<TComponent>(IList<Action<object>> actions, object obj)
+        {
+            return RenderCrudComponentAs<TComponent>(actions, null, obj);
+        }
+
+        public IGridColumn<T> RenderCrudComponentAs<TComponent>(IList<Func<object, Task>> functions, object obj)
+        {
+            return RenderCrudComponentAs<TComponent>(null, functions, obj);
+        }
+
+        public IGridColumn<T> RenderCrudComponentAs<TComponent>(IList<Action<object>> actions,
+            IList<Func<object, Task>> functions, object obj)
+        {
+            return RenderCrudComponentAs<TComponent, TComponent, TComponent, TComponent>(actions, functions, obj);
+        }
+
+        public IGridColumn<T> RenderCrudComponentAs<TCreateComponent, TReadComponent, TUpdateComponent, TDeleteComponent>()
+        {
+            return RenderCrudComponentAs<TCreateComponent, TReadComponent, TUpdateComponent, TDeleteComponent>(null, null, null);
+        }
+
+        public IGridColumn<T> RenderCrudComponentAs<TCreateComponent, TReadComponent, TUpdateComponent, TDeleteComponent>(IList<Action<object>> actions)
+        {
+            return RenderCrudComponentAs<TCreateComponent, TReadComponent, TUpdateComponent, TDeleteComponent>(actions, null, null);
+        }
+
+        public IGridColumn<T> RenderCrudComponentAs<TCreateComponent, TReadComponent, TUpdateComponent, TDeleteComponent>(IList<Func<object, Task>> functions)
+        {
+            return RenderCrudComponentAs<TCreateComponent, TReadComponent, TUpdateComponent, TDeleteComponent>(null, functions, null);
+        }
+
+        public IGridColumn<T> RenderCrudComponentAs<TCreateComponent, TReadComponent, TUpdateComponent, TDeleteComponent>(IList<Action<object>> actions,
+            IList<Func<object, Task>> functions)
+        {
+            return RenderCrudComponentAs<TCreateComponent, TReadComponent, TUpdateComponent, TDeleteComponent>(actions, functions, null);
+        }
+
+        public IGridColumn<T> RenderCrudComponentAs<TCreateComponent, TReadComponent, TUpdateComponent, TDeleteComponent>(object obj)
+        {
+            return RenderCrudComponentAs<TCreateComponent, TReadComponent, TUpdateComponent, TDeleteComponent>(null, null, obj);
+        }
+
+        public IGridColumn<T> RenderCrudComponentAs<TCreateComponent, TReadComponent, TUpdateComponent, TDeleteComponent>(IList<Action<object>> actions, object obj)
+        {
+            return RenderCrudComponentAs<TCreateComponent, TReadComponent, TUpdateComponent, TDeleteComponent>(actions, null, obj);
+        }
+
+        public IGridColumn<T> RenderCrudComponentAs<TCreateComponent, TReadComponent, TUpdateComponent, TDeleteComponent>(IList<Func<object, Task>> functions, object obj)
+        {
+            return RenderCrudComponentAs<TCreateComponent, TReadComponent, TUpdateComponent, TDeleteComponent>(null, functions, obj);
+        }
+
+        public IGridColumn<T> RenderCrudComponentAs<TCreateComponent, TReadComponent, TUpdateComponent, TDeleteComponent>(IList<Action<object>> actions,
+            IList<Func<object, Task>> functions, object obj)
+        {
+            /// Get type arguments from any <see cref="ICustomGridComponent<>"/> interface 
+            /// in <paramref name="componentType"/> to make sure <see cref="T"/> is assignable to it
+            Type createComponentType = typeof(TCreateComponent);
+            List<Type> createTypeArgs = (from iType in createComponentType.GetInterfaces()
+                                   where iType.IsGenericType &&
+                                   iType.GetGenericTypeDefinition() == typeof(ICustomGridComponent<>)
+                                   select iType.GetGenericArguments()[0]).ToList();
+
+            if (createTypeArgs.Any(t => t.IsAssignableFrom(typeof(T))) &&
+                createComponentType.IsSubclassOf(typeof(ComponentBase)))
+            {
+                CreateComponentType = createComponentType;
+            }
+
+            /// Get type arguments from any <see cref="ICustomGridComponent<>"/> interface 
+            /// in <paramref name="componentType"/> to make sure <see cref="T"/> is assignable to it
+            Type readComponentType = typeof(TReadComponent);
+            List<Type> readTypeArgs = (from iType in readComponentType.GetInterfaces()
+                                   where iType.IsGenericType &&
+                                   iType.GetGenericTypeDefinition() == typeof(ICustomGridComponent<>)
+                                   select iType.GetGenericArguments()[0]).ToList();
+
+            if (readTypeArgs.Any(t => t.IsAssignableFrom(typeof(T))) &&
+                readComponentType.IsSubclassOf(typeof(ComponentBase)))
+            {
+                ReadComponentType = readComponentType;
+            }
+
+            /// Get type arguments from any <see cref="ICustomGridComponent<>"/> interface 
+            /// in <paramref name="componentType"/> to make sure <see cref="T"/> is assignable to it
+            Type updateComponentType = typeof(TUpdateComponent);
+            List<Type> updateTypeArgs = (from iType in updateComponentType.GetInterfaces()
+                                       where iType.IsGenericType &&
+                                       iType.GetGenericTypeDefinition() == typeof(ICustomGridComponent<>)
+                                       select iType.GetGenericArguments()[0]).ToList();
+
+            if (updateTypeArgs.Any(t => t.IsAssignableFrom(typeof(T))) &&
+                updateComponentType.IsSubclassOf(typeof(ComponentBase)))
+            {
+                UpdateComponentType = updateComponentType;
+            }
+
+            /// Get type arguments from any <see cref="ICustomGridComponent<>"/> interface 
+            /// in <paramref name="componentType"/> to make sure <see cref="T"/> is assignable to it
+            Type deleteComponentType = typeof(TDeleteComponent);
+            List<Type> deleteTypeArgs = (from iType in deleteComponentType.GetInterfaces()
+                                         where iType.IsGenericType &&
+                                         iType.GetGenericTypeDefinition() == typeof(ICustomGridComponent<>)
+                                         select iType.GetGenericArguments()[0]).ToList();
+
+            if (deleteTypeArgs.Any(t => t.IsAssignableFrom(typeof(T))) &&
+                deleteComponentType.IsSubclassOf(typeof(ComponentBase)))
+            {
+                DeleteComponentType = deleteComponentType;
+            }
+
+            CrudActions = actions;
+            CrudFunctions = functions;
+            CrudObject = obj;
+
+            return this;
         }
 
         public IGridColumn<T> Format(string pattern)

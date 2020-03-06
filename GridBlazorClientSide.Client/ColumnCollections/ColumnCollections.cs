@@ -136,7 +136,7 @@ namespace GridBlazorClientSide.Client.ColumnCollections
             OrderColumnsWithEdit = (c, functions, obj) =>
         {
             /* Adding not mapped column, that renders body, using inline Razor html helper */
-            c.Add().Encoded(false).Sanitized(false).RenderComponentAs<ButtonCell>(obj);
+            c.Add().Encoded(false).Sanitized(false).RenderComponentAs<ButtonCellEdit>(obj);
 
             /* Adding "OrderID" column: */
             c.Add(o => o.OrderID).Titled("Number").SetWidth(100);
@@ -252,6 +252,9 @@ namespace GridBlazorClientSide.Client.ColumnCollections
 
             /* Adding hidden "ShipCountry" column: */
             c.Add(o => o.ShipCountry, true);
+
+            /* Adding not mapped column, that renders a component */
+            c.Add(true).Titled("Images").RenderCrudComponentAs<Carousel, Carousel, NullComponent, NullComponent>();
         };
 
         public static Action<IGridColumnCollection<Order>, string, Func<object[], bool, bool, bool, bool, Task<IGrid>>> 
@@ -315,6 +318,9 @@ namespace GridBlazorClientSide.Client.ColumnCollections
 
             /* Adding hidden "OrderDetails" column for a CRUD subgrid: */
             c.Add(o => o.OrderDetails).Titled("Order Details").SubGrid("tabGroup1", s, ("OrderID", "OrderID"));
+
+            /* Adding not mapped column, that renders a component in a tab */
+            c.Add(true).Titled("Images").RenderCrudComponentAs<NullComponent, NullComponent, Carousel, Carousel>().SetTabGroup("tabGroup1");
         };
 
         public static Action<IGridColumnCollection<Order>, string> OrderColumnsWithCustomCrud = (c, path) =>
@@ -465,7 +471,7 @@ namespace GridBlazorClientSide.Client.ColumnCollections
         public static Action<IGridColumnCollection<Order>, IList<Action<object>>> OrderColumnsMultipleGrids = (c, actions) =>
         {
             /* Adding not mapped column, that renders body, using inline Razor html helper */
-            c.Add().Encoded(false).Sanitized(false).SetWidth(30).RenderComponentAs<ButtonCell>(actions);
+            c.Add().Encoded(false).Sanitized(false).SetWidth(30).RenderComponentAs<ButtonCellMultipleGrids>(actions);
 
             /* Adding "OrderID" column: */
             c.Add(o => o.OrderID).Titled("Number").SetWidth(100);

@@ -28,6 +28,15 @@ namespace GridShared
         /// <returns>Added column</returns>
         IGridColumn<T> Add(bool hidden);
 
+
+        /// <summary>
+        ///     Add new column to the grid
+        /// </summary>
+        /// <param name="hidden">Hidden column not display in grid, but you can get values from client side</param>
+        /// <param name="columnName">Specify column internal static name, used for sorting and filtering</param>
+        /// <returns>Added column</returns>
+        IGridColumn<T> Add(bool hidden, string columnName);
+
         /// <summary>
         ///     Add new column to the grid
         /// </summary>

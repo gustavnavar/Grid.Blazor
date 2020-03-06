@@ -22,6 +22,14 @@ namespace GridMvc.Columns
         public IList<Func<object, Task>> Functions { get; private set; }
         public object Object { get; private set; }
 
+        public Type CreateComponentType { get; private set; }
+        public Type ReadComponentType { get; private set; }
+        public Type UpdateComponentType { get; private set; }
+        public Type DeleteComponentType { get; private set; }
+        public IList<Action<object>> CrudActions { get; private set; }
+        public IList<Func<object, Task>> CrudFunctions { get; private set; }
+        public object CrudObject { get; private set; }
+
         protected Func<T, string> ValueConstraint;
         public string ValuePattern { get; protected set; }
 
@@ -109,7 +117,13 @@ namespace GridMvc.Columns
         {
             AddCssClass(cssClasses);
             return this;
-        }       
+        }
+
+        public IGridColumn<T> SetTabGroup(string tabGroup)
+        {
+            TabGroup = tabGroup;
+            return this;
+        }
 
         public IGridColumn<T> RenderValueAs(Func<T, string> constraint)
         {
@@ -206,6 +220,113 @@ namespace GridMvc.Columns
             IList<Func<object, Task>> functions, object obj)
         {
             return RenderComponentAs(typeof(TComponent), actions, functions, obj);
+        }
+
+        public IGridColumn<T> RenderCrudComponentAs<TComponent>()
+        {
+            return RenderCrudComponentAs<TComponent>(null, null, null);
+        }
+
+        public IGridColumn<T> RenderCrudComponentAs<TComponent>(IList<Action<object>> actions)
+        {
+            return RenderCrudComponentAs<TComponent>(actions, null, null);
+        }
+
+        public IGridColumn<T> RenderCrudComponentAs<TComponent>(IList<Func<object, Task>> functions)
+        {
+            return RenderCrudComponentAs<TComponent>(null, functions, null);
+        }
+
+        public IGridColumn<T> RenderCrudComponentAs<TComponent>(IList<Action<object>> actions,
+            IList<Func<object, Task>> functions)
+        {
+            return RenderCrudComponentAs<TComponent>(actions, functions, null);
+        }
+
+        public IGridColumn<T> RenderCrudComponentAs<TComponent>(object obj)
+        {
+            return RenderCrudComponentAs<TComponent>(null, null, obj);
+        }
+
+        public IGridColumn<T> RenderCrudComponentAs<TComponent>(IList<Action<object>> actions, object obj)
+        {
+            return RenderCrudComponentAs<TComponent>(actions, null, obj);
+        }
+
+        public IGridColumn<T> RenderCrudComponentAs<TComponent>(IList<Func<object, Task>> functions, object obj)
+        {
+            return RenderCrudComponentAs<TComponent>(null, functions, obj);
+        }
+
+        public IGridColumn<T> RenderCrudComponentAs<TComponent>(IList<Action<object>> actions,
+            IList<Func<object, Task>> functions, object obj)
+        {
+            return RenderCrudComponentAs<TComponent, TComponent, TComponent, TComponent>(actions, functions, obj);
+        }
+
+        public IGridColumn<T> RenderCrudComponentAs<TCreateComponent, TReadComponent, TUpdateComponent, TDeleteComponent>()
+        {
+            return RenderCrudComponentAs<TCreateComponent, TReadComponent, TUpdateComponent, TDeleteComponent>(null, null, null);
+        }
+
+        public IGridColumn<T> RenderCrudComponentAs<TCreateComponent, TReadComponent, TUpdateComponent, TDeleteComponent>(IList<Action<object>> actions)
+        {
+            return RenderCrudComponentAs<TCreateComponent, TReadComponent, TUpdateComponent, TDeleteComponent>(actions, null, null);
+        }
+
+        public IGridColumn<T> RenderCrudComponentAs<TCreateComponent, TReadComponent, TUpdateComponent, TDeleteComponent>(IList<Func<object, Task>> functions)
+        {
+            return RenderCrudComponentAs<TCreateComponent, TReadComponent, TUpdateComponent, TDeleteComponent>(null, functions, null);
+        }
+
+        public IGridColumn<T> RenderCrudComponentAs<TCreateComponent, TReadComponent, TUpdateComponent, TDeleteComponent>(IList<Action<object>> actions,
+            IList<Func<object, Task>> functions)
+        {
+            return RenderCrudComponentAs<TCreateComponent, TReadComponent, TUpdateComponent, TDeleteComponent>(actions, functions, null);
+        }
+
+        public IGridColumn<T> RenderCrudComponentAs<TCreateComponent, TReadComponent, TUpdateComponent, TDeleteComponent>(object obj)
+        {
+            return RenderCrudComponentAs<TCreateComponent, TReadComponent, TUpdateComponent, TDeleteComponent>(null, null, obj);
+        }
+
+        public IGridColumn<T> RenderCrudComponentAs<TCreateComponent, TReadComponent, TUpdateComponent, TDeleteComponent>(IList<Action<object>> actions, object obj)
+        {
+            return RenderCrudComponentAs<TCreateComponent, TReadComponent, TUpdateComponent, TDeleteComponent>(actions, null, obj);
+        }
+
+        public IGridColumn<T> RenderCrudComponentAs<TCreateComponent, TReadComponent, TUpdateComponent, TDeleteComponent>(IList<Func<object, Task>> functions, object obj)
+        {
+            return RenderCrudComponentAs<TCreateComponent, TReadComponent, TUpdateComponent, TDeleteComponent>(null, functions, obj);
+        }
+
+        public IGridColumn<T> RenderCrudComponentAs<TCreateComponent, TReadComponent, TUpdateComponent, TDeleteComponent>(IList<Action<object>> actions,
+            IList<Func<object, Task>> functions, object obj)
+        {
+            Type createComponentType = typeof(TCreateComponent);
+            if (createComponentType.IsSubclassOf(typeof(ViewComponent)))
+            {
+                CreateComponentType = createComponentType;
+            }
+            Type readComponentType = typeof(TReadComponent);
+            if (readComponentType.IsSubclassOf(typeof(ViewComponent)))
+            {
+                ReadComponentType = readComponentType;
+            }
+            Type updateComponentType = typeof(TUpdateComponent);
+            if (updateComponentType.IsSubclassOf(typeof(ViewComponent)))
+            {
+                UpdateComponentType = updateComponentType;
+            }
+            Type deleteComponentType = typeof(TDeleteComponent);
+            if (deleteComponentType.IsSubclassOf(typeof(ViewComponent)))
+            {
+                DeleteComponentType = deleteComponentType;
+            }
+            CrudActions = actions;
+            CrudFunctions = functions;
+            CrudObject = obj;
+            return this;
         }
 
         public IGridColumn<T> Format(string pattern)

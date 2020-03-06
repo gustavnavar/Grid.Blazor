@@ -29,7 +29,7 @@ namespace GridBlazor.Pages
         {
             _componentType = ((GridColumnBase<T>)Column).ComponentType;
             if (_componentType != null)
-                _cellRender = CreateCellComponent();
+                _cellRender = CreateComponent(_sequence, _componentType, Column, Item);
             else
                 _cell = (MarkupString)Column.GetCell(Item).ToString();
             if (((GridColumnBase<T>)Column).Hidden)
@@ -42,23 +42,27 @@ namespace GridBlazor.Pages
                 _cssClass += " " + columnCssClasses;
         }
 
-        private RenderFragment CreateCellComponent() => builder =>
+        public static RenderFragment CreateComponent(int sequence, Type componentType, IGridColumn column,
+            object item)  => builder =>
         {
-            builder.OpenComponent(++_sequence, _componentType);
-            builder.AddAttribute(++_sequence, "Item", Item);
-            var gridProperty = _componentType.GetProperty("Grid");
-            if(gridProperty != null && gridProperty.PropertyType == typeof(CGrid<T>))
-                builder.AddAttribute(++_sequence, "Grid", (CGrid<T>)Column.ParentGrid);
-            gridProperty = _componentType.GetProperty("Actions");
-            if (gridProperty != null)
-                builder.AddAttribute(++_sequence, "Actions", ((GridColumnBase<T>)Column).Actions);
-            gridProperty = _componentType.GetProperty("Functions");
-            if (gridProperty != null)
-                builder.AddAttribute(++_sequence, "Functions", ((GridColumnBase<T>)Column).Functions);
-            gridProperty = _componentType.GetProperty("Object");
-            if (gridProperty != null)
-                builder.AddAttribute(++_sequence, "Object", ((GridColumnBase<T>)Column).Object);
-            builder.CloseComponent();
+            if (componentType != null)
+            {
+                builder.OpenComponent(++sequence, componentType);
+                builder.AddAttribute(++sequence, "Item", item);
+                var gridProperty = componentType.GetProperty("Grid");
+                if (gridProperty != null && gridProperty.PropertyType == typeof(CGrid<T>))
+                    builder.AddAttribute(++sequence, "Grid", (CGrid<T>)column.ParentGrid);
+                gridProperty = componentType.GetProperty("Actions");
+                if (gridProperty != null)
+                    builder.AddAttribute(++sequence, "Actions", ((GridColumnBase<T>)column).Actions);
+                gridProperty = componentType.GetProperty("Functions");
+                if (gridProperty != null)
+                    builder.AddAttribute(++sequence, "Functions", ((GridColumnBase<T>)column).Functions);
+                gridProperty = componentType.GetProperty("Object");
+                if (gridProperty != null)
+                    builder.AddAttribute(++sequence, "Object", ((GridColumnBase<T>)column).Object);
+                builder.CloseComponent();
+            }           
         };
     }
 }
