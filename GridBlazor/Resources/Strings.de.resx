@@ -211,10 +211,10 @@
     <value>Bearbeiten</value>
   </data>
   <data name="Save" xml:space="preserve">
-    <value>Sparen</value>
+    <value>Sichern</value>
   </data>
   <data name="View" xml:space="preserve">
-    <value>Aussicht</value>
+    <value>Ansicht</value>
   </data>
   <data name="SelectItem" xml:space="preserve">
     <value>--- Wähle einen Artikel aus ---</value>
@@ -232,13 +232,13 @@
     <value>Artikel löschen</value>
   </data>
   <data name="ReadItem" xml:space="preserve">
-    <value>Artikel lesen</value>
+    <value>Artikel laden</value>
   </data>
   <data name="UpdateItem" xml:space="preserve">
     <value>Artikel aktualisieren</value>
   </data>
   <data name="NotEqual" xml:space="preserve">
-    <value>Nicht gleich</value>
+    <value>Ungleich</value>
   </data>
   <data name="CreateError" xml:space="preserve">
     <value>Beim Erstellen des neuen Elements ist ein Fehler aufgetreten</value>
