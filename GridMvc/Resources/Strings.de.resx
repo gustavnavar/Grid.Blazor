@@ -163,7 +163,7 @@
     <value>Artikel löschen</value>
   </data>
   <data name="ReadItem" xml:space="preserve">
-    <value>Artikel lesen</value>
+    <value>Artikel laden</value>
   </data>
   <data name="UpdateItem" xml:space="preserve">
     <value>Artikel aktualisieren</value>
