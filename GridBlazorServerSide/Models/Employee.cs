@@ -10,6 +10,10 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
+using System.Drawing;
+using System.Drawing.Imaging;
+using System.IO;
 using System.Text.Json.Serialization;
 
 namespace GridBlazorServerSide.Models
@@ -45,5 +49,26 @@ namespace GridBlazorServerSide.Models
         [JsonIgnore]
         public virtual ICollection<Order> Orders { get; set; }
         public virtual ICollection<EmployeeTerritories> Territories { get; set; }
+
+        [NotMapped]
+        public string Base64String
+        {
+            get
+            {
+                var base64Str = string.Empty;
+                using (var ms = new MemoryStream())
+                {
+                    int offset = 78;
+                    ms.Write(Photo, offset, Photo.Length - offset);
+                    var bmp = new Bitmap(ms);
+                    using (var jpegms = new MemoryStream())
+                    {
+                        bmp.Save(jpegms, ImageFormat.Jpeg);
+                        base64Str = Convert.ToBase64String(jpegms.ToArray());
+                    }
+                }
+                return base64Str;
+            }
+        }
     }
 }

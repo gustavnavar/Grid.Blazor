@@ -446,6 +446,9 @@ namespace GridBlazorServerSide.ColumnCollections
             c.Add(o => o.Customer.IsVip).Titled(SharedResource.IsVip).SetWidth(70).Css("hidden-xs") //hide on phones
             .RenderValueAs(o => o.Customer.IsVip ? Strings.BoolTrueLabel : Strings.BoolFalseLabel).SetCrudHidden(true);
 
+            c.Add().Encoded(false).Sanitized(false).SetWidth("5%").SetCrudHidden(true)
+                .RenderValueAs(o => $"<img width='50' height='50' src='data:image/bmp;base64,{o.Employee.Base64String}' />");
+
             /* Adding hidden "RequiredDate" column: */
             c.Add(o => o.RequiredDate, true).Format("{0:yyyy-MM-dd}");
 

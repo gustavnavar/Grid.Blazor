@@ -25,6 +25,7 @@ namespace GridMvc.Demo.Controllers
         private readonly OrderDetailsRepository _orderDetailsRepository;
         private readonly CustomersRepository _customersRepository;
         private readonly ShippersRepository _shippersRepository;
+        private readonly EmployeeRepository _employeeRepository;
 
         public HomeController(NorthwindDbContext context, ICompositeViewEngine compositeViewEngine) : base(compositeViewEngine)
         {
@@ -32,6 +33,7 @@ namespace GridMvc.Demo.Controllers
             _orderDetailsRepository = new OrderDetailsRepository(context);
             _customersRepository = new CustomersRepository(context);
             _shippersRepository = new ShippersRepository(context);
+            _employeeRepository = new EmployeeRepository(context);
         }
 
         public ActionResult Index(string gridState = "")
@@ -448,6 +450,41 @@ namespace GridMvc.Demo.Controllers
             var server = new GridServer<Order>(_orderRepository.GetAll().ToList(), query, false, "ordersGrid",
                 columns, 10, locale)
                 .SetRowCssClasses(item => item.Customer.IsVip ? "success" : string.Empty)
+                .Sortable()
+                .Filterable()
+                .WithMultipleFilters()
+                .Searchable(true, false)
+                .Groupable(true)
+                .ClearFiltersButton(true)
+                .Selectable(true)
+                .SetStriped(true)
+                .ChangePageSize(true)
+                .WithGridItemsCount();
+
+            return View(server.Grid);
+        }
+
+        public ActionResult Images()
+        {
+            IQueryCollection query = Request.Query;
+            ViewBag.ActiveMenuTitle = "Image Demo";
+
+            var requestCulture = HttpContext.Features.Get<IRequestCultureFeature>();
+            var locale = requestCulture.RequestCulture.UICulture.TwoLetterISOLanguageName;
+            SharedResource.Culture = requestCulture.RequestCulture.UICulture;
+
+            Action<IGridColumnCollection<Employee>> columns = c =>
+            {
+                c.Add(o => o.EmployeeID).Titled(SharedResource.Number).SetWidth("10%");
+                c.Add(o => o.Title).SetWidth("5%");
+                c.Add(o => o.FirstName).SetWidth("40%");
+                c.Add(o => o.LastName).SetWidth("40%");
+                c.Add().Encoded(false).Sanitized(false).SetWidth("5%")
+                    .RenderValueAs(o => $"<img width='50' height='50' src='data:image/bmp;base64,{o.Base64String}' />");
+            };
+
+            var server = new GridServer<Employee>(_employeeRepository.GetAll(), query, false, "employeesGrid",
+                columns, 10, locale)
                 .Sortable()
                 .Filterable()
                 .WithMultipleFilters()
