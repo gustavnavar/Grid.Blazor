@@ -14,6 +14,7 @@ namespace GridBlazor.Pages
     public partial class GridUpdateComponent<T> : ICustomGridComponent<T>
     {
         private int _sequence = 0;
+        private bool _shouldRender = false;
         private QueryDictionary<RenderFragment> _renderFragments;
         private IEnumerable<string> _tabGroups;
 
@@ -60,6 +61,16 @@ namespace GridBlazor.Pages
             builder.CloseComponent();
         };
 
+        protected override bool ShouldRender()
+        {
+            return _shouldRender;
+        }
+
+        protected override void OnAfterRender(bool firstRender)
+        {
+            _shouldRender = false;
+        }
+        
         private void ChangeValue(object value, IGridColumn column)
         {
             var names = column.FieldName.Split('.');
@@ -387,6 +398,7 @@ namespace GridBlazor.Pages
             }
             catch (Exception)
             {
+                _shouldRender = true;
                 Error = Strings.UpdateError;
             }
         }

@@ -13,6 +13,7 @@ namespace GridBlazor.Pages
     public partial class GridCreateComponent<T> : ICustomGridComponent<T>
     {
         private int _sequence = 0;
+        private bool _shouldRender = false;
         private QueryDictionary<RenderFragment> _renderFragments;
         private IEnumerable<string> _tabGroups;
 
@@ -42,6 +43,16 @@ namespace GridBlazor.Pages
             _tabGroups = GridComponent.Grid.Columns
                 .Where(r => !string.IsNullOrWhiteSpace(r.TabGroup) && _renderFragments.Keys.Any(s => s.Equals(r.Name)))
                 .Select(r => r.TabGroup).Distinct();
+        }
+
+        protected override bool ShouldRender()
+        {
+            return _shouldRender;
+        }
+
+        protected override void OnAfterRender(bool firstRender)
+        {
+            _shouldRender = false;
         }
 
         private void ChangeValue(object value, IGridColumn column)
@@ -371,6 +382,7 @@ namespace GridBlazor.Pages
             }
             catch (Exception)
             {
+                _shouldRender = true;
                 Error = Strings.CreateError;
             } 
         }

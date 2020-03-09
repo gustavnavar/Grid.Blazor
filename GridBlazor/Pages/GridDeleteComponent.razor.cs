@@ -13,6 +13,7 @@ namespace GridBlazor.Pages
     public partial class GridDeleteComponent<T> : ICustomGridComponent<T>
     {
         private int _sequence = 0;
+        private bool _shouldRender = false;
         private QueryDictionary<RenderFragment> _renderFragments;
         private IEnumerable<string> _tabGroups;
 
@@ -58,6 +59,16 @@ namespace GridBlazor.Pages
             builder.CloseComponent();
         };
 
+        protected override bool ShouldRender()
+        {
+            return _shouldRender;
+        }
+
+        protected override void OnAfterRender(bool firstRender)
+        {
+            _shouldRender = false;
+        }
+
         protected async Task DeleteItem()
         {
             try
@@ -66,6 +77,7 @@ namespace GridBlazor.Pages
             }
             catch (Exception)
             {
+                _shouldRender = true;
                 Error = Strings.DeleteError;
             }
         }
