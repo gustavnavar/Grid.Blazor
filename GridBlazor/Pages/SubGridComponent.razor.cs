@@ -1,6 +1,7 @@
 ﻿using GridShared.Utility;
 using Microsoft.AspNetCore.Components;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -26,6 +27,9 @@ namespace GridBlazor.Pages
         [Parameter]
         public QueryDictionary<object> Values { get; set; }
 
+        [Parameter]
+        public IEnumerable<Action<object>> OnRowClickedActions { get; set; }
+
         protected override async Task OnParametersSetAsync()
         {
             if (GridPosition < GridComponent.IsSubGridVisible.Length 
@@ -49,6 +53,10 @@ namespace GridBlazor.Pages
             Type gridComponentType = typeof(GridComponent<>).MakeGenericType(_grid.Type);
             builder.OpenComponent(++_sequence, gridComponentType);
             builder.AddAttribute(++_sequence, "Grid", _grid);
+            if (OnRowClickedActions != null && OnRowClickedActions.Count() > 0)
+            {
+                builder.AddAttribute(++_sequence, "OnRowClickedActions", OnRowClickedActions);
+            }
             builder.CloseComponent();
         };
     }

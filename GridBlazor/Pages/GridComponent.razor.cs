@@ -74,6 +74,9 @@ namespace GridBlazor.Pages
         public Action<object> OnRowClicked { get; set; }
 
         [Parameter]
+        public IEnumerable<Action<object>> OnRowClickedActions { get; set; }
+
+        [Parameter]
         public IQueryDictionary<Type> CustomFilters { get; set; }
 
         [Parameter]
@@ -146,6 +149,11 @@ namespace GridBlazor.Pages
             }
 
             FirstColumn = (ICGridColumn)Grid.Columns.FirstOrDefault();
+
+            if(OnRowClickedActions != null && OnRowClickedActions.Count() > 0)
+            {
+                OnRowClicked = OnRowClickedActions.First();
+            }
 
             _hasSubGrid = Grid.SubGridKeys != null && Grid.SubGridKeys.Length > 0;
             _hasTotals = Grid.IsSumEnabled || Grid.IsAverageEnabled || Grid.IsMaxEnabled || Grid.IsMinEnabled;

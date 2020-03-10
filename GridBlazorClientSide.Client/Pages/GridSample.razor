@@ -25,14 +25,19 @@
 {
     <div class="row">
         <div class="col-md-9">
-            <GridComponent T="Order" Grid="@_grid" OnRowClicked="@OrderDetails"
+            <GridComponent T="Order" Grid="@_grid" OnRowClickedActions="@_rowClickActions"
                            CustomFilters="@_customFilters"></GridComponent>
         </div>
         <div class="col-md-3">
             <h4>
-                Order details
+                Order
             </h4>
             <OrderInfo @ref="_orderInfo" ReturnUrl="gridsample" GridState="@_grid.GetState()"></OrderInfo>
+
+            <h4 style="margin-top:40px;">
+                Order details
+            </h4>
+            <OrderIDetaillnfo @ref="_orderDetailInfo"></OrderIDetaillnfo>
         </div>
     </div>
 }
@@ -47,8 +52,10 @@ else
     private Task<SelectItem[]> _task1;
     private Task _task2;
     private OrderInfo _orderInfo;
+    private OrderIDetaillnfo _orderDetailInfo;
     private IEnumerable<SelectItem> _shippers;
     private IQueryDictionary<Type> _customFilters = new QueryDictionary<Type>();
+    private List<Action<object>> _rowClickActions;
 
     [Parameter]
     public string GridState { get; set; }
@@ -60,6 +67,10 @@ else
 
     protected override async Task OnParametersSetAsync()
     {
+        _rowClickActions = new List<Action<object>>();
+        _rowClickActions.Add(OrderInfo);
+        _rowClickActions.Add(OrderDetailInfo);
+
         var locale = CultureInfo.CurrentCulture;
         _task1 = HttpClient.GetJsonAsync<SelectItem[]>(NavigationManager.BaseUri + $"api/SampleData/GetAllShippers");
         var shippers = await _task1;
@@ -101,6 +112,7 @@ else
                     .Sortable()
                     .Filterable()
                     .SetStriped(true)
+                    .Selectable(true)
                     .Crud(true, orderDetailService)
                     .WithMultipleFilters()
                     .WithGridItemsCount();
@@ -150,7 +162,7 @@ else
         await _task2;
     }
 
-    protected void OrderDetails(object item)
+    protected void OrderInfo(object item)
     {
         if (item.GetType() == typeof(Order))
         {
@@ -161,5 +173,18 @@ else
             _orderInfo.Order = null;
         }
         _orderInfo.Refresh();
+    }
+
+    protected void OrderDetailInfo(object item)
+    {
+        if (item.GetType() == typeof(OrderDetail))
+        {
+            _orderDetailInfo.OrderDetail = (OrderDetail)item;
+        }
+        else
+        {
+            _orderDetailInfo.OrderDetail = null;
+        }
+        _orderDetailInfo.Refresh();
     }
 }

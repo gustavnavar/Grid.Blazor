@@ -148,9 +148,14 @@
                 }
                 cols += Grid.Columns.Count();
                 var values = Grid.GetSubGridKeyValues(item);
+                IEnumerable<Action<object>> onRowClickedActions = null;
+                if (GridComponent.OnRowClickedActions != null && GridComponent.OnRowClickedActions.Count() > 1)
+                {
+                    onRowClickedActions = GridComponent.OnRowClickedActions.Where(r => !r.Equals(GridComponent.OnRowClickedActions.First()));
+                }
                 <tr class="subgrid-row">
                     <CascadingValue Value=@this Name="GridComponent">
-                        <SubGridComponent T="@T" GridPosition="@capturedI" Cols="@cols" Values="@values"></SubGridComponent>
+                        <SubGridComponent T="@T" GridPosition="@capturedI" Cols="@cols" Values="@values" OnRowClickedActions="onRowClickedActions"></SubGridComponent>
                     </CascadingValue>
                 </tr>
             }

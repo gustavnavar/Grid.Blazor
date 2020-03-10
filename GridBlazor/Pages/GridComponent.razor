@@ -4,6 +4,7 @@
 @using GridBlazor.Sorting
 @using GridShared
 @using GridShared.Columns
+@using System.Linq
 
 @typeparam T
 
@@ -152,9 +153,14 @@
                             }
                             cols += Grid.Columns.Count();
                             var values = Grid.GetSubGridKeyValues(item);
+                            IEnumerable<Action<object>> onRowClickedActions = null;
+                            if (OnRowClickedActions != null && OnRowClickedActions.Count() > 1)
+                            {
+                                onRowClickedActions = OnRowClickedActions.Where(r => !r.Equals(OnRowClickedActions.First()));
+                            }
                             <tr class="subgrid-row">
                                 <CascadingValue Value=@this Name="GridComponent">
-                                    <SubGridComponent T="@T" GridPosition="@capturedI" Cols="@cols" Values="@values"></SubGridComponent>
+                                    <SubGridComponent T="@T" GridPosition="@capturedI" Cols="@cols" Values="@values" OnRowClickedActions="onRowClickedActions"></SubGridComponent>
                                 </CascadingValue>
                             </tr>
                         }
@@ -170,15 +176,15 @@
         else
         {
             <div class="@GridMvcCssClass"
-                data-lang="@Grid.Language"
-                data-gridname="@Grid.ComponentOptions.GridName"
-                data-selectable="@Grid.ComponentOptions.Selectable.ToString().ToLower()"
-                data-extsortable="@Grid.ExtSortingEnabled.ToString().ToLower()"
-                data-groupable="@Grid.GroupingEnabled.ToString().ToLower()"
-                data-multiplefilters="@Grid.ComponentOptions.AllowMultipleFilters.ToString().ToLower()"
-                tabindex="-1"
-                @ref="gridmvc"
-                @onkeyup="GridComponentKeyup">
+                 data-lang="@Grid.Language"
+                 data-gridname="@Grid.ComponentOptions.GridName"
+                 data-selectable="@Grid.ComponentOptions.Selectable.ToString().ToLower()"
+                 data-extsortable="@Grid.ExtSortingEnabled.ToString().ToLower()"
+                 data-groupable="@Grid.GroupingEnabled.ToString().ToLower()"
+                 data-multiplefilters="@Grid.ComponentOptions.AllowMultipleFilters.ToString().ToLower()"
+                 tabindex="-1"
+                 @ref="gridmvc"
+                 @onkeyup="GridComponentKeyup">
                 <div class="@GridWrapCssClass">
                     <div class="row">
                         <div class="row col-md-6">
@@ -389,9 +395,14 @@
                                             }
                                             cols += Grid.Columns.Count();
                                             var values = Grid.GetSubGridKeyValues(item);
+                                            IEnumerable<Action<object>> onRowClickedActions = null;
+                                            if (OnRowClickedActions != null && OnRowClickedActions.Count() > 1)
+                                            {
+                                                onRowClickedActions = OnRowClickedActions.Where(r => !r.Equals(OnRowClickedActions.First()));
+                                            }
                                             <tr class="subgrid-row">
                                                 <CascadingValue Value=@this Name="GridComponent">
-                                                    <SubGridComponent T="@T" GridPosition="@capturedI" Cols="@cols" Values="@values"></SubGridComponent>
+                                                    <SubGridComponent T="@T" GridPosition="@capturedI" Cols="@cols" Values="@values" OnRowClickedActions="onRowClickedActions"></SubGridComponent>
                                                 </CascadingValue>
                                             </tr>
                                         }

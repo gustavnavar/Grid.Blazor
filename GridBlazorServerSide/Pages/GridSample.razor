@@ -30,14 +30,19 @@
 {
     <div class="row">
         <div class="col-md-9">
-            <GridComponent @ref="_gridComponent" T="Order" Grid="@_grid" OnRowClicked="@OrderDetails"
+            <GridComponent @ref="_gridComponent" T="Order" Grid="@_grid" OnRowClickedActions="@_rowClickActions"
                            CustomFilters="@_customFilters"></GridComponent>
         </div>
         <div class="col-md-3">
             <h4>
-                Order details
+                Order
             </h4>
             <OrderInfo @ref="_orderInfo" ReturnUrl="gridsample" GridState="@_grid.GetState()"></OrderInfo>
+
+            <h4 style="margin-top:40px;">
+                Order details
+            </h4>
+            <OrderIDetaillnfo @ref="_orderDetailInfo"></OrderIDetaillnfo>
         </div>
     </div>
 }
@@ -52,13 +57,19 @@ else
     private GridComponent<Order> _gridComponent;
     private Task _task;
     private OrderInfo _orderInfo;
+    private OrderIDetaillnfo _orderDetailInfo;
     private IQueryDictionary<Type> _customFilters = new QueryDictionary<Type>();
+    private List<Action<object>> _rowClickActions;
 
     [Parameter]
     public string GridState { get; set; }
 
     protected override async Task OnParametersSetAsync()
     {
+        _rowClickActions = new List<Action<object>>();
+        _rowClickActions.Add(OrderInfo);
+        _rowClickActions.Add(OrderDetailInfo);
+
         var locale = CultureInfo.CurrentCulture;
         SharedResource.Culture = locale;
 
@@ -96,6 +107,7 @@ else
                     .Sortable()
                     .Filterable()
                     .SetStriped(true)
+                    .Selectable(true)
                     .Crud(true, orderDetailService)
                     .WithMultipleFilters()
                     .WithGridItemsCount();
@@ -106,7 +118,7 @@ else
 
         // build the column collection passing an action list with the action executed by the ButtonCell component
         Action<IGridColumnCollection<Order>> orderColumns = c => ColumnCollections.OrderColumnsAllFeatures(c,
-            customerService.GetAllCustomers, employeeService.GetAllEmployees, shipperService.GetAllShippers, 
+            customerService.GetAllCustomers, employeeService.GetAllEmployees, shipperService.GetAllShippers,
             crudSubGrids);
 
         var query = new QueryDictionary<StringValues>();
@@ -158,7 +170,7 @@ else
         }
     }
 
-    protected void OrderDetails(object item)
+    protected void OrderInfo(object item)
     {
         if (item.GetType() == typeof(Order))
         {
@@ -169,6 +181,19 @@ else
             _orderInfo.Order = null;
         }
         _orderInfo.Refresh();
+    }
+
+    protected void OrderDetailInfo(object item)
+    {
+        if (item.GetType() == typeof(OrderDetail))
+        {
+            _orderDetailInfo.OrderDetail = (OrderDetail)item;
+        }
+        else
+        {
+            _orderDetailInfo.OrderDetail = null;
+        }
+        _orderDetailInfo.Refresh();
     }
 
     private async Task PagerChanged(object sender, PagerEventArgs e)
