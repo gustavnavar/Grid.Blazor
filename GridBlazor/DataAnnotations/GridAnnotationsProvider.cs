@@ -25,14 +25,18 @@ namespace GridBlazor.DataAnnotations
                     {
                         Title = dataAnnotations.DisplayName,
                         FilterEnabled = dataAnnotations.FilterEnabled ?? false,
-                        Format = dataAnnotations.Format
+                        SortEnabled = dataAnnotations.SortEnabled ?? false,
+                        Format = dataAnnotations.Format,
+                        Key = dataAnnotations.Key
                     };
                 }
                 else
                 {
                     dataAnnotationAttr.Title = string.IsNullOrEmpty(gridAttr.Title) ? dataAnnotations.DisplayName : gridAttr.Title;
                     dataAnnotationAttr.FilterEnabled = dataAnnotations.FilterEnabled ?? gridAttr.FilterEnabled;
+                    dataAnnotationAttr.SortEnabled = dataAnnotations.SortEnabled ?? gridAttr.SortEnabled;
                     dataAnnotationAttr.Format = string.IsNullOrEmpty(gridAttr.Format) ? dataAnnotations.Format : gridAttr.Format;
+                    dataAnnotationAttr.Key = dataAnnotations.Key ? dataAnnotations.Key : gridAttr.Key;
                 }
             }
             return dataAnnotationAttr;
@@ -53,7 +57,8 @@ namespace GridBlazor.DataAnnotations
             {
                 dataAnnotationAttr = new GridHiddenColumnAttribute
                 {
-                    Format = dataAnnotations.Format
+                    Format = dataAnnotations.Format,
+                    Key = dataAnnotations.Key
                 };
             }
             return dataAnnotationAttr;
@@ -104,16 +109,23 @@ namespace GridBlazor.DataAnnotations
                 if (result == null) result = new DataAnnotationsOptions();
                 result.Format = displayFormatAttr.DataFormatString;
             }
+            var keyAttr = pi.GetAttribute<KeyAttribute>();
+            if (keyAttr != null)
+            {
+                if (result == null) result = new DataAnnotationsOptions();
+                result.Key = true;
+            }
             return result;
         }
-
 
         private class DataAnnotationsOptions
         {
             public string Format { get; set; }
             public string DisplayName { get; set; }
             public bool? FilterEnabled { get; set; }
+            public bool? SortEnabled { get; set; }
             public int Order { get; set; }
+            public bool Key { get; set; }
         }
     }
 }

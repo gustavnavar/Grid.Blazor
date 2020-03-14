@@ -16,6 +16,7 @@ namespace GridShared.DataAnnotations
             EncodeEnabled = true;
             SanitizeEnabled = true;
             SortEnabled = false;
+            Key = false;
         }
 
         /// <summary>

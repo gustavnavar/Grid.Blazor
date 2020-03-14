@@ -108,7 +108,7 @@ namespace GridBlazor.Columns
                   .Sanitized(options.SanitizeEnabled)
                   .Filterable(options.FilterEnabled)
                   .Sortable(options.SortEnabled);
-
+            column.SetPrimaryKey(options.Key);
             GridSortDirection? initialDirection = options.GetInitialSortDirection();
             if (initialDirection.HasValue)
                 column.SortInitialDirection(initialDirection.Value);

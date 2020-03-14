@@ -92,7 +92,7 @@ namespace GridMvc
 
             _annotations = new GridAnnotationsProvider();
 
-            #endregion
+            #endregion init default properties
 
             //Set up column collection:
             _columnBuilder = new DefaultColumnBuilder<T>(this, _annotations);
@@ -239,7 +239,7 @@ namespace GridMvc
         /// <summary>
         ///     Get value for deleting items
         /// </summary>
-        public bool DeleteEnabled { get { return false; }  }
+        public bool DeleteEnabled { get { return false; } }
 
         /// <summary>
         ///     Manage pager properties
@@ -294,7 +294,7 @@ namespace GridMvc
         /// </summary>
         public bool IsMinEnabled { get { return Columns.Any(r => ((ISGridColumn)r).IsMinEnabled); } }
 
-        #endregion
+        #endregion IGrid Members
 
         /// <summary>
         ///     Applies data annotations settings
@@ -328,11 +328,32 @@ namespace GridMvc
         public virtual void AutoGenerateColumns()
         {
             //TODO add support order property
-            PropertyInfo[] properties = typeof (T).GetProperties(BindingFlags.Public | BindingFlags.Instance);
+            PropertyInfo[] properties = typeof(T).GetProperties(BindingFlags.Public | BindingFlags.Instance);
             foreach (PropertyInfo pi in properties)
             {
+                bool isKey = false;
+                if (pi.CustomAttributes.Count() > 0)
+                {
+                    foreach (var a in pi.CustomAttributes)
+                    {
+                        if (a.AttributeType.Name.Equals("KeyAttribute"))
+                        {
+                            isKey = true;
+                        }
+                    }
+                }
+
                 if (pi.CanRead)
-                    Columns.Add(pi);
+                {
+                    if (isKey)
+                    {
+                        Columns.Add(pi).SetPrimaryKey(true);
+                    }
+                    else
+                    {
+                        Columns.Add(pi);
+                    }
+                }
             }
         }
 
@@ -340,33 +361,33 @@ namespace GridMvc
         {
             var totals = new TotalsDTO();
             if (IsSumEnabled)
-                foreach(ISGridColumn column in Columns)
+                foreach (ISGridColumn column in Columns)
                 {
                     if (column.IsSumEnabled)
                         totals.Sum.Add(((GridColumnBase<T>)column).Name, column.SumString);
                 }
-            
+
             if (IsAverageEnabled)
-                foreach(ISGridColumn column in Columns)
+                foreach (ISGridColumn column in Columns)
                 {
                     if (column.IsAverageEnabled)
                         totals.Average.Add(((GridColumnBase<T>)column).Name, column.AverageString);
                 }
-            
+
             if (IsMaxEnabled)
-                foreach(ISGridColumn column in Columns)
+                foreach (ISGridColumn column in Columns)
                 {
                     if (column.IsMaxEnabled)
                         totals.Max.Add(((GridColumnBase<T>)column).Name, column.MaxString);
                 }
-            
+
             if (IsMinEnabled)
-                foreach(ISGridColumn column in Columns)
+                foreach (ISGridColumn column in Columns)
                 {
                     if (column.IsMinEnabled)
                         totals.Min.Add(((GridColumnBase<T>)column).Name, column.MinString);
                 }
-            
+
             return totals;
         }
 

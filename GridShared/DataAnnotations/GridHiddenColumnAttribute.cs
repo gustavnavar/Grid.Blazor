@@ -11,6 +11,7 @@ namespace GridShared.DataAnnotations
         {
             EncodeEnabled = true;
             SanitizeEnabled = true;
+            Key = false;
         }
 
         /// <summary>
@@ -27,5 +28,10 @@ namespace GridShared.DataAnnotations
         ///     Specify the format of column data
         /// </summary>
         public string Format { get; set; }
+
+        /// <summary>
+        ///     Specify if column data is key
+        /// </summary>
+        public bool Key { get; set; }
     }
 }
