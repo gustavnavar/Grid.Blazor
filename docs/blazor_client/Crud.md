@@ -23,7 +23,7 @@ You can enable CRUD using the **Crud** method of the **GridClient** object:
         .Crud(true, orderService)
 ```
 
-**Note**: All 4 crud forms can be enabled at the same time with the **Crud(true, ...)** method, but you can enable one by one using  the **Crud(true, false, true, false, ...)** method.
+**Note**: All 4 crud forms can be enabled at the same time with the ```Crud(bool enabled, ...)``` method, but you can enable one by one using  the ```Crud(bool create, bool read, bool update, bool delete, ...)``` method.
 
 The parameter **crudDataService** of the **Crud** method must be a class that implements the **ICrudDataService<T>** interface on the front-end project. 
 
@@ -237,13 +237,19 @@ This is an example of back-end web service to get values and titles for a drop-d
     }
 ```
 
-Other fields that you want to be shown as dropdowns with a closed list can also be configured with the **SetSelectField** method.
+Other fields that you want to be shown as dropdowns with a closed list can also be configured with the ```SetSelectField``` method.
 
-All fields to be included in the CRUD forms but not in the grid as columns should be configured as hidden (e.g. **Add(o => o.RequiredDate, true)**).
+All fields to be included in the CRUD forms but not in the grid as columns should be configured as hidden (e.g. ```Add(o => o.RequiredDate, true)```).
 
-All columns required to be included in the Update form as **read only** should be configured using the **SetReadOnlyOnUpdate(true)** method.
+All columns required to be included in the Update form as **read only** should be configured using the ```SetReadOnlyOnUpdate(true)``` method.
 
-And finally all columns included in the grid but not in the CRUD forms should be configured as "CRUD hidden" using the **SetCrudHidden(true)** method.
+You can also add components on the CRUD forms using the ```RenderCrudComponentAs<TComponent>``` method. You must define these columns as **Hidden** to show them just on CRUD forms.
+
+And finally all columns included in the grid but not in the CRUD forms should be configured as "CRUD hidden" using the ```SetCrudHidden(true)``` method.
+
+**Notes**: 
+- You can have more granularity in the "CRUD hidden" configuration. You can use the ```SetCrudHidden(bool create, bool read, bool update, bool delete)``` method to configure the columns that will be hidden on each type of form.
+- You can have more granularity in the components configuration.  You can use the ```RenderCrudComponentAs<TCreateComponent, TReadComponent, TUpdateComponent, TDeleteComponent>``` method to configure the components that will be shown on each type of form. Id you don't want to show any component for a specific type of form you must use ```NullComponent```
 
 This is an example of column definition:
 
@@ -270,6 +276,7 @@ This is an example of column definition:
         c.Add(o => o.ShipPostalCode, true);
         c.Add(o => o.ShipRegion, true);
         c.Add(o => o.ShipCountry, true);
+        c.Add(true).Titled("Images").RenderCrudComponentAs<Carousel>();
     };
 ```
 
@@ -415,4 +422,4 @@ And finally you will have to create a Blazor component for the custom form. This
 
 If you want to use a drop-down list for a field you have to define it as it was for auto-generated forms.
 
-[<- Front-end back-end API](API.md) | [Events ->](Events.md)
+[<- Front-end back-end API](API.md) | [Nested CRUD ->](Nested_crud.md)

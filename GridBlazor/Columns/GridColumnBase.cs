@@ -401,11 +401,11 @@ namespace GridBlazor.Columns
             return this;
         }
 
-        public IGridColumn<T> SetCrudHidden(bool insert, bool update, bool detail, bool delete)
+        public IGridColumn<T> SetCrudHidden(bool create, bool read, bool update, bool delete)
         {
-            if (insert) CrudHidden |= CrudHidden.INSERT;
+            if (create) CrudHidden |= CrudHidden.CREATE;
+            if (read) CrudHidden |= CrudHidden.READ;
             if (update) CrudHidden |= CrudHidden.UPDATE;
-            if (detail) CrudHidden |= CrudHidden.DETAIL;
             if (delete) CrudHidden |= CrudHidden.DELETE;
 
             return this;

@@ -288,7 +288,7 @@ namespace GridShared.Columns
         /// <summary>
         ///     Sets the column as hidden in crud views
         /// </summary>
-        IGridColumn<T> SetCrudHidden(bool insert, bool update, bool detail, bool delete);
+        IGridColumn<T> SetCrudHidden(bool create, bool read, bool update, bool delete);
 
         /// <summary>
         ///     Sets the column as hidden in all crud views

@@ -139,7 +139,7 @@ namespace GridBlazorClientSide.Server.Controllers
         {
             var repository = new OrdersRepository(_context);
             IGridServer<Order> server = new GridServer<Order>(repository.GetAll(), Request.Query,
-                true, "ordersGrid", c => ColumnCollections.OrderColumnsWithSubgridCrud(c, null, null))
+                true, "ordersGrid", c => ColumnCollections.OrderColumnsWithNestedCrud(c, null, null))
                     .WithPaging(10)
                     .Sortable()
                     .Filterable()

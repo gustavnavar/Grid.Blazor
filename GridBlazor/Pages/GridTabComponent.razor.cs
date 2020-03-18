@@ -24,6 +24,11 @@ namespace GridBlazor.Pages
         [Parameter]
         public QueryDictionary<RenderFragment> TabContent { get; set; }
 
+        protected override void OnParametersSet()
+        {
+            _shouldRender = true;
+        }
+
         protected override bool ShouldRender()
         {
             return _shouldRender;

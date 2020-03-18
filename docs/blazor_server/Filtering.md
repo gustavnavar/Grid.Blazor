@@ -47,6 +47,7 @@ You can enable a button to clear all selected filters using the ***ClearFiltersB
 * System.Byte
 * System.Double
 * System.Single
+* enum
 
 It also supports nullable types of any element of the list.
 
