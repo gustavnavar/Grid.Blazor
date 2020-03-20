@@ -104,9 +104,9 @@ namespace GridShared.Filtering
                 //get target type:
                 Type nestedTargetType = nestedIsNullable ? Nullable.GetUnderlyingType(nestedPi.PropertyType) : nestedPi.PropertyType;
 
-                // Check for null on nested properties and target object if it's a string
+                // Check for null on nested properties and not primitive (string, decimal, DateTime ans objects are not primitive)
                 // It's ok for ORM, but throw exception in linq to objects
-                if (nestedIsNullable || nestedTargetType == typeof(string))
+                if (nestedIsNullable || !nestedTargetType.IsPrimitive)
                 {
                     binaryExpression = binaryExpression == null ?
                         Expression.NotEqual(expression, Expression.Constant(null)) :
