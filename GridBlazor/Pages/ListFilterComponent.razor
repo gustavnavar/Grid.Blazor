@@ -16,15 +16,17 @@
                         {
                             bool isChecked = _filters.Any(x => x.Type.Equals("1") && x.Value.Equals(data.Value));
                             <li>
-                                @if (isChecked)
-                                {
-                                    <input type="checkbox" class="grid-filter-list" checked value="@isChecked" @onclick="e => MyClickHandler(e, isChecked, data.Value)" />
-                                }
-                                else
-                                {
-                                    <input type="checkbox" class="grid-filter-list" value="@isChecked" @onclick="e => MyClickHandler(e, isChecked, data.Value)" />
-                                }
-                                @data.Title
+                                <label>
+                                    @if (isChecked)
+                                    {
+                                        <input type="checkbox" class="grid-filter-list" checked value="@isChecked" @onclick="e => MyClickHandler(e, isChecked, data.Value)" />
+                                    }
+                                    else
+                                    {
+                                        <input type="checkbox" class="grid-filter-list" value="@isChecked" @onclick="e => MyClickHandler(e, isChecked, data.Value)" />
+                                    }
+                                    @data.Title
+                                </label>
                             </li>
                         }
                     </ul>

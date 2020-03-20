@@ -1,4 +1,4 @@
-﻿@page "/crudsubgrid"
+﻿@page "/nestedcrud"
 @using GridBlazorServerSide.ColumnCollections
 @using GridBlazorServerSide.Models
 @using GridBlazorServerSide.Resources
@@ -16,7 +16,7 @@
 <h1>Grid Sample</h1>
 
 <p>
-    This page contains a CRUD grid
+    This page contains a CRUD grid with nested CRUD forms
 </p>
 
 <p>
@@ -68,7 +68,7 @@ else
 
         var query = new QueryDictionary<StringValues>();
 
-        Action<IGridColumnCollection<Order>> columns = c => ColumnCollections.OrderColumnsWithSubgridCrud(c,
+        Action<IGridColumnCollection<Order>> columns = c => ColumnCollections.OrderColumnsWithNestedCrud(c,
             customerService.GetAllCustomers, employeeService.GetAllEmployees, shipperService.GetAllShippers, subGrids);
         
         var client = new GridClient<Order>(q => orderService.GetOrdersGridRows(columns, q),

@@ -29,4 +29,5 @@
 * [Passing grid state as parameter](Passing_grid_state_as_parameter.md)
 * [Front-end back-end API](API.md)
 * [CRUD](Crud.md)
-* [Events](Events.md)
+* [Nested CRUD](Nested_crud.md)
+* [Events and CRUD validation](Events.md)

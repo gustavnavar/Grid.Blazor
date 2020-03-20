@@ -1,4 +1,4 @@
-﻿@page "/crudsubgrid"
+﻿@page "/nestedcrud"
 @using GridBlazorClientSide.Client.ColumnCollections
 @using GridBlazorClientSide.Shared.Models
 @using Microsoft.Extensions.Primitives
@@ -12,7 +12,7 @@
 <h1>Grid Sample</h1>
 
 <p>
-    This page contains a CRUD grid
+    This page contains a CRUD grid with nested CRUD forms
 </p>
 
 <p>
@@ -36,6 +36,11 @@ else
 {
     private CGrid<Order> _grid;
     private Task _task;
+
+    protected override void OnInitialized()
+    {
+        CultureInfo.CurrentCulture = new CultureInfo(Program.Culture);
+    }
 
     protected override async Task OnParametersSetAsync()
     {
@@ -67,7 +72,7 @@ else
         string url = NavigationManager.BaseUri + "api/SampleData/OrderColumnsWithSubgridCrud";
 
         var client = new GridClient<Order>(HttpClient, url, query, false, "ordersGrid", c =>
-            ColumnCollections.OrderColumnsWithSubgridCrud(c, NavigationManager.BaseUri, subGrids), locale)
+            ColumnCollections.OrderColumnsWithNestedCrud(c, NavigationManager.BaseUri, subGrids), locale)
             .Sortable()
             .Filterable()
             .SetStriped(true)

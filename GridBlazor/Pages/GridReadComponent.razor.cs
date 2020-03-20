@@ -46,6 +46,8 @@ namespace GridBlazor.Pages
             _tabGroups = GridComponent.Grid.Columns
                 .Where(r => !string.IsNullOrWhiteSpace(r.TabGroup) && _renderFragments.Keys.Any(s => s.Equals(r.Name)))
                 .Select(r => r.TabGroup).Distinct();
+
+            _shouldRender = true;
         }
         
         private RenderFragment CreateSubGridComponent(ICGrid grid) => builder =>

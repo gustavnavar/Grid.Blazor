@@ -19,7 +19,7 @@
                 && column.UpdateComponentType == null && column.DeleteComponentType == null)
             {
                 (Type type, object value) = ((IGridColumn<T>)column).GetTypeAndValue(Item);
-                <div class="form-group row" style="@(column.CrudHidden.HasFlag(CrudHidden.INSERT)?"display:none;":"")">
+                <div class="form-group row" style="@(column.CrudHidden.HasFlag(CrudHidden.CREATE)?"display:none;":"")">
                     <label for="@column.FieldName" class="col-form-label col-md-2">@column.Title</label>
                     <div class="@(type == typeof(bool)?"col-md-1":"col-md-5")">
                         @if (((IGridColumn<T>)column).IsSelectField.IsSelectKey)
@@ -405,7 +405,7 @@
             }
             else if (column.CreateComponentType != null && string.IsNullOrWhiteSpace(column.TabGroup))
             {
-                <div class="form-group row" style="@(column.CrudHidden.HasFlag(CrudHidden.INSERT) ? "display:none;" : "")">
+                <div class="form-group row" style="@(column.CrudHidden.HasFlag(CrudHidden.CREATE) ? "display:none;" : "")">
                     <label for="@column.FieldName" class="col-form-label col-md-2">@column.Title</label>
                     <div class="col-md-10">
                         <div class="card panel panel-default">

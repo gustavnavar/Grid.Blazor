@@ -6,8 +6,8 @@ namespace GridShared.Columns
     public enum CrudHidden
     {
         NONE = 0,
-        DETAIL = 1,
-        INSERT = 2,
+        CREATE = 1,
+        READ = 2,
         UPDATE = 4,
         DELETE = 8
     }

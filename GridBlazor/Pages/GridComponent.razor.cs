@@ -168,6 +168,8 @@ namespace GridBlazor.Pages
             var exceptQueryParameters = new List<string> { GridPager.DefaultPageSizeQueryParameter };
             _changePageSizeUrl = queryBuilder.GetQueryStringExcept(exceptQueryParameters);
             _pageSize = Grid.Pager.ChangePageSize && Grid.Pager.QueryPageSize > 0 ? Grid.Pager.QueryPageSize : Grid.Pager.PageSize;
+
+            _shouldRender = true;
         }
 
         private void InitSubGridVars()

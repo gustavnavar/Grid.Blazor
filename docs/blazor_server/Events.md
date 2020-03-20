@@ -1,21 +1,29 @@
 ## Blazor server-side
 
-# Events
+# Events and CRUD validation
 
 [Index](Documentation.md)
 
 GridBlazor component provides some events to notify other classes or objects when the grid has changed. The supported events are:
-- PagerChanged: it's fired when the page number and/or page size are changed 
-- SortChanged: it's fired when sorting is changed 
-- ExtSortChanged: it's fired when extended sorting or grouping are changed 
-- FilterChanged: it's fired when a filter is created, changed or removed
-- SearchChanged: it's fired when the a new word is searched or search has been cleared 
+- ```Func<object, PagerEventArgs, Task> PagerChanged```: it's fired when the page number and/or page size are changed 
+- ```Func<object, SortEventArgs, Task> SortChanged```: it's fired when sorting is changed 
+- ```Func<object, ExtSortEventArgs, Task> ExtSortChanged```: it's fired when extended sorting or grouping are changed 
+- ```Func<object, FilterEventArgs, Task> FilterChanged```: it's fired when a filter is created, changed or removed
+- ```Func<object, SearchEventArgs, Task> SearchChanged```: it's fired when the a new word is searched or search has been cleared 
 
-If you whant to handle an event you have to create a reference to the ```GridCompoment```. 
+And these events are provided to allow running tasks on changing grid items:
+- ```Func<GridCreateComponent<T>, T, Task<bool>> BeforeInsert```: it's fired before an item is inserted
+- ```Func<GridCreateComponent<T>, T, Task<bool>> BeforeUpdate```: it's fired before an item is updated
+- ```Func<GridCreateComponent<T>, T, Task<bool>> BeforeDelete```: it's fired before an item is deleted
+- ```Func<GridCreateComponent<T>, T, Task> AfterInsert```: it's fired after an item is inserted
+- ```Func<GridCreateComponent<T>, T, Task> AfterUpdate```: it's fired after an item is updated
+- ```Func<GridCreateComponent<T>, T, Task> AfterDelete```: it's fired after an item is deleted
+
+If you want to handle an event you have to create a reference to the ```GridCompoment```. 
 Then you have to add the events that you want to handle in the ```OnAfterRender``` method.
 And finally you have to write the handlers for each event.
 
-You can see here an example handling all component events that writes all grid changes on the console:
+You can see here an example handling all component events that writes some grid changes on the console and validates a grid item before being inserted, updated and deleted:
 
 ```c#
     <GridComponent @ref="_gridComponent" T="Order" Grid="@_grid"></GridComponent>
@@ -34,6 +42,10 @@ You can see here an example handling all component events that writes all grid c
                 _gridComponent.ExtSortChanged += ExtSortChanged;
                 _gridComponent.FilterChanged += FilterChanged;
                 _gridComponent.SearchChanged += SearchChanged;
+
+                _gridComponent.BeforeInsert += BeforeInsert;
+                _gridComponent.BeforeUpdate += BeforeUpdate;
+                _gridComponent.BeforeDelete += BeforeDelete;
             }
         }
 
@@ -78,9 +90,50 @@ You can see here an example handling all component events that writes all grid c
             Console.WriteLine("Search has changed: SearchValue: {0}.", e.SearchValue);
             await Task.CompletedTask;
         }
+
+        private async Task<bool> BeforeInsert(GridCreateComponent<Order> component, Order item)
+        {
+            var orderValidator = new OrderValidator();
+            var valid = await orderValidator.ValidateAsync(item);
+
+            if (!valid.IsValid)
+            {
+                component.Error = valid.ToString();
+            }
+
+            return valid.IsValid;
+        }
+
+        private async Task<bool> BeforeUpdate(GridUpdateComponent<Order> component, Order item)
+        {
+            var orderValidator = new OrderValidator();
+            var valid = await orderValidator.ValidateAsync(item);
+
+            if (!valid.IsValid)
+            {
+                component.Error = valid.ToString();
+            }
+
+            return valid.IsValid;
+        }
+
+        private async Task<bool> BeforeDelete(GridDeleteComponent<Order> component, Order item)
+        {
+            var orderValidator = new OrderValidator();
+            var valid = await orderValidator.ValidateAsync(item);
+
+            if (!valid.IsValid)
+            {
+                component.Error = valid.ToString();
+            }
+
+            return valid.IsValid;
+        }
     }
 ```
 
-Notice that all handlers must be async.
+Notice that all handlers must be async. 
 
-[<- CRUD](Crud.md)
+In this sample ```OrderValidator``` is a class that validates the ```Order``` object to be modified. If it's a valid item the event returns ```true```.  If the item is not valid the event writes an error and returns ```false```. 
+
+[<- Nested CRUD](Nested_crud.md)

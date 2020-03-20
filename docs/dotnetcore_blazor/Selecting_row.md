@@ -54,4 +54,22 @@ When items are selected in grid, collection of selected items are available usin
 
 In the GridComponent.Demo project you will find another example where the order details are shown on a component when a row is selected.
 
+## Selecting rows for subgrids
+
+GridBlazor 1.3.30 and newer versions implement ```OnRowClickedActions``` to allow row click for all subgrids.
+
+You have to create a ```List<Action<object>>()``` and add all row click method for nested subgrids in the same order they are nested:
+
+```c#
+    _rowClickActions = new List<Action<object>>();
+    _rowClickActions.Add(OrderInfo);
+    _rowClickActions.Add(OrderDetailInfo);
+```
+
+And finally you have to pass the list as parameter of the ```GridComponent```:
+
+```c#
+    <GridComponent T="Order" Grid="@_grid" OnRowClickedActions="@_rowClickActions" />
+```
+
 [<- Grouping](Grouping.md) | [Searching ->](Searching.md)

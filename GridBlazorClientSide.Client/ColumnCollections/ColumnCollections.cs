@@ -257,8 +257,8 @@ namespace GridBlazorClientSide.Client.ColumnCollections
             c.Add(true).Titled("Images").RenderCrudComponentAs<Carousel, Carousel, NullComponent, NullComponent>();
         };
 
-        public static Action<IGridColumnCollection<Order>, string, Func<object[], bool, bool, bool, bool, Task<IGrid>>> 
-            OrderColumnsWithSubgridCrud  = (c, path, s) =>
+        public static Action<IGridColumnCollection<Order>, string, Func<object[], bool, bool, bool, bool, Task<IGrid>>>
+            OrderColumnsWithNestedCrud = (c, path, subgrids) =>
         {
             /* Adding "OrderID" column: */
             c.Add(o => o.OrderID).SetPrimaryKey(true).Titled(SharedResource.Number).SetWidth(100);
@@ -317,7 +317,7 @@ namespace GridBlazorClientSide.Client.ColumnCollections
             c.Add(o => o.ShipCountry, true);
 
             /* Adding hidden "OrderDetails" column for a CRUD subgrid: */
-            c.Add(o => o.OrderDetails).Titled("Order Details").SubGrid("tabGroup1", s, ("OrderID", "OrderID"));
+            c.Add(o => o.OrderDetails).Titled("Order Details").SubGrid("tabGroup1", subgrids, ("OrderID", "OrderID"));
 
             /* Adding not mapped column, that renders a component in a tab */
             c.Add(true).Titled("Images").RenderCrudComponentAs<NullComponent, NullComponent, Carousel, Carousel>().SetTabGroup("tabGroup1");
@@ -391,7 +391,7 @@ namespace GridBlazorClientSide.Client.ColumnCollections
 
         public static Action<IGridColumnCollection<Order>, string, IEnumerable<SelectItem>, 
             Func<object[], bool, bool, bool, bool, Task<IGrid>>> 
-            OrderColumnsAllFeatures = (c, path, list, s) =>
+            OrderColumnsAllFeatures = (c, path, list, subgrids) =>
         {
             /* Adding "OrderID" column: */
             c.Add(o => o.OrderID).SetPrimaryKey(true).Titled(SharedResource.Number).SetWidth(100);
@@ -465,7 +465,7 @@ namespace GridBlazorClientSide.Client.ColumnCollections
             c.Add(o => o.ShipCountry, true);
 
             /* Adding hidden "OrderDetails" column for a CRUD subgrid: */
-            c.Add(o => o.OrderDetails).Titled("Order Details").SubGrid("tabGroup1", s, ("OrderID", "OrderID"));
+            c.Add(o => o.OrderDetails).Titled("Order Details").SubGrid("tabGroup1", subgrids, ("OrderID", "OrderID"));
         };
 
         public static Action<IGridColumnCollection<Order>, IList<Action<object>>> OrderColumnsMultipleGrids = (c, actions) =>
