@@ -83,7 +83,10 @@ Dependency injection for DbContext can produce threading and cache issues.
 
 ### Column definition
 
-The column definition must include the primary key using the **SetPrimaryKey(true)** method. 
+The column definition must include the primary keys:
+- using the **SetPrimaryKey(true)** method for columns with auto-generated keys, or
+- using the **SetPrimaryKey(true, false)** method for columns with manually generated keys, or
+- using the **SetPrimaryKey(true).SetSelectField(...)**  method for columns with keys selected from a list
 
 If the grid model includes foreign keys, the column definition should include them using the **SetSelectField** in order to get the options for the ```<select>``` element.
 
