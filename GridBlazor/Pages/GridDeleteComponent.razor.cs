@@ -77,6 +77,11 @@ namespace GridBlazor.Pages
             {
                 await GridComponent.DeleteItem(this);
             }
+            catch (GridException e)
+            {
+                _shouldRender = true;
+                Error = string.IsNullOrWhiteSpace(e.Code) ? e.Message : e.Code + " - " + e.Message;
+            }
             catch (Exception)
             {
                 _shouldRender = true;

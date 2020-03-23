@@ -58,9 +58,16 @@ namespace GridBlazorServerSide.Services
         {
             using (var context = new NorthwindDbContext(_options))
             {
-                var repository = new OrderDetailsRepository(context);
-                await repository.Insert(item);
-                repository.Save();
+                try
+                {
+                    var repository = new OrderDetailsRepository(context);
+                    await repository.Insert(item);
+                    repository.Save();
+                }
+                catch (Exception e)
+                {
+                    throw new GridException("DETSRV-01", e);
+                }
             }
         }
 
@@ -68,9 +75,16 @@ namespace GridBlazorServerSide.Services
         {
             using (var context = new NorthwindDbContext(_options))
             {
-                var repository = new OrderDetailsRepository(context);
-                await repository.Update(item);
-                repository.Save();
+                try
+                {
+                    var repository = new OrderDetailsRepository(context);
+                    await repository.Update(item);
+                    repository.Save();
+                }
+                catch (Exception e)
+                {
+                    throw new GridException(e);
+                }
             }
         }
 
@@ -78,10 +92,17 @@ namespace GridBlazorServerSide.Services
         {
             using (var context = new NorthwindDbContext(_options))
             {
-                var order = await Get(keys);
-                var repository = new OrderDetailsRepository(context);
-                repository.Delete(order);
-                repository.Save();
+                try
+                {
+                    var order = await Get(keys);
+                    var repository = new OrderDetailsRepository(context);
+                    repository.Delete(order);
+                    repository.Save();
+                }
+                catch (Exception e)
+                {
+                    throw new GridException("Error deleting the order detail");
+                }
             }
         }
     }

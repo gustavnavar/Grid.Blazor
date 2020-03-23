@@ -30,4 +30,4 @@
 * [Front-end back-end API](API.md)
 * [CRUD](Crud.md)
 * [Nested CRUD](Nested_crud.md)
-* [Events and CRUD validation](Events.md)
+* [Events, exceptions and CRUD validation](Events.md)
