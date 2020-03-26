@@ -93,6 +93,8 @@ namespace GridBlazor.Pages
 
         [Parameter]
         public string TableCssClass { get; set; } = "table grid-table";
+        [Parameter]
+        public string TableWrapCssClass { get; set; } = "table-wrap";
 
         [Parameter]
         public string GridHeaderCssClass { get; set; } = "grid-header";

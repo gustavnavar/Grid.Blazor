@@ -224,198 +224,200 @@
                             <GridExtSortHeaderComponent T="@T" Grid="@Grid"></GridExtSortHeaderComponent>
                         </CascadingValue>
                     }
-                    <table class="@TableCssClass @(Grid.ComponentOptions.Striped && _hasSubGrid ? "substriped" : Grid.ComponentOptions.Striped ? "striped" : "")">
-                        <thead>
-                            <tr>
-                                @if (_hasSubGrid)
-                                {
-                                    <th class="@GridHeaderCssClass" style="width:1%;"></th>
-                                }
-                                @if (_requiredTotalsColumn)
-                                {
-                                    <th class="@GridHeaderCssClass" style="width:3%;"></th>
-                                }
-                                @if (Grid.ReadEnabled)
-                                {
-                                    <th class="@GridHeaderCssClass" style="width:1%;"></th>
-                                }
-                                @if (Grid.UpdateEnabled)
-                                {
-                                    <th class="@GridHeaderCssClass" style="width:1%;"></th>
-                                }
-                                @if (Grid.DeleteEnabled)
-                                {
-                                    <th class="@GridHeaderCssClass" style="width:1%;"></th>
-                                }
-                                @foreach (IGridColumn column in Grid.Columns)
-                                {
-                                    <CascadingValue Value=@this Name="GridComponent">
-                                        <GridHeaderComponent T="@T" Column="@column" FilterSettings="@((QueryStringFilterSettings)Grid.Settings.FilterSettings)" SortingSettings="@((QueryStringSortSettings)Grid.Settings.SortSettings)" Filters="@_filterComponents"></GridHeaderComponent>
-                                    </CascadingValue>
-                                }
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @if (Grid.DisplayingItemsCount == 0)
-                            {
-                                <tr class="@GridEmptyTextCssClass">
+                    <div class="@TableWrapCssClass">
+                        <table class="@TableCssClass @(Grid.ComponentOptions.Striped && _hasSubGrid ? "substriped" : Grid.ComponentOptions.Striped ? "striped" : "")">
+                            <thead>
+                                <tr>
                                     @if (_hasSubGrid)
                                     {
-                                        <td class="@GridCellCssClass" data-name=""></td>
+                                        <th class="@GridHeaderCssClass" style="width:1%;"></th>
                                     }
                                     @if (_requiredTotalsColumn)
                                     {
-                                        <td class="@GridCellCssClass" data-name=""></td>
+                                        <th class="@GridHeaderCssClass" style="width:3%;"></th>
                                     }
                                     @if (Grid.ReadEnabled)
                                     {
-                                        <td class="@GridButtonCellCssClass" data-name=""></td>
+                                        <th class="@GridHeaderCssClass" style="width:1%;"></th>
                                     }
                                     @if (Grid.UpdateEnabled)
                                     {
-                                        <td class="@GridButtonCellCssClass" data-name=""></td>
+                                        <th class="@GridHeaderCssClass" style="width:1%;"></th>
                                     }
                                     @if (Grid.DeleteEnabled)
                                     {
-                                        <td class="@GridButtonCellCssClass" data-name=""></td>
+                                        <th class="@GridHeaderCssClass" style="width:1%;"></th>
                                     }
-                                    <td colspan="@Grid.Columns.Count()">
-                                        @Grid.EmptyGridText
-                                    </td>
+                                    @foreach (IGridColumn column in Grid.Columns)
+                                    {
+                                        <CascadingValue Value=@this Name="GridComponent">
+                                            <GridHeaderComponent T="@T" Column="@column" FilterSettings="@((QueryStringFilterSettings)Grid.Settings.FilterSettings)" SortingSettings="@((QueryStringSortSettings)Grid.Settings.SortSettings)" Filters="@_filterComponents"></GridHeaderComponent>
+                                        </CascadingValue>
+                                    }
                                 </tr>
-                            }
-                            else
-                            {
-                                int i = 0;
-                                if (Grid.GroupingEnabled)
+                            </thead>
+                            <tbody>
+                                @if (Grid.DisplayingItemsCount == 0)
                                 {
-                                    <CascadingValue Value=@this Name="GridComponent">
-                                        <GridGroupRowsComponent T="@T" Grid="@Grid" Values="@(new List<Tuple<string, object>>())" HasSubGrid="@_hasSubGrid" RequiredTotalsColumn="@_requiredTotalsColumn" ItemsToDisplay="@Grid.ItemsToDisplay" IsVisible="true" I="@i"></GridGroupRowsComponent>
-                                    </CascadingValue>
+                                    <tr class="@GridEmptyTextCssClass">
+                                        @if (_hasSubGrid)
+                                        {
+                                            <td class="@GridCellCssClass" data-name=""></td>
+                                        }
+                                        @if (_requiredTotalsColumn)
+                                        {
+                                            <td class="@GridCellCssClass" data-name=""></td>
+                                        }
+                                        @if (Grid.ReadEnabled)
+                                        {
+                                            <td class="@GridButtonCellCssClass" data-name=""></td>
+                                        }
+                                        @if (Grid.UpdateEnabled)
+                                        {
+                                            <td class="@GridButtonCellCssClass" data-name=""></td>
+                                        }
+                                        @if (Grid.DeleteEnabled)
+                                        {
+                                            <td class="@GridButtonCellCssClass" data-name=""></td>
+                                        }
+                                        <td colspan="@Grid.Columns.Count()">
+                                            @Grid.EmptyGridText
+                                        </td>
+                                    </tr>
                                 }
                                 else
                                 {
-                                    foreach (object item in Grid.ItemsToDisplay)
+                                    int i = 0;
+                                    if (Grid.GroupingEnabled)
                                     {
-                                        int capturedI = i;
-                                        if (Grid.ComponentOptions.Selectable)
+                                        <CascadingValue Value=@this Name="GridComponent">
+                                            <GridGroupRowsComponent T="@T" Grid="@Grid" Values="@(new List<Tuple<string, object>>())" HasSubGrid="@_hasSubGrid" RequiredTotalsColumn="@_requiredTotalsColumn" ItemsToDisplay="@Grid.ItemsToDisplay" IsVisible="true" I="@i"></GridGroupRowsComponent>
+                                        </CascadingValue>
+                                    }
+                                    else
+                                    {
+                                        foreach (object item in Grid.ItemsToDisplay)
                                         {
-                                            <tr class="grid-row@(SelectedRow == capturedI || SelectedRows.Contains(capturedI) || (Grid.ComponentOptions.InitSelection && capturedI == 0 && SelectedRow == -1 && SelectedRows.Count == 0) ? " grid-row-selected" : "") @Grid.GetRowCssClasses(item)" @onclick="(args) => RowClicked(capturedI, item, args)" @onclick:stopPropagation>
-                                                @if (_hasSubGrid)
+                                            int capturedI = i;
+                                            if (Grid.ComponentOptions.Selectable)
+                                            {
+                                                <tr class="grid-row@(SelectedRow == capturedI || SelectedRows.Contains(capturedI) || (Grid.ComponentOptions.InitSelection && capturedI == 0 && SelectedRow == -1 && SelectedRows.Count == 0) ? " grid-row-selected" : "") @Grid.GetRowCssClasses(item)" @onclick="(args) => RowClicked(capturedI, item, args)" @onclick:stopPropagation>
+                                                    @if (_hasSubGrid)
+                                                    {
+                                                        <td class="@GridCellCssClass @GridSubGridCssClass" data-is-rendered="false" data-is-visible="false" data-name="" @onclick="() => SubGridClicked(capturedI)" @onclick:stopPropagation>
+                                                            @if (IsSubGridVisible[capturedI])
+                                                            {
+                                                                <span class="subgrid-caret-down">&nbsp;</span>
+                                                            }
+                                                            else
+                                                            {
+                                                                <span class="subgrid-caret">&nbsp;</span>
+                                                            }
+                                                        </td>
+                                                    }
+                                                    @if (_requiredTotalsColumn)
+                                                    {
+                                                        <td class="@GridCellCssClass" data-name=""></td>
+                                                    }
+                                                    @if (Grid.ReadEnabled)
+                                                    {
+                                                        <td class="@GridButtonCellCssClass" data-name=""><button class='grid-button grid-button-view btn btn-sm btn-outline-secondary' title="@Strings.ReadItem" @onclick="@(e => ReadHandler(item))" type="button" @onclick:stopPropagation></button></td>
+                                                    }
+                                                    @if (Grid.UpdateEnabled)
+                                                    {
+                                                        <td class="@GridButtonCellCssClass" data-name=""><button class='grid-button grid-button-edit btn btn-sm btn-outline-secondary' title="@Strings.UpdateItem" @onclick="@(e => UpdateHandler(item))" type="button" @onclick:stopPropagation></button></td>
+                                                    }
+                                                    @if (Grid.DeleteEnabled)
+                                                    {
+                                                        <td class="@GridButtonCellCssClass" data-name=""><button class='grid-button grid-button-delete btn btn-sm btn-outline-secondary' title="@Strings.DeleteItem" @onclick="@(e => DeleteHandler(item))" type="button" @onclick:stopPropagation></button></td>
+                                                    }
+                                                    @foreach (IGridColumn column in Grid.Columns)
+                                                    {
+                                                        <GridCellComponent T="@T" Column="@column" Item="@item" TdClass="@GridCellCssClass"></GridCellComponent>
+                                                    }
+                                                </tr>
+                                            }
+                                            else
+                                            {
+                                                <tr class="grid-row @Grid.GetRowCssClasses(item)">
+                                                    @if (_hasSubGrid)
+                                                    {
+                                                        <td class="@GridCellCssClass @GridSubGridCssClass" data-is-rendered="false" data-is-visible="false" data-name="" @onclick="() => SubGridClicked(capturedI)" @onclick:stopPropagation>
+                                                            @if (IsSubGridVisible[capturedI])
+                                                            {
+                                                                <span class="subgrid-caret-down">&nbsp;</span>
+                                                            }
+                                                            else
+                                                            {
+                                                                <span class="subgrid-caret">&nbsp;</span>
+                                                            }
+                                                        </td>
+                                                    }
+                                                    @if (_requiredTotalsColumn)
+                                                    {
+                                                        <td class="@GridCellCssClass" data-name=""></td>
+                                                    }
+                                                    @if (Grid.ReadEnabled)
+                                                    {
+                                                        <td class="@GridButtonCellCssClass" data-name=""><button class='grid-button grid-button-view btn btn-sm btn-outline-secondary' title="@Strings.ReadItem" @onclick="@(e => ReadHandler(item))" type="button" @onclick:stopPropagation></button></td>
+                                                    }
+                                                    @if (Grid.UpdateEnabled)
+                                                    {
+                                                        <td class="@GridButtonCellCssClass" data-name=""><button class='grid-button grid-button-edit btn btn-sm btn-outline-secondary' title="@Strings.UpdateItem" @onclick="@(e => UpdateHandler(item))" type="button" @onclick:stopPropagation></button></td>
+                                                    }
+                                                    @if (Grid.DeleteEnabled)
+                                                    {
+                                                        <td class="@GridButtonCellCssClass" data-name=""><button class='grid-button grid-button-delete btn btn-sm btn-outline-secondary' title="@Strings.DeleteItem" @onclick="@(e => DeleteHandler(item))" type="button" @onclick:stopPropagation></button></td>
+                                                    }
+                                                    @foreach (IGridColumn column in Grid.Columns)
+                                                    {
+                                                        <GridCellComponent T="@T" Column="@column" Item="@item" TdClass="@GridCellCssClass"></GridCellComponent>
+                                                    }
+                                                </tr>
+                                            }
+                                            if (_hasSubGrid)
+                                            {
+                                                int cols = 0;
+                                                if (_requiredTotalsColumn)
                                                 {
-                                                    <td class="@GridCellCssClass @GridSubGridCssClass" data-is-rendered="false" data-is-visible="false" data-name="" @onclick="() => SubGridClicked(capturedI)" @onclick:stopPropagation>
-                                                        @if (IsSubGridVisible[capturedI])
-                                                        {
-                                                            <span class="subgrid-caret-down">&nbsp;</span>
-                                                        }
-                                                        else
-                                                        {
-                                                            <span class="subgrid-caret">&nbsp;</span>
-                                                        }
-                                                    </td>
+                                                    cols++;
                                                 }
-                                                @if (_requiredTotalsColumn)
+                                                if (Grid.ReadEnabled)
                                                 {
-                                                    <td class="@GridCellCssClass" data-name=""></td>
+                                                    cols++;
                                                 }
-                                                @if (Grid.ReadEnabled)
+                                                if (Grid.UpdateEnabled)
                                                 {
-                                                    <td class="@GridButtonCellCssClass" data-name=""><button class='grid-button grid-button-view btn btn-sm btn-outline-secondary' title="@Strings.ReadItem" @onclick="@(e => ReadHandler(item))" type="button" @onclick:stopPropagation></button></td>
+                                                    cols++;
                                                 }
-                                                @if (Grid.UpdateEnabled)
+                                                if (Grid.DeleteEnabled)
                                                 {
-                                                    <td class="@GridButtonCellCssClass" data-name=""><button class='grid-button grid-button-edit btn btn-sm btn-outline-secondary' title="@Strings.UpdateItem" @onclick="@(e => UpdateHandler(item))" type="button" @onclick:stopPropagation></button></td>
+                                                    cols++;
                                                 }
-                                                @if (Grid.DeleteEnabled)
+                                                cols += Grid.Columns.Count();
+                                                var values = Grid.GetSubGridKeyValues(item);
+                                                IEnumerable<Action<object>> onRowClickedActions = null;
+                                                if (OnRowClickedActions != null && OnRowClickedActions.Count() > 1)
                                                 {
-                                                    <td class="@GridButtonCellCssClass" data-name=""><button class='grid-button grid-button-delete btn btn-sm btn-outline-secondary' title="@Strings.DeleteItem" @onclick="@(e => DeleteHandler(item))" type="button" @onclick:stopPropagation></button></td>
+                                                    onRowClickedActions = OnRowClickedActions.Where(r => !r.Equals(OnRowClickedActions.First()));
                                                 }
-                                                @foreach (IGridColumn column in Grid.Columns)
-                                                {
-                                                    <GridCellComponent T="@T" Column="@column" Item="@item" TdClass="@GridCellCssClass"></GridCellComponent>
-                                                }
-                                            </tr>
+                                                <tr class="subgrid-row">
+                                                    <CascadingValue Value=@this Name="GridComponent">
+                                                        <SubGridComponent T="@T" GridPosition="@capturedI" Cols="@cols" Values="@values" OnRowClickedActions="onRowClickedActions"></SubGridComponent>
+                                                    </CascadingValue>
+                                                </tr>
+                                            }
+                                            i++;
                                         }
-                                        else
-                                        {
-                                            <tr class="grid-row @Grid.GetRowCssClasses(item)">
-                                                @if (_hasSubGrid)
-                                                {
-                                                    <td class="@GridCellCssClass @GridSubGridCssClass" data-is-rendered="false" data-is-visible="false" data-name="" @onclick="() => SubGridClicked(capturedI)" @onclick:stopPropagation>
-                                                        @if (IsSubGridVisible[capturedI])
-                                                        {
-                                                            <span class="subgrid-caret-down">&nbsp;</span>
-                                                        }
-                                                        else
-                                                        {
-                                                            <span class="subgrid-caret">&nbsp;</span>
-                                                        }
-                                                    </td>
-                                                }
-                                                @if (_requiredTotalsColumn)
-                                                {
-                                                    <td class="@GridCellCssClass" data-name=""></td>
-                                                }
-                                                @if (Grid.ReadEnabled)
-                                                {
-                                                    <td class="@GridButtonCellCssClass" data-name=""><button class='grid-button grid-button-view btn btn-sm btn-outline-secondary' title="@Strings.ReadItem" @onclick="@(e => ReadHandler(item))" type="button" @onclick:stopPropagation></button></td>
-                                                }
-                                                @if (Grid.UpdateEnabled)
-                                                {
-                                                    <td class="@GridButtonCellCssClass" data-name=""><button class='grid-button grid-button-edit btn btn-sm btn-outline-secondary' title="@Strings.UpdateItem" @onclick="@(e => UpdateHandler(item))" type="button" @onclick:stopPropagation></button></td>
-                                                }
-                                                @if (Grid.DeleteEnabled)
-                                                {
-                                                    <td class="@GridButtonCellCssClass" data-name=""><button class='grid-button grid-button-delete btn btn-sm btn-outline-secondary' title="@Strings.DeleteItem" @onclick="@(e => DeleteHandler(item))" type="button" @onclick:stopPropagation></button></td>
-                                                }
-                                                @foreach (IGridColumn column in Grid.Columns)
-                                                {
-                                                    <GridCellComponent T="@T" Column="@column" Item="@item" TdClass="@GridCellCssClass"></GridCellComponent>
-                                                }
-                                            </tr>
-                                        }
-                                        if (_hasSubGrid)
-                                        {
-                                            int cols = 0;
-                                            if (_requiredTotalsColumn)
-                                            {
-                                                cols++;
-                                            }
-                                            if (Grid.ReadEnabled)
-                                            {
-                                                cols++;
-                                            }
-                                            if (Grid.UpdateEnabled)
-                                            {
-                                                cols++;
-                                            }
-                                            if (Grid.DeleteEnabled)
-                                            {
-                                                cols++;
-                                            }
-                                            cols += Grid.Columns.Count();
-                                            var values = Grid.GetSubGridKeyValues(item);
-                                            IEnumerable<Action<object>> onRowClickedActions = null;
-                                            if (OnRowClickedActions != null && OnRowClickedActions.Count() > 1)
-                                            {
-                                                onRowClickedActions = OnRowClickedActions.Where(r => !r.Equals(OnRowClickedActions.First()));
-                                            }
-                                            <tr class="subgrid-row">
-                                                <CascadingValue Value=@this Name="GridComponent">
-                                                    <SubGridComponent T="@T" GridPosition="@capturedI" Cols="@cols" Values="@values" OnRowClickedActions="onRowClickedActions"></SubGridComponent>
-                                                </CascadingValue>
-                                            </tr>
-                                        }
-                                        i++;
                                     }
                                 }
-                            }
-                            @if (_hasTotals)
-                            {
-                                <GridTotalsComponent Grid="@Grid"></GridTotalsComponent>
-                            }
-                        </tbody>
-                    </table>
+                                @if (_hasTotals)
+                                {
+                                    <GridTotalsComponent Grid="@Grid"></GridTotalsComponent>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
                     <div class="@GridFooterCssClass">
                         @if (Grid.ComponentOptions.ShowGridItemsCount)
                         {
