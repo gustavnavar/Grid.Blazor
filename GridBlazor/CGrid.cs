@@ -83,6 +83,9 @@ namespace GridBlazor
             ReadEnabled = false;
             UpdateEnabled = false;
             DeleteEnabled = false;
+
+            ButtonComponents = new QueryDictionary<(string Label, Type ComponentType, IList<Action<object>> Actions, 
+                IList<Func<object, Task>> Functions, object Object)>();
         }
 
         [Obsolete("This constructor is obsolete. Use one including an HttpClient parameter.", false)]
@@ -126,6 +129,9 @@ namespace GridBlazor
             ReadEnabled = false;
             UpdateEnabled = false;
             DeleteEnabled = false;
+
+            ButtonComponents = new QueryDictionary<(string Label, Type ComponentType, IList<Action<object>> Actions,
+                IList<Func<object, Task>> Functions, object Object)>();
         }
 
         public CGrid(Func<QueryDictionary<StringValues>, ItemsDTO<T>> dataService,
@@ -169,6 +175,9 @@ namespace GridBlazor
             ReadEnabled = false;
             UpdateEnabled = false;
             DeleteEnabled = false;
+
+            ButtonComponents = new QueryDictionary<(string Label, Type ComponentType, IList<Action<object>> Actions,
+                IList<Func<object, Task>> Functions, object Object)>();
         }
 
         public CGrid(Func<QueryDictionary<StringValues>, Task<ItemsDTO<T>>> dataServiceAsync,
@@ -211,6 +220,9 @@ namespace GridBlazor
             ReadEnabled = false;
             UpdateEnabled = false;
             DeleteEnabled = false;
+
+            ButtonComponents = new QueryDictionary<(string Label, Type ComponentType, IList<Action<object>> Actions,
+                IList<Func<object, Task>> Functions, object Object)>();
         }
 
         /// <summary>
@@ -457,6 +469,8 @@ namespace GridBlazor
         public IList<Func<object, Task>> DeleteFunctions { get; internal set; }
 
         public object DeleteObject { get; internal set; }
+
+        public QueryDictionary<(string Label, Type ComponentType, IList<Action<object>> Actions, IList<Func<object, Task>> Functions, object Object)> ButtonComponents { get; internal set; }
 
         public bool Keyboard { get; internal set; } = false;
 

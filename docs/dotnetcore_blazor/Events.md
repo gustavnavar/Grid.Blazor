@@ -193,4 +193,4 @@ This is an example of a CRUD form error:
 
 ![](../images/Crud_error.png)
 
-[<- Nested CRUD](Nested_crud.md)
+[<- Nested CRUD](Nested_crud.md) | [Button components on the grid ->](Button_components.md)

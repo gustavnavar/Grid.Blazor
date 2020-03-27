@@ -200,6 +200,15 @@
                                     <button class="grid-button grid-button-add btn btn-sm btn-outline-secondary" type="button" title="@Strings.CreateItem" @onclick="CreateHandler" @onclick:stopPropagation></button>
                                 </div>
                             }
+                            @if (Grid.ButtonComponents != null && Grid.ButtonComponents.Count() > 0)
+                            {
+                                <div class="row grid-button-components">
+                                    @foreach (var key in Grid.ButtonComponents.Keys)
+                                    {
+                                        <button class="grid-button grid-button-component btn btn-sm btn-outline-secondary" type="button" title="@Grid.ButtonComponents.Get(key).Label" @onclick="() => ButtonComponentHandler(key)" @onclick:stopPropagation>@Grid.ButtonComponents.Get(key).Label</button>
+                                    }
+                                </div>
+                            }
                             @if (Grid.EnablePaging && Grid.Pager.ChangePageSize)
                             {
                                 <div class="row grid-change-page-size form-group" data-change-page-size-url="@_changePageSizeUrl">
@@ -439,54 +448,58 @@
     }
     else if (Grid.Mode == GridMode.Create && Grid.CreateEnabled)
     {
-        <CascadingValue Value=@this Name="GridComponent">
-            @if (Grid.CreateComponent == null)
-            {
+        if (Grid.CreateComponent == null)
+        {
+            <CascadingValue Value=@this Name="GridComponent">
                 <GridCreateComponent T="@T" Item="@_item"></GridCreateComponent>
-            }
-            else
-            {
-                @CrudRender
-            }
-        </CascadingValue>
+            </CascadingValue>
+        }
+        else
+        {
+            @CrudRender
+        }
     }
     else if (Grid.Mode == GridMode.Read && Grid.ReadEnabled)
     {
-        <CascadingValue Value=@this Name="GridComponent">
-            @if (Grid.ReadComponent == null)
-            {
+        if (Grid.ReadComponent == null)
+        {
+            <CascadingValue Value=@this Name="GridComponent">
                 <GridReadComponent T="@T" Item="@_item"></GridReadComponent>
-            }
-            else
-            {
-                @CrudRender
-            }
-        </CascadingValue>
+            </CascadingValue>
+        }
+        else
+        {
+            @CrudRender
+        }
     }
     else if (Grid.Mode == GridMode.Update && Grid.UpdateEnabled)
     {
-        <CascadingValue Value=@this Name="GridComponent">
-            @if (Grid.UpdateComponent == null)
-            {
+        if (Grid.UpdateComponent == null)
+        {
+            <CascadingValue Value=@this Name="GridComponent">
                 <GridUpdateComponent T="@T" Item="@_item"></GridUpdateComponent>
-            }
-            else
-            {
-                @CrudRender
-            }
-        </CascadingValue>
+            </CascadingValue>
+        }
+        else
+        {
+            @CrudRender
+        }
     }
     else if (Grid.Mode == GridMode.Delete && Grid.DeleteEnabled)
     {
-        <CascadingValue Value=@this Name="GridComponent">
-            @if (Grid.DeleteComponent == null)
-            {
+        if (Grid.DeleteComponent == null)
+        {
+            <CascadingValue Value=@this Name="GridComponent">
                 <GridDeleteComponent T="@T" Item="@_item"></GridDeleteComponent>
-            }
-            else
-            {
-                @CrudRender
-            }
-        </CascadingValue>
+            </CascadingValue>
+        }
+        else
+        {
+            @CrudRender
+        }
+    }
+    else if (Grid.Mode == GridMode.ButtonComponent)
+    {
+        @CrudRender
     }
 }

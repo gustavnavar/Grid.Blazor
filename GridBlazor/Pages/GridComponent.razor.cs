@@ -532,6 +532,20 @@ namespace GridBlazor.Pages
             StateHasChanged();
         }
 
+        public void ButtonComponentHandler(string key)
+        {
+            var buttonComponent = Grid.ButtonComponents.Get(key);
+            ((CGrid<T>)Grid).Mode = GridMode.ButtonComponent;
+            if (buttonComponent.ComponentType != null)
+                CrudRender = ButtonComponent(buttonComponent.Label, buttonComponent.ComponentType, buttonComponent.Actions,
+                    buttonComponent.Functions, buttonComponent.Object);
+            else
+                CrudRender = null;
+
+            _shouldRender = true;
+            StateHasChanged();
+        }
+
         protected async Task SetSelectFields()
         {
             foreach (var column in Grid.Columns)
@@ -673,6 +687,39 @@ namespace GridBlazor.Pages
             gridProperty = componentType.GetProperty("Object");
             if (gridProperty != null)
                 builder.AddAttribute(++_sequence, "Object", Grid.DeleteObject);
+            builder.CloseComponent();
+        };
+
+        protected RenderFragment ButtonComponent(string label, Type componentType, IList<Action<object>> actions, 
+            IList<Func<object, Task>> functions, object obj) => builder =>
+        {
+            builder.OpenComponent<CascadingValue<GridComponent<T>>>(++_sequence);
+            builder.AddAttribute(++_sequence, "Value", this);
+            builder.AddAttribute(++_sequence, "Name", "GridComponent");
+            builder.AddAttribute(++_sequence, "ChildContent", ButtonChildComponent(label, componentType, actions,
+                functions, obj));
+            builder.CloseComponent();
+        };
+
+        private RenderFragment ButtonChildComponent(string label, Type componentType, IList<Action<object>> actions,
+            IList<Func<object, Task>> functions, object obj) => builder =>
+        {
+            builder.OpenComponent(++_sequence, componentType);
+            var gridProperty = componentType.GetProperty("Grid");
+            if (gridProperty != null && gridProperty.PropertyType == typeof(CGrid<T>))
+                builder.AddAttribute(++_sequence, "Grid", (CGrid<T>)Grid);
+            gridProperty = componentType.GetProperty("Label");
+            if (gridProperty != null)
+                builder.AddAttribute(++_sequence, "Label", label);
+            gridProperty = componentType.GetProperty("Actions");
+            if (gridProperty != null)
+                builder.AddAttribute(++_sequence, "Actions", actions);
+            gridProperty = componentType.GetProperty("Functions");
+            if (gridProperty != null)
+                builder.AddAttribute(++_sequence, "Functions", functions);
+            gridProperty = componentType.GetProperty("Object");
+            if (gridProperty != null)
+                builder.AddAttribute(++_sequence, "Object", obj);
             builder.CloseComponent();
         };
 

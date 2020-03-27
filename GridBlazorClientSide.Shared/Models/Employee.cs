@@ -10,12 +10,18 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
+using System.Drawing;
+using System.Drawing.Imaging;
+using System.IO;
 using System.Text.Json.Serialization;
 
 namespace GridBlazorClientSide.Shared.Models
 {
     public partial class Employee
     {
+        private string _base64Str; 
+
         public Employee()
         {
             this.Orders = new HashSet<Order>();
@@ -45,5 +51,33 @@ namespace GridBlazorClientSide.Shared.Models
         [JsonIgnore]
         public virtual ICollection<Order> Orders { get; set; }
         public virtual ICollection<EmployeeTerritories> Territories { get; set; }
+
+        [NotMapped]
+        public string Base64String
+        {
+            get
+            {
+                if (string.IsNullOrWhiteSpace(_base64Str))
+                {
+                    _base64Str = string.Empty;
+                    using (var ms = new MemoryStream())
+                    {
+                        int offset = 78;
+                        ms.Write(Photo, offset, Photo.Length - offset);
+                        var bmp = new Bitmap(ms);
+                        using (var jpegms = new MemoryStream())
+                        {
+                            bmp.Save(jpegms, ImageFormat.Jpeg);
+                            _base64Str = Convert.ToBase64String(jpegms.ToArray());
+                        }
+                    }
+                }
+                return _base64Str;
+            }
+            set
+            {
+                _base64Str = value;
+            }
+        }
     }
 }
