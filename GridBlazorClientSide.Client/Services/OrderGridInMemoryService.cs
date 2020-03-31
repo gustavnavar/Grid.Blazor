@@ -8,6 +8,7 @@ using Microsoft.Extensions.Primitives;
 using System;
 using System.Collections.Generic;
 using System.Net.Http;
+using System.Net.Http.Json;
 using System.Threading.Tasks;
 
 namespace GridBlazorClientSide.Client.Services
@@ -44,7 +45,7 @@ namespace GridBlazorClientSide.Client.Services
         private async Task<IEnumerable<Order>> GetAll()
         {
             if (_orders == null)
-                _orders = await _httpClient.GetJsonAsync<IEnumerable<Order>>(_baseUri + $"api/Order/");
+                _orders = await _httpClient.GetFromJsonAsync<IEnumerable<Order>>(_baseUri + $"api/Order/");
             return _orders;
         }
     }

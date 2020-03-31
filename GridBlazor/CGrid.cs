@@ -8,13 +8,13 @@ using GridShared.Columns;
 using GridShared.DataAnnotations;
 using GridShared.Filtering;
 using GridShared.Utility;
-using Microsoft.AspNetCore.Components;
 using Microsoft.Extensions.Primitives;
 using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
 using System.Net.Http;
+using System.Net.Http.Json;
 using System.Reflection;
 using System.Text.Json;
 using System.Threading.Tasks;
@@ -865,7 +865,7 @@ namespace GridBlazor
                     string urlParameters = ((GridPager)_pager).GetLink();
                     if (Url.Contains("?"))
                         urlParameters = urlParameters.Replace("?", "&");
-                    response = await HttpClient.GetJsonAsync<ItemsDTO<T>>(Url + urlParameters);       
+                    response = await HttpClient.GetFromJsonAsync<ItemsDTO<T>>(Url + urlParameters);       
                 }
                 if (response != null && response.Items != null && response.Pager != null)
                 {

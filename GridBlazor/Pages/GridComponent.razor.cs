@@ -14,6 +14,7 @@ using Microsoft.JSInterop;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Http.Json;
 using System.Threading.Tasks;
 
 namespace GridBlazor.Pages
@@ -557,7 +558,7 @@ namespace GridBlazor.Pages
                     {
                         if (isSelectField.SelectItemExpr == null)
                         {
-                            var selectItems = await Grid.HttpClient.GetJsonAsync<SelectItem[]>(isSelectField.Url);
+                            var selectItems = await Grid.HttpClient.GetFromJsonAsync<SelectItem[]>(isSelectField.Url);
                             ((GridColumnBase<T>)column).SelectItems = selectItems.ToList();
                         }
                         else
