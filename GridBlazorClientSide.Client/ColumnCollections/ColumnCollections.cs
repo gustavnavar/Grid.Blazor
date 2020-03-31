@@ -472,10 +472,10 @@ namespace GridBlazorClientSide.Client.ColumnCollections
             c.Add(o => o.OrderDetails).Titled("Order Details").SubGrid("tabGroup1", subgrids, ("OrderID", "OrderID"));
         };
 
-        public static Action<IGridColumnCollection<Order>, IList<Action<object>>> OrderColumnsMultipleGrids = (c, actions) =>
+        public static Action<IGridColumnCollection<Order>, IList<Func<object, Task>>> OrderColumnsMultipleGrids = (c, functions) =>
         {
             /* Adding not mapped column, that renders body, using inline Razor html helper */
-            c.Add().Encoded(false).Sanitized(false).SetWidth(30).RenderComponentAs<ButtonCellMultipleGrids>(actions);
+            c.Add().Encoded(false).Sanitized(false).SetWidth(30).RenderComponentAs<ButtonCellMultipleGrids>(functions);
 
             /* Adding "OrderID" column: */
             c.Add(o => o.OrderID).Titled("Number").SetWidth(100);

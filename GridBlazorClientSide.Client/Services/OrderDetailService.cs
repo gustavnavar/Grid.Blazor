@@ -1,5 +1,6 @@
 using GridBlazorClientSide.Shared.Models;
 using GridShared;
+using GridShared.Utility;
 using Microsoft.AspNetCore.Components;
 using System.Net.Http;
 using System.Threading.Tasks;
@@ -42,7 +43,11 @@ namespace GridBlazorClientSide.Client.Services
             int.TryParse(keys[0].ToString(), out orderId);
             int productId;
             int.TryParse(keys[1].ToString(), out productId);
-            await _httpClient.SendJsonAsync(HttpMethod.Delete, _baseUri + $"api/OrderDetail/{orderId}/{productId}", null);
+            var response = await _httpClient.DeleteAsync(_baseUri + $"api/OrderDetail/{orderId}/{productId}");
+            if (!response.IsSuccessStatusCode)
+            {
+                throw new GridException("DETSRV-03", "Error deleting the order detail");
+            }
         }
     }
 }
