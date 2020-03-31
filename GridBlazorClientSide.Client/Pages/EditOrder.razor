@@ -142,12 +142,12 @@ else
     private async Task UpdateOrder()
     {
         await Http.PutJsonAsync($"api/Order/{Convert.ToInt32(OrderId)}", _order);
-        NavigationManager.NavigateTo($"{ReturnUrl}/{GridState}/{AltGridState}");
+        await Task.Run(() => NavigationManager.NavigateTo($"{ReturnUrl}/{GridState}/{AltGridState}"));
     }
 
-    private void Back()
+    private async Task Back()
     {
-        NavigationManager.NavigateTo($"{ReturnUrl}/{GridState}/{AltGridState}");
+        await Task.Run(() => NavigationManager.NavigateTo($"{ReturnUrl}/{GridState}/{AltGridState}"));
     }
 
     private void ChangeOrderDate(ChangeEventArgs e)

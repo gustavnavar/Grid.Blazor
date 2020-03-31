@@ -55,9 +55,10 @@ else
     [Parameter]
     public string GridState { get; set; }
 
-    private void MyClickHandler(MouseEventArgs e)
+    private async Task MyClickHandler(MouseEventArgs e)
     {
-        NavigationManager.NavigateTo($"/editorder/{Order.OrderID.ToString()}/{ReturnUrl}/{GridState}");
+        await Task.Run(() => NavigationManager
+            .NavigateTo($"/editorder/{Order.OrderID.ToString()}/{ReturnUrl}/{GridState}"));
     }
 
     public void Refresh()
