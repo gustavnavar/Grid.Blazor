@@ -31,4 +31,5 @@
 * [Passing grid state as parameter](Passing_grid_state_as_parameter.md)
 * [CRUD](Crud.md)
 * [Nested CRUD](Nested_crud.md)
-* [Events and CRUD validation](Events.md)
+* [Events, exceptions and CRUD validation](Events.md)
+* [Button components on the grid](Button_components.md)

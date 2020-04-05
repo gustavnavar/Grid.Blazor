@@ -71,7 +71,7 @@ else
 
         // build the column collection passing an action list with the action executed by the ButtonCell component
         Action<IGridColumnCollection<Order>> orderColumns = c =>
-            ColumnCollections.OrderColumnsMultipleGrids(c, new List<Action<object>>() { MyAction });
+            ColumnCollections.OrderColumnsMultipleGrids(c, new List<Func<object, Task>>() { MyFunction });
 
         var ordersQuery = new QueryDictionary<StringValues>();
         if (!string.IsNullOrWhiteSpace(OrdersGridState))
@@ -86,7 +86,7 @@ else
             }
         }
         string ordersUrl = NavigationManager.BaseUri + "api/SampleData/OrderColumnsWithEdit";
-        var ordersClient = new GridClient<Order>(HttpClient, ordersUrl, ordersQuery, false, "ordersGrid", 
+        var ordersClient = new GridClient<Order>(HttpClient, ordersUrl, ordersQuery, false, "ordersGrid",
             orderColumns, locale)
             .Sortable()
             .Filterable()
@@ -126,11 +126,12 @@ else
         await _task2;
     }
 
-    private void MyAction(object item)
+    private async Task MyFunction(object item)
     {
         string ordersGridState = _ordersGrid.GetState();
         string customersGridState = _customersGrid.GetState();
-        NavigationManager.NavigateTo($"/editorder/{((Order)item).OrderID.ToString()}/multiplegrids/{ordersGridState}/{customersGridState}");
+        await Task.Run(() => 
+            NavigationManager.NavigateTo($"/editorder/{((Order)item).OrderID.ToString()}/multiplegrids/{ordersGridState}/{customersGridState}"));
     }
 }
 

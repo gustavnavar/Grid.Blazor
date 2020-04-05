@@ -304,6 +304,47 @@ namespace GridBlazor
             object obj);
 
         /// <summary>
+        ///     Setup the Other Component
+        /// </summary>
+        IGridClient<T> AddButtonComponent<TComponent>(string name, string label);
+
+        /// <summary>
+        ///     Setup the Other Component
+        /// </summary>
+        IGridClient<T> AddButtonComponent<TComponent>(string name, string label, IList<Action<object>> actions);
+
+        /// <summary>
+        ///     Setup the Other Component
+        /// </summary>
+        IGridClient<T> AddButtonComponent<TComponent>(string name, string label, object obj);
+
+        /// <summary>
+        ///     Setup the Other Component
+        /// </summary>
+        IGridClient<T> AddButtonComponent<TComponent>(string name, string label, IList<Action<object>> actions, object obj);
+
+        /// <summary>
+        ///     Setup the Other Component
+        /// </summary>
+        IGridClient<T> AddButtonComponent<TComponent>(string name, string label, IList<Func<object, Task>> functions);
+
+        /// <summary>
+        ///     Setup the Other Component
+        /// </summary>
+        IGridClient<T> AddButtonComponent<TComponent>(string name, string label, IList<Action<object>> actions, IList<Func<object, Task>> functions);
+
+        /// <summary>
+        ///     Setup the Other Component
+        /// </summary>
+        IGridClient<T> AddButtonComponent<TComponent>(string name, string label, IList<Func<object, Task>> functions, object obj);
+
+        /// <summary>
+        ///     Setup the Other Component
+        /// </summary>
+        IGridClient<T> AddButtonComponent<TComponent>(string name, string label, IList<Action<object>> actions, IList<Func<object, Task>> functions,
+            object obj);
+
+        /// <summary>
         ///     Setup the text, which will displayed with empty items collection in the grid
         /// </summary>
         /// <param name="text">Grid empty text</param>

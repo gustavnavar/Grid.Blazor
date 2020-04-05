@@ -340,5 +340,21 @@ namespace GridBlazorClientSide.Server.Controllers
                 message = "ModelState is not valid"
             });
         }
+
+        [HttpGet("[action]")]
+        public ActionResult GetemployeesGrid()
+        {
+            var repository = new EmployeeRepository(_context);
+            IGridServer<Employee> server = new GridServer<Employee>(repository.GetAll(), Request.Query,
+                true, "employeesGrid", ColumnCollections.EmployeeColumns)
+                    .WithPaging(10)
+                    .Sortable()
+                    .Filterable()
+                    .WithMultipleFilters()
+                    .WithGridItemsCount();
+
+            var items = server.ItemsToDisplay;
+            return Ok(items);
+        }
     }
 }

@@ -56,7 +56,7 @@ In this sample we name the component **ButtonCell.razor**:
         public Order Item { get; protected set; }
 
         [Parameter]
-        public IList<Action<object>> Actions { get; protected set; }
+        public IList<Func<object, Task>> Functions { get; protected set; }
 
         [Parameter]
         public CGrid<Order> Grid { get; protected set; }
@@ -64,24 +64,26 @@ In this sample we name the component **ButtonCell.razor**:
         [Parameter]
         public object Object { get; protected set; }
 
-        private void MyClickHandler(UIMouseEventArgs e)
+        private async Task MyClickHandler(UIMouseEventArgs e)
         {
-            if (Actions == null)
+            if (Functions == null)
             {
                 string gridState = Grid.GetState();
                 if (Object == null)
                 {
-                    NavigationManager.NavigateTo($"/editorder/{Item.OrderID.ToString()}/gridsample/{gridState}");
+                    await Task.Run(() => 
+                        NavigationManager.NavigateTo($"/editorder/{Item.OrderID.ToString()}/gridsample/{gridState}"));
                 }
                 else
                 {
                     string returnUrl = (string)Object;
-                    NavigationManager.NavigateTo($"/editorder/{Item.OrderID.ToString()}/{returnUrl}/{gridState}");
+                    await Task.Run(() => 
+                        NavigationManager.NavigateTo($"/editorder/{Item.OrderID.ToString()}/{returnUrl}/{gridState}"));
                 }
             }
             else
             {
-                Actions[0]?.Invoke(Item);
+                await Functions[0]?.Invoke(Item);
             }
         }
     }

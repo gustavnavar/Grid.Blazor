@@ -103,3 +103,8 @@ td.grid-button-cell { padding: 5px 0px 5px 0px; }
 /* Grid Clear Filters */
 .grid-all-filters-clear { margin-top: 10px; margin-bottom: 10px; margin-left: 15px; margin-right: 5px; }
 button.grid-button-all-filters-clear { width:32px; margin-right: 5px; background-repeat: no-repeat, no-repeat; background-position-x: 10px, 0px; background-position-y: 10px, 0px; background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAoAAAAMCAYAAABbayygAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAAadEVYdFNvZnR3YXJlAFBhaW50Lk5FVCB2My41LjEwMPRyoQAAARpJREFUKFNjYGj//58o/P//fwdiMIOkpKQ/VhOQMFgNULWIh4fHYWNj4//YMEgOpIYBBI4dO2axOC/396GinP/O+vpwRVbGxl92+vluXm1kuASsEKiD5VB99aG3eTH/HxjL/A/RUPsfrqb6f7e21uutlhbRYEUwAFQskOLmun2+lND/0xxM/7dycXzd6OxoCpVGBduWLjXv4+f/v5WF+f9RbtYvfeysqlApBKhhY2Hcxsy0+xAL038nbe3/m8W4ss/Jcx2GSiPAal6uvGtczP9TFOXBHgGJ7RHlmLGOjy0UrAAGzgT7rn7urP/P3NDgv6+v73aQWAMzM+dqTtbJYAUwsNzeyuhImE8GSBHQYxpQYYYJQCcxMDAwAAB7/bt5uWh9FAAAAABJRU5ErkJggg=='), linear-gradient(#ddd, #eee); }
+
+/* Grid Button Components */
+.grid-button-components { margin-top: 10px; margin-bottom: 10px; margin-left: 0px; margin-right: 5px; }
+.grid-button-components:first-child { margin-left: 15px; }
+button.grid-button-component { margin-right: 5px; }

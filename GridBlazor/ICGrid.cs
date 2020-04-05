@@ -98,6 +98,11 @@ namespace GridBlazor
         Type DeleteComponent { get; }
 
         /// <summary>
+        ///     Get and set custom Delete component
+        /// </summary>
+        QueryDictionary<(string Label, Type ComponentType, IList<Action<object>> Actions, IList<Func<object, Task>> Functions, object Object)> ButtonComponents { get; }
+
+        /// <summary>
         ///     Get and set custom create component actions
         /// </summary>
         IList<Action<object>> CreateActions { get;  }

@@ -44,6 +44,7 @@ namespace GridBlazorServerSide
             services.AddScoped<IEmployeeService, EmployeeService>();
             services.AddScoped<IShipperService, ShipperService>();
             services.AddScoped<IProductService, ProductService>();
+            services.AddScoped<ITruckService, TruckService>();
 
             services.Configure<RequestLocalizationOptions>(
                 options =>

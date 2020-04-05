@@ -1,8 +1,10 @@
 ## Blazor server-side
 
-# Events and CRUD validation
+# Events, exceptions and CRUD validation
 
 [Index](Documentation.md)
+
+## Events and CRUD validation
 
 GridBlazor component provides some events to notify other classes or objects when the grid has changed. The supported events are:
 - ```Func<object, PagerEventArgs, Task> PagerChanged```: it's fired when the page number and/or page size are changed 
@@ -20,7 +22,11 @@ And these events are provided to allow running tasks on changing grid items:
 - ```Func<GridCreateComponent<T>, T, Task> AfterDelete```: it's fired after an item is deleted
 
 If you want to handle an event you have to create a reference to the ```GridCompoment```. 
+
+The ```GridCompoment``` object has an attribute named ```Error``` that can be set to show an error on the CRUD form.
+
 Then you have to add the events that you want to handle in the ```OnAfterRender``` method.
+
 And finally you have to write the handlers for each event.
 
 You can see here an example handling all component events that writes some grid changes on the console and validates a grid item before being inserted, updated and deleted:
@@ -134,6 +140,57 @@ You can see here an example handling all component events that writes some grid 
 
 Notice that all handlers must be async. 
 
-In this sample ```OrderValidator``` is a class that validates the ```Order``` object to be modified. If it's a valid item the event returns ```true```.  If the item is not valid the event writes an error and returns ```false```. 
+In this sample ```OrderValidator``` is a class that validates the ```Order``` object to be modified. If it's a valid item the event returns ```true```.  If the item is not valid the event writes an error on the form and returns ```false```. 
 
-[<- Nested CRUD](Nested_crud.md)
+## Exceptions and messages on the CRUD forms
+
+```GridException``` is provided to throw exceptions from the ```ICrudDataService<T>``` services used for data persistence. The ```GridException``` message will be shown on the CRUD forms.
+
+
+You can see here an example catching any exception issued during database insert and throwing a new ```GridException``` with a custom message:
+```c#
+    public async Task Insert(OrderDetail item)
+    {
+        using (var context = new NorthwindDbContext(_options))
+        {
+            try
+            {
+                var repository = new OrderDetailsRepository(context);
+                await repository.Insert(item);
+                repository.Save();
+            }
+            catch (Exception e)
+            {
+                throw new GridException("There was an error during the order detail record creation");
+            }
+        }
+    }
+
+```
+
+You can also throw a ```GridException``` that will show the most inner exception's message on the CRUD form:
+```c#
+    public async Task Insert(OrderDetail item)
+    {
+        using (var context = new NorthwindDbContext(_options))
+        {
+            try
+            {
+                var repository = new OrderDetailsRepository(context);
+                await repository.Insert(item);
+                repository.Save();
+            }
+            catch (Exception e)
+            {
+                throw new GridException(e);
+            }
+        }
+    }
+
+```
+
+This is an example of a CRUD form error:
+
+![](../images/Crud_error.png)
+
+[<- Nested CRUD](Nested_crud.md) | [Button components on the grid ->](Button_components.md)

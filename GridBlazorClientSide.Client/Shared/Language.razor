@@ -24,6 +24,6 @@
         await HttpClient.PostAsync(NavigationManager.BaseUri + $"api/Culture/SetCulture?culture={culture}", null);
 
         var uri = new Uri(NavigationManager.Uri).GetComponents(UriComponents.PathAndQuery, UriFormat.Unescaped);
-        NavigationManager.NavigateTo(uri, forceLoad: true);
+        await Task.Run(() => NavigationManager.NavigateTo(uri, forceLoad: true));
     }
 }

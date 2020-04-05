@@ -58,4 +58,4 @@ Then you have to define the subgrid that you want to show on the CRUD forms.
 ```
 This function is passed as parameter of the ```Subgrid``` method used on the first step. Of course subgrids must be configured with CRUD support using the ```Crud()``` method of the ```GridClient``` object.
 
-[<- CRUD](Crud.md) | [Events and CRUD validation ->](Events.md)
+[<- CRUD](Crud.md) | [Events, exceptions and CRUD validation ->](Events.md)

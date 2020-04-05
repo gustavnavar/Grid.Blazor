@@ -72,7 +72,7 @@ else
         _rowClickActions.Add(OrderDetailInfo);
 
         var locale = CultureInfo.CurrentCulture;
-        _task1 = HttpClient.GetJsonAsync<SelectItem[]>(NavigationManager.BaseUri + $"api/SampleData/GetAllShippers");
+        _task1 = HttpClient.GetFromJsonAsync<SelectItem[]>(NavigationManager.BaseUri + $"api/SampleData/GetAllShippers");
         var shippers = await _task1;
         _shippers = shippers.ToList();
 

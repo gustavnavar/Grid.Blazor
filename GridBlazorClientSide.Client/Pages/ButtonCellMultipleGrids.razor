@@ -10,11 +10,11 @@
     public Order Item { get; set; }
 
     [Parameter]
-    public IList<Action<object>> Actions { get; set; }
+    public IList<Func<object, Task>> Functions { get; set; }
 
 
-    private void MyClickHandler(MouseEventArgs e)
+    private async Task MyClickHandler(MouseEventArgs e)
     {
-        Actions[0]?.Invoke(Item);
+        await Functions[0]?.Invoke(Item);
     }
 }

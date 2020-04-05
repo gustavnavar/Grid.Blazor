@@ -21,6 +21,7 @@
 }
 else
 {
+    <p id="error" style="color:red;">@_error</p>
     <div class="form-horizontal">
         <div class="form-group">
             <label for="OrderID" class="control-label col-md-2">OrderID: </label>
@@ -120,6 +121,7 @@ else
 
 @code
 {
+    private string _error = "";
     private Order _order;
 
     [Parameter]
@@ -136,18 +138,26 @@ else
 
     protected override async Task OnParametersSetAsync()
     {
-        _order = await Http.GetJsonAsync<Order>($"api/Order/{Convert.ToInt32(OrderId)}");
+        _order = await Http.GetFromJsonAsync<Order>($"api/Order/{Convert.ToInt32(OrderId)}");
     }
 
     private async Task UpdateOrder()
     {
-        await Http.PutJsonAsync($"api/Order/{Convert.ToInt32(OrderId)}", _order);
-        NavigationManager.NavigateTo($"{ReturnUrl}/{GridState}/{AltGridState}");
+        _error = "";
+        var response = await Http.PutAsJsonAsync($"api/Order/{Convert.ToInt32(OrderId)}", _order);
+        if (!response.IsSuccessStatusCode)
+        {
+             _error = "Error updating the order detail";
+        }
+        else
+        {
+            await Task.Run(() => NavigationManager.NavigateTo($"{ReturnUrl}/{GridState}/{AltGridState}"));
+        }
     }
 
-    private void Back()
+    private async Task Back()
     {
-        NavigationManager.NavigateTo($"{ReturnUrl}/{GridState}/{AltGridState}");
+        await Task.Run(() => NavigationManager.NavigateTo($"{ReturnUrl}/{GridState}/{AltGridState}"));
     }
 
     private void ChangeOrderDate(ChangeEventArgs e)

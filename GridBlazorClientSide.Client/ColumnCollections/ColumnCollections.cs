@@ -440,6 +440,10 @@ namespace GridBlazorClientSide.Client.ColumnCollections
             c.Add(o => o.Customer.IsVip).Titled(SharedResource.IsVip).SetWidth(70).Css("hidden-xs") //hide on phones
             .RenderValueAs(o => o.Customer.IsVip ? "Yes" : "No").SetCrudHidden(true);
 
+            /* Adding "Photo" column: */
+            c.Add().Encoded(false).Sanitized(false).SetWidth("5%").SetCrudHidden(true)
+            .RenderValueAs(o => $"<img width='50' height='50' src='data:image/bmp;base64,{o.Employee.Base64String}' />");
+
             /* Adding hidden "RequiredDate" column: */
             c.Add(o => o.RequiredDate, true).Format("{0:yyyy-MM-dd}");
 
@@ -468,10 +472,10 @@ namespace GridBlazorClientSide.Client.ColumnCollections
             c.Add(o => o.OrderDetails).Titled("Order Details").SubGrid("tabGroup1", subgrids, ("OrderID", "OrderID"));
         };
 
-        public static Action<IGridColumnCollection<Order>, IList<Action<object>>> OrderColumnsMultipleGrids = (c, actions) =>
+        public static Action<IGridColumnCollection<Order>, IList<Func<object, Task>>> OrderColumnsMultipleGrids = (c, functions) =>
         {
             /* Adding not mapped column, that renders body, using inline Razor html helper */
-            c.Add().Encoded(false).Sanitized(false).SetWidth(30).RenderComponentAs<ButtonCellMultipleGrids>(actions);
+            c.Add().Encoded(false).Sanitized(false).SetWidth(30).RenderComponentAs<ButtonCellMultipleGrids>(functions);
 
             /* Adding "OrderID" column: */
             c.Add(o => o.OrderID).Titled("Number").SetWidth(100);
@@ -638,6 +642,28 @@ namespace GridBlazorClientSide.Client.ColumnCollections
             /* Adding "Country" column: */
             c.Add(o => o.Country)
                 .Titled("Country");
+        };
+
+        public static Action<IGridColumnCollection<Employee>> EmployeeColumns = c =>
+        {
+            c.Add(o => o.EmployeeID).Titled(SharedResource.Number).SetWidth(100);
+            c.Add(o => o.FirstName).SetWidth(250);
+            c.Add(o => o.LastName).SetWidth(250);
+            c.Add(o => o.HireDate).SetWidth(120);
+            c.Add().Encoded(false).Sanitized(false).SetWidth("5%")
+                .RenderValueAs(o => $"<img width='50' height='50' src='data:image/bmp;base64,{o.Base64String}' />");
+        };
+
+        public static Action<IGridColumnCollection<Customer>> CustomerColumns = c =>
+        {
+            c.Add(o => o.CustomerID).Titled(SharedResource.Number).SetWidth(100);
+            c.Add(o => o.CompanyName).SetWidth(250);
+            c.Add(o => o.ContactName).SetWidth(250);
+            c.Add(o => o.Phone);
+            c.Add(o => o.Address).SetWidth(250);
+            c.Add(o => o.City).SetWidth(250);
+            c.Add(o => o.PostalCode);
+            c.Add(o => o.Country).SetWidth(250);
         };
     }
 }

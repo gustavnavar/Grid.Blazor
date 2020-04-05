@@ -15,10 +15,11 @@
     [Parameter]
     public object Object { get; set; }
 
-    private void MyClickHandler(MouseEventArgs e)
+    private async Task MyClickHandler(MouseEventArgs e)
     {
         string gridState = Grid.GetState();
         string returnUrl = (string)Object;
-        NavigationManager.NavigateTo($"/editorder/{Item.OrderID.ToString()}/{returnUrl}/{gridState}");
+        await Task.Run(() => NavigationManager
+            .NavigateTo($"/editorder/{Item.OrderID.ToString()}/{returnUrl}/{gridState}"));
     }
 }

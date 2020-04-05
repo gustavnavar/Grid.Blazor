@@ -426,6 +426,53 @@ namespace GridBlazor
             return this;
         }
 
+        public IGridClient<T> AddButtonComponent<TComponent>(string name, string label)
+        {
+            return AddButtonComponent<TComponent>(name, label, null, null, null);
+        }
+
+        public IGridClient<T> AddButtonComponent<TComponent>(string name, string label, IList<Action<object>> actions)
+        {
+            return AddButtonComponent<TComponent>(name, label, actions, null, null);
+        }
+
+        public IGridClient<T> AddButtonComponent<TComponent>(string name, string label, object obj)
+        {
+            return AddButtonComponent<TComponent>(name, label, null, null, obj);
+        }
+
+        public IGridClient<T> AddButtonComponent<TComponent>(string name, string label, IList<Func<object, Task>> functions)
+        {
+            return AddButtonComponent<TComponent>(name, label, null, functions, null);
+        }
+
+        public IGridClient<T> AddButtonComponent<TComponent>(string name, string label, IList<Action<object>> actions,
+            IList<Func<object, Task>> functions)
+        {
+            return AddButtonComponent<TComponent>(name, label, actions, functions, null);
+        }
+
+        public IGridClient<T> AddButtonComponent<TComponent>(string name, string label, IList<Func<object, Task>> functions, object obj)
+        {
+            return AddButtonComponent<TComponent>(name, label, null, functions, obj);
+        }
+
+        public IGridClient<T> AddButtonComponent<TComponent>(string name, string label, IList<Action<object>> actions, object obj)
+        {
+            return AddButtonComponent<TComponent>(name, label, actions, null, obj);
+        }
+
+        public IGridClient<T> AddButtonComponent<TComponent>(string name, string label, IList<Action<object>> actions,
+            IList<Func<object, Task>> functions, object obj)
+        {
+            Type buttonComponent = typeof(TComponent);
+            if (buttonComponent != null)
+            {
+                _source.ButtonComponents.Add(name, (label, buttonComponent, actions, functions, obj));
+            }
+            return this;
+        }
+
         public IGridClient<T> EmptyText(string text)
         {
             _source.EmptyGridText = text;

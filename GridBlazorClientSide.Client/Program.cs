@@ -18,6 +18,7 @@ namespace GridBlazorClientSide.Client
         public static async Task Main(string[] args)
         {
             var builder = WebAssemblyHostBuilder.CreateDefault(args);
+            builder.RootComponents.Add<App>("app");
             builder.Services.AddBaseAddressHttpClient();
             builder.Services.AddScoped<ICrudDataService<Order>, OrderService>();
             builder.Services.AddScoped<IOrderGridInMemoryService, OrderGridInMemoryService>();

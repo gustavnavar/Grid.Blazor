@@ -1,7 +1,6 @@
 ﻿@using GridBlazor.Resources
 @using GridShared.Filtering
 @using System.Collections.Generic
-@using System.Net.Http
 @inject NavigationManager NavigationManager
 @inject HttpClient HttpClient
 @inject IJSRuntime jSRuntime
@@ -67,7 +66,7 @@
     protected override async Task OnInitializedAsync()
     {
         string url = NavigationManager.BaseUri + "api/SampleData/GetCustomersNames";
-        _customersNames = await HttpClient.GetJsonAsync<List<string>>(url);
+        _customersNames = await HttpClient.GetFromJsonAsync<List<string>>(url);
     }
 
     protected override void OnParametersSet()
