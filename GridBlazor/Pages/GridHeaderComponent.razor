@@ -7,7 +7,7 @@
     @if (Column.HeaderCheckbox)
     {
         <div class="grid-header-checkbox">
-            <input class="@(_anyChecked && !_allChecked? "grey-checkbox" : "" )" type='checkbox' checked="@_anyChecked" @onchange="HeaderCheckboxChanged" @onclick:stopPropagation>
+            <input type='checkbox' checked="@_allChecked" @onchange="HeaderCheckboxChanged" @onclick:stopPropagation>
         </div>
     }
     else if (Column.FilterEnabled)

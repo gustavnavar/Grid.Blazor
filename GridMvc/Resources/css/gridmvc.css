@@ -12,7 +12,6 @@ table.grid-table { margin: 0; }
         table.grid-table .grid-header > .grid-header-title > button { font-weight: bold; color: #007bff; background-color: white; border: none }
         table.grid-table .grid-header > .grid-header-title > button:hover { color: #0056b3; text-decoration: underline }
         table.grid-table .grid-header > .grid-header-title > button:focus { outline: 0; }
-        table.grid-table .grid-header > .grid-header-checkbox > input.grey-checkbox:checked { background-color: #dadada; box-shadow: 0 0 0 2px #dadada; }
 
     /* Grid body */
     table.grid-table tr.grid-row-selected td { background: #4888C2 !important; color: white; }

@@ -39,7 +39,7 @@
                     </td>
                 </tr>
                 <CascadingValue Value=@GridComponent Name="GridComponent">
-                    <GridGroupRowsComponent @ref="child" T="@T" Grid="@Grid" Values="@values" HasSubGrid="@HasSubGrid" RequiredTotalsColumn="@RequiredTotalsColumn" ItemsToDisplay="@itemsToDisplay" IsVisible="@child.IsVisible" I="@capturedI"></GridGroupRowsComponent>
+                    <GridGroupRowsComponent @ref="child" T="@T" Grid="@Grid" Values="@values" HasSubGrid="@HasSubGrid" RequiredTotalsColumn="@RequiredTotalsColumn" ItemsToDisplay="@itemsToDisplay" IsVisible="@child.IsVisible" RowId="@capturedI"></GridGroupRowsComponent>
                 </CascadingValue>
                 itemsCount += itemsToDisplay.Count();
             }

@@ -32,7 +32,6 @@ namespace GridBlazor.Pages
         protected string _url;
         protected StringValues _clearInitFilter;
         private bool _allChecked = false;
-        private bool _anyChecked = false;
 
         protected string _cssStyles;
         protected string _cssClass;
@@ -213,14 +212,13 @@ namespace GridBlazor.Pages
         {
             if (Column.HeaderCheckbox)
             {
-                _anyChecked = !_anyChecked;
-                _allChecked = _anyChecked;
+                _allChecked = !_allChecked;
 
                 CheckboxEventArgs args = new CheckboxEventArgs
                 {
                     ColumnName = Column.Name,
                 };
-                if (_anyChecked)
+                if (_allChecked)
                 {
                     args.Value = CheckboxValue.Checked;
                 }
@@ -250,12 +248,10 @@ namespace GridBlazor.Pages
                 if (GridComponent.CheckedRows.Get(Column.Name) == null)
                     GridComponent.CheckedRows.Add(Column.Name, new List<int>());
 
-                _anyChecked = GridComponent.CheckedRows.Get(Column.Name).Any();
                 _allChecked = GridComponent.CheckedRows.Get(Column.Name).Count() == GridComponent.Grid.DisplayingItemsCount;
             }
             else
             {
-                _anyChecked = false;
                 _allChecked = false;
             }
         }
