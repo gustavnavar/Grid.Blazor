@@ -1,3 +1,4 @@
+using GridBlazor.Pages;
 using GridShared;
 using GridShared.Columns;
 using GridShared.Filtering;
@@ -64,6 +65,8 @@ namespace GridBlazor.Columns
 
         public string TabGroup { get; protected set; } = null;
 
+        public bool HeaderCheckbox { get; protected set; } = false;
+
         public (bool IsSelectKey, Func<T, string> Expression, string Url, Func<IEnumerable<SelectItem>> SelectItemExpr) IsSelectField { get; protected set; } = (false, null, null, null);
 
         public IEnumerable<SelectItem> SelectItems { get; internal set; }
@@ -122,6 +125,14 @@ namespace GridBlazor.Columns
         {
             TabGroup = tabGroup;
             return this;
+        }
+
+        public IGridColumn<T> SetCheckboxColumn(bool enabled, Func<T, bool> expression)
+        {
+            if (string.IsNullOrWhiteSpace(Name))
+                Name = Guid.NewGuid().ToString();
+            HeaderCheckbox = enabled;
+            return RenderComponentAs<CheckboxComponent<T>>((Name, expression));
         }
 
         public IGridColumn<T> RenderValueAs(Func<T, string> constraint)

@@ -16,11 +16,17 @@ namespace GridBlazor.Pages
         protected Type _componentType;
         protected RenderFragment _cellRender;
 
+        [CascadingParameter(Name = "GridComponent")]
+        protected GridComponent<T> GridComponent { get; set; }
+
         [Parameter]
         public IGridColumn Column { get; set; }
 
         [Parameter]
         public object Item { get; set; }
+
+        [Parameter]
+        public int RowId { get; set; }
 
         [Parameter]
         public string TdClass { get; set; } = "grid-cell";
@@ -29,7 +35,7 @@ namespace GridBlazor.Pages
         {
             _componentType = ((GridColumnBase<T>)Column).ComponentType;
             if (_componentType != null)
-                _cellRender = CreateComponent(_sequence, _componentType, Column, Item);
+                _cellRender = CreateComponent(_sequence, GridComponent, _componentType, Column, Item, RowId);
             else
                 _cell = (MarkupString)Column.GetCell(Item).ToString();
             if (((GridColumnBase<T>)Column).Hidden)
@@ -42,8 +48,19 @@ namespace GridBlazor.Pages
                 _cssClass += " " + columnCssClasses;
         }
 
+        protected RenderFragment CreateComponent(int sequence, GridComponent<T> gridComponent, Type componentType, 
+            IGridColumn column, object item, int rowId) => builder =>
+        {
+            builder.OpenComponent<CascadingValue<GridComponent<T>>>(++_sequence);
+            builder.AddAttribute(++_sequence, "Value", gridComponent);
+            builder.AddAttribute(++_sequence, "Name", "GridComponent");
+            builder.AddAttribute(++_sequence, "ChildContent", GridCellComponent<T>
+                .CreateComponent(sequence, componentType, column, item, rowId));
+            builder.CloseComponent();
+        };
+
         public static RenderFragment CreateComponent(int sequence, Type componentType, IGridColumn column,
-            object item)  => builder =>
+            object item, int? RowId)  => builder =>
         {
             if (componentType != null)
             {
@@ -61,6 +78,9 @@ namespace GridBlazor.Pages
                 gridProperty = componentType.GetProperty("Object");
                 if (gridProperty != null)
                     builder.AddAttribute(++sequence, "Object", ((GridColumnBase<T>)column).Object);
+                gridProperty = componentType.GetProperty("RowId");
+                if (gridProperty != null && RowId.HasValue)
+                    builder.AddAttribute(++sequence, "RowId", RowId.Value);
                 builder.CloseComponent();
             }           
         };

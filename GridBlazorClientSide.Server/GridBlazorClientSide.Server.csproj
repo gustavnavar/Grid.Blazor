@@ -3,7 +3,7 @@
   <PropertyGroup>
     <TargetFramework>netcoreapp3.1</TargetFramework>
     <DisableImplicitComponentsAnalyzers>true</DisableImplicitComponentsAnalyzers>
-    <Version>1.3.36</Version>
+    <Version>1.4.0</Version>
   </PropertyGroup>
 
   <ItemGroup>

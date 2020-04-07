@@ -35,7 +35,7 @@ namespace GridBlazor.Pages
         public bool IsVisible { get; set; }
 
         [Parameter]
-        public int I { get; set; }
+        public int RowId { get; set; }
 
         protected override void OnParametersSet()
         {

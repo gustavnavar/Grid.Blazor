@@ -53,6 +53,9 @@ namespace GridBlazor.Pages
         public event Func<GridUpdateComponent<T>, T, Task> AfterUpdate;
         public event Func<GridDeleteComponent<T>, T, Task> AfterDelete;
 
+        internal event Func<CheckboxEventArgs, Task> HeaderCheckboxChanged;
+        internal event Func<CheckboxEventArgs, Task> RowCheckboxChanged;
+
         internal event Action FilterButtonClicked;
 
         [Inject]
@@ -61,6 +64,8 @@ namespace GridBlazor.Pages
         internal int SelectedRow { get; set; } = -1;
 
         internal List<int> SelectedRows { get; set; } = new List<int>();
+
+        public QueryDictionary<List<int>> CheckedRows { get; internal set; } = new QueryDictionary<List<int>>();
 
         internal ICGridColumn FirstColumn { get; set; }
 
@@ -964,6 +969,22 @@ namespace GridBlazor.Pages
                 {
                     await RemoveAllFilters();
                 }
+            }
+        }
+
+        internal virtual async Task OnHeaderCheckboxChanged(CheckboxEventArgs args)
+        {
+            if (HeaderCheckboxChanged != null)
+            {
+                await HeaderCheckboxChanged.Invoke(args);
+            }
+        }
+
+        internal virtual async Task OnRowCheckboxChanged(CheckboxEventArgs args)
+        {
+            if (RowCheckboxChanged != null)
+            {
+                await RowCheckboxChanged.Invoke(args);
             }
         }
 

@@ -41,6 +41,11 @@ namespace GridMvc.Columns
             return Add((Expression<Func<T, string>>)null, hidden);
         }
 
+        public IGridColumn<T> Add(string columnName)
+        {
+            return Add(false, columnName);
+        }
+
         public IGridColumn<T> Add(bool hidden, string columnName)
         {
             IGridColumn<T> newColumn = CreateColumn((Expression<Func<T, string>>)null, hidden, columnName);

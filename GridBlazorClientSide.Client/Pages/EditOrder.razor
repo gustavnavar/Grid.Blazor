@@ -151,13 +151,13 @@ else
         }
         else
         {
-            await Task.Run(() => NavigationManager.NavigateTo($"{ReturnUrl}/{GridState}/{AltGridState}"));
+            NavigationManager.NavigateTo($"{ReturnUrl}/{GridState}/{AltGridState}");
         }
     }
 
-    private async Task Back()
+    private void Back()
     {
-        await Task.Run(() => NavigationManager.NavigateTo($"{ReturnUrl}/{GridState}/{AltGridState}"));
+        NavigationManager.NavigateTo($"{ReturnUrl}/{GridState}/{AltGridState}");
     }
 
     private void ChangeOrderDate(ChangeEventArgs e)
