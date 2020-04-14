@@ -63,6 +63,8 @@ namespace GridMvc.Columns
 
         public string TabGroup { get; protected set; } = null;
 
+        public bool HeaderCheckbox { get; protected set; } = false;
+
         public (bool IsSelectKey, Func<T, string> Expression, string Url, Func<IEnumerable<SelectItem>> SelectItemExpr) IsSelectField { get; protected set; } = (false, null, null, null);
 
         public IEnumerable<SelectItem> SelectItems { get; internal set; }
@@ -124,6 +126,14 @@ namespace GridMvc.Columns
         public IGridColumn<T> SetTabGroup(string tabGroup)
         {
             TabGroup = tabGroup;
+            return this;
+        }
+
+        public IGridColumn<T> SetCheckboxColumn(bool enabled, Func<T, bool> expression)
+        {
+            if (string.IsNullOrWhiteSpace(Name))
+                Name = Guid.NewGuid().ToString();
+            HeaderCheckbox = enabled;
             return this;
         }
 

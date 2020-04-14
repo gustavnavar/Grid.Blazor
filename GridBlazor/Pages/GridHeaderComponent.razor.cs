@@ -3,6 +3,7 @@ using GridBlazor.Filtering;
 using GridBlazor.Pagination;
 using GridBlazor.Sorting;
 using GridShared.Columns;
+using GridShared.Events;
 using GridShared.Filtering;
 using GridShared.Sorting;
 using GridShared.Utility;
@@ -30,6 +31,7 @@ namespace GridBlazor.Pages
         private bool _isColumnFiltered;
         protected string _url;
         protected StringValues _clearInitFilter;
+        private bool _allChecked = false;
 
         protected string _cssStyles;
         protected string _cssClass;
@@ -140,6 +142,7 @@ namespace GridBlazor.Pages
             if (firstRender)
             {
                 GridComponent.FilterButtonClicked += HideFilter;
+                GridComponent.RowCheckboxChanged += RowCheckboxChanged;
             }
         }
 
@@ -202,6 +205,54 @@ namespace GridBlazor.Pages
             {
                 _isVisible = false;
                 StateHasChanged();
+            }
+        }
+
+        protected async Task HeaderCheckboxChanged()
+        {
+            if (Column.HeaderCheckbox)
+            {
+                _allChecked = !_allChecked;
+
+                CheckboxEventArgs args = new CheckboxEventArgs
+                {
+                    ColumnName = Column.Name,
+                };
+                if (_allChecked)
+                {
+                    args.Value = CheckboxValue.Checked;
+                }
+                else
+                {
+                    args.Value = CheckboxValue.Unchecked;
+                }
+                await GridComponent.OnHeaderCheckboxChanged(args);
+            }
+        }
+
+        private async Task RowCheckboxChanged(CheckboxEventArgs e)
+        {
+            if (e.ColumnName == Column.Name)
+            {
+                SetHeaderCheckbox();
+                StateHasChanged();
+                await Task.CompletedTask;
+            }
+        }
+
+        private void SetHeaderCheckbox()
+        {
+            if (Column.HeaderCheckbox)
+            {
+                // add an empty list if column is not in the dictionary
+                if (GridComponent.CheckedRows.Get(Column.Name) == null)
+                    GridComponent.CheckedRows.Add(Column.Name, new List<int>());
+
+                _allChecked = GridComponent.CheckedRows.Get(Column.Name).Count() == GridComponent.Grid.DisplayingItemsCount;
+            }
+            else
+            {
+                _allChecked = false;
             }
         }
     }

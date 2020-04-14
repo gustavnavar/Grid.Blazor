@@ -28,6 +28,12 @@ namespace GridShared
         /// <returns>Added column</returns>
         IGridColumn<T> Add(bool hidden);
 
+        /// <summary>
+        ///     Add new column to the grid
+        /// </summary>
+        /// <param name="columnName">Specify column internal static name, used for sorting and filtering</param>
+        /// <returns>Added column</returns>
+        IGridColumn<T> Add(string columnName);
 
         /// <summary>
         ///     Add new column to the grid

@@ -169,7 +169,7 @@ namespace GridBlazorClientSide.Client.ColumnCollections
         public static Action<IGridColumnCollection<Order>> OrderColumnsCheckbox = c =>
         {
             /* Adding checkbox column: */
-            c.Add().RenderComponentAs<CheckboxCell>();
+            c.Add("CheckboxColumn").SetCheckboxColumn(true, o => o.Customer.IsVip).SetWidth(40);
 
             /* Adding "OrderID" column: */
             c.Add(o => o.OrderID).Titled("Number").SetWidth(100);

@@ -27,7 +27,7 @@
             string columnValueStr = columnValue == null ? "" : columnValue.ToString();
             if (_children.TryGetValue(columnValueStr, out child))
             {
-                int capturedI = I + itemsCount;
+                int capturedI = RowId + itemsCount;
                 <tr class="grid-group-row">
                     <td colspan="@count">
                         @for (int i = 0; i < Values.Count; i++)
@@ -39,7 +39,7 @@
                     </td>
                 </tr>
                 <CascadingValue Value=@GridComponent Name="GridComponent">
-                    <GridGroupRowsComponent @ref="child" T="@T" Grid="@Grid" Values="@values" HasSubGrid="@HasSubGrid" RequiredTotalsColumn="@RequiredTotalsColumn" ItemsToDisplay="@itemsToDisplay" IsVisible="@child.IsVisible" I="@capturedI"></GridGroupRowsComponent>
+                    <GridGroupRowsComponent @ref="child" T="@T" Grid="@Grid" Values="@values" HasSubGrid="@HasSubGrid" RequiredTotalsColumn="@RequiredTotalsColumn" ItemsToDisplay="@itemsToDisplay" IsVisible="@child.IsVisible" RowId="@capturedI"></GridGroupRowsComponent>
                 </CascadingValue>
                 itemsCount += itemsToDisplay.Count();
             }
@@ -50,7 +50,7 @@
         int i = 0;
         foreach (object item in Grid.GetItemsToDisplay(Values, ItemsToDisplay))
         {
-            int capturedI = I + i;
+            int capturedI = RowId + i;
             if (Grid.ComponentOptions.Selectable)
             {
                 <tr class="grid-row@(GridComponent.SelectedRow == capturedI || GridComponent.SelectedRows.Contains(capturedI) || (Grid.ComponentOptions.InitSelection && capturedI == 0 && GridComponent.SelectedRow == -1 && GridComponent.SelectedRows.Count == 0) ? " grid-row-selected" : "") @Grid.GetRowCssClasses(item)" @onclick="(args) => GridComponent.RowClicked(capturedI, item, args)" @onclick:stopPropagation>
@@ -85,7 +85,9 @@
                     }
                     @foreach (IGridColumn column in Grid.Columns)
                     {
-                        <GridCellComponent T="@T" Column="@column" Item="@item"></GridCellComponent>
+                        <CascadingValue Value=@GridComponent Name="GridComponent">
+                            <GridCellComponent T="@T" Column="@column" Item="@item" RowId="capturedI"></GridCellComponent>
+                        </CascadingValue>
                     }
                 </tr>
             }
@@ -123,7 +125,9 @@
                     }
                     @foreach (IGridColumn column in Grid.Columns)
                     {
-                        <GridCellComponent T="@T" Column="@column" Item="@item"></GridCellComponent>
+                        <CascadingValue Value=@GridComponent Name="GridComponent">
+                            <GridCellComponent T="@T" Column="@column" Item="@item" RowId="capturedI"></GridCellComponent>
+                        </CascadingValue>
                     }
                 </tr>
             }

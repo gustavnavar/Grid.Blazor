@@ -19,6 +19,7 @@ namespace GridBlazorClientSide.Client
         {
             var builder = WebAssemblyHostBuilder.CreateDefault(args);
             builder.RootComponents.Add<App>("app");
+
             builder.Services.AddBaseAddressHttpClient();
             builder.Services.AddScoped<ICrudDataService<Order>, OrderService>();
             builder.Services.AddScoped<IOrderGridInMemoryService, OrderGridInMemoryService>();
@@ -44,7 +45,6 @@ namespace GridBlazorClientSide.Client
                     options.SupportedCultures = supportedCultures;
                     options.SupportedUICultures = supportedCultures;
                 });
-            builder.RootComponents.Add<App>("app");
 
             await builder.Build().RunAsync();
         }
