@@ -54,6 +54,19 @@ namespace GridMvc.Tests.Server
 
             _server.Selectable(true);
             Assert.IsTrue(_server.Grid.RenderOptions.Selectable);
+
+            _server.ChangePageSize(true);
+            Assert.IsTrue(_server.Grid.Pager.ChangePageSize);
+
+            _server.ClearFiltersButton(true);
+            Assert.IsTrue(_server.Grid.ClearFiltersButtonEnabled);
+
+            _server.ExtSortable(true);
+            Assert.IsTrue(_server.Grid.ExtSortingEnabled);
+
+            _server.Groupable(false);
+            Assert.IsFalse(_server.Grid.ExtSortingEnabled);
+            Assert.IsFalse(_server.Grid.GroupingEnabled);
         }
     }
 }

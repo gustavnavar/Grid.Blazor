@@ -3,6 +3,7 @@ using GridShared;
 using GridShared.Columns;
 using GridShared.Filtering;
 using GridShared.Grouping;
+using GridShared.OData;
 using GridShared.Searching;
 using GridShared.Sorting;
 using GridShared.Utility;
@@ -17,7 +18,7 @@ using System.Threading.Tasks;
 
 namespace GridBlazor.Columns
 {
-    public abstract class GridColumnBase<T> : GridStyledColumn, IGridColumn<T>, ICGridColumn, IConstrainedGridColumn
+    public abstract class GridColumnBase<T> : GridStyledColumn, IGridColumn<T>, IExpandColumn<T>, ICGridColumn, IConstrainedGridColumn
     {
         public Type ComponentType { get; private set; }
         public IList<Action<object>> Actions { get; private set; }
@@ -67,7 +68,9 @@ namespace GridBlazor.Columns
 
         public bool HeaderCheckbox { get; protected set; } = false;
 
-        public (bool IsSelectKey, Func<T, string> Expression, string Url, Func<IEnumerable<SelectItem>> SelectItemExpr) IsSelectField { get; protected set; } = (false, null, null, null);
+        public (bool IsSelectKey, Func<T, string> Expression, string Url, Func<IEnumerable<SelectItem>> SelectItemExpr, 
+            Func<Task<IEnumerable<SelectItem>>> SelectItemExprAsync) IsSelectField { get; protected set; } 
+            = (false, null, null, null, null);
 
         public IEnumerable<SelectItem> SelectItems { get; internal set; }
 
@@ -449,13 +452,19 @@ namespace GridBlazor.Columns
 
         public IGridColumn<T> SetSelectField(bool enabled, Func<T, string> expression, Func<IEnumerable<SelectItem>> selectItemExpr)
         {
-            IsSelectField = (enabled, expression, null, selectItemExpr);
+            IsSelectField = (enabled, expression, null, selectItemExpr, null);
+            return this;
+        }
+
+        public IGridColumn<T> SetSelectField(bool enabled, Func<T, string> expression, Func<Task<IEnumerable<SelectItem>>> selectItemExprAsync)
+        {
+            IsSelectField = (enabled, expression, null, null, selectItemExprAsync);
             return this;
         }
 
         public IGridColumn<T> SetSelectField(bool enabled, Func<T, string> expression, string url)
         {
-            IsSelectField = (enabled, expression, url, null);
+            IsSelectField = (enabled, expression, url, null, null);
             return this;
         }
 
@@ -561,6 +570,8 @@ namespace GridBlazor.Columns
         public abstract IColumnSearch<T> Search { get; }
 
         public abstract IColumnGroup<T> Group { get; }
+
+        public abstract IColumnExpand<T> Expand { get; }
 
         public abstract IGridCell GetValue(T instance);
 

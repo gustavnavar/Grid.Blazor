@@ -306,7 +306,9 @@ namespace GridBlazor.Pages
 
         public async Task GoTo(int page)
         {
-            Grid.AddQueryParameter(GridPager.DefaultPageQueryParameter, page.ToString());
+            if (Grid.ServerAPI == ServerAPI.OData)
+                ((GridPager)Grid.Pager).CurrentPage = page;
+            Grid.AddQueryParameter(((GridPager)Grid.Pager).ParameterName, page.ToString());
             await UpdateGrid();
 
             if (Grid.ComponentOptions.Selectable && Grid.ComponentOptions.InitSelection
@@ -561,14 +563,18 @@ namespace GridBlazor.Pages
                 {
                     try
                     {
-                        if (isSelectField.SelectItemExpr == null)
+                        if (isSelectField.SelectItemExpr != null)
                         {
-                            var selectItems = await Grid.HttpClient.GetFromJsonAsync<SelectItem[]>(isSelectField.Url);
-                            ((GridColumnBase<T>)column).SelectItems = selectItems.ToList();
+                            ((GridColumnBase<T>)column).SelectItems = isSelectField.SelectItemExpr.Invoke();
+                        }
+                        else if (isSelectField.SelectItemExprAsync != null)
+                        {
+                            ((GridColumnBase<T>)column).SelectItems = await isSelectField.SelectItemExprAsync.Invoke();
                         }
                         else
                         {
-                            ((GridColumnBase<T>)column).SelectItems = isSelectField.SelectItemExpr.Invoke();
+                            var selectItems = await Grid.HttpClient.GetFromJsonAsync<SelectItem[]>(isSelectField.Url);
+                            ((GridColumnBase<T>)column).SelectItems = selectItems.ToList();
                         }
                     }
                     catch (Exception e)

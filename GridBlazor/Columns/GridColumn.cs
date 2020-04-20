@@ -2,6 +2,7 @@ using GridShared;
 using GridShared.Columns;
 using GridShared.Filtering;
 using GridShared.Grouping;
+using GridShared.OData;
 using GridShared.Searching;
 using GridShared.Sorting;
 using GridShared.Utility;
@@ -35,6 +36,11 @@ namespace GridBlazor.Columns
         ///     Groupers collection for this columns
         /// </summary>
         private readonly IColumnGroup<T> _group;
+
+        /// <summary>
+        ///     Expand collection for this columns
+        /// </summary>
+        private readonly IColumnExpand<T> _expand;
 
         /// <summary>
         ///     Expression to class, used for this column
@@ -80,6 +86,7 @@ namespace GridBlazor.Columns
                 _filter = new DefaultColumnFilter<T, TDataType>(expression);
                 _search = new DefaultColumnSearch<T, TDataType>(expression);
                 _group = new DefaultColumnGroup<T, TDataType>(expression);
+                _expand = new DefaultColumnExpand<T, TDataType>(expression);
                 //Generate unique column name:
                 FieldName = PropertiesHelper.BuildColumnNameFromMemberExpression(expr);
                 Name = FieldName;
@@ -113,6 +120,11 @@ namespace GridBlazor.Columns
         public override IColumnGroup<T> Group
         {
             get { return _group; }
+        }
+
+        public override IColumnExpand<T> Expand
+        {
+            get { return _expand; }
         }
 
         public override IGrid ParentGrid

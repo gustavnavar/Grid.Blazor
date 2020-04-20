@@ -173,8 +173,18 @@ namespace GridBlazor
         bool Keyboard { get; }
 
         /// <summary>
+        ///     Get and set OData interface
+        /// </summary>
+        ServerAPI ServerAPI { get; }
+
+        /// <summary>
         ///     Fixed column values for the grid
         /// </summary>
         QueryDictionary<object> FixedValues { get; set; }
+
+        /// <summary>
+        ///     Fixed column values for the OData url expand parameter
+        /// </summary>
+        IEnumerable<string> ODataExpandList { get; set; }
     }
 }

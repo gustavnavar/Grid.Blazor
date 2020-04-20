@@ -18,7 +18,7 @@ namespace GridBlazor
     /// </summary>
     public class GridClient<T> : IGridClient<T>
     {
-        private readonly CGrid<T> _source;
+        protected readonly CGrid<T> _source;
 
         public GridClient(HttpClient httpClient, string url, IQueryDictionary<StringValues> query, bool renderOnlyRows,
             string gridName, Action<IGridColumnCollection<T>> columns = null, CultureInfo cultureInfo = null)
@@ -223,6 +223,20 @@ namespace GridBlazor
             _source.UpdateEnabled = updateEnabled;
             _source.DeleteEnabled = deleteEnabled;
             _source.CrudDataService = crudDataService;
+            return this;
+        }
+
+        public IGridClient<T> ODataCrud(bool enabled)
+        {
+            return ODataCrud(enabled, enabled, enabled, enabled);
+        }
+
+        public IGridClient<T> ODataCrud(bool createEnabled, bool readEnabled, bool updateEnabled, bool deleteEnabled)
+        {
+            _source.CreateEnabled = createEnabled;
+            _source.ReadEnabled = readEnabled;
+            _source.UpdateEnabled = updateEnabled;
+            _source.DeleteEnabled = deleteEnabled;
             return this;
         }
 
@@ -575,6 +589,24 @@ namespace GridBlazor
         public IGridClient<T> SetModifierKey(ModifierKey modifierKey)
         {
             _source.ModifierKey = modifierKey;
+            return this;
+        }
+
+        /// <summary>
+        ///     Configure the Server API
+        /// </summary>
+        public IGridClient<T> UseServerAPI(ServerAPI serverAPI)
+        {
+            _source.ServerAPI = serverAPI;
+            return this;
+        }
+
+        /// <summary>
+        ///     Use OData extend for columns
+        /// </summary>
+        public IGridClient<T> UseODataExpand(IEnumerable<string> oDataExpandList)
+        {
+            _source.ODataExpandList = oDataExpandList;
             return this;
         }
 

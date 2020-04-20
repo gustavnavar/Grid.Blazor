@@ -1,0 +1,108 @@
+﻿@using GridBlazor.Resources
+@using GridBlazorOData.Shared.Models
+@using GridShared.Filtering
+@using System.Collections.Generic
+@inject NavigationManager NavigationManager
+@inject HttpClient HttpClient
+@inject IJSRuntime jSRuntime
+
+@typeparam T
+
+@if (visible)
+{
+    <div class="dropdown dropdown-menu grid-dropdown opened" style="display:block;" @onkeyup="FilterKeyup" @onclick:stopPropagation @onkeyup:stopPropagation>
+        <div class="grid-dropdown-arrow"></div>
+        <div class="grid-dropdown-inner">
+            <div class="grid-popup-widget">
+                <div class="form-group">
+                    <p><i>This is custom filter widget demo</i></p>
+                    <select @ref="firstSelect" class="grid-filter-type customerslist form-control" style="width:250px;" @bind="_filterValue">
+                        @foreach (var customerName in _customersNames)
+                        {
+                            <option value="@customerName">@customerName</option>
+                        }
+                    </select>
+                </div>
+                <div class="grid-filter-buttons">
+                    <button type="button" class="btn btn-primary grid-apply" @onclick="ApplyButtonClicked">
+                        @Strings.ApplyFilterButtonText
+                    </button>
+                </div>
+            </div>
+            <div class="grid-popup-additional">
+                @if (_clearVisible)
+                {
+                    <ul class="menu-list">
+                        <li>
+                            <a class="grid-filter-clear" href="javascript:void(0);" @onclick="ClearButtonClicked">
+                                @Strings.ClearFilterLabel
+                            </a>
+                        </li>
+                    </ul>
+                }
+            </div>
+        </div>
+    </div>
+}
+
+@code {
+    private bool _clearVisible = false;
+    protected string _filterValue;
+    private List<string> _customersNames = new List<string>();
+
+    protected ElementReference firstSelect;
+
+    [CascadingParameter(Name = "GridHeaderComponent")]
+    private GridHeaderComponent<T> GridHeaderComponent { get; set; }
+
+    [Parameter]
+    public bool visible { get; set; }
+
+    [Parameter]
+    public string ColumnName { get; set; }
+
+    [Parameter]
+    public IEnumerable<ColumnFilterValue> FilterSettings { get; set; }
+
+    protected override async Task OnInitializedAsync()
+    {
+        string url = NavigationManager.BaseUri + "odata/Customers?$select=CompanyName";
+        var response = await HttpClient.GetFromJsonAsync<ODataDTO<Customer>>(url);
+        if (response != null && response.Value != null)
+        {
+            _customersNames = response.Value.Select(r => r.CompanyName).ToList();
+        }
+    }
+
+    protected override void OnParametersSet()
+    {
+        _filterValue = FilterSettings.FirstOrDefault().FilterValue;
+        _clearVisible = !string.IsNullOrWhiteSpace(_filterValue);
+    }
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender && firstSelect.Id != null)
+        {
+            await jSRuntime.InvokeVoidAsync("gridJsFunctions.focusElement", firstSelect);
+        }
+    }
+
+    protected async Task ApplyButtonClicked()
+    {
+        await GridHeaderComponent.AddFilter(new FilterCollection(GridFilterType.Equals.ToString("d"), _filterValue));
+    }
+
+    protected async Task ClearButtonClicked()
+    {
+        await GridHeaderComponent.RemoveFilter();
+    }
+
+    public async Task FilterKeyup(KeyboardEventArgs e)
+    {
+        if (e.Key == "Escape")
+        {
+            await GridHeaderComponent.FilterIconClicked();
+        }
+    }
+}

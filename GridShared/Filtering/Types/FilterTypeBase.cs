@@ -72,6 +72,43 @@ namespace GridShared.Filtering.Types
             }
         }
 
+        public virtual string GetFilterExpression(string columnName, string value, GridFilterType filterType)
+        {
+            value = GetStringValue(value);
+
+            //base implementation of building filter expressions
+            filterType = GetValidType(filterType);        
+
+            switch (filterType)
+            {
+                case GridFilterType.Equals:
+                    return columnName + " eq " + value;
+                case GridFilterType.NotEquals:
+                    return columnName + " ne " + value;
+                case GridFilterType.Contains:
+                    return "contains(" + columnName + ", " + value + ")";
+                case GridFilterType.StartsWith:
+                    return "startswith(" + columnName + ", " + value + ")";
+                case GridFilterType.EndsWidth:
+                    return "endswith(" + columnName + ", " + value + ")";
+                case GridFilterType.LessThan:
+                    return columnName + " lt " + value;
+                case GridFilterType.LessThanOrEquals:
+                    return columnName + " le " + value;
+                case GridFilterType.GreaterThan:
+                    return columnName + " gt " + value;
+                case GridFilterType.GreaterThanOrEquals:
+                    return columnName + " ge " + value;
+                default:
+                    throw new ArgumentOutOfRangeException();
+            }
+        }
+
+        public virtual string GetStringValue(string value)
+        {
+            return value;
+        }
+
         #endregion
     }
 }

@@ -141,5 +141,86 @@ namespace GridShared.Filtering
             //return filter expression
             return binaryExpression;
         }
+
+        public string GetFilter(IEnumerable<ColumnFilterValue> values)
+        {
+            string result = "";
+
+            if (values == null && values.Where(r => r != ColumnFilterValue.Null).Count() <= 0)
+                throw new ArgumentNullException("values");
+
+            // fet condition for multiple filters
+            GridFilterCondition condition;
+            var cond = values.SingleOrDefault(r => r != ColumnFilterValue.Null
+                && r.FilterType == GridFilterType.Condition);
+            if (!Enum.TryParse(cond.FilterValue, true, out condition))
+                condition = GridFilterCondition.And;
+
+            values = values.Where(r => r != ColumnFilterValue.Null && r.FilterType != GridFilterType.Condition);
+
+            var pi = (PropertyInfo)((MemberExpression)_expression.Body).Member;
+            foreach (var value in values)
+            {
+                if (value == ColumnFilterValue.Null)
+                    continue;
+
+                string filterString = GetFilterString(pi, value);
+                if (!string.IsNullOrWhiteSpace(filterString))
+                {
+                    if (string.IsNullOrWhiteSpace(result))
+                        result = filterString;
+                    else if (condition == GridFilterCondition.Or)
+                        result += " or " + filterString;
+                    else
+                        result += " and " + filterString;
+                }
+            }
+            return result;
+        }
+
+        private string GetFilterString(PropertyInfo pi, ColumnFilterValue value)
+        {
+            string result = "";
+
+            // get column name
+            List<string> names = new List<string>();
+            Expression expression = _expression.Body;
+            while (expression.NodeType != ExpressionType.Parameter)
+            {
+                names.Add(((MemberExpression)expression).Member.Name);
+                expression = ((MemberExpression)expression).Expression;
+            }
+            for (int i = names.Count - 1; i >= 0; i--)
+            {
+                result += names[i];
+                if (i != 0)
+                    result += "/";
+            }
+
+            if (!string.IsNullOrWhiteSpace(result))
+            {
+                //detect nullable
+                bool isNullable = pi.PropertyType.GetTypeInfo().IsGenericType &&
+                                  pi.PropertyType.GetGenericTypeDefinition() == typeof(Nullable<>);
+                //get target type:
+                Type targetType = isNullable ? Nullable.GetUnderlyingType(pi.PropertyType) : pi.PropertyType;
+
+                IFilterType filterType = _typeResolver.GetFilterType(targetType);
+                result = filterType.GetFilterExpression(result, value.FilterValue, value.FilterType);
+            }
+
+            return result;
+        }
+
+        public bool IsTextColumn()
+        {
+            var pi = (PropertyInfo)((MemberExpression)_expression.Body).Member;
+            bool isNullable = pi.PropertyType.GetTypeInfo().IsGenericType &&
+                              pi.PropertyType.GetGenericTypeDefinition() == typeof(Nullable<>);
+            Type targetType = isNullable ? Nullable.GetUnderlyingType(pi.PropertyType) : pi.PropertyType;
+            IFilterType filterType = _typeResolver.GetFilterType(targetType);
+
+            return filterType.GetType() == typeof(TextFilterType);
+        }
     }
 }

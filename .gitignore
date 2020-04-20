@@ -49,3 +49,10 @@
 /GridBlazorServerSide/bin
 /GridBlazorServerSide/obj
 /docs/.vscode
+/GridBlazorOData.Server/bin
+/GridBlazorOData.Server/obj
+/GridBlazorOData.Client/bin
+/GridBlazorOData.Client/obj
+/GridBlazorOData.Shared/bin
+/GridBlazorOData.Shared/obj
+/GridBlazorOData.Shared/.vs/GridBlazorOData.Shared

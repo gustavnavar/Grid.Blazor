@@ -1,5 +1,6 @@
 ﻿using GridShared.Filtering;
 using GridShared.Grouping;
+using GridShared.OData;
 using GridShared.Searching;
 using GridShared.Sorting;
 using GridShared.Totals;
@@ -15,7 +16,8 @@ namespace GridShared.Columns
     {
         IGridCell GetValue(T instance);
         (Type Type, object Value) GetTypeAndValue(T item);
-        (bool IsSelectKey, Func<T,string> Expression, string Url, Func<IEnumerable<SelectItem>> SelectItemExpr) IsSelectField { get; }
+        (bool IsSelectKey, Func<T,string> Expression, string Url, Func<IEnumerable<SelectItem>> SelectItemExpr, 
+            Func<Task<IEnumerable<SelectItem>>> SelectItemExprAsync) IsSelectField { get; }
         IEnumerable<SelectItem> SelectItems { get; }
     }
 
@@ -325,6 +327,11 @@ namespace GridShared.Columns
         /// <summary>
         ///     Sets the column as select for CRUD components
         /// </summary>
+        IGridColumn<T> SetSelectField(bool enabled, Func<T, string> expression, Func<Task<IEnumerable<SelectItem>>> selectItemExprAsync);
+
+        /// <summary>
+        ///     Sets the column as select for CRUD components
+        /// </summary>
         IGridColumn<T> SetSelectField(bool enabled, Func<T, string> expression, string url);
 
         /// <summary>
@@ -518,6 +525,14 @@ namespace GridShared.Columns
         ///     Collection of current column totals
         /// </summary>
         IColumnTotals<T> Totals { get; }
+    }
+
+    public interface IExpandColumn<T>
+    {
+        /// <summary>
+        ///     Collection of current column OData Expand
+        /// </summary>
+        IColumnExpand<T> Expand { get; }
     }
 
     public interface IGroupableColumn<T>

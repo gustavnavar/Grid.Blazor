@@ -149,13 +149,13 @@ namespace GridBlazor.Pagination
                 _pageSize = _queryPageSize;
             PageCount = (int) (Math.Ceiling(ItemsCount/(double) PageSize));
 
-            if (CurrentPage > PageCount)
-                CurrentPage = PageCount;
+            if (_currentPage > PageCount)
+                _currentPage = PageCount;
 
-            StartDisplayedPage = (CurrentPage - MaxDisplayedPages/2) < 1 ? 1 : CurrentPage - MaxDisplayedPages/2;
-            EndDisplayedPage = (CurrentPage + MaxDisplayedPages/2) > PageCount
+            StartDisplayedPage = (_currentPage - MaxDisplayedPages/2) < 1 ? 1 : _currentPage - MaxDisplayedPages/2;
+            EndDisplayedPage = (_currentPage + MaxDisplayedPages/2) > PageCount
                                    ? PageCount
-                                   : CurrentPage + MaxDisplayedPages/2;
+                                   : _currentPage + MaxDisplayedPages/2;
         }
 
         #region View

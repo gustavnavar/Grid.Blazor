@@ -1,0 +1,24 @@
+@using GridBlazorOData.Shared.Models
+@using GridShared.Columns
+@implements ICustomGridComponent<Order>
+
+<button class='btn btn-sm btn-primary' @onclick="MyFirstHandler">+1</button>
+<button class='btn btn-sm btn-primary' @onclick="MySecondHandler">-1</button>
+
+@code {
+    [Parameter]
+    public Order Item { get; set; }
+
+    [Parameter]
+    public IList<Func<object, Task>> Functions { get; set; }
+
+    private async Task MyFirstHandler(MouseEventArgs e)
+    {
+        await Functions[0]?.Invoke(Item);
+    }
+
+    private async Task MySecondHandler(MouseEventArgs e)
+    {
+        await Functions[1]?.Invoke(Item);
+    }
+}

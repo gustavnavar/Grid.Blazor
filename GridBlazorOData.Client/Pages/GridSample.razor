@@ -1,0 +1,296 @@
+﻿@page "/gridsample"
+@page "/gridsample/{GridState}"
+@using GridBlazor.Resources
+@using GridBlazorOData.Client.Resources
+@using GridBlazorOData.Shared.Models
+@using Microsoft.Extensions.Primitives
+@using System
+@using System.Globalization
+@using System.Threading.Tasks
+@inject NavigationManager NavigationManager
+@inject HttpClient HttpClient
+
+<h1>Grid with all features</h1>
+
+<p>
+    This page contains a grid that has many features enabled: filtering, sorting, searching, subgrids, conditional styles on columns and rows, etc. It also allows order editing. Its grid state is passed to the edit page, so it can be returned to this page mantaining the grid state.
+</p>
+
+<p>
+    This component demonstrates a GridBlazor client-side grid with an OData back-end. For more information, please see: <a href="https://github.com/gustavnavar/Grid.Blazor">https://github.com/gustavnavar/Grid.Blazor</a>
+</p>
+
+@if (_task1.IsCompleted && _task2.IsCompleted)
+{
+    <div class="row">
+        <div class="col-md-9">
+            <GridComponent T="Order" Grid="@_grid" OnRowClickedActions="@_rowClickActions"
+                           CustomFilters="@_customFilters"></GridComponent>
+        </div>
+        <div class="col-md-3">
+            <h4>
+                Order
+            </h4>
+            <OrderInfo @ref="_orderInfo" ReturnUrl="gridsample" Grid="@_grid"></OrderInfo>
+
+            <h4 style="margin-top:40px;">
+                Order details
+            </h4>
+            <OrderIDetaillnfo @ref="_orderDetailInfo"></OrderIDetaillnfo>
+        </div>
+    </div>
+}
+else
+{
+    <p><em>Loading...</em></p>
+}
+
+@code
+{
+    private CGrid<Order> _grid;
+    private Task<ODataDTO<Shipper>> _task1;
+    private Task _task2;
+    private OrderInfo _orderInfo;
+    private OrderIDetaillnfo _orderDetailInfo;
+    private IEnumerable<SelectItem> _shippers;
+    private IQueryDictionary<Type> _customFilters = new QueryDictionary<Type>();
+    private List<Action<object>> _rowClickActions;
+
+    [Parameter]
+    public string GridState { get; set; }
+
+    protected override void OnInitialized()
+    {
+        CultureInfo.CurrentCulture = new CultureInfo(Program.Culture);
+    }
+
+    protected override async Task OnParametersSetAsync()
+    {
+        _rowClickActions = new List<Action<object>>();
+        _rowClickActions.Add(OrderInfo);
+        _rowClickActions.Add(OrderDetailInfo);
+
+        var locale = CultureInfo.CurrentCulture;
+        _task1 = HttpClient.GetFromJsonAsync<ODataDTO<Shipper>>(NavigationManager.BaseUri + $"odata/Shippers?$select=ShipperID,CompanyName");
+        var shippers = await _task1;
+        if (shippers == null || shippers.Value == null)
+        {
+            _shippers = new List<SelectItem>();
+        }
+        else
+        {
+            _shippers = shippers.Value
+                .Select(r => new SelectItem(r.ShipperID.ToString(), r.ShipperID.ToString() + " - " + r.CompanyName))
+                .ToList();
+        }
+
+
+        Func<object[], bool, bool, bool, bool, Task<IGrid>> crudSubGrids = async (keys, create, read, update, delete) =>
+        {
+            var subGridQuery = new QueryDictionary<StringValues>();
+            string subGridUrl = NavigationManager.BaseUri + $"odata/Orders({ keys[0].ToString()})/OrderDetails";
+
+            Action<IGridColumnCollection<OrderDetail>> subGridColumns = c =>
+            {
+                c.Add(o => o.OrderID, true).SetPrimaryKey(true).SetWidth(100);
+                c.Add(o => o.ProductID).SetPrimaryKey(true).Titled("ProdId").SetWidth(100).SetSelectField(true, o => o.Product.ProductID + " - " + o.Product.ProductName, () => GetAllProducts(NavigationManager.BaseUri));
+                c.Add(o => o.Product.ProductName).Titled("ProdName").SetCrudHidden(true).SetWidth(250);
+                c.Add(o => o.Quantity).Titled("Quant").SetWidth(100).Format("{0:F}");
+                c.Add(o => o.UnitPrice).Titled("Unit Price").SetWidth(100).Format("{0:F}");
+                c.Add(o => o.Discount).Titled("Disc").SetWidth(100).Format("{0:F}");
+            };
+
+            var subGridClient = new GridODataClient<OrderDetail>(HttpClient, subGridUrl, subGridQuery, false,
+                "orderDetailsGrid" + keys[0].ToString(), subGridColumns, 10, locale)
+                    .Sortable()
+                    .Filterable()
+                    .SetStriped(true)
+                    .ODataCrud(create, read, update, delete)
+                    .WithMultipleFilters()
+                    .WithGridItemsCount();
+
+            await subGridClient.UpdateGrid();
+            return subGridClient.Grid;
+        };
+
+        Func<object[], Task<ICGrid>> subGrids = async keys =>
+        {
+            string subGridUrl = NavigationManager.BaseUri + $"odata/Orders({ keys[0].ToString()})/OrderDetails";
+            var subGridQuery = new QueryDictionary<StringValues>();
+
+            Action<IGridColumnCollection<OrderDetail>> subGridColumns = c =>
+            {
+                c.Add(o => o.OrderID, true).SetPrimaryKey(true).SetWidth(100);
+                c.Add(o => o.ProductID).SetPrimaryKey(true).Titled("ProdId").SetWidth(100).SetSelectField(true, o => o.Product.ProductID + " - " + o.Product.ProductName, NavigationManager.BaseUri + $"api/SampleData/GetAllProducts");
+                c.Add(o => o.Product.ProductName).Titled("ProdName").SetCrudHidden(true).SetWidth(250);
+                c.Add(o => o.Quantity).Titled("Quant").SetCellCssClassesContraint(o => o.Quantity >= 50 ? "red" : "").SetWidth(100).Format("{0:F}");
+                c.Add(o => o.UnitPrice).Titled("Unit Price").SetWidth(100).Format("{0:F}");
+                c.Add(o => o.Discount).Titled("Disc").SetWidth(100).Format("{0:F}");
+            };
+
+            var subGridClient = new GridODataClient<OrderDetail>(HttpClient, subGridUrl, subGridQuery, false,
+                "orderDetailsGrid" + keys[0].ToString(), subGridColumns, 10, locale)
+                    .SetRowCssClasses(item => item.Quantity > 10 ? "success" : string.Empty)
+                    .Sortable()
+                    .Filterable()
+                    .SetStriped(true)
+                    .Selectable(true)
+                    .ODataCrud(true)
+                    .WithMultipleFilters()
+                    .WithGridItemsCount();
+
+            await subGridClient.UpdateGrid();
+            return subGridClient.Grid;
+        };
+
+        Action<IGridColumnCollection<Order>> orderColumns = c =>
+        {
+            c.Add(o => o.OrderID).SetPrimaryKey(true).Titled(SharedResource.Number).SetWidth(100);
+            c.Add(o => o.CustomerID, true).SetSelectField(true, o => o.Customer.CustomerID + " - " + o.Customer.CompanyName, () => GetAllCustomers(NavigationManager.BaseUri));
+            c.Add(o => o.EmployeeID, true).SetSelectField(true, o => o.Employee.EmployeeID.ToString() + " - " + o.Employee.FirstName + " " + o.Employee.LastName, () => GetAllEmployees(NavigationManager.BaseUri));
+            c.Add(o => o.ShipVia).Titled("Via").SetWidth(250).RenderValueAs(o => o.Shipper == null ? "" : o.Shipper.CompanyName).SetSelectField(true, o => o.Shipper == null ? "" : o.Shipper.ShipperID.ToString() + " - " + o.Shipper.CompanyName, () => GetAllShippers(NavigationManager.BaseUri)).SetListFilter(_shippers);
+            c.Add(o => o.OrderDate, "OrderCustomDate").Titled(SharedResource.OrderCustomDate).SetCellCssClassesContraint(o => o.OrderDate.HasValue && o.OrderDate.Value >= DateTime.Parse("1997-01-01") ? "red" : "").SetFilterWidgetType("DateTimeLocal").Format("{0:yyyy-MM-dd}").SetWidth(120);
+            c.Add(o => o.Customer.CompanyName).Titled(SharedResource.CompanyName).SetWidth(250).SetCrudHidden(true).SetReadOnlyOnUpdate(true).SetFilterWidgetType("CompanyNameFilter");
+            c.Add(o => o.Customer.ContactName).Titled(SharedResource.ContactName).SetWidth(250).SetCrudHidden(true);
+            c.Add(o => o.Freight).Titled(SharedResource.Freight).Format("{0:F}");
+            c.Add(o => o.Customer.IsVip).Titled(SharedResource.IsVip).SetWidth(70).Css("hidden-xs").RenderValueAs(o => o.Customer.IsVip ? Strings.BoolTrueLabel : Strings.BoolFalseLabel).SetCrudHidden(true);
+            c.Add().Encoded(false).Sanitized(false).SetWidth("5%").SetCrudHidden(true).RenderValueAs(o => $"<img width='50' height='50' src='data:image/bmp;base64,{o.Employee.Base64String}' />");
+            c.Add(o => o.RequiredDate, true).Format("{0:yyyy-MM-dd}");
+            c.Add(o => o.ShippedDate, true).Format("{0:yyyy-MM-dd}");
+            c.Add(o => o.ShipName, true);
+            c.Add(o => o.ShipAddress, true);
+            c.Add(o => o.ShipCity, true);
+            c.Add(o => o.ShipPostalCode, true);
+            c.Add(o => o.ShipRegion, true);
+            c.Add(o => o.ShipCountry, true);
+            c.Add(o => o.OrderDetails).Titled("Order Details").SubGrid("tabGroup1", crudSubGrids, ("OrderID", "OrderID"));
+        };
+
+        var query = new QueryDictionary<StringValues>();
+        if (!string.IsNullOrWhiteSpace(GridState))
+        {
+            try
+            {
+                query = StringExtensions.GetQuery(GridState);
+            }
+            catch (Exception)
+            {
+                // do nothing, GridState was not a valid state
+            }
+        }
+        string url = NavigationManager.BaseUri + "odata/Orders";
+        var client = new GridODataClient<Order>(HttpClient, url, query, false, "ordersGrid", orderColumns, 10, locale,
+            new List<string> { "Employee", "Shipper" })
+                .SetRowCssClasses(item => item.Customer.IsVip ? "success" : string.Empty)
+                .Sortable()
+                .Filterable()
+                .SetKeyboard(true)
+                .Groupable(true)
+                .ClearFiltersButton(true)
+                .SetStriped(true)
+                .WithMultipleFilters()
+                .Searchable(true, false)
+                .Selectable(true, true, true)
+                .WithGridItemsCount()
+                .ChangePageSize(true)
+                .SubGrid(subGrids, ("OrderID", "OrderID"))
+                .ODataCrud(true);
+
+        _customFilters.Add("CompanyNameFilter", typeof(CustomersFilterComponent<Order>));
+
+        _grid = client.Grid;
+        // Set new items to grid
+        _task2 = client.UpdateGrid();
+        await _task2;
+    }
+
+    protected void OrderInfo(object item)
+    {
+        if (item.GetType() == typeof(Order))
+        {
+            _orderInfo.Order = (Order)item;
+        }
+        else
+        {
+            _orderInfo.Order = null;
+        }
+        _orderInfo.Refresh();
+    }
+
+    protected void OrderDetailInfo(object item)
+    {
+        if (item.GetType() == typeof(OrderDetail))
+        {
+            _orderDetailInfo.OrderDetail = (OrderDetail)item;
+        }
+        else
+        {
+            _orderDetailInfo.OrderDetail = null;
+        }
+        _orderDetailInfo.Refresh();
+    }
+
+    Func<string, Task<IEnumerable<SelectItem>>> GetAllCustomers = async (baseUri) =>
+    {
+        string url = baseUri + $"odata/Customers?$select=CustomerID,CompanyName";
+        ODataDTO<Customer> response = await new HttpClient().GetFromJsonAsync<ODataDTO<Customer>>(url);
+        if (response == null || response.Value == null)
+        {
+            return new List<SelectItem>();
+        }
+        else
+        {
+            return response.Value
+                .Select(r => new SelectItem(r.CustomerID, r.CustomerID + " - " + r.CompanyName))
+                .ToList();
+        }
+    };
+
+    Func<string, Task<IEnumerable<SelectItem>>> GetAllEmployees = async (baseUri) =>
+    {
+        string url = baseUri + $"odata/Employees?$select=EmployeeID,FirstName,LastName";
+        ODataDTO<Employee> response = await new HttpClient().GetFromJsonAsync<ODataDTO<Employee>>(url);
+        if (response == null || response.Value == null)
+        {
+            return new List<SelectItem>();
+        }
+        else
+        {
+            return response.Value
+                .Select(r => new SelectItem(r.EmployeeID.ToString(), r.EmployeeID.ToString() + " - " + r.FirstName + " " + r.LastName))
+                .ToList();
+        }
+    };
+
+    Func<string, Task<IEnumerable<SelectItem>>> GetAllShippers = async (baseUri) =>
+    {
+        string url = baseUri + $"odata/Shippers?$select=ShipperID,CompanyName";
+        ODataDTO<Shipper> response = await new HttpClient().GetFromJsonAsync<ODataDTO<Shipper>>(url);
+        if (response == null || response.Value == null)
+        {
+            return new List<SelectItem>();
+        }
+        else
+        {
+            return response.Value
+                .Select(r => new SelectItem(r.ShipperID.ToString(), r.ShipperID.ToString() + " - " + r.CompanyName))
+                .ToList();
+        }
+    };
+
+    Func<string, Task<IEnumerable<SelectItem>>> GetAllProducts = async (baseUri) =>
+    {
+        string url = baseUri + $"odata/Products?$select=ProductID,ProductName";
+        ODataDTO<Product> response = await new HttpClient().GetFromJsonAsync<ODataDTO<Product>>(url);
+        if (response == null || response.Value == null)
+        {
+            return new List<SelectItem>();
+        }
+        else
+        {
+            return response.Value
+                .Select(r => new SelectItem(r.ProductID.ToString(), r.ProductID.ToString() + " - " + r.ProductName))
+                .ToList();
+        }
+    };
+}

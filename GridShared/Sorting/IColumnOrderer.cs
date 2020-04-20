@@ -10,5 +10,9 @@ namespace GridShared.Sorting
     {
         IQueryable<T> ApplyOrder(IQueryable<T> items, GridSortDirection direction);
         IQueryable<T> ApplyThenBy(IQueryable<T> items, GridSortDirection direction);
+
+        // get OData string
+        string GetOrderBy(GridSortDirection direction);  
+        string GetThenBy(GridSortDirection direction);
     }
 }

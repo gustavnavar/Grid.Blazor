@@ -403,8 +403,9 @@ namespace GridBlazor.Pages
                 _shouldRender = true;
                 Error = string.IsNullOrWhiteSpace(e.Code) ? e.Message :  e.Code + " - " + e.Message;
             }
-            catch (Exception)
+            catch (Exception e)
             {
+                Console.WriteLine(e.Message);
                 _shouldRender = true;
                 Error = Strings.UpdateError;
             }
