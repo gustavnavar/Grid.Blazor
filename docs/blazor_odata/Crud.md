@@ -1,10 +1,10 @@
-## Blazor server-side
+## Blazor client-side with OData back-end
 
 # CRUD
 
 [Index](Documentation.md)
 
-GridBlazor supports CRUD forms to add, edit, view and delete items for Blazor server-side projects.
+GridBlazor supports CRUD forms to add, edit, view and delete items for Blazor client-side projects.
 
 These are the supported features:
 - Full screen forms
@@ -16,70 +16,110 @@ These are the supported features:
 
 ## Auto-generated forms
 
-You can enable CRUD using the **Crud** method of the **GridClient** object:
-```c#
-    Action<IGridColumnCollection<Order>> columns = c => ColumnCollections.OrderColumnsWithCrud(c);
-        
-    var client = new GridClient<Order>(q => orderService.GetOrdersGridRows(columns, q), query, false, "ordersGrid", columns, locale)
-        .Crud(true, orderService)
+You can enable CRUD using the **ODataCrud** method of the **GridODataClient** object:
+```c#   
+    var client = new GridODataClient<Order>(HttpClient, url, query, false, "ordersGrid", 
+        c => columns(c, NavigationManager.BaseUri), 10, locale, new List<string> { "Employee", "Shipper" })
+            .ODataCrud(true)
 ```
 
-**Note**: All 4 crud forms can be enabled at the same time with the ```Crud(bool enabled, ...)``` method, but you can enable one by one using  the ```Crud(bool create, bool read, bool update, bool delete, ...)``` method.
+**Note**: All 4 crud forms can be enabled at the same time with the ```ODataCrud(bool enabled)``` method, but you can enable one by one using  the ```ODataCrud(bool create, bool read, bool update, bool delete)``` method.
 
-The parameter **crudDataService** of the **Crud** method must be a class that implements the **ICrudDataService<T>** interface. This interface has 4 methods:
-- ```Task<T> Get(params object[] keys);```
-- ```Task Insert(T item);```
-- ```Task Update(T item);```
-- ```Task Delete(params object[] keys);```
-one for each CRUD operation.
+You must create actions in the ```ODataController``` for all 4 CRUD operations. This is an example of controller including those 4 actions:
 
-This is an example of those 4 methods:
 ```c#
-    public async Task<Order> Get(params object[] keys)
+    public class OrdersController : ODataController
     {
-        using (var context = new NorthwindDbContext(_options))
+        ...
+        [EnableQuery]
+        public async Task<IActionResult> Get(int key)
         {
-           int orderId;
-           int.TryParse(keys[0].ToString(), out orderId);
-           var repository = new OrdersRepository(context);
-           return await repository.GetById(orderId);
+            var repository = new OrdersRepository(_context);
+            Order order = await repository.GetById(key);
+            return Ok(order);
         }
-    }
 
-    public async Task Insert(Order item)
-    {
-        using (var context = new NorthwindDbContext(_options))
+        public async Task<IActionResult> Post([FromBody]Order order)
         {
-            var repository = new OrdersRepository(context);
-            await repository.Insert(item);
-            repository.Save();
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }         
+
+            if (order == null)
+            {
+                return BadRequest();
+            }
+
+            var repository = new OrdersRepository(_context);
+            try
+            {
+                await repository.Insert(order);
+                repository.Save();
+
+                return Created(order);
+            }
+            catch (Exception e)
+            {
+                return BadRequest(new
+                {
+                    message = e.Message.Replace('{', '(').Replace('}', ')')
+                });
+            }
         }
-    }
 
-    public async Task Update(Order item)
-    {
-        using (var context = new NorthwindDbContext(_options))
+        public async Task<IActionResult> Put([FromODataUri]int key, [FromBody] Order order)
         {
-            var repository = new OrdersRepository(context);
-            await repository.Update(item);
-            repository.Save();
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+            if (key != order.OrderID)
+            {
+                return BadRequest();
+            }
+
+            var repository = new OrdersRepository(_context);
+            await repository.Update(order);
+            try
+            {              
+                repository.Save();
+            }
+            catch (DbUpdateConcurrencyException)
+            {
+                if (!OrderExists(key))
+                {
+                    return NotFound();
+                }
+                else
+                {
+                    throw;
+                }
+            }
+            return Updated(order);
         }
-    }
 
-    public async Task Delete(params object[] keys)
-    {
-        using (var context = new NorthwindDbContext(_options))
+        public async Task<ActionResult> Delete([FromODataUri] int key)
         {
-            var order = await Get(keys);
-            var repository = new OrdersRepository(context);
+            var repository = new OrdersRepository(_context);
+            Order order = await repository.GetById(key);
+            if (order == null)
+            {
+                return NotFound();
+            }
             repository.Delete(order);
             repository.Save();
+            return StatusCode((int)HttpStatusCode.NoContent);
         }
+
+        private bool OrderExists(int key)
+        {
+            var repository = new OrdersRepository(_context);
+            return repository.GetAll().Any(x => x.OrderID == key);
+        }
+        ...
     }
 ```
-
-The best way to avoid threading and cache issues for Blazor Server App projects is to create a DbContext inside each method with **using**. 
-Dependency injection for DbContext can produce threading and cache issues.
 
 ### Column definition
 
@@ -95,7 +135,7 @@ Parameter | Description
 --------- | -----------
 enabled | boolean to configure if the field is shown as a ```<select>``` html element
 expression | function to get the selected value for update and delete forms (it must return an string value)
-selectItemExpr | function to get the values and titles to be shown in the drop-down of create and update forms (it must return an ```IEnumerable<SelectItem>```)
+selectItemExprAsync | async function to get the values and titles to be shown in the drop-down of create and update forms (it must return an ```Task<IEnumerable<SelectItem>>```)
 
 The type of fields currently supported as foreign keys are:
 - string
@@ -118,20 +158,23 @@ The type of fields currently supported as foreign keys are:
 This is an example of function to get values and title for a drop-down:
 
 ```c#
-    public IEnumerable<SelectItem> GetAllEmployees()
+    Func<string, Task<IEnumerable<SelectItem>>> GetAllEmployees = async (baseUri) =>
     {
-       using (var context = new NorthwindDbContext(_options))
-       {
-           EmployeeRepository repository = new EmployeeRepository(context);
-           return repository.GetAll()
-               .Select(r => new SelectItem(r.EmployeeID.ToString(), r.EmployeeID.ToString() + " - " 
-                  + r.FirstName + " " + r.LastName))
-               .ToList();
+        string url = baseUri + $"odata/Employees?$select=EmployeeID,FirstName,LastName";
+        ODataDTO<Employee> response = await new HttpClient().GetFromJsonAsync<ODataDTO<Employee>>(url);
+        if (response == null || response.Value == null)
+        {
+            return new List<SelectItem>();
         }
-   }
+        else
+        {
+            return response.Value
+                .Select(r => new SelectItem(r.EmployeeID.ToString(), r.EmployeeID.ToString() + " - " + r.FirstName + " " + r.LastName))
+                .ToList();
+        }
+    };
 ```
 
-As explained for the 4 CRUD methods, the best way to avoid threading and cache issues for Blazor Server App projects is to create a DbContext inside the function with **using**. 
 
 Other fields that you want to be shown as dropdowns with a closed list can also be configured with the ```SetSelectField``` method.
 
@@ -150,20 +193,21 @@ And finally all columns included in the grid but not in the CRUD forms should be
 This is an example of column definition:
 
 ```c#
-    Action<IGridColumnCollection<Order>> columns = c =>
+    Action<IGridColumnCollection<Order>, string> columns = (c, baseUri) =>
     {
-        c.Add(o => o.OrderID).SetPrimaryKey(true);
-        c.Add(o => o.CustomerID, true).SetSelectField(true, o => o.Customer.CustomerID + " - " + o.Customer.CompanyName,
-            customerService.GetAllCustomers);
-        c.Add(o => o.EmployeeID, true).SetSelectField(true, o => o.Employee.EmployeeID.ToString() 
-            + " - " + o.Employee.FirstName + " " + o.Employee.LastName, employeeService.GetAllEmployees);
-        c.Add(o => o.ShipVia, true).SetSelectField(true, o => o.Shipper == null ? "" : o.Shipper.ShipperID.ToString() 
-            + " - " + o.Shipper.CompanyName, shipperService.GetAllShippers);
-        c.Add(o => o.OrderDate, "OrderCustomDate").Titled(SharedResource.OrderCustomDate).Format("{0:yyyy-MM-dd}");
-        c.Add(o => o.Customer.CompanyName).Titled(SharedResource.CompanyName).SetReadOnlyOnUpdate(true);
-        c.Add(o => o.Customer.ContactName).Titled(SharedResource.ContactName).SetCrudHidden(true);
+        c.Add(o => o.OrderID).SetPrimaryKey(true).Titled(SharedResource.Number).SetWidth(100);
+        c.Add(o => o.CustomerID, true).SetSelectField(true, o => o.Customer.CustomerID + " - " + o.Customer.CompanyName, 
+            () => GetAllCustomers(baseUri));
+        c.Add(o => o.EmployeeID, true).SetSelectField(true, o => o.Employee.EmployeeID.ToString() + " - " + o.Employee.FirstName 
+            + " " + o.Employee.LastName, () => GetAllEmployees(baseUri));
+        c.Add(o => o.ShipVia, true).SetSelectField(true, o => o.Shipper == null ? "" : o.Shipper.ShipperID.ToString() + " - " 
+            + o.Shipper.CompanyName, () => GetAllShippers(baseUri));
+        c.Add(o => o.OrderDate, "OrderCustomDate").Titled(SharedResource.OrderCustomDate).Format("{0:yyyy-MM-dd}").SetWidth(120);
+        c.Add(o => o.Customer.CompanyName).Titled(SharedResource.CompanyName).SetWidth(250).SetCrudHidden(true).SetReadOnlyOnUpdate(true);
+        c.Add(o => o.Customer.ContactName).Titled(SharedResource.ContactName).SetWidth(250).SetCrudHidden(true);
         c.Add(o => o.Freight).Titled(SharedResource.Freight).Format("{0:F}");
-        c.Add(o => o.Customer.IsVip).Titled(SharedResource.IsVip).RenderValueAs(o => o.Customer.IsVip ? "Yes" : "No").SetCrudHidden(true);
+        c.Add(o => o.Customer.IsVip).Titled(SharedResource.IsVip).SetWidth(70).Css("hidden-xs")
+            .RenderValueAs(o => o.Customer.IsVip ? Strings.BoolTrueLabel : Strings.BoolFalseLabel).SetCrudHidden(true);
         c.Add(o => o.RequiredDate, true).Format("{0:yyyy-MM-dd}");
         c.Add(o => o.ShippedDate, true).Format("{0:yyyy-MM-dd}");
         c.Add(o => o.ShipName, true);
@@ -172,6 +216,7 @@ This is an example of column definition:
         c.Add(o => o.ShipPostalCode, true);
         c.Add(o => o.ShipRegion, true);
         c.Add(o => o.ShipCountry, true);
+        c.Add(true).Titled("Images").RenderCrudComponentAs<Carousel, Carousel, NullComponent, NullComponent>();
     };
 ```
 
@@ -185,15 +230,16 @@ And this is an auto-genereated edit form:
 
 ## Custom forms (Optional)
 
-If you want to use custom forms you can enable them using the **SetCreateComponent**, **SetReadComponent**, **SetUpdateComponent** and **SetDeleteComponent**  methods of the **GridClient** object:
+If you want to use custom forms you can enable them using the **SetCreateComponent**, **SetReadComponent**, **SetUpdateComponent** and **SetDeleteComponent**  methods of the **GridODataClient** object:
 
 ```c#
-    var client = new GridClient<Order>(q => orderService.GetOrdersGridRows(columns, q), query, false, "ordersGrid", columns, locale)
-        .Crud(true, orderService)
-        .SetCreateComponent<OrderCreateComponent>()
-        .SetReadComponent<OrderReadComponent>()
-        .SetUpdateComponent<OrderUpdateComponent>()
-        .SetDeleteComponent<OrderDeleteComponent>();
+    var client = new GridODataClient<Order>(HttpClient, url, query, false, "ordersGrid", 
+        c => columns(c, NavigationManager.BaseUri), 10, locale, new List<string> { "Employee", "Shipper" })
+            .ODataCrud(true)
+            .SetCreateComponent<OrderCreateComponent>()
+            .SetReadComponent<OrderReadComponent>()
+            .SetUpdateComponent<OrderUpdateComponent>()
+            .SetDeleteComponent<OrderDeleteComponent>();
 ```
 
 You can define all custom forms or just some of them. If you don't define a custom form for one of the enabled operations an auto-generated form will be used instead.
@@ -201,9 +247,8 @@ You can define all custom forms or just some of them. If you don't define a cust
 And finally you will have to create a Blazor component for the custom form. This is an example of edit form:
 
 ```razor
-@using GridBlazor
 @using GridBlazor.Resources
-@using GridBlazorServerSide.Models
+@using GridBlazorOData.Shared.Models
 @inherits GridUpdateComponentBase<Order>
 
 <h1>@Strings.Add Order</h1>
@@ -317,4 +362,4 @@ And finally you will have to create a Blazor component for the custom form. This
 
 If you want to use a drop-down list for a field you have to define it as it was for auto-generated forms.
 
-[<- Passing grid state as parameter](Passing_grid_state_as_parameter.md) | [Nested CRUD ->](Nested_crud.md)
+[<- Front-end back-end API](API.md) | [Nested CRUD ->](Nested_crud.md)

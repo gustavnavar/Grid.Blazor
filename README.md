@@ -2,9 +2,11 @@
 
 A fork from: https://gridmvc.codeplex.com/
 
-It supports .NET Core 3.1 and Blazor WebAssembly 3.2.0 Preview 1
+It supports .NET Core 3.1 and Blazor WebAssembly 3.2.0 Preview 4
 
 ## Notes
+
+- GridBlazor 1.5.0 supports OData server back-ends for Blazor WA applications. More info [here](./docs/blazor_odata/Documentation.md)
 
 - Versions before GridBlazor 1.3.9 had the keyboard navigation enabled by default. This feature requires to focus on the grid element, but it can create problems when used on pages with 2 or more grids. As a consequence, starting with version 1.3.9 it has to be explicitly configured for each grid that requires keyboard navigation. Users can enable keyboard navigation between pages using the ```SetKeyboard``` method of the ```GridClient``` object:
 
@@ -65,6 +67,9 @@ http://gridblazor.azurewebsites.net
 * [GridBlazorClientSide.Client](./GridBlazorClientSide.Client): Front-end project for the Blazor WebAssembly demo
 * [GridBlazorClientSide.Server](./GridBlazorClientSide.Server): Back-end project for the Blazor WebAssembly demo
 * [GridBlazorClientSide.Shared](./GridBlazorClientSide.Shared): Shared project for the Blazor WebAssembly demo
+* [GridBlazorOData.Client](./GridBlazorOData.Client): Front-end project for the Blazor WebAssembly with OData server demo
+* [GridBlazorOData.Server](./GridBlazorOData.Server): Back-end project implementing an OData server for the Blazor WebAssembly demo
+* [GridBlazorOData.Shared](./GridBlazorOData.Shared): Shared project for the Blazor WebAssembly with OData server demo
 * [GridBlazorServerSide](./GridBlazorServerSide): Blazor Server App demo
 * [GridMvc.Demo](./GridMvc.Demo): ASP.NET Core MVC demo
 * [GridBlazor.Tests](./GridBlazor.Tests): Unit tests for the GridBlazor library
@@ -93,6 +98,7 @@ There are native C# Grid components for Blazor client-side and server-side, and 
 
 You can find the specific documentation for each environment clicking the following links:
 * [Documentation for Blazor client-side](./docs/blazor_client/Documentation.md)
+* [Documentation for Blazor client-side with OData back-end](./docs/blazor_odata/Documentation.md)
 * [Documentation for Blazor server-side](./docs/blazor_server/Documentation.md)
 * [Documentation for ASP.NET Core MVC](./docs/dotnetcore/Documentation.md)
 * [Using GridBlazor component for ASP.NET Core MVC](./docs/dotnetcore_blazor/Documentation.md)

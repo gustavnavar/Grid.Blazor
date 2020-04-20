@@ -1,4 +1,4 @@
-## Blazor server-side
+## Blazor client-side with OData back-end
 
 # Filtering
 
@@ -10,30 +10,23 @@ You can enable the filtering option for your columns. To enable this functionali
     Columns.Add(o => o.Customers.CompanyName)
         .Titled("Company Name")
         .Filterable(true)
-        .Width(220)
+        .Width(220);
 ```
 After that you can filter this column. 
 
-You can enable filtering for all columns of a grid using the **Filterable** method for both **GridClient** and **GridServer** objects:
+You can enable filtering for all columns of a grid using the **Filterable** method for the **GridODataClient** object:
 
-* razor page
-    ```c#
-        var client = new GridClient<Order>(q => orderService.GetOrdersGridRows(columns, q), query, false, "ordersGrid", Columns, locale)
-            .Filterable()
-    ```
+```c#
+    var client = new GridODataClient<Order>(httpClient, url, query, false, "ordersGrid", columns, 10, locale)
+        .Filterable();
+```
 
-* service method
-    ```c#
-        var server = new GridServer<Order>(repository.GetAll(), Request.Query, true, "ordersGrid", columns, 10)
-            .Filterable()
-    ```
+You can enable a button to clear all selected filters using the ***ClearFiltersButton*** method of the **GridODataClient** object:  
 
-You can enable a button to clear all selected filters using the ***ClearFiltersButton*** method of the **GridClient** object:  
-
-    ```razor
-        var client = new GridClient<Order>(q => orderService.GetOrdersGridRows(columns, q), query, false, "ordersGrid", Columns, locale)
-            .ClearFiltersButton(true);
-    ```
+```razor
+    var client = new GridODataClient<Order>(httpClient, url, query, false, "ordersGrid", columns, 10)
+        .ClearFiltersButton(true);
+```
 
 **GridBlazor** supports several types of columns (specified in the **Add** method):
 
@@ -76,4 +69,4 @@ Pressing the **+** and **-** buttons you can add multiple options to filter. You
 
 You can also create your own filter widgets.
 
-[<- Searching](Searching.md) | [Using a list filter ->](Using_list_filter.md)
+[<- Searching](Searching.md) | [Using a list filter->](Using_list_filter.md)
