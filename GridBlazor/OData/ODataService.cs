@@ -12,9 +12,9 @@ namespace GridBlazor.OData
     {
         private readonly HttpClient _httpClient;
         private readonly string _url;
-        private readonly ICGrid _grid;
+        private readonly CGrid<T> _grid;
 
-        public ODataService(HttpClient httpClient, string url, ICGrid grid)
+        public ODataService(HttpClient httpClient, string url, CGrid<T> grid)
         {
             _httpClient = httpClient;
             _url = url;
@@ -23,7 +23,7 @@ namespace GridBlazor.OData
 
         public async Task<T> Get(params object[] keys)
         {
-            string url = GetUrl(_url, keys);
+            string url = GetUrl(_grid, _url, keys);
             return await _httpClient.GetFromJsonAsync<T>(url);
         }
 
@@ -40,7 +40,7 @@ namespace GridBlazor.OData
         public async Task Update(T item)
         {
             var keys = _grid.GetPrimaryKeyValues(item);
-            string url = GetUrl(_url, keys);
+            string url = GetUrl(_grid, _url, keys);
 
             var jsonOptions = new JsonSerializerOptions().AddOdataSupport();
             var response = await _httpClient.PutAsJsonAsync<T>(url, item, jsonOptions);
@@ -52,7 +52,7 @@ namespace GridBlazor.OData
 
         public async Task Delete(params object[] keys)
         {
-            string url = GetUrl(_url, keys);
+            string url = GetUrl(_grid, _url, keys);
             var response = await _httpClient.DeleteAsync(url);
             if (!response.IsSuccessStatusCode)
             {
@@ -60,9 +60,16 @@ namespace GridBlazor.OData
             }
         }
 
-        public static string GetUrl(string url, params object[] keys)
+        public static string GetUrl(CGrid<T> grid, string url, params object[] keys)
         {
-            return url + "(" + string.Join(",", keys.Select(x => x.ToString())) + ")";
+            string expandParameters = grid.CurrentExpandODataProcessor.Process();
+            if (url.Contains("?"))
+                expandParameters = "&" + expandParameters;
+            else
+                expandParameters = "?" + expandParameters;
+
+            return url + "(" + string.Join(",", keys.Select(x => x.ToString())) + ")" + expandParameters;
+
         }
     }
 }

@@ -1,4 +1,5 @@
 ﻿@page "/crud"
+@page "/crud/{OrderId}/{Mode}"
 @using GridBlazorServerSide.ColumnCollections
 @using GridBlazorServerSide.Models
 @using GridBlazorServerSide.Resources
@@ -25,7 +26,7 @@
 {
     <div class="row">
         <div class="col-md-12">
-            <GridComponent T="Order" @ref="_gridComponent" Grid="@_grid"></GridComponent>
+            <GridComponent T="Order" @ref="_gridComponent" Grid="@_grid" Mode="_mode" Keys="_keys"></GridComponent>
         </div>
     </div>
 }
@@ -38,7 +39,15 @@ else
 {
     private CGrid<Order> _grid;
     private GridComponent<Order> _gridComponent;
+    private object[] _keys;
+    private GridMode _mode;
     private Task _task;
+
+    [Parameter]
+    public string OrderId { get; set; }
+
+    [Parameter]
+    public string Mode { get; set; }
 
     protected override async Task OnParametersSetAsync()
     {
@@ -59,6 +68,36 @@ else
             .WithGridItemsCount();
 
         _grid = client.Grid;
+
+        if (!string.IsNullOrWhiteSpace(OrderId))
+        {
+            int orderId;
+            bool result = int.TryParse(OrderId, out orderId);
+            if (result)
+            {
+                if (Mode.ToLower() == "create")
+                {
+                    _keys = new object[] { orderId };
+                    _mode = GridMode.Create;
+                }
+                else if (Mode.ToLower() == "read")
+                {
+                    _keys = new object[] { orderId };
+                    _mode = GridMode.Read;
+                }
+                else if (Mode.ToLower() == "update")
+                {
+                    _keys = new object[] { orderId };
+                    _mode = GridMode.Update;
+                }
+                else if (Mode.ToLower() == "delete")
+                {
+                    _keys = new object[] { orderId };
+                    _mode = GridMode.Delete;
+                }
+            }
+        }
+
         // Set new items to grid
         _task = client.UpdateGrid();
         await _task;

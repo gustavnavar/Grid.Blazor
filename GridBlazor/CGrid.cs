@@ -266,6 +266,8 @@ namespace GridBlazor
 
         public ServerAPI ServerAPI { get; internal set; } = ServerAPI.ItemsDTO;
 
+        internal ExpandGridODataProcessor<T> CurrentExpandODataProcessor { get { return _currentExpandODataProcessor; } }
+
         /// <summary>
         ///     Provides CrudDataService used by the grid
         /// </summary>

@@ -86,6 +86,12 @@ namespace GridBlazor.Pages
         public IQueryDictionary<Type> CustomFilters { get; set; }
 
         [Parameter]
+        public GridMode Mode { get; set; }
+
+        [Parameter]
+        public object[] Keys { get; set; }
+
+        [Parameter]
         public string GridMvcCssClass { get; set; } = "grid-mvc";
 
         [Parameter]
@@ -236,7 +242,37 @@ namespace GridBlazor.Pages
                 RowClicked(0, Grid.ItemsToDisplay.First(), mouseEventArgs) ;
             }
 
+            if (firstRender)
+            {
+                await GoToCrudView();
+            }
+
             _shouldRender = false;
+        }
+
+        private async Task GoToCrudView()
+        {
+            if (Keys != null)
+            {
+                if (Mode == GridMode.Create)
+                {
+                    await CreateHandler();
+                }
+                else if (Mode == GridMode.Read)
+                {
+                    var item = await ((CGrid<T>)Grid).CrudDataService.Get(Keys);
+                    ReadHandler(item);
+                }
+                else if (Mode == GridMode.Update)
+                {
+                    await UpdateHandler(Keys);
+                }
+                else if (Mode == GridMode.Delete)
+                {
+                    var item = await ((CGrid<T>)Grid).CrudDataService.Get(Keys);
+                    DeleteHandler(item);
+                }
+            }
         }
 
         internal void RowClicked(int i, object item, MouseEventArgs args)
@@ -505,8 +541,13 @@ namespace GridBlazor.Pages
 
         public async Task UpdateHandler(object item)
         {
-            await SetSelectFields();
             var keys = Grid.GetPrimaryKeyValues(item);
+            await UpdateHandler(keys);
+        }
+
+        public async Task UpdateHandler(object[] keys)
+        {
+            await SetSelectFields();
             try
             {
                 _item = await ((CGrid<T>)Grid).CrudDataService.Get(keys);
@@ -526,7 +567,6 @@ namespace GridBlazor.Pages
                 throw;
             }
         }
-
         public void DeleteHandler(object item)
         {
             _item = (T)item;
