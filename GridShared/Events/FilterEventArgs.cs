@@ -7,4 +7,9 @@ namespace GridShared.Events
     {
         public IFilterColumnCollection FilteredColumns { get; set; }
     }
+
+    public class FilterEventCancelArgs : EventArgs
+    {
+        public bool Cancel { get; set; } = false;
+    }
 }
