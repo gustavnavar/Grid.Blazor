@@ -92,5 +92,35 @@ namespace GridShared.Filtering.Types
             }
             return Expression.Equal(upperFirstExpr, upperValueExpr);
         }
+
+        public override string GetFilterExpression(string columnName, string value, GridFilterType filterType)
+        {
+            value = GetStringValue(value).ToLower();
+            columnName = "tolower(" + columnName + ")";
+
+            //base implementation of building filter expressions
+            filterType = GetValidType(filterType);
+
+            switch (filterType)
+            {
+                case GridFilterType.Equals:
+                    return columnName + " eq " + value;
+                case GridFilterType.NotEquals:
+                    return columnName + " ne " + value;
+                case GridFilterType.Contains:
+                    return "contains(" + columnName + ", " + value + ")";
+                case GridFilterType.StartsWith:
+                    return "startswith(" + columnName + ", " + value + ")";
+                case GridFilterType.EndsWidth:
+                    return "endswith(" + columnName + ", " + value + ")";
+                default:
+                    throw new ArgumentOutOfRangeException();
+            }
+        }
+
+        public override string GetStringValue(string value)
+        {
+            return "'" + value.Replace("'", "''") + "'";
+        }
     }
 }

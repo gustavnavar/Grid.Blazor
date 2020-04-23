@@ -62,7 +62,7 @@ But the parameters **grid-sorting**, **grid-filter** and **grid-clearinitfilter*
     While the grid is using the initial filter this parameters must not be used. But from the moment that the initial filter is removed, either by clearing it or by defining other filter for that column, this parameter must be included in the query string with the name of the column.
     A query string can contain multiple times this parameter, once per each column that had an initial filter not used anymore.
     
-The folling query string is an example:
+The following query string is an example:
 
 ```url
     /Home/GetOrdersGridRows?

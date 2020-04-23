@@ -1,0 +1,61 @@
+@using BlazorStrap
+@using GridBlazorOData.Shared.Models
+@using GridShared.Columns
+@implements ICustomGridComponent<Order>
+
+<BSCarousel NumberOfItems="@_images.Count" Fade="true">
+    <BSCarouselIndicators NumberOfItems="@_images.Count" />
+    <div class="carousel-inner">
+        @for (int i = 0; i < _images.Count; i++)
+        {
+            Image image = _images[i];
+            <BSCarouselItem src="@image.Source" alt="@image.Alt">
+                <BSCarouselCaption CaptionText="@image.Caption" HeaderText="@image.Header" />
+            </BSCarouselItem>
+        }
+    </div>
+    <BSCarouselControl CarouselDirection="CarouselDirection.Previous" NumberOfItems="@_images.Count" />
+    <BSCarouselControl CarouselDirection="CarouselDirection.Next" NumberOfItems="@_images.Count" />
+</BSCarousel>
+
+@code {
+    private IList<Image> _images;
+
+    [Parameter]
+    public Order Item { get; set; }
+
+    protected override void OnParametersSet()
+    {
+        _images = new List<Image>
+        {
+            new Image {
+                Source = "images/bright-summer.jpg",
+                Alt ="First Slide",
+                Caption = "Slide 1",
+                Header = "Customer: " + Item.Customer?.CompanyName
+
+            },
+            new Image {
+               Source = "images/the-railroad-goes-into-the-distance.jpg",
+               Alt ="Second Slide",
+               Caption = "Slide 2",
+               Header = "Shipper: " + Item.Shipper?.CompanyName
+            },
+            new Image {
+               Source = "images/wald-herbst-baume-laub-1573340070HKJ.jpg",
+               Alt ="Third Slide",
+               Caption = "Slide 3",
+               Header = "Employee: " + Item.Employee?.FirstName + " " + Item.Employee?.LastName
+            }
+        };
+    }
+
+
+    class Image
+    {
+        public string Source { get; set; }
+        public string Alt { get; set; }
+        public string Caption { get; set; }
+        public string Header { get; set; }
+    }
+}

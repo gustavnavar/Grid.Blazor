@@ -25,5 +25,9 @@ namespace GridShared.Filtering.Types
         object GetTypedValue(string value);
 
         Expression GetFilterExpression(Expression leftExpr, string value, GridFilterType filterType);
+
+        string GetFilterExpression(string columnName, string value, GridFilterType filterType);
+
+        string GetStringValue(string value);
     }
 }

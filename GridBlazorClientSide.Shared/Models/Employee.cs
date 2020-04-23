@@ -60,15 +60,18 @@ namespace GridBlazorClientSide.Shared.Models
                 if (string.IsNullOrWhiteSpace(_base64Str))
                 {
                     _base64Str = string.Empty;
-                    using (var ms = new MemoryStream())
+                    if (Photo != null)
                     {
-                        int offset = 78;
-                        ms.Write(Photo, offset, Photo.Length - offset);
-                        var bmp = new Bitmap(ms);
-                        using (var jpegms = new MemoryStream())
+                        using (var ms = new MemoryStream())
                         {
-                            bmp.Save(jpegms, ImageFormat.Jpeg);
-                            _base64Str = Convert.ToBase64String(jpegms.ToArray());
+                            int offset = 78;
+                            ms.Write(Photo, offset, Photo.Length - offset);
+                            var bmp = new Bitmap(ms);
+                            using (var jpegms = new MemoryStream())
+                            {
+                                bmp.Save(jpegms, ImageFormat.Jpeg);
+                                _base64Str = Convert.ToBase64String(jpegms.ToArray());
+                            }
                         }
                     }
                 }

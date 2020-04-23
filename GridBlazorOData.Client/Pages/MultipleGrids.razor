@@ -1,0 +1,155 @@
+﻿@page "/multiplegrids"
+@page "/multiplegrids/{OrdersGridState}/{CustomersGridState}"
+@using BlazorStrap
+@using GridBlazor.Resources
+@using GridBlazorOData.Shared.Models
+@using Microsoft.Extensions.Primitives
+@using System.Globalization
+@inject NavigationManager NavigationManager
+@inject HttpClient HttpClient
+
+<h1>Multiple Grids</h1>
+
+<p>
+    This page contains 2 grids. It also allows order editing. Both grid states are passed to the order edit page, so they can be returned to this page mantaining both grid states.
+</p>
+
+<p>
+    This component demonstrates a GridBlazor client-side grid with an OData back-end. For more documentation, please see: <a href="https://github.com/gustavnavar/Grid.Blazor">https://github.com/gustavnavar/Grid.Blazor</a>
+</p>
+
+@if (_task1.IsCompleted && _task2.IsCompleted)
+{
+    <BSTabGroup>
+        <BSTabList>
+            <BSTab>
+                <BSTabLabel>Orders</BSTabLabel>
+                <BSTabContent>
+                    <div style="margin:20px">
+                        <GridComponent T="Order" Grid="@_ordersGrid"></GridComponent>
+                    </div>
+                </BSTabContent>
+            </BSTab>
+            <BSTab>
+                <BSTabLabel>Customers</BSTabLabel>
+                <BSTabContent>
+                    <div style="margin:20px">
+                        <GridComponent T="Customer" Grid="@_customersGrid"></GridComponent>
+                    </div>
+                </BSTabContent>
+            </BSTab>
+        </BSTabList>
+        <BSTabSelectedContent />
+    </BSTabGroup>
+}
+else
+{
+    <p><em>Loading...</em></p>
+}
+
+@code
+{
+    private ICGrid _ordersGrid;
+    private ICGrid _customersGrid;
+    private Task _task1;
+    private Task _task2;
+
+    [Parameter]
+    public string OrdersGridState { get; set; }
+
+    [Parameter]
+    public string CustomersGridState { get; set; }
+
+    protected override void OnInitialized()
+    {
+        CultureInfo.CurrentCulture = new CultureInfo(Program.Culture);
+    }
+
+    protected override async Task OnParametersSetAsync()
+    {
+        var locale = CultureInfo.CurrentCulture;
+
+        Action<IGridColumnCollection<Order>> orderColumns = c =>
+        {
+            c.Add().Encoded(false).Sanitized(false).SetWidth(30).RenderComponentAs<ButtonCellMultipleGrids>(new List<Func<object, Task>>() { MyFunction });
+            c.Add(o => o.OrderID).Titled("Number").SetWidth(100);
+            c.Add(o => o.OrderDate, "OrderCustomDate").Titled("Date").Format("{0:yyyy-MM-dd}").SetWidth(120);
+            c.Add(o => o.Customer.CompanyName).Titled("Company").SetWidth(250);
+            c.Add(o => o.Customer.ContactName).Titled("ContactName").SetWidth(250);
+            c.Add(o => o.Freight).Titled("Freight").Format("{0:F}");
+            c.Add(o => o.Customer.IsVip).Titled("Is Vip").SetWidth(70).RenderValueAs(o => o.Customer.IsVip ? Strings.BoolTrueLabel : Strings.BoolFalseLabel);
+        };
+
+        var ordersQuery = new QueryDictionary<StringValues>();
+        if (!string.IsNullOrWhiteSpace(OrdersGridState))
+        {
+            try
+            {
+                ordersQuery = StringExtensions.GetQuery(OrdersGridState);
+            }
+            catch (Exception)
+            {
+                // do nothing, GridState was not a valid state
+            }
+        }
+        string ordersUrl = NavigationManager.BaseUri + "odata/Orders";
+        var ordersClient = new GridODataClient<Order>(HttpClient, ordersUrl, ordersQuery, false, "ordersGrid", orderColumns, 10, locale)
+            .Sortable()
+            .Filterable()
+            .SetStriped(true)
+            .WithMultipleFilters()
+            .WithGridItemsCount();
+        _ordersGrid = ordersClient.Grid;
+
+        // Set new items to grid
+        _task1 = ordersClient.UpdateGrid();
+        await _task1;
+
+        var customersQuery = new QueryDictionary<StringValues>();
+        if (!string.IsNullOrWhiteSpace(CustomersGridState))
+        {
+            try
+            {
+                customersQuery = StringExtensions.GetQuery(CustomersGridState);
+            }
+            catch (Exception)
+            {
+                // do nothing, GridState was not a valid state
+            }
+        }
+
+        Action<IGridColumnCollection<Customer>> customerColumns = c =>
+        {
+            c.Add(o => o.CustomerID).Titled("ID");
+            c.Add(o => o.CompanyName).Titled("Company");
+            c.Add(o => o.ContactName).Titled("ContactName").SetWidth(250);
+            c.Add(o => o.Address).Titled("Address");
+            c.Add(o => o.City).Titled("City");
+            c.Add(o => o.PostalCode).Titled("Postal Code");
+            c.Add(o => o.Country).Titled("Country");
+        };
+
+        string customersUrl = NavigationManager.BaseUri + "odata/Customers";
+        var customersClient = new GridODataClient<Customer>(HttpClient, customersUrl, customersQuery, false, "customersGrid",
+            customerColumns, 10, locale)
+                .Sortable()
+                .Filterable()
+                .SetStriped(true)
+                .WithMultipleFilters()
+                .WithGridItemsCount();
+        _customersGrid = customersClient.Grid;
+
+        // Set new items to grid
+        _task2 = customersClient.UpdateGrid();
+        await _task2;
+    }
+
+    private async Task MyFunction(object item)
+    {
+        string ordersGridState = _ordersGrid.GetState();
+        string customersGridState = _customersGrid.GetState();
+        await Task.Run(() =>
+            NavigationManager.NavigateTo($"/editorder/{((Order)item).OrderID.ToString()}/multiplegrids/{ordersGridState}/{customersGridState}"));
+    }
+}
+

@@ -65,7 +65,9 @@ namespace GridMvc.Columns
 
         public bool HeaderCheckbox { get; protected set; } = false;
 
-        public (bool IsSelectKey, Func<T, string> Expression, string Url, Func<IEnumerable<SelectItem>> SelectItemExpr) IsSelectField { get; protected set; } = (false, null, null, null);
+        public (bool IsSelectKey, Func<T, string> Expression, string Url, Func<IEnumerable<SelectItem>> SelectItemExpr,
+            Func<Task<IEnumerable<SelectItem>>> SelectItemExprAsync) IsSelectField { get; protected set; } 
+            = (false, null, null, null, null);
 
         public IEnumerable<SelectItem> SelectItems { get; internal set; }
 
@@ -406,13 +408,19 @@ namespace GridMvc.Columns
 
         public IGridColumn<T> SetSelectField(bool enabled, Func<T, string> expression, Func<IEnumerable<SelectItem>> selectItemExpr)
         {
-            IsSelectField = (enabled, expression, null, selectItemExpr);
+            IsSelectField = (enabled, expression, null, selectItemExpr, null);
+            return this;
+        }
+
+        public IGridColumn<T> SetSelectField(bool enabled, Func<T, string> expression, Func<Task<IEnumerable<SelectItem>>> selectItemExprAsync)
+        {
+            IsSelectField = (enabled, expression, null, null, selectItemExprAsync);
             return this;
         }
 
         public IGridColumn<T> SetSelectField(bool enabled, Func<T, string> expression, string url)
         {
-            IsSelectField = (enabled, expression, url, null);
+            IsSelectField = (enabled, expression, url, null, null);
             return this;
         }
         public abstract IGrid ParentGrid { get; }

@@ -1,0 +1,108 @@
+﻿@page "/selectable"
+@page "/selectable/{GridState}"
+@using GridBlazor.Resources
+@using GridBlazorOData.Shared.Models
+@using Microsoft.Extensions.Primitives
+@using System.Globalization
+@using System.Threading.Tasks
+@inject NavigationManager NavigationManager
+@inject HttpClient HttpClient
+
+<h1>Selectable Grid</h1>
+
+<p>
+    This page contains a grid where rows can be selected. When a row is selected, the order details are shown in a component on rigth column.
+</p>
+
+<p>
+    This component demonstrates a GridBlazor client-side grid with an OData back-end. For more information, please see: <a href="https://github.com/gustavnavar/Grid.Blazor">https://github.com/gustavnavar/Grid.Blazor</a>
+</p>
+
+@if (_task.IsCompleted)
+{
+    <div class="row">
+        <div class="col-md-9">
+            <GridComponent T="Order" Grid="@_grid" OnRowClicked="@OrderDetails"></GridComponent>
+        </div>
+        <div class="col-md-3">
+            <h4>
+                Order details
+            </h4>
+            <OrderInfo @ref="_orderInfo" ReturnUrl="selectable" Grid="@_grid"></OrderInfo>
+        </div>
+    </div>
+}
+else
+{
+    <p><em>Loading...</em></p>
+}
+
+@code
+{
+    private CGrid<Order> _grid;
+    private OrderInfo _orderInfo;
+    private Task _task;
+
+    [Parameter]
+    public string GridState { get; set; }
+
+    protected override void OnInitialized()
+    {
+        CultureInfo.CurrentCulture = new CultureInfo(Program.Culture);
+    }
+
+    protected override async Task OnParametersSetAsync()
+    {
+        var locale = CultureInfo.CurrentCulture;
+        var query = new QueryDictionary<StringValues>();
+        if (!string.IsNullOrWhiteSpace(GridState))
+        {
+            try
+            {
+                query = StringExtensions.GetQuery(GridState);
+            }
+            catch (Exception)
+            {
+                // do nothing, GridState was not a valid state
+            }
+        }
+
+        Action<IGridColumnCollection<Order>> columns = c =>
+        {
+            c.Add(o => o.OrderID).Titled("Number").SetWidth(100);
+            c.Add(o => o.OrderDate, "OrderCustomDate").Titled("Date").SetWidth(120).RenderComponentAs<TooltipCell>();
+            c.Add(o => o.Customer.CompanyName).Titled("Company").SetWidth(250);
+            c.Add(o => o.Customer.ContactName).Titled("ContactName").SetWidth(250);
+            c.Add(o => o.Customer.Country, true);
+            c.Add(o => o.Freight).Titled("Freight").Format("{0:F}");
+            c.Add(o => o.Customer.IsVip).Titled("Is Vip").SetWidth(70).Css("hidden-xs").RenderValueAs(o => o.Customer.IsVip ? Strings.BoolTrueLabel : Strings.BoolFalseLabel);
+        };
+
+        string url = NavigationManager.BaseUri + "odata/Orders";
+        var client = new GridODataClient<Order>(HttpClient, url, query, false, "ordersGrid", columns, 10, locale)
+            .Sortable()
+            .Filterable()
+            .SetStriped(true)
+            .Selectable(true, true)
+            .WithMultipleFilters()
+            .WithGridItemsCount();
+
+        _grid = client.Grid;
+        // Set new items to grid
+        _task = client.UpdateGrid();
+        await _task;
+    }
+
+    protected void OrderDetails(object item)
+    {
+        if (item.GetType() == typeof(Order))
+        {
+            _orderInfo.Order = (Order)item;
+        }
+        else
+        {
+            _orderInfo.Order = null;
+        }
+        _orderInfo.Refresh();
+    }
+}

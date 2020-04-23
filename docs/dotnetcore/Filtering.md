@@ -47,7 +47,7 @@ You can enable a button to clear all selected filters using the ***ClearFiltersB
 It also supports nullable types of any element of the list.
 
 **GridMvc** has different filter widgets for these types:
-* **TextFitlerWidget**: it provides a filter interface for text columns (System.String). This means that if your column has text data, **Grid.Mvc** will render an specific filter interface:
+* **TextFitlerWidget**: it provides a filter interface for text columns (System.String). This means that if your column has text data, **GridMvcCore** will render an specific filter interface:
 
     ![](../images/Filtering_string.png)
 

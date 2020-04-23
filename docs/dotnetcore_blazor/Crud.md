@@ -13,6 +13,7 @@ These are the supported features:
 - Custom forms
 - Support of grid models including 1:N relationships
 - Support of entities with multiple foreign keys
+- Direct URLs
 
 ## Auto-generated forms
 
@@ -316,5 +317,93 @@ And finally you will have to create a Blazor component for the custom form. This
 **Note**: The Blazor component must be to inherited from the **GridUpdateComponentBase<T>** class.
 
 If you want to use a drop-down list for a field you have to define it as it was for auto-generated forms.
+
+## Direct URLs
+
+You can configure a direct route to an specific CRUD form. The first step is to roure alternative routes as follows:
+
+```c#
+@page "/crud"
+@page "/crud/{OrderId}/{Mode}"
+```
+
+Then you have to create and initialize the following parameters:
+- ```GridMode ``` for the type of CRUD form
+- ```object[]``` for the primary keys of the row to be shown on the form 
+
+This is an example of these parameters initialization:
+
+```c#
+@code
+{
+    ...
+
+    private object[] _keys;
+    private GridMode _mode;
+    
+    ...
+
+    protected override async Task OnParametersSetAsync()
+    {
+        var locale = CultureInfo.CurrentCulture;
+        SharedResource.Culture = locale;
+
+        var query = new QueryDictionary<StringValues>();
+
+        Action<IGridColumnCollection<Order>> columns = c => ColumnCollections.OrderColumnsWithCrud(c,
+            customerService.GetAllCustomers, employeeService.GetAllEmployees, shipperService.GetAllShippers);
+        var client = new GridClient<Order>(q => orderService.GetOrdersGridRows(columns, q),
+            query, false, "ordersGrid", columns, locale)
+            .Sortable()
+            .Filterable()
+            .SetStriped(true)
+            .Crud(true, orderService)
+            .WithMultipleFilters()
+            .WithGridItemsCount();
+
+        _grid = client.Grid;
+
+        if (!string.IsNullOrWhiteSpace(OrderId))
+        {
+            int orderId;
+            bool result = int.TryParse(OrderId, out orderId);
+            if (result)
+            {
+                if (Mode.ToLower() == "create")
+                {
+                    _keys = new object[] { orderId };
+                    _mode = GridMode.Create;
+                }
+                else if (Mode.ToLower() == "read")
+                {
+                    _keys = new object[] { orderId };
+                    _mode = GridMode.Read;
+                }
+                else if (Mode.ToLower() == "update")
+                {
+                    _keys = new object[] { orderId };
+                    _mode = GridMode.Update;
+                }
+                else if (Mode.ToLower() == "delete")
+                {
+                    _keys = new object[] { orderId };
+                    _mode = GridMode.Delete;
+                }
+            }
+        }
+
+        // Set new items to grid
+        _task = client.UpdateGrid();
+        await _task;
+    }
+
+    ...
+```
+
+And finaly you have to pass the paramenters initialized before to the ```GridComponent```
+
+```c#
+<GridComponent T="Order" Grid="@_grid" Mode="_mode" Keys="_keys"></GridComponent>
+``` 
 
 [<- Passing grid state as parameter](Passing_grid_state_as_parameter.md) | [Nested CRUD ->](Nested_crud.md)

@@ -1,0 +1,29 @@
+﻿@using Microsoft.AspNetCore.Builder
+@using Microsoft.Extensions.Options
+@using System.Globalization
+@inject NavigationManager NavigationManager
+@inject HttpClient HttpClient
+@inject IOptions<RequestLocalizationOptions> LocOptions
+
+<select class="form-control" value="@Program.Culture" @onchange="SetLanguage">
+    @foreach (var culture in LocOptions.Value.SupportedUICultures)
+    {
+        <option value="@culture.Name">@culture.Name</option>
+    }
+</select>
+
+@code {
+    protected override void OnInitialized()
+    {
+        CultureInfo.CurrentCulture = new CultureInfo(Program.Culture);
+    }
+
+    private async Task SetLanguage(ChangeEventArgs e)
+    {
+        var culture = (string)e.Value;
+        await HttpClient.PostAsync(NavigationManager.BaseUri + $"api/Culture/SetCulture?culture={culture}", null);
+
+        var uri = new Uri(NavigationManager.Uri).GetComponents(UriComponents.PathAndQuery, UriFormat.Unescaped);
+        NavigationManager.NavigateTo(uri, forceLoad: true);
+    }
+}

@@ -53,11 +53,11 @@ else
     public string ReturnUrl { get; set; }
 
     [Parameter]
-    public string GridState { get; set; }
+    public IGrid Grid { get; set; }
 
     private void MyClickHandler(MouseEventArgs e)
     {
-        NavigationManager.NavigateTo($"/editorder/{Order.OrderID.ToString()}/{ReturnUrl}/{GridState}");
+        NavigationManager.NavigateTo($"/editorder/{Order.OrderID.ToString()}/{ReturnUrl}/{Grid.GetState()}");
     }
 
     public void Refresh()

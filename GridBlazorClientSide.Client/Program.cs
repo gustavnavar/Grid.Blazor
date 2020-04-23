@@ -5,8 +5,10 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
 using Microsoft.AspNetCore.Localization;
 using Microsoft.Extensions.DependencyInjection;
+using System;
 using System.Collections.Generic;
 using System.Globalization;
+using System.Net.Http;
 using System.Threading.Tasks;
 
 namespace GridBlazorClientSide.Client
@@ -20,7 +22,7 @@ namespace GridBlazorClientSide.Client
             var builder = WebAssemblyHostBuilder.CreateDefault(args);
             builder.RootComponents.Add<App>("app");
 
-            builder.Services.AddBaseAddressHttpClient();
+            builder.Services.AddSingleton(new HttpClient { BaseAddress = new Uri(builder.HostEnvironment.BaseAddress) });
             builder.Services.AddScoped<ICrudDataService<Order>, OrderService>();
             builder.Services.AddScoped<IOrderGridInMemoryService, OrderGridInMemoryService>();
             builder.Services.AddScoped<ICrudDataService<OrderDetail>, OrderDetailService>();

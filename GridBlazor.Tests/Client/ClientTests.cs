@@ -37,6 +37,7 @@ namespace GridBlazor.Tests.Client
             _client.WithPaging(5);
             Assert.IsTrue(_client.Grid.EnablePaging);
             Assert.AreEqual(_client.Grid.Pager.PageSize, 5);
+            Assert.AreEqual(_client.Grid.ServerAPI, ServerAPI.ItemsDTO);
 
             _client.WithMultipleFilters();
             Assert.IsTrue(_client.Grid.ComponentOptions.AllowMultipleFilters);
@@ -50,7 +51,19 @@ namespace GridBlazor.Tests.Client
 
             _client.Selectable(true);
             Assert.IsTrue(_client.Grid.ComponentOptions.Selectable);
-  
+
+            _client.ChangePageSize(true);
+            Assert.IsTrue(_client.Grid.Pager.ChangePageSize);
+
+            _client.ClearFiltersButton(true);
+            Assert.IsTrue(_client.Grid.ClearFiltersButtonEnabled);
+
+            _client.ExtSortable(true);
+            Assert.IsTrue(_client.Grid.ExtSortingEnabled);
+
+            _client.Groupable(false);
+            Assert.IsFalse(_client.Grid.ExtSortingEnabled);
+            Assert.IsFalse(_client.Grid.GroupingEnabled);
         }
     }
 }

@@ -53,7 +53,47 @@ namespace GridShared.Sorting
         {
             return Apply(items);
         }
-        
+
+        public string GetOrderBy(GridSortDirection direction)
+        {
+            return GetBy(direction);
+        }
+
+        public string GetThenBy(GridSortDirection direction)
+        {
+            return GetBy(direction);
+        }
+
+        private string GetBy(GridSortDirection direction)
+        {
+            string result = "";
+
+            // get column name
+            List<string> names = new List<string>();
+            Expression expression = _expression.Body;
+            while (expression.NodeType != ExpressionType.Parameter)
+            {
+                names.Add(((MemberExpression)expression).Member.Name);
+                expression = ((MemberExpression)expression).Expression;
+            }
+            for (int i = names.Count - 1; i >= 0; i--)
+            {
+                result += names[i];
+                if (i != 0)
+                    result += "/";
+            }
+
+            switch (_initialDirection)
+            {
+                case GridSortDirection.Ascending:
+                    return result;
+                case GridSortDirection.Descending:
+                    return result + " desc";
+                default:
+                    throw new ArgumentOutOfRangeException();
+            }
+        }
+
         #endregion
     }
 }

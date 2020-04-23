@@ -140,6 +140,16 @@ namespace GridBlazor
             ICrudDataService<T> crudDataService);
 
         /// <summary>
+        ///     Enable or disable client grid CRUD with and OData back-end
+        /// </summary>
+        IGridClient<T> ODataCrud(bool enabled);
+
+        /// <summary>
+        ///     Enable or disable client grid CRUD with and OData back-end
+        /// </summary>
+        IGridClient<T> ODataCrud(bool createEnabled, bool readEnabled, bool updateEnabled, bool deleteEnabled);
+
+        /// <summary>
         ///     Setup the Create Component
         /// </summary>
         IGridClient<T> SetCreateComponent<TComponent>();
@@ -412,6 +422,16 @@ namespace GridBlazor
         ///     Configure the modifier key
         /// </summary>
         IGridClient<T> SetModifierKey(ModifierKey modifierKey);
+
+        /// <summary>
+        ///     Configure the Server API
+        /// </summary>
+        IGridClient<T> UseServerAPI(ServerAPI serverAPI);
+
+        /// <summary>
+        ///     Use OData extend for columns
+        /// </summary>
+        IGridClient<T> UseODataExpand(IEnumerable<string> oDataExpandList);
 
         /// <summary>
         ///    Get grid object
