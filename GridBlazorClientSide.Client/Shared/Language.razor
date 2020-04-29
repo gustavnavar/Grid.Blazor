@@ -1,29 +1,41 @@
-﻿@using Microsoft.AspNetCore.Builder
-@using Microsoft.Extensions.Options
-@using System.Globalization
+﻿@using  System.Globalization
+@inject IJSRuntime JSRuntime
 @inject NavigationManager NavigationManager
-@inject HttpClient HttpClient
-@inject IOptions<RequestLocalizationOptions> LocOptions
 
-<select class="form-control" value="@Program.Culture" @onchange="SetLanguage">
-    @foreach (var culture in LocOptions.Value.SupportedUICultures)
+<select class="form-control" @bind="Culture">
+    @foreach (var culture in supportedCultures)
     {
         <option value="@culture.Name">@culture.Name</option>
     }
 </select>
 
 @code {
-    protected override void OnInitialized()
+    CultureInfo[] supportedCultures = new[]
     {
-        CultureInfo.CurrentCulture = new CultureInfo(Program.Culture);
-    }
+        new CultureInfo("en-US"),
+        new CultureInfo("de-DE"),
+        new CultureInfo("it-IT"),
+        new CultureInfo("es-ES"),
+        new CultureInfo("fr-FR"),
+        new CultureInfo("ru-RU"),
+        new CultureInfo("nb-NO"),
+        new CultureInfo("nl-NL"),
+        new CultureInfo("tr-TR"),
+        new CultureInfo("cs-CZ"),
+        new CultureInfo("sl-SI")
+    };
 
-    private async Task SetLanguage(ChangeEventArgs e)
+    CultureInfo Culture
     {
-        var culture = (string)e.Value;
-        await HttpClient.PostAsync(NavigationManager.BaseUri + $"api/Culture/SetCulture?culture={culture}", null);
-
-        var uri = new Uri(NavigationManager.Uri).GetComponents(UriComponents.PathAndQuery, UriFormat.Unescaped);
-        NavigationManager.NavigateTo(uri, forceLoad: true);
+        get => CultureInfo.CurrentCulture;
+        set
+        {
+            if (CultureInfo.CurrentCulture != value)
+            {
+                var js = (IJSInProcessRuntime)JSRuntime;
+                js.InvokeVoid("blazorCulture.set", value.Name);
+                NavigationManager.NavigateTo(NavigationManager.Uri, forceLoad: true);
+            }
+        }
     }
 }

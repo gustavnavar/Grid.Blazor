@@ -99,20 +99,20 @@ The **GridMvcCore** package sends back a **json** reponse string with the follow
 
 ```json
     {
-        "items":[ -- array of registers -- ],
+        "items":[ array of registers ],
         "totals":
         {
-            "sum":{ -- values of column's addition -- },
-            "average":{ -- values of column's average -- },
-            "max":{ -- values of column's max-- },
-            "min":{ -- values of column's min-- }
+            "sum":{ values of column's addition },
+            "average":{ values of column's average },
+            "max":{ values of column's max },
+            "min":{ values of column's min }
         },
         "pager":
         {
-            "enablePaging": -- true|false --,
-            "pageSize": -- number --,
-            "currentPage": -- number --,
-            "itemsCount": -- number --
+            "enablePaging": true|false,
+            "pageSize": number,
+            "currentPage": number,
+            "itemsCount": number
         }
     }
 ```

@@ -30,9 +30,9 @@ You can enable filtering for all columns of a grid using the **Filterable** meth
 
 You can enable a button to clear all selected filters using the ***ClearFiltersButton*** method of the **GridClient** object:  
 
-    ```razor
-        var client = new GridClient<Order>(httpClient, url, query, false, "ordersGrid", Columns).ClearFiltersButton(true);
-    ```
+```c#
+    var client = new GridClient<Order>(httpClient, url, query, false, "ordersGrid", Columns).ClearFiltersButton(true);
+```
 
 **GridBlazor** supports several types of columns (specified in the **Add** method):
 

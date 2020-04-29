@@ -59,11 +59,6 @@ else
     [Parameter]
     public string GridState { get; set; }
 
-    protected override void OnInitialized()
-    {
-        CultureInfo.CurrentCulture = new CultureInfo(Program.Culture);
-    }
-
     protected override async Task OnParametersSetAsync()
     {
         _rowClickActions = new List<Action<object>>();

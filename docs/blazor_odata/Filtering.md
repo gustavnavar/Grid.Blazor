@@ -23,7 +23,7 @@ You can enable filtering for all columns of a grid using the **Filterable** meth
 
 You can enable a button to clear all selected filters using the ***ClearFiltersButton*** method of the **GridODataClient** object:  
 
-```razor
+```c#
     var client = new GridODataClient<Order>(httpClient, url, query, false, "ordersGrid", columns, 10)
         .ClearFiltersButton(true);
 ```

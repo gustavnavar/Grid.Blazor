@@ -41,7 +41,7 @@ namespace GridBlazor.Pages
 
         public event Func<object, SortEventArgs, Task> SortChanged;
         public event Func<object, ExtSortEventArgs, Task> ExtSortChanged;
-        public event Func<object, FilterEventCancelArgs, Task> BeforeFilterChanged;
+        public event Func<object, FilterEventArgs, Task<bool>> BeforeFilterChanged;
         public event Func<object, FilterEventArgs, Task> FilterChanged;
         public event Func<object, SearchEventArgs, Task> SearchChanged;
         public event Func<object, PagerEventArgs, Task> PagerChanged;
@@ -53,6 +53,9 @@ namespace GridBlazor.Pages
         public event Func<GridCreateComponent<T>, T, Task> AfterInsert;
         public event Func<GridUpdateComponent<T>, T, Task> AfterUpdate;
         public event Func<GridDeleteComponent<T>, T, Task> AfterDelete;
+
+        public event Func<Task> BeforeRefreshGrid;
+        public event Func<Task> AfterRefreshGrid;
 
         internal event Func<CheckboxEventArgs, Task> HeaderCheckboxChanged;
         internal event Func<CheckboxEventArgs, Task> RowCheckboxChanged;
@@ -405,28 +408,25 @@ namespace GridBlazor.Pages
 
         public async Task AddFilter(IGridColumn column, FilterCollection filters)
         {
-            if (await OnBeforeFilterChangeCancelled()) return;
-
-            Grid.AddFilterParameter(column, filters);
-            await UpdateGrid();
-            await OnFilterChanged();
+            bool isValid = await OnBeforeFilterChanged();
+            if (isValid)
+            {
+                Grid.AddFilterParameter(column, filters);
+                await UpdateGrid();
+                await OnFilterChanged();
+            }      
         }
 
-        protected virtual async Task<bool> OnBeforeFilterChangeCancelled()
+        protected virtual async Task<bool> OnBeforeFilterChanged()
         {
-            FilterEventCancelArgs args = new FilterEventCancelArgs();
+            FilterEventArgs args = new FilterEventArgs();
+            args.FilteredColumns = Grid.Settings.FilterSettings.FilteredColumns;
 
             if (BeforeFilterChanged != null)
             {
-                await BeforeFilterChanged.Invoke(this, args);
-                if (args.Cancel)
-                {
-                    FilterButtonClicked?.Invoke();
-                    await UpdateGrid(false);
-                }
-                return args.Cancel;
+                return await BeforeFilterChanged.Invoke(this, args);
             }
-            return false;
+            return true;
         }
         
         protected virtual async Task OnFilterChanged()
@@ -442,20 +442,24 @@ namespace GridBlazor.Pages
 
         public async Task RemoveFilter(IGridColumn column)
         {
-            if (await OnBeforeFilterChangeCancelled()) return;
-
-            Grid.RemoveFilterParameter(column);
-            await UpdateGrid();
-            await OnFilterChanged();
+            bool isValid = await OnBeforeFilterChanged();
+            if (isValid)
+            {
+                Grid.RemoveFilterParameter(column);
+                await UpdateGrid();
+                await OnFilterChanged();
+            }
         }
 
         public async Task RemoveAllFilters()
         {
-            if (await OnBeforeFilterChangeCancelled()) return;
-
-            Grid.RemoveAllFilters();
-            await UpdateGrid();
-            await OnFilterChanged();
+            bool isValid = await OnBeforeFilterChanged();
+            if (isValid)
+            {
+                Grid.RemoveAllFilters();
+                await UpdateGrid();
+                await OnFilterChanged();
+            }
         }
 
         public async Task AddSearch(string searchValue)
@@ -1060,6 +1064,8 @@ namespace GridBlazor.Pages
 
         public async Task UpdateGrid(bool ReloadData = true)
         {
+            await OnBeforeRefreshGrid();
+            
             if (ReloadData) await Grid.UpdateGrid();
             SelectedRow = -1;
             SelectedRows.Clear();
@@ -1069,6 +1075,24 @@ namespace GridBlazor.Pages
             StateHasChanged();
 
             await SetGridFocus();
+
+            await OnAfterRefreshGrid();
+        }
+
+        protected virtual async Task OnBeforeRefreshGrid()
+        {
+            if (BeforeRefreshGrid != null)
+            {
+                await BeforeRefreshGrid.Invoke();
+            }
+        }
+
+        protected virtual async Task OnAfterRefreshGrid()
+        {
+            if (AfterRefreshGrid != null)
+            {
+                await AfterRefreshGrid.Invoke();
+            }
         }
     }
 }

@@ -32,14 +32,8 @@ else
 
 @code
 {
-    private CGrid<Order>
-    _grid;
+    private CGrid<Order> _grid;
     private Task _task;
-
-    protected override void OnInitialized()
-    {
-        CultureInfo.CurrentCulture = new CultureInfo(Program.Culture);
-    }
 
     protected override async Task OnParametersSetAsync()
     {

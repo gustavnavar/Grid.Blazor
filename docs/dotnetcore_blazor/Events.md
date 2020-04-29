@@ -9,17 +9,22 @@
 GridBlazor component provides some events to notify other classes or objects when the grid has changed. The supported events are:
 - ```Func<object, PagerEventArgs, Task> PagerChanged```: it's fired when the page number and/or page size are changed 
 - ```Func<object, SortEventArgs, Task> SortChanged```: it's fired when sorting is changed 
-- ```Func<object, ExtSortEventArgs, Task> ExtSortChanged```: it's fired when extended sorting or grouping are changed 
+- ```Func<object, ExtSortEventArgs, Task> ExtSortChanged```: it's fired when extended sorting or grouping are changed
+- ```Func<object, FilterEventArgs, Task<bool>> BeforeFilterChanged```: it's fired before a filter is created, changed or removed
 - ```Func<object, FilterEventArgs, Task> FilterChanged```: it's fired when a filter is created, changed or removed
 - ```Func<object, SearchEventArgs, Task> SearchChanged```: it's fired when the a new word is searched or search has been cleared 
 
-And these events are provided to allow running tasks on changing grid items:
+These events are provided to allow running tasks on changing grid items:
 - ```Func<GridCreateComponent<T>, T, Task<bool>> BeforeInsert```: it's fired before an item is inserted
 - ```Func<GridCreateComponent<T>, T, Task<bool>> BeforeUpdate```: it's fired before an item is updated
 - ```Func<GridCreateComponent<T>, T, Task<bool>> BeforeDelete```: it's fired before an item is deleted
 - ```Func<GridCreateComponent<T>, T, Task> AfterInsert```: it's fired after an item is inserted
 - ```Func<GridCreateComponent<T>, T, Task> AfterUpdate```: it's fired after an item is updated
 - ```Func<GridCreateComponent<T>, T, Task> AfterDelete```: it's fired after an item is deleted
+
+And these events are provided to allow running tasks before and after grid is refreshed:
+- ```Func<Task> BeforeRefreshGrid```: it's fired before the grid will be refreshed
+- ```Func<Task> AfterRefreshGrid```: it's fired after the grid is refreshed 
 
 If you want to handle an event you have to create a reference to the ```GridCompoment```. 
 
@@ -46,12 +51,16 @@ You can see here an example handling all component events that writes some grid 
                 _gridComponent.PagerChanged += PagerChanged;
                 _gridComponent.SortChanged += SortChanged;
                 _gridComponent.ExtSortChanged += ExtSortChanged;
+                _gridComponent.BeforeFilterChanged += BeforeFilterChanged;
                 _gridComponent.FilterChanged += FilterChanged;
                 _gridComponent.SearchChanged += SearchChanged;
 
                 _gridComponent.BeforeInsert += BeforeInsert;
                 _gridComponent.BeforeUpdate += BeforeUpdate;
                 _gridComponent.BeforeDelete += BeforeDelete;
+
+                _gridComponent.BeforeRefreshGrid += BeforeRefreshGrid;
+                _gridComponent.AfterRefreshGrid += AfterRefreshGrid;
             }
         }
 
@@ -80,6 +89,28 @@ You can see here an example handling all component events that writes some grid 
             await Task.CompletedTask;
         }
 
+        private async Task<bool> BeforeFilterChanged(object sender, FilterEventArgs e)
+        {
+            Console.WriteLine("Filters can be changed:");
+            foreach (var filteredColumn in e.FilteredColumns)
+            {
+                Console.WriteLine(" - ColumnName: {0}, FilterType: {1}, FilterValue: {2}.",
+                    filteredColumn.ColumnName, filteredColumn.FilterType, filteredColumn.FilterValue);
+            }
+            await Task.CompletedTask;
+            var rnd = new Random();
+            if (rnd.Next(100) % 2 == 0)
+            {
+                Console.WriteLine("Filters will be changed");
+                return true;
+            }
+            else
+            {
+                Console.WriteLine("Filters won't be changed");
+                return false;
+            }
+        }
+        
         private async Task FilterChanged(object sender, FilterEventArgs e)
         {
             Console.WriteLine("Filters have changed:");
@@ -134,6 +165,19 @@ You can see here an example handling all component events that writes some grid 
             }
 
             return valid.IsValid;
+        }
+        
+        private async Task<bool> BeforeRefreshGrid()
+        {
+            Console.WriteLine("Grid will start refreshing");
+            await Task.CompletedTask;
+            return true;
+        }
+
+        private async Task AfterRefreshGrid()
+        {
+            Console.WriteLine("Grid has been refreshed");
+            await Task.CompletedTask;
         }
     }
 ```
