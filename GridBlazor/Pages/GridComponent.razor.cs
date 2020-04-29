@@ -41,6 +41,7 @@ namespace GridBlazor.Pages
 
         public event Func<object, SortEventArgs, Task> SortChanged;
         public event Func<object, ExtSortEventArgs, Task> ExtSortChanged;
+        public event Func<object, FilterEventCancelArgs, Task> BeforeFilterChanged;
         public event Func<object, FilterEventArgs, Task> FilterChanged;
         public event Func<object, SearchEventArgs, Task> SearchChanged;
         public event Func<object, PagerEventArgs, Task> PagerChanged;
@@ -404,11 +405,30 @@ namespace GridBlazor.Pages
 
         public async Task AddFilter(IGridColumn column, FilterCollection filters)
         {
+            if (await OnBeforeFilterChangeCancelled()) return;
+
             Grid.AddFilterParameter(column, filters);
             await UpdateGrid();
             await OnFilterChanged();
         }
 
+        protected virtual async Task<bool> OnBeforeFilterChangeCancelled()
+        {
+            FilterEventCancelArgs args = new FilterEventCancelArgs();
+
+            if (BeforeFilterChanged != null)
+            {
+                await BeforeFilterChanged.Invoke(this, args);
+                if (args.Cancel)
+                {
+                    FilterButtonClicked?.Invoke();
+                    await UpdateGrid(false);
+                }
+                return args.Cancel;
+            }
+            return false;
+        }
+        
         protected virtual async Task OnFilterChanged()
         {
             FilterEventArgs args = new FilterEventArgs();
@@ -422,6 +442,8 @@ namespace GridBlazor.Pages
 
         public async Task RemoveFilter(IGridColumn column)
         {
+            if (await OnBeforeFilterChangeCancelled()) return;
+
             Grid.RemoveFilterParameter(column);
             await UpdateGrid();
             await OnFilterChanged();
@@ -429,6 +451,8 @@ namespace GridBlazor.Pages
 
         public async Task RemoveAllFilters()
         {
+            if (await OnBeforeFilterChangeCancelled()) return;
+
             Grid.RemoveAllFilters();
             await UpdateGrid();
             await OnFilterChanged();
