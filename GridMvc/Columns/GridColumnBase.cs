@@ -131,11 +131,11 @@ namespace GridMvc.Columns
             return this;
         }
 
-        public IGridColumn<T> SetCheckboxColumn(bool enabled, Func<T, bool> expression)
+        public IGridColumn<T> SetCheckboxColumn(bool headerCheckbox, Func<T, bool> expression)
         {
             if (string.IsNullOrWhiteSpace(Name))
                 Name = Guid.NewGuid().ToString();
-            HeaderCheckbox = enabled;
+            HeaderCheckbox = headerCheckbox;
             return this;
         }
 

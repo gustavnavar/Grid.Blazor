@@ -57,8 +57,8 @@ namespace GridBlazor.Pages
         public event Func<Task> BeforeRefreshGrid;
         public event Func<Task> AfterRefreshGrid;
 
-        internal event Func<CheckboxEventArgs, Task> HeaderCheckboxChanged;
-        internal event Func<CheckboxEventArgs, Task> RowCheckboxChanged;
+        public event Func<CheckboxEventArgs, Task> HeaderCheckboxChanged;
+        public event Func<CheckboxEventArgs, Task> RowCheckboxChanged;
 
         internal event Action FilterButtonClicked;
 
