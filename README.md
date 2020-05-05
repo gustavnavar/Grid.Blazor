@@ -2,7 +2,7 @@
 
 A fork from: https://gridmvc.codeplex.com/
 
-It supports .NET Core 3.1 and Blazor WebAssembly 3.2.0 Preview 5
+It supports .NET Core 3.1 and Blazor WebAssembly 3.2.0 RC1
 
 ## Notes
 

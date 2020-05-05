@@ -46,7 +46,7 @@ namespace GridMvc.Filtering
                                                                  }
                                                              : _settings.FilteredColumns.GetByColumn(column);
 
-                items = gridColumn.Filter.ApplyFilter(items, options);
+                items = ((IColumnFilter<T>)gridColumn.Filter).ApplyFilter(items, options);
             }
             return items;
         }

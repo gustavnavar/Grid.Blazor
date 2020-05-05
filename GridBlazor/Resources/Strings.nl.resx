@@ -249,4 +249,10 @@
   <data name="UpdateError" xml:space="preserve">
     <value>Er is een fout opgetreden bij het updaten van dit item</value>
   </data>
+  <data name="IsNotNull" xml:space="preserve">
+    <value>Is niet nul</value>
+  </data>
+  <data name="IsNull" xml:space="preserve">
+    <value>Is niets</value>
+  </data>
 </root>

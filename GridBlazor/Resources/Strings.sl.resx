@@ -240,4 +240,10 @@
   <data name="NotEqual" xml:space="preserve">
     <value>Ni enak</value>
   </data>
+  <data name="IsNotNull" xml:space="preserve">
+    <value>Ni nična</value>
+  </data>
+  <data name="IsNull" xml:space="preserve">
+    <value>Nična</value>
+  </data>
 </root>

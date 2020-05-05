@@ -23,6 +23,8 @@ namespace GridShared.Filtering.Types
                 case GridFilterType.Contains:
                 case GridFilterType.StartsWith:
                 case GridFilterType.EndsWidth:
+                case GridFilterType.IsNull:
+                case GridFilterType.IsNotNull:
                     return type;
                 default:
                     return GridFilterType.Equals;
@@ -48,9 +50,11 @@ namespace GridShared.Filtering.Types
             switch (filterType)
             {
                 case GridFilterType.Equals:
+                case GridFilterType.IsNull:
                     binaryExpression = GetCaseInsensitiveСomparation(string.Empty, leftExpr, valueExpr);
                     break;
                 case GridFilterType.NotEquals:
+                case GridFilterType.IsNotNull:
                     binaryExpression = GetCaseInsensitiveСomparation("NotEquals", leftExpr, valueExpr);
                     break;
                 case GridFilterType.Contains:
@@ -113,6 +117,10 @@ namespace GridShared.Filtering.Types
                     return "startswith(" + columnName + ", " + value + ")";
                 case GridFilterType.EndsWidth:
                     return "endswith(" + columnName + ", " + value + ")";
+                case GridFilterType.IsNull:
+                    return columnName + " eq null";
+                case GridFilterType.IsNotNull:
+                    return columnName + " ne null";
                 default:
                     throw new ArgumentOutOfRangeException();
             }

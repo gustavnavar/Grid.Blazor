@@ -18,7 +18,9 @@ GridMvc.lang.cs = {
         GreaterThanOrEquals: "Větší než nebo rovno",
         LessThanOrEquals: "Menší než nebo rovno",
         And: "A",
-        Or: "Nebo"
+        Or: "Nebo",
+        IsNull: "Je null",
+        IsNotNull: "Není null"
     },
     code: 'cs',
     boolTrueLabel: "Ano",

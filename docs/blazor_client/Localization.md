@@ -53,6 +53,8 @@ If you need to support other languages, please send me the translation of the fo
 * Greater than
 * Greater than or equals
 * Drop columns here for column grouping
+* Is null
+* Is not null
 * Items
 * Less than
 * Less than or equals

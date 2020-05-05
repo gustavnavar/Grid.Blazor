@@ -46,13 +46,16 @@ namespace GridMvc.Filtering
                 return ColumnFilterValue.Null;
 
             string[] data = queryParameterValue.Split(new[] {FilterDataDelimeter}, StringSplitOptions.RemoveEmptyEntries);
-            if (data.Length != 3)
+            if (data.Length != 2 && data.Length != 3)
                 return ColumnFilterValue.Null;
             GridFilterType type;
             if (!Enum.TryParse(data[1], true, out type))
                 type = GridFilterType.Equals;
 
-            return new ColumnFilterValue {ColumnName = data[0], FilterType = type, FilterValue = data[2]};
+            if (data.Length == 2)
+                return new ColumnFilterValue { ColumnName = data[0], FilterType = type, FilterValue = String.Empty };
+            else
+                return new ColumnFilterValue { ColumnName = data[0], FilterType = type, FilterValue = data[2] };
         }
 
         #region IGridFilterSettings Members

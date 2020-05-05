@@ -18,7 +18,9 @@ GridMvc.lang.nl = {
         GreaterThanOrEquals: "Groter dan of gelijk aan",
         LessThanOrEquals: "Minder dan of gelijk aan",
         And: "En",
-        Or: "Of"
+        Or: "Of",
+        IsNull: "Is niets",
+        IsNotNull: "Is niet nul"
     },
     code: 'nl',
     boolTrueLabel: "Ja",

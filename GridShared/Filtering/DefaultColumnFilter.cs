@@ -14,10 +14,16 @@ namespace GridShared.Filtering
     {
         private readonly Expression<Func<T, TData>> _expression;
         private readonly FilterTypeResolver _typeResolver = new FilterTypeResolver();
+        private readonly PropertyInfo _pi;
+
+        public bool IsNullable { get; private set; }
 
         public DefaultColumnFilter(Expression<Func<T, TData>> expression)
         {
             _expression = expression;
+            _pi = (PropertyInfo)((MemberExpression)_expression.Body).Member;
+            IsNullable = _pi.PropertyType.GetTypeInfo().IsGenericType &&
+                              _pi.PropertyType.GetGenericTypeDefinition() == typeof(Nullable<>);
         }
 
         #region IColumnFilter<T> Members
@@ -27,8 +33,6 @@ namespace GridShared.Filtering
             if (values == null && values.Where(r => r != ColumnFilterValue.Null).Count() <= 0)
                 throw new ArgumentNullException("values");
 
-            var pi = (PropertyInfo)((MemberExpression)_expression.Body).Member;
-
             GridFilterCondition condition;
             var cond = values.SingleOrDefault(r => r != ColumnFilterValue.Null
                 && r.FilterType == GridFilterType.Condition);
@@ -37,7 +41,7 @@ namespace GridShared.Filtering
 
             values = values.Where(r => r != ColumnFilterValue.Null && r.FilterType != GridFilterType.Condition);
 
-            Expression<Func<T, bool>> expr = GetFilterExpression(pi, values, condition);
+            Expression<Func<T, bool>> expr = GetFilterExpression(values, condition);
             if (expr == null)
                 return items;
             return items.Where(expr);
@@ -45,7 +49,7 @@ namespace GridShared.Filtering
 
         #endregion
 
-        private Expression<Func<T, bool>> GetFilterExpression(PropertyInfo pi, IEnumerable<ColumnFilterValue> values,
+        private Expression<Func<T, bool>> GetFilterExpression(IEnumerable<ColumnFilterValue> values,
             GridFilterCondition condition)
         {
             Expression binaryExpression = null;
@@ -54,7 +58,7 @@ namespace GridShared.Filtering
                 if (value == ColumnFilterValue.Null)
                     continue;
 
-                Expression expression = GetExpression(pi, value);
+                Expression expression = GetExpression(value);
                 if (expression != null)
                 {
                     if (binaryExpression == null)
@@ -75,13 +79,10 @@ namespace GridShared.Filtering
             return Expression.Lambda<Func<T, bool>>(binaryExpression, entityParam);
         }
 
-        private Expression GetExpression(PropertyInfo pi, ColumnFilterValue value)
+        private Expression GetExpression(ColumnFilterValue value)
         {
-            //detect nullable
-            bool isNullable = pi.PropertyType.GetTypeInfo().IsGenericType &&
-                              pi.PropertyType.GetGenericTypeDefinition() == typeof(Nullable<>);
             //get target type:
-            Type targetType = isNullable ? Nullable.GetUnderlyingType(pi.PropertyType) : pi.PropertyType;
+            Type targetType = IsNullable ? Nullable.GetUnderlyingType(_pi.PropertyType) : _pi.PropertyType;
 
             List<string> names = new List<string>();
             Expression expression = _expression.Body;
@@ -114,23 +115,56 @@ namespace GridShared.Filtering
                 }
             }
 
+            // return expression for IsNull and IsNotNull
+            if (value.FilterType == GridFilterType.IsNull)
+            {
+                value.FilterValue = "";
+                if (targetType == typeof(string))
+                    return GetExpression(binaryExpression, value, targetType);
+                else if (IsNullable)
+                    return binaryExpression == null ?
+                        Expression.Equal(_expression.Body, Expression.Constant(null)) :
+                        Expression.OrElse(Expression.Not(binaryExpression), Expression.Equal(expression, Expression.Constant(null)));
+                else
+                    return binaryExpression == null ? null : Expression.Not(binaryExpression);
+            }
+            else if (value.FilterType == GridFilterType.IsNotNull)
+            {
+                value.FilterValue = "";
+                if (targetType == typeof(string))
+                    return GetExpression(binaryExpression, value, targetType);
+                else if (IsNullable)
+                    return binaryExpression == null ?
+                        Expression.NotEqual(_expression.Body, Expression.Constant(null)) :
+                        Expression.AndAlso(binaryExpression, Expression.NotEqual(expression, Expression.Constant(null)));
+                else
+                    return binaryExpression;
+            }
+            else
+            {
+                return GetExpression(binaryExpression, value, targetType);
+            }
+        }
+
+        private Expression GetExpression(Expression binaryExpression, ColumnFilterValue value, Type targetType)
+        {
             IFilterType filterType = _typeResolver.GetFilterType(targetType);
 
             //support nullable types:
-            Expression firstExpr = isNullable
-                                       ? Expression.Property(_expression.Body, pi.PropertyType.GetProperty("Value"))
+            Expression firstExpr = IsNullable
+                                       ? Expression.Property(_expression.Body, _pi.PropertyType.GetProperty("Value"))
                                        : _expression.Body;
 
             var filterExpression = filterType.GetFilterExpression(firstExpr, value.FilterValue, value.FilterType);
 
             if (filterExpression == null) return null;
 
-            if (isNullable && targetType != typeof(string))
+            if (IsNullable && targetType != typeof(string))
             {
                 //add additional filter condition for check items on NULL with invoring "HasValue" method.
                 //for example: result of this expression will like - c=> c.HasValue && c.Value = 3
                 MemberExpression hasValueExpr = Expression.Property(_expression.Body,
-                                                                    pi.PropertyType.GetProperty("HasValue"));
+                                                                    _pi.PropertyType.GetProperty("HasValue"));
                 filterExpression = Expression.AndAlso(hasValueExpr, filterExpression);
             }
 
@@ -164,7 +198,7 @@ namespace GridShared.Filtering
                 if (value == ColumnFilterValue.Null)
                     continue;
 
-                string filterString = GetFilterString(pi, value);
+                string filterString = GetFilterString(value);
                 if (!string.IsNullOrWhiteSpace(filterString))
                 {
                     if (string.IsNullOrWhiteSpace(result))
@@ -178,7 +212,7 @@ namespace GridShared.Filtering
             return result;
         }
 
-        private string GetFilterString(PropertyInfo pi, ColumnFilterValue value)
+        private string GetFilterString(ColumnFilterValue value)
         {
             string result = "";
 
@@ -199,14 +233,22 @@ namespace GridShared.Filtering
 
             if (!string.IsNullOrWhiteSpace(result))
             {
-                //detect nullable
-                bool isNullable = pi.PropertyType.GetTypeInfo().IsGenericType &&
-                                  pi.PropertyType.GetGenericTypeDefinition() == typeof(Nullable<>);
-                //get target type:
-                Type targetType = isNullable ? Nullable.GetUnderlyingType(pi.PropertyType) : pi.PropertyType;
-
-                IFilterType filterType = _typeResolver.GetFilterType(targetType);
-                result = filterType.GetFilterExpression(result, value.FilterValue, value.FilterType);
+                if (value.FilterType == GridFilterType.IsNull)
+                {
+                    result += " eq null";
+                }
+                else if (value.FilterType == GridFilterType.IsNotNull)
+                {
+                    result += " ne null";
+                }
+                else
+                {
+                    //get target type:
+                    Type targetType = IsNullable ? Nullable.GetUnderlyingType(_pi.PropertyType) : _pi.PropertyType;
+                    
+                    IFilterType filterType = _typeResolver.GetFilterType(targetType);
+                    result = filterType.GetFilterExpression(result, value.FilterValue, value.FilterType);
+                }
             }
 
             return result;
@@ -214,10 +256,7 @@ namespace GridShared.Filtering
 
         public bool IsTextColumn()
         {
-            var pi = (PropertyInfo)((MemberExpression)_expression.Body).Member;
-            bool isNullable = pi.PropertyType.GetTypeInfo().IsGenericType &&
-                              pi.PropertyType.GetGenericTypeDefinition() == typeof(Nullable<>);
-            Type targetType = isNullable ? Nullable.GetUnderlyingType(pi.PropertyType) : pi.PropertyType;
+            Type targetType = IsNullable ? Nullable.GetUnderlyingType(_pi.PropertyType) : _pi.PropertyType;
             IFilterType filterType = _typeResolver.GetFilterType(targetType);
 
             return filterType.GetType() == typeof(TextFilterType);

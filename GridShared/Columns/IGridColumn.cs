@@ -459,7 +459,7 @@ namespace GridShared.Columns
         /// <summary>
         ///     Collection of current column filter
         /// </summary>
-        IColumnFilter<T> Filter { get; }
+        //IColumnFilter<T> Filter { get; }
 
         /// <summary>
         ///     Allows filtering for this column
@@ -496,6 +496,11 @@ namespace GridShared.Columns
 
     public interface IFilterableColumn : IColumn
     {
+        /// <summary>
+        ///     Collection of current column filter
+        /// </summary>
+        IColumnFilter Filter { get; }
+
         /// <summary>
         ///     Internal name of the gridColumn
         /// </summary>
