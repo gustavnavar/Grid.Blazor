@@ -48,10 +48,12 @@ namespace GridBlazor.Pages
 
                 if (RowId + 1 == GridComponent.Grid.DisplayingItemsCount)
                 {
-                    CheckboxEventArgs args = new CheckboxEventArgs
+                    CheckboxEventArgs<T> args = new CheckboxEventArgs<T>
                     {
                         ColumnName = _columnName,
-                        Value = CheckboxValue.Checked
+                        Value = CheckboxValue.Checked,
+                        Item = Item,
+                        RowId = RowId
                     };
                     await GridComponent.OnRowCheckboxChanged(args);
                 }
@@ -63,9 +65,11 @@ namespace GridBlazor.Pages
             _value = !_value;
             UpdadeList();
 
-            CheckboxEventArgs args = new CheckboxEventArgs
+            CheckboxEventArgs<T> args = new CheckboxEventArgs<T>
             {
                 ColumnName = _columnName,
+                Item = Item,
+                RowId = RowId
             };
             if (_value)
             {
@@ -78,7 +82,7 @@ namespace GridBlazor.Pages
             await GridComponent.OnRowCheckboxChanged(args);
         }
 
-        private async Task HeaderCheckboxChanged(CheckboxEventArgs e)
+        private async Task HeaderCheckboxChanged(CheckboxEventArgs<T> e)
         {
             if (e.ColumnName == _columnName)
             {

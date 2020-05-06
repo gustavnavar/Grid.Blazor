@@ -113,8 +113,8 @@ If you want to retrieve the checked values for each row, you can use the ```Chec
 Row IDs in this list are those of rows with the checkbox checked. If a row ID is not in the list the checkbox is not checked. Rows are numbered starting by 0.
 
 These events are provided by the ```GridComponent``` object to allow running tasks on changing checkboxes:
-- ```Func<CheckboxEventArgs, Task> HeaderCheckboxChanged```: it's fired when a header checkbox is changed
-- ```Func<CheckboxEventArgs, Task> RowCheckboxChanged```: it's fired when a row checkbox is changed
+- ```Func<CheckboxEventArgs<T>, Task> HeaderCheckboxChanged```: it's fired when a header checkbox is changed
+- ```Func<CheckboxEventArgs<T>, Task> RowCheckboxChanged```: it's fired when a row checkbox is changed
 
 This is an example of grid using ```SetCheckboxColumn```:
 

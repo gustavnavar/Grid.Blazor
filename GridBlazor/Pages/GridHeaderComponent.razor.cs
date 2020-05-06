@@ -216,9 +216,9 @@ namespace GridBlazor.Pages
             {
                 _allChecked = !_allChecked;
 
-                CheckboxEventArgs args = new CheckboxEventArgs
+                CheckboxEventArgs<T> args = new CheckboxEventArgs<T>
                 {
-                    ColumnName = Column.Name,
+                    ColumnName = Column.Name
                 };
                 if (_allChecked)
                 {
@@ -232,7 +232,7 @@ namespace GridBlazor.Pages
             }
         }
 
-        private async Task RowCheckboxChanged(CheckboxEventArgs e)
+        private async Task RowCheckboxChanged(CheckboxEventArgs<T> e)
         {
             if (e.ColumnName == Column.Name)
             {
