@@ -12,10 +12,16 @@
 </head>
 <body>
     <app>Loading...</app>
-    
+
     <script src="_framework/blazor.webassembly.js"></script>
     <script src="_content/GridBlazor/js/gridblazor.js"></script>
     <script src="_content/BlazorStrap/blazorStrap.js"></script>
     <script src="_content/BlazorStrap/popper.min.js"></script>
+    <script>
+        window.blazorCulture = {
+            get: () => window.localStorage['BlazorCulture'],
+            set: (value) => window.localStorage['BlazorCulture'] = value
+        };
+    </script>
 </body>
 </html>

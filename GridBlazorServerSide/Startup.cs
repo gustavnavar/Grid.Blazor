@@ -58,6 +58,7 @@ namespace GridBlazorServerSide
                             new CultureInfo("fr-FR"),
                             new CultureInfo("ru-RU"),
                             new CultureInfo("nb-NO"),
+                            new CultureInfo("nl-NL"),
                             new CultureInfo("tr-TR"),
                             new CultureInfo("cs-CZ"),
                             new CultureInfo("sl-SI")

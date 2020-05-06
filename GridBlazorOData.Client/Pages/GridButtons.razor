@@ -1,5 +1,6 @@
 ﻿@page "/gridbuttons"
 @using GridBlazor.Resources
+@using GridBlazorOData.Client.Resources
 @using GridBlazorOData.Shared.Models
 @using Microsoft.Extensions.Primitives
 @using System.Globalization
@@ -35,11 +36,6 @@ else
     private CGrid<Order> _grid;
     private Task _task;
 
-    protected override void OnInitialized()
-    {
-        CultureInfo.CurrentCulture = new CultureInfo(Program.Culture);
-    }
-
     protected override async Task OnParametersSetAsync()
     {
         var locale = CultureInfo.CurrentCulture;
@@ -48,13 +44,13 @@ else
 
         Action<IGridColumnCollection<Order>> columns = c =>
         {
-            c.Add(o => o.OrderID).Titled("Number").SetWidth(100);
-            c.Add(o => o.OrderDate, "OrderCustomDate").Titled("Date").SetWidth(120).RenderComponentAs<TooltipCell>();
-            c.Add(o => o.Customer.CompanyName).Titled("Company").SetWidth(250);
-            c.Add(o => o.Customer.ContactName).Titled("ContactName").SetWidth(250);
+            c.Add(o => o.OrderID).Titled(SharedResource.Number).SetWidth(100);
+            c.Add(o => o.OrderDate, "OrderCustomDate").Titled(SharedResource.OrderCustomDate).SetWidth(120).RenderComponentAs<TooltipCell>();
+            c.Add(o => o.Customer.CompanyName).Titled(SharedResource.CompanyName).SetWidth(250);
+            c.Add(o => o.Customer.ContactName).Titled(SharedResource.ContactName).SetWidth(250);
             c.Add(o => o.Customer.Country, true);
-            c.Add(o => o.Freight).Titled("Freight").Format("{0:F}");
-            c.Add(o => o.Customer.IsVip).Titled("Is Vip").SetWidth(70).Css("hidden-xs").RenderValueAs(o => o.Customer.IsVip ? Strings.BoolTrueLabel : Strings.BoolFalseLabel);
+            c.Add(o => o.Freight).Titled(SharedResource.Freight).Format("{0:F}");
+            c.Add(o => o.Customer.IsVip).Titled(SharedResource.IsVip).SetWidth(70).Css("hidden-xs").RenderValueAs(o => o.Customer.IsVip ? Strings.BoolTrueLabel : Strings.BoolFalseLabel);
         };
 
         string url = NavigationManager.BaseUri + "odata/Orders";

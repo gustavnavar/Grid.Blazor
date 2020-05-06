@@ -18,7 +18,9 @@ GridMvc.lang.sl = {
         GreaterThanOrEquals: "Večji ali enak kot",
         LessThanOrEquals: "Manjši ali enak kot",
         And: "In",
-        Or: "Ali"
+        Or: "Ali",
+        IsNull: "Nična",
+        IsNotNull: "Ni nična"
     },
     code: 'sl',
     boolTrueLabel: "Da",

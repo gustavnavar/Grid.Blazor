@@ -131,11 +131,11 @@ namespace GridMvc.Columns
             return this;
         }
 
-        public IGridColumn<T> SetCheckboxColumn(bool enabled, Func<T, bool> expression)
+        public IGridColumn<T> SetCheckboxColumn(bool headerCheckbox, Func<T, bool> expression)
         {
             if (string.IsNullOrWhiteSpace(Name))
                 Name = Guid.NewGuid().ToString();
-            HeaderCheckbox = enabled;
+            HeaderCheckbox = headerCheckbox;
             return this;
         }
 
@@ -517,7 +517,7 @@ namespace GridMvc.Columns
         public abstract IGridColumn<T> SetCellCssClassesContraint(Func<T, string> contraint);
         public abstract string GetCellCssClasses(object item);
 
-        public abstract IColumnFilter<T> Filter { get; }
+        public abstract IColumnFilter Filter { get; }
         public abstract string FilterWidgetTypeName { get; }
         public object FilterWidgetData { get; protected set; }
 

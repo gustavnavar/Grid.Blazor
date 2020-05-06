@@ -18,7 +18,9 @@ GridMvc.lang.tr = {
         GreaterThanOrEquals: "Büyüktür veya Eşittir",
         LessThanOrEquals: "Küçüktür veya Eşittir",
         And: "Ve",
-        Or: "Veya"
+        Or: "Veya",
+        IsNull: "Boş",
+        IsNotNull: "Boş değil"
     },
     code: 'tr',
     boolTrueLabel: "Evet",

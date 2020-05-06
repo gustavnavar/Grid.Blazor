@@ -17,7 +17,7 @@ namespace GridShared.Filtering
         {
             foreach (var filter in filters)
             {
-                if(!string.IsNullOrWhiteSpace(filter.Type) && !string.IsNullOrWhiteSpace(filter.Value))
+                if(!string.IsNullOrWhiteSpace(filter.Type))
                     Add(filter.Type, filter.Value);
             }   
         }
@@ -26,7 +26,7 @@ namespace GridShared.Filtering
         {
             foreach (var filter in filters)
             {
-                if (!string.IsNullOrWhiteSpace(filter.Type) && !string.IsNullOrWhiteSpace(filter.Value))
+                if (!string.IsNullOrWhiteSpace(filter.Type))
                     Add(filter.Type, filter.Value);
             }
         }

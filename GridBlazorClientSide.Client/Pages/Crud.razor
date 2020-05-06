@@ -45,11 +45,6 @@ else
     [Parameter]
     public string Mode { get; set; }
 
-    protected override void OnInitialized()
-    {
-        CultureInfo.CurrentCulture = new CultureInfo(Program.Culture);
-    }
-
     protected override async Task OnParametersSetAsync()
     {
         var locale = CultureInfo.CurrentCulture;

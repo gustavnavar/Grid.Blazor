@@ -137,7 +137,7 @@
 <th class="@_cssClass" style="@_cssStyles">
     @if (Model.FilterEnabled)
     {
-        <div class="grid-filter" data-type="@Model.FilterWidgetTypeName" data-name="@Model.Name" data-widgetdata="@JsonSerializer.Serialize(Model.FilterWidgetData)" data-filterdata="@JsonSerializer.Serialize(_filterSettings)" data-url="@_url" data-clearinitfilter="@_clearInitFilter.ToString()">
+        <div class="grid-filter" data-type="@Model.FilterWidgetTypeName" data-isnullable="@Model.Filter.IsNullable" data-name="@Model.Name" data-widgetdata="@JsonSerializer.Serialize(Model.FilterWidgetData)" data-filterdata="@JsonSerializer.Serialize(_filterSettings)" data-url="@_url" data-clearinitfilter="@_clearInitFilter.ToString()">
             <span class="@_cssFilterClass" title="@Strings.FilterButtonTooltipText"></span>
         </div>
     }

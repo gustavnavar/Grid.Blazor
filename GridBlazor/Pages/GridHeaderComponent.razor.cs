@@ -183,12 +183,14 @@ namespace GridBlazor.Pages
         public async Task AddFilter(FilterCollection filters)
         {
             _isVisible = !_isVisible;
+            StateHasChanged();
             await GridComponent.AddFilter(Column, filters);
         }
 
         public async Task RemoveFilter()
         {
             _isVisible = !_isVisible;
+            StateHasChanged();
             await GridComponent.RemoveFilter(Column);
         }
 

@@ -1,40 +1,18 @@
-﻿@using System.Globalization
-@inject NavigationManager NavigationManager
-@inject HttpClient HttpClient
-@inherits LayoutComponentBase
+﻿@inherits LayoutComponentBase
 
 <div class="sidebar">
     <NavMenu />
 </div>
 
-@if (_task.IsCompleted)
-{
-    <div class="main">
-        <div class="top-row px-4">
-            <div class="col-md-2">
-                <Language />
-            </div>
-            <a href="https://github.com/gustavnavar/Grid.Blazor" target="_blank">About</a>
+<div class="main">
+    <div class="top-row px-4">
+        <div class="col-md-2">
+            <Language />
         </div>
-
-        <div class="content px-4">
-            @Body
-        </div>
+        <a href="https://github.com/gustavnavar/Grid.Blazor" target="_blank">About</a>
     </div>
-}
-else
-{
-    <p><em>Loading...</em></p>
-}
 
-@code
-{
-    private Task<string> _task;
-
-    protected override async Task OnInitializedAsync()
-    {
-        _task = HttpClient.GetStringAsync(NavigationManager.BaseUri + $"api/Culture/GetCulture");
-        Program.Culture = await _task;
-        CultureInfo.CurrentCulture = new CultureInfo(Program.Culture);
-    }
-}
+    <div class="content px-4">
+        @Body
+    </div>
+</div>

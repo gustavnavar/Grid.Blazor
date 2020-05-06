@@ -167,6 +167,8 @@ else
             _gridComponent.ExtSortChanged += ExtSortChanged;
             _gridComponent.FilterChanged += FilterChanged;
             _gridComponent.SearchChanged += SearchChanged;
+            _gridComponent.BeforeRefreshGrid += BeforeRefreshGrid;
+            _gridComponent.AfterRefreshGrid += AfterRefreshGrid;
         }
     }
 
@@ -235,6 +237,19 @@ else
     private async Task SearchChanged(object sender, SearchEventArgs e)
     {
         Console.WriteLine("Search has changed: SearchValue: {0}.", e.SearchValue);
+        await Task.CompletedTask;
+    }
+
+    private async Task<bool> BeforeRefreshGrid()
+    {
+        Console.WriteLine("Grid will start refreshing");
+        await Task.CompletedTask;
+        return true;
+    }
+
+    private async Task AfterRefreshGrid()
+    {
+        Console.WriteLine("Grid has been refreshed");
         await Task.CompletedTask;
     }
 }

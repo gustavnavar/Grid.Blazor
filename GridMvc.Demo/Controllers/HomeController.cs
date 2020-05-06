@@ -93,7 +93,7 @@ namespace GridMvc.Demo.Controllers
                 c.Add(o => o.ShipVia)
                     .Titled("Via")
                     .SetWidth(250)
-                    .RenderValueAs(o => o.Shipper.CompanyName)
+                    .RenderValueAs(o => o.Shipper?.CompanyName)
                     .SetListFilter(shipperList);
 
                 /* Adding "CompanyName" column: */
@@ -415,7 +415,7 @@ namespace GridMvc.Demo.Controllers
                 c.Add(o => o.ShipVia)
                     .Titled("Via")
                     .SetWidth(250)
-                    .RenderValueAs(o => o.Shipper.CompanyName)
+                    .RenderValueAs(o => o.Shipper?.CompanyName)
                     .SetListFilter(shipperList);
 
                 /* Adding "CompanyName" column: */

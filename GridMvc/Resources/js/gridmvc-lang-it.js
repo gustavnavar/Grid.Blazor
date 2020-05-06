@@ -18,7 +18,9 @@ GridMvc.lang.it = {
         GreaterThanOrEquals: "Maggiore o uguale a",
         LessThanOrEquals: "Meno o uguale a",
         And: "E",
-        Or: "O"
+        Or: "O",
+        IsNull: "È nulla",
+        IsNotNull: "Non è nulla"
     },
     code: 'it',
     boolTrueLabel: "Sì",

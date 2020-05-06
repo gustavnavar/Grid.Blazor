@@ -103,7 +103,7 @@ namespace GridMvc.Columns
         public override bool FilterEnabled { get; set; }
 
 
-        public override IColumnFilter<T> Filter
+        public override IColumnFilter Filter
         {
             get { return _filter; }
         }

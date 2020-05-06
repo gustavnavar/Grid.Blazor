@@ -148,6 +148,7 @@ GridMvc = (function ($) {
     gridMvc.prototype.openFilterPopup = function (self, html) {
         //retrive all column filter parameters from html attrs:
         var columnType = $(this).attr("data-type") || "";
+        var isNullable = $(this).attr("data-isnullable") || "";
         //determine widget
         var widget = self.getFilterWidgetForType(columnType);
         //if widget for specified column type not found - do nothing
@@ -179,7 +180,7 @@ GridMvc = (function ($) {
         var widgetContainer = $(this).find(".grid-popup-widget");
         //onRender target widget
         if (typeof widget.onRender !== 'undefined')
-            widget.onRender(widgetContainer, self.lang, columnType, columnName, filterDataObj, function (values) {
+            widget.onRender(widgetContainer, self.lang, columnType, columnName, isNullable, filterDataObj, function (values) {
                 self.closeOpenedPopups();
                 self.applyFilterValues(filterUrl, columnName, values, false);
             }, $.parseJSON(widgetData));
@@ -712,7 +713,7 @@ GridMvc.lang.en = {
     applyFilterButtonText: "Apply",
     filterSelectTypes: {
         Equals: "Equals",
-        NotEquals: "Not Equals",
+        NotEquals: "Not equals",
         StartsWith: "Starts with",
         Contains: "Contains",
         EndsWith: "Ends with",
@@ -721,7 +722,9 @@ GridMvc.lang.en = {
         GreaterThanOrEquals: "Greater than or equals",
         LessThanOrEquals: "Less than or equals",
         And: "And",
-        Or: "Or"
+        Or: "Or",
+        IsNull: "Is null",
+        IsNotNull: "Is not null"
     },
     code: 'en',
     boolTrueLabel: "Yes",
@@ -769,7 +772,7 @@ TextFilterWidget = (function ($) {
     // filterValue - current filter value;
     // cb - callback function that must invoked when user want to filter this column. Widget must pass filter type and filter value.
     //
-    textFilterWidget.prototype.onRender = function (container, lang, typeName, columnName, values, cb) {
+    textFilterWidget.prototype.onRender = function (container, lang, typeName, columnName, isNullable, values, cb) {
         this.cb = cb;
         this.lang = lang;
 
@@ -783,7 +786,7 @@ TextFilterWidget = (function ($) {
         this.filterData[columnName].typeName = typeName;
         var cond = values.find(x => x.filterType === 9 && x.filterValue && x.columnName === columnName);
         this.filterData[columnName].condition = cond ? cond.filterValue : "1";
-        this.filterData[columnName].values = values.filter(x => x.filterType !== 9 && x.filterValue && x.columnName === columnName);
+        this.filterData[columnName].values = values.filter(x => x.filterType !== 9 && x.columnName === columnName);
         if (!this.filterData[columnName].values) {
             this.filterData[columnName].values = new Array();
         }
@@ -836,6 +839,8 @@ TextFilterWidget = (function ($) {
                                     <option value="10" ' + (this.filterData[columnName].values[i].filterType.toString() === "10" ? "selected=\"selected\"" : "") + '>' + this.lang.filterSelectTypes.NotEquals + '</option>\
                                     <option value="3" ' + (this.filterData[columnName].values[i].filterType.toString() === "3" ? "selected=\"selected\"" : "") + '>' + this.lang.filterSelectTypes.StartsWith + '</option>\
                                     <option value="4" ' + (this.filterData[columnName].values[i].filterType.toString() === "4" ? "selected=\"selected\"" : "") + '>' + this.lang.filterSelectTypes.EndsWith + '</option>\
+                                    <option value="11" ' + (this.filterData[columnName].values[i].filterType.toString() === "11" ? "selected=\"selected\"" : "") + '>' + this.lang.filterSelectTypes.IsNull + '</option>\
+                                    <option value="12" ' + (this.filterData[columnName].values[i].filterType.toString() === "12" ? "selected=\"selected\"" : "") + '>' + this.lang.filterSelectTypes.IsNotNull + '</option>\
                                 </select>\
                             </div>\
                         </div>\
@@ -967,7 +972,7 @@ NumberFilterWidget = (function ($) {
         textBox.last().focus();
     };
 
-    numberFilterWidget.prototype.onRender = function (container, lang, typeName, columnName, values, cb) {
+    numberFilterWidget.prototype.onRender = function (container, lang, typeName, columnName, isNullable, values, cb) {
         this.cb = cb;
         this.lang = lang;
 
@@ -981,7 +986,7 @@ NumberFilterWidget = (function ($) {
         this.filterData[columnName].typeName = typeName;
         var cond = values.find(x => x.filterType === 9 && x.filterValue && x.columnName === columnName);
         this.filterData[columnName].condition = cond ? cond.filterValue : "1";
-        this.filterData[columnName].values = values.filter(x => x.filterType !== 9 && x.filterValue && x.columnName === columnName);
+        this.filterData[columnName].values = values.filter(x => x.filterType !== 9 && x.columnName === columnName);
         if (!this.filterData[columnName].values) {
             this.filterData[columnName].values = new Array();
         }
@@ -993,11 +998,11 @@ NumberFilterWidget = (function ($) {
             });
         }
 
-        this.renderWidget(columnName);
-        this.registerEvents(columnName);
+        this.renderWidget(columnName, isNullable);
+        this.registerEvents(columnName, isNullable);
     };
 
-    numberFilterWidget.prototype.renderWidget = function (columnName) {
+    numberFilterWidget.prototype.renderWidget = function (columnName, isNullable) {
         var html = '<div class="grid-filter-body">';
         for (var i = 0; i < this.filterData[columnName].values.length; i++) {
             if (i === 1) {
@@ -1032,8 +1037,12 @@ NumberFilterWidget = (function ($) {
                                     <option value="5" ' + (this.filterData[columnName].values[i].filterType.toString() === "5" ? "selected=\"selected\"" : "") + '>' + this.lang.filterSelectTypes.GreaterThan + '</option>\
                                     <option value="6" ' + (this.filterData[columnName].values[i].filterType.toString() === "6" ? "selected=\"selected\"" : "") + '>' + this.lang.filterSelectTypes.LessThan + '</option>\
                                     <option value="7" ' + (this.filterData[columnName].values[i].filterType.toString() === "7" ? "selected=\"selected\"" : "") + '>' + this.lang.filterSelectTypes.GreaterThanOrEquals + '</option>\
-                                    <option value="8" ' + (this.filterData[columnName].values[i].filterType.toString() === "8" ? "selected=\"selected\"" : "") + '>' + this.lang.filterSelectTypes.LessThanOrEquals + '</option>\
-                                </select>\
+                                    <option value="8" ' + (this.filterData[columnName].values[i].filterType.toString() === "8" ? "selected=\"selected\"" : "") + '>' + this.lang.filterSelectTypes.LessThanOrEquals + '</option>';
+            if (isNullable.toLowerCase() === "true") {
+                html +=             '<option value="11" ' + (this.filterData[columnName].values[i].filterType.toString() === "11" ? "selected=\"selected\"" : "") + ' > ' + this.lang.filterSelectTypes.IsNull + '</option >\
+                                    <option value="12" ' + (this.filterData[columnName].values[i].filterType.toString() === "12" ? "selected=\"selected\"" : "") + ' > ' + this.lang.filterSelectTypes.IsNotNull + '</option >';
+            }
+            html +=             '</select>\
                             </div >\
                         </div>\
                         <div class="col-md-6">';
@@ -1063,7 +1072,7 @@ NumberFilterWidget = (function ($) {
         this.filterData[columnName].container.append(html);
     };
 
-    numberFilterWidget.prototype.registerEvents = function (columnName) {
+    numberFilterWidget.prototype.registerEvents = function (columnName, isNullable) {
         var $context = this.filterData[columnName];
         var self = this;
         var applyBtn = this.filterData[columnName].container.find(".grid-apply");
@@ -1105,8 +1114,8 @@ NumberFilterWidget = (function ($) {
                     $context.values.push({ filterType: types[i].value, filterValue: values[i].value, columnName: columnName });
                 }
                 $context.values.push({ filterType: "1", filterValue: "", columnName: columnName });
-                self.renderWidget(columnName);
-                self.registerEvents(columnName);
+                self.renderWidget(columnName, isNullable);
+                self.registerEvents(columnName, isNullable);
                 self.onShow(columnName);
             }
         });
@@ -1126,8 +1135,8 @@ NumberFilterWidget = (function ($) {
                     $context.values.push({ filterType: types[i].value, filterValue: values[i].value, columnName: columnName });
                 }
                 $context.values.splice(values.length - 1, 1);
-                self.renderWidget(columnName);
-                self.registerEvents(columnName);
+                self.renderWidget(columnName, isNullable);
+                self.registerEvents(columnName, isNullable);
                 self.onShow(columnName);
             }
         });
@@ -1181,7 +1190,7 @@ DateTimeFilterWidget = (function ($) {
         textBox.last().focus();
     };
 
-    dateTimeFilterWidget.prototype.onRender = function (container, lang, typeName, columnName, values, applycb, data) {
+    dateTimeFilterWidget.prototype.onRender = function (container, lang, typeName, columnName, isNullable, values, applycb, data) {
         this.datePickerIncluded = typeof $.fn.datepicker !== 'undefined';
         this.cb = applycb;
         this.data = data;
@@ -1197,7 +1206,7 @@ DateTimeFilterWidget = (function ($) {
         this.filterData[columnName].typeName = typeName;
         var cond = values.find(x => x.filterType === 9 && x.filterValue && x.columnName === columnName);
         this.filterData[columnName].condition = cond ? cond.filterValue : "1";
-        this.filterData[columnName].values = values.filter(x => x.filterType !== 9 && x.filterValue && x.columnName === columnName);
+        this.filterData[columnName].values = values.filter(x => x.filterType !== 9 && x.columnName === columnName);
         if (!this.filterData[columnName].values) {
             this.filterData[columnName].values = new Array();
         }
@@ -1209,11 +1218,11 @@ DateTimeFilterWidget = (function ($) {
             });
         }
 
-        this.renderWidget(columnName);
-        this.registerEvents(columnName);
+        this.renderWidget(columnName, isNullable);
+        this.registerEvents(columnName, isNullable);
     };
 
-    dateTimeFilterWidget.prototype.renderWidget = function (columnName) {
+    dateTimeFilterWidget.prototype.renderWidget = function (columnName, isNullable) {
         this.datePickerIncluded = typeof $.fn.datepicker !== 'undefined';
         var html = '<div class="grid-filter-body">';
         for (var i = 0; i < this.filterData[columnName].values.length; i++) {
@@ -1249,9 +1258,13 @@ DateTimeFilterWidget = (function ($) {
                                     <option value="5" ' + (this.filterData[columnName].values[i].filterType.toString() === "5" ? "selected=\"selected\"" : "") + '>' + this.lang.filterSelectTypes.GreaterThan + '</option>\
                                     <option value="6" ' + (this.filterData[columnName].values[i].filterType.toString() === "6" ? "selected=\"selected\"" : "") + '>' + this.lang.filterSelectTypes.LessThan + '</option>\
                                     <option value="7" ' + (this.filterData[columnName].values[i].filterType.toString() === "7" ? "selected=\"selected\"" : "") + '>' + this.lang.filterSelectTypes.GreaterThanOrEquals + '</option>\
-                                    <option value="8" ' + (this.filterData[columnName].values[i].filterType.toString() === "8" ? "selected=\"selected\"" : "") + '>' + this.lang.filterSelectTypes.LessThanOrEquals + '</option>\
-                                </select>\
-                            </div>\
+                                    <option value="8" ' + (this.filterData[columnName].values[i].filterType.toString() === "8" ? "selected=\"selected\"" : "") + '>' + this.lang.filterSelectTypes.LessThanOrEquals + '</option>';
+            if (isNullable.toLowerCase() === "true") {
+                html += '<option value="11" ' + (this.filterData[columnName].values[i].filterType.toString() === "11" ? "selected=\"selected\"" : "") + ' > ' + this.lang.filterSelectTypes.IsNull + '</option >\
+                                    <option value="12" ' + (this.filterData[columnName].values[i].filterType.toString() === "12" ? "selected=\"selected\"" : "") + ' > ' + this.lang.filterSelectTypes.IsNotNull + '</option >';
+            }
+            html +=             '</select>\
+                            </div>\ 
                         </div>\
                         <div class="col-md-6">';
             if (i === 0) {
@@ -1281,7 +1294,7 @@ DateTimeFilterWidget = (function ($) {
         this.filterData[columnName].container.append(html);
     };
 
-    dateTimeFilterWidget.prototype.registerEvents = function (columnName) {
+    dateTimeFilterWidget.prototype.registerEvents = function (columnName, isNullable) {
         var self = this;
         var $context = this.filterData[columnName];
         var applyBtn = this.filterData[columnName].container.find(".grid-apply");
@@ -1344,8 +1357,8 @@ DateTimeFilterWidget = (function ($) {
                     $context.values.push({ filterType: types[i].value, filterValue: values[i].value, columnName: columnName });
                 }
                 $context.values.push({ filterType: "1", filterValue: "", columnName: columnName });
-                self.renderWidget(columnName);
-                self.registerEvents(columnName);
+                self.renderWidget(columnName, isNullable);
+                self.registerEvents(columnName, isNullable);
                 self.onShow(columnName);
             }
         });
@@ -1365,8 +1378,8 @@ DateTimeFilterWidget = (function ($) {
                     $context.values.push({ filterType: types[i].value, filterValue: values[i].value, columnName: columnName });
                 }
                 $context.values.splice(values.length - 1, 1);
-                self.renderWidget(columnName);
-                self.registerEvents(columnName);
+                self.renderWidget(columnName, isNullable);
+                self.registerEvents(columnName, isNullable);
                 self.onShow(columnName);
             }
         });
@@ -1391,7 +1404,7 @@ BooleanFilterWidget = (function ($) {
 
     booleanFilterWidget.prototype.showClearFilterButton = function () { return true; };
 
-    booleanFilterWidget.prototype.onRender = function (container, lang, typeName, columnName, values, cb) {
+    booleanFilterWidget.prototype.onRender = function (container, lang, typeName, columnName, isNullable, values, cb) {
         this.cb = cb;
         this.container = container;
         this.lang = lang;
@@ -1433,7 +1446,7 @@ ListFilterWidget = (function ($) {
 
     listFilterWidget.prototype.showClearFilterButton = function () { return true; };
 
-    listFilterWidget.prototype.onRender = function (container, lang, typeName, columnName, values, cb, data) {
+    listFilterWidget.prototype.onRender = function (container, lang, typeName, columnName, isNullable, values, cb, data) {
         this.cb = cb;
         this.data = data;
         this.lang = lang;
@@ -1448,7 +1461,7 @@ ListFilterWidget = (function ($) {
         this.filterData[columnName].typeName = typeName;
         // conditions is always "OR"
         this.filterData[columnName].condition = "2";
-        this.filterData[columnName].values = values.filter(x => x.filterType !== 9 && x.filterValue && x.columnName === columnName);
+        this.filterData[columnName].values = values.filter(x => x.filterType !== 9 && x.columnName === columnName);
         if (!this.filterData[columnName].values) {
             this.filterData[columnName].values = new Array();
         }

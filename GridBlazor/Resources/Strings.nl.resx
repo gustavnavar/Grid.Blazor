@@ -118,64 +118,64 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="ApplyFilterButtonText" xml:space="preserve">
-    <value>Apply</value>
+    <value>Toepassen</value>
   </data>
   <data name="BoolFalseLabel" xml:space="preserve">
-    <value>No</value>
+    <value>Nee</value>
   </data>
   <data name="BoolTrueLabel" xml:space="preserve">
-    <value>Yes</value>
+    <value>Ja</value>
   </data>
   <data name="ClearFilterLabel" xml:space="preserve">
-    <value>Clear filter</value>
+    <value>Verwijder filter</value>
   </data>
   <data name="Contains" xml:space="preserve">
-    <value>Contains</value>
+    <value>Bevat</value>
   </data>
   <data name="DefaultGridEmptyText" xml:space="preserve">
-    <value>There are no items to display</value>
+    <value>Er zijn geen items om weer te geven</value>
   </data>
   <data name="EndsWith" xml:space="preserve">
-    <value>Ends with</value>
+    <value>Eindigt met</value>
   </data>
   <data name="Equal" xml:space="preserve">
-    <value>Equals</value>
+    <value>Is gelijk aan</value>
   </data>
   <data name="FilterButtonTooltipText" xml:space="preserve">
-    <value>Filter this column</value>
+    <value>Filter deze kolom</value>
   </data>
   <data name="FilterTypeLabel" xml:space="preserve">
     <value>Type</value>
   </data>
   <data name="FilterValueLabel" xml:space="preserve">
-    <value>Value</value>
+    <value>Waarde</value>
   </data>
   <data name="GreaterThan" xml:space="preserve">
-    <value>Greater than</value>
+    <value>Groter dan</value>
   </data>
   <data name="GreaterThanOrEquals" xml:space="preserve">
-    <value>Greater than or equals</value>
+    <value>Groter dan of gelijk aan</value>
   </data>
   <data name="Items" xml:space="preserve">
     <value>Items</value>
   </data>
   <data name="Lang" xml:space="preserve">
-    <value>en</value>
+    <value>nl</value>
   </data>
   <data name="LessThan" xml:space="preserve">
-    <value>Less than</value>
+    <value>Minder dan</value>
   </data>
   <data name="LessThanOrEquals" xml:space="preserve">
-    <value>Less than or equals</value>
+    <value>Minder dan of gelijk aan</value>
   </data>
   <data name="SearchFor" xml:space="preserve">
-    <value>Search for ...</value>
+    <value>Zoek op ...</value>
   </data>
   <data name="StartsWith" xml:space="preserve">
-    <value>Starts with</value>
+    <value>Begint met</value>
   </data>
   <data name="Average" xml:space="preserve">
-    <value>Average</value>
+    <value>Gemiddelde</value>
   </data>
   <data name="Max" xml:space="preserve">
     <value>Max</value>
@@ -184,75 +184,75 @@
     <value>Min</value>
   </data>
   <data name="Sum" xml:space="preserve">
-    <value>Sum</value>
+    <value>Som</value>
   </data>
   <data name="And" xml:space="preserve">
-    <value>And</value>
+    <value>En</value>
   </data>
   <data name="Or" xml:space="preserve">
-    <value>Or</value>
+    <value>Of</value>
   </data>
   <data name="ExtSortingText" xml:space="preserve">
-    <value>Drop columns here for column extended sorting</value>
+    <value>Zet kolommen hier neer voor uitgebreide sortering op kolommen</value>
   </data>
   <data name="GroupingText" xml:space="preserve">
-    <value>Drop columns here for column grouping</value>
+    <value>Zet kolommen hier neer voor kolomgroepering</value>
   </data>
   <data name="Add" xml:space="preserve">
-    <value>Add</value>
+    <value>Toevoegen</value>
   </data>
   <data name="Back" xml:space="preserve">
-    <value>Back</value>
+    <value>Terug</value>
   </data>
   <data name="Delete" xml:space="preserve">
-    <value>Delete</value>
+    <value>Verwijderen</value>
   </data>
   <data name="Edit" xml:space="preserve">
-    <value>Edit</value>
+    <value>Aanpassen</value>
   </data>
   <data name="Save" xml:space="preserve">
-    <value>Save</value>
+    <value>Opslaan</value>
   </data>
   <data name="View" xml:space="preserve">
-    <value>View</value>
+    <value>Bekijken</value>
   </data>
   <data name="SelectItem" xml:space="preserve">
-    <value>--- Select an item ---</value>
+    <value>--- Selecteer een item ---</value>
   </data>
   <data name="Show" xml:space="preserve">
-    <value>Show</value>
+    <value>Tonen</value>
   </data>
   <data name="ClearAllFilters" xml:space="preserve">
-    <value>Clear all filters</value>
+    <value>Verwijder alle filters</value>
   </data>
   <data name="CreateItem" xml:space="preserve">
-    <value>Create item</value>
+    <value>Item toevoegen</value>
   </data>
   <data name="DeleteItem" xml:space="preserve">
-    <value>Delete item</value>
+    <value>Verwijder item</value>
   </data>
   <data name="ReadItem" xml:space="preserve">
-    <value>Read item</value>
+    <value>Lees</value>
   </data>
   <data name="UpdateItem" xml:space="preserve">
-    <value>Update item</value>
+    <value>Item bijwerken</value>
   </data>
   <data name="NotEqual" xml:space="preserve">
-    <value>Not equals</value>
+    <value>Niet gelijk</value>
   </data>
   <data name="CreateError" xml:space="preserve">
-    <value>There was an error creating the new item</value>
+    <value>Er is een fout opgetreden bij het maken van het nieuwe item</value>
   </data>
   <data name="DeleteError" xml:space="preserve">
-    <value>There was an error deleting this item</value>
+    <value>Er is een fout opgetreden bij het verwijderen van dit item</value>
   </data>
   <data name="UpdateError" xml:space="preserve">
-    <value>There was an error updating this item</value>
+    <value>Er is een fout opgetreden bij het updaten van dit item</value>
   </data>
   <data name="IsNotNull" xml:space="preserve">
-    <value>Is not null</value>
+    <value>Is niet nul</value>
   </data>
   <data name="IsNull" xml:space="preserve">
-    <value>Is null</value>
+    <value>Is niets</value>
   </data>
 </root>

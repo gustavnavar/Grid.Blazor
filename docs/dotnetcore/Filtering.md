@@ -25,7 +25,7 @@ Remember that you can also enable filtering for all columns of a grid using the 
 
 You can enable a button to clear all selected filters using the ***ClearFiltersButton*** method of the **GridClient** object:  
 
-```razor
+```c#
     var client = new GridServer<Order>(_orderRepository.GetAll(), query, false, "ordersGrid", columns, 10, locale)
         .ClearFiltersButton(true);
 ```

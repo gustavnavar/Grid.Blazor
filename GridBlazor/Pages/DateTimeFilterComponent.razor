@@ -47,6 +47,11 @@
                                             <option value="6">@Strings.LessThan</option>
                                             <option value="7">@Strings.GreaterThanOrEquals</option>
                                             <option value="8">@Strings.LessThanOrEquals</option>
+                                            @if (GridHeaderComponent.Column.Filter.IsNullable)
+                                            {
+                                                <option value="11">@Strings.IsNull</option>
+                                                <option value="12">@Strings.IsNotNull</option>
+                                            }
                                         </select>
                                     </div>
                                 }
@@ -60,6 +65,11 @@
                                             <option value="6">@Strings.LessThan</option>
                                             <option value="7">@Strings.GreaterThanOrEquals</option>
                                             <option value="8">@Strings.LessThanOrEquals</option>
+                                            @if (GridHeaderComponent.Column.Filter.IsNullable)
+                                            {
+                                                <option value="11">@Strings.IsNull</option>
+                                                <option value="12">@Strings.IsNotNull</option>
+                                            }
                                         </select>
                                     </div>
                                 }

@@ -97,7 +97,7 @@ You can add one or more columns with checkboxes on each row.
 Columns defined in this way must be not connected ones (defined with ```Add()``` method). But they can have a name (defined with ```Add("columnName")``` method).
 
 ```SetCheckboxColumn``` method has 2 parameters:
-- enabled: it's a boolean value to enable the checkbox column
+- headerCheckbox: it's a boolean value to enable the checkbox on the header
 - expression: it's a ```Func<T, bool>``` to define the initial value of the checkbox for each row
 
 If you want to retrieve the checked values for each row, you can use the ```CheckedRows``` property of the ```GridComponent``` object. It is a dictionary that has all checkbox values for each column:
@@ -111,6 +111,10 @@ If you want to retrieve the checked values for each row, you can use the ```Chec
 ```
 
 Row IDs in this list are those of rows with the checkbox checked. If a row ID is not in the list the checkbox is not checked. Rows are numbered starting by 0.
+
+These events are provided by the ```GridComponent``` object to allow running tasks on changing checkboxes:
+- ```Func<CheckboxEventArgs, Task> HeaderCheckboxChanged```: it's fired when a header checkbox is changed
+- ```Func<CheckboxEventArgs, Task> RowCheckboxChanged```: it's fired when a row checkbox is changed
 
 This is an example of grid using ```SetCheckboxColumn```:
 

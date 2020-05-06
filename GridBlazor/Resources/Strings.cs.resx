@@ -249,4 +249,10 @@
   <data name="UpdateError" xml:space="preserve">
     <value>Při aktualizaci této položky došlo k chybě</value>
   </data>
+  <data name="IsNotNull" xml:space="preserve">
+    <value>Není null</value>
+  </data>
+  <data name="IsNull" xml:space="preserve">
+    <value>Je null</value>
+  </data>
 </root>

@@ -295,6 +295,24 @@ namespace GridBlazor.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Is not null.
+        /// </summary>
+        public static string IsNotNull {
+            get {
+                return ResourceManager.GetString("IsNotNull", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Is null.
+        /// </summary>
+        public static string IsNull {
+            get {
+                return ResourceManager.GetString("IsNull", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Items.
         /// </summary>
         public static string Items {

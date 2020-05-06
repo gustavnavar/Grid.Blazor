@@ -6,7 +6,7 @@
     <EnableDefaultEmbeddedResourceItems>False</EnableDefaultEmbeddedResourceItems>
     <Product>GridMvc</Product>
     <PackageId>GridMvcCore</PackageId>
-    <Version>2.13.0</Version>
+    <Version>2.14.1</Version>
     <Title>GridMvc</Title>
     <Description>ASP.NET MVC Grid component</Description>
     <Summary>ASP.NET MVC Grid component</Summary>
@@ -54,6 +54,9 @@
     <EmbeddedResource Include="Resources\Strings.nb-NO.resx" LogicalName="GridMvc.Resources.Strings.nb-NO.resources">
       <Generator></Generator>
     </EmbeddedResource>
+    <EmbeddedResource Include="Resources\Strings.nl.resx" LogicalName="GridMvc.Resources.Strings.nl.resources">
+      <Generator></Generator>
+    </EmbeddedResource>
     <EmbeddedResource Include="Resources\Strings.sl.resx" LogicalName="GridMvc.Resources.Strings.sl.resources">
       <Generator></Generator>
     </EmbeddedResource>
@@ -73,6 +76,7 @@
     <EmbeddedResource Include="Resources\js\gridmvc-lang-es.js" LogicalName="GridMvc.Resources.js.gridmvc-lang-es.js" />
     <EmbeddedResource Include="Resources\js\gridmvc-lang-ru.js" LogicalName="GridMvc.Resources.js.gridmvc-lang-ru.js" />
     <EmbeddedResource Include="Resources\js\gridmvc-lang-nb.js" LogicalName="GridMvc.Resources.js.gridmvc-lang-nb.js" />
+    <EmbeddedResource Include="Resources\js\gridmvc-lang-nl.js" LogicalName="GridMvc.Resources.js.gridmvc-lang-nl.js" />
     <EmbeddedResource Include="Resources\js\gridmvc-lang-tr.js" LogicalName="GridMvc.Resources.js.gridmvc-lang-tr.js" />
     <EmbeddedResource Include="Resources\js\gridmvc-lang-sl.js" LogicalName="GridMvc.Resources.js.gridmvc-lang-sl.js" />
     <EmbeddedResource Include="Resources\js\gridmvc-lang-cs.js" LogicalName="GridMvc.Resources.js.gridmvc-lang-cs.js" />

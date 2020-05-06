@@ -11,6 +11,8 @@
         GreaterThanOrEquals = 7,
         LessThanOrEquals = 8,
         Condition = 9,
-        NotEquals = 10
+        NotEquals = 10,
+        IsNull = 11,
+        IsNotNull = 12
     }
 }

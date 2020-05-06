@@ -41,6 +41,7 @@ namespace GridBlazor.Pages
 
         public event Func<object, SortEventArgs, Task> SortChanged;
         public event Func<object, ExtSortEventArgs, Task> ExtSortChanged;
+        public event Func<object, FilterEventArgs, Task<bool>> BeforeFilterChanged;
         public event Func<object, FilterEventArgs, Task> FilterChanged;
         public event Func<object, SearchEventArgs, Task> SearchChanged;
         public event Func<object, PagerEventArgs, Task> PagerChanged;
@@ -53,8 +54,11 @@ namespace GridBlazor.Pages
         public event Func<GridUpdateComponent<T>, T, Task> AfterUpdate;
         public event Func<GridDeleteComponent<T>, T, Task> AfterDelete;
 
-        internal event Func<CheckboxEventArgs, Task> HeaderCheckboxChanged;
-        internal event Func<CheckboxEventArgs, Task> RowCheckboxChanged;
+        public event Func<Task> BeforeRefreshGrid;
+        public event Func<Task> AfterRefreshGrid;
+
+        public event Func<CheckboxEventArgs, Task> HeaderCheckboxChanged;
+        public event Func<CheckboxEventArgs, Task> RowCheckboxChanged;
 
         internal event Action FilterButtonClicked;
 
@@ -404,11 +408,27 @@ namespace GridBlazor.Pages
 
         public async Task AddFilter(IGridColumn column, FilterCollection filters)
         {
-            Grid.AddFilterParameter(column, filters);
-            await UpdateGrid();
-            await OnFilterChanged();
+            bool isValid = await OnBeforeFilterChanged();
+            if (isValid)
+            {
+                Grid.AddFilterParameter(column, filters);
+                await UpdateGrid();
+                await OnFilterChanged();
+            }      
         }
 
+        protected virtual async Task<bool> OnBeforeFilterChanged()
+        {
+            FilterEventArgs args = new FilterEventArgs();
+            args.FilteredColumns = Grid.Settings.FilterSettings.FilteredColumns;
+
+            if (BeforeFilterChanged != null)
+            {
+                return await BeforeFilterChanged.Invoke(this, args);
+            }
+            return true;
+        }
+        
         protected virtual async Task OnFilterChanged()
         {
             FilterEventArgs args = new FilterEventArgs();
@@ -422,16 +442,24 @@ namespace GridBlazor.Pages
 
         public async Task RemoveFilter(IGridColumn column)
         {
-            Grid.RemoveFilterParameter(column);
-            await UpdateGrid();
-            await OnFilterChanged();
+            bool isValid = await OnBeforeFilterChanged();
+            if (isValid)
+            {
+                Grid.RemoveFilterParameter(column);
+                await UpdateGrid();
+                await OnFilterChanged();
+            }
         }
 
         public async Task RemoveAllFilters()
         {
-            Grid.RemoveAllFilters();
-            await UpdateGrid();
-            await OnFilterChanged();
+            bool isValid = await OnBeforeFilterChanged();
+            if (isValid)
+            {
+                Grid.RemoveAllFilters();
+                await UpdateGrid();
+                await OnFilterChanged();
+            }
         }
 
         public async Task AddSearch(string searchValue)
@@ -1036,6 +1064,8 @@ namespace GridBlazor.Pages
 
         public async Task UpdateGrid(bool ReloadData = true)
         {
+            await OnBeforeRefreshGrid();
+            
             if (ReloadData) await Grid.UpdateGrid();
             SelectedRow = -1;
             SelectedRows.Clear();
@@ -1045,6 +1075,24 @@ namespace GridBlazor.Pages
             StateHasChanged();
 
             await SetGridFocus();
+
+            await OnAfterRefreshGrid();
+        }
+
+        protected virtual async Task OnBeforeRefreshGrid()
+        {
+            if (BeforeRefreshGrid != null)
+            {
+                await BeforeRefreshGrid.Invoke();
+            }
+        }
+
+        protected virtual async Task OnAfterRefreshGrid()
+        {
+            if (AfterRefreshGrid != null)
+            {
+                await AfterRefreshGrid.Invoke();
+            }
         }
     }
 }
