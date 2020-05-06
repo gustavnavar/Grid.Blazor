@@ -328,7 +328,7 @@
                             {
                                 if (((IGridColumn<T>)column).InputType == InputType.TextArea)
                                 {
-                                    <textarea id="@column.FieldName" name="@column.FieldName" class="form-control" value="@column.GetFormatedValue(value)" @onchange="(e) => ChangeString(e, column)" />
+                                    <textarea id="@column.FieldName" name="@column.FieldName" class="form-control" rows="5" value="@column.GetFormatedValue(value)" @onchange="(e) => ChangeString(e, column)" />
                                 }
                                 else
                                 {

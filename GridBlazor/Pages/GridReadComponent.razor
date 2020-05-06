@@ -38,7 +38,7 @@
                     {
                         if (((IGridColumn<T>)column).InputType == InputType.TextArea)
                         {
-                            <textarea id="@column.FieldName" class="form-control" readonly="readonly" value="@column.GetFormatedValue(value)" />
+                            <textarea id="@column.FieldName" class="form-control" rows="5" readonly="readonly" value="@column.GetFormatedValue(value)" />
                         }
                         else
                         {
