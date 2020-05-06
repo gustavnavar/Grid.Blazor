@@ -34,6 +34,32 @@
                             <input id="@column.FieldName" type="checkbox" class="form-control" disabled="disabled" readonly="readonly" value="false" />
                         }
                     }
+                    else if (type == typeof(string))
+                    {
+                        if (((IGridColumn<T>)column).InputType == InputType.TextArea)
+                        {
+                            <textarea id="@column.FieldName" class="form-control" readonly="readonly" value="@column.GetFormatedValue(value)" />
+                        }
+                        else
+                        {
+                            <input id="@column.FieldName" class="form-control" readonly="readonly" value="@column.GetFormatedValue(value)" />
+                        }
+                    }
+                    else if (type == typeof(DateTime))
+                    {
+                        string typeAttr = ((IGridColumn<T>)column).InputType == InputType.None ? "date" : ((IGridColumn<T>)column).InputType.ToTypeAttr();
+                        <input id="@column.FieldName" type="@typeAttr" class="form-control" readonly="readonly" value="@(((GridColumnBase<T>)column).GetFormatedDateTime(value, typeAttr))" />
+                    }
+                    else if (type == typeof(DateTimeOffset))
+                    {
+                        string typeAttr = ((IGridColumn<T>)column).InputType == InputType.None ? "date" : ((IGridColumn<T>)column).InputType.ToTypeAttr();
+                        <input id="@column.FieldName" type="@typeAttr" class="form-control" readonly="readonly" value="@(((GridColumnBase<T>)column).GetFormatedDateTime(value, typeAttr))" />
+                    }
+                    else if (type == typeof(TimeSpan))
+                    {
+                        string typeAttr = ((IGridColumn<T>)column).InputType == InputType.None ? "time" : ((IGridColumn<T>)column).InputType.ToTypeAttr();
+                        <input id="@column.FieldName" type="@typeAttr" class="form-control" readonly="readonly" value="@(((GridColumnBase<T>)column).GetFormatedDateTime(value, typeAttr))" />
+                    }
                     else
                     {
                         <input id="@column.FieldName" class="form-control" readonly="readonly" value="@column.GetFormatedValue(value)" />

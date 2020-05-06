@@ -19,6 +19,7 @@ namespace GridShared.Columns
         (bool IsSelectKey, Func<T,string> Expression, string Url, Func<IEnumerable<SelectItem>> SelectItemExpr, 
             Func<Task<IEnumerable<SelectItem>>> SelectItemExprAsync) IsSelectField { get; }
         IEnumerable<SelectItem> SelectItems { get; }
+        InputType InputType { get; }
     }
 
     public interface IGridColumn : ISortableColumn, IFilterableColumn
@@ -333,6 +334,11 @@ namespace GridShared.Columns
         ///     Sets the column as select for CRUD components
         /// </summary>
         IGridColumn<T> SetSelectField(bool enabled, Func<T, string> expression, string url);
+
+        /// <summary>
+        ///     Sets the column input type for CRUD components
+        /// </summary>
+        IGridColumn<T> SetInputType(InputType inputType);
 
         /// <summary>
         ///    Allow grid to show a SubGrid
