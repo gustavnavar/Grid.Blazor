@@ -96,9 +96,10 @@ You can add one or more columns with checkboxes on each row.
 
 Columns defined in this way must be not connected ones (defined with ```Add()``` method). But they can have a name (defined with ```Add("columnName")``` method).
 
-```SetCheckboxColumn``` method has 2 parameters:
+```SetCheckboxColumn``` method has 3 parameters:
 - headerCheckbox: it's a boolean value to enable the checkbox on the header
 - expression: it's a ```Func<T, bool>``` to define the initial value of the checkbox for each row
+- readonlyExpr (optional): it's a ```Func<T, bool>``` to configure the checkbox for each row as read only
 
 If you want to retrieve the checked values for each row, you can use the ```CheckedRows``` property of the ```GridComponent``` object. It is a dictionary that has all checkbox values for each column:
 

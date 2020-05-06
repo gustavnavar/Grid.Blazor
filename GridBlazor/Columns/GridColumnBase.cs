@@ -140,6 +140,14 @@ namespace GridBlazor.Columns
             return RenderComponentAs<CheckboxComponent<T>>((Name, expression));
         }
 
+        public IGridColumn<T> SetCheckboxColumn(bool headerCheckbox, Func<T, bool> expression, Func<T, bool> readonlyExpr)
+        {
+            if (string.IsNullOrWhiteSpace(Name))
+                Name = Guid.NewGuid().ToString();
+            HeaderCheckbox = headerCheckbox;
+            return RenderComponentAs<CheckboxComponent<T>>((Name, expression, readonlyExpr));
+        }
+
         public IGridColumn<T> RenderValueAs(Func<T, string> constraint)
         {
             ValueConstraint = constraint;

@@ -102,6 +102,11 @@ namespace GridShared.Columns
         IGridColumn<T> SetCheckboxColumn(bool headerCheckbox, Func<T, bool> expression);
 
         /// <summary>
+        ///     Sets a column as checkbox
+        /// </summary>
+        IGridColumn<T> SetCheckboxColumn(bool headerCheckbox, Func<T, bool> expression, Func<T, bool> readonlyExpr);
+
+        /// <summary>
         ///     Setup the custom rendere for property
         /// </summary>
         IGridColumn<T> RenderValueAs(Func<T, string> constraint);

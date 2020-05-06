@@ -141,6 +141,11 @@ namespace GridMvc.Columns
             return this;
         }
 
+        public IGridColumn<T> SetCheckboxColumn(bool headerCheckbox, Func<T, bool> expression, Func<T, bool> readonlyExpr)
+        {
+            return SetCheckboxColumn(headerCheckbox, expression);
+        }
+
         public IGridColumn<T> RenderValueAs(Func<T, string> constraint)
         {
             ValueConstraint = constraint;

@@ -10,7 +10,9 @@ namespace GridBlazor.Pages
     public partial class CheckboxComponent<T> : ICustomGridComponent<T>
     {
         private Func<T, bool> _expr;
+        private Func<T, bool> _readonlyExpr;
         private bool _value = false;
+        private bool _readonly = false;
         private string _columnName;
 
         [CascadingParameter(Name = "GridComponent")]
@@ -36,6 +38,18 @@ namespace GridBlazor.Pages
                     GridComponent.CheckedRows.Add(_columnName, new List<int>());
 
                 _value = _expr(Item);
+                UpdadeList();
+            }
+            else if (Object.GetType() == typeof((string, Func<T, bool>, Func<T, bool>)))
+            {
+                (_columnName, _expr, _readonlyExpr) = ((string, Func<T, bool>, Func<T, bool>))Object;
+
+                // add an empty list if column is not in the dictionary
+                if (GridComponent.CheckedRows.Get(_columnName) == null)
+                    GridComponent.CheckedRows.Add(_columnName, new List<int>());
+
+                _value = _expr(Item);
+                _readonly = _readonlyExpr(Item);
                 UpdadeList();
             }
         }
@@ -84,7 +98,7 @@ namespace GridBlazor.Pages
 
         private async Task HeaderCheckboxChanged(CheckboxEventArgs<T> e)
         {
-            if (e.ColumnName == _columnName)
+            if (e.ColumnName == _columnName && !_readonly)
             {
                 if (e.Value == CheckboxValue.Checked)
                 {
