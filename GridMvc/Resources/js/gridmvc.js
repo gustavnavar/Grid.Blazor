@@ -1264,7 +1264,7 @@ DateTimeFilterWidget = (function ($) {
                                     <option value="12" ' + (this.filterData[columnName].values[i].filterType.toString() === "12" ? "selected=\"selected\"" : "") + ' > ' + this.lang.filterSelectTypes.IsNotNull + '</option >';
             }
             html +=             '</select>\
-                            </div>\ 
+                            </div>\
                         </div>\
                         <div class="col-md-6">';
             if (i === 0) {
