@@ -44,7 +44,7 @@
                             }
                             else if (type == typeof(DateTime))
                             {
-                                <select id="@column.FieldName" name="@column.FieldName" class="form-control" value="@selectedValue" @onchange="(e) => ChangeDateTime(e, column)">
+                                <select id="@column.FieldName" name="@column.FieldName" class="form-control" value="@selectedValue" @onchange="(e) => ChangeDateTime(e, column, null)">
                                     <option value="">@Strings.SelectItem</option>
                                     @foreach (var selectItem in ((IGridColumn<T>)column).SelectItems)
                                     {
@@ -61,7 +61,7 @@
                             }
                             else if (type == typeof(System.DateTimeOffset))
                             {
-                                <select id="@column.FieldName" name="@column.FieldName" class="form-control" value="@selectedValue" @onchange="(e) => ChangeDateTimeOffset(e, column)">
+                                <select id="@column.FieldName" name="@column.FieldName" class="form-control" value="@selectedValue" @onchange="(e) => ChangeDateTimeOffset(e, column, null)">
                                     <option value="">@Strings.SelectItem</option>
                                     @foreach (var selectItem in ((IGridColumn<T>)column).SelectItems)
                                     {
@@ -338,12 +338,84 @@
                             else if (type == typeof(DateTime))
                             {
                                 string typeAttr = ((IGridColumn<T>)column).InputType == InputType.None ? "date" : ((IGridColumn<T>)column).InputType.ToTypeAttr();
-                                <input id="@column.FieldName" name="@column.FieldName" type="@typeAttr" class="form-control" value="@(((GridColumnBase<T>)column).GetFormatedDateTime(value, typeAttr))" @onchange="(e) => ChangeDateTime(e, column)" />
+                                if (typeAttr == "week")
+                                {
+                                    if (GridComponent._isWeekSupported)
+                                    {
+                                        <input id="@column.FieldName" name="@column.FieldName" type="@typeAttr" placeholder="yyyy-Www" class="form-control" value="@(((GridColumnBase<T>)column).GetFormatedDateTime(value, typeAttr))" @onchange="(e) => ChangeDateTime(e, column, typeAttr)" />
+                                    }
+                                    else
+                                    {
+                                        <input id="@column.FieldName" name="@column.FieldName" type="text" placeholder="yyyy-Www" class="form-control" value="@(((GridColumnBase<T>)column).GetFormatedDateTime(value, typeAttr))" @onchange="(e) => ChangeDateTime(e, column, typeAttr)" />
+                                    }
+                                }
+                                else if (typeAttr == "month")
+                                {
+                                    if (GridComponent._isMonthSupported)
+                                    {
+                                        <input id="@column.FieldName" name="@column.FieldName" type="@typeAttr" placeholder="yyyy-mm" class="form-control" value="@(((GridColumnBase<T>)column).GetFormatedDateTime(value, typeAttr))" @onchange="(e) => ChangeDateTime(e, column, typeAttr)" />
+                                    }
+                                    else
+                                    {
+                                        <input id="@column.FieldName" name="@column.FieldName" type="text" placeholder="yyyy-mm" class="form-control" value="@(((GridColumnBase<T>)column).GetFormatedDateTime(value, typeAttr))" @onchange="(e) => ChangeDateTime(e, column, typeAttr)" />
+                                    }
+                                }
+                                else if (typeAttr == "datetime-local")
+                                {
+                                    if (GridComponent._isDateTimeLocalSupported)
+                                    {
+                                        <input id="@column.FieldName" name="@column.FieldName" type="@typeAttr" placeholder="yyyy-mm-dd hh:mm" class="form-control" value="@(((GridColumnBase<T>)column).GetFormatedDateTime(value, typeAttr))" @onchange="(e) => ChangeDateTime(e, column, typeAttr)" />
+                                    }
+                                    else
+                                    {
+                                        <input id="@column.FieldName" name="@column.FieldName" type="text" placeholder="yyyy-mm-dd hh:mm" class="form-control" value="@(((GridColumnBase<T>)column).GetFormatedDateTime(value, typeAttr))" @onchange="(e) => ChangeDateTime(e, column, typeAttr)" />
+                                    }
+                                }
+                                else
+                                {
+                                    <input id="@column.FieldName" name="@column.FieldName" type="@typeAttr" class="form-control" value="@(((GridColumnBase<T>)column).GetFormatedDateTime(value, typeAttr))" @onchange="(e) => ChangeDateTime(e, column, typeAttr)" />
+                                }
                             }
                             else if (type == typeof(System.DateTimeOffset))
                             {
                                 string typeAttr = ((IGridColumn<T>)column).InputType == InputType.None ? "date" : ((IGridColumn<T>)column).InputType.ToTypeAttr();
-                                <input id="@column.FieldName" name="@column.FieldName" type="@typeAttr" class="form-control" value="@(((GridColumnBase<T>)column).GetFormatedDateTime(value, typeAttr))" @onchange="(e) => ChangeDateTimeOffset(e, column)" />
+                                if (typeAttr == "week")
+                                {
+                                    if (GridComponent._isWeekSupported)
+                                    {
+                                        <input id="@column.FieldName" name="@column.FieldName" type="@typeAttr" class="form-control" value="@(((GridColumnBase<T>)column).GetFormatedDateTime(value, typeAttr))" @onchange="(e) => ChangeDateTimeOffset(e, column, typeAttr)" />
+                                    }
+                                    else
+                                    {
+                                        <input id="@column.FieldName" name="@column.FieldName" type="text" class="form-control" value="@(((GridColumnBase<T>)column).GetFormatedDateTime(value, typeAttr))" @onchange="(e) => ChangeDateTimeOffset(e, column, typeAttr)" />
+                                    }
+                                }
+                                else if (typeAttr == "month")
+                                {
+                                    if (GridComponent._isMonthSupported)
+                                    {
+                                        <input id="@column.FieldName" name="@column.FieldName" type="@typeAttr" class="form-control" value="@(((GridColumnBase<T>)column).GetFormatedDateTime(value, typeAttr))" @onchange="(e) => ChangeDateTimeOffset(e, column, typeAttr)" />
+                                    }
+                                    else
+                                    {
+                                        <input id="@column.FieldName" name="@column.FieldName" type="text" class="form-control" value="@(((GridColumnBase<T>)column).GetFormatedDateTime(value, typeAttr))" @onchange="(e) => ChangeDateTimeOffset(e, column, typeAttr)" />
+                                    }
+                                }
+                                else if (typeAttr == "datetime-local")
+                                {
+                                    if (GridComponent._isDateTimeLocalSupported)
+                                    {
+                                        <input id="@column.FieldName" name="@column.FieldName" type="@typeAttr" class="form-control" value="@(((GridColumnBase<T>)column).GetFormatedDateTime(value, typeAttr))" @onchange="(e) => ChangeDateTimeOffset(e, column, typeAttr)" />
+                                    }
+                                    else
+                                    {
+                                        <input id="@column.FieldName" name="@column.FieldName" type="text" class="form-control" value="@(((GridColumnBase<T>)column).GetFormatedDateTime(value, typeAttr))" @onchange="(e) => ChangeDateTimeOffset(e, column, typeAttr)" />
+                                    }
+                                }
+                                else
+                                {
+                                    <input id="@column.FieldName" name="@column.FieldName" type="@typeAttr" class="form-control" value="@(((GridColumnBase<T>)column).GetFormatedDateTime(value, typeAttr))" @onchange="(e) => ChangeDateTimeOffset(e, column, typeAttr)" />
+                                }
                             }
                             else if (type == typeof(System.TimeSpan))
                             {

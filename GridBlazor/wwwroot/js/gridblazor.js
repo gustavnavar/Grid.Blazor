@@ -8,6 +8,16 @@
         elem.setAttribute("type", "datetime-local");
         return elem.type !== "text";
     },
+    isWeekSupported: function () {
+        var elem = document.createElement("input");
+        elem.setAttribute("type", "week");
+        return elem.type !== "text";
+    },
+    isMonthSupported: function () {
+        var elem = document.createElement("input");
+        elem.setAttribute("type", "month");
+        return elem.type !== "text";
+    },
     getPosition: function (element) {
         if (element) {
             var width = element.offsetWidth;

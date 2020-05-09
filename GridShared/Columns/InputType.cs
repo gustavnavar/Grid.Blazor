@@ -7,7 +7,9 @@
         TextArea,
         Date,
         Time,
-        DateTimeLocal
+        DateTimeLocal,
+        Week,
+        Month
     }
     public static class InputTypeExtensions
     {
@@ -23,6 +25,10 @@
                     return "time";
                 case InputType.DateTimeLocal:
                     return "datetime-local";
+                case InputType.Week:
+                    return "week";
+                case InputType.Month:
+                    return "month";
                 default:
                     return "";
             }
