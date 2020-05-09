@@ -71,6 +71,8 @@ namespace GridMvc.Columns
 
         public IEnumerable<SelectItem> SelectItems { get; internal set; }
 
+        public InputType InputType { get; protected set; }
+
         public bool IsSumEnabled { get; internal set; } = false;
 
         public bool IsAverageEnabled { get; internal set; } = false;
@@ -137,6 +139,11 @@ namespace GridMvc.Columns
                 Name = Guid.NewGuid().ToString();
             HeaderCheckbox = headerCheckbox;
             return this;
+        }
+
+        public IGridColumn<T> SetCheckboxColumn(bool headerCheckbox, Func<T, bool> expression, Func<T, bool> readonlyExpr)
+        {
+            return SetCheckboxColumn(headerCheckbox, expression);
         }
 
         public IGridColumn<T> RenderValueAs(Func<T, string> constraint)
@@ -409,20 +416,31 @@ namespace GridMvc.Columns
         public IGridColumn<T> SetSelectField(bool enabled, Func<T, string> expression, Func<IEnumerable<SelectItem>> selectItemExpr)
         {
             IsSelectField = (enabled, expression, null, selectItemExpr, null);
+            InputType = InputType.None;
             return this;
         }
 
         public IGridColumn<T> SetSelectField(bool enabled, Func<T, string> expression, Func<Task<IEnumerable<SelectItem>>> selectItemExprAsync)
         {
             IsSelectField = (enabled, expression, null, null, selectItemExprAsync);
+            InputType = InputType.None;
             return this;
         }
 
         public IGridColumn<T> SetSelectField(bool enabled, Func<T, string> expression, string url)
         {
             IsSelectField = (enabled, expression, url, null, null);
+            InputType = InputType.None;
             return this;
         }
+
+        public IGridColumn<T> SetInputType(InputType inputType)
+        {
+            IsSelectField = (false, null, null, null, null);
+            InputType = inputType;
+            return this;
+        }
+
         public abstract IGrid ParentGrid { get; }
 
         public virtual IGridColumn<T> Sanitized(bool sanitize)

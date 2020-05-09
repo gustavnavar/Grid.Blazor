@@ -74,6 +74,8 @@ namespace GridBlazor.Columns
 
         public IEnumerable<SelectItem> SelectItems { get; internal set; }
 
+        public InputType InputType { get; protected set; }
+
         public bool IsSumEnabled { get; internal set; } = false;
 
         public bool IsAverageEnabled { get; internal set; } = false;
@@ -136,6 +138,14 @@ namespace GridBlazor.Columns
                 Name = Guid.NewGuid().ToString();
             HeaderCheckbox = headerCheckbox;
             return RenderComponentAs<CheckboxComponent<T>>((Name, expression));
+        }
+
+        public IGridColumn<T> SetCheckboxColumn(bool headerCheckbox, Func<T, bool> expression, Func<T, bool> readonlyExpr)
+        {
+            if (string.IsNullOrWhiteSpace(Name))
+                Name = Guid.NewGuid().ToString();
+            HeaderCheckbox = headerCheckbox;
+            return RenderComponentAs<CheckboxComponent<T>>((Name, expression, readonlyExpr));
         }
 
         public IGridColumn<T> RenderValueAs(Func<T, string> constraint)
@@ -453,18 +463,28 @@ namespace GridBlazor.Columns
         public IGridColumn<T> SetSelectField(bool enabled, Func<T, string> expression, Func<IEnumerable<SelectItem>> selectItemExpr)
         {
             IsSelectField = (enabled, expression, null, selectItemExpr, null);
+            InputType = InputType.None;
             return this;
         }
 
         public IGridColumn<T> SetSelectField(bool enabled, Func<T, string> expression, Func<Task<IEnumerable<SelectItem>>> selectItemExprAsync)
         {
             IsSelectField = (enabled, expression, null, null, selectItemExprAsync);
+            InputType = InputType.None;
             return this;
         }
 
         public IGridColumn<T> SetSelectField(bool enabled, Func<T, string> expression, string url)
         {
             IsSelectField = (enabled, expression, url, null, null);
+            InputType = InputType.None;
+            return this;
+        }
+
+        public IGridColumn<T> SetInputType(InputType inputType)
+        {
+            IsSelectField = (false, null, null, null, null);
+            InputType = inputType;
             return this;
         }
 
@@ -506,6 +526,24 @@ namespace GridBlazor.Columns
                 return null;
             string textValue;
             if (!string.IsNullOrEmpty(ValuePattern))
+                textValue = string.Format(ValuePattern, value);
+            else
+                textValue = value.ToString();
+            return textValue;
+        }
+
+        internal string GetFormatedDateTime(object value, string type)
+        {
+            if (value == null)
+                return null;
+            string textValue;
+            if(type == "date")
+                textValue = string.Format("{0:yyyy-MM-dd}", value);
+            else if (type == "time")
+                textValue = string.Format("{0:HH:mm}", value);
+            else if (type == "datetime-local")
+                textValue = string.Format("{0:yyyy-MM-ddTHH:mm}", value);
+            else if (!string.IsNullOrEmpty(ValuePattern))
                 textValue = string.Format(ValuePattern, value);
             else
                 textValue = value.ToString();

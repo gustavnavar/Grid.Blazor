@@ -57,8 +57,8 @@ namespace GridBlazor.Pages
         public event Func<Task> BeforeRefreshGrid;
         public event Func<Task> AfterRefreshGrid;
 
-        public event Func<CheckboxEventArgs, Task> HeaderCheckboxChanged;
-        public event Func<CheckboxEventArgs, Task> RowCheckboxChanged;
+        public event Func<CheckboxEventArgs<T>, Task> HeaderCheckboxChanged;
+        public event Func<CheckboxEventArgs<T>, Task> RowCheckboxChanged;
 
         internal event Action FilterButtonClicked;
 
@@ -1046,7 +1046,7 @@ namespace GridBlazor.Pages
             }
         }
 
-        internal virtual async Task OnHeaderCheckboxChanged(CheckboxEventArgs args)
+        internal virtual async Task OnHeaderCheckboxChanged(CheckboxEventArgs<T> args)
         {
             if (HeaderCheckboxChanged != null)
             {
@@ -1054,7 +1054,7 @@ namespace GridBlazor.Pages
             }
         }
 
-        internal virtual async Task OnRowCheckboxChanged(CheckboxEventArgs args)
+        internal virtual async Task OnRowCheckboxChanged(CheckboxEventArgs<T> args)
         {
             if (RowCheckboxChanged != null)
             {

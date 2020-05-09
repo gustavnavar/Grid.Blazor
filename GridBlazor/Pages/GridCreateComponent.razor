@@ -326,19 +326,29 @@
                             }
                             else if (type == typeof(string))
                             {
-                                <input id="@column.FieldName" name="@column.FieldName" class="form-control" value="@column.GetFormatedValue(value)" @onchange="(e) => ChangeString(e, column)" />
+                                if (((IGridColumn<T>)column).InputType == InputType.TextArea)
+                                {
+                                    <textarea id="@column.FieldName" name="@column.FieldName" class="form-control" rows="5" value="@column.GetFormatedValue(value)" @onchange="(e) => ChangeString(e, column)" />
+                                }
+                                else
+                                {
+                                    <input id="@column.FieldName" name="@column.FieldName" class="form-control" value="@column.GetFormatedValue(value)" @onchange="(e) => ChangeString(e, column)" />
+                                }
                             }
                             else if (type == typeof(DateTime))
                             {
-                                <input id="@column.FieldName" name="@column.FieldName" type="date" class="form-control" value="@column.GetFormatedValue(value)" @onchange="(e) => ChangeDateTime(e, column)" />
+                                string typeAttr = ((IGridColumn<T>)column).InputType == InputType.None ? "date" : ((IGridColumn<T>)column).InputType.ToTypeAttr();
+                                <input id="@column.FieldName" name="@column.FieldName" type="@typeAttr" class="form-control" value="@(((GridColumnBase<T>)column).GetFormatedDateTime(value, typeAttr))" @onchange="(e) => ChangeDateTime(e, column)" />
                             }
                             else if (type == typeof(System.DateTimeOffset))
                             {
-                                <input id="@column.FieldName" name="@column.FieldName" type="date" class="form-control" value="@column.GetFormatedValue(value)" @onchange="(e) => ChangeDateTimeOffset(e, column)" />
+                                string typeAttr = ((IGridColumn<T>)column).InputType == InputType.None ? "date" : ((IGridColumn<T>)column).InputType.ToTypeAttr();
+                                <input id="@column.FieldName" name="@column.FieldName" type="@typeAttr" class="form-control" value="@(((GridColumnBase<T>)column).GetFormatedDateTime(value, typeAttr))" @onchange="(e) => ChangeDateTimeOffset(e, column)" />
                             }
                             else if (type == typeof(System.TimeSpan))
                             {
-                                <input id="@column.FieldName" name="@column.FieldName" type="time" class="form-control" value="@column.GetFormatedValue(value)" @onchange="(e) => ChangeTimeSpan(e, column)" />
+                                string typeAttr = ((IGridColumn<T>)column).InputType == InputType.None ? "time" : ((IGridColumn<T>)column).InputType.ToTypeAttr();
+                                <input id="@column.FieldName" name="@column.FieldName" type="@typeAttr" class="form-control" value="@(((GridColumnBase<T>)column).GetFormatedDateTime(value, typeAttr))" @onchange="(e) => ChangeTimeSpan(e, column)" />
                             }
                             else if (type == typeof(System.Int32))
                             {

@@ -23,8 +23,8 @@ These events are provided to allow running tasks on changing grid items:
 - ```Func<GridCreateComponent<T>, T, Task> AfterDelete```: it's fired after an item is deleted
 
 These events are provided to allow running tasks on changing [Checkbox columns](Selecting_row.md#setcheckboxcolumn-method) :
-- ```Func<CheckboxEventArgs, Task> HeaderCheckboxChanged```: it's fired when a header checkbox is changed
-- ```Func<CheckboxEventArgs, Task> RowCheckboxChanged```: it's fired when a row checkbox is changed
+- ```Func<CheckboxEventArgs<T>, Task> HeaderCheckboxChanged```: it's fired when a header checkbox is changed
+- ```Func<CheckboxEventArgs<T>, Task> RowCheckboxChanged```: it's fired when a row checkbox is changed
 
 And these events are provided to allow running tasks before and after grid is refreshed:
 - ```Func<Task> BeforeRefreshGrid```: it's fired before the grid will be refreshed

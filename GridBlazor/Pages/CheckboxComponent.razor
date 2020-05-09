@@ -1,3 +1,10 @@
 @typeparam T
 
-<input type='checkbox' checked="@_value" @onchange="ChangeHandler" @onclick:stopPropagation>
+@if (_readonly)
+{
+    <input type='checkbox' checked="@_value" disabled="disabled" readonly="readonly">
+}
+else
+{
+    <input type='checkbox' checked="@_value" @onchange="ChangeHandler" @onclick:stopPropagation>
+}
