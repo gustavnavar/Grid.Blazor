@@ -37,7 +37,7 @@ namespace GridBlazor.Pages
                 if (column.CreateComponentType != null)
                 {
                     _renderFragments.Add(column.Name, GridCellComponent<T>.CreateComponent(_sequence,
-                        column.CreateComponentType, column, Item, null));
+                        column.CreateComponentType, column, Item, null, true));
                 }
             }
             _tabGroups = GridComponent.Grid.Columns
@@ -76,7 +76,7 @@ namespace GridBlazor.Pages
             ChangeValue(e.Value.ToString(), column);
         }
 
-        protected void ChangeDateTime(ChangeEventArgs e, IGridColumn column)
+        protected void ChangeDateTime(ChangeEventArgs e, IGridColumn column, string typeAttr)
         {
             if (string.IsNullOrWhiteSpace(e.Value.ToString()))
             {
@@ -84,19 +84,32 @@ namespace GridBlazor.Pages
             }
             else
             {
-                DateTime value;
-                if (DateTime.TryParse(e.Value.ToString(), out value))
+                if (typeAttr == "week")
                 {
+                    var value = DateTimeUtils.FromIso8601WeekDate(e.Value.ToString());
+                    ChangeValue(value, column);
+                }
+                else if (typeAttr == "month")
+                {
+                    var value = DateTimeUtils.FromMonthDate(e.Value.ToString());
                     ChangeValue(value, column);
                 }
                 else
                 {
-                    ChangeValue(null, column);
+                    DateTime value;
+                    if (DateTime.TryParse(e.Value.ToString(), out value))
+                    {
+                        ChangeValue(value, column);
+                    }
+                    else
+                    {
+                        ChangeValue(null, column);
+                    }
                 }
             }
         }
 
-        protected void ChangeDateTimeOffset(ChangeEventArgs e, IGridColumn column)
+        protected void ChangeDateTimeOffset(ChangeEventArgs e, IGridColumn column, string typeAttr)
         {
             if (string.IsNullOrWhiteSpace(e.Value.ToString()))
             {
@@ -104,14 +117,27 @@ namespace GridBlazor.Pages
             }
             else
             {
-                DateTimeOffset value;
-                if (DateTimeOffset.TryParse(e.Value.ToString(), out value))
+                if (typeAttr == "week")
                 {
+                    var value = DateTimeUtils.FromIso8601WeekDate(e.Value.ToString());
+                    ChangeValue(value, column);
+                }
+                else if (typeAttr == "month")
+                {
+                    var value = DateTimeUtils.FromMonthDate(e.Value.ToString());
                     ChangeValue(value, column);
                 }
                 else
                 {
-                    ChangeValue(null, column);
+                    DateTimeOffset value;
+                    if (DateTimeOffset.TryParse(e.Value.ToString(), out value))
+                    {
+                        ChangeValue(value, column);
+                    }
+                    else
+                    {
+                        ChangeValue(null, column);
+                    }
                 }
             }
         }

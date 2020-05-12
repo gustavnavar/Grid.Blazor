@@ -80,13 +80,13 @@
                                     <label class="control-label"><b>@Strings.FilterValueLabel:</b></label>
                                 }
                                 <div>
-                                    @if (GridHeaderComponent.GridComponent._isDateTimeLocalSupported)
+                                    @if (GridHeaderComponent.GridComponent._isMonthSupported)
                                     {
-                                        <input type="datetime-local" placeholder="yyyy-mm-dd hh:mm" class="grid-filter-input form-control" value="@_filters[j].Value" @onchange="(ChangeEventArgs __e) => _filters[j].Value = __e.Value.ToString()" />
+                                        <input type="month" placeholder="yyyy-mm" class="grid-filter-input form-control" value="@_filters[j].Value" @onchange="(ChangeEventArgs __e) => _filters[j].Value = __e.Value.ToString()" />
                                     }
                                     else
                                     {
-                                        <input type="text" placeholder="yyyy-mm-dd hh:mm" class="grid-filter-input form-control" value="@_filters[j].Value" @onchange="(ChangeEventArgs __e) => _filters[j].Value = __e.Value.ToString()" />
+                                        <input type="text" placeholder="yyyy-mm" class="grid-filter-input form-control" value="@_filters[j].Value" @onchange="(ChangeEventArgs __e) => _filters[j].Value = __e.Value.ToString()" />
                                     }
                                 </div>
                             </div>

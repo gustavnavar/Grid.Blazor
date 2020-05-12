@@ -543,6 +543,10 @@ namespace GridBlazor.Columns
                 textValue = string.Format("{0:HH:mm}", value);
             else if (type == "datetime-local")
                 textValue = string.Format("{0:yyyy-MM-ddTHH:mm}", value);
+            else if (type == "week")
+                textValue = string.Format("{0:yyyy}-W{1}", value, DateTimeUtils.GetIso8601WeekOfYear(value));
+            else if (type == "month")
+                textValue = string.Format("{0:yyyy-MM}", value);
             else if (!string.IsNullOrEmpty(ValuePattern))
                 textValue = string.Format(ValuePattern, value);
             else

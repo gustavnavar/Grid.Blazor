@@ -33,7 +33,11 @@ namespace GridBlazor.Pages
         internal bool[] InitSubGrid;
         protected IQueryDictionary<Type> _filterComponents;
         protected T _item;
+
+        // browser input type support
         internal bool _isDateTimeLocalSupported = false;
+        internal bool _isWeekSupported = false;
+        internal bool _isMonthSupported = false;
 
         protected ElementReference gridmvc;
         public ElementReference PageSizeInput;
@@ -147,6 +151,8 @@ namespace GridBlazor.Pages
             _filterComponents.Add("System.Date", typeof(DateTimeFilterComponent<T>));
             _filterComponents.Add("System.DateTimeOffset", typeof(DateTimeFilterComponent<T>));
             _filterComponents.Add("DateTimeLocal", typeof(DateTimeLocalFilterComponent<T>));
+            _filterComponents.Add("Week", typeof(WeekFilterComponent<T>));
+            _filterComponents.Add("Month", typeof(MonthFilterComponent<T>));
             _filterComponents.Add("System.Boolean", typeof(BooleanFilterComponent<T>));
 
             if (CustomFilters == null)
@@ -220,6 +226,8 @@ namespace GridBlazor.Pages
             if (firstRender)
             {
                 _isDateTimeLocalSupported = await jSRuntime.InvokeAsync<bool>("gridJsFunctions.isDateTimeLocalSupported");
+                _isWeekSupported = await jSRuntime.InvokeAsync<bool>("gridJsFunctions.isWeekSupported");
+                _isMonthSupported = await jSRuntime.InvokeAsync<bool>("gridJsFunctions.isMonthSupported");
             }
             
             if ((firstRender || _fromCrud) && gridmvc.Id != null && Grid.Keyboard)

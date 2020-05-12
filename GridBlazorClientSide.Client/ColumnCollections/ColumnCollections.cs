@@ -3,6 +3,8 @@ using GridBlazorClientSide.Client.Pages;
 using GridBlazorClientSide.Client.Resources;
 using GridBlazorClientSide.Shared.Models;
 using GridShared;
+using GridShared.Columns;
+using GridShared.Utility;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -211,7 +213,10 @@ namespace GridBlazorClientSide.Client.ColumnCollections
 
             /* Adding "OrderDate" column: */
             c.Add(o => o.OrderDate, "OrderCustomDate").Titled(SharedResource.OrderCustomDate)
-            .Format("{0:yyyy-MM-dd}").SetWidth(120);
+            .SetInputType(InputType.Week)
+            .SetFilterWidgetType("Week")
+            .RenderValueAs(o => DateTimeUtils.GetWeekDateTimeString(o.OrderDate))
+            .SetWidth(120);
 
             /* Adding "CompanyName" column: */
             c.Add(o => o.Customer.CompanyName).Titled(SharedResource.CompanyName)
@@ -274,7 +279,10 @@ namespace GridBlazorClientSide.Client.ColumnCollections
 
             /* Adding "OrderDate" column: */
             c.Add(o => o.OrderDate, "OrderCustomDate").Titled(SharedResource.OrderCustomDate)
-            .Format("{0:yyyy-MM-dd}").SetWidth(120);
+            .SetInputType(InputType.Month)
+            .SetFilterWidgetType("Month")
+            .Format("{0:yyyy-MM}")
+            .SetWidth(120);
 
             /* Adding "CompanyName" column: */
             c.Add(o => o.Customer.CompanyName).Titled(SharedResource.CompanyName)
@@ -412,8 +420,9 @@ namespace GridBlazorClientSide.Client.ColumnCollections
             c.Add(o => o.OrderDate, "OrderCustomDate").Titled(SharedResource.OrderCustomDate)
             //.SortInitialDirection(GridSortDirection.Descending)
             .SetCellCssClassesContraint(o => o.OrderDate.HasValue && o.OrderDate.Value >= DateTime.Parse("1997-01-01") ? "red" : "")
+            .SetInputType(InputType.DateTimeLocal)
             .SetFilterWidgetType("DateTimeLocal")
-            .Format("{0:yyyy-MM-dd}").SetWidth(120)
+            .Format("{0:yyyy-MM-dd HH:mm}").SetWidth(120)
             .Max(true).Min(true);
 
             /* Adding "CompanyName" column: */

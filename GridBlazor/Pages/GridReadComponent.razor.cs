@@ -40,7 +40,7 @@ namespace GridBlazor.Pages
                 else if (column.ReadComponentType != null)
                 {
                     _renderFragments.Add(column.Name, GridCellComponent<T>.CreateComponent(_sequence, 
-                        column.ReadComponentType, column, Item, null));
+                        column.ReadComponentType, column, Item, null, true));
                 }
             }
             _tabGroups = GridComponent.Grid.Columns
