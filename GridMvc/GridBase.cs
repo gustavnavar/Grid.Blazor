@@ -16,6 +16,7 @@ namespace GridMvc
         private IGridItemsProcessor<T> _totalsprocessor;
         protected IEnumerable<T> AfterItems; //items after processors
         protected IQueryable<T> BeforeItems; //items before processors
+        public IEnumerable<T> OriginalItems { get; } //items after processors
 
 
         private int _itemsCount = -1; // total items count on collection
@@ -26,6 +27,7 @@ namespace GridMvc
 
         protected GridBase(IEnumerable<T> items)
         {
+            OriginalItems = items;
             BeforeItems = items.AsQueryable();
         }
 

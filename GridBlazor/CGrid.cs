@@ -214,6 +214,16 @@ namespace GridBlazor
         }
 
         /// <summary>
+        /// Gets the original items retrieved from database, without any processing
+        /// </summary>
+        public IEnumerable<T> OriginalItems { get; private set; }
+
+        /// <summary>
+        /// Gets all items retrieved from database after filtering (without paging)
+        /// </summary>
+        public IEnumerable<T> AllFilteredItems { get; private set; }
+
+        /// <summary>
         ///     Provides settings, using by the grid
         /// </summary>
         public IGridSettingsProvider Settings
@@ -788,6 +798,8 @@ namespace GridBlazor
                 if (response != null && response.Items != null && response.Pager != null)
                 {
                     Items = response.Items;
+                    OriginalItems = response.OriginalItems;
+                    AllFilteredItems = response.AllFilteredItems;
                     EnablePaging = response.Pager.EnablePaging;
                     ((GridPager)_pager).CurrentPage = response.Pager.CurrentPage;
                     ((GridPager)_pager).PageSize = response.Pager.PageSize;

@@ -7,6 +7,7 @@ using GridShared.Utility;
 using Microsoft.AspNetCore.Http;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace GridMvc.Server
 
@@ -249,7 +250,7 @@ namespace GridMvc.Server
                 var items = _source.GetItemsToDisplay();
                 var totals = _source.GetTotals();
                 return new ItemsDTO<T>(items, totals, new PagerDTO(_source.EnablePaging, _source.Pager.PageSize,
-                    _source.Pager.CurrentPage, _source.ItemsCount));
+                    _source.Pager.CurrentPage, _source.ItemsCount), _source.OriginalItems, _source.GridItems.ToList());
             }
         }
 
