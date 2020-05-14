@@ -115,6 +115,8 @@ The type of fields currently supported as foreign keys are:
 - Decimal
 - bool
 - Guid
+- enums
+- custom types using a [type converter](https://docs.microsoft.com/en-us/dotnet/api/system.componentmodel.typeconverter)
 
 This is an example of function to get values and title for a drop-down:
 
