@@ -137,7 +137,7 @@
                                 }
                                 else
                                 {
-                                    <input id="@column.FieldName" name="@column.FieldName" class="form-control" value="@column.GetFormatedValue(value)" />
+                                    <input id="@column.FieldName" name="@column.FieldName" class="form-control" value="@column.GetFormatedValue(value)" @onchange="(e) => ChangeValue(e, column)" />
                                 }
                             }
                         }

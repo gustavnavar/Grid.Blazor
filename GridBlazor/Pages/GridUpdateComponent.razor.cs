@@ -74,7 +74,7 @@ namespace GridBlazor.Pages
             _shouldRender = false;
         }
         
-        private void ChangeValue(object value, IGridColumn column)
+        private void SetValue(object value, IGridColumn column)
         {
             var names = column.FieldName.Split('.');
             PropertyInfo pi;
@@ -92,33 +92,35 @@ namespace GridBlazor.Pages
         {
             if (string.IsNullOrWhiteSpace(e.Value.ToString()))
             {
-                ChangeValue(null, column);
+                SetValue(null, column);
             }
             else
             {
                 if (typeAttr == "week")
                 {
                     var value = DateTimeUtils.FromIso8601WeekDate(e.Value.ToString());
-                    ChangeValue(value, column);
+                    SetValue(value, column);
                 }
                 else if (typeAttr == "month")
                 {
                     var value = DateTimeUtils.FromMonthDate(e.Value.ToString());
-                    ChangeValue(value, column);
+                    SetValue(value, column);
                 }
                 else
                 {
                     var (type, _) = ((IGridColumn<T>)column).GetTypeAndValue(Item);
                     var typeConverter = TypeDescriptor.GetConverter(type);
-
-                    if (typeConverter.IsValid(e.Value))
+                    if (typeConverter != null)
                     {
-                        var value = typeConverter.ConvertFrom(e.Value);
-                        ChangeValue(value, column);
-                    }
-                    else
-                    {
-                        ChangeValue(null, column);
+                        try
+                        {
+                            var value = typeConverter.ConvertFrom(e.Value);
+                            SetValue(value, column);
+                        }
+                        catch (Exception)
+                        {
+                            SetValue(null, column);
+                        }
                     }
                 }
             }
