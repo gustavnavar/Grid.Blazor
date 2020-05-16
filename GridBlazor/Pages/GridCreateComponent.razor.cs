@@ -4,6 +4,7 @@ using GridShared.Utility;
 using Microsoft.AspNetCore.Components;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Reflection;
 using System.Threading.Tasks;
@@ -71,12 +72,7 @@ namespace GridBlazor.Pages
             pi.SetValue(obj, value, null);
         }
 
-        protected void ChangeString(ChangeEventArgs e, IGridColumn column)
-        {
-            ChangeValue(e.Value.ToString(), column);
-        }
-
-        protected void ChangeDateTime(ChangeEventArgs e, IGridColumn column, string typeAttr)
+        private void ChangeValue(ChangeEventArgs e, IGridColumn column, string typeAttr = null)
         {
             if (string.IsNullOrWhiteSpace(e.Value.ToString()))
             {
@@ -96,308 +92,18 @@ namespace GridBlazor.Pages
                 }
                 else
                 {
-                    DateTime value;
-                    if (DateTime.TryParse(e.Value.ToString(), out value))
+                    var (type, _) = ((IGridColumn<T>)column).GetTypeAndValue(Item);
+                    var typeConverter = TypeDescriptor.GetConverter(type);
+
+                    if (typeConverter.IsValid(e.Value))
                     {
+                        var value = typeConverter.ConvertFrom(e.Value);
                         ChangeValue(value, column);
                     }
                     else
                     {
                         ChangeValue(null, column);
                     }
-                }
-            }
-        }
-
-        protected void ChangeDateTimeOffset(ChangeEventArgs e, IGridColumn column, string typeAttr)
-        {
-            if (string.IsNullOrWhiteSpace(e.Value.ToString()))
-            {
-                ChangeValue(null, column);
-            }
-            else
-            {
-                if (typeAttr == "week")
-                {
-                    var value = DateTimeUtils.FromIso8601WeekDate(e.Value.ToString());
-                    ChangeValue(value, column);
-                }
-                else if (typeAttr == "month")
-                {
-                    var value = DateTimeUtils.FromMonthDate(e.Value.ToString());
-                    ChangeValue(value, column);
-                }
-                else
-                {
-                    DateTimeOffset value;
-                    if (DateTimeOffset.TryParse(e.Value.ToString(), out value))
-                    {
-                        ChangeValue(value, column);
-                    }
-                    else
-                    {
-                        ChangeValue(null, column);
-                    }
-                }
-            }
-        }
-
-        protected void ChangeTimeSpan(ChangeEventArgs e, IGridColumn column)
-        {
-            if (string.IsNullOrWhiteSpace(e.Value.ToString()))
-            {
-                ChangeValue(null, column);
-            }
-            else
-            {
-                TimeSpan value;
-                if (TimeSpan.TryParse(e.Value.ToString(), out value))
-                {
-                    ChangeValue(value, column);
-                }
-                else
-                {
-                    ChangeValue(null, column);
-                }
-            }
-        }
-
-        protected void ChangeInt32(ChangeEventArgs e, IGridColumn column)
-        {
-            if (string.IsNullOrWhiteSpace(e.Value.ToString()))
-            {
-                ChangeValue(null, column);
-            }
-            else
-            {
-                Int32 value;
-                if (Int32.TryParse(e.Value.ToString(), out value))
-                {
-                    ChangeValue(value, column);
-                }
-                else
-                {
-                    ChangeValue(null, column);
-                }
-            }
-        }
-
-        protected void ChangeDouble(ChangeEventArgs e, IGridColumn column)
-        {
-            if (string.IsNullOrWhiteSpace(e.Value.ToString()))
-            {
-                ChangeValue(null, column);
-            }
-            else
-            {
-                Double value;
-                if (Double.TryParse(e.Value.ToString(), out value))
-                {
-                    ChangeValue(value, column);
-                }
-                else
-                {
-                    ChangeValue(null, column);
-                }
-            }
-        }
-
-        protected void ChangeDecimal(ChangeEventArgs e, IGridColumn column)
-        {
-            if (string.IsNullOrWhiteSpace(e.Value.ToString()))
-            {
-                ChangeValue(null, column);
-            }
-            else
-            {
-                Decimal value;
-                if (Decimal.TryParse(e.Value.ToString(), out value))
-                {
-                    ChangeValue(value, column);
-                }
-                else
-                {
-                    ChangeValue(null, column);
-                }
-            }
-        }
-
-        protected void ChangeByte(ChangeEventArgs e, IGridColumn column)
-        {
-            if (string.IsNullOrWhiteSpace(e.Value.ToString()))
-            {
-                ChangeValue(null, column);
-            }
-            else
-            {
-                Byte value;
-                if (Byte.TryParse(e.Value.ToString(), out value))
-                {
-                    ChangeValue(value, column);
-                }
-                else
-                {
-                    ChangeValue(null, column);
-                }
-            }
-        }
-
-        protected void ChangeSingle(ChangeEventArgs e, IGridColumn column)
-        {
-            if (string.IsNullOrWhiteSpace(e.Value.ToString()))
-            {
-                ChangeValue(null, column);
-            }
-            else
-            {
-                Single value;
-                if (Single.TryParse(e.Value.ToString(), out value))
-                {
-                    ChangeValue(value, column);
-                }
-                else
-                {
-                    ChangeValue(null, column);
-                }
-            }
-        }
-
-        protected void ChangeInt64(ChangeEventArgs e, IGridColumn column)
-        {
-            if (string.IsNullOrWhiteSpace(e.Value.ToString()))
-            {
-                ChangeValue(null, column);
-            }
-            else
-            {
-                Int64 value;
-                if (Int64.TryParse(e.Value.ToString(), out value))
-                {
-                    ChangeValue(value, column);
-                }
-                else
-                {
-                    ChangeValue(null, column);
-                }
-            }
-        }
-
-        protected void ChangeInt16(ChangeEventArgs e, IGridColumn column)
-        {
-            if (string.IsNullOrWhiteSpace(e.Value.ToString()))
-            {
-                ChangeValue(null, column);
-            }
-            else
-            {
-                Int16 value;
-                if (Int16.TryParse(e.Value.ToString(), out value))
-                {
-                    ChangeValue(value, column);
-                }
-                else
-                {
-                    ChangeValue(null, column);
-                }
-            }
-        }
-
-        protected void ChangeUInt64(ChangeEventArgs e, IGridColumn column)
-        {
-            if (string.IsNullOrWhiteSpace(e.Value.ToString()))
-            {
-                ChangeValue(null, column);
-            }
-            else
-            {
-                UInt64 value;
-                if (UInt64.TryParse(e.Value.ToString(), out value))
-                {
-                    ChangeValue(value, column);
-                }
-                else
-                {
-                    ChangeValue(null, column);
-                }
-            }
-        }
-
-        protected void ChangeUInt32(ChangeEventArgs e, IGridColumn column)
-        {
-            if (string.IsNullOrWhiteSpace(e.Value.ToString()))
-            {
-                ChangeValue(null, column);
-            }
-            else
-            {
-                UInt32 value;
-                if (UInt32.TryParse(e.Value.ToString(), out value))
-                {
-                    ChangeValue(value, column);
-                }
-                else
-                {
-                    ChangeValue(null, column);
-                }
-            }
-        }
-
-        protected void ChangeUInt16(ChangeEventArgs e, IGridColumn column)
-        {
-            if (string.IsNullOrWhiteSpace(e.Value.ToString()))
-            {
-                ChangeValue(null, column);
-            }
-            else
-            {
-                UInt16 value;
-                if (UInt16.TryParse(e.Value.ToString(), out value))
-                {
-                    ChangeValue(value, column);
-                }
-                else
-                {
-                    ChangeValue(null, column);
-                }
-            }
-        }
-
-        protected void ChangeBool(ChangeEventArgs e, IGridColumn column)
-        {
-            if (string.IsNullOrWhiteSpace(e.Value.ToString()))
-            {
-                ChangeValue(null, column);
-            }
-            else
-            {
-                bool value;
-                if (bool.TryParse(e.Value.ToString(), out value))
-                {
-                    ChangeValue(value, column);
-                }
-                else
-                {
-                    ChangeValue(null, column);
-                }
-            }
-        }
-
-        protected void ChangeGuid(ChangeEventArgs e, IGridColumn column)
-        {
-            if (string.IsNullOrWhiteSpace(e.Value.ToString()))
-            {
-                ChangeValue(null, column);
-            }
-            else
-            {
-                Guid value;
-                if (Guid.TryParse(e.Value.ToString(), out value))
-                {
-                    ChangeValue(value, column);
-                }
-                else
-                {
-                    ChangeValue(null, column);
                 }
             }
         }
