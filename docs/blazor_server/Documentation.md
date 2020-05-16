@@ -31,3 +31,4 @@
 * [Nested CRUD](Nested_crud.md)
 * [Events, exceptions and CRUD validation](Events.md)
 * [Button components on the grid](Button_components.md)
+* [Export to Excel](Excel_export.md)

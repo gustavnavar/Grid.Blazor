@@ -6,13 +6,32 @@
 
 The default behavior for a ```DateTime``` column is to use a filter widget that allows only date picking. 
 
-But it's also possible to use a date time picker, where users can select year, month, day, hour, and minute info. Seconds are not supported.
+But it's also possible to use other ```DateTime``` formats:
+- a date time picker, where users can select year, month, day, hour, and minute info. Seconds are not supported.
 
-You have to add the column using the ```SetFilterWidgetType``` method of the ```GridColumn``` object using the parameter value "DateTimeLocal":
+    You have to add the column using the ```SetFilterWidgetType``` method of the ```GridColumn``` object using the parameter value "DateTimeLocal" and add the correct column format:
 
-```c#
-    c.Add(o => o.OrderDate).SetFilterWidgetType("DateTimeLocal");
-``` 
+    ```c#
+        c.Add(o => o.OrderDate).SetFilterWidgetType("DateTimeLocal").Format("{0:yyyy-MM-dd HH:mm}");
+    ``` 
+
+- a week picker, where users can select year and week info.
+
+    You have to add the column using the ```SetFilterWidgetType``` method of the ```GridColumn``` object using the parameter value "Week" and render the value using ```DateTimeUtils.GetWeekDateTimeString```:
+
+    ```c#
+        c.Add(o => o.OrderDate).SetFilterWidgetType("Week").RenderValueAs(o => DateTimeUtils.GetWeekDateTimeString(o.OrderDate));
+    ``` 
+
+- a month picker, where users can select year and month info.
+
+    You have to add the column using the ```SetFilterWidgetType``` method of the ```GridColumn``` object using the parameter value "Month" and add the correct column format:
+
+    ```c#
+        c.Add(o => o.OrderDate).SetFilterWidgetType("Month").Format("{0:yyyy-MM}");
+    ``` 
+
+## Examples
 
 The UI shown by the widget will depend on the browser used:
 
