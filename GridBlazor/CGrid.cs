@@ -1,17 +1,18 @@
 using GridBlazor.Columns;
 using GridBlazor.DataAnnotations;
 using GridBlazor.Filtering;
+using GridBlazor.OData;
 using GridBlazor.Pagination;
 using GridBlazor.Resources;
 using GridBlazor.Searching;
 using GridBlazor.Sorting;
-using GridBlazor.OData;
 using GridShared;
 using GridShared.Columns;
 using GridShared.DataAnnotations;
 using GridShared.Filtering;
 using GridShared.Utility;
 using Microsoft.Extensions.Primitives;
+using Microsoft.JSInterop;
 using System;
 using System.Collections.Generic;
 using System.Globalization;
@@ -332,6 +333,11 @@ namespace GridBlazor
         ///     Grid mode
         /// </summary>
         public GridMode Mode { get; internal set; }
+
+        /// <summary>
+        ///     Get and set export to an Excel file
+        /// </summary>
+        public bool ExcelExport { get; internal set; }
 
         /// <summary>
         ///     Get value for creating items
@@ -755,6 +761,16 @@ namespace GridBlazor
                 itms = ((IGridColumn<T>)column).Group.ApplyFilter(itms, value.Item2);
             }
             return (IEnumerable<object>)itms;
+        }
+
+        public async Task DownloadExcel(IJSRuntime js, string filename)
+        {
+            if (ExcelExport)
+            {
+                ExcelWriter excelWriter = new ExcelWriter();
+                byte[] content = excelWriter.GenerateExcel(Columns, Items);
+                await js.InvokeAsync<object>("gridJsFunctions.saveAsFile", filename, Convert.ToBase64String(content));
+            }
         }
 
         public async Task UpdateGrid()

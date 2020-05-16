@@ -616,6 +616,11 @@ namespace GridBlazor.Pages
             StateHasChanged();
         }
 
+        public async Task ExcelHandler()
+        {
+            await Grid.DownloadExcel(jSRuntime, Grid.ComponentOptions.GridName + ".xlsx");
+        }
+
         public void ButtonComponentHandler(string key)
         {
             var buttonComponent = Grid.ButtonComponents.Get(key);

@@ -204,6 +204,12 @@
                                     <button class="grid-button grid-button-add btn btn-sm btn-outline-secondary" type="button" title="@Strings.CreateItem" @onclick="CreateHandler" @onclick:stopPropagation></button>
                                 </div>
                             }
+                            @if (Grid.ExcelExport)
+                            {
+                                <div class="row grid-excel">
+                                    <button class="grid-button grid-button-excel btn btn-sm btn-outline-secondary" type="button" title="Excel" @onclick="ExcelHandler" @onclick:stopPropagation></button>
+                                </div>
+                            }
                             @if (Grid.ButtonComponents != null && Grid.ButtonComponents.Count() > 0)
                             {
                                 <div class="row grid-button-components">

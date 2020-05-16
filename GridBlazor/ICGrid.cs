@@ -4,6 +4,7 @@ using GridShared.Columns;
 using GridShared.Filtering;
 using GridShared.Utility;
 using Microsoft.Extensions.Primitives;
+using Microsoft.JSInterop;
 using System;
 using System.Collections.Generic;
 using System.Net.Http;
@@ -76,6 +77,13 @@ namespace GridBlazor
         void RemoveFilterParameter(IGridColumn column);
 
         void RemoveAllFilters();
+
+        Task DownloadExcel(IJSRuntime js, string filename);
+
+        /// <summary>
+        ///     Get and set export to an Excel file
+        /// </summary>
+        bool ExcelExport { get; }
 
         /// <summary>
         ///     Get and set custom create component

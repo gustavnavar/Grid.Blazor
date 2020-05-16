@@ -424,6 +424,11 @@ namespace GridBlazor
         IGridClient<T> SetModifierKey(ModifierKey modifierKey);
 
         /// <summary>
+        ///     Allow grid to export to an Excel file
+        /// </summary>
+        IGridClient<T> SetExcelExport(bool enable);
+
+        /// <summary>
         ///     Configure the Server API
         /// </summary>
         IGridClient<T> UseServerAPI(ServerAPI serverAPI);
