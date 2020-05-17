@@ -54,23 +54,11 @@ namespace GridBlazor.Pages
             }
         }
 
-        protected override async Task OnAfterRenderAsync(bool firstRender)
+        protected override void OnAfterRender(bool firstRender)
         {
             if (firstRender)
             {
                 GridComponent.HeaderCheckboxChanged += HeaderCheckboxChanged;
-
-                if (RowId + 1 == GridComponent.Grid.DisplayingItemsCount)
-                {
-                    CheckboxEventArgs<T> args = new CheckboxEventArgs<T>
-                    {
-                        ColumnName = _columnName,
-                        Value = CheckboxValue.Checked,
-                        Item = Item,
-                        RowId = RowId
-                    };
-                    await GridComponent.OnRowCheckboxChanged(args);
-                }
             }
         }
 
