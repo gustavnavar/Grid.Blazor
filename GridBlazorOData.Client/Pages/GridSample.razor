@@ -190,7 +190,8 @@ else
                 .WithGridItemsCount()
                 .ChangePageSize(true)
                 .SubGrid(subGrids, ("OrderID", "OrderID"))
-                .ODataCrud(true);
+                .ODataCrud(true)
+                .SetExcelExport(true);
 
         _customFilters.Add("CompanyNameFilter", typeof(CustomersFilterComponent<Order>));
 

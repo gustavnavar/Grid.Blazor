@@ -44,4 +44,4 @@ This is an example of a grid with 2 additional components:
 ![](../images/Button_components.png)
 
 
-[<- Events](Events.md)
+[<- Events](Events.md) | [Export to Excel ->](Excel_export.md)

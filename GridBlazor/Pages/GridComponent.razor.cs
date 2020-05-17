@@ -344,14 +344,6 @@ namespace GridBlazor.Pages
             RowClicked(i, Grid.ItemsToDisplay.ElementAt(i), mouseEventArgs);
         }
 
-        internal void SubGridClicked(int i)
-        {
-            IsSubGridVisible[i] = !IsSubGridVisible[i];
-
-            _shouldRender = true;
-            StateHasChanged();
-        }
-
         public async Task GoTo(int page)
         {
             if (Grid.ServerAPI == ServerAPI.OData)
@@ -614,6 +606,11 @@ namespace GridBlazor.Pages
 
             _shouldRender = true;
             StateHasChanged();
+        }
+
+        public async Task ExcelHandler()
+        {
+            await Grid.DownloadExcel(jSRuntime, Grid.ComponentOptions.GridName + ".xlsx");
         }
 
         public void ButtonComponentHandler(string key)
