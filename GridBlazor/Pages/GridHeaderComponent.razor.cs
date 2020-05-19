@@ -211,24 +211,10 @@ namespace GridBlazor.Pages
         }
 
         protected async Task HeaderCheckboxChanged()
-        {
+        {        
             if (Column.HeaderCheckbox)
             {
-                _allChecked = !_allChecked;
-
-                CheckboxEventArgs<T> args = new CheckboxEventArgs<T>
-                {
-                    ColumnName = Column.Name
-                };
-                if (_allChecked)
-                {
-                    args.Value = CheckboxValue.Checked;
-                }
-                else
-                {
-                    args.Value = CheckboxValue.Unchecked;
-                }
-                await GridComponent.OnHeaderCheckboxChanged(args);
+                await SetChecked(!_allChecked);
             }
         }
 
@@ -247,14 +233,42 @@ namespace GridBlazor.Pages
             if (Column.HeaderCheckbox)
             {
                 // add an empty list if column is not in the dictionary
-                if (GridComponent.CheckedRows.Get(Column.Name) == null)
-                    GridComponent.CheckedRows.Add(Column.Name, new List<int>());
+                if (GridComponent.Checkboxes.Get(Column.Name) == null)
+                    GridComponent.Checkboxes.Add(Column.Name, new Dictionary<int, CheckboxComponent<T>>());
 
-                _allChecked = GridComponent.CheckedRows.Get(Column.Name).Count() == GridComponent.Grid.DisplayingItemsCount;
+                _allChecked = GridComponent.Checkboxes.Get(Column.Name).Values.Where(r => r.IsChecked()).Count()
+                    == GridComponent.Grid.DisplayingItemsCount;
             }
             else
             {
                 _allChecked = false;
+            }
+        }
+
+        public bool IsChecked()
+        {
+            return _allChecked;
+        }
+
+        public async Task SetChecked(bool value)
+        {
+            if (Column.HeaderCheckbox)
+            {
+                _allChecked = value;
+                CheckboxEventArgs<T> args = new CheckboxEventArgs<T>
+                {
+                    ColumnName = Column.Name
+                };
+                if (_allChecked)
+                {
+                    args.Value = CheckboxValue.Checked;
+                }
+                else
+                {
+                    args.Value = CheckboxValue.Unchecked;
+                }
+                await GridComponent.OnHeaderCheckboxChanged(args);
+                StateHasChanged();
             }
         }
     }

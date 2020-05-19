@@ -101,17 +101,30 @@ Columns defined in this way must be not connected ones (defined with ```Add()```
 - expression: it's a ```Func<T, bool>``` to define the initial value of the checkbox for each row
 - readonlyExpr (optional): it's a ```Func<T, bool>``` to configure the checkbox for each row as read only
 
-If you want to retrieve the checked values for each row, you can use the ```CheckedRows``` property of the ```GridComponent``` object. It is a dictionary that has all checkbox values for each column:
+**Important:** ```CheckedRows``` pr0perty is not available since release 1.6.2. ```CheckedRows``` only allowed to retrieve the checked values, but not to change them. Use the ```Checkboxes``` property instead of it.
 
+If you want to retrieve or change the checked values for each row, you can use the ```Checkboxes``` property of the ```GridComponent``` object. 
+It is a dictionary that contains references to all checkbox components for each column.
+
+Row IDs are the keys of this dictionary. Rows are numbered starting by 0.
+
+The ```CheckboxComponent<T>``` object contains 2 methods to get and set the checked value:
+- IsChecked(): It retrieves the current value
+- SetChecked(bool): It changes the checkbox value
+
+This is an example showing how to access both methods:
 ```c#
     private GridComponent<Order> _gridComponent;
     
     ...
     
-    List<int> values = _gridComponent.CheckedRows.Get("CheckboxColumn");
+    Dictionary<int, CheckboxComponent<Order>> checkboxes = _gridComponent.Checkboxes.Get("CheckboxColumn");
+    bool isChecked = checkboxes[0].IsChecked();
+    if (isChecked)
+        await checkboxes[0].SetChecked(false);
 ```
 
-Row IDs in this list are those of rows with the checkbox checked. If a row ID is not in the list the checkbox is not checked. Rows are numbered starting by 0.
+Blazor pages using checkboxes may require to use the ```ShouldRender``` method to suppress UI refreshing. See this [sample](https://github.com/gustavnavar/Grid.Blazor/blob/master/GridBlazorOData.Client/Pages/Checkbox.razor) as reference.
 
 These events are provided by the ```GridComponent``` object to allow running tasks on changing checkboxes:
 - ```Func<CheckboxEventArgs<T>, Task> HeaderCheckboxChanged```: it's fired when a header checkbox is changed
