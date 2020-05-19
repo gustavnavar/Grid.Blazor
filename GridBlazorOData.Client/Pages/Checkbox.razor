@@ -20,9 +20,12 @@
 
 @if (_task.IsCompleted)
 {
+    <div class="row mb-3">
+        <button type="button" class="btn btn-primary" @onclick="ButtonHandler" @onclick:stopPropagation>Change First</button>
+    </div>
     <div class="row">
         <div class="col-md-12">
-            <GridComponent T="Order" Grid="@_grid"></GridComponent>
+            <GridComponent @ref="component" T="Order" Grid="@_grid"></GridComponent>
         </div>
     </div>
 }
@@ -35,6 +38,8 @@ else
 {
     private CGrid<Order> _grid;
     private Task _task;
+    private GridComponent<Order> component;
+    private bool _shouldRender = false;
 
     protected override async Task OnParametersSetAsync()
     {
@@ -65,5 +70,22 @@ else
         // Set new items to grid
         _task = client.UpdateGrid();
         await _task;
+        _shouldRender = true;
+    }
+
+    protected override void OnAfterRender(bool firstRender)
+    {
+        _shouldRender = false;
+    }
+
+    protected override bool ShouldRender()
+    {
+        return _shouldRender;
+    }
+
+    public async Task ButtonHandler()
+    {
+        var checkedRows = component.Checkboxes.Get("CheckboxColumn");
+        await checkedRows[0].SetChecked(!checkedRows[0].IsChecked());
     }
 }
