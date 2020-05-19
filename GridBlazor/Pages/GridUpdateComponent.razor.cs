@@ -114,7 +114,7 @@ namespace GridBlazor.Pages
                     {
                         try
                         {
-                            var value = typeConverter.ConvertFrom(e.Value);
+                            var value = typeConverter.ConvertFrom(e.Value.ToString());
                             SetValue(value, column);
                         }
                         catch (Exception)
