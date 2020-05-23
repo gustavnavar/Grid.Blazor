@@ -20,7 +20,7 @@
                 <div class="@(type == typeof(bool)?"col-md-1":"col-md-5")">
                     @if (((IGridColumn<T>)column).IsSelectField.IsSelectKey)
                     {
-                        string text = ((GridColumnBase<T>)column).GetFormatedValue(((IGridColumn<T>)column).IsSelectField.Expression, Item);
+                        string text = ((IGridColumn<T>)column).GetFormatedValue(((IGridColumn<T>)column).IsSelectField.Expression, Item);
                         <input id="@column.FieldName" class="form-control" readonly="readonly" value="@text" />
                     }
                     else if (type == typeof(bool))
@@ -48,17 +48,17 @@
                     else if (type == typeof(DateTime))
                     {
                         string typeAttr = ((IGridColumn<T>)column).InputType == InputType.None ? "date" : ((IGridColumn<T>)column).InputType.ToTypeAttr();
-                        <input id="@column.FieldName" type="@typeAttr" class="form-control" readonly="readonly" value="@(((GridColumnBase<T>)column).GetFormatedDateTime(value, typeAttr))" />
+                        <input id="@column.FieldName" type="@typeAttr" class="form-control" readonly="readonly" value="@(((ICGridColumn)column).GetFormatedDateTime(value, typeAttr))" />
                     }
                     else if (type == typeof(DateTimeOffset))
                     {
                         string typeAttr = ((IGridColumn<T>)column).InputType == InputType.None ? "date" : ((IGridColumn<T>)column).InputType.ToTypeAttr();
-                        <input id="@column.FieldName" type="@typeAttr" class="form-control" readonly="readonly" value="@(((GridColumnBase<T>)column).GetFormatedDateTime(value, typeAttr))" />
+                        <input id="@column.FieldName" type="@typeAttr" class="form-control" readonly="readonly" value="@(((ICGridColumn)column).GetFormatedDateTime(value, typeAttr))" />
                     }
                     else if (type == typeof(TimeSpan))
                     {
                         string typeAttr = ((IGridColumn<T>)column).InputType == InputType.None ? "time" : ((IGridColumn<T>)column).InputType.ToTypeAttr();
-                        <input id="@column.FieldName" type="@typeAttr" class="form-control" readonly="readonly" value="@(((GridColumnBase<T>)column).GetFormatedDateTime(value, typeAttr))" />
+                        <input id="@column.FieldName" type="@typeAttr" class="form-control" readonly="readonly" value="@(((ICGridColumn)column).GetFormatedDateTime(value, typeAttr))" />
                     }
                     else
                     {

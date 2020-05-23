@@ -40,7 +40,7 @@ namespace GridBlazor.OData
                 columnNames.AddRange(_grid.ODataExpandList);
             foreach (IGridColumn column in _grid.Columns)
             {
-                var gridColumn = column as GridColumnBase<T>;
+                var gridColumn = column as IExpandColumn<T>;
                 if (gridColumn == null) continue;
                 if (gridColumn.Expand == null) continue;
 

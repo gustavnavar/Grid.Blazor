@@ -52,8 +52,8 @@ namespace GridMvc
         */
 
         public SGrid(IEnumerable<T> items, IQueryCollection query, bool renderOnlyRows,
-            string pagerViewName = GridPager.DefaultPagerViewName)
-            : this(items, query)
+            string pagerViewName = GridPager.DefaultPagerViewName, IColumnBuilder<T> columnBuilder = null)
+            : this(items, query, columnBuilder)
         {
             var urlParameters = CustomQueryStringBuilder.Convert(query);
             string pageParameter = urlParameters[((GridPager)Pager).ParameterName];
@@ -67,7 +67,7 @@ namespace GridMvc
             RenderOptions.RenderRowsOnly = renderOnlyRows;
         }
 
-        public SGrid(IEnumerable<T> items, IQueryCollection query)
+        public SGrid(IEnumerable<T> items, IQueryCollection query, IColumnBuilder<T> columnBuilder = null)
             : base(items)
         {
             #region init default properties
@@ -95,7 +95,10 @@ namespace GridMvc
             #endregion init default properties
 
             //Set up column collection:
-            _columnBuilder = new DefaultColumnBuilder<T>(this, _annotations);
+            if (columnBuilder == null)
+                _columnBuilder = new DefaultColumnBuilder<T>(this, _annotations);
+            else
+                _columnBuilder = columnBuilder;
             _columnsCollection = new GridColumnCollection<T>(this, _columnBuilder, _settings.SortSettings);
             RenderOptions = new GridRenderOptions();
 
@@ -277,22 +280,22 @@ namespace GridMvc
         /// <summary>
         ///     Sum enabled for some columns
         /// </summary>
-        public bool IsSumEnabled { get { return Columns.Any(r => ((ISGridColumn)r).IsSumEnabled); } }
+        public bool IsSumEnabled { get { return Columns.Any(r => ((ITotalsColumn)r).IsSumEnabled); } }
 
         /// <summary>
         ///     Average enabled for some columns
         /// </summary>
-        public bool IsAverageEnabled { get { return Columns.Any(r => ((ISGridColumn)r).IsAverageEnabled); } }
+        public bool IsAverageEnabled { get { return Columns.Any(r => ((ITotalsColumn)r).IsAverageEnabled); } }
 
         /// <summary>
         ///     Max enabled for some columns
         /// </summary>
-        public bool IsMaxEnabled { get { return Columns.Any(r => ((ISGridColumn)r).IsMaxEnabled); } }
+        public bool IsMaxEnabled { get { return Columns.Any(r => ((ITotalsColumn)r).IsMaxEnabled); } }
 
         /// <summary>
         ///     Min enabled for some columns
         /// </summary>
-        public bool IsMinEnabled { get { return Columns.Any(r => ((ISGridColumn)r).IsMinEnabled); } }
+        public bool IsMinEnabled { get { return Columns.Any(r => ((ITotalsColumn)r).IsMinEnabled); } }
 
         #endregion IGrid Members
 
@@ -361,31 +364,31 @@ namespace GridMvc
         {
             var totals = new TotalsDTO();
             if (IsSumEnabled)
-                foreach (ISGridColumn column in Columns)
+                foreach (ITotalsColumn column in Columns)
                 {
                     if (column.IsSumEnabled)
-                        totals.Sum.Add(((GridColumnBase<T>)column).Name, column.SumString);
+                        totals.Sum.Add(((IGridColumn)column).Name, column.SumString);
                 }
 
             if (IsAverageEnabled)
-                foreach (ISGridColumn column in Columns)
+                foreach (ITotalsColumn column in Columns)
                 {
                     if (column.IsAverageEnabled)
-                        totals.Average.Add(((GridColumnBase<T>)column).Name, column.AverageString);
+                        totals.Average.Add(((IGridColumn)column).Name, column.AverageString);
                 }
 
             if (IsMaxEnabled)
-                foreach (ISGridColumn column in Columns)
+                foreach (ITotalsColumn column in Columns)
                 {
                     if (column.IsMaxEnabled)
-                        totals.Max.Add(((GridColumnBase<T>)column).Name, column.MaxString);
+                        totals.Max.Add(((IGridColumn)column).Name, column.MaxString);
                 }
 
             if (IsMinEnabled)
-                foreach (ISGridColumn column in Columns)
+                foreach (ITotalsColumn column in Columns)
                 {
                     if (column.IsMinEnabled)
-                        totals.Min.Add(((GridColumnBase<T>)column).Name, column.MinString);
+                        totals.Min.Add(((IGridColumn)column).Name, column.MinString);
                 }
 
             return totals;

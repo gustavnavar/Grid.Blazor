@@ -22,7 +22,7 @@
     {
         keys = string.Join(",", Model.SubGridKeys);
     }
-    var firstColumn = (ISGridColumn)Model.Columns.FirstOrDefault();
+    var firstColumn = (ITotalsColumn)Model.Columns.FirstOrDefault();
     bool hasSubGrid = Model.SubGridKeys != null && Model.SubGridKeys.Length > 0;
     bool hasTotals = Model.IsSumEnabled || Model.IsAverageEnabled || Model.IsMaxEnabled || Model.IsMinEnabled;
     bool requiredTotalsColumn = hasTotals

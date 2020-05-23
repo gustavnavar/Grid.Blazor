@@ -21,36 +21,40 @@ namespace GridBlazor
         protected readonly CGrid<T> _source;
 
         public GridClient(HttpClient httpClient, string url, IQueryDictionary<StringValues> query, bool renderOnlyRows,
-            string gridName, Action<IGridColumnCollection<T>> columns = null, CultureInfo cultureInfo = null)
+            string gridName, Action<IGridColumnCollection<T>> columns = null, CultureInfo cultureInfo = null,
+            IColumnBuilder<T> columnBuilder = null)
         {
-            _source = new CGrid<T>(httpClient, url, query, renderOnlyRows, columns, cultureInfo);
+            _source = new CGrid<T>(httpClient, url, query, renderOnlyRows, columns, cultureInfo, columnBuilder);
             Named(gridName);
             //WithPaging(_source.Pager.PageSize);
         }
 
         [Obsolete("This constructor is obsolete. Use one including an HttpClient parameter.", false)]
         public GridClient(string url, IQueryDictionary<StringValues> query, bool renderOnlyRows, 
-            string gridName, Action<IGridColumnCollection<T>> columns = null, CultureInfo cultureInfo = null)
+            string gridName, Action<IGridColumnCollection<T>> columns = null, CultureInfo cultureInfo = null,
+            IColumnBuilder<T> columnBuilder = null)
         {
-            _source =  new CGrid<T>(url, query, renderOnlyRows, columns, cultureInfo);
+            _source =  new CGrid<T>(url, query, renderOnlyRows, columns, cultureInfo, columnBuilder);
             Named(gridName);
             //WithPaging(_source.Pager.PageSize);
         }
 
         public GridClient(Func<QueryDictionary<StringValues>, ItemsDTO<T>> dataService, 
             QueryDictionary<StringValues> query, bool renderOnlyRows, string gridName, 
-            Action<IGridColumnCollection<T>> columns = null, CultureInfo cultureInfo = null)
+            Action<IGridColumnCollection<T>> columns = null, CultureInfo cultureInfo = null,
+            IColumnBuilder<T> columnBuilder = null)
         {
-            _source = new CGrid<T>(dataService, query, renderOnlyRows, columns, cultureInfo);
+            _source = new CGrid<T>(dataService, query, renderOnlyRows, columns, cultureInfo, columnBuilder);
             Named(gridName);
             //WithPaging(_source.Pager.PageSize);
         }
 
         public GridClient(Func<QueryDictionary<StringValues>, Task<ItemsDTO<T>>> dataServiceAsync,
             QueryDictionary<StringValues> query, bool renderOnlyRows, string gridName,
-            Action<IGridColumnCollection<T>> columns = null, CultureInfo cultureInfo = null)
+            Action<IGridColumnCollection<T>> columns = null, CultureInfo cultureInfo = null,
+            IColumnBuilder<T> columnBuilder = null)
         {
-            _source = new CGrid<T>(dataServiceAsync, query, renderOnlyRows, columns, cultureInfo);
+            _source = new CGrid<T>(dataServiceAsync, query, renderOnlyRows, columns, cultureInfo, columnBuilder);
             Named(gridName);
             //WithPaging(_source.Pager.PageSize);
         }

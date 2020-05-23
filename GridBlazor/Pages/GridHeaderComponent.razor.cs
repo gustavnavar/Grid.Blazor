@@ -83,7 +83,7 @@ namespace GridBlazor.Pages
 
             _clearInitFilter = FilterSettings.Query.Get(QueryStringFilterSettings.DefaultClearInitFilterQueryParameter);
 
-            if (((GridColumnBase<T>)Column).Hidden)
+            if (Column.Hidden)
                 _cssStyles = ((GridStyledColumn)Column).GetCssStylesString() + " " + ThStyle;
             else
                 _cssStyles = ((GridStyledColumn)Column).GetCssStylesString();

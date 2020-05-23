@@ -33,12 +33,12 @@ namespace GridBlazor.Pages
 
         protected override void OnParametersSet()
         {
-            _componentType = ((GridColumnBase<T>)Column).ComponentType;
+            _componentType = Column.ComponentType;
             if (_componentType != null)
                 _cellRender = CreateComponent(_sequence, GridComponent, _componentType, Column, Item, RowId);
             else
                 _cell = (MarkupString)Column.GetCell(Item).ToString();
-            if (((GridColumnBase<T>)Column).Hidden)
+            if (Column.Hidden)
                 _cssStyles = ((GridStyledColumn)Column).GetCssStylesString() + " " + TdStyle;
             else
                 _cssStyles = ((GridStyledColumn)Column).GetCssStylesString();
@@ -71,13 +71,13 @@ namespace GridBlazor.Pages
                     builder.AddAttribute(++sequence, "Grid", (CGrid<T>)column.ParentGrid);
                 gridProperty = componentType.GetProperty("Actions");
                 if (gridProperty != null)
-                    builder.AddAttribute(++sequence, "Actions", crud ? ((GridColumnBase<T>)column).CrudActions : ((GridColumnBase<T>)column).Actions);
+                    builder.AddAttribute(++sequence, "Actions", crud ? column.CrudActions : column.Actions);
                 gridProperty = componentType.GetProperty("Functions");
                 if (gridProperty != null)
-                    builder.AddAttribute(++sequence, "Functions", crud ? ((GridColumnBase<T>)column).CrudFunctions : ((GridColumnBase<T>)column).Functions);
+                    builder.AddAttribute(++sequence, "Functions", crud ? column.CrudFunctions : column.Functions);
                 gridProperty = componentType.GetProperty("Object");
                 if (gridProperty != null)
-                    builder.AddAttribute(++sequence, "Object", crud ? ((GridColumnBase<T>)column).CrudObject : ((GridColumnBase<T>)column).Object);
+                    builder.AddAttribute(++sequence, "Object", crud ? column.CrudObject : column.Object);
                 gridProperty = componentType.GetProperty("RowId");
                 if (gridProperty != null && RowId.HasValue)
                     builder.AddAttribute(++sequence, "RowId", RowId.Value);

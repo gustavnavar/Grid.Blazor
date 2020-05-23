@@ -12,13 +12,14 @@ using System.Threading.Tasks;
 namespace GridShared.Columns
 {
     public interface IGridColumn<T> : IGridColumn, IColumn<T>, ISortableColumn<T>,
-        IFilterableColumn<T>, ISearchableColumn<T>, IGroupableColumn<T>
+        IFilterableColumn<T>, ISearchableColumn<T>, ITotalsColumn<T>, IGroupableColumn<T>
     {
         IGridCell GetValue(T instance);
+        string GetFormatedValue(Func<T, string> expression, object value);
         (Type Type, object Value) GetTypeAndValue(T item);
         (bool IsSelectKey, Func<T,string> Expression, string Url, Func<IEnumerable<SelectItem>> SelectItemExpr, 
             Func<Task<IEnumerable<SelectItem>>> SelectItemExprAsync) IsSelectField { get; }
-        IEnumerable<SelectItem> SelectItems { get; }
+        IEnumerable<SelectItem> SelectItems { get; set; }
         InputType InputType { get; }
     }
 
@@ -535,12 +536,31 @@ namespace GridShared.Columns
         IColumnSearch<T> Search { get; }
     }
 
-    public interface ITotalsColumn<T>
+    public interface ITotalsColumn<T> : ITotalsColumn
     {
         /// <summary>
         ///     Collection of current column totals
         /// </summary>
         IColumnTotals<T> Totals { get; }
+    }
+
+    public interface ITotalsColumn
+    {
+        bool IsSumEnabled { get; set; }
+
+        string SumString { get; set; }
+
+        bool IsAverageEnabled { get; set; }
+
+        string AverageString { get; set; }
+
+        bool IsMaxEnabled { get; set; }
+
+        string MaxString { get; set; }
+
+        bool IsMinEnabled { get; set; }
+
+        string MinString { get; set; }
     }
 
     public interface IExpandColumn<T>

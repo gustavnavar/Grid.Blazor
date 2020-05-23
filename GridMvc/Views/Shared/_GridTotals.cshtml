@@ -1,11 +1,12 @@
 ﻿@using GridMvc.Columns
 @using GridMvc.Resources
+@using GridShared.Columns
 @model GridMvc.ISGrid
 
 @if (Model == null) { return; }
 
 @{
-    var firstColumn = (ISGridColumn)Model.Columns.FirstOrDefault();
+    var firstColumn = (ITotalsColumn)Model.Columns.FirstOrDefault();
     bool hasSubGrid = Model.SubGridKeys != null && Model.SubGridKeys.Length > 0;
     bool requiredTotalsColumn = firstColumn != null
               && (firstColumn.IsSumEnabled || firstColumn.IsAverageEnabled
@@ -32,7 +33,7 @@ else
             }
             @for (int i = 0; i < Model.Columns.Count(); i++)
             {
-                var column = (ISGridColumn)Model.Columns.ElementAt(i);
+                var column = (ITotalsColumn)Model.Columns.ElementAt(i);
                 if (i == 0 && !column.IsSumEnabled && !column.IsAverageEnabled
                    && !column.IsMaxEnabled && !column.IsMinEnabled)
                 {
@@ -66,7 +67,7 @@ else
             }
             @for (int i = 0; i < Model.Columns.Count(); i++)
             {
-                var column = (ISGridColumn)Model.Columns.ElementAt(i);
+                var column = (ITotalsColumn)Model.Columns.ElementAt(i);
                 if (i == 0 && !column.IsSumEnabled && !column.IsAverageEnabled
                    && !column.IsMaxEnabled && !column.IsMinEnabled)
                 {
@@ -99,7 +100,7 @@ else
             }
             @for (int i = 0; i < Model.Columns.Count(); i++)
             {
-                var column = (ISGridColumn)Model.Columns.ElementAt(i);
+                var column = (ITotalsColumn)Model.Columns.ElementAt(i);
                 if (i == 0 && !column.IsSumEnabled && !column.IsAverageEnabled
                    && !column.IsMaxEnabled && !column.IsMinEnabled)
                 {
@@ -132,7 +133,7 @@ else
             }
             @for (int i = 0; i < Model.Columns.Count(); i++)
             {
-                var column = (ISGridColumn)Model.Columns.ElementAt(i);
+                var column = (ITotalsColumn)Model.Columns.ElementAt(i);
                 if (i == 0 && !column.IsSumEnabled && !column.IsAverageEnabled
                    && !column.IsMaxEnabled && !column.IsMinEnabled)
                 {
