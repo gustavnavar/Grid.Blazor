@@ -62,6 +62,9 @@ It supports .NET Core 3.1 and Blazor WebAssembly 3.2.0
 ## Demo 
 http://gridblazor.azurewebsites.net
 
+## Change Log
+https://github.com/gustavnavar/Grid.Blazor/releases
+
 ## Folder description
 * [GridBlazor](./GridBlazor): Library to build de GridBlazor package
 * [GridMvc](./GridMvc): Library to build de GridMvcCore package
