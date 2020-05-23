@@ -130,16 +130,19 @@ namespace GridBlazor.Pages
         {
             try
             {
+                _tabGroups = null;
                 await GridComponent.UpdateItem(this);
             }
             catch (GridException e)
             {
+                await OnParametersSetAsync();
                 _shouldRender = true;
                 Error = string.IsNullOrWhiteSpace(e.Code) ? e.Message :  e.Code + " - " + e.Message;
             }
             catch (Exception e)
             {
                 Console.WriteLine(e.Message);
+                await OnParametersSetAsync();
                 _shouldRender = true;
                 Error = Strings.UpdateError;
             }
