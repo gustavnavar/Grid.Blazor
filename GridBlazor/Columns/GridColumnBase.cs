@@ -97,6 +97,8 @@ namespace GridBlazor.Columns
 
         public Func<object[], bool, bool, bool, bool, Task<IGrid>> SubGrids { get; set; }
 
+        public string TooltipValue { get; set; }
+
         public IGridColumn<T> Titled(string title)
         {
             Title = title;
@@ -641,6 +643,12 @@ namespace GridBlazor.Columns
                 values.Add(key.Item2, value);
             }
             return values;
+        }
+
+        public IGridColumn<T> SetTooltip(string value)
+        {
+            TooltipValue = value;
+            return this;
         }
 
         #endregion

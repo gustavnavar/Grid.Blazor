@@ -97,6 +97,8 @@ namespace GridMvc.Columns
 
         public string MinString { get; set; }
 
+        public string TooltipValue { get; set; }
+
         public IGridColumn<T> Titled(string title)
         {
             Title = title;
@@ -554,6 +556,12 @@ namespace GridMvc.Columns
 
         public IGridColumn<T> SubGrid(string tabGrup, Func<object[], bool, bool, bool, bool, Task<IGrid>> subGrids, params (string,string)[] keys)
         {
+            return this;
+        }
+
+        public IGridColumn<T> SetTooltip(string value)
+        {
+            TooltipValue = value;
             return this;
         }
 
