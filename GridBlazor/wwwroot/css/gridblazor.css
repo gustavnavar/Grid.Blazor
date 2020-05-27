@@ -103,6 +103,8 @@ button.grid-button-view { width:30px; height:30px; margin-right: 5px; background
 button.grid-button-edit { width:30px; height:30px;margin-right: 5px; background-repeat: no-repeat, no-repeat; background-position-x: 7px, 0px; background-position-y: 7px, 0px; background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 8 8"><path d="M6 0l-1 1 2 2 1-1-2-2zm-2 2l-4 4v2h2l4-4-2-2z"/></svg>'), linear-gradient(#ddd, #eee); }
 button.grid-button-delete { width:30px; height:30px; margin-right: 5px; background-repeat: no-repeat, no-repeat; background-position-x: 7px, 0px; background-position-y: 7px, 0px; background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 8 8"><path d="M3 0c-.55 0-1 .45-1 1h-1c-.55 0-1 .45-1 1h7c0-.55-.45-1-1-1h-1c0-.55-.45-1-1-1h-1zm-2 3v4.81c0 .11.08.19.19.19h4.63c.11 0 .19-.08.19-.19v-4.81h-1v3.5c0 .28-.22.5-.5.5s-.5-.22-.5-.5v-3.5h-1v3.5c0 .28-.22.5-.5.5s-.5-.22-.5-.5v-3.5h-1z"/></svg>'), linear-gradient(#ddd, #eee); }
 td.grid-button-cell { padding: 5px 0px 5px 0px; }
+.input-validation-error { border: 1px solid red; }
+.field-validation-error { color: red; }
 
 /* Grid Clear Filters */
 .grid-all-filters-clear { margin-top: 10px; margin-bottom: 10px; margin-left: 15px; margin-right: 5px; }
