@@ -20,9 +20,10 @@ namespace GridMvc.Server
 
         public GridServer(IEnumerable<T> items, IQueryCollection query, bool renderOnlyRows, 
             string gridName, Action<IGridColumnCollection<T>> columns = null, int? pageSize = null, 
-            string language = "", string pagerViewName = GridPager.DefaultPagerViewName)
+            string language = "", string pagerViewName = GridPager.DefaultPagerViewName,
+            IColumnBuilder<T> columnBuilder = null)
         {
-            _source = new SGrid<T>(items, query, renderOnlyRows, pagerViewName);
+            _source = new SGrid<T>(items, query, renderOnlyRows, pagerViewName, columnBuilder);
             _source.RenderOptions.GridName = gridName;
             columns?.Invoke(_source.Columns);
             if (!string.IsNullOrWhiteSpace(language))

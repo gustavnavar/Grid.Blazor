@@ -1,11 +1,10 @@
-﻿@using GridBlazor.Columns
-@using GridBlazor.Resources
+﻿@using GridBlazor.Resources
 @using GridShared.Columns
 
 @if (Grid != null && !Grid.ComponentOptions.RenderRowsOnly)
 {
     <tr class="grid-row"><td class="grid-cell" style="height:25px;border:none;background-color:white"></td></tr>
-    var firstColumn = (ICGridColumn)Grid.Columns.FirstOrDefault();
+    var firstColumn = (ITotalsColumn)Grid.Columns.FirstOrDefault();
     if (Grid.IsSumEnabled)
     {
         <tr class="grid-totals-row">
@@ -26,14 +25,14 @@
                 <td class="grid-cell" data-name=""></td>
             }
             @if (firstColumn != null
-             && (firstColumn.IsSumEnabled || firstColumn.IsAverageEnabled
-                 || firstColumn.IsMaxEnabled || firstColumn.IsMinEnabled))
+                && (firstColumn.IsSumEnabled || firstColumn.IsAverageEnabled
+                || firstColumn.IsMaxEnabled || firstColumn.IsMinEnabled))
             {
                 <td class="grid-cell"><b>@Strings.Sum</b></td>
             }
             @for (int i = 0; i < Grid.Columns.Count(); i++)
             {
-                var column = (ICGridColumn)Grid.Columns.ElementAt(i);
+                var column = (ITotalsColumn)Grid.Columns.ElementAt(i);
                 if (i == 0 && !column.IsSumEnabled && !column.IsAverageEnabled
                    && !column.IsMaxEnabled && !column.IsMinEnabled)
                 {
@@ -81,14 +80,14 @@
                 <td class="grid-cell" data-name=""></td>
             }
             @if (firstColumn != null
-             && (firstColumn.IsSumEnabled || firstColumn.IsAverageEnabled
-                 || firstColumn.IsMaxEnabled || firstColumn.IsMinEnabled))
+                && (firstColumn.IsSumEnabled || firstColumn.IsAverageEnabled
+                || firstColumn.IsMaxEnabled || firstColumn.IsMinEnabled))
             {
                 <td class="grid-cell"><b>@Strings.Average</b></td>
             }
             @for (int i = 0; i < Grid.Columns.Count(); i++)
             {
-                var column = (ICGridColumn)Grid.Columns.ElementAt(i);
+                var column = (ITotalsColumn)Grid.Columns.ElementAt(i);
                 if (i == 0 && !column.IsSumEnabled && !column.IsAverageEnabled
                    && !column.IsMaxEnabled && !column.IsMinEnabled)
                 {
@@ -135,14 +134,14 @@
                 <td class="grid-cell" data-name=""></td>
             }
             @if (firstColumn != null
-             && (firstColumn.IsSumEnabled || firstColumn.IsAverageEnabled
-                 || firstColumn.IsMaxEnabled || firstColumn.IsMinEnabled))
+                && (firstColumn.IsSumEnabled || firstColumn.IsAverageEnabled
+                || firstColumn.IsMaxEnabled || firstColumn.IsMinEnabled))
             {
                 <td class="grid-cell"><b>@Strings.Max</b></td>
             }
             @for (int i = 0; i < Grid.Columns.Count(); i++)
             {
-                var column = (ICGridColumn)Grid.Columns.ElementAt(i);
+                var column = (ITotalsColumn)Grid.Columns.ElementAt(i);
                 if (i == 0 && !column.IsSumEnabled && !column.IsAverageEnabled
                    && !column.IsMaxEnabled && !column.IsMinEnabled)
                 {
@@ -189,14 +188,14 @@
                 <td class="grid-cell" data-name=""></td>
             }
             @if (firstColumn != null
-             && (firstColumn.IsSumEnabled || firstColumn.IsAverageEnabled
-                 || firstColumn.IsMaxEnabled || firstColumn.IsMinEnabled))
+                && (firstColumn.IsSumEnabled || firstColumn.IsAverageEnabled
+                || firstColumn.IsMaxEnabled || firstColumn.IsMinEnabled))
             {
                 <td class="grid-cell"><b>@Strings.Min</b></td>
             }
             @for (int i = 0; i < Grid.Columns.Count(); i++)
             {
-                var column = (ICGridColumn)Grid.Columns.ElementAt(i);
+                var column = (ITotalsColumn)Grid.Columns.ElementAt(i);
                 if (i == 0 && !column.IsSumEnabled && !column.IsAverageEnabled
                    && !column.IsMaxEnabled && !column.IsMinEnabled)
                 {

@@ -16,11 +16,21 @@
         {
             (Type type, object value) = ((IGridColumn<T>)column).GetTypeAndValue(Item);
             <div class="form-group row" style="@(column.CrudHidden.HasFlag(CrudHidden.READ)?"display:none;":"")">
-                <label for="@column.FieldName" class="col-form-label col-md-2">@column.Title</label>
+                @if (!string.IsNullOrWhiteSpace(column.TooltipValue))
+                {
+                    <div class="col-md-2">
+                        <label for="@column.FieldName" class="col-form-label" @onmouseover="e => DisplayTooltip(column.Name)" @onmouseout="e => HideTooltip(column.Name)">@column.Title</label>
+                        <TooltipComponent Value="@column.TooltipValue" Visible="@_isTooltipVisible.Get(column.Name)"></TooltipComponent>
+                    </div>
+                }
+                else
+                {
+                    <label for="@column.FieldName" class="col-form-label col-md-2">@column.Title</label>
+                }
                 <div class="@(type == typeof(bool)?"col-md-1":"col-md-5")">
                     @if (((IGridColumn<T>)column).IsSelectField.IsSelectKey)
                     {
-                        string text = ((GridColumnBase<T>)column).GetFormatedValue(((IGridColumn<T>)column).IsSelectField.Expression, Item);
+                        string text = ((IGridColumn<T>)column).GetFormatedValue(((IGridColumn<T>)column).IsSelectField.Expression, Item);
                         <input id="@column.FieldName" class="form-control" readonly="readonly" value="@text" />
                     }
                     else if (type == typeof(bool))
@@ -48,17 +58,17 @@
                     else if (type == typeof(DateTime))
                     {
                         string typeAttr = ((IGridColumn<T>)column).InputType == InputType.None ? "date" : ((IGridColumn<T>)column).InputType.ToTypeAttr();
-                        <input id="@column.FieldName" type="@typeAttr" class="form-control" readonly="readonly" value="@(((GridColumnBase<T>)column).GetFormatedDateTime(value, typeAttr))" />
+                        <input id="@column.FieldName" type="@typeAttr" class="form-control" readonly="readonly" value="@(((ICGridColumn)column).GetFormatedDateTime(value, typeAttr))" />
                     }
                     else if (type == typeof(DateTimeOffset))
                     {
                         string typeAttr = ((IGridColumn<T>)column).InputType == InputType.None ? "date" : ((IGridColumn<T>)column).InputType.ToTypeAttr();
-                        <input id="@column.FieldName" type="@typeAttr" class="form-control" readonly="readonly" value="@(((GridColumnBase<T>)column).GetFormatedDateTime(value, typeAttr))" />
+                        <input id="@column.FieldName" type="@typeAttr" class="form-control" readonly="readonly" value="@(((ICGridColumn)column).GetFormatedDateTime(value, typeAttr))" />
                     }
                     else if (type == typeof(TimeSpan))
                     {
                         string typeAttr = ((IGridColumn<T>)column).InputType == InputType.None ? "time" : ((IGridColumn<T>)column).InputType.ToTypeAttr();
-                        <input id="@column.FieldName" type="@typeAttr" class="form-control" readonly="readonly" value="@(((GridColumnBase<T>)column).GetFormatedDateTime(value, typeAttr))" />
+                        <input id="@column.FieldName" type="@typeAttr" class="form-control" readonly="readonly" value="@(((ICGridColumn)column).GetFormatedDateTime(value, typeAttr))" />
                     }
                     else
                     {
@@ -71,7 +81,17 @@
             && string.IsNullOrWhiteSpace(column.TabGroup))
         {
             <div class="form-group row" style="@(column.CrudHidden.HasFlag(CrudHidden.READ)?"display:none;":"")">
-                <label for="@column.FieldName" class="col-form-label col-md-2">@column.Title</label>
+                @if (!string.IsNullOrWhiteSpace(column.TooltipValue))
+                {
+                    <div class="col-md-2">
+                        <label for="@column.FieldName" class="col-form-label" @onmouseover="e => DisplayTooltip(column.Name)" @onmouseout="e => HideTooltip(column.Name)">@column.Title</label>
+                        <TooltipComponent Value="@column.TooltipValue" Visible="@_isTooltipVisible.Get(column.Name)"></TooltipComponent>
+                    </div>
+                }
+                else
+                {
+                    <label for="@column.FieldName" class="col-form-label col-md-2">@column.Title</label>
+                }
                 <div class="col-md-10">
                     <div class="card panel panel-default">
                         <div class="card-body panel-body">@_renderFragments.Get(column.Name)</div>

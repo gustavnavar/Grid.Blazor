@@ -2,7 +2,8 @@
 
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
-    <Version>2.15.0</Version>
+    <LangVersion>8.0</LangVersion>
+    <Version>2.15.2</Version>
     <Title>GridShared</Title>
     <Description>Support library for GridBlazor and GridMvcCore component libraries</Description>
     <Summary>Support library for GridBlazor and GridMvcCore component libraries</Summary>

@@ -15,7 +15,7 @@ using System.Threading.Tasks;
 
 namespace GridMvc.Columns
 {
-    public abstract class GridColumnBase<T> : GridStyledColumn, IGridColumn<T>, ISGridColumn, ITotalsColumn<T>, IConstrainedGridColumn
+    public abstract class GridColumnBase<T> : GridStyledColumn, IGridColumn<T>, ISGridColumn, IConstrainedGridColumn
     {
         public Type ComponentType { get; private set; }
         public IList<Action<object>> Actions { get; private set; }
@@ -69,17 +69,17 @@ namespace GridMvc.Columns
             Func<Task<IEnumerable<SelectItem>>> SelectItemExprAsync) IsSelectField { get; protected set; } 
             = (false, null, null, null, null);
 
-        public IEnumerable<SelectItem> SelectItems { get; internal set; }
+        public IEnumerable<SelectItem> SelectItems { get; set; }
 
         public InputType InputType { get; protected set; }
 
-        public bool IsSumEnabled { get; internal set; } = false;
+        public bool IsSumEnabled { get; set; } = false;
 
-        public bool IsAverageEnabled { get; internal set; } = false;
+        public bool IsAverageEnabled { get; set; } = false;
 
-        public bool IsMaxEnabled { get; internal set; } = false;
+        public bool IsMaxEnabled { get; set; } = false;
 
-        public bool IsMinEnabled { get; internal set; } = false;
+        public bool IsMinEnabled { get; set; } = false;
 
         public decimal? SumValue { get; set; }
 
@@ -96,6 +96,8 @@ namespace GridMvc.Columns
         public string MaxString { get; set; }
 
         public string MinString { get; set; }
+
+        public string TooltipValue { get; set; }
 
         public IGridColumn<T> Titled(string title)
         {
@@ -554,6 +556,12 @@ namespace GridMvc.Columns
 
         public IGridColumn<T> SubGrid(string tabGrup, Func<object[], bool, bool, bool, bool, Task<IGrid>> subGrids, params (string,string)[] keys)
         {
+            return this;
+        }
+
+        public IGridColumn<T> SetTooltip(string value)
+        {
+            TooltipValue = value;
             return this;
         }
 

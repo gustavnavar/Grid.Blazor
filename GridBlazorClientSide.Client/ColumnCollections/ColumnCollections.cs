@@ -18,7 +18,7 @@ namespace GridBlazorClientSide.Client.ColumnCollections
         public static Action<IGridColumnCollection<Order>> OrderColumns = c =>
         {
             /* Adding "OrderID" column: */
-            c.Add(o => o.OrderID).Titled(SharedResource.Number).SetWidth(100);
+            c.Add(o => o.OrderID).Titled(SharedResource.Number).SetTooltip("Order ID is ... ").SetWidth(100);
 
             /* Adding "OrderDate" column: */
             c.Add(o => o.OrderDate, "OrderCustomDate").Titled(SharedResource.OrderCustomDate)
@@ -402,7 +402,7 @@ namespace GridBlazorClientSide.Client.ColumnCollections
             OrderColumnsAllFeatures = (c, path, list, subgrids) =>
         {
             /* Adding "OrderID" column: */
-            c.Add(o => o.OrderID).SetPrimaryKey(true).Titled(SharedResource.Number).SetWidth(100);
+            c.Add(o => o.OrderID).SetPrimaryKey(true).Titled(SharedResource.Number).SetTooltip("Order ID is ... ").SetWidth(100);
 
             /* Adding "CustomerID" column: */
             c.Add(o => o.CustomerID, true).SetSelectField(true, o => o.Customer.CustomerID + " - " + o.Customer.CompanyName, path + $"api/SampleData/GetAllCustomers");

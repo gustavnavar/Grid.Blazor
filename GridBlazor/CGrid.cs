@@ -54,29 +54,33 @@ namespace GridBlazor
         private ICrudDataService<T> _crudDataService;
 
         public CGrid(HttpClient httpClient, string url, IQueryDictionary<StringValues> query, bool renderOnlyRows,
-            Action<IGridColumnCollection<T>> columns = null, CultureInfo cultureInfo = null)
-            : this(httpClient, url, null, null, query, renderOnlyRows, columns, cultureInfo)
+            Action<IGridColumnCollection<T>> columns = null, CultureInfo cultureInfo = null,
+            IColumnBuilder<T> columnBuilder = null)
+            : this(httpClient, url, null, null, query, renderOnlyRows, columns, cultureInfo, columnBuilder)
         {
         }
 
         [Obsolete("This constructor is obsolete. Use one including an HttpClient parameter.", false)]
         public CGrid(string url, IQueryDictionary<StringValues> query, bool renderOnlyRows,
-            Action<IGridColumnCollection<T>> columns = null, CultureInfo cultureInfo = null)
-            : this(null, url, null, null, query, renderOnlyRows, columns, cultureInfo)
+            Action<IGridColumnCollection<T>> columns = null, CultureInfo cultureInfo = null, 
+            IColumnBuilder<T> columnBuilder = null)
+            : this(null, url, null, null, query, renderOnlyRows, columns, cultureInfo, columnBuilder)
         {
         }
 
         public CGrid(Func<QueryDictionary<StringValues>, ItemsDTO<T>> dataService,
             IQueryDictionary<StringValues> query, bool renderOnlyRows,
-            Action<IGridColumnCollection<T>> columns = null, CultureInfo cultureInfo = null)
-            : this(null, null, dataService, null, query, renderOnlyRows, columns, cultureInfo)
+            Action<IGridColumnCollection<T>> columns = null, CultureInfo cultureInfo = null,
+            IColumnBuilder<T> columnBuilder = null)
+            : this(null, null, dataService, null, query, renderOnlyRows, columns, cultureInfo, columnBuilder)
         {
         }
 
         public CGrid(Func<QueryDictionary<StringValues>, Task<ItemsDTO<T>>> dataServiceAsync,
             IQueryDictionary<StringValues> query, bool renderOnlyRows,
-            Action<IGridColumnCollection<T>> columns = null, CultureInfo cultureInfo = null)
-            : this (null, null, null, dataServiceAsync, query, renderOnlyRows, columns, cultureInfo)
+            Action<IGridColumnCollection<T>> columns = null, CultureInfo cultureInfo = null,
+            IColumnBuilder<T> columnBuilder = null)
+            : this (null, null, null, dataServiceAsync, query, renderOnlyRows, columns, cultureInfo, columnBuilder)
         {
         }
 
@@ -84,7 +88,8 @@ namespace GridBlazor
             Func<QueryDictionary<StringValues>, ItemsDTO<T>> dataService, 
             Func<QueryDictionary<StringValues>, Task<ItemsDTO<T>>> dataServiceAsync,
             IQueryDictionary<StringValues> query, bool renderOnlyRows,
-            Action<IGridColumnCollection<T>> columns = null, CultureInfo cultureInfo = null)
+            Action<IGridColumnCollection<T>> columns = null, CultureInfo cultureInfo = null,
+            IColumnBuilder<T> columnBuilder = null)
         {
             _dataServiceAsync = dataServiceAsync;
             _dataService = dataService;
@@ -113,7 +118,10 @@ namespace GridBlazor
             _annotations = new GridAnnotationsProvider();
 
             //Set up column collection:
-            _columnBuilder = new DefaultColumnBuilder<T>(this, _annotations);
+            if (columnBuilder == null)
+                _columnBuilder = new DefaultColumnBuilder<T>(this, _annotations);
+            else
+                _columnBuilder = columnBuilder;
             _columnsCollection = new GridColumnCollection<T>(this, _columnBuilder, _settings.SortSettings);
             ComponentOptions = new GridOptions();
 
@@ -412,22 +420,22 @@ namespace GridBlazor
         /// <summary>
         ///     Sum enabled for some columns
         /// </summary>
-        public bool IsSumEnabled { get { return Columns.Any(r => ((ICGridColumn)r).IsSumEnabled); } }
+        public bool IsSumEnabled { get { return Columns.Any(r => ((ITotalsColumn)r).IsSumEnabled); } }
 
         /// <summary>
         ///     Average enabled for some columns
         /// </summary>
-        public bool IsAverageEnabled { get { return Columns.Any(r => ((ICGridColumn)r).IsAverageEnabled); } }
+        public bool IsAverageEnabled { get { return Columns.Any(r => ((ITotalsColumn)r).IsAverageEnabled); } }
 
         /// <summary>
         ///     Max enabled for some columns
         /// </summary>
-        public bool IsMaxEnabled { get { return Columns.Any(r => ((ICGridColumn)r).IsMaxEnabled); } }
+        public bool IsMaxEnabled { get { return Columns.Any(r => ((ITotalsColumn)r).IsMaxEnabled); } }
 
         /// <summary>
         ///     Min enabled for some columns
         /// </summary>
-        public bool IsMinEnabled { get { return Columns.Any(r => ((ICGridColumn)r).IsMinEnabled); } }
+        public bool IsMinEnabled { get { return Columns.Any(r => ((ITotalsColumn)r).IsMinEnabled); } }
 
         /// <summary>
         ///     Manage pager properties
@@ -814,7 +822,7 @@ namespace GridBlazor
                         if (response.Totals.Sum != null)
                             foreach (var keyValue in response.Totals.Sum)
                             {
-                                var column = (GridColumnBase<T>)Columns.SingleOrDefault(r => r.Name != null && r.Name.Equals(keyValue.Key));
+                                var column = (ITotalsColumn)Columns.SingleOrDefault(r => r.Name != null && r.Name.Equals(keyValue.Key));
                                 if (column != null && column.IsSumEnabled)
                                     column.SumString = keyValue.Value;
                             }
@@ -822,7 +830,7 @@ namespace GridBlazor
                         if (response.Totals.Average != null)
                             foreach (var keyValue in response.Totals.Average)
                             {
-                                var column = (GridColumnBase<T>)Columns.SingleOrDefault(r => r.Name != null && r.Name.Equals(keyValue.Key));
+                                var column = (ITotalsColumn)Columns.SingleOrDefault(r => r.Name != null && r.Name.Equals(keyValue.Key));
                                 if (column != null && column.IsAverageEnabled)
                                     column.AverageString = keyValue.Value;
                             }
@@ -830,7 +838,7 @@ namespace GridBlazor
                         if (response.Totals.Max != null)
                             foreach (var keyValue in response.Totals.Max)
                             {
-                                var column = (GridColumnBase<T>)Columns.SingleOrDefault(r => r.Name != null && r.Name.Equals(keyValue.Key));
+                                var column = (ITotalsColumn)Columns.SingleOrDefault(r => r.Name != null && r.Name.Equals(keyValue.Key));
                                 if (column != null && column.IsMaxEnabled)
                                     column.MaxString = keyValue.Value;
                             }
@@ -838,7 +846,7 @@ namespace GridBlazor
                         if (response.Totals.Min != null)
                             foreach (var keyValue in response.Totals.Min)
                             {
-                                var column = (GridColumnBase<T>)Columns.SingleOrDefault(r => r.Name != null && r.Name.Equals(keyValue.Key));
+                                var column = (ITotalsColumn)Columns.SingleOrDefault(r => r.Name != null && r.Name.Equals(keyValue.Key));
                                 if (column != null && column.IsMinEnabled)
                                     column.MinString = keyValue.Value;
                             }

@@ -20,7 +20,17 @@
             {
                 (Type type, object value) = ((IGridColumn<T>)column).GetTypeAndValue(Item);
                 <div class="form-group row" style="@(column.CrudHidden.HasFlag(CrudHidden.CREATE)?"display:none;":"")">
-                    <label for="@column.FieldName" class="col-form-label col-md-2">@column.Title</label>
+                    @if (!string.IsNullOrWhiteSpace(column.TooltipValue))
+                    {
+                        <div class="col-md-2">
+                            <label for="@column.FieldName" class="col-form-label" @onmouseover="e => DisplayTooltip(column.Name)" @onmouseout="e => HideTooltip(column.Name)">@column.Title</label>
+                            <TooltipComponent Value="@column.TooltipValue" Visible="@_isTooltipVisible.Get(column.Name)"></TooltipComponent>
+                        </div>
+                    }
+                    else
+                    {
+                        <label for="@column.FieldName" class="col-form-label col-md-2">@column.Title</label>
+                    }
                     <div class="@(type == typeof(bool)?"col-md-1":"col-md-5")">
                         @if (((IGridColumn<T>)column).IsSelectField.IsSelectKey)
                         {
@@ -57,44 +67,44 @@
                                 {
                                     if (GridComponent._isWeekSupported)
                                     {
-                                        <input id="@column.FieldName" name="@column.FieldName" type="@typeAttr" placeholder="yyyy-Www" class="form-control" value="@(((GridColumnBase<T>)column).GetFormatedDateTime(value, typeAttr))" @onchange="(e) => ChangeValue(e, column, typeAttr)" />
+                                        <input id="@column.FieldName" name="@column.FieldName" type="@typeAttr" placeholder="yyyy-Www" class="form-control" value="@(((ICGridColumn)column).GetFormatedDateTime(value, typeAttr))" @onchange="(e) => ChangeValue(e, column, typeAttr)" />
                                     }
                                     else
                                     {
-                                        <input id="@column.FieldName" name="@column.FieldName" type="text" placeholder="yyyy-Www" class="form-control" value="@(((GridColumnBase<T>)column).GetFormatedDateTime(value, typeAttr))" @onchange="(e) => ChangeValue(e, column, typeAttr)" />
+                                        <input id="@column.FieldName" name="@column.FieldName" type="text" placeholder="yyyy-Www" class="form-control" value="@(((ICGridColumn)column).GetFormatedDateTime(value, typeAttr))" @onchange="(e) => ChangeValue(e, column, typeAttr)" />
                                     }
                                 }
                                 else if (typeAttr == "month")
                                 {
                                     if (GridComponent._isMonthSupported)
                                     {
-                                        <input id="@column.FieldName" name="@column.FieldName" type="@typeAttr" placeholder="yyyy-mm" class="form-control" value="@(((GridColumnBase<T>)column).GetFormatedDateTime(value, typeAttr))" @onchange="(e) => ChangeValue(e, column, typeAttr)" />
+                                        <input id="@column.FieldName" name="@column.FieldName" type="@typeAttr" placeholder="yyyy-mm" class="form-control" value="@(((ICGridColumn)column).GetFormatedDateTime(value, typeAttr))" @onchange="(e) => ChangeValue(e, column, typeAttr)" />
                                     }
                                     else
                                     {
-                                        <input id="@column.FieldName" name="@column.FieldName" type="text" placeholder="yyyy-mm" class="form-control" value="@(((GridColumnBase<T>)column).GetFormatedDateTime(value, typeAttr))" @onchange="(e) => ChangeValue(e, column, typeAttr)" />
+                                        <input id="@column.FieldName" name="@column.FieldName" type="text" placeholder="yyyy-mm" class="form-control" value="@(((ICGridColumn)column).GetFormatedDateTime(value, typeAttr))" @onchange="(e) => ChangeValue(e, column, typeAttr)" />
                                     }
                                 }
                                 else if (typeAttr == "datetime-local")
                                 {
                                     if (GridComponent._isDateTimeLocalSupported)
                                     {
-                                        <input id="@column.FieldName" name="@column.FieldName" type="@typeAttr" placeholder="yyyy-mm-dd hh:mm" class="form-control" value="@(((GridColumnBase<T>)column).GetFormatedDateTime(value, typeAttr))" @onchange="(e) => ChangeValue(e, column, typeAttr)" />
+                                        <input id="@column.FieldName" name="@column.FieldName" type="@typeAttr" placeholder="yyyy-mm-dd hh:mm" class="form-control" value="@(((ICGridColumn)column).GetFormatedDateTime(value, typeAttr))" @onchange="(e) => ChangeValue(e, column, typeAttr)" />
                                     }
                                     else
                                     {
-                                        <input id="@column.FieldName" name="@column.FieldName" type="text" placeholder="yyyy-mm-dd hh:mm" class="form-control" value="@(((GridColumnBase<T>)column).GetFormatedDateTime(value, typeAttr))" @onchange="(e) => ChangeValue(e, column, typeAttr)" />
+                                        <input id="@column.FieldName" name="@column.FieldName" type="text" placeholder="yyyy-mm-dd hh:mm" class="form-control" value="@(((ICGridColumn)column).GetFormatedDateTime(value, typeAttr))" @onchange="(e) => ChangeValue(e, column, typeAttr)" />
                                     }
                                 }
                                 else
                                 {
-                                    <input id="@column.FieldName" name="@column.FieldName" type="@typeAttr" class="form-control" value="@(((GridColumnBase<T>)column).GetFormatedDateTime(value, typeAttr))" @onchange="(e) => ChangeValue(e, column, typeAttr)" />
+                                    <input id="@column.FieldName" name="@column.FieldName" type="@typeAttr" class="form-control" value="@(((ICGridColumn)column).GetFormatedDateTime(value, typeAttr))" @onchange="(e) => ChangeValue(e, column, typeAttr)" />
                                 }
                             }
                             else if (type == typeof(System.TimeSpan))
                             {
                                 string typeAttr = ((IGridColumn<T>)column).InputType == InputType.None ? "time" : ((IGridColumn<T>)column).InputType.ToTypeAttr();
-                                <input id="@column.FieldName" name="@column.FieldName" type="@typeAttr" class="form-control" value="@(((GridColumnBase<T>)column).GetFormatedDateTime(value, typeAttr))" @onchange="(e) => ChangeValue(e, column)" />
+                                <input id="@column.FieldName" name="@column.FieldName" type="@typeAttr" class="form-control" value="@(((ICGridColumn)column).GetFormatedDateTime(value, typeAttr))" @onchange="(e) => ChangeValue(e, column)" />
                             }
                             else if (type == typeof(bool))
                             {
@@ -118,7 +128,17 @@
             else if (column.CreateComponentType != null && string.IsNullOrWhiteSpace(column.TabGroup))
             {
                 <div class="form-group row" style="@(column.CrudHidden.HasFlag(CrudHidden.CREATE) ? "display:none;" : "")">
-                    <label for="@column.FieldName" class="col-form-label col-md-2">@column.Title</label>
+                    @if (!string.IsNullOrWhiteSpace(column.TooltipValue))
+                    {
+                        <div class="col-md-2">
+                            <label for="@column.FieldName" class="col-form-label" @onmouseover="e => DisplayTooltip(column.Name)" @onmouseout="e => HideTooltip(column.Name)">@column.Title</label>
+                            <TooltipComponent Value="@column.TooltipValue" Visible="@_isTooltipVisible.Get(column.Name)"></TooltipComponent>
+                        </div>
+                    }
+                    else
+                    {
+                        <label for="@column.FieldName" class="col-form-label col-md-2">@column.Title</label>
+                    }
                     <div class="col-md-10">
                         <div class="card panel panel-default">
                             <div class="card-body panel-body">@_renderFragments.Get(column.Name)</div>

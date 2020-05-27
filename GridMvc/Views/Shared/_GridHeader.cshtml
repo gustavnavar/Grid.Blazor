@@ -135,53 +135,55 @@
 }
 
 <th class="@_cssClass" style="@_cssStyles">
-    @if (Model.FilterEnabled)
-    {
-        <div class="grid-filter" data-type="@Model.FilterWidgetTypeName" data-isnullable="@Model.Filter.IsNullable" data-name="@Model.Name" data-widgetdata="@JsonSerializer.Serialize(Model.FilterWidgetData)" data-filterdata="@JsonSerializer.Serialize(_filterSettings)" data-url="@_url" data-clearinitfilter="@_clearInitFilter.ToString()">
-            <span class="@_cssFilterClass" title="@Strings.FilterButtonTooltipText"></span>
-        </div>
-    }
-    @if (Model.ParentGrid.ExtSortingEnabled)
-    {
-        <div class="grid-extsort-draggable @_cssSortingClass" draggable="true" data-column="@Model.Name">
-            @if (Model.SortEnabled)
-            {
-                if (Model.IsSorted)
+    <div class="grid-header-group">
+        @if (Model.FilterEnabled)
+        {
+            <div class="grid-filter" data-type="@Model.FilterWidgetTypeName" data-isnullable="@Model.Filter.IsNullable" data-name="@Model.Name" data-widgetdata="@JsonSerializer.Serialize(Model.FilterWidgetData)" data-filterdata="@JsonSerializer.Serialize(_filterSettings)" data-url="@_url" data-clearinitfilter="@_clearInitFilter.ToString()">
+                <span class="@_cssFilterClass" title="@Strings.FilterButtonTooltipText"></span>
+            </div>
+        }
+        @if (Model.ParentGrid.ExtSortingEnabled)
+        {
+            <div class="grid-extsort-draggable @_cssSortingClass" draggable="true" data-column="@Model.Name">
+                @if (Model.SortEnabled)
                 {
-                    <a href="@_href" data-column="@Model.Name" data-sorted="@(Model.Direction == GridSortDirection.Ascending ? "asc" : "desc")">@Model.Title</a>
+                    if (Model.IsSorted)
+                    {
+                        <a href="@_href" data-column="@Model.Name" data-sorted="@(Model.Direction == GridSortDirection.Ascending ? "asc" : "desc")">@Model.Title</a>
+                    }
+                    else
+                    {
+                        <a href="@_href" data-column="@Model.Name">@Model.Title</a>
+                    }
                 }
                 else
                 {
-                    <a href="@_href" data-column="@Model.Name">@Model.Title</a>
+                    <span data-column="@Model.Name">@Model.Title</span>
                 }
-            }
-            else
-            {
-                <span data-column="@Model.Name">@Model.Title</span>
-            }
-            @if (Model.IsSorted)
-            {
-                <span class="grid-sort-arrow"></span>
-            }
-        </div>
-    }
-    else
-    {
-        <div class="@_cssSortingClass">
-            @if (Model.SortEnabled)
-            {
-                <a href="@_href">@Model.Title</a>
-            }
-            else
-            {
-                <span>@Model.Title</span>
-            }
-            @if (Model.IsSorted)
-            {
-                <span class="grid-sort-arrow"></span>
-            }
-        </div>
-    }
+                @if (Model.IsSorted)
+                {
+                    <span class="grid-sort-arrow"></span>
+                }
+            </div>
+        }
+        else
+        {
+            <div class="@_cssSortingClass">
+                @if (Model.SortEnabled)
+                {
+                    <a href="@_href">@Model.Title</a>
+                }
+                else
+                {
+                    <span>@Model.Title</span>
+                }
+                @if (Model.IsSorted)
+                {
+                    <span class="grid-sort-arrow"></span>
+                }
+            </div>
+        }
+    </div>
 </th>
 
 

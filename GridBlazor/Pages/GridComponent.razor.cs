@@ -78,7 +78,7 @@ namespace GridBlazor.Pages
 
         public QueryDictionary<Dictionary<int, CheckboxComponent<T>>> Checkboxes { get; internal set; }
 
-        internal ICGridColumn FirstColumn { get; set; }
+        internal IGridColumn<T> FirstColumn { get; set; }
 
         internal ColumnOrderValue Payload { get; set; }
 
@@ -175,7 +175,7 @@ namespace GridBlazor.Pages
                     _filterComponents.Add(widget);
             }
 
-            FirstColumn = (ICGridColumn)Grid.Columns.FirstOrDefault();
+            FirstColumn = (IGridColumn<T>)Grid.Columns.FirstOrDefault();
 
             if(OnRowClickedActions != null && OnRowClickedActions.Count() > 0)
             {
@@ -642,22 +642,22 @@ namespace GridBlazor.Pages
                     {
                         if (isSelectField.SelectItemExpr != null)
                         {
-                            ((GridColumnBase<T>)column).SelectItems = isSelectField.SelectItemExpr.Invoke();
+                            ((IGridColumn<T>)column).SelectItems = isSelectField.SelectItemExpr.Invoke();
                         }
                         else if (isSelectField.SelectItemExprAsync != null)
                         {
-                            ((GridColumnBase<T>)column).SelectItems = await isSelectField.SelectItemExprAsync.Invoke();
+                            ((IGridColumn<T>)column).SelectItems = await isSelectField.SelectItemExprAsync.Invoke();
                         }
                         else
                         {
                             var selectItems = await Grid.HttpClient.GetFromJsonAsync<SelectItem[]>(isSelectField.Url);
-                            ((GridColumnBase<T>)column).SelectItems = selectItems.ToList();
+                            ((IGridColumn<T>)column).SelectItems = selectItems.ToList();
                         }
                     }
                     catch (Exception e)
                     {
                         Console.WriteLine(e.Message);
-                        ((GridColumnBase<T>)column).SelectItems = new List<SelectItem>();
+                        ((IGridColumn<T>)column).SelectItems = new List<SelectItem>();
                     }
                 }
             }

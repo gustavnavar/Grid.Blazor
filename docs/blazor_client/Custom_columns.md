@@ -149,6 +149,16 @@ If you want to use a custom comparer for a column yo can do it by calling the **
     c.Add(o => o.Customer.CompanyName, comparer)
 ```
 
+## Header tooltip
+
+You can enable a tooltip for a column header. The tooltip will appear when the pointer hover on the column header of the grid. 
+
+If the grid is configured for CRUD operations, the tooltip will also appear hovering over the field label of CRUD forms. 
+
+If you want to use a tooltip for a column yo can do it by calling the **SetTooltip** method in the column definition:
+```c#
+    c.Add(o => o.OrderID).SetTooltip("Order ID is ... ");
+
 ## Column settings
 
 Method name | Description | Example
@@ -169,6 +179,6 @@ SetFilterWidgetType | Setup filter widget type for rendering custom filtering us
 Format | Format column value | Columns.Add(o => o.OrderDate).Format("{0:dd/MM/yyyy}");
 Css | Apply css classes to the column | Columns.Add(x => x.Number).Css("hidden-xs");
 SetCellCssClassesContraint | Apply css classes to selected cells | Columns.Add(x => x.Number).SetCellCssClassesContraint(x => x.Number < 0 ? "red" : "black");
-
+SetTooltip | Enable column header tooltip | Columns.Add(x => x.Number).SetTooltip("Number column is ... ");
 
 [<- Paging](Paging.md) | [Totals ->](Totals.md)

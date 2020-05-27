@@ -2,7 +2,7 @@
 
 A fork from: https://gridmvc.codeplex.com/
 
-It supports .NET Core 3.1 and Blazor WebAssembly 3.2.0 RC1
+It supports .NET Core 3.1 and Blazor WebAssembly 3.2.0
 
 ## Notes
 
@@ -61,6 +61,9 @@ It supports .NET Core 3.1 and Blazor WebAssembly 3.2.0 RC1
 
 ## Demo 
 http://gridblazor.azurewebsites.net
+
+## Change Log
+https://github.com/gustavnavar/Grid.Blazor/releases
 
 ## Folder description
 * [GridBlazor](./GridBlazor): Library to build de GridBlazor package

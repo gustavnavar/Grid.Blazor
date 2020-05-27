@@ -6,6 +6,7 @@ using GridShared.Grouping;
 using GridShared.OData;
 using GridShared.Searching;
 using GridShared.Sorting;
+using GridShared.Totals;
 using GridShared.Utility;
 using Microsoft.AspNetCore.Components;
 using System;
@@ -72,17 +73,17 @@ namespace GridBlazor.Columns
             Func<Task<IEnumerable<SelectItem>>> SelectItemExprAsync) IsSelectField { get; protected set; } 
             = (false, null, null, null, null);
 
-        public IEnumerable<SelectItem> SelectItems { get; internal set; }
+        public IEnumerable<SelectItem> SelectItems { get; set; }
 
         public InputType InputType { get; protected set; }
 
-        public bool IsSumEnabled { get; internal set; } = false;
+        public bool IsSumEnabled { get; set; } = false;
 
-        public bool IsAverageEnabled { get; internal set; } = false;
+        public bool IsAverageEnabled { get; set; } = false;
 
-        public bool IsMaxEnabled { get; internal set; } = false;
+        public bool IsMaxEnabled { get; set; } = false;
 
-        public bool IsMinEnabled { get; internal set; } = false;
+        public bool IsMinEnabled { get; set; } = false;
 
         public string SumString { get; set; }
 
@@ -95,6 +96,8 @@ namespace GridBlazor.Columns
         public (string,string)[] SubGridKeys { get; set; }
 
         public Func<object[], bool, bool, bool, bool, Task<IGrid>> SubGrids { get; set; }
+
+        public string TooltipValue { get; set; }
 
         public IGridColumn<T> Titled(string title)
         {
@@ -532,7 +535,7 @@ namespace GridBlazor.Columns
             return textValue;
         }
 
-        internal string GetFormatedDateTime(object value, string type)
+        public string GetFormatedDateTime(object value, string type)
         {
             if (value == null)
                 return null;
@@ -642,6 +645,12 @@ namespace GridBlazor.Columns
             return values;
         }
 
+        public IGridColumn<T> SetTooltip(string value)
+        {
+            TooltipValue = value;
+            return this;
+        }
+
         #endregion
 
         #region IConstrainedGridColumn Members
@@ -649,6 +658,8 @@ namespace GridBlazor.Columns
         public abstract bool HasConstraint { get; }
 
         #endregion
+
+        public IColumnTotals<T> Totals { get; }
 
     }
 }

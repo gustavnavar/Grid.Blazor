@@ -2,7 +2,7 @@
 
 namespace GridBlazor.Pages
 {
-    public partial class GridTotalsComponent 
+    public partial class GridTotalsComponent
     {
         [Parameter]
         public ICGrid Grid { get; set; }

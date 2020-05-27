@@ -3,9 +3,10 @@
   <PropertyGroup>
     <TargetFramework>netstandard2.1</TargetFramework>
     <RazorLangVersion>3.0</RazorLangVersion>
+    <LangVersion>8.0</LangVersion>
     <GenerateEmbeddedFilesManifest>True</GenerateEmbeddedFilesManifest>
     <EnableDefaultEmbeddedResourceItems>False</EnableDefaultEmbeddedResourceItems>
-    <Version>1.6.2</Version>
+    <Version>1.6.5</Version>
     <Title>GridBlazor</Title>
     <Description>Grid components for Blazor</Description>
     <Summary>Grid components for Blazor</Summary>
@@ -27,8 +28,8 @@
     <PackageReference Include="Microsoft.AspNetCore.Components.Web" Version="3.1.4" />
     <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="3.1.4" />
     <PackageReference Include="Microsoft.Extensions.Primitives" Version="3.1.4" />
-    <PackageReference Include="System.Net.Http.Json" Version="3.2.0-rc1.20217.1" />
-    <PackageReference Include="DocumentFormat.OpenXml" Version="2.10.1" />
+    <PackageReference Include="System.Net.Http.Json" Version="3.2.0" />
+    <PackageReference Include="DocumentFormat.OpenXml" Version="2.11.0" />
   </ItemGroup>
 
   <ItemGroup>

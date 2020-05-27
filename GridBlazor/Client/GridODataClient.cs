@@ -1,4 +1,5 @@
 ﻿using GridShared;
+using GridShared.Columns;
 using GridShared.Utility;
 using Microsoft.Extensions.Primitives;
 using System;
@@ -15,8 +16,9 @@ namespace GridBlazor
     {
         public GridODataClient(HttpClient httpClient, string url, IQueryDictionary<StringValues> query, bool renderOnlyRows,
             string gridName, Action<IGridColumnCollection<T>> columns = null, int? pageSize = null, 
-            CultureInfo cultureInfo = null, IEnumerable<string> oDataExpandList = null)
-            : base (httpClient, url, query, renderOnlyRows, gridName, columns, cultureInfo)
+            CultureInfo cultureInfo = null, IEnumerable<string> oDataExpandList = null,
+            IColumnBuilder<T> columnBuilder = null)
+            : base (httpClient, url, query, renderOnlyRows, gridName, columns, cultureInfo, columnBuilder)
         {
             UseServerAPI(ServerAPI.OData);
             if (pageSize.HasValue)

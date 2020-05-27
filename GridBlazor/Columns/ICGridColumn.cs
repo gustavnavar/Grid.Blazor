@@ -7,22 +7,6 @@ namespace GridBlazor.Columns
 {
     public interface ICGridColumn
     {
-        bool IsSumEnabled { get; }
-
-        string SumString { get; set; }
-
-        bool IsAverageEnabled { get; }
-
-        string AverageString { get; set; }
-
-        bool IsMaxEnabled { get; }
-
-        string MaxString { get; set; }
-
-        bool IsMinEnabled { get; }
-
-        string MinString { get; set; }
-
         /// <summary>
         ///     Keys for subgrid
         /// </summary>
@@ -37,5 +21,7 @@ namespace GridBlazor.Columns
         ///     Get foreign key values for subgrid records
         /// </summary>
         QueryDictionary<object> GetSubGridKeyValues(object item);
+
+        string GetFormatedDateTime(object value, string type);
     }
 }

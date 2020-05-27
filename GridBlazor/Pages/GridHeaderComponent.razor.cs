@@ -1,5 +1,4 @@
-﻿using GridBlazor.Columns;
-using GridBlazor.Filtering;
+﻿using GridBlazor.Filtering;
 using GridBlazor.Pagination;
 using GridBlazor.Sorting;
 using GridShared.Columns;
@@ -26,7 +25,8 @@ namespace GridBlazor.Pages
         private const string FilterButtonCss = "grid-filter-btn";
 
         private int _sequence = 0;
-        protected bool _isVisible = false;
+        protected bool _isFilterVisible = false;
+        protected bool _isTooltipVisible = false;
         protected List<ColumnFilterValue> _filterSettings;
         private bool _isColumnFiltered;
         protected string _url;
@@ -83,7 +83,7 @@ namespace GridBlazor.Pages
 
             _clearInitFilter = FilterSettings.Query.Get(QueryStringFilterSettings.DefaultClearInitFilterQueryParameter);
 
-            if (((GridColumnBase<T>)Column).Hidden)
+            if (Column.Hidden)
                 _cssStyles = ((GridStyledColumn)Column).GetCssStylesString() + " " + ThStyle;
             else
                 _cssStyles = ((GridStyledColumn)Column).GetCssStylesString();
@@ -108,7 +108,8 @@ namespace GridBlazor.Pages
             }
             _cssSortingClass = string.Join(" ", cssSortingClass);
 
-            FilterWidgetRender = CreateFilterWidgetComponent();
+            if (Column.FilterEnabled)
+                FilterWidgetRender = CreateFilterWidgetComponent();
         }
 
         private RenderFragment CreateFilterWidgetComponent() => builder =>
@@ -131,7 +132,7 @@ namespace GridBlazor.Pages
             {
                 builder.OpenComponent<TextFilterComponent<T>>(++_sequence);
             }
-            builder.AddAttribute(++_sequence, "Visible", _isVisible);
+            builder.AddAttribute(++_sequence, "Visible", _isFilterVisible);
             builder.AddAttribute(++_sequence, "ColumnName", Column.Name);
             builder.AddAttribute(++_sequence, "FilterSettings", _filterSettings);
             builder.CloseComponent();
@@ -170,26 +171,46 @@ namespace GridBlazor.Pages
 
         public async Task FilterIconClicked()
         {
-            var isVisible = _isVisible;
+            var isVisible = _isFilterVisible;
             GridComponent.FilterIconClicked();
 
             //switch visibility for the filter dialog:
-            _isVisible = !isVisible;
+            _isFilterVisible = !isVisible;
                 
             StateHasChanged();
             await GridComponent.SetGridFocus();
         }
 
+        public async Task DisplayTooltip()
+        {
+            if (!string.IsNullOrWhiteSpace(Column.TooltipValue))
+            {
+                _isTooltipVisible = true;
+                StateHasChanged();
+                await GridComponent.SetGridFocus();
+            }
+        }
+
+        public async Task HideTooltip()
+        {
+            if (!string.IsNullOrWhiteSpace(Column.TooltipValue))
+            {
+                _isTooltipVisible = false;
+                StateHasChanged();
+                await GridComponent.SetGridFocus();
+            }
+        }
+
         public async Task AddFilter(FilterCollection filters)
         {
-            _isVisible = !_isVisible;
+            _isFilterVisible = !_isFilterVisible;
             StateHasChanged();
             await GridComponent.AddFilter(Column, filters);
         }
 
         public async Task RemoveFilter()
         {
-            _isVisible = !_isVisible;
+            _isFilterVisible = !_isFilterVisible;
             StateHasChanged();
             await GridComponent.RemoveFilter(Column);
         }
@@ -203,9 +224,9 @@ namespace GridBlazor.Pages
 
         private void HideFilter()
         {
-            if (_isVisible)
+            if (_isFilterVisible)
             {
-                _isVisible = false;
+                _isFilterVisible = false;
                 StateHasChanged();
             }
         }
