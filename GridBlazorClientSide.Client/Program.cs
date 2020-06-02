@@ -1,4 +1,5 @@
-﻿using GridBlazorClientSide.Client.Services;
+﻿using BlazorStrap;
+using GridBlazorClientSide.Client.Services;
 using GridBlazorClientSide.Shared.Models;
 using GridShared;
 using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
@@ -23,6 +24,8 @@ namespace GridBlazorClientSide.Client
             builder.Services.AddScoped<IOrderGridInMemoryService, OrderGridInMemoryService>();
             builder.Services.AddScoped<ICrudDataService<OrderDetail>, OrderDetailService>();
             builder.Services.AddLocalization();
+
+            builder.Services.AddBootstrapCss();
 
             var host = builder.Build();
             var jsInterop = host.Services.GetRequiredService<IJSRuntime>();

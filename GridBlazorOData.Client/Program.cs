@@ -1,3 +1,4 @@
+using BlazorStrap;
 using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.JSInterop;
@@ -17,6 +18,8 @@ namespace GridBlazorOData.Client
 
             builder.Services.AddSingleton(new HttpClient { BaseAddress = new Uri(builder.HostEnvironment.BaseAddress) });
             builder.Services.AddLocalization();
+
+            builder.Services.AddBootstrapCss();
 
             var host = builder.Build();
             var jsInterop = host.Services.GetRequiredService<IJSRuntime>();

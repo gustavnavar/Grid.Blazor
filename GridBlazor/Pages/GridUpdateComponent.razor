@@ -18,6 +18,11 @@
                 && column.CreateComponentType == null && column.ReadComponentType == null
                 && column.UpdateComponentType == null && column.DeleteComponentType == null)
             {
+                if (column.FieldName == null)
+                {
+                    continue;
+                }
+
                 (Type type, object value) = ((IGridColumn<T>)column).GetTypeAndValue(Item);
                 <div class="form-group row" style="@(column.CrudHidden.HasFlag(CrudHidden.UPDATE) && !column.ReadOnlyOnUpdate ? "display:none;" : "")">
                     @if (!string.IsNullOrWhiteSpace(column.TooltipValue))
@@ -164,13 +169,13 @@
                     @if (!string.IsNullOrWhiteSpace(column.TooltipValue))
                     {
                         <div class="col-md-2">
-                            <label for="@column.FieldName" class="col-form-label" @onmouseover="e => DisplayTooltip(column.Name)" @onmouseout="e => HideTooltip(column.Name)">@column.Title</label>
+                            <label class="col-form-label" @onmouseover="e => DisplayTooltip(column.Name)" @onmouseout="e => HideTooltip(column.Name)">@column.Title</label>
                             <TooltipComponent Value="@column.TooltipValue" Visible="@_isTooltipVisible.Get(column.Name)"></TooltipComponent>
                         </div>
                     }
                     else
                     {
-                        <label for="@column.FieldName" class="col-form-label col-md-2">@column.Title</label>
+                        <label class="col-form-label col-md-2">@column.Title</label>
                     }
                     <div class="col-md-10">
                         <div class="card panel panel-default">
