@@ -33,6 +33,7 @@ And these events are provided to allow running tasks before and after grid is re
 If you want to handle an event you have to create a reference to the ```GridCompoment```. 
 
 The ```GridCompoment``` object has an attribute named ```Error``` that can be set to show an error on the CRUD form.
+There is also another property named ```ColumnErrors``` to show errors specific to each each form field. ```ColumnErrors``` is a ```QueryDictionary``` to store the error message for each field.
 
 Then you have to add the events that you want to handle in the ```OnAfterRender``` method.
 
@@ -139,7 +140,11 @@ You can see here an example handling all component events that writes some grid 
 
             if (!valid.IsValid)
             {
-                component.Error = valid.ToString();
+                component.Error = "Insert operation returned one or more errors";
+                foreach (var error in valid.Errors)
+                {
+                    component.ColumnErrors.AddParameter(error.PropertyName, error.ErrorMessage);
+                }
             }
 
             return valid.IsValid;
@@ -152,7 +157,11 @@ You can see here an example handling all component events that writes some grid 
 
             if (!valid.IsValid)
             {
-                component.Error = valid.ToString();
+                component.Error = "Update operation returned one or more errors";
+                foreach (var error in valid.Errors)
+                {
+                    component.ColumnErrors.AddParameter(error.PropertyName, error.ErrorMessage);
+                }
             }
 
             return valid.IsValid;

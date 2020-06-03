@@ -1,3 +1,4 @@
+using BlazorStrap;
 using GridBlazorServerSide.Data;
 using GridBlazorServerSide.Services;
 using Microsoft.AspNetCore.Builder;
@@ -45,6 +46,8 @@ namespace GridBlazorServerSide
             services.AddScoped<IShipperService, ShipperService>();
             services.AddScoped<IProductService, ProductService>();
             services.AddScoped<ITruckService, TruckService>();
+
+            services.AddBootstrapCss();
 
             services.Configure<RequestLocalizationOptions>(
                 options =>

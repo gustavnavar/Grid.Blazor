@@ -120,7 +120,11 @@ else
 
         if (!valid.IsValid)
         {
-            component.Error = valid.ToString();
+            component.Error = "Insert operation returned one or more errors";
+            foreach (var error in valid.Errors)
+            {
+                component.ColumnErrors.AddParameter(error.PropertyName, error.ErrorMessage);
+            }
         }
 
         return valid.IsValid;
@@ -133,7 +137,11 @@ else
 
         if (!valid.IsValid)
         {
-            component.Error = valid.ToString();
+            component.Error = "Update operation returned one or more errors";
+            foreach (var error in valid.Errors)
+            {
+                component.ColumnErrors.AddParameter(error.PropertyName, error.ErrorMessage);
+            }
         }
 
         return valid.IsValid;

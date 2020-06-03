@@ -21,6 +21,7 @@ namespace GridBlazor.Pages
         private IEnumerable<string> _tabGroups;
 
         public string Error { get; set; } = "";
+        public QueryDictionary<string> ColumnErrors { get; set; } = new QueryDictionary<string>();
 
         [CascadingParameter(Name = "GridComponent")]
         protected GridComponent<T> GridComponent { get; set; }
@@ -148,6 +149,8 @@ namespace GridBlazor.Pages
         {
             try
             {
+                Error = "";
+                ColumnErrors = new QueryDictionary<string>();
                 _tabGroups = null;
                 await GridComponent.UpdateItem(this);
             }

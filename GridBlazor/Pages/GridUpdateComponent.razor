@@ -18,6 +18,11 @@
                 && column.CreateComponentType == null && column.ReadComponentType == null
                 && column.UpdateComponentType == null && column.DeleteComponentType == null)
             {
+                if (column.FieldName == null)
+                {
+                    continue;
+                }
+
                 (Type type, object value) = ((IGridColumn<T>)column).GetTypeAndValue(Item);
                 <div class="form-group row" style="@(column.CrudHidden.HasFlag(CrudHidden.UPDATE) && !column.ReadOnlyOnUpdate ? "display:none;" : "")">
                     @if (!string.IsNullOrWhiteSpace(column.TooltipValue))
@@ -86,7 +91,7 @@
                             {
                                 if (type == typeof(string) && ((IGridColumn<T>)column).InputType == InputType.TextArea)
                                 {
-                                    <textarea id="@column.FieldName" name="@column.FieldName" class="form-control" rows="5" value="@column.GetFormatedValue(value)" @onchange="(e) => ChangeValue(e, column)" />
+                                    <textarea id="@column.FieldName" name="@column.FieldName" class="form-control @(ColumnErrors.ContainsKey(@column.FieldName) ? "input-validation-error" : "")" rows="5" value="@column.GetFormatedValue(value)" @onchange="(e) => ChangeValue(e, column)" />
                                 }
                                 else if (type == typeof(DateTime) || type == typeof(System.DateTimeOffset))
                                 {
@@ -95,60 +100,63 @@
                                     {
                                         if (GridComponent._isWeekSupported)
                                         {
-                                            <input id="@column.FieldName" name="@column.FieldName" type="@typeAttr" placeholder="yyyy-Www" class="form-control" value="@(((ICGridColumn)column).GetFormatedDateTime(value, typeAttr))" @onchange="(e) => ChangeValue(e, column, typeAttr)" />
+                                            <input id="@column.FieldName" name="@column.FieldName" type="@typeAttr" placeholder="yyyy-Www" class="form-control @(ColumnErrors.ContainsKey(@column.FieldName) ? "input-validation-error" : "")" value="@(((ICGridColumn)column).GetFormatedDateTime(value, typeAttr))" @onchange="(e) => ChangeValue(e, column, typeAttr)" />
                                         }
                                         else
                                         {
-                                            <input id="@column.FieldName" name="@column.FieldName" type="text" placeholder="yyyy-Www" class="form-control" value="@(((ICGridColumn)column).GetFormatedDateTime(value, typeAttr))" @onchange="(e) => ChangeValue(e, column, typeAttr)" />
+                                            <input id="@column.FieldName" name="@column.FieldName" type="text" placeholder="yyyy-Www" class="form-control @(ColumnErrors.ContainsKey(@column.FieldName) ? "input-validation-error" : "")" value="@(((ICGridColumn)column).GetFormatedDateTime(value, typeAttr))" @onchange="(e) => ChangeValue(e, column, typeAttr)" />
                                         }
                                     }
                                     else if (typeAttr == "month")
                                     {
                                         if (GridComponent._isMonthSupported)
                                         {
-                                            <input id="@column.FieldName" name="@column.FieldName" type="@typeAttr" placeholder="yyyy-mm" class="form-control" value="@(((ICGridColumn)column).GetFormatedDateTime(value, typeAttr))" @onchange="(e) => ChangeValue(e, column, typeAttr)" />
+                                            <input id="@column.FieldName" name="@column.FieldName" type="@typeAttr" placeholder="yyyy-mm" class="form-control @(ColumnErrors.ContainsKey(@column.FieldName) ? "input-validation-error" : "")" value="@(((ICGridColumn)column).GetFormatedDateTime(value, typeAttr))" @onchange="(e) => ChangeValue(e, column, typeAttr)" />
                                         }
                                         else
                                         {
-                                            <input id="@column.FieldName" name="@column.FieldName" type="text" placeholder="yyyy-mm" class="form-control" value="@(((ICGridColumn)column).GetFormatedDateTime(value, typeAttr))" @onchange="(e) => ChangeValue(e, column, typeAttr)" />
+                                            <input id="@column.FieldName" name="@column.FieldName" type="text" placeholder="yyyy-mm" class="form-control @(ColumnErrors.ContainsKey(@column.FieldName) ? "input-validation-error" : "")" value="@(((ICGridColumn)column).GetFormatedDateTime(value, typeAttr))" @onchange="(e) => ChangeValue(e, column, typeAttr)" />
                                         }
                                     }
                                     else if (typeAttr == "datetime-local")
                                     {
                                         if (GridComponent._isDateTimeLocalSupported)
                                         {
-                                            <input id="@column.FieldName" name="@column.FieldName" type="@typeAttr" placeholder="yyyy-mm-dd hh:mm" class="form-control" value="@(((ICGridColumn)column).GetFormatedDateTime(value, typeAttr))" @onchange="(e) => ChangeValue(e, column, typeAttr)" />
+                                            <input id="@column.FieldName" name="@column.FieldName" type="@typeAttr" placeholder="yyyy-mm-dd hh:mm" class="form-control @(ColumnErrors.ContainsKey(@column.FieldName) ? "input-validation-error" : "")" value="@(((ICGridColumn)column).GetFormatedDateTime(value, typeAttr))" @onchange="(e) => ChangeValue(e, column, typeAttr)" />
                                         }
                                         else
                                         {
-                                            <input id="@column.FieldName" name="@column.FieldName" type="text" placeholder="yyyy-mm-dd hh:mm" class="form-control" value="@(((ICGridColumn)column).GetFormatedDateTime(value, typeAttr))" @onchange="(e) => ChangeValue(e, column, typeAttr)" />
+                                            <input id="@column.FieldName" name="@column.FieldName" type="text" placeholder="yyyy-mm-dd hh:mm" class="form-control @(ColumnErrors.ContainsKey(@column.FieldName) ? "input-validation-error" : "")" value="@(((ICGridColumn)column).GetFormatedDateTime(value, typeAttr))" @onchange="(e) => ChangeValue(e, column, typeAttr)" />
                                         }
                                     }
                                     else
                                     {
-                                        <input id="@column.FieldName" name="@column.FieldName" type="@typeAttr" class="form-control" value="@(((ICGridColumn)column).GetFormatedDateTime(value, typeAttr))" @onchange="(e) => ChangeValue(e, column, typeAttr)" />
+                                        <input id="@column.FieldName" name="@column.FieldName" type="@typeAttr" class="form-control @(ColumnErrors.ContainsKey(@column.FieldName) ? "input-validation-error" : "")" value="@(((ICGridColumn)column).GetFormatedDateTime(value, typeAttr))" @onchange="(e) => ChangeValue(e, column, typeAttr)" />
                                     }
                                 }
                                 else if (type == typeof(System.TimeSpan))
                                 {
                                     string typeAttr = ((IGridColumn<T>)column).InputType == InputType.None ? "time" : ((IGridColumn<T>)column).InputType.ToTypeAttr();
-                                    <input id="@column.FieldName" name="@column.FieldName" type="@typeAttr" class="form-control" value="@(((ICGridColumn)column).GetFormatedDateTime(value, typeAttr))" @onchange="(e) => ChangeValue(e, column)" />
+                                    <input id="@column.FieldName" name="@column.FieldName" type="@typeAttr" class="form-control @(ColumnErrors.ContainsKey(@column.FieldName) ? "input-validation-error" : "")" value="@(((ICGridColumn)column).GetFormatedDateTime(value, typeAttr))" @onchange="(e) => ChangeValue(e, column)" />
                                 }
                                 else if (type == typeof(bool))
                                 {
                                     if (value != null && (bool)value == true)
                                     {
-                                        <input id="@column.FieldName" name="@column.FieldName" type="checkbox" class="form-control" checked="checked" value="true" @onchange="(e) => ChangeValue(e, column)" />
+                                        <input id="@column.FieldName" name="@column.FieldName" type="checkbox" class="form-control @(ColumnErrors.ContainsKey(@column.FieldName) ? "input-validation-error" : "")" checked="checked" value="true" @onchange="(e) => ChangeValue(e, column)" />
                                     }
                                     else
                                     {
-                                        <input id="@column.FieldName" name="@column.FieldName" type="checkbox" class="form-control" value="false" @onchange="(e) => ChangeValue(e, column)" />
+                                        <input id="@column.FieldName" name="@column.FieldName" type="checkbox" class="form-control @(ColumnErrors.ContainsKey(@column.FieldName) ? "input-validation-error" : "")" value="false" @onchange="(e) => ChangeValue(e, column)" />
                                     }
                                 }
                                 else
                                 {
-                                    <input id="@column.FieldName" name="@column.FieldName" class="form-control" value="@column.GetFormatedValue(value)" @onchange="(e) => ChangeValue(e, column)" />
+                                    <input id="@column.FieldName" name="@column.FieldName" class="form-control @(ColumnErrors.ContainsKey(@column.FieldName) ? "input-validation-error" : "")" value="@column.GetFormatedValue(value)" @onchange="(e) => ChangeValue(e, column)" />
                                 }
+                                <span class="field-validation-error">
+                                    <span>@ColumnErrors.Get(column.FieldName)</span>
+                                </span>
                             }
                         }
                     </div>
@@ -161,13 +169,13 @@
                     @if (!string.IsNullOrWhiteSpace(column.TooltipValue))
                     {
                         <div class="col-md-2">
-                            <label for="@column.FieldName" class="col-form-label" @onmouseover="e => DisplayTooltip(column.Name)" @onmouseout="e => HideTooltip(column.Name)">@column.Title</label>
+                            <label class="col-form-label" @onmouseover="e => DisplayTooltip(column.Name)" @onmouseout="e => HideTooltip(column.Name)">@column.Title</label>
                             <TooltipComponent Value="@column.TooltipValue" Visible="@_isTooltipVisible.Get(column.Name)"></TooltipComponent>
                         </div>
                     }
                     else
                     {
-                        <label for="@column.FieldName" class="col-form-label col-md-2">@column.Title</label>
+                        <label class="col-form-label col-md-2">@column.Title</label>
                     }
                     <div class="col-md-10">
                         <div class="card panel panel-default">

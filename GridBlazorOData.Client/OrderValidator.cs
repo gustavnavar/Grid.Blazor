@@ -1,6 +1,7 @@
 ﻿using FluentValidation;
+using GridBlazorOData.Shared.Models;
 
-namespace GridBlazorServerSide.Models
+namespace GridBlazorOData.Client
 {
     public class OrderValidator : AbstractValidator<Order>
     {

@@ -15,7 +15,6 @@
 
  <ItemGroup>
     <ProjectReference Include="..\GridBlazorOData.Client\GridBlazorOData.Client.csproj" />
-    <ProjectReference Include="..\GridMvc\GridMvc.csproj" />
   </ItemGroup>
 
 </Project>
