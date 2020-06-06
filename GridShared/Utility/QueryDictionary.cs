@@ -11,20 +11,15 @@ namespace GridShared.Utility
     {
         public T Get(string key)
         {
-            T val;
-            TryGetValue(key, out val);
-            return val;
+            return this.Get<string,T>(key);
         }
 
         public void AddParameter(string parameterName, T parameterValue)
-        {
+        {      
             if (string.IsNullOrEmpty(parameterName))
                 throw new ArgumentException("parameterName");
 
-            if (ContainsKey(parameterName))
-                this[parameterName] = parameterValue;
-            else
-                Add(parameterName, parameterValue);
+            this.AddOrSet(parameterName, parameterValue);
         }
 
         public static QueryDictionary<StringValues> Convert(IQueryCollection collection)

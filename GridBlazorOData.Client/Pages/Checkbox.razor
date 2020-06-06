@@ -50,7 +50,7 @@ else
         Action<IGridColumnCollection<Order>> columns = c =>
         {
             c.Add("CheckboxColumn").SetCheckboxColumn(true, o => o.Customer.IsVip).SetWidth(40);
-            c.Add(o => o.OrderID).Titled(SharedResource.Number).SetWidth(100);
+            c.Add(o => o.OrderID).SetPrimaryKey(true).Titled(SharedResource.Number).SetWidth(100);
             c.Add(o => o.OrderDate, "OrderCustomDate").Titled(SharedResource.OrderCustomDate).SetWidth(120).RenderComponentAs<TooltipCell>();
             c.Add(o => o.Customer.CompanyName).Titled(SharedResource.CompanyName).SetWidth(250);
             c.Add(o => o.Customer.ContactName).Titled(SharedResource.ContactName).SetWidth(250);

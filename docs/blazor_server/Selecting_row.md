@@ -91,10 +91,13 @@ This is an example of grid using ```Selectable```:
 You can add one or more columns with checkboxes on each row.
 
 ```c#
-    c.Add("CheckboxColumn").SetCheckboxColumn(true, o => o.Customer.IsVip).SetWidth(40);
+    c.Add("CheckboxColumn").SetCheckboxColumn(true, o => o.Customer.IsVip);
+    c.Add(o => o.OrderID).SetPrimaryKey(true);
 ```
 
 Columns defined in this way must be not connected ones (defined with ```Add()``` method). But they can have a name (defined with ```Add("columnName")``` method).
+
+It's also mandatory identify the columns that are primary keys for the grid. You must do it using the ```SetPrimaryKey(true)``` method for the primary key columns' definitions.
 
 ```SetCheckboxColumn``` method has 3 parameters:
 - headerCheckbox: it's a boolean value to enable the checkbox on the header

@@ -31,7 +31,8 @@ namespace GridBlazor.Pages
         private bool _isColumnFiltered;
         protected string _url;
         protected StringValues _clearInitFilter;
-        private bool _allChecked = false;
+        private bool? _allChecked = null;
+        private bool _showAllChecked = false;
 
         protected string _cssStyles;
         protected string _cssClass;
@@ -110,6 +111,9 @@ namespace GridBlazor.Pages
 
             if (Column.FilterEnabled)
                 FilterWidgetRender = CreateFilterWidgetComponent();
+
+            if(!string.IsNullOrWhiteSpace(Column.Name))
+                GridComponent.HeaderComponents.AddParameter(Column.Name, this);
         }
 
         private RenderFragment CreateFilterWidgetComponent() => builder =>
@@ -235,7 +239,10 @@ namespace GridBlazor.Pages
         {        
             if (Column.HeaderCheckbox)
             {
-                await SetChecked(!_allChecked);
+                if(_allChecked.HasValue)
+                    await SetChecked(!_allChecked.Value);
+                else
+                    await SetChecked(true);
             }
         }
 
@@ -243,30 +250,42 @@ namespace GridBlazor.Pages
         {
             if (e.ColumnName == Column.Name)
             {
-                SetHeaderCheckbox();
+                if (Column.HeaderCheckbox)
+                {
+                    if (GridComponent.ExceptCheckedRows.Get(Column.Name).Values.Where(r => r == true).Count() 
+                        == GridComponent.Grid.ItemsCount
+                        || (_allChecked == true &&
+                            GridComponent.ExceptCheckedRows.Get(Column.Name).Values.Where(r => r == false).Count() == 0))
+                    {
+                        _allChecked = true;
+                        _showAllChecked = true;
+                        GridComponent.ExceptCheckedRows.AddParameter(Column.Name, new QueryDictionary<bool>());
+                    }
+                    else if (GridComponent.ExceptCheckedRows.Get(Column.Name).Values.Where(r => r == false).Count()
+                        == GridComponent.Grid.ItemsCount
+                        || (_allChecked == false &&
+                            GridComponent.ExceptCheckedRows.Get(Column.Name).Values.Where(r => r == true).Count() == 0))
+                    {
+                        _allChecked = false;
+                        _showAllChecked = true;
+                        GridComponent.ExceptCheckedRows.AddParameter(Column.Name, new QueryDictionary<bool>());
+                    }
+                    else
+                    {
+                        _showAllChecked = false;
+                    }
+                }
+                else
+                {
+                    _allChecked = null;
+                    _showAllChecked = false;
+                }
                 StateHasChanged();
                 await Task.CompletedTask;
             }
         }
 
-        private void SetHeaderCheckbox()
-        {
-            if (Column.HeaderCheckbox)
-            {
-                // add an empty list if column is not in the dictionary
-                if (GridComponent.Checkboxes.Get(Column.Name) == null)
-                    GridComponent.Checkboxes.Add(Column.Name, new Dictionary<int, CheckboxComponent<T>>());
-
-                _allChecked = GridComponent.Checkboxes.Get(Column.Name).Values.Where(r => r.IsChecked()).Count()
-                    == GridComponent.Grid.DisplayingItemsCount;
-            }
-            else
-            {
-                _allChecked = false;
-            }
-        }
-
-        public bool IsChecked()
+        public bool? IsChecked()
         {
             return _allChecked;
         }
@@ -275,12 +294,16 @@ namespace GridBlazor.Pages
         {
             if (Column.HeaderCheckbox)
             {
+                // set a value and init ExceptCheckedRows for this column
                 _allChecked = value;
+                _showAllChecked = true;
+                GridComponent.ExceptCheckedRows.AddParameter(Column.Name, new QueryDictionary<bool>());
+
                 CheckboxEventArgs<T> args = new CheckboxEventArgs<T>
                 {
                     ColumnName = Column.Name
                 };
-                if (_allChecked)
+                if (value)
                 {
                     args.Value = CheckboxValue.Checked;
                 }
