@@ -6,6 +6,13 @@ It supports .NET Core 3.1 and Blazor WebAssembly 3.2.0
 
 ## Notes
 
+- GridBlazor 1.6.7 requires a change on the column defintion when selecting rows with checkboxes using the ```SetCheckboxColumn``` method. It's mandatory to identify the columns that are primary keys for the grid. You must do it using the SetPrimaryKey(true) method for the primary key columns' definitions:
+
+```c#
+    c.Add("CheckboxColumn").SetCheckboxColumn(true, o => o.Customer.IsVip);
+    c.Add(o => o.OrderID).SetPrimaryKey(true);
+```
+
 - GridBlazor 1.6.2 doesn't support the ```CheckedRows``` property anymore. ```CheckedRows``` only allowed to retrieve the checked values, but not to change them. Use the ```Checkboxes``` property instead of it.
 
 - GridBlazor 1.5.0 supports OData server back-ends for Blazor WA applications. More info [here](./docs/blazor_odata/Documentation.md)

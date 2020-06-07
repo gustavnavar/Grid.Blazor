@@ -97,7 +97,7 @@ You can add one or more columns with checkboxes on each row.
 
 Columns defined in this way must be not connected ones (defined with ```Add()``` method). But they can have a name (defined with ```Add("columnName")``` method).
 
-It's also mandatory identify the columns that are primary keys for the grid. You must do it using the ```SetPrimaryKey(true)``` method for the primary key columns' definitions.
+It's also mandatory to identify the columns that are primary keys for the grid. You must do it using the ```SetPrimaryKey(true)``` method for the primary key columns' definitions.
 
 ```SetCheckboxColumn``` method has 3 parameters:
 - headerCheckbox: it's a boolean value to enable the checkbox on the header
