@@ -269,7 +269,7 @@ namespace GridBlazorServerSide.ColumnCollections
             OrderColumnsWithNestedCrud  = (c, f, g, h, subgrids) =>
         {
             /* Adding "OrderID" column: */
-            c.Add(o => o.OrderID).SetPrimaryKey(true).Titled(SharedResource.Number).SetWidth(100);
+            c.Add(o => o.OrderID).SetPrimaryKey(true).Titled(SharedResource.Number).SetTooltip("Order ID is ... ").SetWidth(100);
 
             /* Adding "CustomerID" column: */
             c.Add(o => o.CustomerID, true).SetSelectField(true, o => o.Customer.CustomerID + " - " + o.Customer.CompanyName, f);

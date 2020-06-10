@@ -1,13 +1,15 @@
-﻿using GridShared.Utility;
+﻿using GridShared.Columns;
+using GridShared.Utility;
 using Microsoft.AspNetCore.Components;
 using Microsoft.JSInterop;
 using System.Threading.Tasks;
 
 namespace GridBlazor.Pages
 {
-    public partial class TooltipComponent
+    public partial class FormTooltipComponent
     {
         protected int _offset = 0;
+        protected bool _isTooltipVisible = false;
 
         protected ElementReference tooltip;
 
@@ -15,10 +17,7 @@ namespace GridBlazor.Pages
         private IJSRuntime jSRuntime { get; set; }
 
         [Parameter]
-        public bool Visible { get; set; }
-
-        [Parameter]
-        public string Value { get; set; }
+        public IGridColumn Column { get; set; }
 
         protected override async Task OnAfterRenderAsync(bool firstRender)
         {
@@ -32,6 +31,18 @@ namespace GridBlazor.Pages
                     StateHasChanged();
                 }
             }
+        }
+
+        public void DisplayTooltip(string columnName)
+        {
+            _isTooltipVisible = true;
+            StateHasChanged();
+        }
+
+        public void HideTooltip(string columnName)
+        {
+            _isTooltipVisible = false;
+            StateHasChanged();
         }
     }
 }

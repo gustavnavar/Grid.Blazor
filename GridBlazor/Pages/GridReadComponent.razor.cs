@@ -13,7 +13,6 @@ namespace GridBlazor.Pages
     {
         private int _sequence = 0;
         private bool _shouldRender = false;
-        protected QueryDictionary<bool> _isTooltipVisible;
         private QueryDictionary<RenderFragment> _renderFragments;
         private IEnumerable<string> _tabGroups;
 
@@ -26,7 +25,6 @@ namespace GridBlazor.Pages
         protected override async Task OnParametersSetAsync()
         {
             _renderFragments = new QueryDictionary<RenderFragment>();
-            _isTooltipVisible = new QueryDictionary<bool>();
             foreach (var column in GridComponent.Grid.Columns)
             {
                 // Name must have a non empty value
@@ -44,8 +42,6 @@ namespace GridBlazor.Pages
                     _renderFragments.Add(column.Name, GridCellComponent<T>.CreateComponent(_sequence, 
                         column.ReadComponentType, column, Item, null, true));
                 }
-
-                _isTooltipVisible.AddParameter(column.Name, false);
             }
             _tabGroups = GridComponent.Grid.Columns
                 .Where(r => !string.IsNullOrWhiteSpace(r.TabGroup) && _renderFragments.Keys.Any(s => s.Equals(r.Name)))
@@ -70,20 +66,6 @@ namespace GridBlazor.Pages
         protected override void OnAfterRender(bool firstRender)
         {
             _shouldRender = false;
-        }
-
-        public void DisplayTooltip(string columnName)
-        {
-            _isTooltipVisible.AddParameter(columnName, true);
-            _shouldRender = true;
-            StateHasChanged();
-        }
-
-        public void HideTooltip(string columnName)
-        {
-            _isTooltipVisible.AddParameter(columnName, false);
-            _shouldRender = true;
-            StateHasChanged();
         }
 
         protected void BackButtonClicked()
