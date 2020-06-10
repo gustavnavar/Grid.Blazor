@@ -3,7 +3,7 @@
   <PropertyGroup>
     <TargetFramework>netstandard2.1</TargetFramework>
     <RazorLangVersion>3.0</RazorLangVersion>
-    <Version>1.6.7</Version>
+    <Version>1.6.8</Version>
   </PropertyGroup>
 
   <ItemGroup>
