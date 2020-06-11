@@ -7,8 +7,16 @@
     <div class="grid-header-group">
         @if (Column.HeaderCheckbox)
         {
-            <div class="grid-header-checkbox">
-                <input type='checkbox' checked="@_allChecked" @onchange="HeaderCheckboxChanged" @onclick:stopPropagation>
+            <div class="grid-header-checkbox">              
+                @if (_allChecked == null || _showAllChecked == false)
+                {
+                    <input class="grid-header-checkbox-input" type='checkbox' @onchange="HeaderCheckboxChanged" @onclick:stopPropagation>
+                    <span class="null-checkbox"></span>
+                }
+                else
+                {
+                    <input type='checkbox' checked="@_allChecked" @onchange="HeaderCheckboxChanged" @onclick:stopPropagation>
+                }
             </div>
         }
         else if (Column.FilterEnabled)
@@ -62,7 +70,7 @@
     </div>
     @if (!string.IsNullOrWhiteSpace(Column.TooltipValue))
     {
-        <TooltipComponent Value="@Column.TooltipValue" Visible="@_isTooltipVisible"></TooltipComponent>
+        <HeaderTooltipComponent Value="@Column.TooltipValue" Visible="@_isTooltipVisible"></HeaderTooltipComponent>
     }
 </th>
 

@@ -10,8 +10,9 @@ namespace GridMvc
     /// </summary>
     public abstract class GridBase<T>
     {
-        //pre-processors process items before adds to main collection (like filtering)
+        //pre-processors process items before adds to main collection (filtering and searching)
         private readonly List<IGridItemsProcessor<T>> _preprocessors = new List<IGridItemsProcessor<T>>();
+        //processors process items after adds to main collection (sorting and paging)
         private readonly List<IGridItemsProcessor<T>> _processors = new List<IGridItemsProcessor<T>>();
         private IGridItemsProcessor<T> _totalsprocessor;
         protected IEnumerable<T> AfterItems; //items after processors

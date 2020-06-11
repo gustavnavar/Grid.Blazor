@@ -1,4 +1,3 @@
-using GridBlazor.Columns;
 using GridBlazor.Pagination;
 using GridBlazor.Searching;
 using GridShared;
@@ -77,6 +76,10 @@ namespace GridBlazor.Pages
         public QueryDictionary<List<int>> CheckedRows { get; internal set; } = new QueryDictionary<List<int>>();
 
         public QueryDictionary<Dictionary<int, CheckboxComponent<T>>> Checkboxes { get; internal set; }
+
+        public QueryDictionary<QueryDictionary<bool>> ExceptCheckedRows { get; internal set; } = new QueryDictionary<QueryDictionary<bool>>();
+
+        public QueryDictionary<GridHeaderComponent<T>> HeaderComponents { get; internal set; }
 
         internal IGridColumn<T> FirstColumn { get; set; }
 
@@ -189,7 +192,10 @@ namespace GridBlazor.Pages
                 && (FirstColumn.IsSumEnabled || FirstColumn.IsAverageEnabled
                     || FirstColumn.IsMaxEnabled || FirstColumn.IsMinEnabled);
 
+            HeaderComponents = new QueryDictionary<GridHeaderComponent<T>>();
+
             InitCheckboxAndSubGridVars();
+            InitCheckedKeys();
 
             var queryBuilder = new CustomQueryStringBuilder(Grid.Settings.SearchSettings.Query);
             var exceptQueryParameters = new List<string> { GridPager.DefaultPageSizeQueryParameter };
@@ -218,6 +224,12 @@ namespace GridBlazor.Pages
                     InitSubGrid[i] = true;
                 }
             }
+        }
+
+        private void InitCheckedKeys()
+        {
+            // checked keys must be initialized only on component creation or after a filter or search change
+            ExceptCheckedRows = new QueryDictionary<QueryDictionary<bool>>();
         }
 
         protected override bool ShouldRender()
@@ -435,6 +447,8 @@ namespace GridBlazor.Pages
         
         protected virtual async Task OnFilterChanged()
         {
+            InitCheckedKeys();
+
             FilterEventArgs args = new FilterEventArgs();
             args.FilteredColumns = Grid.Settings.FilterSettings.FilteredColumns;
 
@@ -475,6 +489,8 @@ namespace GridBlazor.Pages
 
         protected virtual async Task OnSearchChanged()
         {
+            InitCheckedKeys();
+
             SearchEventArgs args = new SearchEventArgs();
             args.SearchValue = Grid.Settings.SearchSettings.SearchValue;
             

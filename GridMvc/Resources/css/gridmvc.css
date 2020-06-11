@@ -6,8 +6,8 @@ table.grid-table { margin: 0; }
 
     /* Grid headers */
     table.grid-table .grid-header { position: relative; }
-        table.grid-table .grid-header .sorted-asc .grid-sort-arrow:after { content: " \2191"; }
-        table.grid-table .grid-header .sorted-desc .grid-sort-arrow:after { content: " \2193"; }
+        table.grid-table .grid-header .sorted-asc .grid-sort-arrow::after { content: " \2191"; }
+        table.grid-table .grid-header .sorted-desc .grid-sort-arrow::after { content: " \2193"; }
         table.grid-table .grid-header > .grid-header-group > .grid-header-title { width: 100%; margin-right: 15px; white-space: nowrap; }
         table.grid-table .grid-header > .grid-header-group > .grid-header-title > button { font-weight: bold; color: #007bff; background-color: white; border: none }
         table.grid-table .grid-header > .grid-header-group > .grid-header-title > button:hover { color: #0056b3; text-decoration: underline }
@@ -78,8 +78,8 @@ input.grid-search-input {height: 34px; border-color: #ccc; }
 /* Grid extended sorting */
 .grid-extsort-droppable { height: 42px; width: 100%; margin-bottom:10px; border: 1px solid #ccc; border-radius: 4px; }
 .grid-extsort-column { height: 28px; display: inline-block; margin: 6px 0px 6px 20px; padding: 5px; background-color:#efefef; border: 1px solid #ccc; border-radius: 4px; }
-    .grid-extsort-column .sorted-asc .grid-sort-arrow:after { content: " \2191"; }
-    .grid-extsort-column .sorted-desc .grid-sort-arrow:after { content: " \2193"; }
+    .grid-extsort-column .sorted-asc .grid-sort-arrow::after { content: " \2191"; }
+    .grid-extsort-column .sorted-desc .grid-sort-arrow::after { content: " \2193"; }
     .grid-extsort-column a { font-weight:700; }
     .grid-extsort-column > a { margin-left:10px; margin-right:5px; }
     .grid-extsort-column button { border: none; padding: 0; font-size: 14px; font-weight:700; }
@@ -118,3 +118,7 @@ button.grid-button-excel { width:32px; margin-right: 5px; background-repeat: no-
 .grid-button-components { margin-top: 10px; margin-bottom: 10px; margin-left: 0px; margin-right: 5px; }
 .grid-button-components:first-child { margin-left: 15px; }
 button.grid-button-component { margin-right: 5px; }
+
+/* Grid checkbox header */
+.grid-header-checkbox-input { opacity: 0; }
+    .grid-header-checkbox-input ~ .null-checkbox::before { position: absolute; top: 1rem; display: block; width: .9rem; height: .9rem; pointer-events: none; content: ""; border: 0.5px solid #666; border-radius: 3px; background-color: #ccc; }

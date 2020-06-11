@@ -104,7 +104,7 @@ namespace GridBlazor
             _settings = new QueryStringGridSettingsProvider(_query);
             Sanitizer = new Sanitizer();
             if (cultureInfo != null)
-                Strings.Culture = cultureInfo;
+                CultureInfo.CurrentCulture = cultureInfo;
             EmptyGridText = Strings.DefaultGridEmptyText;
             Language = Strings.Lang;
 

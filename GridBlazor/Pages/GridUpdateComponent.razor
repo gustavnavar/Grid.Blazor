@@ -28,8 +28,7 @@
                     @if (!string.IsNullOrWhiteSpace(column.TooltipValue))
                     {
                         <div class="col-md-2">
-                            <label for="@column.FieldName" class="col-form-label" @onmouseover="e => DisplayTooltip(column.Name)" @onmouseout="e => HideTooltip(column.Name)">@column.Title</label>
-                            <TooltipComponent Value="@column.TooltipValue" Visible="@_isTooltipVisible.Get(column.Name)"></TooltipComponent>
+                            <FormTooltipComponent Column="@column"></FormTooltipComponent>
                         </div>
                     }
                     else
@@ -169,8 +168,7 @@
                     @if (!string.IsNullOrWhiteSpace(column.TooltipValue))
                     {
                         <div class="col-md-2">
-                            <label class="col-form-label" @onmouseover="e => DisplayTooltip(column.Name)" @onmouseout="e => HideTooltip(column.Name)">@column.Title</label>
-                            <TooltipComponent Value="@column.TooltipValue" Visible="@_isTooltipVisible.Get(column.Name)"></TooltipComponent>
+                            <FormTooltipComponent Column="@column"></FormTooltipComponent>
                         </div>
                     }
                     else

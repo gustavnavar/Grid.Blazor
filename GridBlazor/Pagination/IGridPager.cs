@@ -27,7 +27,7 @@
         ///// <summary>
         /////     Total pages count
         ///// </summary>
-        //int PageCount { get; }
+        int PageCount { get; }
 
         ///// <summary>
         /////     Starting displaying page
