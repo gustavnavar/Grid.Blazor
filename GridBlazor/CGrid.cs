@@ -814,6 +814,7 @@ namespace GridBlazor
                     Items = response.Items;
                     EnablePaging = response.Pager.EnablePaging;
                     ((GridPager)_pager).CurrentPage = response.Pager.CurrentPage;
+                    AddQueryParameter(((GridPager)Pager).ParameterName, response.Pager.CurrentPage.ToString());
                     ((GridPager)_pager).PageSize = response.Pager.PageSize;
                     ((GridPager)_pager).ItemsCount = response.Pager.ItemsCount;
 
