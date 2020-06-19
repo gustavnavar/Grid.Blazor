@@ -10,50 +10,50 @@
         <tr class="grid-totals-row">
             @if (Grid.SubGridKeys != null && Grid.SubGridKeys.Length > 0)
             {
-                <td class="grid-cell" data-name=""></td>
+                <td class="grid-cell" data-name="" style="width:36.5px;"></td>
             }
             @if (Grid.ReadEnabled)
             {
-                <td class="grid-cell" data-name=""></td>
+                <td class="grid-cell" data-name="" style="width:35px;"></td>
             }
             @if (Grid.UpdateEnabled)
             {
-                <td class="grid-cell" data-name=""></td>
+                <td class="grid-cell" data-name="" style="width:35px;"></td>
             }
             @if (Grid.DeleteEnabled)
             {
-                <td class="grid-cell" data-name=""></td>
+                <td class="grid-cell" data-name="" style="width:35px;"></td>
             }
             @if (firstColumn != null
                 && (firstColumn.IsSumEnabled || firstColumn.IsAverageEnabled
                 || firstColumn.IsMaxEnabled || firstColumn.IsMinEnabled))
             {
-                <td class="grid-cell"><b>@Strings.Sum</b></td>
+                <td class="grid-cell" style="width:90px;"><b>@Strings.Sum</b></td>
             }
             @for (int i = 0; i < Grid.Columns.Count(); i++)
             {
                 var column = (ITotalsColumn)Grid.Columns.ElementAt(i);
+                string cssStyles;
+                if (((IGridColumn)column).Hidden)
+                    cssStyles = ((GridStyledColumn)column).GetCssStylesString() + " " + TdStyle;
+                else
+                    cssStyles = ((GridStyledColumn)column).GetCssStylesString();
+                if (!string.IsNullOrWhiteSpace(((IGridColumn)column).Width))
+                    cssStyles = string.Concat(cssStyles, " width:", ((IGridColumn)column).Width, ";").Trim();
                 if (i == 0 && !column.IsSumEnabled && !column.IsAverageEnabled
                    && !column.IsMaxEnabled && !column.IsMinEnabled)
                 {
-                    <td class="grid-cell"><b>@Strings.Sum</b></td>
+                    <td class="grid-cell" style="@cssStyles"><b>@Strings.Sum</b></td>
                 }
                 else
                 {
                     if (column.IsSumEnabled)
                     {
-                        <td class="grid-cell"><b>@column.SumString</b></td>
+                        <td class="grid-cell" style="@cssStyles"><b>@column.SumString</b></td>
                     }
                     else
                     {
-                        if (((IGridColumn)column).Hidden)
-                        {
-                            <td class="grid-cell" style="display:none;"></td>
-                        }
-                        else
-                        {
-                            <td class="grid-cell"></td>
-                        }
+                        <td class="grid-cell" style="@cssStyles"></td>
                     }
                 }
 
@@ -65,50 +65,50 @@
         <tr class="grid-totals-row">
             @if (Grid.SubGridKeys != null && Grid.SubGridKeys.Length > 0)
             {
-                <td class="grid-cell" data-name=""></td>
+                <td class="grid-cell" data-name="" style="width:36.5px;"></td>
             }
             @if (Grid.ReadEnabled)
             {
-                <td class="grid-cell" data-name=""></td>
+                <td class="grid-cell" data-name="" style="width:35px;"></td>
             }
             @if (Grid.UpdateEnabled)
             {
-                <td class="grid-cell" data-name=""></td>
+                <td class="grid-cell" data-name="" style="width:35px;"></td>
             }
             @if (Grid.DeleteEnabled)
             {
-                <td class="grid-cell" data-name=""></td>
+                <td class="grid-cell" data-name="" style="width:35px;"></td>
             }
             @if (firstColumn != null
                 && (firstColumn.IsSumEnabled || firstColumn.IsAverageEnabled
                 || firstColumn.IsMaxEnabled || firstColumn.IsMinEnabled))
             {
-                <td class="grid-cell"><b>@Strings.Average</b></td>
+                <td class="grid-cell" style="width:90px;"><b>@Strings.Average</b></td>
             }
             @for (int i = 0; i < Grid.Columns.Count(); i++)
             {
                 var column = (ITotalsColumn)Grid.Columns.ElementAt(i);
+                string cssStyles;
+                if (((IGridColumn)column).Hidden)
+                    cssStyles = ((GridStyledColumn)column).GetCssStylesString() + " " + TdStyle;
+                else
+                    cssStyles = ((GridStyledColumn)column).GetCssStylesString();
+                if (!string.IsNullOrWhiteSpace(((IGridColumn)column).Width))
+                    cssStyles = string.Concat(cssStyles, " width:", ((IGridColumn)column).Width, ";").Trim();
                 if (i == 0 && !column.IsSumEnabled && !column.IsAverageEnabled
                    && !column.IsMaxEnabled && !column.IsMinEnabled)
                 {
-                    <td class="grid-cell"><b>@Strings.Average</b></td>
+                    <td class="grid-cell" style="@cssStyles"><b>@Strings.Average</b></td>
                 }
                 else
                 {
                     if (column.IsAverageEnabled)
                     {
-                        <td class="grid-cell"><b>@column.AverageString</b></td>
+                        <td class="grid-cell" style="@cssStyles"><b>@column.AverageString</b></td>
                     }
                     else
                     {
-                        if (((IGridColumn)column).Hidden)
-                        {
-                            <td class="grid-cell" style="display:none;"></td>
-                        }
-                        else
-                        {
-                            <td class="grid-cell"></td>
-                        }
+                        <td class="grid-cell" style="@cssStyles"></td>
                     }
                 }
             }
@@ -119,50 +119,50 @@
         <tr class="grid-totals-row">
             @if (Grid.SubGridKeys != null && Grid.SubGridKeys.Length > 0)
             {
-                <td class="grid-cell" data-name=""></td>
+                <td class="grid-cell" data-name="" style="width:36.5px;"></td>
             }
             @if (Grid.ReadEnabled)
             {
-                <td class="grid-cell" data-name=""></td>
+                <td class="grid-cell" data-name="" style="width:35px;"></td>
             }
             @if (Grid.UpdateEnabled)
             {
-                <td class="grid-cell" data-name=""></td>
+                <td class="grid-cell" data-name="" style="width:35px;"></td>
             }
             @if (Grid.DeleteEnabled)
             {
-                <td class="grid-cell" data-name=""></td>
+                <td class="grid-cell" data-name="" style="width:35px;"></td>
             }
             @if (firstColumn != null
                 && (firstColumn.IsSumEnabled || firstColumn.IsAverageEnabled
                 || firstColumn.IsMaxEnabled || firstColumn.IsMinEnabled))
             {
-                <td class="grid-cell"><b>@Strings.Max</b></td>
+                <td class="grid-cell" style="width:90px;"><b>@Strings.Max</b></td>
             }
             @for (int i = 0; i < Grid.Columns.Count(); i++)
             {
                 var column = (ITotalsColumn)Grid.Columns.ElementAt(i);
+                string cssStyles;
+                if (((IGridColumn)column).Hidden)
+                    cssStyles = ((GridStyledColumn)column).GetCssStylesString() + " " + TdStyle;
+                else
+                    cssStyles = ((GridStyledColumn)column).GetCssStylesString();
+                if (!string.IsNullOrWhiteSpace(((IGridColumn)column).Width))
+                    cssStyles = string.Concat(cssStyles, " width:", ((IGridColumn)column).Width, ";").Trim();
                 if (i == 0 && !column.IsSumEnabled && !column.IsAverageEnabled
                    && !column.IsMaxEnabled && !column.IsMinEnabled)
                 {
-                    <td class="grid-cell"><b>@Strings.Max</b></td>
+                    <td class="grid-cell" style="@cssStyles"><b>@Strings.Max</b></td>
                 }
                 else
                 {
                     if (column.IsMaxEnabled)
                     {
-                        <td class="grid-cell"><b>@column.MaxString</b></td>
+                        <td class="grid-cell" style="@cssStyles"><b>@column.MaxString</b></td>
                     }
                     else
                     {
-                        if (((IGridColumn)column).Hidden)
-                        {
-                            <td class="grid-cell" style="display:none;"></td>
-                        }
-                        else
-                        {
-                            <td class="grid-cell"></td>
-                        }
+                        <td class="grid-cell" style="@cssStyles"></td>
                     }
                 }
             }
@@ -173,50 +173,50 @@
         <tr class="grid-totals-row">
             @if (Grid.SubGridKeys != null && Grid.SubGridKeys.Length > 0)
             {
-                <td class="grid-cell" data-name=""></td>
+                <td class="grid-cell" data-name="" style="width:36.5px;"></td>
             }
             @if (Grid.ReadEnabled)
             {
-                <td class="grid-cell" data-name=""></td>
+                <td class="grid-cell" data-name="" style="width:35px;"></td>
             }
             @if (Grid.UpdateEnabled)
             {
-                <td class="grid-cell" data-name=""></td>
+                <td class="grid-cell" data-name="" style="width:35px;"></td>
             }
             @if (Grid.DeleteEnabled)
             {
-                <td class="grid-cell" data-name=""></td>
+                <td class="grid-cell" data-name="" style="width:35px;"></td>
             }
             @if (firstColumn != null
                 && (firstColumn.IsSumEnabled || firstColumn.IsAverageEnabled
                 || firstColumn.IsMaxEnabled || firstColumn.IsMinEnabled))
             {
-                <td class="grid-cell"><b>@Strings.Min</b></td>
+                <td class="grid-cell" style="width:90px;"><b>@Strings.Min</b></td>
             }
             @for (int i = 0; i < Grid.Columns.Count(); i++)
             {
                 var column = (ITotalsColumn)Grid.Columns.ElementAt(i);
+                string cssStyles;
+                if (((IGridColumn)column).Hidden)
+                    cssStyles = ((GridStyledColumn)column).GetCssStylesString() + " " + TdStyle;
+                else
+                    cssStyles = ((GridStyledColumn)column).GetCssStylesString();
+                if (!string.IsNullOrWhiteSpace(((IGridColumn)column).Width))
+                    cssStyles = string.Concat(cssStyles, " width:", ((IGridColumn)column).Width, ";").Trim();
                 if (i == 0 && !column.IsSumEnabled && !column.IsAverageEnabled
                    && !column.IsMaxEnabled && !column.IsMinEnabled)
                 {
-                    <td class="grid-cell"><b>@Strings.Min</b></td>
+                    <td class="grid-cell" style="@cssStyles"><b>@Strings.Min</b></td>
                 }
                 else
                 {
                     if (column.IsMinEnabled)
                     {
-                        <td class="grid-cell"><b>@column.MinString</b></td>
+                        <td class="grid-cell" style="@cssStyles"><b>@column.MinString</b></td>
                     }
                     else
                     {
-                        if (((IGridColumn)column).Hidden)
-                        {
-                            <td class="grid-cell" style="display:none;"></td>
-                        }
-                        else
-                        {
-                            <td class="grid-cell"></td>
-                        }
+                        <td class="grid-cell" style="@cssStyles"></td>
                     }
                 }
             }

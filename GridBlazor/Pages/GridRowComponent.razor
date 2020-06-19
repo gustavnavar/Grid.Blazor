@@ -8,7 +8,7 @@
     <tr class="grid-row@(GridComponent.SelectedRow == GridPosition || GridComponent.SelectedRows.Contains(GridPosition) || (Grid.ComponentOptions.InitSelection && GridPosition == 0 && GridComponent.SelectedRow == -1 && GridComponent.SelectedRows.Count == 0) ? " grid-row-selected" : "") @Grid.GetRowCssClasses(Item)" @onclick="(args) => GridComponent.RowClicked(GridPosition, Item, args)" @onclick:stopPropagation>
         @if (HasSubGrid)
         {
-            <td class="@GridComponent.GridCellCssClass @GridComponent.GridSubGridCssClass" data-is-rendered="false" data-is-visible="false" data-name="" @onclick="SubGridClicked" @onclick:stopPropagation>
+            <td class="@GridComponent.GridCellCssClass @GridComponent.GridSubGridCssClass" data-is-rendered="false" data-is-visible="false" data-name="" style="width:36.5px;" @onclick="SubGridClicked" @onclick:stopPropagation>
                 @if (GridComponent.IsSubGridVisible[GridPosition])
                 {
                     <span class="subgrid-caret-down">&nbsp;</span>
@@ -19,21 +19,21 @@
                 }
             </td>
         }
-        @if (RequiredTotalsColumn)
-        {
-            <td class="@GridComponent.GridCellCssClass" data-name=""></td>
-        }
         @if (Grid.ReadEnabled)
         {
-            <td class="@GridComponent.GridButtonCellCssClass" data-name=""><button class='grid-button grid-button-view btn btn-sm btn-outline-secondary' title="@Strings.ReadItem" @onclick="@(e => GridComponent.ReadHandler(Item))" type="button" @onclick:stopPropagation></button></td>
+            <td class="@GridComponent.GridButtonCellCssClass" data-name="" style="width:35px;"><button class='grid-button grid-button-view btn btn-sm btn-outline-secondary' title="@Strings.ReadItem" @onclick="@(e => GridComponent.ReadHandler(Item))" type="button" @onclick:stopPropagation></button></td>
         }
         @if (Grid.UpdateEnabled)
         {
-            <td class="@GridComponent.GridButtonCellCssClass" data-name=""><button class='grid-button grid-button-edit btn btn-sm btn-outline-secondary' title="@Strings.UpdateItem" @onclick="@(e => GridComponent.UpdateHandler(Item))" type="button" @onclick:stopPropagation></button></td>
+            <td class="@GridComponent.GridButtonCellCssClass" data-name="" style="width:35px;"><button class='grid-button grid-button-edit btn btn-sm btn-outline-secondary' title="@Strings.UpdateItem" @onclick="@(e => GridComponent.UpdateHandler(Item))" type="button" @onclick:stopPropagation></button></td>
         }
         @if (Grid.DeleteEnabled)
         {
-            <td class="@GridComponent.GridButtonCellCssClass" data-name=""><button class='grid-button grid-button-delete btn btn-sm btn-outline-secondary' title="@Strings.DeleteItem" @onclick="@(e => GridComponent.DeleteHandler(Item))" type="button" @onclick:stopPropagation></button></td>
+            <td class="@GridComponent.GridButtonCellCssClass" data-name="" style="width:35px;"><button class='grid-button grid-button-delete btn btn-sm btn-outline-secondary' title="@Strings.DeleteItem" @onclick="@(e => GridComponent.DeleteHandler(Item))" type="button" @onclick:stopPropagation></button></td>
+        }
+        @if (RequiredTotalsColumn)
+        {
+            <td class="@GridComponent.GridCellCssClass" data-name="" style="width:90px;"></td>
         }
         @foreach (IGridColumn column in Grid.Columns)
         {
@@ -48,7 +48,7 @@ else
     <tr class="grid-row @Grid.GetRowCssClasses(Item)">
         @if (HasSubGrid)
         {
-            <td class="@GridComponent.GridCellCssClass @GridComponent.GridSubGridCssClass" data-is-rendered="false" data-is-visible="false" data-name="" @onclick="SubGridClicked" @onclick:stopPropagation>
+            <td class="@GridComponent.GridCellCssClass @GridComponent.GridSubGridCssClass" data-is-rendered="false" data-is-visible="false" data-name="" style="width:36.5px;" @onclick="SubGridClicked" @onclick:stopPropagation>
                 @if (GridComponent.IsSubGridVisible[GridPosition])
                 {
                     <span class="subgrid-caret-down">&nbsp;</span>
@@ -59,21 +59,21 @@ else
                 }
             </td>
         }
-        @if (RequiredTotalsColumn)
-        {
-            <td class="@GridComponent.GridCellCssClass" data-name=""></td>
-        }
         @if (Grid.ReadEnabled)
         {
-            <td class="@GridComponent.GridButtonCellCssClass" data-name=""><button class='grid-button grid-button-view btn btn-sm btn-outline-secondary' title="@Strings.ReadItem" @onclick="@(e => GridComponent.ReadHandler(Item))" type="button" @onclick:stopPropagation></button></td>
+            <td class="@GridComponent.GridButtonCellCssClass" data-name="" style="width:35px;"><button class='grid-button grid-button-view btn btn-sm btn-outline-secondary' title="@Strings.ReadItem" @onclick="@(e => GridComponent.ReadHandler(Item))" type="button" @onclick:stopPropagation></button></td>
         }
         @if (Grid.UpdateEnabled)
         {
-            <td class="@GridComponent.GridButtonCellCssClass" data-name=""><button class='grid-button grid-button-edit btn btn-sm btn-outline-secondary' title="@Strings.UpdateItem" @onclick="@(e => GridComponent.UpdateHandler(Item))" type="button" @onclick:stopPropagation></button></td>
+            <td class="@GridComponent.GridButtonCellCssClass" data-name="" style="width:35px;"><button class='grid-button grid-button-edit btn btn-sm btn-outline-secondary' title="@Strings.UpdateItem" @onclick="@(e => GridComponent.UpdateHandler(Item))" type="button" @onclick:stopPropagation></button></td>
         }
         @if (Grid.DeleteEnabled)
         {
-            <td class="@GridComponent.GridButtonCellCssClass" data-name=""><button class='grid-button grid-button-delete btn btn-sm btn-outline-secondary' title="@Strings.DeleteItem" @onclick="@(e => GridComponent.DeleteHandler(Item))" type="button" @onclick:stopPropagation></button></td>
+            <td class="@GridComponent.GridButtonCellCssClass" data-name="" style="width:35px;"><button class='grid-button grid-button-delete btn btn-sm btn-outline-secondary' title="@Strings.DeleteItem" @onclick="@(e => GridComponent.DeleteHandler(Item))" type="button" @onclick:stopPropagation></button></td>
+        }
+        @if (RequiredTotalsColumn)
+        {
+            <td class="@GridComponent.GridCellCssClass" data-name="" style="width:90px;"></td>
         }
         @foreach (IGridColumn column in Grid.Columns)
         {
