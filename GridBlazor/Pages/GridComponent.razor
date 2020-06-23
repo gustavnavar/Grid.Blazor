@@ -19,23 +19,23 @@
                 <tr class="@GridEmptyTextCssClass">
                     @if (_hasSubGrid)
                     {
-                        <td class="@GridCellCssClass" data-name=""></td>
-                    }
-                    @if (_requiredTotalsColumn)
-                    {
-                        <td class="@GridCellCssClass" data-name=""></td>
+                        <td class="@GridCellCssClass" data-name="" style="width:36.5px;"></td>
                     }
                     @if (Grid.ReadEnabled)
                     {
-                        <td class="@GridButtonCellCssClass" data-name=""></td>
+                        <td class="@GridButtonCellCssClass" data-name="" style="width:35px;"></td>
                     }
                     @if (Grid.UpdateEnabled)
                     {
-                        <td class="@GridButtonCellCssClass" data-name=""></td>
+                        <td class="@GridButtonCellCssClass" data-name="" style="width:35px;"></td>
                     }
                     @if (Grid.DeleteEnabled)
                     {
-                        <td class="@GridButtonCellCssClass" data-name=""></td>
+                        <td class="@GridButtonCellCssClass" data-name="" style="width:35px;"></td>
+                    }
+                    @if (_requiredTotalsColumn)
+                    {
+                        <td class="@GridCellCssClass" data-name="" style="width:90px;"></td>
                     }
                     <td colspan="@Grid.Columns.Count()">
                         @Grid.EmptyGridText
@@ -140,23 +140,23 @@
                                 <tr>
                                     @if (_hasSubGrid)
                                     {
-                                        <th class="@GridHeaderCssClass" style="width:1%;"></th>
-                                    }
-                                    @if (_requiredTotalsColumn)
-                                    {
-                                        <th class="@GridHeaderCssClass" style="width:3%;"></th>
+                                        <th class="@GridHeaderCssClass" style="width:36.5px;"></th>
                                     }
                                     @if (Grid.ReadEnabled)
                                     {
-                                        <th class="@GridHeaderCssClass" style="width:1%;"></th>
+                                        <th class="@GridHeaderCssClass" style="width:35px;"></th>
                                     }
                                     @if (Grid.UpdateEnabled)
                                     {
-                                        <th class="@GridHeaderCssClass" style="width:1%;"></th>
+                                        <th class="@GridHeaderCssClass" style="width:35px;"></th>
                                     }
                                     @if (Grid.DeleteEnabled)
                                     {
-                                        <th class="@GridHeaderCssClass" style="width:1%;"></th>
+                                        <th class="@GridHeaderCssClass" style="width:35px;"></th>
+                                    }
+                                    @if (_requiredTotalsColumn)
+                                    {
+                                        <th class="@GridHeaderCssClass" style="width:90px;"></th>
                                     }
                                     @foreach (IGridColumn column in Grid.Columns)
                                     {
@@ -172,23 +172,23 @@
                                     <tr class="@GridEmptyTextCssClass">
                                         @if (_hasSubGrid)
                                         {
-                                            <td class="@GridCellCssClass" data-name=""></td>
-                                        }
-                                        @if (_requiredTotalsColumn)
-                                        {
-                                            <td class="@GridCellCssClass" data-name=""></td>
+                                            <td class="@GridCellCssClass" data-name="" style="width:36.5px;"></td>
                                         }
                                         @if (Grid.ReadEnabled)
                                         {
-                                            <td class="@GridButtonCellCssClass" data-name=""></td>
+                                            <td class="@GridButtonCellCssClass" data-name="" style="width:35px;"></td>
                                         }
                                         @if (Grid.UpdateEnabled)
                                         {
-                                            <td class="@GridButtonCellCssClass" data-name=""></td>
+                                            <td class="@GridButtonCellCssClass" data-name="" style="width:35px;"></td>
                                         }
                                         @if (Grid.DeleteEnabled)
                                         {
-                                            <td class="@GridButtonCellCssClass" data-name=""></td>
+                                            <td class="@GridButtonCellCssClass" data-name="" style="width:35px;"></td>
+                                        }
+                                        @if (_requiredTotalsColumn)
+                                        {
+                                            <td class="@GridCellCssClass" data-name="" style="width:90px;"></td>
                                         }
                                         <td colspan="@Grid.Columns.Count()">
                                             @Grid.EmptyGridText

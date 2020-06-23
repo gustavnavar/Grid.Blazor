@@ -1,5 +1,4 @@
-﻿using GridBlazor.Columns;
-using GridShared.Columns;
+﻿using GridShared.Columns;
 using Microsoft.AspNetCore.Components;
 using System;
 
@@ -43,6 +42,10 @@ namespace GridBlazor.Pages
             else
                 _cssStyles = ((GridStyledColumn)Column).GetCssStylesString();
             _cssClass = ((GridStyledColumn)Column).GetCssClassesString() + " " + TdClass;
+
+            if (!string.IsNullOrWhiteSpace(Column.Width))
+                _cssStyles = string.Concat(_cssStyles, " width:", Column.Width, ";").Trim();
+
             string columnCssClasses = Column.GetCellCssClasses(Item);
             if(!string.IsNullOrWhiteSpace(columnCssClasses))
                 _cssClass += " " + columnCssClasses;
