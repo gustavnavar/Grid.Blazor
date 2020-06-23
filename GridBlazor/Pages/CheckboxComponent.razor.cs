@@ -54,20 +54,17 @@ namespace GridBlazor.Pages
 
             // init value when header checkbox is enabled and is not null
             var header = GridComponent.HeaderComponents.Get(_columnName);
+            var exceptCheckedRows = GridComponent.ExceptCheckedRows.Get(_columnName);
+            var keys = GridComponent.Grid.GetPrimaryKeyValues(Item);
+            string stringKeys = string.Join('_', keys);
+
             if (header != null && header.IsChecked().HasValue)
+                _value = header.IsChecked().Value;
+
+            if (exceptCheckedRows != null && !string.IsNullOrWhiteSpace(stringKeys))
             {
-                var exceptCheckedRows = GridComponent.ExceptCheckedRows.Get(_columnName);
-                var keys = GridComponent.Grid.GetPrimaryKeyValues(Item);
-                string stringKeys = string.Join('_', keys);
-                if (exceptCheckedRows != null && !string.IsNullOrWhiteSpace(stringKeys))
-                {
-                    if(exceptCheckedRows.ContainsKey(stringKeys))
-                        _value = exceptCheckedRows.Get(stringKeys);
-                    else
-                        _value = header.IsChecked().Value;
-                }
-                else
-                    _value = header.IsChecked().Value;
+                if(exceptCheckedRows.ContainsKey(stringKeys))
+                    _value = exceptCheckedRows.Get(stringKeys);
             }
         }
 
