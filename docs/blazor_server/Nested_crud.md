@@ -9,7 +9,7 @@ And these subgrids can also be configured with CRUD support, so you can add, edi
 
 ### Column definition
 
-Fist of all the column definition of the main grid must include the ```SubGrid``` method for those columns that have a 1:N relationship. 
+First off, all the column definition of the main grid must include the ```SubGrid``` method for those columns that have a 1:N relationship. 
 
 ```c#
     c.Add(o => o.OrderDetails).Titled("Order Details").SubGrid(subgrid, ("OrderID", "OrderID"));
