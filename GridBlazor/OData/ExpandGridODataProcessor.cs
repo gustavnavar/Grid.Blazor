@@ -36,16 +36,21 @@ namespace GridBlazor.OData
         private string GetExpand()
         {
             List<string> columnNames = new List<string>();
-            if(_grid.ODataExpandList != null)
-                columnNames.AddRange(_grid.ODataExpandList);
-            foreach (IGridColumn column in _grid.Columns)
-            {
-                var gridColumn = column as IExpandColumn<T>;
-                if (gridColumn == null) continue;
-                if (gridColumn.Expand == null) continue;
 
-                columnNames.Add(gridColumn.Expand.GetName());
+            if (!_grid.ODataOverrideExpandList)
+            {
+                foreach (IGridColumn column in _grid.Columns)
+                {
+                    var gridColumn = column as IExpandColumn<T>;
+                    if (gridColumn == null) continue;
+                    if (gridColumn.Expand == null) continue;
+
+                    columnNames.Add(gridColumn.Expand.GetName());
+                }
             }
+
+            if (_grid.ODataExpandList != null)
+                columnNames.AddRange(_grid.ODataExpandList);
 
             if (columnNames.Count == 0)
                 return "";

@@ -194,5 +194,10 @@ namespace GridBlazor
         ///     Fixed column values for the OData url expand parameter
         /// </summary>
         IEnumerable<string> ODataExpandList { get; set; }
+
+        /// <summary>
+        ///     Override OData url expand parameter with list
+        /// </summary>
+        bool ODataOverrideExpandList { get; set; }
     }
 }

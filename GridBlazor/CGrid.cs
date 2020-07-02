@@ -500,6 +500,11 @@ namespace GridBlazor
         public IEnumerable<string> ODataExpandList { get; set; }
 
         /// <summary>
+        ///     Override OData url expand parameter with list
+        /// </summary>
+        public bool ODataOverrideExpandList { get; set; } = false;
+
+        /// <summary>
         ///     Applies data annotations settings
         /// </summary>
         private void ApplyGridSettings()
