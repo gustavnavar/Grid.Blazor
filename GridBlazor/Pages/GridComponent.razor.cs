@@ -447,7 +447,8 @@ namespace GridBlazor.Pages
         
         protected virtual async Task OnFilterChanged()
         {
-            InitCheckedKeys();
+            // Filter changes must not init checked keys
+            //InitCheckedKeys();
 
             FilterEventArgs args = new FilterEventArgs();
             args.FilteredColumns = Grid.Settings.FilterSettings.FilteredColumns;
@@ -489,7 +490,8 @@ namespace GridBlazor.Pages
 
         protected virtual async Task OnSearchChanged()
         {
-            InitCheckedKeys();
+            // Filter changes must not init checked keys
+            //InitCheckedKeys();
 
             SearchEventArgs args = new SearchEventArgs();
             args.SearchValue = Grid.Settings.SearchSettings.SearchValue;
