@@ -20,6 +20,7 @@ namespace GridBlazor.Pages
 
         public string Error { get; set; } = "";
         public QueryDictionary<string> ColumnErrors { get; set; } = new QueryDictionary<string>();
+        public QueryDictionary<VariableReference> Children { get; private set; } = new QueryDictionary<VariableReference>();
 
         [CascadingParameter(Name = "GridComponent")]
         protected GridComponent<T> GridComponent { get; set; }
@@ -38,8 +39,10 @@ namespace GridBlazor.Pages
 
                 if (column.CreateComponentType != null)
                 {
+                    VariableReference reference = new VariableReference();
+                    Children.Add(column.Name, reference);
                     _renderFragments.Add(column.Name, GridCellComponent<T>.CreateComponent(_sequence,
-                        column.CreateComponentType, column, Item, null, true));
+                        column.CreateComponentType, column, Item, null, true, reference));
                 }
             }
             _tabGroups = GridComponent.Grid.Columns

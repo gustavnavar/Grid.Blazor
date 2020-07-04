@@ -39,8 +39,6 @@ namespace GridBlazor.Pages
         internal bool _isMonthSupported = false;
 
         protected ElementReference gridmvc;
-        public ElementReference PageSizeInput;
-        public GridSearchComponent<T> SearchComponent;
 
         public event Func<object, SortEventArgs, Task> SortChanged;
         public event Func<object, ExtSortEventArgs, Task> ExtSortChanged;
@@ -75,11 +73,23 @@ namespace GridBlazor.Pages
         [Obsolete("This property is obsolete. Use the new Checkboxes parameter.", true)]
         public QueryDictionary<List<int>> CheckedRows { get; internal set; } = new QueryDictionary<List<int>>();
 
-        public QueryDictionary<Dictionary<int, CheckboxComponent<T>>> Checkboxes { get; internal set; }
+        public QueryDictionary<Dictionary<int, CheckboxComponent<T>>> Checkboxes { get; private set; }
 
-        public QueryDictionary<QueryDictionary<bool>> ExceptCheckedRows { get; internal set; } = new QueryDictionary<QueryDictionary<bool>>();
+        public QueryDictionary<QueryDictionary<bool>> ExceptCheckedRows { get; private set; } = new QueryDictionary<QueryDictionary<bool>>();
 
-        public QueryDictionary<GridHeaderComponent<T>> HeaderComponents { get; internal set; }
+        public QueryDictionary<GridHeaderComponent<T>> HeaderComponents { get; private set; }
+
+        public ElementReference PageSizeInput { get; private set; }
+
+        public GridSearchComponent<T> SearchComponent { get; private set; }
+
+        public GridCreateComponent<T> CreateComponent { get; private set; }
+
+        public GridReadComponent<T> ReadComponent { get; private set; }
+
+        public GridUpdateComponent<T> UpdateComponent { get; private set; }
+
+        public GridDeleteComponent<T> DeleteComponent { get; private set; }
 
         internal IGridColumn<T> FirstColumn { get; set; }
 
