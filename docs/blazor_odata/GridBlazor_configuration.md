@@ -57,5 +57,7 @@ SetModifierKey | Configure the modifier key for keyboard navigation | GridClient
 EmptyText | Setup the text displayed for all empty items in the grid | GridClient<Order>(...).EmptyText(' - ');
 WithGridItemsCount | Allows the grid to show items count | GridClient<Order>(...).WithGridItemsCount();
 SetRowCssClasses | Setup specific row css classes | GridClient<Order>(...).SetRowCssClasses(item => item.Customer.IsVip ? "success" : string.Empty);
+UseODataExpand | Add subclasses to the list of items to be expanded with OData | GridClient<Order>(...).UseODataExpand(new List<string> { "Employee", "Shipper" });
+OverrideODataExpand | Override the list of subclasses to expand with OData | GridClient<Order>(...).OverrideODataExpand(new List<string> { "Employee", "Shipper" });
 
 [<- Quick start](Quick_start.md) | [Keyboard navigation ->](Keyboard_navigation.md)
