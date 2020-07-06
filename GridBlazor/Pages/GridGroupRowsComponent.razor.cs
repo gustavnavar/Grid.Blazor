@@ -1,4 +1,5 @@
 ﻿using GridShared.Columns;
+using GridShared.Utility;
 using Microsoft.AspNetCore.Components;
 using System;
 using System.Collections.Generic;
@@ -8,13 +9,14 @@ namespace GridBlazor.Pages
 {
     public partial class GridGroupRowsComponent<T>
     {
-        protected IDictionary<string, GridGroupRowsComponent<T>> _children;
         protected string _columnName;
         protected IGridColumn _column;
         protected IEnumerable<object> _columnValues;
 
+        public QueryDictionary<GridGroupRowsComponent<T>> Children { get; private set; }
+
         [CascadingParameter(Name = "GridComponent")]
-        protected GridComponent<T> GridComponent { get; set; }
+        protected GridComponent<T> GridComponent { get; private set; }
 
         [Parameter]
         public ICGrid Grid { get; set; }
@@ -45,12 +47,12 @@ namespace GridBlazor.Pages
                 _column = Grid.Columns.SingleOrDefault(r => r.Name == _columnName);
                 _columnValues = Grid.GetValuesToDisplay(_columnName, ItemsToDisplay).Distinct();
 
-                _children = new Dictionary<string, GridGroupRowsComponent<T>>();
+                Children = new QueryDictionary<GridGroupRowsComponent<T>>();
                 foreach (object columnValue in _columnValues)
                 {
                     var child = new GridGroupRowsComponent<T>();
                     child.IsVisible = true;
-                    _children.Add(columnValue != null ? columnValue.ToString(): "", child);
+                    Children.Add(columnValue != null ? columnValue.ToString(): "", child);
                 }
             }
         }
@@ -58,7 +60,7 @@ namespace GridBlazor.Pages
         protected void HandleGrouping(string groupId)
         {
             GridGroupRowsComponent<T> child;
-            if (_children.TryGetValue(groupId, out child))
+            if (Children.TryGetValue(groupId, out child))
             {
                 child.IsVisible = !child.IsVisible;
             }

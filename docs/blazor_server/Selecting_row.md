@@ -6,7 +6,7 @@
 
 There are 2 ways to configure selecting rows:
 - using the ```Selectable``` method of the ```GridClient``` object
-- using the ```SetCheckboxColumn``` method on the column definition
+- using the ```SetCheckboxColumn``` or ```SetSingleCheckboxColumn``` methods on the column definition
 
 ## Selectable method
 
@@ -136,5 +136,22 @@ These events are provided by the ```GridComponent``` object to allow running tas
 This is an example of grid using ```SetCheckboxColumn```:
 
 ![](../images/Checkbox_column.png)
+
+## SetSingleCheckboxColumn method
+
+This case is very similar to the previous one, with the exception of only one checkbox selected at a time. 
+When you select a checkbox, any other checkboxes are automatically unchecked.
+
+You can add one or more columns with checkboxes on each row.
+
+```c#
+    c.Add("CheckboxColumn").SetSingleCheckboxColumn();
+    c.Add(o => o.OrderID).SetPrimaryKey(true);
+```
+Columns defined in this way must be not connected ones (defined with ```Add()``` method). But they can have a name (defined with ```Add("columnName")``` method).
+
+It's also mandatory to identify the columns that are primary keys for the grid. You must do it using the ```SetPrimaryKey(true)``` method for the primary key columns' definitions.
+
+```SetSingleCheckboxColumn``` method has no parameters.
 
 [<- Grouping](Grouping.md) | [Searching ->](Searching.md)

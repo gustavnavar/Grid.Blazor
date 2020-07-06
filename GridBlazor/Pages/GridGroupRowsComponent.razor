@@ -25,7 +25,7 @@
             }
             GridGroupRowsComponent<T> child;
             string columnValueStr = columnValue == null ? "" : columnValue.ToString();
-            if (_children.TryGetValue(columnValueStr, out child))
+            if (Children.TryGetValue(columnValueStr, out child))
             {
                 int capturedI = RowId + itemsCount;
                 <tr class="grid-group-row">

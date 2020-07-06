@@ -65,6 +65,8 @@ namespace GridMvc.Columns
 
         public bool HeaderCheckbox { get; protected set; } = false;
 
+        public bool SingleCheckbox { get; protected set; } = false;
+
         public (bool IsSelectKey, Func<T, string> Expression, string Url, Func<IEnumerable<SelectItem>> SelectItemExpr,
             Func<Task<IEnumerable<SelectItem>>> SelectItemExprAsync) IsSelectField { get; protected set; } 
             = (false, null, null, null, null);
@@ -133,6 +135,12 @@ namespace GridMvc.Columns
         {
             TabGroup = tabGroup;
             return this;
+        }
+
+        public IGridColumn<T> SetSingleCheckboxColumn()
+        {
+            SingleCheckbox = true;
+            return SetCheckboxColumn(false, null);
         }
 
         public IGridColumn<T> SetCheckboxColumn(bool headerCheckbox, Func<T, bool> expression)

@@ -6,7 +6,7 @@
 
 There are 2 ways to configure selecting rows:
 - using the ```Selectable``` method of the ```GridODataClient``` object
-- using the ```SetCheckboxColumn``` method on the column definition
+- using the ```SetCheckboxColumn``` or ```SetSingleCheckboxColumn``` methods on the column definition
 
 ## Selectable method
 
@@ -104,7 +104,7 @@ It's also mandatory to identify the columns that are primary keys for the grid. 
 - expression: it's a ```Func<T, bool>``` to define the initial value of the checkbox for each row
 - readonlyExpr (optional): it's a ```Func<T, bool>``` to configure the checkbox for each row as read only
 
-**Important:** ```CheckedRows``` pr0perty is not available since release 1.6.2. ```CheckedRows``` only allowed to retrieve the checked values, but not to change them. Use the ```Checkboxes``` property instead of it.
+**Important:** ```CheckedRows``` property is not available since release 1.6.2. ```CheckedRows``` only allowed to retrieve the checked values, but not to change them. Use the ```Checkboxes``` property instead of it.
 
 If you want to retrieve or change the checked values for each row, you can use the ```Checkboxes``` property of the ```GridComponent``` object. 
 It is a dictionary that contains references to all checkbox components for each column.
@@ -136,5 +136,22 @@ These events are provided by the ```GridComponent``` object to allow running tas
 This is an example of grid using ```SetCheckboxColumn```:
 
 ![](../images/Checkbox_column.png)
+
+## SetSingleCheckboxColumn method
+
+This case is very similar to the previous one, with the exception of only one checkbox selected at a time. 
+When you select a checkbox, any other checkboxes are automatically unchecked.
+
+You can add one or more columns with checkboxes on each row.
+
+```c#
+    c.Add("CheckboxColumn").SetSingleCheckboxColumn();
+    c.Add(o => o.OrderID).SetPrimaryKey(true);
+```
+Columns defined in this way must be not connected ones (defined with ```Add()``` method). But they can have a name (defined with ```Add("columnName")``` method).
+
+It's also mandatory to identify the columns that are primary keys for the grid. You must do it using the ```SetPrimaryKey(true)``` method for the primary key columns' definitions.
+
+```SetSingleCheckboxColumn``` method has no parameters.
 
 [<- Grouping](Grouping.md) | [Searching ->](Searching.md)

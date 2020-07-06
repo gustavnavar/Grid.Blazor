@@ -619,6 +619,14 @@ namespace GridBlazor
         /// </summary>
         public IGridClient<T> UseODataExpand(IEnumerable<string> oDataExpandList)
         {
+            _source.ODataOverrideExpandList = false;
+            _source.ODataExpandList = oDataExpandList;
+            return this;
+        }
+
+        public IGridClient<T> OverrideODataExpand(IEnumerable<string> oDataExpandList)
+        {
+            _source.ODataOverrideExpandList = true;
             _source.ODataExpandList = oDataExpandList;
             return this;
         }

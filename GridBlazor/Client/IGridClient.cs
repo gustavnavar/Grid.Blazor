@@ -439,6 +439,11 @@ namespace GridBlazor
         IGridClient<T> UseODataExpand(IEnumerable<string> oDataExpandList);
 
         /// <summary>
+        ///     Use OData extend for columns
+        /// </summary>
+        IGridClient<T> OverrideODataExpand(IEnumerable<string> oDataExpandList);
+
+        /// <summary>
         ///    Get grid object
         /// </summary>
         CGrid<T> Grid { get; }

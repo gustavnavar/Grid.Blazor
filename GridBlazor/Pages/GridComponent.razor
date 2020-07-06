@@ -247,7 +247,7 @@
         if (Grid.CreateComponent == null)
         {
             <CascadingValue Value=@this Name="GridComponent">
-                <GridCreateComponent T="@T" Item="@_item"></GridCreateComponent>
+                <GridCreateComponent @ref="CreateComponent" T="@T" Item="@_item"></GridCreateComponent>
             </CascadingValue>
         }
         else
@@ -260,7 +260,7 @@
         if (Grid.ReadComponent == null)
         {
             <CascadingValue Value=@this Name="GridComponent">
-                <GridReadComponent T="@T" Item="@_item"></GridReadComponent>
+                <GridReadComponent @ref="ReadComponent" T="@T" Item="@_item"></GridReadComponent>
             </CascadingValue>
         }
         else
@@ -273,7 +273,7 @@
         if (Grid.UpdateComponent == null)
         {
             <CascadingValue Value=@this Name="GridComponent">
-                <GridUpdateComponent T="@T" Item="@_item"></GridUpdateComponent>
+                <GridUpdateComponent @ref="UpdateComponent" T="@T" Item="@_item"></GridUpdateComponent>
             </CascadingValue>
         }
         else
@@ -286,7 +286,7 @@
         if (Grid.DeleteComponent == null)
         {
             <CascadingValue Value=@this Name="GridComponent">
-                <GridDeleteComponent T="@T" Item="@_item"></GridDeleteComponent>
+                <GridDeleteComponent @ref="DeleteComponent" T="@T" Item="@_item"></GridDeleteComponent>
             </CascadingValue>
         }
         else

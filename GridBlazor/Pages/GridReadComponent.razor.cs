@@ -16,6 +16,8 @@ namespace GridBlazor.Pages
         private QueryDictionary<RenderFragment> _renderFragments;
         private IEnumerable<string> _tabGroups;
 
+        public QueryDictionary<VariableReference> Children { get; private set; } = new QueryDictionary<VariableReference>();
+
         [CascadingParameter(Name = "GridComponent")]
         protected GridComponent<T> GridComponent { get; set; }
 
@@ -35,12 +37,16 @@ namespace GridBlazor.Pages
                 {
                     var values = ((ICGridColumn)column).GetSubGridKeyValues(Item).Values.ToArray();
                     var grid = await ((ICGridColumn)column).SubGrids(values, false, true, false, false) as ICGrid;
-                    _renderFragments.Add(column.Name, CreateSubGridComponent(grid));
+                    VariableReference reference = new VariableReference();
+                    Children.Add(column.Name, reference);
+                    _renderFragments.Add(column.Name, CreateSubGridComponent(grid, reference));
                 }
                 else if (column.ReadComponentType != null)
                 {
+                    VariableReference reference = new VariableReference();
+                    Children.Add(column.Name, reference);
                     _renderFragments.Add(column.Name, GridCellComponent<T>.CreateComponent(_sequence, 
-                        column.ReadComponentType, column, Item, null, true));
+                        column.ReadComponentType, column, Item, null, true, reference));
                 }
             }
             _tabGroups = GridComponent.Grid.Columns
@@ -50,7 +56,7 @@ namespace GridBlazor.Pages
             _shouldRender = true;
         }
         
-        private RenderFragment CreateSubGridComponent(ICGrid grid) => builder =>
+        private RenderFragment CreateSubGridComponent(ICGrid grid, VariableReference reference) => builder =>
         {
             Type gridComponentType = typeof(GridComponent<>).MakeGenericType(grid.Type);
             builder.OpenComponent(++_sequence, gridComponentType);

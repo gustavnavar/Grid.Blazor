@@ -21,6 +21,7 @@ namespace GridBlazor.Pages
 
         public string Error { get; set; } = "";
         public QueryDictionary<string> ColumnErrors { get; set; } = new QueryDictionary<string>();
+        public QueryDictionary<VariableReference> Children { get; private set; } = new QueryDictionary<VariableReference>();
 
         [CascadingParameter(Name = "GridComponent")]
         protected GridComponent<T> GridComponent { get; set; }
@@ -42,12 +43,16 @@ namespace GridBlazor.Pages
                     var values = ((ICGridColumn)column).GetSubGridKeyValues(Item);
                     var grid = await ((ICGridColumn)column).SubGrids(values.Values.ToArray(), true, true, true, true) as ICGrid;
                     grid.FixedValues = values;
-                    _renderFragments.Add(column.Name, CreateSubGridComponent(grid));
+                    VariableReference reference = new VariableReference();
+                    Children.Add(column.Name, reference);
+                    _renderFragments.Add(column.Name, CreateSubGridComponent(grid, reference));
                 }
                 else if (column.UpdateComponentType != null)
                 {
+                    VariableReference reference = new VariableReference();
+                    Children.Add(column.Name, reference);
                     _renderFragments.Add(column.Name, GridCellComponent<T>.CreateComponent(_sequence,
-                        column.UpdateComponentType, column, Item, null, true));
+                        column.UpdateComponentType, column, Item, null, true, reference));
                 }
             }
             _tabGroups = GridComponent.Grid.Columns
@@ -57,11 +62,12 @@ namespace GridBlazor.Pages
             _shouldRender = true;
         }
 
-        private RenderFragment CreateSubGridComponent(ICGrid grid) => builder =>
+        private RenderFragment CreateSubGridComponent(ICGrid grid, VariableReference reference) => builder =>
         {
             Type gridComponentType = typeof(GridComponent<>).MakeGenericType(grid.Type);
             builder.OpenComponent(++_sequence, gridComponentType);
             builder.AddAttribute(++_sequence, "Grid", grid);
+            builder.AddComponentReferenceCapture(++_sequence, r => reference.Variable = r);
             builder.CloseComponent();
         };
 

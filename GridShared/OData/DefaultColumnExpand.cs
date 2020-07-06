@@ -26,11 +26,11 @@ namespace GridShared.OData
                 }
 
                 string result = "";
-                for (int i = names.Count - 1; i >= 1; i--)
+                for (int i = 1 ; i <= names.Count - 1; i++)
                 {
-                    result += names[i];
-                    if (i != 1)
-                        result += "/";
+                    result = names[i] + result;
+                    if (i != names.Count - 1)
+                        result = "($expand=" + result + ")";
                 }
 
                 return result;
