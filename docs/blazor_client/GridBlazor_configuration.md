@@ -55,6 +55,7 @@ SetModifierKey | Configure the modifier key for keyboard navigation | GridClient
 EmptyText | Setup the text displayed for all empty items in the grid | GridClient<Order>(...).EmptyText(' - ');
 WithGridItemsCount | Allows the grid to show items count | GridClient<Order>(...).WithGridItemsCount();
 SetRowCssClasses | Setup specific row css classes | GridClient<Order>(...).SetRowCssClasses(item => item.Customer.IsVip ? "success" : string.Empty);
+AddToOnAfterRender | Add a Func<GridComponent<T>, bool, Task> to be executed at the end of the ```OnAfterRenderAsync``` method of the grid component | GridClient<Order>(...).AddToOnAfterRender(OnAfterDepartmentRender);
 
 ## GridServer parameters
 

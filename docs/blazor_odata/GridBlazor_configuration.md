@@ -59,5 +59,6 @@ WithGridItemsCount | Allows the grid to show items count | GridClient<Order>(...
 SetRowCssClasses | Setup specific row css classes | GridClient<Order>(...).SetRowCssClasses(item => item.Customer.IsVip ? "success" : string.Empty);
 UseODataExpand | Add subclasses to the list of items to be expanded with OData | GridClient<Order>(...).UseODataExpand(new List<string> { "Employee", "Shipper" });
 OverrideODataExpand | Override the list of subclasses to expand with OData | GridClient<Order>(...).OverrideODataExpand(new List<string> { "Employee", "Shipper" });
+AddToOnAfterRender | Add a Func<GridComponent<T>, bool, Task> to be executed at the end of the ```OnAfterRenderAsync``` method of the grid component | GridClient<Order>(...).AddToOnAfterRender(OnAfterDepartmentRender);
 
 [<- Quick start](Quick_start.md) | [Keyboard navigation ->](Keyboard_navigation.md)

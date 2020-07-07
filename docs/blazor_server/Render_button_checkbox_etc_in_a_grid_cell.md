@@ -32,6 +32,7 @@ This interface includes a mandatory parameter called **Item** of the same type o
 Parameter | Type | Description
 --------- | ---- | -----------
 Item | row element (mandatory) | the row item that will be used by the component
+GridComponent  | GridComponent<T> (CascadingParameter optional) | Parent Grid component
 Grid | CGrid<T> (optional) | Grid can be used to get the grid state (see [Passing grid state as parameter](Passing_grid_state_as_parameter.md))
 Actions | IList<Action<object>> (optional) | the parent component can pass a list of Actions to be used by the component (see [Passing grid state as parameter](Passing_grid_state_as_parameter.md))
 Functions | IList<Func<object,Task>> (optional) | the parent component can pass a list of Functions to be used by the child component
@@ -40,6 +41,25 @@ Object | object (optional) | the parent component can pass an object to be used 
 **Actions**, **Functions** and **Object** must be used when calling the **RenderComponentAs** method, but **Grid** can be used without this requirement.
  
 The component can include any html elements as well as any event handling features.
+
+## RenderCrudComponentAs
+
+**RenderCrudComponentAs** is a variant of **RenderComponentAs** to be used on grids with CRUD forms. The main difference is:
+- Columns defined with **RenderCrudComponentAs** are visible on CRUD forms and on grids
+- Columns defined with **RenderComponentAs** are visible on grids, but not visible on CRUD forms. 
+
+You must configure columns created with **RenderCrudComponentAs** as Hidden if you want to show them just on CRUD forms:
+
+``` razor
+    c.Add(true).RenderCrudComponentAs<Carousel>();
+```
+
+And finally all columns included in the grid but not in the CRUD forms should be configured as "CRUD hidden" using the ```SetCrudHidden(true)``` method.
+
+**Notes**: 
+- You can have more granularity in the "CRUD hidden" configuration. You can use the ```SetCrudHidden(bool create, bool read, bool update, bool delete)``` method to configure the columns that will be hidden on each type of form.
+- You can have more granularity in the components configuration.  You can use the ```RenderCrudComponentAs<TCreateComponent, TReadComponent, TUpdateComponent, TDeleteComponent>``` method to configure the components that will be shown on each type of form. Id you don't want to show any component for a specific type of form you must use ```NullComponent```
+
 
 ## Button
 
@@ -52,6 +72,9 @@ In this sample we name the component **ButtonCell.razor**:
     <button class='btn btn-sm btn-primary' @onclick="MyClickHandler">Edit</button>
 
     @code {
+        [CascadingParameter(Name = "GridComponent")]
+        public GridComponent<Order> GridComponent { get; set; }
+        
         [Parameter]
         public Order Item { get; protected set; }
 
