@@ -65,7 +65,7 @@ function CustomersFilterWidget() {
     * cb - callback function that must invoked when user want to filter this column. Widget must pass filter type and filter value.
     * data - widget data passed from the server
     */
-    this.onRender = function (container, lang, typeName, columnName, values, cb, data) {
+    this.onRender = function (container, lang, typeName, columnName, isNullable, values, cb) {
         //store parameters:
         this.cb = cb;
         this.container = container;
