@@ -99,7 +99,7 @@ namespace GridBlazorServerSide.Services
                     repository.Delete(order);
                     repository.Save();
                 }
-                catch (Exception e)
+                catch (Exception)
                 {
                     throw new GridException("Error deleting the order detail");
                 }
