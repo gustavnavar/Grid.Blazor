@@ -42,7 +42,7 @@ namespace GridBlazor.Pages
                     VariableReference reference = new VariableReference();
                     Children.Add(column.Name, reference);
                     _renderFragments.Add(column.Name, GridCellComponent<T>.CreateComponent(_sequence,
-                        column.CreateComponentType, column, Item, null, true, reference));
+                        GridComponent, column.CreateComponentType, column, Item, null, true, reference));
                 }
             }
             _tabGroups = GridComponent.Grid.Columns

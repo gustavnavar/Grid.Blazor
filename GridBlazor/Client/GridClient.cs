@@ -631,6 +631,12 @@ namespace GridBlazor
             return this;
         }
 
+        public IGridClient<T> AddToOnAfterRender(Func<GridComponent<T>, bool, Task> OnAfterRender)
+        {
+            _source.OnAfterRender = OnAfterRender;
+            return this;
+        }
+
         /// <summary>
         ///     Get grid object
         /// </summary>

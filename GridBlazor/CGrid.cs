@@ -2,6 +2,7 @@ using GridBlazor.Columns;
 using GridBlazor.DataAnnotations;
 using GridBlazor.Filtering;
 using GridBlazor.OData;
+using GridBlazor.Pages;
 using GridBlazor.Pagination;
 using GridBlazor.Resources;
 using GridBlazor.Searching;
@@ -503,6 +504,11 @@ namespace GridBlazor
         ///     Override OData url expand parameter with list
         /// </summary>
         public bool ODataOverrideExpandList { get; set; } = false;
+
+        /// <summary>
+        ///    Add code to the end of OnAfterRenderAsync method of the component
+        /// </summary>
+        public Func<GridComponent<T>, bool, Task> OnAfterRender { get; set; }
 
         /// <summary>
         ///     Applies data annotations settings

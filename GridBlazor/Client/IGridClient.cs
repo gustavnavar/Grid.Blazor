@@ -1,4 +1,5 @@
-﻿using GridShared;
+﻿using GridBlazor.Pages;
+using GridShared;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -442,6 +443,11 @@ namespace GridBlazor
         ///     Use OData extend for columns
         /// </summary>
         IGridClient<T> OverrideODataExpand(IEnumerable<string> oDataExpandList);
+
+        /// <summary>
+        ///    Add code to the end of OnAfterRenderAsync method of the component
+        /// </summary>
+        IGridClient<T> AddToOnAfterRender(Func<GridComponent<T>, bool, Task> OnAfterRender);
 
         /// <summary>
         ///    Get grid object
