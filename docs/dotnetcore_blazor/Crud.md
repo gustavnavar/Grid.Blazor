@@ -17,15 +17,22 @@ These are the supported features:
 
 ## Auto-generated forms
 
-You can enable CRUD using the **Crud** method of the **GridClient** object:
-```c#
-    Action<IGridColumnCollection<Order>> columns = c => ColumnCollections.OrderColumnsWithCrud(c);
-        
-    var client = new GridClient<Order>(q => orderService.GetOrdersGridRows(columns, q), query, false, "ordersGrid", columns, locale)
+You can enable CRUD using the **Crud(bool enabled, ICrudDataService<T> crudDataService)** method of the **GridClient** object:
+```c#   
+    var client = new GridClient<Order>(HttpClient, url, query, false, "ordersGrid", c => 
+            ColumnCollections.OrderColumnsWithCrud(c, NavigationManager.BaseUri), locale)
         .Crud(true, orderService)
 ```
 
-**Note**: All 4 crud forms can be enabled at the same time with the ```Crud(bool enabled, ...)``` method, but you can enable one by one using  the ```Crud(bool create, bool read, bool update, bool delete, ...)``` method.
+You can also enable CRUD depending on a condition for each row using the **Crud(bool createEnabled, Func<T, bool> enabled, ICrudDataService<T> crudDataService)** method:
+```c#   
+    var client = new GridClient<Order>(HttpClient, url, query, false, "ordersGrid", c => 
+            ColumnCollections.OrderColumnsWithCrud(c, NavigationManager.BaseUri), locale)
+        .Crud(true, r => r.Customer.IsVip, orderService)
+```
+The create form can only be enabled using a ```bool``` parameter. But the read, update and delete forms can be enabled using a function that returns a ```bool```.
+
+**Note**: All 4 crud forms can be enabled at the same time with the former methods, but you can enable one by one using ```Crud(bool create, bool read, bool update, bool delete, ICrudDataService<T> crudDataService)``` or ```Crud(bool createEnabled, Func<T, bool> readEnabled, Func<T, bool> updateEnabled, Func<T, bool> deleteEnabled, ICrudDataService<T> crudDataService)``` methods.
 
 The parameter ```crudDataService``` of the ```Crud``` method must be a class that implements the **ICrudDataService<T>** interface. This interface has 4 methods:
 - ```Task<T> Get(params object[] keys);```

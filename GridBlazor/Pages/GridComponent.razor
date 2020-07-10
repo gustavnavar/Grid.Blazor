@@ -21,15 +21,15 @@
                     {
                         <td class="@GridCellCssClass" data-name="" style="width:36.5px;"></td>
                     }
-                    @if (Grid.ReadEnabled)
+                    @if (Grid.ReadEnabled || ((CGrid<T>)Grid).FuncReadEnabled != null)
                     {
                         <td class="@GridButtonCellCssClass" data-name="" style="width:35px;"></td>
                     }
-                    @if (Grid.UpdateEnabled)
+                    @if (Grid.UpdateEnabled || ((CGrid<T>)Grid).FuncUpdateEnabled != null)
                     {
                         <td class="@GridButtonCellCssClass" data-name="" style="width:35px;"></td>
                     }
-                    @if (Grid.DeleteEnabled)
+                    @if (Grid.DeleteEnabled || ((CGrid<T>)Grid).FuncDeleteEnabled != null)
                     {
                         <td class="@GridButtonCellCssClass" data-name="" style="width:35px;"></td>
                     }
@@ -65,7 +65,7 @@
             }
             if (_hasTotals)
             {
-                <GridTotalsComponent Grid="@Grid"></GridTotalsComponent>
+                <GridTotalsComponent T="@T" Grid="@Grid"></GridTotalsComponent>
             }
         }
         else
@@ -142,15 +142,15 @@
                                     {
                                         <th class="@GridHeaderCssClass" style="width:36.5px;"></th>
                                     }
-                                    @if (Grid.ReadEnabled)
+                                    @if (Grid.ReadEnabled || ((CGrid<T>)Grid).FuncReadEnabled != null)
                                     {
                                         <th class="@GridHeaderCssClass" style="width:35px;"></th>
                                     }
-                                    @if (Grid.UpdateEnabled)
+                                    @if (Grid.UpdateEnabled || ((CGrid<T>)Grid).FuncUpdateEnabled != null)
                                     {
                                         <th class="@GridHeaderCssClass" style="width:35px;"></th>
                                     }
-                                    @if (Grid.DeleteEnabled)
+                                    @if (Grid.DeleteEnabled || ((CGrid<T>)Grid).FuncDeleteEnabled != null)
                                     {
                                         <th class="@GridHeaderCssClass" style="width:35px;"></th>
                                     }
@@ -174,15 +174,15 @@
                                         {
                                             <td class="@GridCellCssClass" data-name="" style="width:36.5px;"></td>
                                         }
-                                        @if (Grid.ReadEnabled)
+                                        @if (Grid.ReadEnabled || ((CGrid<T>)Grid).FuncReadEnabled != null)
                                         {
                                             <td class="@GridButtonCellCssClass" data-name="" style="width:35px;"></td>
                                         }
-                                        @if (Grid.UpdateEnabled)
+                                        @if (Grid.UpdateEnabled || ((CGrid<T>)Grid).FuncUpdateEnabled != null)
                                         {
                                             <td class="@GridButtonCellCssClass" data-name="" style="width:35px;"></td>
                                         }
-                                        @if (Grid.DeleteEnabled)
+                                        @if (Grid.DeleteEnabled || ((CGrid<T>)Grid).FuncDeleteEnabled != null)
                                         {
                                             <td class="@GridButtonCellCssClass" data-name="" style="width:35px;"></td>
                                         }
@@ -218,7 +218,7 @@
                                 }
                                 @if (_hasTotals)
                                 {
-                                    <GridTotalsComponent Grid="@Grid"></GridTotalsComponent>
+                                    <GridTotalsComponent T="@T" Grid="@Grid"></GridTotalsComponent>
                                 }
                             </tbody>
                         </table>
@@ -255,7 +255,7 @@
             @CrudRender
         }
     }
-    else if (Grid.Mode == GridMode.Read && Grid.ReadEnabled)
+    else if (Grid.Mode == GridMode.Read && (Grid.ReadEnabled || (((CGrid<T>)Grid).FuncReadEnabled != null && ((CGrid<T>)Grid).FuncReadEnabled(_item))))
     {
         if (Grid.ReadComponent == null)
         {
@@ -268,7 +268,7 @@
             @CrudRender
         }
     }
-    else if (Grid.Mode == GridMode.Update && Grid.UpdateEnabled)
+    else if (Grid.Mode == GridMode.Update && (Grid.UpdateEnabled || (((CGrid<T>)Grid).FuncUpdateEnabled != null && ((CGrid<T>)Grid).FuncUpdateEnabled(_item))))
     {
         if (Grid.UpdateComponent == null)
         {
@@ -281,7 +281,7 @@
             @CrudRender
         }
     }
-    else if (Grid.Mode == GridMode.Delete && Grid.DeleteEnabled)
+    else if (Grid.Mode == GridMode.Delete && (Grid.DeleteEnabled || (((CGrid<T>)Grid).FuncDeleteEnabled != null && ((CGrid<T>)Grid).FuncDeleteEnabled(_item))))
     {
         if (Grid.DeleteComponent == null)
         {

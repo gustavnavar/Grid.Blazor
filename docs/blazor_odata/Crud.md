@@ -17,14 +17,22 @@ These are the supported features:
 
 ## Auto-generated forms
 
-You can enable CRUD using the **ODataCrud** method of the **GridODataClient** object:
+You can enable CRUD using the **ODataCrud(bool enabled)** method of the **GridODataClient** object:
 ```c#   
     var client = new GridODataClient<Order>(HttpClient, url, query, false, "ordersGrid", 
         c => columns(c, NavigationManager.BaseUri), 10, locale, new List<string> { "Employee", "Shipper" })
             .ODataCrud(true)
 ```
 
-**Note**: All 4 crud forms can be enabled at the same time with the ```ODataCrud(bool enabled)``` method, but you can enable one by one using  the ```ODataCrud(bool create, bool read, bool update, bool delete)``` method.
+You can also enable CRUD depending on a condition for each row using the **ODataCrud(bool createEnabled, Func<T, bool> enabled)** method:
+```c#   
+    var client = new GridODataClient<Order>(HttpClient, url, query, false, "ordersGrid", 
+        c => columns(c, NavigationManager.BaseUri), 10, locale, new List<string> { "Employee", "Shipper" })
+            .ODataCrud(true, r => r.Customer.IsVip)
+```
+The create form can only be enabled using a ```bool``` parameter. But the read, update and delete forms can be enabled using a function that returns a ```bool```.
+
+**Note**: All 4 crud forms can be enabled at the same time with the former methods, but you can enable one by one using ```ODataCrud(bool create, bool read, bool update, bool delete)``` or ```ODataCrud(bool createEnabled, Func<T, bool> readEnabled, Func<T, bool> updateEnabled, Func<T, bool> deleteEnabled)``` methods.
 
 You must create actions in the ```ODataController``` for all 4 CRUD operations. This is an example of controller including those 4 actions:
 

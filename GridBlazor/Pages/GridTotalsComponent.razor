@@ -1,6 +1,8 @@
 ﻿@using GridBlazor.Resources
 @using GridShared.Columns
 
+@typeparam T
+
 @if (Grid != null && !Grid.ComponentOptions.RenderRowsOnly)
 {
     <tr class="grid-row"><td class="grid-cell" style="height:25px;border:none;background-color:white"></td></tr>
@@ -12,21 +14,21 @@
             {
                 <td class="grid-cell" data-name="" style="width:36.5px;"></td>
             }
-            @if (Grid.ReadEnabled)
+            @if (Grid.ReadEnabled || ((CGrid<T>)Grid).FuncReadEnabled != null)
             {
                 <td class="grid-cell" data-name="" style="width:35px;"></td>
             }
-            @if (Grid.UpdateEnabled)
+            @if (Grid.UpdateEnabled || ((CGrid<T>)Grid).FuncUpdateEnabled != null)
             {
                 <td class="grid-cell" data-name="" style="width:35px;"></td>
             }
-            @if (Grid.DeleteEnabled)
+            @if (Grid.DeleteEnabled || ((CGrid<T>)Grid).FuncDeleteEnabled != null)
             {
                 <td class="grid-cell" data-name="" style="width:35px;"></td>
             }
             @if (firstColumn != null
-                && (firstColumn.IsSumEnabled || firstColumn.IsAverageEnabled
-                || firstColumn.IsMaxEnabled || firstColumn.IsMinEnabled))
+               && (firstColumn.IsSumEnabled || firstColumn.IsAverageEnabled
+               || firstColumn.IsMaxEnabled || firstColumn.IsMinEnabled))
             {
                 <td class="grid-cell" style="width:90px;"><b>@Strings.Sum</b></td>
             }
@@ -67,21 +69,21 @@
             {
                 <td class="grid-cell" data-name="" style="width:36.5px;"></td>
             }
-            @if (Grid.ReadEnabled)
+            @if (Grid.ReadEnabled || ((CGrid<T>)Grid).FuncReadEnabled != null)
             {
                 <td class="grid-cell" data-name="" style="width:35px;"></td>
             }
-            @if (Grid.UpdateEnabled)
+            @if (Grid.UpdateEnabled || ((CGrid<T>)Grid).FuncUpdateEnabled != null)
             {
                 <td class="grid-cell" data-name="" style="width:35px;"></td>
             }
-            @if (Grid.DeleteEnabled)
+            @if (Grid.DeleteEnabled || ((CGrid<T>)Grid).FuncDeleteEnabled != null)
             {
                 <td class="grid-cell" data-name="" style="width:35px;"></td>
             }
             @if (firstColumn != null
-                && (firstColumn.IsSumEnabled || firstColumn.IsAverageEnabled
-                || firstColumn.IsMaxEnabled || firstColumn.IsMinEnabled))
+               && (firstColumn.IsSumEnabled || firstColumn.IsAverageEnabled
+               || firstColumn.IsMaxEnabled || firstColumn.IsMinEnabled))
             {
                 <td class="grid-cell" style="width:90px;"><b>@Strings.Average</b></td>
             }
@@ -121,21 +123,21 @@
             {
                 <td class="grid-cell" data-name="" style="width:36.5px;"></td>
             }
-            @if (Grid.ReadEnabled)
+            @if (Grid.ReadEnabled || ((CGrid<T>)Grid).FuncReadEnabled != null)
             {
                 <td class="grid-cell" data-name="" style="width:35px;"></td>
             }
-            @if (Grid.UpdateEnabled)
+            @if (Grid.UpdateEnabled || ((CGrid<T>)Grid).FuncUpdateEnabled != null)
             {
                 <td class="grid-cell" data-name="" style="width:35px;"></td>
             }
-            @if (Grid.DeleteEnabled)
+            @if (Grid.DeleteEnabled || ((CGrid<T>)Grid).FuncDeleteEnabled != null)
             {
                 <td class="grid-cell" data-name="" style="width:35px;"></td>
             }
             @if (firstColumn != null
-                && (firstColumn.IsSumEnabled || firstColumn.IsAverageEnabled
-                || firstColumn.IsMaxEnabled || firstColumn.IsMinEnabled))
+               && (firstColumn.IsSumEnabled || firstColumn.IsAverageEnabled
+               || firstColumn.IsMaxEnabled || firstColumn.IsMinEnabled))
             {
                 <td class="grid-cell" style="width:90px;"><b>@Strings.Max</b></td>
             }
@@ -175,21 +177,21 @@
             {
                 <td class="grid-cell" data-name="" style="width:36.5px;"></td>
             }
-            @if (Grid.ReadEnabled)
+            @if (Grid.ReadEnabled || ((CGrid<T>)Grid).FuncReadEnabled != null)
             {
                 <td class="grid-cell" data-name="" style="width:35px;"></td>
             }
-            @if (Grid.UpdateEnabled)
+            @if (Grid.UpdateEnabled || ((CGrid<T>)Grid).FuncUpdateEnabled != null)
             {
                 <td class="grid-cell" data-name="" style="width:35px;"></td>
             }
-            @if (Grid.DeleteEnabled)
+            @if (Grid.DeleteEnabled || ((CGrid<T>)Grid).FuncDeleteEnabled != null)
             {
                 <td class="grid-cell" data-name="" style="width:35px;"></td>
             }
             @if (firstColumn != null
-                && (firstColumn.IsSumEnabled || firstColumn.IsAverageEnabled
-                || firstColumn.IsMaxEnabled || firstColumn.IsMinEnabled))
+               && (firstColumn.IsSumEnabled || firstColumn.IsAverageEnabled
+               || firstColumn.IsMaxEnabled || firstColumn.IsMinEnabled))
             {
                 <td class="grid-cell" style="width:90px;"><b>@Strings.Min</b></td>
             }
