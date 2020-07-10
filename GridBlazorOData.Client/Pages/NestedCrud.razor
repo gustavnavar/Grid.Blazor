@@ -70,7 +70,7 @@ else
                     .Sortable()
                     .Filterable()
                     .SetStriped(true)
-                    .ODataCrud(create, r.Quantity > 15 && read, r => r.Quantity > 15 || update, 
+                    .ODataCrud(create, r => r.Quantity > 15 && read, r => r.Quantity > 15 || update, 
                         r => r.Quantity > 15 || delete)
                     .WithMultipleFilters()
                     .WithGridItemsCount();
