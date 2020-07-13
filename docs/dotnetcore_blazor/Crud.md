@@ -158,6 +158,8 @@ inputType | ```InputType``` enum. Its value can be ```InputType.TextArea```, ```
 
 You can also add components on the CRUD forms using the ```RenderCrudComponentAs<TComponent>``` method. You must define these columns as **Hidden** to show them just on CRUD forms.
 
+You can configure the width of the column input element using the ```SetCrudWidth(int width)``` method. The default value is 5 and you can configure it from 1 to 10.
+
 And finally all columns included in the grid but not in the CRUD forms should be configured as "CRUD hidden" using the ```SetCrudHidden(true)``` method.
 
 **Notes**: 
@@ -176,13 +178,13 @@ This is an example of column definition:
             + " - " + o.Employee.FirstName + " " + o.Employee.LastName, employeeService.GetAllEmployees);
         c.Add(o => o.ShipVia, true).SetSelectField(true, o => o.Shipper == null ? "" : o.Shipper.ShipperID.ToString() 
             + " - " + o.Shipper.CompanyName, shipperService.GetAllShippers);
-        c.Add(o => o.OrderDate, "OrderCustomDate").Titled(SharedResource.OrderCustomDate).Format("{0:yyyy-MM-dd}");
+        c.Add(o => o.OrderDate, "OrderCustomDate").Titled(SharedResource.OrderCustomDate).Format("{0:yyyy-MM-dd}").SetCrudWidth(3);
         c.Add(o => o.Customer.CompanyName).Titled(SharedResource.CompanyName).SetReadOnlyOnUpdate(true);
         c.Add(o => o.Customer.ContactName).Titled(SharedResource.ContactName).SetCrudHidden(true);
         c.Add(o => o.Freight).Titled(SharedResource.Freight).Format("{0:F}");
         c.Add(o => o.Customer.IsVip).Titled(SharedResource.IsVip).RenderValueAs(o => o.Customer.IsVip ? "Yes" : "No").SetCrudHidden(true);
-        c.Add(o => o.RequiredDate, true).Format("{0:yyyy-MM-dd}");
-        c.Add(o => o.ShippedDate, true).Format("{0:yyyy-MM-dd}");
+        c.Add(o => o.RequiredDate, true).Format("{0:yyyy-MM-dd}").SetCrudWidth(3);
+        c.Add(o => o.ShippedDate, true).Format("{0:yyyy-MM-dd}").SetCrudWidth(3);
         c.Add(o => o.ShipName, true);
         c.Add(o => o.ShipAddress, true);
         c.Add(o => o.ShipCity, true);

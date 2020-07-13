@@ -40,6 +40,8 @@ namespace GridMvc.Columns
 
         public string Width { get; set; }
 
+        public int CrudWidth { get; set; } = 5;
+
         public bool SortEnabled { get; protected set; }
 
         public string Title { get; set; }
@@ -122,6 +124,12 @@ namespace GridMvc.Columns
         IGridColumn<T> IColumn<T>.SetWidth(int width)
         {
             Width = width.ToString(CultureInfo.InvariantCulture) + "px";
+            return this;
+        }
+
+        IGridColumn<T> IColumn<T>.SetCrudWidth(int width)
+        {
+            CrudWidth = width;
             return this;
         }
 
