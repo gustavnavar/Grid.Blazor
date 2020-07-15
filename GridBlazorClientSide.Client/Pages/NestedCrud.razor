@@ -64,7 +64,8 @@ else
                     .Sortable()
                     .Filterable()
                     .SetStriped(true)
-                    .Crud(create, read, update, delete, orderDetailService)
+                    .Crud(create, r => r.Quantity > 15 && read, r => r.Quantity > 15  || update, 
+                        r => r.Quantity > 15 || delete, orderDetailService)
                     .WithMultipleFilters()
                     .WithGridItemsCount();
 
@@ -80,7 +81,7 @@ else
             .Sortable()
             .Filterable()
             .SetStriped(true)
-            .Crud(true, orderService)
+            .Crud(true, r => r.Customer.IsVip, r => !r.Customer.IsVip, r => r.Customer.IsVip, orderService)
             .WithMultipleFilters()
             .WithGridItemsCount();
 

@@ -230,6 +230,22 @@ namespace GridBlazor
             return this;
         }
 
+        public IGridClient<T> Crud(bool createEnabled, Func<T, bool> enabled, ICrudDataService<T> crudDataService)
+        {
+            return Crud(createEnabled, enabled, enabled, enabled, crudDataService);
+        }
+
+        public IGridClient<T> Crud(bool createEnabled, Func<T, bool> readEnabled, Func<T, bool> updateEnabled,
+            Func<T, bool> deleteEnabled, ICrudDataService<T> crudDataService)
+        {
+            _source.CreateEnabled = createEnabled;
+            _source.FuncReadEnabled = readEnabled;
+            _source.FuncUpdateEnabled = updateEnabled;
+            _source.FuncDeleteEnabled = deleteEnabled;
+            _source.CrudDataService = crudDataService;
+            return this;
+        }
+
         public IGridClient<T> ODataCrud(bool enabled)
         {
             return ODataCrud(enabled, enabled, enabled, enabled);
@@ -241,6 +257,21 @@ namespace GridBlazor
             _source.ReadEnabled = readEnabled;
             _source.UpdateEnabled = updateEnabled;
             _source.DeleteEnabled = deleteEnabled;
+            return this;
+        }
+
+        public IGridClient<T> ODataCrud(bool createEnabled, Func<T, bool> enabled)
+        {
+            return ODataCrud(createEnabled, enabled, enabled, enabled);
+        }
+
+        public IGridClient<T> ODataCrud(bool createEnabled, Func<T, bool> readEnabled, 
+            Func<T, bool> updateEnabled, Func<T, bool> deleteEnabled)
+        {
+            _source.CreateEnabled = createEnabled;
+            _source.FuncReadEnabled = readEnabled;
+            _source.FuncUpdateEnabled = updateEnabled;
+            _source.FuncDeleteEnabled = deleteEnabled;
             return this;
         }
 
@@ -628,6 +659,12 @@ namespace GridBlazor
         {
             _source.ODataOverrideExpandList = true;
             _source.ODataExpandList = oDataExpandList;
+            return this;
+        }
+
+        public IGridClient<T> AddToOnAfterRender(Func<GridComponent<T>, bool, Task> OnAfterRender)
+        {
+            _source.OnAfterRender = OnAfterRender;
             return this;
         }
 

@@ -19,17 +19,32 @@
                 }
             </td>
         }
-        @if (Grid.ReadEnabled)
+        @if (Grid.ReadEnabled || ((CGrid<T>)Grid).FuncReadEnabled != null)
         {
-            <td class="@GridComponent.GridButtonCellCssClass" data-name="" style="width:35px;"><button class='grid-button grid-button-view btn btn-sm btn-outline-secondary' title="@Strings.ReadItem" @onclick="@(e => GridComponent.ReadHandler(Item))" type="button" @onclick:stopPropagation></button></td>
+            <td class="@GridComponent.GridButtonCellCssClass" data-name="" style="width:35px;">
+                @if (Grid.ReadEnabled || (((CGrid<T>)Grid).FuncReadEnabled != null && ((CGrid<T>)Grid).FuncReadEnabled((T)Item)))
+                {
+                    <button class='grid-button grid-button-view btn btn-sm btn-outline-secondary' title="@Strings.ReadItem" @onclick="@(e => GridComponent.ReadHandler(Item))" type="button" @onclick:stopPropagation></button>
+                }
+            </td>
         }
-        @if (Grid.UpdateEnabled)
+        @if (Grid.UpdateEnabled || ((CGrid<T>)Grid).FuncUpdateEnabled != null)
         {
-            <td class="@GridComponent.GridButtonCellCssClass" data-name="" style="width:35px;"><button class='grid-button grid-button-edit btn btn-sm btn-outline-secondary' title="@Strings.UpdateItem" @onclick="@(e => GridComponent.UpdateHandler(Item))" type="button" @onclick:stopPropagation></button></td>
+            <td class="@GridComponent.GridButtonCellCssClass" data-name="" style="width:35px;">
+                @if (Grid.UpdateEnabled || (((CGrid<T>)Grid).FuncUpdateEnabled != null && ((CGrid<T>)Grid).FuncUpdateEnabled((T)Item)))
+                {
+                    <button class='grid-button grid-button-edit btn btn-sm btn-outline-secondary' title="@Strings.UpdateItem" @onclick="@(e => GridComponent.UpdateHandler(Item))" type="button" @onclick:stopPropagation></button>
+                }
+            </td>
         }
-        @if (Grid.DeleteEnabled)
+        @if (Grid.DeleteEnabled || ((CGrid<T>)Grid).FuncDeleteEnabled != null)
         {
-            <td class="@GridComponent.GridButtonCellCssClass" data-name="" style="width:35px;"><button class='grid-button grid-button-delete btn btn-sm btn-outline-secondary' title="@Strings.DeleteItem" @onclick="@(e => GridComponent.DeleteHandler(Item))" type="button" @onclick:stopPropagation></button></td>
+            <td class="@GridComponent.GridButtonCellCssClass" data-name="" style="width:35px;">
+                @if (Grid.DeleteEnabled || (((CGrid<T>)Grid).FuncDeleteEnabled != null && ((CGrid<T>)Grid).FuncDeleteEnabled((T)Item)))
+                {
+                    <button class='grid-button grid-button-delete btn btn-sm btn-outline-secondary' title="@Strings.DeleteItem" @onclick="@(e => GridComponent.DeleteHandler(Item))" type="button" @onclick:stopPropagation></button>
+                }
+            </td>
         }
         @if (RequiredTotalsColumn)
         {
@@ -59,17 +74,32 @@ else
                 }
             </td>
         }
-        @if (Grid.ReadEnabled)
+        @if (Grid.ReadEnabled || ((CGrid<T>)Grid).FuncReadEnabled != null)
         {
-            <td class="@GridComponent.GridButtonCellCssClass" data-name="" style="width:35px;"><button class='grid-button grid-button-view btn btn-sm btn-outline-secondary' title="@Strings.ReadItem" @onclick="@(e => GridComponent.ReadHandler(Item))" type="button" @onclick:stopPropagation></button></td>
+            <td class="@GridComponent.GridButtonCellCssClass" data-name="" style="width:35px;">
+                @if (Grid.ReadEnabled || (((CGrid<T>)Grid).FuncReadEnabled != null && ((CGrid<T>)Grid).FuncReadEnabled((T)Item)))
+                {
+                    <button class='grid-button grid-button-view btn btn-sm btn-outline-secondary' title="@Strings.ReadItem" @onclick="@(e => GridComponent.ReadHandler(Item))" type="button" @onclick:stopPropagation></button>
+                }
+            </td>
         }
-        @if (Grid.UpdateEnabled)
+        @if (Grid.UpdateEnabled || ((CGrid<T>)Grid).FuncUpdateEnabled != null)
         {
-            <td class="@GridComponent.GridButtonCellCssClass" data-name="" style="width:35px;"><button class='grid-button grid-button-edit btn btn-sm btn-outline-secondary' title="@Strings.UpdateItem" @onclick="@(e => GridComponent.UpdateHandler(Item))" type="button" @onclick:stopPropagation></button></td>
+            <td class="@GridComponent.GridButtonCellCssClass" data-name="" style="width:35px;">
+                @if (Grid.UpdateEnabled || (((CGrid<T>)Grid).FuncUpdateEnabled != null && ((CGrid<T>)Grid).FuncUpdateEnabled((T)Item)))
+                {
+                    <button class='grid-button grid-button-edit btn btn-sm btn-outline-secondary' title="@Strings.UpdateItem" @onclick="@(e => GridComponent.UpdateHandler(Item))" type="button" @onclick:stopPropagation></button>
+                }
+            </td>
         }
-        @if (Grid.DeleteEnabled)
+        @if (Grid.DeleteEnabled || ((CGrid<T>)Grid).FuncDeleteEnabled != null)
         {
-            <td class="@GridComponent.GridButtonCellCssClass" data-name="" style="width:35px;"><button class='grid-button grid-button-delete btn btn-sm btn-outline-secondary' title="@Strings.DeleteItem" @onclick="@(e => GridComponent.DeleteHandler(Item))" type="button" @onclick:stopPropagation></button></td>
+            <td class="@GridComponent.GridButtonCellCssClass" data-name="" style="width:35px;">
+                @if (Grid.DeleteEnabled || (((CGrid<T>)Grid).FuncDeleteEnabled != null && ((CGrid<T>)Grid).FuncDeleteEnabled((T)Item)))
+                {
+                    <button class='grid-button grid-button-delete btn btn-sm btn-outline-secondary' title="@Strings.DeleteItem" @onclick="@(e => GridComponent.DeleteHandler(Item))" type="button" @onclick:stopPropagation></button>
+                }
+            </td>
         }
         @if (RequiredTotalsColumn)
         {
@@ -90,15 +120,15 @@ else
     {
         cols++;
     }
-    if (Grid.ReadEnabled)
+    if (Grid.ReadEnabled || ((CGrid<T>)Grid).FuncReadEnabled != null)
     {
         cols++;
     }
-    if (Grid.UpdateEnabled)
+    if (Grid.UpdateEnabled || ((CGrid<T>)Grid).FuncUpdateEnabled != null)
     {
         cols++;
     }
-    if (Grid.DeleteEnabled)
+    if (Grid.DeleteEnabled || ((CGrid<T>)Grid).FuncDeleteEnabled != null)
     {
         cols++;
     }

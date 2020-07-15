@@ -216,7 +216,8 @@ namespace GridBlazorClientSide.Client.ColumnCollections
             .SetInputType(InputType.Week)
             .SetFilterWidgetType("Week")
             .RenderValueAs(o => DateTimeUtils.GetWeekDateTimeString(o.OrderDate))
-            .SetWidth(120);
+            .SetWidth(120)
+            .SetCrudWidth(3);
 
             /* Adding "CompanyName" column: */
             c.Add(o => o.Customer.CompanyName).Titled(SharedResource.CompanyName)
@@ -235,10 +236,10 @@ namespace GridBlazorClientSide.Client.ColumnCollections
             .RenderValueAs(o => o.Customer.IsVip ? Strings.BoolTrueLabel : Strings.BoolFalseLabel).SetCrudHidden(true);
 
             /* Adding hidden "RequiredDate" column: */
-            c.Add(o => o.RequiredDate, true).Format("{0:yyyy-MM-dd}");
+            c.Add(o => o.RequiredDate, true).Format("{0:yyyy-MM-dd}").SetCrudWidth(3);
 
             /* Adding hidden "ShippedDate" column: */
-            c.Add(o => o.ShippedDate, true).Format("{0:yyyy-MM-dd}");
+            c.Add(o => o.ShippedDate, true).Format("{0:yyyy-MM-dd}").SetCrudWidth(3);
 
             /* Adding hidden "ShipName" column: */
             c.Add(o => o.ShipName, true);

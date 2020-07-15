@@ -1,7 +1,7 @@
 ﻿using GridShared;
 using GridShared.Utility;
 using GridMvc.Server;
-using Microsoft.AspNetCore.Http.Internal;
+using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Primitives;
 using System;
 using System.Collections.Generic;

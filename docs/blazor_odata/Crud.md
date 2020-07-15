@@ -17,14 +17,22 @@ These are the supported features:
 
 ## Auto-generated forms
 
-You can enable CRUD using the **ODataCrud** method of the **GridODataClient** object:
+You can enable CRUD using the **ODataCrud(bool enabled)** method of the **GridODataClient** object:
 ```c#   
     var client = new GridODataClient<Order>(HttpClient, url, query, false, "ordersGrid", 
         c => columns(c, NavigationManager.BaseUri), 10, locale, new List<string> { "Employee", "Shipper" })
             .ODataCrud(true)
 ```
 
-**Note**: All 4 crud forms can be enabled at the same time with the ```ODataCrud(bool enabled)``` method, but you can enable one by one using  the ```ODataCrud(bool create, bool read, bool update, bool delete)``` method.
+You can also enable CRUD depending on a condition for each row using the **ODataCrud(bool createEnabled, Func<T, bool> enabled)** method:
+```c#   
+    var client = new GridODataClient<Order>(HttpClient, url, query, false, "ordersGrid", 
+        c => columns(c, NavigationManager.BaseUri), 10, locale, new List<string> { "Employee", "Shipper" })
+            .ODataCrud(true, r => r.Customer.IsVip)
+```
+The create form can only be enabled using a ```bool``` parameter. But the read, update and delete forms can be enabled using a function that returns a ```bool```.
+
+**Note**: All 4 crud forms can be enabled at the same time with the former methods, but you can enable one by one using ```ODataCrud(bool create, bool read, bool update, bool delete)``` or ```ODataCrud(bool createEnabled, Func<T, bool> readEnabled, Func<T, bool> updateEnabled, Func<T, bool> deleteEnabled)``` methods.
 
 You must create actions in the ```ODataController``` for all 4 CRUD operations. This is an example of controller including those 4 actions:
 
@@ -194,6 +202,8 @@ inputType | ```InputType``` enum. Its value can be ```InputType.TextArea```, ```
 
 You can also add components on the CRUD forms using the ```RenderCrudComponentAs<TComponent>``` method. You must define these columns as **Hidden** to show them just on CRUD forms.
 
+You can configure the width of the column input element using the ```SetCrudWidth(int width)``` method. The default value is 5 and you can configure it from 1 to 10.
+
 And finally all columns included in the grid but not in the CRUD forms should be configured as "CRUD hidden" using the ```SetCrudHidden(true)``` method.
 
 **Notes**: 
@@ -212,14 +222,14 @@ This is an example of column definition:
             + " " + o.Employee.LastName, () => GetAllEmployees(baseUri));
         c.Add(o => o.ShipVia, true).SetSelectField(true, o => o.Shipper == null ? "" : o.Shipper.ShipperID.ToString() + " - " 
             + o.Shipper.CompanyName, () => GetAllShippers(baseUri));
-        c.Add(o => o.OrderDate, "OrderCustomDate").Titled(SharedResource.OrderCustomDate).Format("{0:yyyy-MM-dd}").SetWidth(120);
+        c.Add(o => o.OrderDate, "OrderCustomDate").Titled(SharedResource.OrderCustomDate).Format("{0:yyyy-MM-dd}").SetWidth(120).SetCrudWidth(3);
         c.Add(o => o.Customer.CompanyName).Titled(SharedResource.CompanyName).SetWidth(250).SetCrudHidden(true).SetReadOnlyOnUpdate(true);
         c.Add(o => o.Customer.ContactName).Titled(SharedResource.ContactName).SetWidth(250).SetCrudHidden(true);
         c.Add(o => o.Freight).Titled(SharedResource.Freight).Format("{0:F}");
         c.Add(o => o.Customer.IsVip).Titled(SharedResource.IsVip).SetWidth(70).Css("hidden-xs")
             .RenderValueAs(o => o.Customer.IsVip ? Strings.BoolTrueLabel : Strings.BoolFalseLabel).SetCrudHidden(true);
-        c.Add(o => o.RequiredDate, true).Format("{0:yyyy-MM-dd}");
-        c.Add(o => o.ShippedDate, true).Format("{0:yyyy-MM-dd}");
+        c.Add(o => o.RequiredDate, true).Format("{0:yyyy-MM-dd}").SetCrudWidth(3);
+        c.Add(o => o.ShippedDate, true).Format("{0:yyyy-MM-dd}").SetCrudWidth(3);
         c.Add(o => o.ShipName, true);
         c.Add(o => o.ShipAddress, true);
         c.Add(o => o.ShipCity, true);

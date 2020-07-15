@@ -45,8 +45,8 @@ namespace GridBlazor.Pages
                 {
                     VariableReference reference = new VariableReference();
                     Children.Add(column.Name, reference);
-                    _renderFragments.Add(column.Name, GridCellComponent<T>.CreateComponent(_sequence, 
-                        column.ReadComponentType, column, Item, null, true, reference));
+                    _renderFragments.Add(column.Name, GridCellComponent<T>.CreateComponent(_sequence,
+                        GridComponent, column.ReadComponentType, column, Item, null, true, reference));
                 }
             }
             _tabGroups = GridComponent.Grid.Columns

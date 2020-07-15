@@ -9,9 +9,9 @@ namespace GridMvc
 {
     internal class GridMvcConfigureOptions : IPostConfigureOptions<StaticFileOptions>
     {
-        private readonly IHostingEnvironment _environment;
+        private readonly IWebHostEnvironment _environment;
 
-        public GridMvcConfigureOptions(IHostingEnvironment environment)
+        public GridMvcConfigureOptions(IWebHostEnvironment environment)
         {
             _environment = environment;
         }

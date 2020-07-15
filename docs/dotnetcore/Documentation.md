@@ -4,6 +4,8 @@
 
 **GridMvc** is a component that allows you the construction of HTML tables for displaying, paging, filtering and sorting data from a collection of model objects.
 
+**Note:** GridMvcCore 3.0.0 does not support .Net Core 2.x. It requires .NET Core 3.1
+
 ## Documentation
 
 * [Installation](Installation.md)

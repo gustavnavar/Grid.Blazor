@@ -286,6 +286,9 @@ namespace GridBlazor.Pages
             }
 
             _shouldRender = false;
+
+            if(((CGrid<T>)Grid).OnAfterRender != null)
+                await ((CGrid<T>)Grid).OnAfterRender.Invoke(this, firstRender);
         }
 
         private async Task GoToCrudView()

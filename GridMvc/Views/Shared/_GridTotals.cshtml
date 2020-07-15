@@ -47,7 +47,14 @@ else
                     }
                     else
                     {
-                        <td class="grid-cell"></td>
+                        if (((IGridColumn)column).Hidden)
+                        {
+                            <td class="grid-cell" style="display:none;"></td>
+                        }
+                        else
+                        {
+                            <td class="grid-cell"></td>
+                        }
                     }
                 }
 
@@ -81,7 +88,14 @@ else
                     }
                     else
                     {
-                        <td class="grid-cell"></td>
+                        if (((IGridColumn)column).Hidden)
+                        {
+                            <td class="grid-cell" style="display:none;"></td>
+                        }
+                        else
+                        {
+                            <td class="grid-cell"></td>
+                        }
                     }
                 }
             }
@@ -114,7 +128,14 @@ else
                     }
                     else
                     {
-                        <td class="grid-cell"></td>
+                        if (((IGridColumn)column).Hidden)
+                        {
+                            <td class="grid-cell" style="display:none;"></td>
+                        }
+                        else
+                        {
+                            <td class="grid-cell"></td>
+                        }
                     }
                 }
             }
@@ -147,7 +168,14 @@ else
                     }
                     else
                     {
-                        <td class="grid-cell"></td>
+                        if (((IGridColumn)column).Hidden)
+                        {
+                            <td class="grid-cell" style="display:none;"></td>
+                        }
+                        else
+                        {
+                            <td class="grid-cell"></td>
+                        }
                     }
                 }
             }

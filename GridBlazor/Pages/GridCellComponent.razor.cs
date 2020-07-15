@@ -38,7 +38,7 @@ namespace GridBlazor.Pages
             _componentType = Column.ComponentType;
             if (_componentType != null)
                 _cellRender = CreateComponent(_sequence, GridComponent, _componentType, Column, Item, 
-                    RowId, new VariableReference(ChildComponent));
+                    RowId, false, new VariableReference(ChildComponent));
             else
                 _cell = (MarkupString)Column.GetCell(Item).ToString();
             if (Column.Hidden)
@@ -55,18 +55,17 @@ namespace GridBlazor.Pages
                 _cssClass += " " + columnCssClasses;
         }
 
-        protected RenderFragment CreateComponent(int sequence, GridComponent<T> gridComponent, Type componentType, 
-            IGridColumn column, object item, int rowId, VariableReference reference) => builder =>
+        public static RenderFragment CreateComponent(int sequence, GridComponent<T> gridComponent, Type componentType, 
+            IGridColumn column, object item, int? rowId, bool crud, VariableReference reference) => builder =>
         {
-            builder.OpenComponent<CascadingValue<GridComponent<T>>>(++_sequence);
-            builder.AddAttribute(++_sequence, "Value", gridComponent);
-            builder.AddAttribute(++_sequence, "Name", "GridComponent");
-            builder.AddAttribute(++_sequence, "ChildContent", GridCellComponent<T>
-                .CreateComponent(sequence, componentType, column, item, rowId, false, reference));
+            builder.OpenComponent<CascadingValue<GridComponent<T>>>(++sequence);
+            builder.AddAttribute(++sequence, "Value", gridComponent);
+            builder.AddAttribute(++sequence, "Name", "GridComponent");
+            builder.AddAttribute(++sequence, "ChildContent", CreateComponent(sequence, componentType, column, item, rowId, crud, reference));
             builder.CloseComponent();
         };
 
-        public static RenderFragment CreateComponent(int sequence, Type componentType, IGridColumn column,
+        private static RenderFragment CreateComponent(int sequence, Type componentType, IGridColumn column,
             object item, int? RowId, bool crud, VariableReference reference)  => builder =>
         {
             if (componentType != null)

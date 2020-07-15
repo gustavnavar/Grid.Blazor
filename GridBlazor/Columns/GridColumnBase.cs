@@ -44,6 +44,8 @@ namespace GridBlazor.Columns
 
         public string Width { get; set; }
 
+        public int CrudWidth { get; set; } = 5;
+
         public bool SortEnabled { get; protected set; }
 
         public string Title { get; set; }
@@ -116,6 +118,12 @@ namespace GridBlazor.Columns
         IGridColumn<T> IColumn<T>.SetWidth(string width)
         {
             Width = width;
+            return this;
+        }
+
+        IGridColumn<T> IColumn<T>.SetCrudWidth(int width)
+        {
+            CrudWidth = width;
             return this;
         }
 

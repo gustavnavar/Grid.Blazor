@@ -1,7 +1,6 @@
 ﻿using GridShared.Utility;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Http.Extensions;
-using Microsoft.AspNetCore.Http.Internal;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace GridMvc.Tests.Utility
@@ -23,7 +22,8 @@ namespace GridMvc.Tests.Utility
             QueryBuilder qb = new QueryBuilder();
             qb.Add("key1", "value1");
             qb.Add("key2", "value2");
-            var request = new DefaultHttpRequest(new DefaultHttpContext());
+            var context = new DefaultHttpContext();
+            var request = context.Request;
             request.QueryString = qb.ToQueryString();
 
             _builder = new CustomQueryStringBuilder(request.Query);
@@ -45,7 +45,8 @@ namespace GridMvc.Tests.Utility
             qb.Add("key1", "value1");
             qb.Add("key2", "value2");
             qb.Add("key3", "value3");
-            var request = new DefaultHttpRequest(new DefaultHttpContext());
+            var context = new DefaultHttpContext();
+            var request = context.Request;
             request.QueryString = qb.ToQueryString();
 
             _builder = new CustomQueryStringBuilder(request.Query);

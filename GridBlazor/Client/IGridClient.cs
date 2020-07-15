@@ -1,4 +1,5 @@
-﻿using GridShared;
+﻿using GridBlazor.Pages;
+using GridShared;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -136,8 +137,19 @@ namespace GridBlazor
         /// <summary>
         ///     Enable or disable client grid CRUD
         /// </summary>
+        IGridClient<T> Crud(bool createEnabled, Func<T, bool> enabled, ICrudDataService<T> crudDataService);
+
+        /// <summary>
+        ///     Enable or disable client grid CRUD
+        /// </summary>
         IGridClient<T> Crud(bool createEnabled, bool readEnabled, bool updateEnabled, bool deleteEnabled, 
             ICrudDataService<T> crudDataService);
+
+        /// <summary>
+        ///     Enable or disable client grid CRUD
+        /// </summary>
+        IGridClient<T> Crud(bool createEnabled, Func<T, bool> readEnabled, Func<T, bool> updateEnabled,
+            Func<T, bool> deleteEnabled, ICrudDataService<T> crudDataService);
 
         /// <summary>
         ///     Enable or disable client grid CRUD with and OData back-end
@@ -147,7 +159,18 @@ namespace GridBlazor
         /// <summary>
         ///     Enable or disable client grid CRUD with and OData back-end
         /// </summary>
+        IGridClient<T> ODataCrud(bool createEnabled, Func<T, bool> enabled);
+
+        /// <summary>
+        ///     Enable or disable client grid CRUD with and OData back-end
+        /// </summary>
         IGridClient<T> ODataCrud(bool createEnabled, bool readEnabled, bool updateEnabled, bool deleteEnabled);
+
+        /// <summary>
+        ///     Enable or disable client grid CRUD with and OData back-end
+        /// </summary>
+        IGridClient<T> ODataCrud(bool createEnabled, Func<T, bool> readEnabled, 
+            Func<T, bool> updateEnabled, Func<T, bool> deleteEnabled);
 
         /// <summary>
         ///     Setup the Create Component
@@ -442,6 +465,11 @@ namespace GridBlazor
         ///     Use OData extend for columns
         /// </summary>
         IGridClient<T> OverrideODataExpand(IEnumerable<string> oDataExpandList);
+
+        /// <summary>
+        ///    Add code to the end of OnAfterRenderAsync method of the component
+        /// </summary>
+        IGridClient<T> AddToOnAfterRender(Func<GridComponent<T>, bool, Task> OnAfterRender);
 
         /// <summary>
         ///    Get grid object

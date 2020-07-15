@@ -2,6 +2,7 @@ using GridBlazor.Columns;
 using GridBlazor.DataAnnotations;
 using GridBlazor.Filtering;
 using GridBlazor.OData;
+using GridBlazor.Pages;
 using GridBlazor.Pagination;
 using GridBlazor.Resources;
 using GridBlazor.Searching;
@@ -358,14 +359,29 @@ namespace GridBlazor
         public bool ReadEnabled { get; internal set; }
 
         /// <summary>
+        ///     Get value for reading items
+        /// </summary>
+        public Func<T, bool> FuncReadEnabled { get; internal set; }
+
+        /// <summary>
         ///     Get value for updating items
         /// </summary>
         public bool UpdateEnabled { get; internal set; }
 
         /// <summary>
+        ///     Get value for updating items
+        /// </summary>
+        public Func<T, bool> FuncUpdateEnabled { get; internal set; }
+
+        /// <summary>
         ///     Get value for deleting items
         /// </summary>
         public bool DeleteEnabled { get; internal set; }
+
+        /// <summary>
+        ///     Get value for deleting items
+        /// </summary>
+        public Func<T, bool> FuncDeleteEnabled { get; internal set; }
 
         /// <summary>
         ///     Get and set custom create component
@@ -503,6 +519,11 @@ namespace GridBlazor
         ///     Override OData url expand parameter with list
         /// </summary>
         public bool ODataOverrideExpandList { get; set; } = false;
+
+        /// <summary>
+        ///    Add code to the end of OnAfterRenderAsync method of the component
+        /// </summary>
+        public Func<GridComponent<T>, bool, Task> OnAfterRender { get; set; }
 
         /// <summary>
         ///     Applies data annotations settings
