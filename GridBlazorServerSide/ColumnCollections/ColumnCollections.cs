@@ -240,7 +240,8 @@ namespace GridBlazorServerSide.ColumnCollections
             c.Add(o => o.RequiredDate, true).Format("{0:yyyy-MM-dd}");
 
             /* Adding hidden "ShippedDate" column: */
-            c.Add(o => o.ShippedDate, true).Format("{0:yyyy-MM-dd}");
+            c.Add(o => o.ShippedDate, false).SetInputType(InputType.DateTimeLocal)
+                .SetFilterWidgetType("DateTimeLocal").Format("{0:yyyy-MM-dd HH:mm}");
 
             /* Adding hidden "ShipName" column: */
             c.Add(o => o.ShipName, true);

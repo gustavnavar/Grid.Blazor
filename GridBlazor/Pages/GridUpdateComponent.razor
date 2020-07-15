@@ -175,10 +175,8 @@
                     {
                         <label class="col-form-label col-md-2">@column.Title</label>
                     }
-                    <div class="col-md-10">
-                        <div class="card panel panel-default">
-                            <div class="card-body panel-body">@_renderFragments.Get(column.Name)</div>
-                        </div>
+                    <div class="col-md-5">
+@_renderFragments.Get(column.Name)
                     </div>
                 </div>
             }
