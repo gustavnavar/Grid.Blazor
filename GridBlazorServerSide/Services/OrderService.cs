@@ -53,7 +53,14 @@ namespace GridBlazorServerSide.Services
             {
                 var repository = new OrdersRepository(context);
                 var server = new GridServer<Order>(repository.GetAll(), new QueryCollection(query),
-                    true, "ordersGrid", null).AutoGenerateColumns();
+                    true, "ordersGrid", null)
+                        .AutoGenerateColumns()
+                        .Sortable()
+                        .WithPaging(10)
+                        .Filterable()
+                        .WithMultipleFilters()
+                        .Groupable(true)
+                        .Searchable(true, false, false);
 
                 // return items to displays
                 return server.ItemsToDisplay;

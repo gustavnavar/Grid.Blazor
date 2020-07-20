@@ -110,6 +110,13 @@ namespace GridBlazor.Columns
             return column;
         }
 
+        public IGridColumn<T> Insert(int position, PropertyInfo pi)
+        {
+            IGridColumn<T> newColumn = _columnBuilder.CreateColumn(pi);
+            if (newColumn == null) return null;
+            return Insert(position, newColumn);
+        }
+
         public IGridColumn<T> Insert(int position, IGridColumn<T> column)
         {
             base.Insert(position, column);

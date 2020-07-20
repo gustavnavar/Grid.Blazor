@@ -330,8 +330,32 @@ namespace GridMvc
         /// </summary>
         public virtual void AutoGenerateColumns()
         {
-            //TODO add support order property
             PropertyInfo[] properties = typeof(T).GetProperties(BindingFlags.Public | BindingFlags.Instance);
+
+            // if any property has a position attribute it's necessary 
+            // to create a new array before adding columns to the collection
+            if (properties.SelectMany(r => r.CustomAttributes).SelectMany(r => r.NamedArguments).Any(r => r.MemberName == "Position"))
+            {
+                PropertyInfo[] newProperties = new PropertyInfo[properties.Length];
+                foreach (PropertyInfo pi in properties)
+                {
+                    int? position = null;
+                    if (pi.CustomAttributes.Count() > 0)
+                    {
+                        foreach (var a in pi.CustomAttributes)
+                        {
+                            if (a.NamedArguments.Any(r => r.MemberName == "Position"))
+                            {
+                                position = (int)a.NamedArguments.First(r => r.MemberName == "Position").TypedValue.Value;
+                            }
+                        }
+                    }
+                    if (position.HasValue)
+                        newProperties[position.Value] = pi;
+                }
+                properties = newProperties;
+            }
+
             foreach (PropertyInfo pi in properties)
             {
                 bool isKey = false;

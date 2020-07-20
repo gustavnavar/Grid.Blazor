@@ -34,29 +34,48 @@ namespace GridMvc.Demo.Models
         }
         [Key]
         [GridHiddenColumn]
+        [GridColumn(Position = 0)]
         public int OrderID { get; set; }
+        [GridColumn(Position = 5)]
         public string CustomerID { get; set; }
+        [GridColumn(Position = 4)]
         public int? EmployeeID { get; set; }
-        [GridColumn(Title = "Date", Width = "120px", Format = "{0:yyyy-MM-dd}", SortEnabled = true, FilterEnabled = true, SortInitialDirection = GridSortDirection.Descending)]
+        [GridColumn(Position = 1, Title = "Date", Width = "120px", Format = "{0:yyyy-MM-dd}", SortEnabled = true, FilterEnabled = true, SortInitialDirection = GridSortDirection.Descending)]
         public DateTime? OrderDate { get; set; }
+        [GridColumn(Position = 2, Width = "120px", Format = "{0:yyyy-MM-dd}")]
         public DateTime? RequiredDate { get; set; }
+        [GridColumn(Position = 3, Width = "120px", Format = "{0:yyyy-MM-dd}")]
         public DateTime? ShippedDate { get; set; }
+        [GridColumn(Position = 6)]
         public int? ShipVia { get; set; }
-        [GridColumn(Title = "Freight", Width = "120px", SortEnabled = true, FilterEnabled = true)]
+        [GridColumn(Position = 7, Title = "Freight", Width = "120px", SortEnabled = true, FilterEnabled = true)]
         public decimal? Freight { get; set; }
-
+        [GridColumn(Position = 8)]
         public string ShipName { get; set; }
+        [GridColumn(Position = 9)]
         public string ShipAddress { get; set; }
+        [GridColumn(Position = 10)]
         public string ShipCity { get; set; }
+        [GridColumn(Position = 11)]
         public string ShipRegion { get; set; }
+        [GridColumn(Position = 12)]
         public string ShipPostalCode { get; set; }
+        [GridColumn(Position = 13)]
         public string ShipCountry { get; set; }
+        [NotMappedColumn]
+        [GridColumn(Position = 14)]
         public virtual Customer Customer { get; set; }
+        [NotMappedColumn]
+        [GridColumn(Position = 15)]
         public virtual Employee Employee { get; set; }
         [JsonIgnore]
+        [NotMappedColumn]
+        [GridColumn(Position = 17)]
         public virtual ICollection<OrderDetail> OrderDetails { get; set; }
         
         [ForeignKey("ShipVia")]
+        [NotMappedColumn]
+        [GridColumn(Position = 16)]
         public virtual Shipper Shipper { get; set; }
     }
 
