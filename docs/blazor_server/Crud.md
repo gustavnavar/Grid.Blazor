@@ -160,7 +160,7 @@ inputType | ```InputType``` enum. Its value can be ```InputType.TextArea```, ```
 
 You can also add components on the CRUD forms using the ```RenderCrudComponentAs<TComponent>``` method. You must define these columns as **Hidden** to show them just on CRUD forms.
 
-You can configure the width of the column input element using the ```SetCrudWidth(int width)``` method. The default value is 5 and you can configure it from 1 to 10.
+You can configure the width of the column input element using the ```SetCrudWidth(int width)``` and ```SetCrudWidth(int width, int labelWidtth)``` methods. The default value for the column width is 5 and and for the label width is 2. You can configure them from 1 to 11, but the sum of both can not be more than 12.
 
 And finally all columns included in the grid but not in the CRUD forms should be configured as "CRUD hidden" using the ```SetCrudHidden(true)``` method.
 
