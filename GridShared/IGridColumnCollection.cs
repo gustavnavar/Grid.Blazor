@@ -156,6 +156,13 @@ namespace GridShared
         IGridColumn<T> Insert<TKey>(int position, Expression<Func<T, TKey>> constraint, IComparer<TKey> comparer, bool hidden);
 
         /// <summary>
+        ///     Add new column based on property info, using reflection
+        /// </summary>
+        /// <param name="position">Position to insert</param>
+        /// <returns>Added column</returns>
+        IGridColumn<T> Insert(int position, PropertyInfo pi);
+
+        /// <summary>
         ///     Get added column by member expression
         /// </summary>
         /// <param name="constraint">Member of generic class</param>

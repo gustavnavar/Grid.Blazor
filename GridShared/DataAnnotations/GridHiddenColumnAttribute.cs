@@ -33,5 +33,10 @@ namespace GridShared.DataAnnotations
         ///     Specify if column data is key
         /// </summary>
         public bool Key { get; set; }
+
+        /// <summary>
+        ///     Sets or get column position
+        /// </summary>
+        public int Position { get; set; }
     }
 }

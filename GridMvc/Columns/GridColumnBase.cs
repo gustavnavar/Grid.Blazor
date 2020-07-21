@@ -42,6 +42,8 @@ namespace GridMvc.Columns
 
         public int CrudWidth { get; set; } = 5;
 
+        public int CrudLabelWidth { get; set; } = 2;
+
         public bool SortEnabled { get; protected set; }
 
         public string Title { get; set; }
@@ -132,6 +134,14 @@ namespace GridMvc.Columns
             CrudWidth = width;
             return this;
         }
+
+        IGridColumn<T> IColumn<T>.SetCrudWidth(int width, int labelWidth)
+        {
+            CrudWidth = width;
+            CrudLabelWidth = labelWidth;
+            return this;
+        }
+
 
         public IGridColumn<T> Css(string cssClasses)
         {

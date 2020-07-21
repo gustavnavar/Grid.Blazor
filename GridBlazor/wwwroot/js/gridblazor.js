@@ -29,6 +29,8 @@
                 y += element.offsetTop - element.scrollTop;
                 element = element.offsetParent;
             }
+            x -= Math.round(window.pageXOffset);
+            y -= Math.round(window.pageYOffset);
             var screenHeight = screen.availHeight;
             var screenWidth = screen.availWidth;
             var innerHeight = window.innerHeight;

@@ -19,16 +19,17 @@ For example a model class with the following data annotations:
     [GridTable(PagingEnabled = true, PageSize = 20)]
     public class Foo
     {
-        [GridColumn(Title = "Name title", SortEnabled = true, FilterEnabled = true)]
+        [GridColumn(Position = 0, Title = "Name title", SortEnabled = true, FilterEnabled = true)]
         public string Name { get; set; }
 
-        [GridColumn(Title = "Active Foo?")]
+        [GridColumn(Position = 2, Title = "Active Foo?")]
         public bool Enabled { get; set; }
 
-        [GridColumn(Title = "Date", Format = "{0:dd/MM/yyyy}")]
+        [GridColumn(Position = 1, Title = "Date", Format = "{0:dd/MM/yyyy}")]
         public DateTime FooDate { get; set; }
 
         [NotMappedColumn]
+        [GridColumn(Position = 3)]
         public byte[]() Data { get; set; }
     }
 ```
@@ -91,5 +92,7 @@ You can also overwrite grid options. For example using the **WithPaging** method
 ```c#
     var client = new GridODataClient<Foo>(...).AutoGenerateColumns().WithPaging(10)
 ```
+
+**Note:** If you use the ```Position``` custom option to order the columns, you must use it on all the columns of the table including the ones using the ```NotMappedColumn``` attribute. If you don't do it the ```AutoGenerateColumns``` will throw an exception.
 
 [<- Localization](Localization.md) | [Render button, checkbox, etc. in a grid cell ->](Render_button_checkbox_etc_in_a_grid_cell.md)

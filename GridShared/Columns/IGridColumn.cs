@@ -90,6 +90,11 @@ namespace GridShared.Columns
         IGridColumn<T> SetCrudWidth(int width);
 
         /// <summary>
+        ///     Sets the width of the column and its label on crud forms
+        /// </summary>
+        IGridColumn<T> SetCrudWidth(int width, int labelWidth);
+
+        /// <summary>
         ///     Specify additional css class of the column
         /// </summary>
         IGridColumn<T> Css(string cssClasses);
@@ -400,6 +405,11 @@ namespace GridShared.Columns
         ///     Width of the column on crud forms
         /// </summary>
         int CrudWidth { get; set; }
+
+        /// <summary>
+        ///     Width of the column label on crud forms
+        /// </summary>
+        int CrudLabelWidth { get; set; }
 
         /// <summary>
         ///     EncodeEnabled
