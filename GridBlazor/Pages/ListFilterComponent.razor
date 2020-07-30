@@ -5,8 +5,8 @@
 
 @if (Visible)
 {
-    <div class="dropdown dropdown-menu grid-dropdown opened" style="display:block;@(_offset > 0 ? "margin-left:-" + _offset.ToString() + "px;" : "")" @ref="listFilter" @onkeyup="FilterKeyup" @onclick:stopPropagation @onkeyup:stopPropagation tabindex="-1">
-        <div class="grid-dropdown-arrow" style="@(_offset > 0 ? "margin-left:" + _offset.ToString() + "px" : "")"></div>
+    <div class="dropdown dropdown-menu grid-dropdown opened" style="display:block;@(GridHeaderComponent.GridComponent.Grid.Direction == GridShared.GridDirection.RTL ? _offset > 0 ? "margin-right:-" + _offset.ToString() + "px;" : "" : _offset > 0 ? "margin-left:-" + _offset.ToString() + "px;" : "")" @ref="listFilter" @onkeyup="FilterKeyup" @onclick:stopPropagation @onkeyup:stopPropagation tabindex="-1">
+        <div class="grid-dropdown-arrow" style="@(GridHeaderComponent.GridComponent.Grid.Direction == GridShared.GridDirection.RTL ? _offset > 0 ? "margin-right:" + _offset.ToString() + "px" : "" : _offset > 0 ? "margin-left:" + _offset.ToString() + "px" : "")"></div>
         <div class="grid-dropdown-inner">
             <div class="grid-popup-widget">
                 <div class="grid-filter-body">
@@ -30,10 +30,12 @@
                             </li>
                         }
                     </ul>
-                    <div class="grid-filter-buttons" style="margin-top:5px;">
-                        <button type="button" class="btn btn-primary" @onclick="ApplyButtonClicked">
-                            @Strings.ApplyFilterButtonText
-                        </button>
+                    <div class="grid-buttons">
+                        <div class="grid-filter-buttons">
+                            <button type="button" class="btn btn-primary" @onclick="ApplyButtonClicked">
+                                @Strings.ApplyFilterButtonText
+                            </button>
+                        </div>
                     </div>
                 </div>
             </div>

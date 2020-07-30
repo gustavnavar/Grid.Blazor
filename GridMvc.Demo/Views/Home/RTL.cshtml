@@ -1,0 +1,58 @@
+﻿@using GridMvc
+@using GridMvc.Demo.Models
+@using GridShared
+@model SGrid<Order>
+@{
+    ViewBag.Title = "Home Page";
+
+    IEnumerable<SelectItem> shipperList = (IEnumerable<SelectItem>)ViewData["shipperList"];
+}
+
+<script src="~/js/gridmvc-ajax.js" type="text/javascript"></script>
+<script src="~/lib/URI.js/URI.js" type="text/javascript"></script>
+
+<div class="row">
+    <div class="col-md-12">
+        <p>
+            This page demonstrates the possibilities of GridMvcCore. For more documentation, please
+            see: <a href="https://github.com/gustavnavar/Grid.Blazor">https://github.com/gustavnavar/Grid.Blazor</a>
+        </p>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-9">
+        @await Html.PartialAsync("_OrdersRTLGrid", Model)
+    </div>
+    <div class="col-md-3">
+        <h4>
+            Order details
+        </h4>
+        <div id="order-content">
+            <p class="muted">
+                Select order to display detailed infomation
+            </p>
+        </div>
+    </div>
+</div>
+
+<script>
+    $(function () {
+        pageGrids.ordersGrid.addFilterWidget(new CustomersFilterWidget());
+
+        pageGrids.ordersGrid.ajaxify({
+            getPagedData: "/Home/GetOrdersRTLGridRows",
+            getSubGridData: "/Home/GetSubgridRTL"
+        });
+
+        pageGrids.ordersGrid.onRowSelect(function (e) {
+            $.get("/Home/GetOrder?id=" + e.row.OrderID, function (data) {
+                if (data.status <= 0) {
+                    alert(data.message);
+                    return;
+                }
+                $("#order-content").html(data.content);
+            });
+        });
+    });
+</script>

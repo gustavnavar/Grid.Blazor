@@ -23,6 +23,15 @@ English is the default laguage. But you can use other languages. You have to cre
 * Turkish
 * Czech
 * Slovenian
+* Sweden
+
+## Right to left direction
+Those languages that require right to left direction are also supported. You must configure the grid to user RTL direction using the ```SetDirection``` method of the ```GridClient``` object:
+    
+```c#
+    var client = new GridClient<Order>(q => orderService.GetOrdersGridRows(columns, q), query, false, "ordersGrid", Columns, locale)
+        .SetDirection(GridDirection.RTL);
+```
 
 ## Additional languages
 

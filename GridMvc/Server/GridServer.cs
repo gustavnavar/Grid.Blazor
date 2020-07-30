@@ -241,6 +241,12 @@ namespace GridMvc.Server
             return this;
         }
 
+        public IGridServer<T> SetDirection(GridDirection dir)
+        {
+            _source.Direction = dir;
+            return this;
+        }
+
         /// <summary>
         ///     Items, displaying in the grid view
         /// </summary>

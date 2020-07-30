@@ -140,6 +140,7 @@ SetStriped | Configure the grid as striped | GridServer<Order>(...).SetStriped(t
 EmptyText | Setup the text displayed for all empty items in the grid | GridServer<Order>(...).EmptyText(' - ');
 WithGridItemsCount | Allows the grid to show items count | GridServer<Order>(...).WithGridItemsCount();
 SetRowCssClasses | Setup specific row css classes | GridServer<Order>(...).SetRowCssClasses(item => item.Customer.IsVip ? "success" : string.Empty);
+SetDirection | Allows the grid to be show in right to left direction | GridServer<Order>(...).SetDirection(GridDirection.RTL);
 
 ## Grid configuration
 
@@ -170,6 +171,7 @@ SetStriped | Configure the grid as striped | Html.Grid(Model).SetStriped(true);
 EmptyText | Setup the text displayed for all empty items in the grid | Html.Grid(Model).EmptyText(' - ');
 WithGridItemsCount | Allows the grid to show items count | Html.Grid(Model).WithGridItemsCount();
 SetRowCssClasses | Setup specific row css classes | Html.Grid(Model).SetRowCssClasses(item => item.Customer.IsVip ? "success" : string.Empty);
+SetDirection | Allows the grid to be show in right to left direction | Html.Grid(Model).SetDirection(GridDirection.RTL);
 
 For more documentation about column options, please see: [Custom columns](Custom_columns.md).
 

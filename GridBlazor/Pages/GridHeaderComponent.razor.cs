@@ -1,6 +1,7 @@
 ﻿using GridBlazor.Filtering;
 using GridBlazor.Pagination;
 using GridBlazor.Sorting;
+using GridShared;
 using GridShared.Columns;
 using GridShared.Events;
 using GridShared.Filtering;
@@ -89,6 +90,9 @@ namespace GridBlazor.Pages
             else
                 _cssStyles = ((GridStyledColumn)Column).GetCssStylesString();
             _cssClass = ((GridStyledColumn)Column).GetCssClassesString() + " " + ThClass;
+
+            if (GridComponent.Grid.Direction == GridDirection.RTL)
+                _cssStyles = string.Concat(_cssStyles, " text-align:right;direction:rtl;").Trim();
 
             if (!string.IsNullOrWhiteSpace(Column.Width))
                 _cssStyles = string.Concat(_cssStyles, " width:", Column.Width, ";").Trim();

@@ -44,21 +44,22 @@ oDataExpandList | **IEnumerable<string>** class to define the subclasses to expa
 
 Method name | Description | Example
 ----------- | ----------- | -------
-AutoGenerateColumns | Generates columns for all properties of the model using data annotations | GridClient<Order>(...).AutoGenerateColumns();
-Sortable | Enable or disable sorting for all columns of the grid | GridClient<Order>(...).Sortable(true);
-Searchable | Enable or disable searching on the grid | GridClient<Order>(...).Searchable(true, true);
-Filterable | Enable or disable filtering for all columns of the grid | GridClient<Order>(...).Filterable(true);
-WithMultipleFilters | Allow grid to use multiple filters | GridClient<Order>(...).WithMultipleFilters();
-ClearFiltersButton | Enable or disable the ClearFilters button | GridClient<Order>(...).ClearFiltersButton(true);
-Selectable | Enable or disable the client grid items selectable feature | GridClient<Order>(...).Selectable(true, true);
-SetStriped | Enable or disable the grid as a striped one | GridClient<Order>(...).SetStriped(true);
-SetKeyboard | Enable or disable the keyboard navigation | GridClient<Order>(...).SetKeyboard(true);
-SetModifierKey | Configure the modifier key for keyboard navigation | GridClient<Order>(...).SetModifierKey(ModifierKey.ShiftKey);
-EmptyText | Setup the text displayed for all empty items in the grid | GridClient<Order>(...).EmptyText(' - ');
-WithGridItemsCount | Allows the grid to show items count | GridClient<Order>(...).WithGridItemsCount();
-SetRowCssClasses | Setup specific row css classes | GridClient<Order>(...).SetRowCssClasses(item => item.Customer.IsVip ? "success" : string.Empty);
-UseODataExpand | Add subclasses to the list of items to be expanded with OData | GridClient<Order>(...).UseODataExpand(new List<string> { "Employee", "Shipper" });
-OverrideODataExpand | Override the list of subclasses to expand with OData | GridClient<Order>(...).OverrideODataExpand(new List<string> { "Employee", "Shipper" });
-AddToOnAfterRender | Add a Func<GridComponent<T>, bool, Task> to be executed at the end of the ```OnAfterRenderAsync``` method of the grid component | GridClient<Order>(...).AddToOnAfterRender(OnAfterDepartmentRender);
+AutoGenerateColumns | Generates columns for all properties of the model using data annotations | GridODataClient<Order>(...).AutoGenerateColumns();
+Sortable | Enable or disable sorting for all columns of the grid | GridODataClient<Order>(...).Sortable(true);
+Searchable | Enable or disable searching on the grid | GridODataClient<Order>(...).Searchable(true, true);
+Filterable | Enable or disable filtering for all columns of the grid | GridODataClient<Order>(...).Filterable(true);
+WithMultipleFilters | Allow grid to use multiple filters | GridODataClient<Order>(...).WithMultipleFilters();
+ClearFiltersButton | Enable or disable the ClearFilters button | GridODataClient<Order>(...).ClearFiltersButton(true);
+Selectable | Enable or disable the client grid items selectable feature | GridODataClient<Order>(...).Selectable(true, true);
+SetStriped | Enable or disable the grid as a striped one | GridODataClient<Order>(...).SetStriped(true);
+SetKeyboard | Enable or disable the keyboard navigation | GridODataClient<Order>(...).SetKeyboard(true);
+SetModifierKey | Configure the modifier key for keyboard navigation | GridODataClient<Order>(...).SetModifierKey(ModifierKey.ShiftKey);
+EmptyText | Setup the text displayed for all empty items in the grid | GridODataClient<Order>(...).EmptyText(' - ');
+WithGridItemsCount | Allows the grid to show items count | GridODataClient<Order>(...).WithGridItemsCount();
+SetRowCssClasses | Setup specific row css classes | GridODataClient<Order>(...).SetRowCssClasses(item => item.Customer.IsVip ? "success" : string.Empty);
+UseODataExpand | Add subclasses to the list of items to be expanded with OData | GridODataClient<Order>(...).UseODataExpand(new List<string> { "Employee", "Shipper" });
+OverrideODataExpand | Override the list of subclasses to expand with OData | GridODataClient<Order>(...).OverrideODataExpand(new List<string> { "Employee", "Shipper" });
+AddToOnAfterRender | Add a Func<GridComponent<T>, bool, Task> to be executed at the end of the ```OnAfterRenderAsync``` method of the grid component | GridODataClient<Order>(...).AddToOnAfterRender(OnAfterDepartmentRender);
+SetDirection | Allows the grid to be show in right to left direction | GridODataClient<Order>(...).SetDirection(GridDirection.RTL);
 
 [<- Quick start](Quick_start.md) | [Keyboard navigation ->](Keyboard_navigation.md)

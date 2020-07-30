@@ -162,6 +162,11 @@ namespace GridMvc.Server
         IGridServer<T> SetStriped(bool enable);
 
         /// <summary>
+        ///    Setup the direction of grid
+        /// </summary>
+        IGridServer<T> SetDirection(GridDirection dir);
+
+        /// <summary>
         ///     Items, displaying in the grid view
         /// </summary>
         ItemsDTO<T> ItemsToDisplay { get; }

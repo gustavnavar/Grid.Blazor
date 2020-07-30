@@ -270,6 +270,107 @@ namespace GridMvc.Demo.Controllers
         }
 
         [HttpGet]
+        public ActionResult RTL(string gridState = "")
+        {
+            //string returnUrl = Request.Path;
+            string returnUrl = "/Home/RTL";
+            ViewData["returnUrl"] = returnUrl;
+
+            var shipperList = _shippersRepository.GetAll()
+                .Select(s => new SelectItem(s.ShipperID.ToString(), s.CompanyName))
+                .ToList();
+            ViewData["shipperList"] = shipperList;
+
+            IQueryCollection query = Request.Query;
+            if (!string.IsNullOrWhiteSpace(gridState))
+            {
+                try
+                {
+                    query = new QueryCollection(StringExtensions.GetQuery(gridState));
+                }
+                catch (Exception)
+                {
+                    // do nothing, gridState was not a valid state
+                }
+            }
+
+            var model = new SGrid<Order>(_orderRepository.GetAll(), query, false, GridPager.DefaultAjaxPagerViewName);
+
+            ViewBag.ActiveMenuTitle = "RTL";
+            return View(model);
+        }
+
+        [HttpPost]
+        public ActionResult GetOrdersRTLGridRows()
+        {
+            //string returnUrl = Request.Path;
+            string returnUrl = "/Home/RTL";
+            ViewData["returnUrl"] = returnUrl;
+
+            var shipperList = _shippersRepository.GetAll()
+                .Select(s => new SelectItem(s.ShipperID.ToString(), s.CompanyName))
+                .ToList();
+            ViewData["shipperList"] = shipperList;
+
+            var model = new SGrid<Order>(_orderRepository.GetAll(), Request.Query, false, GridPager.DefaultAjaxPagerViewName);
+
+            return PartialView("_OrdersRTLGrid", model);
+        }
+
+        [HttpPost]
+        public ActionResult GetSubgridRTL(int OrderId)
+        {
+            Action<IGridColumnCollection<OrderDetail>> columns = c =>
+            {
+                /* Adding "OrderID" column: */
+                c.Add(o => o.OrderID)
+                    .Titled("Order Number")
+                    .SortInitialDirection(GridSortDirection.Descending)
+                    .ThenSortByDescending(o => o.ProductID)
+                    .SetWidth(100);
+
+                /* Adding "ProductID" column: */
+                c.Add(o => o.ProductID)
+                    .Titled("Product Number")
+                    .SetWidth(100);
+
+                /* Adding "ProductName" column: */
+                c.Add(o => o.Product.ProductName)
+                    .Titled("Product Name")
+                    .SetWidth(250);
+
+                /* Adding "Quantity" column: */
+                c.Add(o => o.Quantity)
+                    .Titled("Quantity")
+                    .SetCellCssClassesContraint(o => o.Quantity >= 50 ? "red" : "")
+                    .SetWidth(100)
+                    .Format("{0:F}");
+
+                /* Adding "UnitPrice" column: */
+                c.Add(o => o.UnitPrice)
+                    .Titled("Unit Price")
+                    .SetWidth(100)
+                    .Format("{0:F}");
+            };
+
+            var requestCulture = HttpContext.Features.Get<IRequestCultureFeature>();
+            var locale = requestCulture.RequestCulture.UICulture.TwoLetterISOLanguageName;
+            var orderDetails = _orderDetailsRepository.GetForOrder(OrderId);
+
+            var server = new GridServer<OrderDetail>(orderDetails, Request.Query,
+                    false, "orderDetailsGrid" + OrderId.ToString(), columns, 10, locale)
+                        .SetRowCssClasses(item => item.Quantity > 10 ? "success" : string.Empty)
+                        .Sortable()
+                        .Filterable()
+                        .SetStriped(true)
+                        .WithMultipleFilters()
+                        .WithGridItemsCount()
+                        .SetDirection(GridDirection.RTL);
+
+            return PartialView("_SubGrid", server.Grid);
+        }
+
+        [HttpGet]
         public ActionResult MultipleGrids(string gridState = "", string altGridState = "")
         {        
             ViewBag.ActiveMenuTitle = "MultipleGrids";

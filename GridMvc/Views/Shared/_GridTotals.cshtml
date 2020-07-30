@@ -1,5 +1,5 @@
-﻿@using GridMvc.Columns
-@using GridMvc.Resources
+﻿@using GridMvc.Resources
+@using GridShared
 @using GridShared.Columns
 @model GridMvc.ISGrid
 
@@ -11,6 +11,9 @@
     bool requiredTotalsColumn = firstColumn != null
               && (firstColumn.IsSumEnabled || firstColumn.IsAverageEnabled
                   || firstColumn.IsMaxEnabled || firstColumn.IsMinEnabled);
+    string cssStyles = "";
+    if (Model.Direction == GridDirection.RTL)
+        cssStyles = string.Concat(cssStyles, " text-align:right;direction:rtl;").Trim();
 }
 
 @if (Model.RenderOptions.RenderRowsOnly)
@@ -29,7 +32,7 @@ else
             }
             @if (requiredTotalsColumn)
             {
-                <td class="grid-cell"><b>@Strings.Sum</b></td>
+                <td class="grid-cell" style="@cssStyles"><b>@Strings.Sum</b></td>
             }
             @for (int i = 0; i < Model.Columns.Count(); i++)
             {
@@ -37,13 +40,13 @@ else
                 if (i == 0 && !column.IsSumEnabled && !column.IsAverageEnabled
                    && !column.IsMaxEnabled && !column.IsMinEnabled)
                 {
-                    <td class="grid-cell"><b>@Strings.Sum</b></td>
+                    <td class="grid-cell" style="@cssStyles"><b>@Strings.Sum</b></td>
                 }
                 else
                 {
                     if (column.IsSumEnabled)
                     {
-                        <td class="grid-cell"><b>@column.SumString</b></td>
+                        <td class="grid-cell" style="@cssStyles"><b>@column.SumString</b></td>
                     }
                     else
                     {
@@ -53,7 +56,7 @@ else
                         }
                         else
                         {
-                            <td class="grid-cell"></td>
+                            <td class="grid-cell" style="@cssStyles"></td>
                         }
                     }
                 }
@@ -70,7 +73,7 @@ else
             }
             @if (requiredTotalsColumn)
             {
-                <td class="grid-cell"><b>@Strings.Average</b></td>
+                <td class="grid-cell" style="@cssStyles"><b>@Strings.Average</b></td>
             }
             @for (int i = 0; i < Model.Columns.Count(); i++)
             {
@@ -78,13 +81,13 @@ else
                 if (i == 0 && !column.IsSumEnabled && !column.IsAverageEnabled
                    && !column.IsMaxEnabled && !column.IsMinEnabled)
                 {
-                    <td class="grid-cell"><b>@Strings.Average</b></td>
+                    <td class="grid-cell" style="@cssStyles"><b>@Strings.Average</b></td>
                 }
                 else
                 {
                     if (column.IsAverageEnabled)
                     {
-                        <td class="grid-cell"><b>@column.AverageString</b></td>
+                        <td class="grid-cell" style="@cssStyles"><b>@column.AverageString</b></td>
                     }
                     else
                     {
@@ -94,7 +97,7 @@ else
                         }
                         else
                         {
-                            <td class="grid-cell"></td>
+                            <td class="grid-cell" style="@cssStyles"></td>
                         }
                     }
                 }
@@ -110,7 +113,7 @@ else
             }
             @if (requiredTotalsColumn)
             {
-                <td class="grid-cell"><b>@Strings.Max</b></td>
+                <td class="grid-cell" style="@cssStyles"><b>@Strings.Max</b></td>
             }
             @for (int i = 0; i < Model.Columns.Count(); i++)
             {
@@ -118,13 +121,13 @@ else
                 if (i == 0 && !column.IsSumEnabled && !column.IsAverageEnabled
                    && !column.IsMaxEnabled && !column.IsMinEnabled)
                 {
-                    <td class="grid-cell"><b>@Strings.Max</b></td>
+                    <td class="grid-cell" style="@cssStyles"><b>@Strings.Max</b></td>
                 }
                 else
                 {
                     if (column.IsMaxEnabled)
                     {
-                        <td class="grid-cell"><b>@column.MaxString</b></td>
+                        <td class="grid-cell" style="@cssStyles"><b>@column.MaxString</b></td>
                     }
                     else
                     {
@@ -134,7 +137,7 @@ else
                         }
                         else
                         {
-                            <td class="grid-cell"></td>
+                            <td class="grid-cell" style="@cssStyles"></td>
                         }
                     }
                 }
@@ -150,7 +153,7 @@ else
             }
             @if (requiredTotalsColumn)
             {
-                <td class="grid-cell"><b>@Strings.Min</b></td>
+                <td class="grid-cell" style="@cssStyles"><b>@Strings.Min</b></td>
             }
             @for (int i = 0; i < Model.Columns.Count(); i++)
             {
@@ -158,13 +161,13 @@ else
                 if (i == 0 && !column.IsSumEnabled && !column.IsAverageEnabled
                    && !column.IsMaxEnabled && !column.IsMinEnabled)
                 {
-                    <td class="grid-cell"><b>@Strings.Min</b></td>
+                    <td class="grid-cell" style="@cssStyles"><b>@Strings.Min</b></td>
                 }
                 else
                 {
                     if (column.IsMinEnabled)
                     {
-                        <td class="grid-cell"><b>@column.MinString</b></td>
+                        <td class="grid-cell" style="@cssStyles"><b>@column.MinString</b></td>
                     }
                     else
                     {
@@ -174,7 +177,7 @@ else
                         }
                         else
                         {
-                            <td class="grid-cell"></td>
+                            <td class="grid-cell" style="@cssStyles"></td>
                         }
                     }
                 }

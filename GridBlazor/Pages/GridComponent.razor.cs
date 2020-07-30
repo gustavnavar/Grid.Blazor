@@ -119,7 +119,7 @@ namespace GridBlazor.Pages
         public string GridMvcCssClass { get; set; } = "grid-mvc";
 
         [Parameter]
-        public string GridWrapCssClass { get; set; } = "grid-wrap";
+        public string GridWrapCssClass { get; set; } = "grid-wrap container";
 
         [Parameter]
         public string GridFooterCssClass { get; set; } = "grid-footer";

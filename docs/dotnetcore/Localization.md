@@ -35,7 +35,15 @@ Then you have to call the **SetLanguage** function with the required language va
 * Turkish
 * Czech
 * Slovenian
+* Sweden
 
+## Right to left direction
+Those languages that require right to left direction are also supported. You must configure the grid to user RTL direction using the ```SetDirection``` method of the ```GridServer``` object:
+    
+```c#
+    var server = new GridServer<Order>(items, Request.Query, false, "ordersGrid", columns)
+        .SetDirection(GridDirection.RTL);
+```
 ## Additional languages
 
 If you need to support other languages, please send me the translation of the following expressions and I will updete the component:

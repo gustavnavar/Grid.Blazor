@@ -472,6 +472,11 @@ namespace GridBlazor
         IGridClient<T> AddToOnAfterRender(Func<GridComponent<T>, bool, Task> OnAfterRender);
 
         /// <summary>
+        ///    Setup the direction of grid
+        /// </summary>
+        IGridClient<T> SetDirection(GridDirection dir);
+
+        /// <summary>
         ///    Get grid object
         /// </summary>
         CGrid<T> Grid { get; }

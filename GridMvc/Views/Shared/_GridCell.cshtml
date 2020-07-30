@@ -20,6 +20,9 @@
         _cssStyles = ((GridStyledColumn)column).GetCssStylesString();
     }
 
+    if (column.ParentGrid.Direction == GridDirection.RTL)
+        _cssStyles = string.Concat(_cssStyles, " text-align:right;direction:rtl;").Trim();
+
     string _cssClass = ((GridStyledColumn)column).GetCssClassesString() + " " + TdClass;
     string columnCssClasses = column.GetCellCssClasses(item);
     if (!string.IsNullOrWhiteSpace(columnCssClasses))

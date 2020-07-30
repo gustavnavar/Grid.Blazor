@@ -24,8 +24,8 @@
             <div class="form-group row" style="@(column.CrudHidden.HasFlag(CrudHidden.DELETE)?"display:none;":"")">
                 @if (!string.IsNullOrWhiteSpace(column.TooltipValue))
                 {
-                    <div class="col-md-2">
-                        <FormTooltipComponent Column="@column"></FormTooltipComponent>
+                    <div class="col-md-@column.CrudLabelWidth.ToString()">
+                        <FormTooltipComponent T="@T" Column="@column"></FormTooltipComponent>
                     </div>
                 }
                 else
@@ -88,8 +88,8 @@
             <div class="form-group row" style="@(column.CrudHidden.HasFlag(CrudHidden.DELETE)?"display:none;":"")">
                 @if (!string.IsNullOrWhiteSpace(column.TooltipValue))
                 {
-                    <div class="col-md-2">
-                        <FormTooltipComponent Column="@column"></FormTooltipComponent>
+                    <div class="col-md-@column.CrudLabelWidth.ToString()">
+                        <FormTooltipComponent T="@T" Column="@column"></FormTooltipComponent>
                     </div>
                 }
                 else
@@ -124,8 +124,8 @@
         }
     }
 
-    <div class="form-group row">
-        <div class="col-md-5">
+    <div style="display:flex;">
+        <div>
             <button type="button" class="btn btn-primary btn-md" @onclick="() => DeleteItem()">@Strings.Delete</button>
             <button type="button" class="btn btn-primary btn-md" @onclick="() => BackButtonClicked()">@Strings.Back</button>
         </div>

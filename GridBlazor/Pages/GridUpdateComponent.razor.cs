@@ -42,6 +42,7 @@ namespace GridBlazor.Pages
                 {
                     var values = ((ICGridColumn)column).GetSubGridKeyValues(Item);
                     var grid = await ((ICGridColumn)column).SubGrids(values.Values.ToArray(), true, true, true, true) as ICGrid;
+                    grid.Direction = GridComponent.Grid.Direction;
                     grid.FixedValues = values;
                     VariableReference reference = new VariableReference();
                     Children.Add(column.Name, reference);

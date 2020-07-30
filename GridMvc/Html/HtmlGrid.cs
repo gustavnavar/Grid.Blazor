@@ -115,6 +115,12 @@ namespace GridMvc.Html
             get { return _source.DeleteEnabled; }
         }
 
+        public GridDirection Direction
+        {
+            get { return _source.Direction; }
+            set { _source.Direction = value; }
+        }
+
         string IGrid.GetRowCssClasses(object item)
         {
             return _source.GetRowCssClasses(item);

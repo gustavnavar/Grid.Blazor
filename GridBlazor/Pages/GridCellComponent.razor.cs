@@ -1,4 +1,5 @@
-﻿using GridShared.Columns;
+﻿using GridShared;
+using GridShared.Columns;
 using GridShared.Utility;
 using Microsoft.AspNetCore.Components;
 using System;
@@ -46,6 +47,9 @@ namespace GridBlazor.Pages
             else
                 _cssStyles = ((GridStyledColumn)Column).GetCssStylesString();
             _cssClass = ((GridStyledColumn)Column).GetCssClassesString() + " " + TdClass;
+
+            if (GridComponent.Grid.Direction == GridDirection.RTL)
+                _cssStyles = string.Concat(_cssStyles, " text-align:right;direction:rtl;").Trim();
 
             if (!string.IsNullOrWhiteSpace(Column.Width))
                 _cssStyles = string.Concat(_cssStyles, " width:", Column.Width, ";").Trim();

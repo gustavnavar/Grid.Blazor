@@ -1,8 +1,10 @@
-﻿@if (Visible)
+﻿@typeparam T
+
+@if (Visible)
 {
     <div class="grid-tooltip">
-        <div class="dropdown dropdown-menu grid-tooltip-dropdown opened" style="display:block;@(_offset > 0 ? "margin-left:-" + _offset.ToString() + "px;" : "margin-left:90px;")" @ref="tooltip">
-            <div class="grid-dropdown-arrow" style="@(_offset > 0 ? "margin-left:" + _offset.ToString() + "px" : "margin-left:-90px;")"></div>
+        <div class="dropdown dropdown-menu grid-tooltip-dropdown opened" style="display:block;@(GridComponent.Grid.Direction == GridShared.GridDirection.RTL ? _offset > 0 ? "margin-right:-" + _offset.ToString() + "px;" : "margin-right:90px;" : _offset > 0 ? "margin-left:-" + _offset.ToString() + "px;" : "margin-left:90px;")" @ref="tooltip">
+            <div class="grid-dropdown-arrow" style="@(GridComponent.Grid.Direction == GridShared.GridDirection.RTL ? _offset > 0 ? "margin-right:" + _offset.ToString() + "px" : "margin-right:-90px;" : _offset > 0 ? "margin-left:" + _offset.ToString() + "px" : "margin-left:-90px;")"></div>
             <div class="grid-dropdown-inner">
                 <div class="grid-popup-widget">
                     <div class="grid-tooltip-body">

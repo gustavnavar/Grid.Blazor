@@ -344,6 +344,11 @@ namespace GridBlazor
         public GridMode Mode { get; internal set; }
 
         /// <summary>
+        ///     Grid direction
+        /// </summary>
+        public GridDirection Direction { get; set; } = GridDirection.LTR;
+
+        /// <summary>
         ///     Get and set export to an Excel file
         /// </summary>
         public bool ExcelExport { get; internal set; }

@@ -110,6 +110,11 @@ namespace GridShared
         string GetState();
 
         /// <summary>
+        ///     Grid direction
+        /// </summary>
+        GridDirection Direction { get; set; }
+
+        /// <summary>
         ///     Get column values to display
         /// </summary>
         IList<object> GetValuesToDisplay(string columnName, IEnumerable<object> items);

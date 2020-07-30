@@ -42,6 +42,7 @@ namespace GridBlazor.Pages
                 {
                     GridComponent.InitSubGrid[GridPosition] = false;
                     _grid = await GridComponent.Grid.SubGrids(Values.Values.ToArray());
+                    _grid.Direction = GridComponent.Grid.Direction;
                     _grid.FixedValues = Values;
                     _subGridRender = CreateSubGridComponent();
                 }

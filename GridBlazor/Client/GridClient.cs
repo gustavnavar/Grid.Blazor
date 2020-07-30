@@ -668,6 +668,12 @@ namespace GridBlazor
             return this;
         }
 
+        public IGridClient<T> SetDirection(GridDirection dir)
+        {
+            _source.Direction = dir;
+            return this;
+        }
+
         /// <summary>
         ///     Get grid object
         /// </summary>

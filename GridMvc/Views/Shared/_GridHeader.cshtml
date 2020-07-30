@@ -3,6 +3,7 @@
 @using GridMvc.Pagination
 @using GridMvc.Resources
 @using GridMvc.Sorting
+@using GridShared
 @using GridShared.Columns
 @using GridShared.Filtering
 @using GridShared.Sorting
@@ -77,6 +78,9 @@
         _cssStyles = string.Concat(_cssStyles, " width:", Model.Width, ";").Trim();
     }
 
+    if (Model.ParentGrid.Direction == GridDirection.RTL)
+        _cssStyles = string.Concat(_cssStyles, " text-align:right;direction:rtl;").Trim();
+
     List<string> cssFilterClasses = new List<string>();
     cssFilterClasses.Add(FilterButtonCss);
     if (_isColumnFiltered)
@@ -136,12 +140,6 @@
 
 <th class="@_cssClass" style="@_cssStyles">
     <div class="grid-header-group">
-        @if (Model.FilterEnabled)
-        {
-            <div class="grid-filter" data-type="@Model.FilterWidgetTypeName" data-isnullable="@Model.Filter.IsNullable" data-name="@Model.Name" data-widgetdata="@JsonSerializer.Serialize(Model.FilterWidgetData)" data-filterdata="@JsonSerializer.Serialize(_filterSettings)" data-url="@_url" data-clearinitfilter="@_clearInitFilter.ToString()">
-                <span class="@_cssFilterClass" title="@Strings.FilterButtonTooltipText"></span>
-            </div>
-        }
         @if (Model.ParentGrid.ExtSortingEnabled)
         {
             <div class="grid-extsort-draggable @_cssSortingClass" draggable="true" data-column="@Model.Name">
@@ -181,6 +179,12 @@
                 {
                     <span class="grid-sort-arrow"></span>
                 }
+            </div>
+        }
+        @if (Model.FilterEnabled)
+        {
+            <div class="grid-filter" data-type="@Model.FilterWidgetTypeName" data-isnullable="@Model.Filter.IsNullable" data-name="@Model.Name" data-widgetdata="@JsonSerializer.Serialize(Model.FilterWidgetData)" data-filterdata="@JsonSerializer.Serialize(_filterSettings)" data-url="@_url" data-clearinitfilter="@_clearInitFilter.ToString()">
+                <span class="@_cssFilterClass" title="@Strings.FilterButtonTooltipText"></span>
             </div>
         }
     </div>

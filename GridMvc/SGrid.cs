@@ -297,6 +297,11 @@ namespace GridMvc
         /// </summary>
         public bool IsMinEnabled { get { return Columns.Any(r => ((ITotalsColumn)r).IsMinEnabled); } }
 
+        /// <summary>
+        ///     Grid direction
+        /// </summary>
+        public GridDirection Direction { get; set; } = GridDirection.LTR;
+
         #endregion IGrid Members
 
         /// <summary>

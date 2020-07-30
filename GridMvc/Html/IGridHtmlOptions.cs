@@ -161,6 +161,11 @@ namespace GridMvc.Html
         IGridHtmlOptions<T> SubGrid(params string[] keys);
 
         /// <summary>
+        ///    Setup the direction of grid
+        /// </summary>
+        IGridHtmlOptions<T> SetDirection(GridDirection dir);
+
+        /// <summary>
         ///     Obviously render Grid markup
         /// </summary>
         /// <returns>Grid html layout</returns>

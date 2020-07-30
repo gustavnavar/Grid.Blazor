@@ -4,8 +4,8 @@
 
 @if (Visible)
 {
-    <div class="dropdown dropdown-menu grid-dropdown opened" style="display:block;@(_offset > 0 ? "margin-left:-" + _offset.ToString() + "px;" : "")" @ref="boolFilter" @onkeyup="FilterKeyup" @onclick:stopPropagation @onkeyup:stopPropagation tabindex="-1">
-        <div class="grid-dropdown-arrow" style="@(_offset > 0 ? "margin-left:" + _offset.ToString() + "px" : "")"></div>
+    <div class="dropdown dropdown-menu grid-dropdown opened" style="display:block;@(GridHeaderComponent.GridComponent.Grid.Direction == GridShared.GridDirection.RTL ? _offset > 0 ? "margin-right:-" + _offset.ToString() + "px;" : "" : _offset > 0 ? "margin-left:-" + _offset.ToString() + "px;" : "")" @ref="boolFilter" @onkeyup="FilterKeyup" @onclick:stopPropagation @onkeyup:stopPropagation>
+        <div class="grid-dropdown-arrow" style="@(GridHeaderComponent.GridComponent.Grid.Direction == GridShared.GridDirection.RTL ? _offset > 0 ? "margin-right:" + _offset.ToString() + "px" : "" : _offset > 0 ? "margin-left:" + _offset.ToString() + "px" : "")"></div>
         <div class="grid-dropdown-inner">
             <div class="grid-popup-widget">
                 <div class="grid-filter-body">
@@ -22,7 +22,7 @@
                             </a>
                         </li>
                     </ul>
-                </div>  
+                </div>
             </div>
             <div class="grid-popup-additional">
                 @if (_clearVisible)

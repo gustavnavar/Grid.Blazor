@@ -11,7 +11,7 @@ $.fn.extend({
         var aObj = [];
         $(this).each(function () {
             if (!$(this).data("gridmvc")) {
-                var options = { lang: $(this).attr("data-lang"), selectable: $(this).attr("data-selectable") === "true", extsortable: $(this).attr("data-extsortable") === "true", multiplefilters: $(this).attr("data-multiplefilters") === "true", currentPage: $(this).find(".grid-pager").first().attr("data-currentpage") };
+                var options = { lang: $(this).attr("data-lang"), selectable: $(this).attr("data-selectable") === "true", extsortable: $(this).attr("data-extsortable") === "true", multiplefilters: $(this).attr("data-multiplefilters") === "true", currentPage: $(this).find(".grid-pager").first().attr("data-currentpage"), dir: $(this).attr("dir") };
                 var grid = new GridMvc(this, options);
                 var name = $(this).attr("data-gridname");
                 if (name.length > 0)
@@ -201,24 +201,47 @@ GridMvc = (function ($) {
 
     gridMvc.prototype.setupPopupInitialPosition = function (popup) {
         var drop = popup.find(".grid-dropdown");
-        function getInfo() {
-            var arrow = popup.find(".grid-dropdown-arrow");
-            return { arrow: arrow, currentDropLeft: parseInt(drop.css("left")), currentArrowLeft: parseInt(arrow.css("left")) };
+        if (this.options.dir === "rtl") {
+            function getInfo() {
+                var arrow = popup.find(".grid-dropdown-arrow");
+                return { arrow: arrow, currentDropRight: parseInt(drop.css("right")), currentArrowRight: parseInt(arrow.css("right")) };
+            }
+            var dropLeft = drop.offset().left;
+            var info;
+            if (dropLeft < 0) {
+                info = getInfo();
+                info.arrow.css({ right: Math.trunc(info.currentArrowRight - dropLeft + 10) + "px" });
+                drop.css({ right: Math.trunc(info.currentDropRight + dropLeft - 10) + "px" });
+                return;
+            }
+            var dropWidth = drop.width();
+            var offsetLeft = $(window).width() - (dropLeft + dropWidth);
+            if (offsetLeft < 0) {
+                info = getInfo();
+                info.arrow.css({ right: Math.trunc(info.currentArrowRight + offsetLeft - 5) + "px" });
+                drop.css({ right: Math.trunc(info.currentDropRight - offsetLeft + 5) + "px" });
+            }
         }
-        var dropLeft = drop.offset().left;
-        var info;
-        if (dropLeft < 0) {
-            info = getInfo();
-            info.arrow.css({ left: info.currentArrowLeft + dropLeft - 10 + "px" });
-            drop.css({ left: info.currentDropLeft - dropLeft + 10 + "px" });
-            return;
-        }
-        var dropWidth = drop.width();
-        var offsetRight = $(window).width() + $(window).scrollLeft() - (dropLeft + dropWidth);
-        if (offsetRight < 0) {
-            info = getInfo();
-            info.arrow.css({ left: info.currentArrowLeft - offsetRight + 5 + "px" });
-            drop.css({ left: info.currentDropLeft + offsetRight - 5 + "px" });
+        else {
+            function getInfo() {
+                var arrow = popup.find(".grid-dropdown-arrow");
+                return { arrow: arrow, currentDropLeft: parseInt(drop.css("left")), currentArrowLeft: parseInt(arrow.css("left")) };
+            }
+            var dropLeft = drop.offset().left;
+            var info;
+            if (dropLeft < 0) {
+                info = getInfo();
+                info.arrow.css({ left: Math.trunc(info.currentArrowLeft + dropLeft - 10) + "px" });
+                drop.css({ left: Math.trunc(info.currentDropLeft - dropLeft + 10) + "px" });
+                return;
+            }
+            var dropWidth = drop.width();
+            var offsetRight = $(window).width() + $(window).scrollLeft() - (dropLeft + dropWidth);
+            if (offsetRight < 0) {
+                info = getInfo();
+                info.arrow.css({ left: Math.trunc(info.currentArrowLeft - offsetRight + 5) + "px" });
+                drop.css({ left: Math.trunc(info.currentDropLeft + offsetRight - 5) + "px" });
+            }
         }
     };
     //
@@ -808,8 +831,8 @@ TextFilterWidget = (function ($) {
         var html = '<div class="grid-filter-body">';
         for (var i = 0; i < this.filterData[columnName].values.length; i++) {
             if (i === 1) {
-                html += '<div class="form-group row">\
-                            <div class="col-md-4 col-md-offset-4 offset-md-4">\
+                html += '<div class="form-group" style="display:flex;justify-content:center;">\
+                            <div>\
                                 <select class="grid-filter-cond form-control">\
                                     <option value="1" ' + (this.filterData[columnName].condition === "1" ? "selected=\"selected\"" : "") + '>' + this.lang.filterSelectTypes.And + '</option>\
                                     <option value="2" ' + (this.filterData[columnName].condition === "2" ? "selected=\"selected\"" : "") + '>' + this.lang.filterSelectTypes.Or + '</option>\
@@ -818,8 +841,8 @@ TextFilterWidget = (function ($) {
                         </div>';
             }
             else if (i > 1) {
-                html += '<div class="form-group row">\
-                            <div class="col-md-4 col-md-offset-4 offset-md-4">\
+                html += '<div class="form-group" style="display:flex;justify-content:center;">\
+                            <div>\
                                 <select class="grid-filter-conddis form-control" disabled="disabled">\
                                     <option value="1" ' + (this.filterData[columnName].condition === "1" ? "selected=\"selected\"" : "") + '>' + this.lang.filterSelectTypes.And + '</option>\
                                     <option value="2" ' + (this.filterData[columnName].condition === "2" ? "selected=\"selected\"" : "") + '>' + this.lang.filterSelectTypes.Or + '</option>\
@@ -854,15 +877,17 @@ TextFilterWidget = (function ($) {
                         </div>\
                     </div > ';
         }
-        html += '<div class="grid-filter-buttons" style="float:right;">\
-                    <button type ="button" class="btn btn-primary grid-add"><b>+</b></button>';
+        html += '<div class="grid-buttons">\
+                    <div class="grid-filter-buttons" >\
+                        <button type="button" class="btn btn-primary grid-apply" >' + this.lang.applyFilterButtonText + '</button>\
+                    </div >\
+                    <div class="grid-filter-buttons">\
+                        <button type ="button" class="btn btn-primary grid-add"><b>+</b></button>';
         if (this.filterData[columnName].values.length > 1) {
-            html += '<button type="button" class="btn btn-primary grid-remove" style="margin-left:10px;"><b>-</b></button>';
+            html +=     '<button type="button" class="btn btn-primary grid-remove"><b>-</b></button>';
         }
-        html += '</div>';
-        html += '<div class="grid-filter-buttons" style="margin-top:10px;">\
-                    <button type="button" class="btn btn-primary grid-apply" >' + this.lang.applyFilterButtonText + '</button>\
-                 </div>\
+        html +=     '</div>\
+                </div>\
             </div> ';
         var filterBody = this.filterData[columnName].container.find(".grid-filter-body");
         if (filterBody) {
@@ -1006,8 +1031,8 @@ NumberFilterWidget = (function ($) {
         var html = '<div class="grid-filter-body">';
         for (var i = 0; i < this.filterData[columnName].values.length; i++) {
             if (i === 1) {
-                html += '<div class="form-group row">\
-                            <div class="col-md-4 col-md-offset-4 offset-md-4">\
+                html += '<div class="form-group" style="display:flex;justify-content:center;">\
+                            <div>\
                                 <select class="grid-filter-cond form-control">\
                                     <option value="1" ' + (this.filterData[columnName].condition === "1" ? "selected=\"selected\"" : "") + '>' + this.lang.filterSelectTypes.And + '</option>\
                                     <option value="2" ' + (this.filterData[columnName].condition === "2" ? "selected=\"selected\"" : "") + '>' + this.lang.filterSelectTypes.Or + '</option>\
@@ -1016,8 +1041,8 @@ NumberFilterWidget = (function ($) {
                         </div>';
             }
             else if (i > 1) {
-                html += '<div class="form-group row">\
-                            <div class="col-md-4 col-md-offset-4 offset-md-4">\
+                html += '<div class="form-group" style="display:flex;justify-content:center;">\
+                            <div>\
                                 <select class="grid-filter-conddis form-control" disabled="disabled">\
                                     <option value="1" ' + (this.filterData[columnName].condition === "1" ? "selected=\"selected\"" : "") + '>' + this.lang.filterSelectTypes.And + '</option>\
                                     <option value="2" ' + (this.filterData[columnName].condition === "2" ? "selected=\"selected\"" : "") + '>' + this.lang.filterSelectTypes.Or + '</option>\
@@ -1055,14 +1080,16 @@ NumberFilterWidget = (function ($) {
                         </div>\
                     </div> ';
         }
-        html += '<div class="grid-filter-buttons" style="float:right;">\
-                    <button type ="button" class="btn btn-primary grid-add"><b>+</b></button>';
+        html += '<div class="grid-buttons">\
+                    <div class="grid-filter-buttons" >\
+                        <button type="button" class="btn btn-primary grid-apply" >' + this.lang.applyFilterButtonText + '</button>\
+                    </div >\
+                    <div class="grid-filter-buttons">\
+                        <button type ="button" class="btn btn-primary grid-add"><b>+</b></button>';
         if (this.filterData[columnName].values.length > 1) {
-            html += '<button type="button" class="btn btn-primary grid-remove" style="margin-left:10px;"><b>-</b></button>';
+            html +=     '<button type="button" class="btn btn-primary grid-remove"><b>-</b></button>';
         }
-        html += '</div>';
-        html += '<div class="grid-filter-buttons" style="margin-top:10px;">\
-                    <button type="button" class="btn btn-primary grid-apply" >' + this.lang.applyFilterButtonText + '</button>\
+        html +=     '</div>\
                 </div>\
             </div> ';
         var filterBody = this.filterData[columnName].container.find(".grid-filter-body");
@@ -1227,8 +1254,8 @@ DateTimeFilterWidget = (function ($) {
         var html = '<div class="grid-filter-body">';
         for (var i = 0; i < this.filterData[columnName].values.length; i++) {
             if (i === 1) {
-                html += '<div class="form-group row">\
-                            <div class="col-md-4 col-md-offset-4 offset-md-4">\
+                html += '<div class="form-group" style="display:flex;justify-content:center;">\
+                            <div>\
                                 <select class="grid-filter-cond form-control">\
                                     <option value="1" ' + (this.filterData[columnName].condition === "1" ? "selected=\"selected\"" : "") + '>' + this.lang.filterSelectTypes.And + '</option>\
                                     <option value="2" ' + (this.filterData[columnName].condition === "2" ? "selected=\"selected\"" : "") + '>' + this.lang.filterSelectTypes.Or + '</option>\
@@ -1237,8 +1264,8 @@ DateTimeFilterWidget = (function ($) {
                         </div>';
             }
             else if (i > 1) {
-                html += '<div class="form-group row">\
-                            <div class="col-md-4 col-md-offset-4 offset-md-4">\
+                html += '<div class="form-group" style="display:flex;justify-content:center;">\
+                            <div>\
                                 <select class="grid-filter-conddis form-control" disabled="disabled">\
                                     <option value="1" ' + (this.filterData[columnName].condition === "1" ? "selected=\"selected\"" : "") + '>' + this.lang.filterSelectTypes.And + '</option>\
                                     <option value="2" ' + (this.filterData[columnName].condition === "2" ? "selected=\"selected\"" : "") + '>' + this.lang.filterSelectTypes.Or + '</option>\
@@ -1277,15 +1304,17 @@ DateTimeFilterWidget = (function ($) {
             html +=    '</div>\
                     </div > ';
         }
-        html += '<div class="grid-filter-buttons" style="float:right;">\
-                    <button type ="button" class="btn btn-primary grid-add"><b>+</b></button>';
+        html += '<div class="grid-buttons">\
+                    <div class="grid-filter-buttons" >\
+                        <button type="button" class="btn btn-primary grid-apply" >' + this.lang.applyFilterButtonText + '</button>\
+                    </div >\
+                    <div class="grid-filter-buttons">\
+                        <button type ="button" class="btn btn-primary grid-add"><b>+</b></button>';
         if (this.filterData[columnName].values.length > 1) {
-            html += '<button type="button" class="btn btn-primary grid-remove" style="margin-left:10px;"><b>-</b></button>';
+            html +=     '<button type="button" class="btn btn-primary grid-remove"><b>-</b></button>';
         }
-        html += '</div>';
-        html += '<div class="grid-filter-buttons" style="margin-top:10px;">\
-                    <button type="button" class="btn btn-primary grid-apply" >' + this.lang.applyFilterButtonText + '</button>\
-                 </div>\
+        html +=     '</div>\
+                </div>\
             </div> ';
         var filterBody = this.filterData[columnName].container.find(".grid-filter-body");
         if (filterBody) {
@@ -1488,8 +1517,10 @@ ListFilterWidget = (function ($) {
                 + ' value="' + this.data[i].Value + '" /> ' + this.data[i].Title + '</li >';
         }
         html +=        '</ul>';
-        html +=        '<div class="grid-filter-buttons" style="margin-top:10px;">\
-                            <button type="button" class="btn btn-primary grid-apply" >' + this.lang.applyFilterButtonText + '</button>\
+        html +=        '<div class="grid-buttons">\
+                            <div class="grid-filter-buttons" >\
+                                <button type="button" class="btn btn-primary grid-apply" >' + this.lang.applyFilterButtonText + '</button>\
+                            </div>\
                         </div>\
                     </div> ';
         this.filterData[columnName].container.append(html);

@@ -253,6 +253,12 @@ namespace GridMvc.Html
             return this;
         }
 
+        public IGridHtmlOptions<T> SetDirection(GridDirection dir)
+        {
+            _source.Direction = dir;
+            return this;
+        }
+
         public GridRenderOptions RenderOptions
         {
             get { return _source.RenderOptions; }
