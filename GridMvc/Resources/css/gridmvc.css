@@ -142,6 +142,14 @@ button.grid-button-edit { width:30px; height:30px; margin-right: 5px; background
 div[dir="rtl"] button.grid-button-edit { margin-left: 5px; margin-right: 0; }
 button.grid-button-delete { width:30px; height:30px; margin-right: 5px; background-repeat: no-repeat, no-repeat; background-position-x: 7px, 0px; background-position-y: 7px, 0px; background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 8 8"><path d="M3 0c-.55 0-1 .45-1 1h-1c-.55 0-1 .45-1 1h7c0-.55-.45-1-1-1h-1c0-.55-.45-1-1-1h-1zm-2 3v4.81c0 .11.08.19.19.19h4.63c.11 0 .19-.08.19-.19v-4.81h-1v3.5c0 .28-.22.5-.5.5s-.5-.22-.5-.5v-3.5h-1v3.5c0 .28-.22.5-.5.5s-.5-.22-.5-.5v-3.5h-1z"/></svg>'), linear-gradient(#ddd, #eee); }
 div[dir="rtl"] button.grid-button-delete { margin-left: 5px; margin-right: 0; }
+button.grid-button-label-add { margin-right: 5px; }
+div[dir="rtl"] button.grid-button-label-add { margin-left: 5px; margin-right: 0; }
+button.grid-button-label-view { height:30px; margin-right: 5px; }
+div[dir="rtl"] button.grid-button-label-view { margin-left: 5px; margin-right: 0; }
+button.grid-button-label-edit { height:30px; margin-right: 5px; }
+div[dir="rtl"] button.grid-button-label-edit { margin-left: 5px; margin-right: 0; }
+button.grid-button-label-delete { height:30px; margin-right: 5px; }
+div[dir="rtl"] button.grid-button-label-delete { margin-left: 5px; margin-right: 0; }
 td.grid-button-cell { padding: 5px 0px 5px 0px; }
 .input-validation-error { border: 1px solid red; }
 .field-validation-error { color: red; }

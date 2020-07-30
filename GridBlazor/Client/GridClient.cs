@@ -275,6 +275,16 @@ namespace GridBlazor
             return this;
         }
 
+        public IGridClient<T> SetCrudButtonLabels(string createLabel, string readLabel, string updateLabel, 
+            string deleteLabel)
+        {
+            _source.CreateLabel = createLabel;
+            _source.ReadLabel = readLabel;
+            _source.UpdateLabel = updateLabel;
+            _source.DeleteLabel = deleteLabel;
+            return this;
+        }
+
         public IGridClient<T> SetCreateComponent<TComponent>()
         {
             return SetCreateComponent<TComponent>(null, null, null);

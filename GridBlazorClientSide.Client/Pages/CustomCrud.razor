@@ -53,6 +53,7 @@ else
             .SetReadComponent<OrderReadComponent>()
             .SetUpdateComponent<OrderUpdateComponent>()
             .SetDeleteComponent<OrderDeleteComponent>()
+            .SetCrudButtonLabels("Add", "View", "Edit", "Delete")
             .WithMultipleFilters()
             .WithGridItemsCount();
 

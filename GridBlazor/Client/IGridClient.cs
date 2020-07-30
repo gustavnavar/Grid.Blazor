@@ -173,6 +173,11 @@ namespace GridBlazor
             Func<T, bool> updateEnabled, Func<T, bool> deleteEnabled);
 
         /// <summary>
+        ///     Configure CRUD button labels
+        /// </summary>
+        IGridClient<T> SetCrudButtonLabels(string createLabel, string readLabel, string updateLabel, string deleteLabel);
+
+        /// <summary>
         ///     Setup the Create Component
         /// </summary>
         IGridClient<T> SetCreateComponent<TComponent>();

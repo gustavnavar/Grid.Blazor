@@ -611,6 +611,26 @@ namespace GridBlazor
         /// </summary>
         public string EmptyGridText { get; set; }
 
+        /// <summary>
+        ///     Create button label
+        /// </summary>
+        public string CreateLabel { get; set; }
+
+        /// <summary>
+        ///     Read button label
+        /// </summary>
+        public string ReadLabel { get; set; }
+
+        /// <summary>
+        ///     Update button label
+        /// </summary>
+        public string UpdateLabel { get; set; }
+
+        /// <summary>
+        ///     Delete button label
+        /// </summary>
+        public string DeleteLabel { get; set; }
+
         #region Custom row css classes
         public void SetRowCssClassesContraint(Func<T, string> contraint)
         {

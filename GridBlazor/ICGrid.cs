@@ -199,5 +199,25 @@ namespace GridBlazor
         ///     Override OData url expand parameter with list
         /// </summary>
         bool ODataOverrideExpandList { get; set; }
+
+        /// <summary>
+        ///     Create button label
+        /// </summary>
+        string CreateLabel { get; set; }
+
+        /// <summary>
+        ///     Read button label
+        /// </summary>
+        string ReadLabel { get; set; }
+
+        /// <summary>
+        ///     Update button label
+        /// </summary>
+        string UpdateLabel { get; set; }
+
+        /// <summary>
+        ///     Delete button label
+        /// </summary>
+        string DeleteLabel { get; set; }
     }
 }

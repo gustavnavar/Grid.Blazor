@@ -24,7 +24,14 @@
             <td class="@GridComponent.GridButtonCellCssClass" data-name="" style="width:35px;">
                 @if (Grid.ReadEnabled || (((CGrid<T>)Grid).FuncReadEnabled != null && ((CGrid<T>)Grid).FuncReadEnabled((T)Item)))
                 {
-                    <button class='grid-button grid-button-view btn btn-sm btn-outline-secondary' title="@Strings.ReadItem" @onclick="@(e => GridComponent.ReadHandler(Item))" type="button" @onclick:stopPropagation></button>
+                    @if (string.IsNullOrWhiteSpace(Grid.ReadLabel))
+                    {
+                        <button class='grid-button grid-button-view btn btn-sm btn-outline-secondary' title="@Strings.ReadItem" @onclick="@(e => GridComponent.ReadHandler(Item))" type="button" @onclick:stopPropagation></button>
+                    }
+                    else
+                    {
+                        <button class='grid-button-label-view btn btn-sm btn-primary' title="@Strings.ReadItem" @onclick="@(e => GridComponent.ReadHandler(Item))" type="button" @onclick:stopPropagation>@Grid.ReadLabel</button>
+                    }  
                 }
             </td>
         }
@@ -33,7 +40,14 @@
             <td class="@GridComponent.GridButtonCellCssClass" data-name="" style="width:35px;">
                 @if (Grid.UpdateEnabled || (((CGrid<T>)Grid).FuncUpdateEnabled != null && ((CGrid<T>)Grid).FuncUpdateEnabled((T)Item)))
                 {
-                    <button class='grid-button grid-button-edit btn btn-sm btn-outline-secondary' title="@Strings.UpdateItem" @onclick="@(e => GridComponent.UpdateHandler(Item))" type="button" @onclick:stopPropagation></button>
+                    @if (string.IsNullOrWhiteSpace(Grid.UpdateLabel))
+                    {
+                        <button class='grid-button grid-button-edit btn btn-sm btn-outline-secondary' title="@Strings.UpdateItem" @onclick="@(e => GridComponent.UpdateHandler(Item))" type="button" @onclick:stopPropagation></button>
+                    }
+                    else
+                    {
+                        <button class='grid-button-label-edit btn btn-sm btn-primary' title="@Strings.UpdateItem" @onclick="@(e => GridComponent.UpdateHandler(Item))" type="button" @onclick:stopPropagation>@Grid.UpdateLabel</button>
+                    } 
                 }
             </td>
         }
@@ -42,7 +56,17 @@
             <td class="@GridComponent.GridButtonCellCssClass" data-name="" style="width:35px;">
                 @if (Grid.DeleteEnabled || (((CGrid<T>)Grid).FuncDeleteEnabled != null && ((CGrid<T>)Grid).FuncDeleteEnabled((T)Item)))
                 {
-                    <button class='grid-button grid-button-delete btn btn-sm btn-outline-secondary' title="@Strings.DeleteItem" @onclick="@(e => GridComponent.DeleteHandler(Item))" type="button" @onclick:stopPropagation></button>
+                    @if (Grid.DeleteEnabled || (((CGrid<T>)Grid).FuncDeleteEnabled != null && ((CGrid<T>)Grid).FuncDeleteEnabled((T)Item)))
+                    {
+                        @if (string.IsNullOrWhiteSpace(Grid.DeleteLabel))
+                        {
+                            <button class='grid-button grid-button-delete btn btn-sm btn-outline-secondary' title="@Strings.DeleteItem" @onclick="@(e => GridComponent.DeleteHandler(Item))" type="button" @onclick:stopPropagation></button>
+                        }
+                        else
+                        {
+                            <button class='grid-button-label-delete btn btn-sm btn-primary' title="@Strings.DeleteItem" @onclick="@(e => GridComponent.DeleteHandler(Item))" type="button" @onclick:stopPropagation>@Grid.DeleteLabel</button>
+                        }
+                    }
                 }
             </td>
         }
@@ -79,25 +103,49 @@ else
             <td class="@GridComponent.GridButtonCellCssClass" data-name="" style="width:35px;">
                 @if (Grid.ReadEnabled || (((CGrid<T>)Grid).FuncReadEnabled != null && ((CGrid<T>)Grid).FuncReadEnabled((T)Item)))
                 {
-                    <button class='grid-button grid-button-view btn btn-sm btn-outline-secondary' title="@Strings.ReadItem" @onclick="@(e => GridComponent.ReadHandler(Item))" type="button" @onclick:stopPropagation></button>
+                    @if (string.IsNullOrWhiteSpace(Grid.ReadLabel))
+                    {
+                        <button class='grid-button grid-button-view btn btn-sm btn-outline-secondary' title="@Strings.ReadItem" @onclick="@(e => GridComponent.ReadHandler(Item))" type="button" @onclick:stopPropagation></button>
+                    }
+                    else
+                    {
+                        <button class='grid-button-label-view btn btn-sm btn-primary' title="@Strings.ReadItem" @onclick="@(e => GridComponent.ReadHandler(Item))" type="button" @onclick:stopPropagation>@Grid.ReadLabel</button>
+                    } 
                 }
             </td>
         }
         @if (Grid.UpdateEnabled || ((CGrid<T>)Grid).FuncUpdateEnabled != null)
         {
-            <td class="@GridComponent.GridButtonCellCssClass" data-name="" style="width:35px;">
-                @if (Grid.UpdateEnabled || (((CGrid<T>)Grid).FuncUpdateEnabled != null && ((CGrid<T>)Grid).FuncUpdateEnabled((T)Item)))
+    <td class="@GridComponent.GridButtonCellCssClass" data-name="" style="width:35px;">
+        @if (Grid.UpdateEnabled || (((CGrid<T>)Grid).FuncUpdateEnabled != null && ((CGrid<T>)Grid).FuncUpdateEnabled((T)Item)))
+        {
+            @if (Grid.UpdateEnabled || (((CGrid<T>)Grid).FuncUpdateEnabled != null && ((CGrid<T>)Grid).FuncUpdateEnabled((T)Item)))
+            {
+                @if (string.IsNullOrWhiteSpace(Grid.UpdateLabel))
                 {
                     <button class='grid-button grid-button-edit btn btn-sm btn-outline-secondary' title="@Strings.UpdateItem" @onclick="@(e => GridComponent.UpdateHandler(Item))" type="button" @onclick:stopPropagation></button>
                 }
-            </td>
+                else
+                {
+                    <button class='grid-button-label-edit btn btn-sm btn-primary' title="@Strings.UpdateItem" @onclick="@(e => GridComponent.UpdateHandler(Item))" type="button" @onclick:stopPropagation>@Grid.UpdateLabel</button>
+                }
+            }
+        }
+    </td>
         }
         @if (Grid.DeleteEnabled || ((CGrid<T>)Grid).FuncDeleteEnabled != null)
         {
             <td class="@GridComponent.GridButtonCellCssClass" data-name="" style="width:35px;">
                 @if (Grid.DeleteEnabled || (((CGrid<T>)Grid).FuncDeleteEnabled != null && ((CGrid<T>)Grid).FuncDeleteEnabled((T)Item)))
                 {
-                    <button class='grid-button grid-button-delete btn btn-sm btn-outline-secondary' title="@Strings.DeleteItem" @onclick="@(e => GridComponent.DeleteHandler(Item))" type="button" @onclick:stopPropagation></button>
+                    @if (string.IsNullOrWhiteSpace(Grid.DeleteLabel))
+                    {
+                        <button class='grid-button grid-button-delete btn btn-sm btn-outline-secondary' title="@Strings.DeleteItem" @onclick="@(e => GridComponent.DeleteHandler(Item))" type="button" @onclick:stopPropagation></button>
+                    }
+                    else
+                    {
+                        <button class='grid-button-label-delete btn btn-sm btn-primary' title="@Strings.DeleteItem" @onclick="@(e => GridComponent.DeleteHandler(Item))" type="button" @onclick:stopPropagation>@Grid.DeleteLabel</button>
+                    }
                 }
             </td>
         }

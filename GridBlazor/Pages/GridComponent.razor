@@ -93,7 +93,14 @@
                             @if (Grid.CreateEnabled)
                             {
                                 <div class="grid-crud">
-                                    <button class="grid-button grid-button-add btn btn-sm btn-outline-secondary" type="button" title="@Strings.CreateItem" @onclick="CreateHandler" @onclick:stopPropagation></button>
+                                    @if (string.IsNullOrWhiteSpace(Grid.CreateLabel))
+                                    {
+                                        <button class="grid-button grid-button-add btn btn-sm btn-outline-secondary" type="button" title="@Strings.CreateItem" @onclick="CreateHandler" @onclick:stopPropagation></button>
+                                    }
+                                    else
+                                    {
+                                        <button class="grid-button-label-add btn btn-sm btn-primary" type="button" title="@Strings.CreateItem" @onclick="CreateHandler" @onclick:stopPropagation>@Grid.CreateLabel</button>
+                                    }
                                 </div>
                             }
                             @if (Grid.ExcelExport)

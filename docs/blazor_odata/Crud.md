@@ -248,6 +248,17 @@ And this is an auto-genereated edit form:
 
 ![](../images/Crud_edit.png)
 
+## CRUD button labels
+
+```GridBlazor``` uses buttons with a background image by default. You can change these images overriding their styles. But you can also use text labels. 
+
+You will have to use the ```SetCrudButtonLabels``` method of the ```GridODataClient``` object for this:
+```c#
+    var client = new GridODataClient<Order>(HttpClient, url, query, false, "ordersGrid", columns, 10, locale)
+        .ODataCrud(true)
+        .SetCrudButtonLabels("Add", "View", "Edit", "Delete");
+```
+
 ## Custom forms (Optional)
 
 If you want to use custom forms you can enable them using the **SetCreateComponent**, **SetReadComponent**, **SetUpdateComponent** and **SetDeleteComponent**  methods of the **GridODataClient** object:
