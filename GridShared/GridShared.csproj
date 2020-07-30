@@ -3,7 +3,7 @@
   <PropertyGroup>
     <TargetFramework>netstandard2.1</TargetFramework>
     <LangVersion>8.0</LangVersion>
-    <Version>3.0.2</Version>
+    <Version>3.1.0</Version>
     <Title>GridShared</Title>
     <Description>Support library for GridBlazor and GridMvcCore component libraries</Description>
     <Summary>Support library for GridBlazor and GridMvcCore component libraries</Summary>
@@ -14,8 +14,8 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Microsoft.AspNetCore.Http.Features" Version="3.1.5" />
-    <PackageReference Include="Microsoft.Extensions.Primitives" Version="3.1.5" />
+    <PackageReference Include="Microsoft.AspNetCore.Http.Features" Version="3.1.6" />
+    <PackageReference Include="Microsoft.Extensions.Primitives" Version="3.1.6" />
     <PackageReference Include="System.Text.Json" Version="4.7.2" />
   </ItemGroup>
 
