@@ -17,4 +17,4 @@ This is an example of a grid with an export to Excel button:
 ![](../images/Excel.png)
 
 
-[<- Button components on the grid](Button_components.md)
+[<- Embedded components on the grid](Embedded_components.md)

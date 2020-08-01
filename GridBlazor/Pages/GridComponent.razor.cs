@@ -651,10 +651,22 @@ namespace GridBlazor.Pages
         public void ButtonComponentHandler(string key)
         {
             var buttonComponent = Grid.ButtonComponents.Get(key);
-            ((CGrid<T>)Grid).Mode = GridMode.ButtonComponent;
-            if (buttonComponent.ComponentType != null)
-                CrudRender = ButtonComponent(buttonComponent.Label, buttonComponent.ComponentType, buttonComponent.Actions,
+            StartFormComponent(buttonComponent.Label, buttonComponent.ComponentType, buttonComponent.Actions,
                     buttonComponent.Functions, buttonComponent.Object);
+        }
+
+        public void StartFormComponent<TFormComponent>(string label, IList<Action<object>> actions,
+            IList<Func<object, Task>> functions, object obj)
+        {
+            StartFormComponent(label, typeof(TFormComponent), actions, functions, obj);
+        }
+
+        public void StartFormComponent(string label, Type componentType, IList<Action<object>> actions, 
+            IList<Func<object, Task>> functions, object obj)
+        {
+            ((CGrid<T>)Grid).Mode = GridMode.Form;
+            if (componentType != null)
+                CrudRender = FormComponent(label, componentType, actions, functions, obj);
             else
                 CrudRender = null;
 
@@ -810,18 +822,18 @@ namespace GridBlazor.Pages
             builder.CloseComponent();
         };
 
-        protected RenderFragment ButtonComponent(string label, Type componentType, IList<Action<object>> actions, 
+        protected RenderFragment FormComponent(string label, Type componentType, IList<Action<object>> actions, 
             IList<Func<object, Task>> functions, object obj) => builder =>
         {
             builder.OpenComponent<CascadingValue<GridComponent<T>>>(++_sequence);
             builder.AddAttribute(++_sequence, "Value", this);
             builder.AddAttribute(++_sequence, "Name", "GridComponent");
-            builder.AddAttribute(++_sequence, "ChildContent", ButtonChildComponent(label, componentType, actions,
+            builder.AddAttribute(++_sequence, "ChildContent", FormChildComponent(label, componentType, actions,
                 functions, obj));
             builder.CloseComponent();
         };
 
-        private RenderFragment ButtonChildComponent(string label, Type componentType, IList<Action<object>> actions,
+        private RenderFragment FormChildComponent(string label, Type componentType, IList<Action<object>> actions,
             IList<Func<object, Task>> functions, object obj) => builder =>
         {
             builder.OpenComponent(++_sequence, componentType);

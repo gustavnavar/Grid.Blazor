@@ -403,6 +403,38 @@ namespace GridBlazorServerSide.ColumnCollections
             .RenderValueAs(o => o.Customer.IsVip ? Strings.BoolTrueLabel : Strings.BoolFalseLabel);
         };
 
+        public static Action<IGridColumnCollection<Order>> OrderColumnsWithButttonComponents = c =>
+        {
+            /* Adding not mapped column, that renders body, using inline Razor html helper */
+            c.Add().Encoded(false).Sanitized(false).RenderComponentAs<ShipperButtonCell>();
+
+            /* Adding "OrderID" column: */
+            c.Add(o => o.OrderID).Titled(SharedResource.Number).SetTooltip("Order ID is ... ").SetWidth(100);
+
+            /* Adding "OrderDate" column: */
+            c.Add(o => o.OrderDate, "OrderCustomDate").Titled(SharedResource.OrderCustomDate)
+            .SetWidth(120).RenderComponentAs<TooltipCell>();
+
+            /* Adding "CompanyName" column: */
+            c.Add(o => o.Customer.CompanyName).Titled(SharedResource.CompanyName)
+            .SetWidth(250);
+
+            /* Adding "ContactName" column: */
+            c.Add(o => o.Customer.ContactName).Titled(SharedResource.ContactName).SetWidth(250);
+
+            /* Adding "Customer.Country" hidden column: */
+            c.Add(o => o.Customer.Country, true);
+
+            /* Adding "Freight" column: */
+            c.Add(o => o.Freight)
+            .Titled(SharedResource.Freight)
+            .Format("{0:F}");
+
+            /* Adding "Vip customer" column: */
+            c.Add(o => o.Customer.IsVip).Titled(SharedResource.IsVip).SetWidth(70).Css("hidden-xs") //hide on phones
+            .RenderValueAs(o => o.Customer.IsVip ? Strings.BoolTrueLabel : Strings.BoolFalseLabel);
+        };
+
         public static Action<IGridColumnCollection<Order>, Func<IEnumerable<SelectItem>>,
             Func<IEnumerable<SelectItem>>, Func<IEnumerable<SelectItem>>,
             Func<object[], bool, bool, bool, bool, Task<IGrid>>> 
