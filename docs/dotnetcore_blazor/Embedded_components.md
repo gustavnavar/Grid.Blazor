@@ -8,7 +8,8 @@ Compoments can be embedded on a grid. These components can be started pushing a 
 
 ## Page definition
 
-1- If you want to use a button on the top of the grid to start the embedded component, you can use the **AddButtonComponent** method of the **GridClient** object to add a component:
+* If you want to use a button on the top of the grid to start the embedded component, you can use the **AddButtonComponent** method of the **GridClient** object to add a component:
+
     ```c#
         var client = new GridClient<Order>(q => orderService.GetOrdersGridRows(columns, q), query, false, "ordersGrid", Columns, locale)
             .AddButtonComponent<EmployeeComponent>("Employees", "Employee's Grid");
@@ -26,7 +27,8 @@ Compoments can be embedded on a grid. These components can be started pushing a 
 
     If you use any of these paramenters, you must use them when creating the component.
 
-2- If you want to use a button in a grid column to start the embedded component, you has to render a button in a grid cell custom column:
+* If you want to use a button in a grid column to start the embedded component, you has to render a button in a grid cell custom column:
+
     ```c#
         c.Add().Encoded(false).Sanitized(false).RenderComponentAs<ShipperButtonCell>();
     ```
