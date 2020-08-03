@@ -215,6 +215,33 @@ You will have to use the ```SetCrudButtonLabels``` method of the ```GridClient``
         .SetCrudButtonLabels("Add", "View", "Edit", "Delete");
 ```
 
+## CRUD buttons on the grid header
+
+You can have the all the CRUD buttons on the grid header instead of the grid rows. If you decide to use this layout you must configure the grid to allow row selection. Once you selects one row you can click on the "Edit", "View" and "Delete" buttons of the header.
+
+The configuration for this type of grid is as follows:
+
+```c#
+    var client = new GridClient<Order>(q => orderService.GetOrdersGridRows(columns, q), query, false, "ordersGrid", columns, locale)
+        .Selectable(true)
+        .Crud(true, orderService)
+        .SetHeaderCrudButtons(true);
+```
+
+This is an example of grid with CRUD buttons on the header:
+
+![](../images/Crud_header_buttons.png)
+
+You can also use text labels for the header buttons. In this the configuration is as follows:
+
+```c#
+    var client = new GridClient<Order>(q => orderService.GetOrdersGridRows(columns, q), query, false, "ordersGrid", columns, locale)
+        .Selectable(true)
+        .Crud(true, orderService)
+        .SetHeaderCrudButtons(true);
+        .SetCrudButtonLabels("Add", "View", "Edit", "Delete");
+```
+
 ## Custom forms (Optional)
 
 If you want to use custom forms you can enable them using the **SetCreateComponent**, **SetReadComponent**, **SetUpdateComponent** and **SetDeleteComponent**  methods of the **GridClient** object:

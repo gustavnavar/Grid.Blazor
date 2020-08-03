@@ -1,4 +1,5 @@
 using GridBlazor.Pagination;
+using GridBlazor.Resources;
 using GridBlazor.Searching;
 using GridShared;
 using GridShared.Columns;
@@ -14,6 +15,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http.Json;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace GridBlazor.Pages
@@ -37,6 +39,9 @@ namespace GridBlazor.Pages
         internal bool _isDateTimeLocalSupported = false;
         internal bool _isWeekSupported = false;
         internal bool _isMonthSupported = false;
+
+        // CRUD buttons on the header
+        internal bool HeaderCrudButtons = false;
 
         protected ElementReference gridmvc;
 
@@ -96,6 +101,8 @@ namespace GridBlazor.Pages
         internal ColumnOrderValue Payload { get; set; }
 
         protected RenderFragment CrudRender { get; set; }
+
+        public string Error { get; set; } = "";
 
         [Parameter]
         public ICGrid Grid { get; set; }
@@ -201,6 +208,10 @@ namespace GridBlazor.Pages
                 && FirstColumn != null
                 && (FirstColumn.IsSumEnabled || FirstColumn.IsAverageEnabled
                     || FirstColumn.IsMaxEnabled || FirstColumn.IsMinEnabled);
+
+            HeaderCrudButtons = Grid.HeaderCrudButtons
+                && Grid.ComponentOptions.Selectable
+                && !Grid.ComponentOptions.MultiSelectable;
 
             HeaderComponents = new QueryDictionary<GridHeaderComponent<T>>();
 
@@ -602,6 +613,33 @@ namespace GridBlazor.Pages
             StateHasChanged();
         }
 
+        public void ReadSelectedHandler()
+        {
+            if (SelectedRow != -1)
+            {
+                var item = Grid.ItemsToDisplay.ElementAt(SelectedRow);
+                ReadHandler(item);
+            }
+            else
+                ShowError(Strings.SelectionReadError);
+        }
+
+        public void ShowError(string error)
+        {
+            Error = error;
+            var timer = new Timer((_) => {
+                InvokeAsync(OnTimerEvent);
+            }, null, 3000, -1);
+            _shouldRender = true;
+        }
+
+        private void OnTimerEvent()
+        {
+            Error = "";
+            _shouldRender = true;
+            StateHasChanged();
+        }
+
         public async Task UpdateHandler(object item)
         {
             var keys = Grid.GetPrimaryKeyValues(item);
@@ -630,6 +668,18 @@ namespace GridBlazor.Pages
                 throw;
             }
         }
+
+        public async Task UpdateSelectedHandler()
+        {
+            if (SelectedRow != -1)
+            {
+                var item = Grid.ItemsToDisplay.ElementAt(SelectedRow);
+                await UpdateHandler(item);
+            }
+            else
+                ShowError(Strings.SelectionUpdateError);
+        }
+
         public void DeleteHandler(object item)
         {
             _item = (T)item;
@@ -641,6 +691,17 @@ namespace GridBlazor.Pages
 
             _shouldRender = true;
             StateHasChanged();
+        }
+
+        public void DeleteSelectedHandler()
+        {
+            if (SelectedRow != -1)
+            {
+                var item = Grid.ItemsToDisplay.ElementAt(SelectedRow);
+                DeleteHandler(item);
+            }
+            else
+                ShowError(Strings.SelectionDeleteError);
         }
 
         public async Task ExcelHandler()

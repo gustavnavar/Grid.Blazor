@@ -631,6 +631,8 @@ namespace GridBlazor
         /// </summary>
         public string DeleteLabel { get; set; }
 
+        public bool HeaderCrudButtons { get; set; }
+
         #region Custom row css classes
         public void SetRowCssClassesContraint(Func<T, string> contraint)
         {

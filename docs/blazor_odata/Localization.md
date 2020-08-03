@@ -83,5 +83,8 @@ If you need to support other languages, please send me the translation of the fo
 * There was an error creating the new item
 * There was an error deleting this item
 * There was an error updating this item
+* You must select the row you want to delete	
+* You must select the row you want to view	
+* You must select the row you want to edit
 
 [<- Setup initial column filtering](Setup_initial_column_filtering.md) | [Data annotations ->](Data_annotations.md)

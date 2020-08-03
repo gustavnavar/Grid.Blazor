@@ -219,5 +219,10 @@ namespace GridBlazor
         ///     Delete button label
         /// </summary>
         string DeleteLabel { get; set; }
+
+        /// <summary>
+        ///     Header CRUD buttons
+        /// </summary>
+        bool HeaderCrudButtons { get; set; }
     }
 }

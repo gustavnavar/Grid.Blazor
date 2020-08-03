@@ -255,4 +255,13 @@
   <data name="IsNull" xml:space="preserve">
     <value>Est nul</value>
   </data>
+  <data name="SelectionDeleteError" xml:space="preserve">
+    <value>Vous devez sélectionner la ligne que vous souhaitez supprimer</value>
+  </data>
+  <data name="SelectionReadError" xml:space="preserve">
+    <value>Vous devez sélectionner la ligne que vous souhaitez afficher</value>
+  </data>
+  <data name="SelectionUpdateError" xml:space="preserve">
+    <value>Vous devez sélectionner la ligne que vous souhaitez modifier</value>
+  </data>
 </root>

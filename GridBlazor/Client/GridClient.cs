@@ -285,6 +285,12 @@ namespace GridBlazor
             return this;
         }
 
+        public IGridClient<T> SetHeaderCrudButtons(bool enabled)
+        {
+            _source.HeaderCrudButtons = enabled;
+            return this;
+        }
+
         public IGridClient<T> SetCreateComponent<TComponent>()
         {
             return SetCreateComponent<TComponent>(null, null, null);

@@ -255,4 +255,13 @@
   <data name="IsNull" xml:space="preserve">
     <value>Er null</value>
   </data>
+  <data name="SelectionDeleteError" xml:space="preserve">
+    <value>Du må velge raden du vil slette</value>
+  </data>
+  <data name="SelectionReadError" xml:space="preserve">
+    <value>Du må velge raden du vil vise</value>
+  </data>
+  <data name="SelectionUpdateError" xml:space="preserve">
+    <value>Du må velge raden du vil redigere</value>
+  </data>
 </root>

@@ -255,4 +255,13 @@
   <data name="IsNull" xml:space="preserve">
     <value>Is null</value>
   </data>
+  <data name="SelectionDeleteError" xml:space="preserve">
+    <value>You must select the row you want to delete</value>
+  </data>
+  <data name="SelectionReadError" xml:space="preserve">
+    <value>You must select the row you want to view</value>
+  </data>
+  <data name="SelectionUpdateError" xml:space="preserve">
+    <value>You must select the row you want to edit</value>
+  </data>
 </root>

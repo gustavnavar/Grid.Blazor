@@ -255,4 +255,13 @@
   <data name="IsNull" xml:space="preserve">
     <value>Je null</value>
   </data>
+  <data name="SelectionDeleteError" xml:space="preserve">
+    <value>Musíte vybrat řádek, který chcete odstranit</value>
+  </data>
+  <data name="SelectionReadError" xml:space="preserve">
+    <value>Musíte vybrat řádek, který chcete zobrazit</value>
+  </data>
+  <data name="SelectionUpdateError" xml:space="preserve">
+    <value>Musíte vybrat řádek, který chcete upravit</value>
+  </data>
 </root>

@@ -42,15 +42,28 @@ namespace GridBlazor.Pages
                     var grid = await ((ICGridColumn)column).SubGrids(values, false, true, false, true) as ICGrid;
                     grid.Direction = GridComponent.Grid.Direction;
                     VariableReference reference = new VariableReference();
-                    Children.Add(column.Name, reference);
-                    _renderFragments.Add(column.Name, CreateSubGridComponent(grid, reference));
+                    if (Children.ContainsKey(column.Name))
+                        Children[column.Name] = reference;
+                    else
+                        Children.Add(column.Name, reference);
+                    if (_renderFragments.ContainsKey(column.Name))
+                        _renderFragments[column.Name] = CreateSubGridComponent(grid, reference);
+                    else
+                        _renderFragments.Add(column.Name, CreateSubGridComponent(grid, reference));
                 }
                 else if (column.DeleteComponentType != null)
                 {
                     VariableReference reference = new VariableReference();
-                    Children.Add(column.Name, reference);
-                    _renderFragments.Add(column.Name, GridCellComponent<T>.CreateComponent(_sequence, 
-                        GridComponent, column.DeleteComponentType, column, Item, null, true, reference));
+                    if (Children.ContainsKey(column.Name))
+                        Children[column.Name] = reference;
+                    else
+                        Children.Add(column.Name, reference);
+                    if (_renderFragments.ContainsKey(column.Name))
+                        _renderFragments[column.Name] = GridCellComponent<T>.CreateComponent(_sequence,
+                            GridComponent, column.DeleteComponentType, column, Item, null, true, reference);
+                    else
+                        _renderFragments.Add(column.Name, GridCellComponent<T>.CreateComponent(_sequence,
+                            GridComponent, column.DeleteComponentType, column, Item, null, true, reference));
                 }
             }
             _tabGroups = GridComponent.Grid.Columns

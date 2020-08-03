@@ -178,6 +178,11 @@ namespace GridBlazor
         IGridClient<T> SetCrudButtonLabels(string createLabel, string readLabel, string updateLabel, string deleteLabel);
 
         /// <summary>
+        ///     Configure CRUD buttons on the header
+        /// </summary>
+        IGridClient<T> SetHeaderCrudButtons(bool enabled);
+
+        /// <summary>
         ///     Setup the Create Component
         /// </summary>
         IGridClient<T> SetCreateComponent<TComponent>();

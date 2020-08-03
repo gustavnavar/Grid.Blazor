@@ -396,6 +396,33 @@ namespace GridBlazor.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to You must select the row you want to delete.
+        /// </summary>
+        public static string SelectionDeleteError {
+            get {
+                return ResourceManager.GetString("SelectionDeleteError", System.Globalization.CultureInfo.CurrentCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to You must select the row you want to view.
+        /// </summary>
+        public static string SelectionReadError {
+            get {
+                return ResourceManager.GetString("SelectionReadError", System.Globalization.CultureInfo.CurrentCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to You must select the row you want to edit.
+        /// </summary>
+        public static string SelectionUpdateError {
+            get {
+                return ResourceManager.GetString("SelectionUpdateError", System.Globalization.CultureInfo.CurrentCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to --- Select an item ---.
         /// </summary>
         public static string SelectItem {

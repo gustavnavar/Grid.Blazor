@@ -255,4 +255,13 @@
   <data name="IsNull" xml:space="preserve">
     <value>Нулевой</value>
   </data>
+  <data name="SelectionDeleteError" xml:space="preserve">
+    <value>Вы должны выбрать строку, которую хотите удалить</value>
+  </data>
+  <data name="SelectionReadError" xml:space="preserve">
+    <value>Вы должны выбрать строку, которую хотите просмотреть</value>
+  </data>
+  <data name="SelectionUpdateError" xml:space="preserve">
+    <value>Вы должны выбрать строку, которую хотите редактировать</value>
+  </data>
 </root>

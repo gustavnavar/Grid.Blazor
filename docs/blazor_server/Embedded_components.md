@@ -4,7 +4,7 @@
 
 [Index](Documentation.md)
 
-Compoments can be embedded on a grid. These components can be started pushing a button on the top of the grid or in the grid columns. On both cases they will be shown on the screen instead of the grid.
+Compoments can be embedded on a grid. These components can be started clicking on a button on the top of the grid or in the grid columns. On both cases they will be shown on the screen instead of the grid.
 
 ## Page definition
 

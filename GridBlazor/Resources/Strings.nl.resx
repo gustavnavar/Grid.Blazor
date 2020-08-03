@@ -255,4 +255,13 @@
   <data name="IsNull" xml:space="preserve">
     <value>Is niets</value>
   </data>
+  <data name="SelectionDeleteError" xml:space="preserve">
+    <value>U moet de rij selecteren die u wilt verwijderen</value>
+  </data>
+  <data name="SelectionReadError" xml:space="preserve">
+    <value>U moet de rij selecteren die u wilt bekijken</value>
+  </data>
+  <data name="SelectionUpdateError" xml:space="preserve">
+    <value>U moet de rij selecteren die u wilt bewerken</value>
+  </data>
 </root>

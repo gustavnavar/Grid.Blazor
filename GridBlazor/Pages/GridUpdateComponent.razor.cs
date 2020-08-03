@@ -45,15 +45,28 @@ namespace GridBlazor.Pages
                     grid.Direction = GridComponent.Grid.Direction;
                     grid.FixedValues = values;
                     VariableReference reference = new VariableReference();
-                    Children.Add(column.Name, reference);
-                    _renderFragments.Add(column.Name, CreateSubGridComponent(grid, reference));
+                    if(Children.ContainsKey(column.Name))
+                        Children[column.Name] = reference;
+                    else
+                        Children.Add(column.Name, reference);
+                    if (_renderFragments.ContainsKey(column.Name))
+                        _renderFragments[column.Name] = CreateSubGridComponent(grid, reference);
+                    else
+                        _renderFragments.Add(column.Name, CreateSubGridComponent(grid, reference));
                 }
                 else if (column.UpdateComponentType != null)
                 {
                     VariableReference reference = new VariableReference();
-                    Children.Add(column.Name, reference);
-                    _renderFragments.Add(column.Name, GridCellComponent<T>.CreateComponent(_sequence,
-                        GridComponent, column.UpdateComponentType, column, Item, null, true, reference));
+                    if (Children.ContainsKey(column.Name))
+                        Children[column.Name] = reference;
+                    else
+                        Children.Add(column.Name, reference);
+                    if (_renderFragments.ContainsKey(column.Name))
+                        _renderFragments[column.Name] = GridCellComponent<T>.CreateComponent(_sequence,
+                            GridComponent, column.UpdateComponentType, column, Item, null, true, reference);
+                    else
+                        _renderFragments.Add(column.Name, GridCellComponent<T>.CreateComponent(_sequence,
+                            GridComponent, column.UpdateComponentType, column, Item, null, true, reference));
                 }
             }
             _tabGroups = GridComponent.Grid.Columns

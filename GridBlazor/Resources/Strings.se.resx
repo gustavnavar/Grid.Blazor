@@ -234,6 +234,15 @@
   <data name="SearchFor" xml:space="preserve">
     <value>Sök efter ...</value>
   </data>
+  <data name="SelectionDeleteError" xml:space="preserve">
+    <value>Du måste välja raden du vill ta bort</value>
+  </data>
+  <data name="SelectionReadError" xml:space="preserve">
+    <value>Du måste välja raden du vill visa</value>
+  </data>
+  <data name="SelectionUpdateError" xml:space="preserve">
+    <value>Du måste välja raden du vill redigera</value>
+  </data>
   <data name="SelectItem" xml:space="preserve">
     <value>--- Välj ett objekt ---</value>
   </data>

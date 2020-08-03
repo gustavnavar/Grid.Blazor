@@ -246,4 +246,13 @@
   <data name="IsNull" xml:space="preserve">
     <value>Nična</value>
   </data>
+  <data name="SelectionDeleteError" xml:space="preserve">
+    <value>Izbrati morate vrstico, ki jo želite izbrisati</value>
+  </data>
+  <data name="SelectionReadError" xml:space="preserve">
+    <value>Izbrati morate vrstico, ki si jo želite ogledati</value>
+  </data>
+  <data name="SelectionUpdateError" xml:space="preserve">
+    <value>Izbrati morate vrstico, ki jo želite urediti</value>
+  </data>
 </root>
