@@ -230,7 +230,7 @@ The configuration for this type of grid is as follows:
 
 This is an example of grid with CRUD buttons on the header:
 
-![](../images/Crud_header_buttons.png)
+![](../images/Crud_header_button.png)
 
 You can also use text labels for the header buttons. In this the configuration is as follows:
 
