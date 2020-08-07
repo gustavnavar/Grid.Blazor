@@ -72,7 +72,7 @@ namespace GridBlazorOData.Server
 
             app.UseEndpoints(endpoints =>
             {
-                endpoints.Select().Expand().Filter().OrderBy().MaxTop(100).Count();
+                endpoints.Select().Expand().Filter().OrderBy().MaxTop(null).Count();
                 endpoints.MapODataRoute("odata", "odata", EdmModel.GetEdmModel());
 
                 endpoints.MapControllers();

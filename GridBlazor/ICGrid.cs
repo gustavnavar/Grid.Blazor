@@ -86,6 +86,16 @@ namespace GridBlazor
         bool ExcelExport { get; }
 
         /// <summary>
+        ///     Get and set export all rows to an Excel file
+        /// </summary>
+        bool ExcelExportAllRows { get; }
+
+        /// <summary>
+        ///     Get and set Excel file name
+        /// </summary>
+        string ExcelExportFileName { get; }
+
+        /// <summary>
         ///     Get and set custom create component
         /// </summary>
         Type CreateComponent { get; }

@@ -354,6 +354,16 @@ namespace GridBlazor
         public bool ExcelExport { get; internal set; }
 
         /// <summary>
+        ///     Get and set export all rows to an Excel file
+        /// </summary>
+        public bool ExcelExportAllRows { get; internal set; }
+
+        /// <summary>
+        ///     Get and set Excel file name
+        /// </summary>
+        public string ExcelExportFileName { get; internal set; }
+
+        /// <summary>
         ///     Get value for creating items
         /// </summary>
         public bool CreateEnabled { get; internal set; }
@@ -874,7 +884,20 @@ namespace GridBlazor
             if (ExcelExport)
             {
                 ExcelWriter excelWriter = new ExcelWriter();
-                byte[] content = excelWriter.GenerateExcel(Columns, Items);
+                byte[] content;
+                if (ExcelExportAllRows)
+                {
+                    var oldPageSize = Pager.PageSize;
+                    Pager.PageSize = ItemsCount;
+                    AddQueryParameter(GridPager.DefaultPageSizeQueryParameter, ItemsCount.ToString());
+                    await UpdateGrid();
+                    content = excelWriter.GenerateExcel(Columns, Items);
+                    Pager.PageSize = oldPageSize;
+                    AddQueryParameter(GridPager.DefaultPageSizeQueryParameter, oldPageSize.ToString());
+                    await UpdateGrid();
+                }
+                else
+                    content = excelWriter.GenerateExcel(Columns, Items);
                 await js.InvokeAsync<object>("gridJsFunctions.saveAsFile", filename, Convert.ToBase64String(content));
             }
         }

@@ -49,7 +49,7 @@ else
             .SetStriped(true)
             .WithMultipleFilters()
             .WithGridItemsCount()
-            .SetExcelExport(true);
+            .SetExcelExport(true, true, "Orders");
 
         _grid = client.Grid;
         // Set new items to grid

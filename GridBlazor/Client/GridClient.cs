@@ -646,9 +646,19 @@ namespace GridBlazor
         /// <summary>
         ///     Allow grid to export to an Excel file
         /// </summary>
-        public IGridClient<T> SetExcelExport(bool enable)
+        public IGridClient<T> SetExcelExport(bool enable, string fileName = null)
+        {
+            return SetExcelExport(enable, false, fileName);
+        }
+
+        /// <summary>
+        ///     Allow grid to export to an Excel file
+        /// </summary>
+        public IGridClient<T> SetExcelExport(bool enable, bool allRows, string fileName = null)
         {
             _source.ExcelExport = enable;
+            _source.ExcelExportAllRows = allRows;
+            _source.ExcelExportFileName = fileName;
             return this;
         }
 

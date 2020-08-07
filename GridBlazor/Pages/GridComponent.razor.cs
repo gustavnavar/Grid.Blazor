@@ -706,7 +706,10 @@ namespace GridBlazor.Pages
 
         public async Task ExcelHandler()
         {
-            await Grid.DownloadExcel(jSRuntime, Grid.ComponentOptions.GridName + ".xlsx");
+            if(string.IsNullOrWhiteSpace(Grid.ExcelExportFileName))
+                await Grid.DownloadExcel(jSRuntime, Grid.ComponentOptions.GridName + ".xlsx");
+            else
+                await Grid.DownloadExcel(jSRuntime, Grid.ExcelExportFileName + ".xlsx");
         }
 
         public void ButtonComponentHandler(string key)
