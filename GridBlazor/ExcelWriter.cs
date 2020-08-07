@@ -9,7 +9,6 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
 using System.Linq;
-using System.Text.RegularExpressions;
 
 namespace GridBlazor
 {
@@ -27,20 +26,9 @@ namespace GridBlazor
 
         public ExcelCell(string content)
         {
-            Content = CleanInvalidXmlChars(content);
+            Content = content;
             ColSpan = 1;
             RowSpan = 1;
-        }
-
-        public string CleanInvalidXmlChars(string text)
-        {
-            if (text != null)
-            {
-                string re = @"[^\x09\x0A\x0D\x20-\xD7FF\xE000-\xFFFD\x10000-x10FFFF]";
-                return Regex.Replace(text, re, "");
-            }
-            else
-                return null;
         }
     }
 
