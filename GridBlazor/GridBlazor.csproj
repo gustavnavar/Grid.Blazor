@@ -70,6 +70,18 @@
     <EmbeddedResource Include="Resources\Strings.se.resx" LogicalName="GridBlazor.Resources.Strings.se.resources">
       <Generator></Generator>
     </EmbeddedResource>
+    <EmbeddedResource Include="Resources\Strings.sr-Cyrl-BA.resx" LogicalName="GridBlazor.Resources.Strings.sr-Cyrl-BA.resources">
+      <Generator></Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\Strings.sr-Latn-BA.resx" LogicalName="GridBlazor.Resources.Strings.sr-Latn-BA.resources">
+      <Generator></Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\Strings.sr-Cyrl-RS.resx" LogicalName="GridBlazor.Resources.Strings.sr-Cyrl-RS.resources">
+      <Generator></Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\Strings.sr-Latn-RS.resx" LogicalName="GridBlazor.Resources.Strings.sr-Latn-RS.resources">
+      <Generator></Generator>
+    </EmbeddedResource>
   </ItemGroup>
 
   <ItemGroup>
