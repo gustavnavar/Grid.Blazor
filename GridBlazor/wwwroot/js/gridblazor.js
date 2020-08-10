@@ -36,8 +36,9 @@
             var innerHeight = window.innerHeight;
             var innerWidth = window.innerWidth;
             return {
-                Width: width, Height: height, X: x, Y: y, ScreenWidth: screenWidth, ScreenHeight: screenHeight,
-                InnerWidth: innerWidth, InnerHeight: innerHeight
+                Width: Math.round(width), Height: Math.round(height), X: Math.round(x), Y: Math.round(y),
+                ScreenWidth: Math.round(screenWidth), ScreenHeight: Math.round(screenHeight),
+                InnerWidth: Math.round(innerWidth), InnerHeight: Math.round(innerHeight)
             };
         }
         else

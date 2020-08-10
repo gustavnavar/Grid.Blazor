@@ -154,6 +154,9 @@ namespace GridBlazor.Pages
         [Parameter]
         public string GridEmptyTextCssClass { get; set; } = "grid-empty-text";
 
+        [Parameter]
+        public ScreenPosition ScreenPosition { get; set; }
+
         protected override void OnParametersSet()
         {
             _filterComponents = new QueryDictionary<Type>();
@@ -271,6 +274,11 @@ namespace GridBlazor.Pages
             {
                 _fromCrud = false;
                 await SetFocus(gridmvc);
+            }
+
+            if (ScreenPosition == null && firstRender && gridmvc.Id != null)
+            {
+                ScreenPosition = await jSRuntime.InvokeAsync<ScreenPosition>("gridJsFunctions.getPosition", gridmvc);
             }
 
             if (Grid.ComponentOptions.Selectable && Grid.ComponentOptions.InitSelection

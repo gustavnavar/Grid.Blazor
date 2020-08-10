@@ -59,17 +59,21 @@ namespace GridBlazor.Pages
                 ScreenPosition sp = await jSRuntime.InvokeAsync<ScreenPosition>("gridJsFunctions.getPosition", dateTimeFilter);
                 if (GridHeaderComponent.GridComponent.Grid.Direction == GridShared.GridDirection.RTL)
                 {
-                    if (sp != null && sp.X < 0)
+                    if (sp != null && GridHeaderComponent.GridComponent.ScreenPosition != null
+                        && sp.X < Math.Max(25, GridHeaderComponent.GridComponent.ScreenPosition.X))
                     {
-                        _offset = -sp.X + 25;
+                        _offset = -sp.X + Math.Max(25, GridHeaderComponent.GridComponent.ScreenPosition.X);
                         StateHasChanged();
                     }
                 }
                 else
                 {
-                    if (sp != null && sp.X + sp.Width > sp.InnerWidth)
+                    if (sp != null && GridHeaderComponent.GridComponent.ScreenPosition != null
+                        && sp.X + sp.Width > Math.Min(sp.InnerWidth, GridHeaderComponent.GridComponent.ScreenPosition.X
+                        + GridHeaderComponent.GridComponent.ScreenPosition.Width + 25))
                     {
-                        _offset = sp.X + sp.Width - sp.InnerWidth + 25;
+                        _offset = sp.X + sp.Width - Math.Min(sp.InnerWidth, GridHeaderComponent.GridComponent.ScreenPosition.X
+                        + GridHeaderComponent.GridComponent.ScreenPosition.Width + 25) + 25;
                         StateHasChanged();
                     }
                 }

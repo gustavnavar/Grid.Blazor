@@ -2,6 +2,7 @@
 using GridShared.Utility;
 using Microsoft.AspNetCore.Components;
 using Microsoft.JSInterop;
+using System;
 using System.Threading.Tasks;
 
 namespace GridBlazor.Pages
@@ -30,17 +31,21 @@ namespace GridBlazor.Pages
                 ScreenPosition sp = await jSRuntime.InvokeAsync<ScreenPosition>("gridJsFunctions.getPosition", tooltip);
                 if (GridComponent.Grid.Direction == GridShared.GridDirection.RTL)
                 {
-                    if (sp != null && sp.X < 0)
+                    if (sp != null && GridComponent.ScreenPosition != null
+                        && sp.X < Math.Max(35, GridComponent.ScreenPosition.X))
                     {
-                        _offset = -sp.X - 35;
+                        _offset = -sp.X - Math.Max(35, GridComponent.ScreenPosition.X);
                         StateHasChanged();
                     }
                 }
                 else
                 {
-                    if (sp != null && sp.X + sp.Width > sp.InnerWidth)
+                    if (sp != null && GridComponent.ScreenPosition != null
+                        && sp.X + sp.Width > Math.Min(sp.InnerWidth, GridComponent.ScreenPosition.X
+                        + GridComponent.ScreenPosition.Width + 35))
                     {
-                        _offset = sp.X + sp.Width - sp.InnerWidth - 35;
+                        _offset = sp.X + sp.Width - Math.Min(sp.InnerWidth, GridComponent.ScreenPosition.X
+                            + GridComponent.ScreenPosition.Width + 35) - 35;
                         StateHasChanged();
                     }
                 }
