@@ -1,112 +1,115 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk.Razor">
 
-  <PropertyGroup>
-    <TargetFramework>netstandard2.1</TargetFramework>
-    <RazorLangVersion>3.0</RazorLangVersion>
-    <LangVersion>8.0</LangVersion>
-    <GenerateEmbeddedFilesManifest>True</GenerateEmbeddedFilesManifest>
-    <EnableDefaultEmbeddedResourceItems>False</EnableDefaultEmbeddedResourceItems>
-    <Version>1.8.4</Version>
-    <Title>GridBlazor</Title>
-    <Description>Grid components for Blazor</Description>
-    <Summary>Grid components for Blazor</Summary>
-    <Authors>Gustau Navarro</Authors>
-    <PackageTags>grid blazor</PackageTags>
-    <PackageProjectUrl>https://github.com/gustavnavar/Grid.Blazor</PackageProjectUrl>
-    <PackageLicenseExpression>LGPL-2.1-only</PackageLicenseExpression>
-    <PackageReleaseNotes>Supports .NET Core 3.1</PackageReleaseNotes>
-  </PropertyGroup>
+    <PropertyGroup>
+        <TargetFramework>netstandard2.1</TargetFramework>
+        <RazorLangVersion>3.0</RazorLangVersion>
+        <LangVersion>8.0</LangVersion>
+        <GenerateEmbeddedFilesManifest>True</GenerateEmbeddedFilesManifest>
+        <EnableDefaultEmbeddedResourceItems>False</EnableDefaultEmbeddedResourceItems>
+        <Version>1.8.4</Version>
+        <Title>GridBlazor</Title>
+        <Description>Grid components for Blazor</Description>
+        <Summary>Grid components for Blazor</Summary>
+        <Authors>Gustau Navarro</Authors>
+        <PackageTags>grid blazor</PackageTags>
+        <PackageProjectUrl>https://github.com/gustavnavar/Grid.Blazor</PackageProjectUrl>
+        <PackageLicenseExpression>LGPL-2.1-only</PackageLicenseExpression>
+        <PackageReleaseNotes>Supports .NET Core 3.1</PackageReleaseNotes>
+    </PropertyGroup>
 
-  <ItemGroup>
-    <AssemblyAttribute Include="System.Runtime.CompilerServices.InternalsVisibleTo">
-      <_Parameter1>GridBlazor.Tests</_Parameter1>
-    </AssemblyAttribute>
-  </ItemGroup>
+    <ItemGroup>
+        <AssemblyAttribute Include="System.Runtime.CompilerServices.InternalsVisibleTo">
+            <_Parameter1>GridBlazor.Tests</_Parameter1>
+        </AssemblyAttribute>
+    </ItemGroup>
 
-  <ItemGroup>
-    <PackageReference Include="Microsoft.AspNetCore.Components" Version="3.1.6" />
-    <PackageReference Include="Microsoft.AspNetCore.Components.Web" Version="3.1.6" />
-    <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="3.1.6" />
-    <PackageReference Include="Microsoft.Extensions.Primitives" Version="3.1.6" />
-    <PackageReference Include="System.Net.Http.Json" Version="3.2.1" />
-    <PackageReference Include="DocumentFormat.OpenXml" Version="2.11.3" />
-  </ItemGroup>
+    <ItemGroup>
+        <PackageReference Include="Microsoft.AspNetCore.Components" Version="3.1.6" />
+        <PackageReference Include="Microsoft.AspNetCore.Components.Web" Version="3.1.6" />
+        <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="3.1.6" />
+        <PackageReference Include="Microsoft.Extensions.Primitives" Version="3.1.6" />
+        <PackageReference Include="System.Net.Http.Json" Version="3.2.1" />
+        <PackageReference Include="DocumentFormat.OpenXml" Version="2.11.3" />
+    </ItemGroup>
 
-  <ItemGroup>
-    <EmbeddedResource Include="Resources\Strings.resx" LogicalName="GridBlazor.Resources.Strings.resources">
-      <Generator>PublicResXFileCodeGenerator</Generator>
-      <LastGenOutput>Strings.Designer.cs</LastGenOutput>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Resources\Strings.de.resx" LogicalName="GridBlazor.Resources.Strings.de.resources">
-      <Generator></Generator>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Resources\Strings.fr.resx" LogicalName="GridBlazor.Resources.Strings.fr.resources">
-      <Generator></Generator>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Resources\Strings.it.resx" LogicalName="GridBlazor.Resources.Strings.it.resources">
-      <Generator></Generator>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Resources\Strings.es.resx" LogicalName="GridBlazor.Resources.Strings.es.resources">
-      <Generator></Generator>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Resources\Strings.ru.resx" LogicalName="GridBlazor.Resources.Strings.ru.resources">
-      <Generator></Generator>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Resources\Strings.nb-NO.resx" LogicalName="GridBlazor.Resources.Strings.nb-NO.resources">
-      <Generator></Generator>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Resources\Strings.nl.resx" LogicalName="GridBlazor.Resources.Strings.nl.resources">
-      <Generator></Generator>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Resources\Strings.sl.resx" LogicalName="GridBlazor.Resources.Strings.sl.resources">
-      <Generator></Generator>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Resources\Strings.tr.resx" LogicalName="GridBlazor.Resources.Strings.tr.resources">
-      <Generator></Generator>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Resources\Strings.cs.resx" LogicalName="GridBlazor.Resources.Strings.cs.resources">
-      <Generator></Generator>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Resources\Strings.se.resx" LogicalName="GridBlazor.Resources.Strings.se.resources">
-      <Generator></Generator>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Resources\Strings.sr-Cyrl-BA.resx" LogicalName="GridBlazor.Resources.Strings.sr-Cyrl-BA.resources">
-      <Generator></Generator>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Resources\Strings.sr-Latn-BA.resx" LogicalName="GridBlazor.Resources.Strings.sr-Latn-BA.resources">
-      <Generator></Generator>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Resources\Strings.sr-Cyrl-RS.resx" LogicalName="GridBlazor.Resources.Strings.sr-Cyrl-RS.resources">
-      <Generator></Generator>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Resources\Strings.sr-Latn-RS.resx" LogicalName="GridBlazor.Resources.Strings.sr-Latn-RS.resources">
-      <Generator></Generator>
-    </EmbeddedResource>
-  </ItemGroup>
+    <ItemGroup>
+        <EmbeddedResource Include="Resources\Strings.resx" LogicalName="GridBlazor.Resources.Strings.resources">
+            <Generator>PublicResXFileCodeGenerator</Generator>
+            <LastGenOutput>Strings.Designer.cs</LastGenOutput>
+        </EmbeddedResource>
+        <EmbeddedResource Include="Resources\Strings.de.resx" LogicalName="GridBlazor.Resources.Strings.de.resources">
+            <Generator></Generator>
+        </EmbeddedResource>
+        <EmbeddedResource Include="Resources\Strings.fr.resx" LogicalName="GridBlazor.Resources.Strings.fr.resources">
+            <Generator></Generator>
+        </EmbeddedResource>
+        <EmbeddedResource Include="Resources\Strings.it.resx" LogicalName="GridBlazor.Resources.Strings.it.resources">
+            <Generator></Generator>
+        </EmbeddedResource>
+        <EmbeddedResource Include="Resources\Strings.es.resx" LogicalName="GridBlazor.Resources.Strings.es.resources">
+            <Generator></Generator>
+        </EmbeddedResource>
+        <EmbeddedResource Include="Resources\Strings.ru.resx" LogicalName="GridBlazor.Resources.Strings.ru.resources">
+            <Generator></Generator>
+        </EmbeddedResource>
+        <EmbeddedResource Include="Resources\Strings.nb-NO.resx" LogicalName="GridBlazor.Resources.Strings.nb-NO.resources">
+            <Generator></Generator>
+        </EmbeddedResource>
+        <EmbeddedResource Include="Resources\Strings.nl.resx" LogicalName="GridBlazor.Resources.Strings.nl.resources">
+            <Generator></Generator>
+        </EmbeddedResource>
+        <EmbeddedResource Include="Resources\Strings.sl.resx" LogicalName="GridBlazor.Resources.Strings.sl.resources">
+            <Generator></Generator>
+        </EmbeddedResource>
+        <EmbeddedResource Include="Resources\Strings.tr.resx" LogicalName="GridBlazor.Resources.Strings.tr.resources">
+            <Generator></Generator>
+        </EmbeddedResource>
+        <EmbeddedResource Include="Resources\Strings.cs.resx" LogicalName="GridBlazor.Resources.Strings.cs.resources">
+            <Generator></Generator>
+        </EmbeddedResource>
+        <EmbeddedResource Include="Resources\Strings.se.resx" LogicalName="GridBlazor.Resources.Strings.se.resources">
+            <Generator></Generator>
+        </EmbeddedResource>
+        <EmbeddedResource Include="Resources\Strings.sr-Cyrl-BA.resx" LogicalName="GridBlazor.Resources.Strings.sr-Cyrl-BA.resources">
+            <Generator></Generator>
+        </EmbeddedResource>
+        <EmbeddedResource Include="Resources\Strings.sr-Latn-BA.resx" LogicalName="GridBlazor.Resources.Strings.sr-Latn-BA.resources">
+            <Generator></Generator>
+        </EmbeddedResource>
+        <EmbeddedResource Include="Resources\Strings.sr-Cyrl-RS.resx" LogicalName="GridBlazor.Resources.Strings.sr-Cyrl-RS.resources">
+            <Generator></Generator>
+        </EmbeddedResource>
+        <EmbeddedResource Include="Resources\Strings.sr-Latn-RS.resx" LogicalName="GridBlazor.Resources.Strings.sr-Latn-RS.resources">
+            <Generator></Generator>
+        </EmbeddedResource>
+        <EmbeddedResource Include="Resources\Strings.hr.resx" LogicalName="GridBlazor.Resources.Strings.hr.resources">
+            <Generator></Generator>
+        </EmbeddedResource>
+    </ItemGroup>
 
-  <ItemGroup>
-    <ProjectReference Include="..\GridShared\GridShared.csproj" />
-  </ItemGroup>
+    <ItemGroup>
+        <ProjectReference Include="..\GridShared\GridShared.csproj" />
+    </ItemGroup>
 
-  <ItemGroup>
-    <None Include="bundleconfig.json" />
-    <None Include="wwwroot\css\gridblazor.css" />
-    <None Include="wwwroot\css\gridblazor.min.css" />
-    <None Include="wwwroot\css\gridblazor-bootstrap3.css" />
-    <None Include="wwwroot\css\gridblazor-bootstrap3.min.css" />
-    <None Include="wwwroot\js\gridblazor.js" />
-    <None Include="wwwroot\js\gridblazor.min.js" />
-  </ItemGroup>
+    <ItemGroup>
+        <None Include="bundleconfig.json" />
+        <None Include="wwwroot\css\gridblazor.css" />
+        <None Include="wwwroot\css\gridblazor.min.css" />
+        <None Include="wwwroot\css\gridblazor-bootstrap3.css" />
+        <None Include="wwwroot\css\gridblazor-bootstrap3.min.css" />
+        <None Include="wwwroot\js\gridblazor.js" />
+        <None Include="wwwroot\js\gridblazor.min.js" />
+    </ItemGroup>
 
-  <ItemGroup>
-    <Content Remove="bundleconfig.json" />
-  </ItemGroup>
+    <ItemGroup>
+        <Content Remove="bundleconfig.json" />
+    </ItemGroup>
 
-  <ItemGroup>
-    <Compile Update="Resources\Strings.Designer.cs">
-      <DesignTime>True</DesignTime>
-      <AutoGen>True</AutoGen>
-      <DependentUpon>Strings.resx</DependentUpon>
-    </Compile>
-  </ItemGroup>
+    <ItemGroup>
+        <Compile Update="Resources\Strings.Designer.cs">
+            <DesignTime>True</DesignTime>
+            <AutoGen>True</AutoGen>
+            <DependentUpon>Strings.resx</DependentUpon>
+        </Compile>
+    </ItemGroup>
 </Project>
