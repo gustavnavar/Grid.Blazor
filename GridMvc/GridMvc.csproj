@@ -76,6 +76,9 @@
     <EmbeddedResource Include="Resources\Strings.sr.resx" LogicalName="GridMvc.Resources.Strings.sr.resources">
       <Generator></Generator>
     </EmbeddedResource>
+    <EmbeddedResource Include="Resources\Strings.hr.resx" LogicalName="GridMvc.Resources.Strings.hr.resources">
+      <Generator></Generator>
+    </EmbeddedResource>
     <EmbeddedResource Include="Resources\css\gridmvc.css" LogicalName="GridMvc.Resources.css.gridmvc.css" />
     <EmbeddedResource Include="Resources\css\gridmvc.min.css" LogicalName="GridMvc.Resources.css.gridmvc.min.css" />
     <EmbeddedResource Include="Resources\js\gridmvc.js" LogicalName="GridMvc.Resources.js.gridmvc.js" />
@@ -92,6 +95,7 @@
     <EmbeddedResource Include="Resources\js\gridmvc-lang-cs.js" LogicalName="GridMvc.Resources.js.gridmvc-lang-cs.js" />
     <EmbeddedResource Include="Resources\js\gridmvc-lang-se.js" LogicalName="GridMvc.Resources.js.gridmvc-lang-se.js" />
     <EmbeddedResource Include="Resources\js\gridmvc-lang-sr.js" LogicalName="GridMvc.Resources.js.gridmvc-lang-sr.js" />
+    <EmbeddedResource Include="Resources\js\gridmvc-lang-hr.js" LogicalName="GridMvc.Resources.js.gridmvc-lang-hr.js" />
     <EmbeddedResource Include="Resources\js\gridmvc-ajax.js" LogicalName="GridMvc.Resources.js.gridmvc-ajax.js" />
     <EmbeddedResource Include="Resources\js\gridmvc-ajax.min.js" LogicalName="GridMvc.Resources.js.gridmvc-ajax.min.js" />
   </ItemGroup>

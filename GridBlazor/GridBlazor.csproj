@@ -83,6 +83,9 @@
     <EmbeddedResource Include="Resources\Strings.sr-Latn-RS.resx" LogicalName="GridBlazor.Resources.Strings.sr-Latn-RS.resources">
       <Generator></Generator>
     </EmbeddedResource>
+    <EmbeddedResource Include="Resources\Strings.hr.resx" LogicalName="GridBlazor.Resources.Strings.hr.resources">
+      <Generator></Generator>
+    </EmbeddedResource>
   </ItemGroup>
 
   <ItemGroup>
