@@ -373,5 +373,32 @@ namespace GridBlazorClientSide.Server.Controllers
             var items = server.ItemsToDisplay;
             return Ok(items);
         }
+
+        [HttpPost("[action]")]
+        public async Task<ActionResult> SetEmployeePhoto([FromBody] Employee employee)
+        {
+            if (ModelState.IsValid)
+            {
+                var repository = new EmployeeRepository(_context);
+                try
+                {
+                    await repository.UpdatePhoto(employee.EmployeeID, employee.Base64String);
+                    repository.Save();
+
+                    return NoContent();
+                }
+                catch (Exception e)
+                {
+                    return BadRequest(new
+                    {
+                        message = e.Message.Replace('{', '(').Replace('}', ')')
+                    });
+                }
+            }
+            return BadRequest(new
+            {
+                message = "ModelState is not valid"
+            });
+        }
     }
 }

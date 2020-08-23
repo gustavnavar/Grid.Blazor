@@ -27,7 +27,9 @@ namespace GridBlazorServerSide.Models
         }
         [Key]
         public int EmployeeID { get; set; }
+        [Required]
         public string LastName { get; set; }
+        [Required]
         public string FirstName { get; set; }
         public string Title { get; set; }
         public string TitleOfCourtesy { get; set; }
@@ -55,6 +57,9 @@ namespace GridBlazorServerSide.Models
         {
             get
             {
+                if (Photo == null)
+                    return "";
+
                 var base64Str = string.Empty;
                 using (var ms = new MemoryStream())
                 {

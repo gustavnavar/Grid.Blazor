@@ -42,7 +42,7 @@ namespace GridBlazorClientSide.Client.Services
             var response = await _httpClient.PutAsJsonAsync(_baseUri + $"api/OrderDetail/{item.OrderID}/{item.ProductID}", item);
             if (!response.IsSuccessStatusCode)
             {
-                throw new GridException("DETSRV-03", "Error updating the order detail");
+                throw new GridException("DETSRV-02", "Error updating the order detail");
             }
         }
 

@@ -46,6 +46,7 @@ namespace GridBlazorServerSide
             services.AddScoped<IShipperService, ShipperService>();
             services.AddScoped<IProductService, ProductService>();
             services.AddScoped<ITruckService, TruckService>();
+            services.AddScoped<IEmployeeFileService, EmployeeFileService>();
 
             services.AddBootstrapCss();
 

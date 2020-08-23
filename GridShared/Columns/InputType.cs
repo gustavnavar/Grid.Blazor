@@ -9,8 +9,10 @@
         Time,
         DateTimeLocal,
         Week,
-        Month
+        Month,
+        File
     }
+
     public static class InputTypeExtensions
     {
         public static string ToTypeAttr(this InputType me)
@@ -29,6 +31,8 @@
                     return "week";
                 case InputType.Month:
                     return "month";
+                case InputType.File:
+                    return "file";
                 default:
                     return "";
             }

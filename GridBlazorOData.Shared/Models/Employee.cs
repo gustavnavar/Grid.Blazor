@@ -29,7 +29,9 @@ namespace GridBlazorOData.Shared.Models
         }
         [Key]
         public int EmployeeID { get; set; }
+        [Required]
         public string LastName { get; set; }
+        [Required]
         public string FirstName { get; set; }
         public string Title { get; set; }
         public string TitleOfCourtesy { get; set; }

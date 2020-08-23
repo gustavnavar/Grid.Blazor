@@ -292,6 +292,11 @@ namespace GridBlazor
         }
 
         /// <summary>
+        ///     Provides CrudFileService used by the grid
+        /// </summary>
+        public ICrudFileService<T> CrudFileService { get; set; }
+
+        /// <summary>
         ///     Provides query, using by the grid
         /// </summary>
         public QueryDictionary<StringValues> Query

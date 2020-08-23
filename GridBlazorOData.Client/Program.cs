@@ -1,4 +1,7 @@
 using BlazorStrap;
+using GridBlazor;
+using GridBlazorOData.Client.Services;
+using GridBlazorOData.Shared.Models;
 using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.JSInterop;
@@ -17,6 +20,7 @@ namespace GridBlazorOData.Client
             builder.RootComponents.Add<App>("app");
 
             builder.Services.AddSingleton(new HttpClient { BaseAddress = new Uri(builder.HostEnvironment.BaseAddress) });
+            builder.Services.AddScoped<ICrudFileService<Employee>, EmployeeFileService>();
             builder.Services.AddLocalization();
 
             builder.Services.AddBootstrapCss();

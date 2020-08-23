@@ -83,6 +83,8 @@ namespace GridBlazor.Columns
 
         public InputType InputType { get; protected set; }
 
+        public bool MultipleInput { get; protected set; } = false;
+
         public bool IsSumEnabled { get; set; } = false;
 
         public bool IsAverageEnabled { get; set; } = false;
@@ -513,6 +515,15 @@ namespace GridBlazor.Columns
         {
             IsSelectField = (false, null, null, null, null);
             InputType = inputType;
+            return this;
+        }
+
+        public IGridColumn<T> SetInputFileType(bool? multiple = null)
+        {
+            IsSelectField = (false, null, null, null, null);
+            InputType = InputType.File;
+            if (multiple.HasValue)
+                MultipleInput = multiple.Value;
             return this;
         }
 

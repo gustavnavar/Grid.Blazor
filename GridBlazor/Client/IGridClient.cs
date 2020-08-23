@@ -132,45 +132,47 @@ namespace GridBlazor
         /// <summary>
         ///     Enable or disable client grid CRUD
         /// </summary>
-        IGridClient<T> Crud(bool enabled, ICrudDataService<T> crudDataService);
+        IGridClient<T> Crud(bool enabled, ICrudDataService<T> crudDataService, ICrudFileService<T> crudFileService = null);
 
         /// <summary>
         ///     Enable or disable client grid CRUD
         /// </summary>
-        IGridClient<T> Crud(bool createEnabled, Func<T, bool> enabled, ICrudDataService<T> crudDataService);
+        IGridClient<T> Crud(bool createEnabled, Func<T, bool> enabled, ICrudDataService<T> crudDataService, 
+            ICrudFileService<T> crudFileService = null);
 
         /// <summary>
         ///     Enable or disable client grid CRUD
         /// </summary>
         IGridClient<T> Crud(bool createEnabled, bool readEnabled, bool updateEnabled, bool deleteEnabled, 
-            ICrudDataService<T> crudDataService);
+            ICrudDataService<T> crudDataService, ICrudFileService<T> crudFileService = null);
 
         /// <summary>
         ///     Enable or disable client grid CRUD
         /// </summary>
         IGridClient<T> Crud(bool createEnabled, Func<T, bool> readEnabled, Func<T, bool> updateEnabled,
-            Func<T, bool> deleteEnabled, ICrudDataService<T> crudDataService);
+            Func<T, bool> deleteEnabled, ICrudDataService<T> crudDataService, ICrudFileService<T> crudFileService = null);
 
         /// <summary>
         ///     Enable or disable client grid CRUD with and OData back-end
         /// </summary>
-        IGridClient<T> ODataCrud(bool enabled);
+        IGridClient<T> ODataCrud(bool enabled, ICrudFileService<T> crudFileService = null);
 
         /// <summary>
         ///     Enable or disable client grid CRUD with and OData back-end
         /// </summary>
-        IGridClient<T> ODataCrud(bool createEnabled, Func<T, bool> enabled);
+        IGridClient<T> ODataCrud(bool createEnabled, Func<T, bool> enabled, ICrudFileService<T> crudFileService = null);
 
         /// <summary>
         ///     Enable or disable client grid CRUD with and OData back-end
         /// </summary>
-        IGridClient<T> ODataCrud(bool createEnabled, bool readEnabled, bool updateEnabled, bool deleteEnabled);
+        IGridClient<T> ODataCrud(bool createEnabled, bool readEnabled, bool updateEnabled, bool deleteEnabled, 
+            ICrudFileService<T> crudFileService = null);
 
         /// <summary>
         ///     Enable or disable client grid CRUD with and OData back-end
         /// </summary>
         IGridClient<T> ODataCrud(bool createEnabled, Func<T, bool> readEnabled, 
-            Func<T, bool> updateEnabled, Func<T, bool> deleteEnabled);
+            Func<T, bool> updateEnabled, Func<T, bool> deleteEnabled, ICrudFileService<T> crudFileService = null);
 
         /// <summary>
         ///     Configure CRUD button labels

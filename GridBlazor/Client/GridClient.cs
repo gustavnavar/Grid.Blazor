@@ -214,64 +214,70 @@ namespace GridBlazor
             return this;
         }       
 
-        public IGridClient<T> Crud(bool enabled, ICrudDataService<T> crudDataService)
+        public IGridClient<T> Crud(bool enabled, ICrudDataService<T> crudDataService, ICrudFileService<T> crudFileService = null)
         {
-            return Crud(enabled, enabled, enabled, enabled, crudDataService);
+            return Crud(enabled, enabled, enabled, enabled, crudDataService, crudFileService);
         }
 
         public IGridClient<T> Crud(bool createEnabled, bool readEnabled, bool updateEnabled, bool deleteEnabled, 
-            ICrudDataService<T> crudDataService)
+            ICrudDataService<T> crudDataService, ICrudFileService<T> crudFileService = null)
         {
             _source.CreateEnabled = createEnabled;
             _source.ReadEnabled = readEnabled;
             _source.UpdateEnabled = updateEnabled;
             _source.DeleteEnabled = deleteEnabled;
             _source.CrudDataService = crudDataService;
+            _source.CrudFileService = crudFileService;
             return this;
         }
 
-        public IGridClient<T> Crud(bool createEnabled, Func<T, bool> enabled, ICrudDataService<T> crudDataService)
+        public IGridClient<T> Crud(bool createEnabled, Func<T, bool> enabled, ICrudDataService<T> crudDataService, 
+            ICrudFileService<T> crudFileService = null)
         {
-            return Crud(createEnabled, enabled, enabled, enabled, crudDataService);
+            return Crud(createEnabled, enabled, enabled, enabled, crudDataService, crudFileService);
         }
 
         public IGridClient<T> Crud(bool createEnabled, Func<T, bool> readEnabled, Func<T, bool> updateEnabled,
-            Func<T, bool> deleteEnabled, ICrudDataService<T> crudDataService)
+            Func<T, bool> deleteEnabled, ICrudDataService<T> crudDataService, ICrudFileService<T> crudFileService = null)
         {
             _source.CreateEnabled = createEnabled;
             _source.FuncReadEnabled = readEnabled;
             _source.FuncUpdateEnabled = updateEnabled;
             _source.FuncDeleteEnabled = deleteEnabled;
             _source.CrudDataService = crudDataService;
+            _source.CrudFileService = crudFileService;
             return this;
         }
 
-        public IGridClient<T> ODataCrud(bool enabled)
+        public IGridClient<T> ODataCrud(bool enabled, ICrudFileService<T> crudFileService = null)
         {
-            return ODataCrud(enabled, enabled, enabled, enabled);
+            return ODataCrud(enabled, enabled, enabled, enabled, crudFileService);
         }
 
-        public IGridClient<T> ODataCrud(bool createEnabled, bool readEnabled, bool updateEnabled, bool deleteEnabled)
+        public IGridClient<T> ODataCrud(bool createEnabled, bool readEnabled, bool updateEnabled, bool deleteEnabled, 
+            ICrudFileService<T> crudFileService = null)
         {
             _source.CreateEnabled = createEnabled;
             _source.ReadEnabled = readEnabled;
             _source.UpdateEnabled = updateEnabled;
             _source.DeleteEnabled = deleteEnabled;
+            _source.CrudFileService = crudFileService;
             return this;
         }
 
-        public IGridClient<T> ODataCrud(bool createEnabled, Func<T, bool> enabled)
+        public IGridClient<T> ODataCrud(bool createEnabled, Func<T, bool> enabled, ICrudFileService<T> crudFileService = null)
         {
-            return ODataCrud(createEnabled, enabled, enabled, enabled);
+            return ODataCrud(createEnabled, enabled, enabled, enabled, crudFileService);
         }
 
         public IGridClient<T> ODataCrud(bool createEnabled, Func<T, bool> readEnabled, 
-            Func<T, bool> updateEnabled, Func<T, bool> deleteEnabled)
+            Func<T, bool> updateEnabled, Func<T, bool> deleteEnabled, ICrudFileService<T> crudFileService = null)
         {
             _source.CreateEnabled = createEnabled;
             _source.FuncReadEnabled = readEnabled;
             _source.FuncUpdateEnabled = updateEnabled;
             _source.FuncDeleteEnabled = deleteEnabled;
+            _source.CrudFileService = crudFileService;
             return this;
         }
 

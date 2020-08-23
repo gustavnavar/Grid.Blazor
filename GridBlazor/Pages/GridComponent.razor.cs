@@ -5,6 +5,7 @@ using GridShared;
 using GridShared.Columns;
 using GridShared.Events;
 using GridShared.Filtering;
+using GridShared.OData;
 using GridShared.Pagination;
 using GridShared.Sorting;
 using GridShared.Utility;
@@ -944,7 +945,12 @@ namespace GridBlazor.Pages
                 bool isValid = await OnBeforeInsert(component);
                 if (isValid)
                 {
-                    await ((CGrid<T>)Grid).CrudDataService.Insert(_item);
+                    if (Grid.ServerAPI == ServerAPI.OData)
+                        _item = await ((ICrudODataService<T>)((CGrid<T>)Grid).CrudDataService).Add(_item);
+                    else
+                        await ((CGrid<T>)Grid).CrudDataService.Insert(_item);
+                    if(((CGrid<T>)Grid).CrudFileService != null)
+                        await ((CGrid<T>)Grid).CrudFileService.InsertFiles(_item, component.Files);
                     await OnAfterInsert(component);
                     ((CGrid<T>)Grid).Mode = GridMode.Grid;
                     CrudRender = null;
@@ -984,6 +990,8 @@ namespace GridBlazor.Pages
                 if (isValid)
                 {
                     await ((CGrid<T>)Grid).CrudDataService.Update(_item);
+                    if (((CGrid<T>)Grid).CrudFileService != null)
+                        await ((CGrid<T>)Grid).CrudFileService.UpdateFiles(_item, component.Files);
                     await OnAfterUpdate(component);
                     ((CGrid<T>)Grid).Mode = GridMode.Grid;
                     CrudRender = null;
@@ -1023,6 +1031,8 @@ namespace GridBlazor.Pages
                 if (isValid)
                 {
                     var keys = Grid.GetPrimaryKeyValues(_item);
+                    if (((CGrid<T>)Grid).CrudFileService != null)
+                        await ((CGrid<T>)Grid).CrudFileService.DeleteFiles(keys);
                     await ((CGrid<T>)Grid).CrudDataService.Delete(keys);
                     await OnAfterDelete(component);
                     ((CGrid<T>)Grid).Mode = GridMode.Grid;

@@ -6,6 +6,8 @@
 @using System.Threading.Tasks
 @inject NavigationManager NavigationManager
 @inject HttpClient HttpClient
+@inject ICrudDataService<Employee> employeeService
+@inject ICrudFileService<Employee> employeeFileService
 
 <h3>Employees</h3>
 
@@ -17,7 +19,7 @@
         </div>
     </div>
 
-    <div class="row">
+    <div class="row mt-3">
         <div class="col-md-5">
             <button type="button" class="btn btn-primary btn-md" @onclick="() => BackButtonClicked()">@Strings.Back</button>
         </div>
@@ -47,6 +49,7 @@ else
             .Sortable()
             .Filterable()
             .SetStriped(true)
+            .Crud(true, employeeService, employeeFileService)
             .WithMultipleFilters()
             .WithGridItemsCount();
 

@@ -1,13 +1,15 @@
-﻿@using GridBlazor.Columns
+﻿@using Agno.BlazorInputFile
+@using GridBlazor.Columns
 @using GridBlazor.Resources
 @using GridShared
 @using GridShared.Columns
+@using GridShared.Utility
 
 @typeparam T
 
 <h1>@Strings.Edit</h1>
 
-<EditForm Model="@Item" OnValidSubmit="@UpdateItem">
+<EditForm Model="@Item" OnValidSubmit="@UpdateItem" @ref="Form">
     <DataAnnotationsValidator />
     <ValidationSummary />
     <p id="error" style="color:red;">@Error</p>
@@ -91,6 +93,33 @@
                                 if (type == typeof(string) && ((IGridColumn<T>)column).InputType == InputType.TextArea)
                                 {
                                     <textarea id="@column.FieldName" name="@column.FieldName" class="form-control @(ColumnErrors.ContainsKey(@column.FieldName) ? "input-validation-error" : "")" rows="5" value="@column.GetFormatedValue(value)" @onchange="(e) => ChangeValue(e, column)" />
+                                }
+                                else if (type == typeof(string) && ((IGridColumn<T>)column).InputType == InputType.File)
+                                {
+                                    VariableReference reference;
+                                    if (InputFiles.ContainsKey(column.FieldName))
+                                    {
+                                        reference = InputFiles[column.FieldName];
+                                    }
+                                    else
+                                    {
+                                        reference = new VariableReference();
+                                        InputFiles.Add(column.FieldName, reference);
+                                    }
+                                    <div class="input-group">
+                                        <input type="text" id="@column.FieldName" name="@column.FieldName" class="form-control  @(ColumnErrors.ContainsKey(@column.FieldName) ? "input-validation-error" : "")" value="@column.GetFormatedValue(value)">
+                                        <span class="input-group-append">
+                                            <button type="button" class="grid-button btn btn-outline-secondary" @onclick="() => ButtonFileClicked(column.FieldName)">Browse</button>
+                                        </span>
+                                    </div>
+                                    @if (column.MultipleInput)
+                                    {
+                                        <InputFile name="@(column.FieldName + "-file")" multiple style="visibility:hidden;" @ref="reference.Variable" OnFileChange="(files) => OnFileChange(column, files)" @onchange="(e) => ChangeValue(e, column, ((IGridColumn<T>)column).InputType.ToTypeAttr())" />
+                                    }
+                                    else
+                                    {
+                                        <InputFile name="@(column.FieldName + "-file")" style="visibility:hidden;" @ref="reference.Variable" OnFileChange="(files) => OnFileChange(column, files)" @onchange="(e) => ChangeValue(e, column, ((IGridColumn<T>)column).InputType.ToTypeAttr())" />
+                                    }
                                 }
                                 else if (type == typeof(DateTime) || type == typeof(System.DateTimeOffset))
                                 {

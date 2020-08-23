@@ -60,6 +60,10 @@
                             <input id="@column.FieldName" class="form-control" readonly="readonly" value="@column.GetFormatedValue(value)" />
                         }
                     }
+                    else if (type == typeof(string) && ((IGridColumn<T>)column).InputType == InputType.File)
+                    {
+                        <input id="@column.FieldName" name="@column.FieldName" type="file" class="form-control" readonly="readonly" value="@column.GetFormatedValue(value)" />
+                    }
                     else if (type == typeof(DateTime))
                     {
                         string typeAttr = ((IGridColumn<T>)column).InputType == InputType.None ? "date" : ((IGridColumn<T>)column).InputType.ToTypeAttr();

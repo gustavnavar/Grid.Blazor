@@ -1,4 +1,4 @@
-﻿using GridShared;
+﻿using GridShared.OData;
 using GridShared.Utility;
 using System.Linq;
 using System.Net.Http;
@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace GridBlazor.OData
 {
-    public class ODataService<T> : ICrudDataService<T>
+    public class ODataService<T> : ICrudODataService<T>
     {
         private readonly HttpClient _httpClient;
         private readonly string _url;
@@ -27,14 +27,23 @@ namespace GridBlazor.OData
             return await _httpClient.GetFromJsonAsync<T>(url);
         }
 
-        public async Task Insert(T item)
+        public async Task<T> Add(T item)
         {
             var jsonOptions = new JsonSerializerOptions().AddOdataSupport();
             var response = await _httpClient.PostAsJsonAsync<T>(_url, item, jsonOptions);
-            if (!response.IsSuccessStatusCode)
+            if (response.IsSuccessStatusCode)
+            {
+                return await response.Content.ReadFromJsonAsync<T>();     
+            }
+            else
             {
                 throw new GridException("ODATA-01", "Error creating the order");
             }
+        }
+
+        public async Task Insert(T item)
+        {
+            await Add(item);
         }
 
         public async Task Update(T item)

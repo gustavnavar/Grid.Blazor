@@ -48,6 +48,7 @@ namespace GridShared.Columns
         bool HeaderCheckbox { get; }
         bool SingleCheckbox { get; }
         string TooltipValue { get; }
+        bool MultipleInput { get; }
     }
 
     /// <summary>
@@ -362,6 +363,11 @@ namespace GridShared.Columns
         ///     Sets the column input type for CRUD components
         /// </summary>
         IGridColumn<T> SetInputType(InputType inputType);
+
+        /// <summary>
+        ///     Sets the column input type for CRUD components
+        /// </summary>
+        IGridColumn<T> SetInputFileType(bool? multiple = null);
 
         /// <summary>
         ///    Allow grid to show a SubGrid

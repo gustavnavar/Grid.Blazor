@@ -1,8 +1,11 @@
-﻿using GridBlazor.Columns;
+﻿using Agno.BlazorInputFile;
+using GridBlazor.Columns;
 using GridBlazor.Resources;
 using GridShared.Columns;
 using GridShared.Utility;
 using Microsoft.AspNetCore.Components;
+using Microsoft.AspNetCore.Components.Forms;
+using Microsoft.JSInterop;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -22,6 +25,14 @@ namespace GridBlazor.Pages
         public string Error { get; set; } = "";
         public QueryDictionary<string> ColumnErrors { get; set; } = new QueryDictionary<string>();
         public QueryDictionary<VariableReference> Children { get; private set; } = new QueryDictionary<VariableReference>();
+
+        public QueryDictionary<VariableReference> InputFiles { get; private set; } = new QueryDictionary<VariableReference>();
+        public QueryDictionary<IFileListEntry[]> Files { get; private set; } = new QueryDictionary<IFileListEntry[]>();
+
+        public EditForm Form { get; private set; }
+
+        [Inject]
+        private IJSRuntime jSRuntime { get; set; }
 
         [CascadingParameter(Name = "GridComponent")]
         protected GridComponent<T> GridComponent { get; set; }
@@ -137,6 +148,12 @@ namespace GridBlazor.Pages
                         {
                             var value = typeConverter.ConvertFrom(e.Value.ToString());
                             SetValue(value, column);
+
+                            if(typeAttr == "file")
+                            {
+                                _shouldRender = true;
+                                StateHasChanged();
+                            }
                         }
                         catch (Exception)
                         {
@@ -145,6 +162,17 @@ namespace GridBlazor.Pages
                     }
                 }
             }
+        }
+
+        private void OnFileChange(IGridColumn column, IFileListEntry[] files)
+        {
+            if (!column.MultipleInput && files.Length > 1)
+                files = new IFileListEntry[] { files[0] };
+
+            if (Files.ContainsKey(column.FieldName))
+                Files[column.FieldName] = files;
+            else
+                Files.Add(column.FieldName, files);
         }
 
         protected async Task UpdateItem()
@@ -168,6 +196,17 @@ namespace GridBlazor.Pages
                 await OnParametersSetAsync();
                 _shouldRender = true;
                 Error = Strings.UpdateError;
+            }
+        }
+
+        protected async Task ButtonFileClicked(string fieldName)
+        {
+            var inputFile = InputFiles.Get(fieldName);
+            var type = inputFile.Variable.GetType();
+            if (type == typeof(InputFile) 
+                && ((InputFile)inputFile.Variable).InputFileElement.Id != null)
+            {
+                await jSRuntime.InvokeVoidAsync("gridJsFunctions.click", (ElementReference)((InputFile)inputFile.Variable).InputFileElement);
             }
         }
 
