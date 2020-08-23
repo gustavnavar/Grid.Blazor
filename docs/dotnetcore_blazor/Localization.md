@@ -25,6 +25,7 @@ English is the default laguage. But you can use other languages. You have to cre
 * Slovenian
 * Sweden
 * Serbian
+* Croatian
 
 ## Right to left direction
 Those languages that require right to left direction are also supported. You must configure the grid to user RTL direction using the ```SetDirection``` method of the ```GridClient``` object:
@@ -55,6 +56,7 @@ If you need to support other languages, please send me the translation of the fo
 * Ends with
 * Equals
 * Drop columns here for column extended sorting
+* Files
 * Filter this column
 * Type
 * Value

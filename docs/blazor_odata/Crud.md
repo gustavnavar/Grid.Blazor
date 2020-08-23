@@ -248,6 +248,38 @@ And this is an auto-genereated edit form:
 
 ![](../images/Crud_edit.png)
 
+## File type columns
+
+If a column is a file that can be uploaded using the CRUD forms, the column definition should use the  **SetInputFileType** method in order to get the correct html element.
+```c#   
+    c.Add(o => o.PhotoPath, true).SetInputFileType();    
+```
+
+The **SetInputFileType** method has 1 optional parameter:
+Parameter | Description
+--------- | ----------
+multiple | Its a boolean to configure if the input element can upload multiple files
+
+You must also configure CRUD using the **ODataCrud(bool enabled, ICrudFileService<T> crudFileService)** method of the **GridODataClient** object:
+```c#   
+    var client = new GridODataClient<Employee>(HttpClient, url, query, false, "employeesGrid", columns, 10, locale)
+        .ODataCrud(true, employeeFileService);       
+```
+
+The parameter **crudFileService** of the **Crud** method must be a class that implements the **ICrudFileService<T>** interface. This interface has 3 methods:
+- ```Task InsertFiles(T item, IQueryDictionary<IFileListEntry[]> files);```
+- ```Task UpdateFiles(T item, IQueryDictionary<IFileListEntry[]> files);```
+- ```Task DeleteFiles(params object[] keys);```
+
+These methods will be responsible to perform all file operations either on a server file repository, or a database or a cloud service as Azure Blob Storage or Amazon S3.
+
+And finally you have to load this ```javascript``` on the html page:
+```
+    <script src="_content/Agno.BlazorInputFile/inputfile.js"></script>
+```
+
+You can see how it works clicking on the "Employees" button of this sample https://gridblazor.azurewebsites.net/embedded
+
 ## CRUD button labels
 
 ```GridBlazor``` uses buttons with a background image by default. You can change these images overriding their styles. But you can also use text labels. 
