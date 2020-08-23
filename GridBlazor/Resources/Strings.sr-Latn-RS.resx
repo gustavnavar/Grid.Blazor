@@ -288,4 +288,7 @@ Prazno</value>
   <data name="SelectionUpdateError" xml:space="preserve">
     <value>Trebate označiti red koji želite izmeniti</value>
   </data>
+  <data name="Files" xml:space="preserve">
+    <value>Datoteke</value>
+  </data>
 </root>

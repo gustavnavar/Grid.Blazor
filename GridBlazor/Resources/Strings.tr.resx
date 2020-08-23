@@ -264,4 +264,7 @@
   <data name="SelectionUpdateError" xml:space="preserve">
     <value>Düzenlemek istediğiniz satırı seçmelisiniz</value>
   </data>
+  <data name="Files" xml:space="preserve">
+    <value>Dosyaları</value>
+  </data>
 </root>

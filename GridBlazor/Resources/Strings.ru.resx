@@ -264,4 +264,7 @@
   <data name="SelectionUpdateError" xml:space="preserve">
     <value>Вы должны выбрать строку, которую хотите редактировать</value>
   </data>
+  <data name="Files" xml:space="preserve">
+    <value>Файлы</value>
+  </data>
 </root>

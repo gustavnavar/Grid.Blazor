@@ -264,4 +264,7 @@
   <data name="SelectionUpdateError" xml:space="preserve">
     <value>U moet de rij selecteren die u wilt bewerken</value>
   </data>
+  <data name="Files" xml:space="preserve">
+    <value>Archief</value>
+  </data>
 </root>

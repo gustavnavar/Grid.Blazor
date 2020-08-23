@@ -264,4 +264,7 @@
   <data name="SelectionUpdateError" xml:space="preserve">
     <value>Devi selezionare la riga che desideri modificare</value>
   </data>
+  <data name="Files" xml:space="preserve">
+    <value>Archivi</value>
+  </data>
 </root>

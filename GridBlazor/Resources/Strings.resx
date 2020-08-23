@@ -264,4 +264,7 @@
   <data name="SelectionUpdateError" xml:space="preserve">
     <value>You must select the row you want to edit</value>
   </data>
+  <data name="Files" xml:space="preserve">
+    <value>Files</value>
+  </data>
 </root>

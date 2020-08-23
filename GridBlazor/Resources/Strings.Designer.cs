@@ -223,7 +223,16 @@ namespace GridBlazor.Resources {
                 return ResourceManager.GetString("ExtSortingText", System.Globalization.CultureInfo.CurrentCulture);
             }
         }
-        
+
+        /// <summary>
+        ///   Looks up a localized string similar to Files.
+        /// </summary>
+        public static string Files {
+            get {
+                return ResourceManager.GetString("Files", System.Globalization.CultureInfo.CurrentCulture);
+            }
+        }
+
         /// <summary>
         ///   Looks up a localized string similar to Filter this column.
         /// </summary>

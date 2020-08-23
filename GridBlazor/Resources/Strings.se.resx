@@ -177,6 +177,9 @@
   <data name="ExtSortingText" xml:space="preserve">
     <value>Släpp kolumner här för utökad sortering av kolumner</value>
   </data>
+  <data name="Files" xml:space="preserve">
+    <value>Fler</value>
+  </data>
   <data name="FilterButtonTooltipText" xml:space="preserve">
     <value>Filtrera denna kolumn</value>
   </data>

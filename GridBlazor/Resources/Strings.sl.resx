@@ -255,4 +255,7 @@
   <data name="SelectionUpdateError" xml:space="preserve">
     <value>Izbrati morate vrstico, ki jo želite urediti</value>
   </data>
+  <data name="Files" xml:space="preserve">
+    <value>Datoteke</value>
+  </data>
 </root>

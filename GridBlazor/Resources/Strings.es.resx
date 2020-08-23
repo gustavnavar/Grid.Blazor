@@ -264,4 +264,7 @@
   <data name="SelectionUpdateError" xml:space="preserve">
     <value>Se debe seleccionar la fila que se quiere editar</value>
   </data>
+  <data name="Files" xml:space="preserve">
+    <value>Archivos</value>
+  </data>
 </root>
