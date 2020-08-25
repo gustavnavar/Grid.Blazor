@@ -989,9 +989,9 @@ namespace GridBlazor.Pages
                 bool isValid = await OnBeforeUpdate(component);
                 if (isValid)
                 {
-                    await ((CGrid<T>)Grid).CrudDataService.Update(_item);
                     if (((CGrid<T>)Grid).CrudFileService != null)
-                        await ((CGrid<T>)Grid).CrudFileService.UpdateFiles(_item, component.Files);
+                        _item = await((CGrid<T>)Grid).CrudFileService.UpdateFiles(_item, component.Files);
+                    await ((CGrid<T>)Grid).CrudDataService.Update(_item);
                     await OnAfterUpdate(component);
                     ((CGrid<T>)Grid).Mode = GridMode.Grid;
                     CrudRender = null;

@@ -81,17 +81,17 @@
                                 <div class="input-group">
                                     <input type="text" id="@column.FieldName" name="@column.FieldName" class="form-control  @(ColumnErrors.ContainsKey(@column.FieldName) ? "input-validation-error" : "")" value="@column.GetFormatedValue(value)">
                                     <span class="input-group-append">
-                                        <button type="button" class="grid-button btn btn-outline-secondary" @onclick="() => ButtonFileClicked(column.FieldName)">Browse</button>
+                                        <button type="button" class="grid-button btn btn-outline-secondary" @onclick="() => ButtonFileClicked(column.FieldName)">@Strings.Files</button>
                                     </span>
+                                    @if (column.MultipleInput)
+                                    {
+                                        <InputFile name="@(column.FieldName + "-file")" multiple style="display:none;" @ref="reference.Variable" OnFileChange="(files) => OnFileChange(column, files)" @onchange="(e) => ChangeValue(e, column, ((IGridColumn<T>)column).InputType.ToTypeAttr())" />
+                                    }
+                                    else
+                                    {
+                                        <InputFile name="@(column.FieldName + "-file")" style="display:none;" @ref="reference.Variable" OnFileChange="(files) => OnFileChange(column, files)" @onchange="(e) => ChangeValue(e, column, ((IGridColumn<T>)column).InputType.ToTypeAttr())" />
+                                    }
                                 </div>
-                                @if (column.MultipleInput)
-                                {
-                                    <InputFile name="@(column.FieldName + "-file")" multiple style="visibility:hidden;" @ref="reference.Variable" OnFileChange="(files) => OnFileChange(column, files)" @onchange="(e) => ChangeValue(e, column, ((IGridColumn<T>)column).InputType.ToTypeAttr())" />
-                                }
-                                else
-                                {
-                                    <InputFile name="@(column.FieldName + "-file")" style="visibility:hidden;" @ref="reference.Variable" OnFileChange="(files) => OnFileChange(column, files)" @onchange="(e) => ChangeValue(e, column, ((IGridColumn<T>)column).InputType.ToTypeAttr())" />
-                                }
                             }
                             else if (type == typeof(DateTime) || type == typeof(System.DateTimeOffset))
                             {

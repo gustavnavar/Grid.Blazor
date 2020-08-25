@@ -28,7 +28,7 @@ namespace GridBlazorClientSide.Client.Services
             await UpdateFiles(item, files);
         }
 
-        public async Task UpdateFiles(Employee item, IQueryDictionary<IFileListEntry[]> files)
+        public async Task<Employee> UpdateFiles(Employee item, IQueryDictionary<IFileListEntry[]> files)
         {
             if (files.Count > 0)
             {
@@ -59,6 +59,7 @@ namespace GridBlazorClientSide.Client.Services
                     }
                 }
             }
+            return item;
         }
 
         public async Task DeleteFiles(params object[] keys)

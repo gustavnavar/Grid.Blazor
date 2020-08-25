@@ -268,7 +268,7 @@ You must also configure CRUD using the **ODataCrud(bool enabled, ICrudFileServic
 
 The parameter **crudFileService** of the **Crud** method must be a class that implements the **ICrudFileService<T>** interface. This interface has 3 methods:
 - ```Task InsertFiles(T item, IQueryDictionary<IFileListEntry[]> files);```
-- ```Task UpdateFiles(T item, IQueryDictionary<IFileListEntry[]> files);```
+- ```Task<T> UpdateFiles(T item, IQueryDictionary<IFileListEntry[]> files);```
 - ```Task DeleteFiles(params object[] keys);```
 
 These methods will be responsible to perform all file operations either on a server file repository, or a database or a cloud service as Azure Blob Storage or Amazon S3.
@@ -277,6 +277,11 @@ And finally you have to load this ```javascript``` on the html page:
 ```
     <script src="_content/Agno.BlazorInputFile/inputfile.js"></script>
 ```
+
+**Notes:**
+- ```InsertFiles``` method will be executed after inserting the new record on the database. This will ensure the record includes the primary keys in case of auto-generated ones. If the ```InsertFiles``` method does any modification to the record that requires to be applied to the database, it will no be automatically updated. So you will have to implement the record update.
+- ```UpdateFiles``` method will be executed before updating the record on the database. If the ```UpdateFiles``` method does any modification to the record, it will be automatically updated on the database.
+- ```DeleteFiles``` method will be executed before deleting the record on the database.
 
 You can see how it works clicking on the "Employees" button of this sample https://gridblazor.azurewebsites.net/embedded
 
