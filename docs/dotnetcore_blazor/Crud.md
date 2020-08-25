@@ -204,9 +204,9 @@ And this is an auto-genereated edit form:
 
 ## File type columns
 
-If a column is a file that can be uploaded using the CRUD forms, the column definition should use the  **SetInputFileType** method in order to get the correct html element.
+If you need to upload files on the CRUD forms, you have to use a not connected, named and hidden colum. The column definition should use the  **SetInputFileType** method in order to get the correct html element.
 ```c#   
-    c.Add(o => o.PhotoPath, true).SetInputFileType();    
+    c.Add(true, "PhotoFile").Titled("Photo").SetInputFileType();   
 ```
 
 The **SetInputFileType** method has 1 optional parameter:
