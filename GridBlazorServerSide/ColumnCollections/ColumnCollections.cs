@@ -713,8 +713,8 @@ namespace GridBlazorServerSide.ColumnCollections
             c.Add(o => o.Extension, true);
             c.Add(o => o.ReportsTo, true);
             c.Add(o => o.Notes, true).SetInputType(InputType.TextArea);
-            c.Add(o => o.PhotoPath, true).SetInputFileType();
-            c.Add(o => o.Photo, true).SetCrudHidden(true);
+            c.Add(o => o.PhotoPath, true);
+            c.Add(true, "PhotoFile").Titled("Photo").SetInputFileType();
         };
 
         public static Action<IGridColumnCollection<Customer>> CustomerColumns = c =>

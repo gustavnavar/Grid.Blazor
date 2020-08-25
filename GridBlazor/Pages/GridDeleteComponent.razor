@@ -21,6 +21,10 @@
             }
 
             (Type type, object value) = ((IGridColumn<T>)column).GetTypeAndValue(Item);
+            if (type == null)
+            {
+                continue;
+            }
             <div class="form-group row" style="@(column.CrudHidden.HasFlag(CrudHidden.DELETE)?"display:none;":"")">
                 @if (!string.IsNullOrWhiteSpace(column.TooltipValue))
                 {

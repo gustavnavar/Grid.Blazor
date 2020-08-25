@@ -65,7 +65,8 @@ else
             c.Add(o => o.Extension, true);
             c.Add(o => o.ReportsTo, true);
             c.Add(o => o.Notes, true).SetInputType(InputType.TextArea);
-            c.Add(o => o.PhotoPath, true).SetInputFileType();
+            c.Add(o => o.PhotoPath, true);
+            c.Add(true, "PhotoFile").Titled("Photo").SetInputFileType();
         };
 
         string url = NavigationManager.BaseUri + "odata/Employees";

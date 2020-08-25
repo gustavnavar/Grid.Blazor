@@ -26,6 +26,10 @@
                 }
 
                 (Type type, object value) = ((IGridColumn<T>)column).GetTypeAndValue(Item);
+                if (type == null && ((IGridColumn<T>)column).InputType != InputType.File)
+                {
+                    continue;
+                }
                 <div class="form-group row" style="@(column.CrudHidden.HasFlag(CrudHidden.CREATE)?"display:none;":"")">
                     @if (!string.IsNullOrWhiteSpace(column.TooltipValue))
                     {
@@ -66,8 +70,16 @@
                             {
                                 <textarea id="@column.FieldName" name="@column.FieldName" class="form-control @(ColumnErrors.ContainsKey(@column.FieldName) ? "input-validation-error" : "")" rows="5" value="@column.GetFormatedValue(value)" @onchange="(e) => ChangeValue(e, column)" />
                             }
-                            else if (type == typeof(string) && ((IGridColumn<T>)column).InputType == InputType.File)
+                            else if (((IGridColumn<T>)column).InputType == InputType.File)
                             {
+                                if (Files.ContainsKey(column.FieldName))
+                                {
+                                    value = string.Join(";", Files[column.FieldName].Select(r => r.Name));
+                                }
+                                else
+                                {
+                                    value = "";
+                                }
                                 VariableReference reference;
                                 if (InputFiles.ContainsKey(column.FieldName))
                                 {
@@ -85,11 +97,11 @@
                                     </span>
                                     @if (column.MultipleInput)
                                     {
-                                        <InputFile name="@(column.FieldName + "-file")" multiple style="display:none;" @ref="reference.Variable" OnFileChange="(files) => OnFileChange(column, files)" @onchange="(e) => ChangeValue(e, column, ((IGridColumn<T>)column).InputType.ToTypeAttr())" />
+                                        <InputFile name="@(column.FieldName + "-file")" multiple style="display:none;" @ref="reference.Variable" OnFileChange="(files) => OnFileChange(column, files)" />
                                     }
                                     else
                                     {
-                                        <InputFile name="@(column.FieldName + "-file")" style="display:none;" @ref="reference.Variable" OnFileChange="(files) => OnFileChange(column, files)" @onchange="(e) => ChangeValue(e, column, ((IGridColumn<T>)column).InputType.ToTypeAttr())" />
+                                        <InputFile name="@(column.FieldName + "-file")" style="display:none;" @ref="reference.Variable" OnFileChange="(files) => OnFileChange(column, files)" />
                                     }
                                 </div>
                             }

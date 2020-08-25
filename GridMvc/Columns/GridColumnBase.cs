@@ -477,6 +477,10 @@ namespace GridMvc.Columns
             InputType = InputType.File;
             if (multiple.HasValue)
                 MultipleInput = multiple.Value;
+            if (string.IsNullOrWhiteSpace(Name))
+                Name = Guid.NewGuid().ToString();
+            if (string.IsNullOrWhiteSpace(FieldName))
+                FieldName = Name;
             return this;
         }
 
@@ -546,6 +550,9 @@ namespace GridMvc.Columns
                 for (int i = 0; i < names.Length; i++)
                 {
                     pi = type.GetProperty(names[i]);
+                    if (pi == null)
+                        return (null, null);
+
                     bool isNullable = pi.PropertyType.GetTypeInfo().IsGenericType &&
                         pi.PropertyType.GetGenericTypeDefinition() == typeof(Nullable<>);
                     type = isNullable ? Nullable.GetUnderlyingType(pi.PropertyType) : pi.PropertyType;

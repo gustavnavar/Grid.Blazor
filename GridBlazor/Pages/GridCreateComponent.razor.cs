@@ -115,12 +115,6 @@ namespace GridBlazor.Pages
                         {
                             var value = typeConverter.ConvertFrom(e.Value.ToString());
                             SetValue(value, column);
-
-                            if (typeAttr == "file")
-                            {
-                                _shouldRender = true;
-                                StateHasChanged();
-                            }
                         }
                         catch (Exception)
                         {
@@ -140,6 +134,9 @@ namespace GridBlazor.Pages
                 Files[column.FieldName] = files;
             else
                 Files.Add(column.FieldName, files);
+
+            _shouldRender = true;
+            StateHasChanged();
         }
 
         protected async Task CreateItem()
