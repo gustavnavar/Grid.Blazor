@@ -165,6 +165,8 @@ div[dir="rtl"] button.grid-button-header-label-delete { margin-left: 5px; margin
 td.grid-button-cell { padding: 5px 0px 5px 0px; }
 .input-validation-error { border: 1px solid red; }
 .field-validation-error { color: red; }
+button.grid-button-input-file { border-radius: 0 4px 4px 0; background-image: linear-gradient(#ddd, #eee); font-weight:bold; }
+div[dir="rtl"] button.grid-button-input-file { border-radius: 4px 0 0 4px; }
 
 /* Grid Clear Filters */
 .grid-all-filters-clear { margin-top: 10px; margin-bottom: 10px; margin-left: 15px; margin-right: 5px; }

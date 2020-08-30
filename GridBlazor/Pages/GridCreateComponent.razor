@@ -92,8 +92,8 @@
                                 }
                                 <div class="input-group">
                                     <input type="text" id="@column.FieldName" name="@column.FieldName" class="form-control  @(ColumnErrors.ContainsKey(@column.FieldName) ? "input-validation-error" : "")" value="@column.GetFormatedValue(value)">
-                                    <span class="input-group-append">
-                                        <button type="button" class="grid-button btn btn-outline-secondary" @onclick="() => ButtonFileClicked(column.FieldName)">@Strings.Files</button>
+                                    <span class="input-group-btn">
+                                        <button type="button" class="btn btn-default btn-outline-secondary grid-button-input-file" @onclick="() => ButtonFileClicked(column.FieldName)">@Strings.Files</button>
                                     </span>
                                     @if (column.MultipleInput)
                                     {
