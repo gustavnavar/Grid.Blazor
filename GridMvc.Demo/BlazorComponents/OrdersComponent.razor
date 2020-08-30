@@ -127,7 +127,9 @@ else
             .Searchable(true, false)
             .WithGridItemsCount()
             .ChangePageSize(true)
-            .Crud(true, orderService);
+            .Crud(true, orderService)
+            .AddButtonComponent<EmployeeComponent>("Employees", "Employees")
+            .AddButtonComponent<CustomerComponent>("Customers", "Curstomers");
 
         _grid = client.Grid;
 

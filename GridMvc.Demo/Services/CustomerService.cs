@@ -1,6 +1,11 @@
 ﻿using GridMvc.Demo.Models;
+using GridMvc.Server;
 using GridShared;
+using GridShared.Utility;
+using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Primitives;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -34,11 +39,32 @@ namespace GridMvc.Demo.Services
                     .ToList();
             }
         }
+
+        public ItemsDTO<Customer> GetCustomersGridRows(Action<IGridColumnCollection<Customer>> columns,
+            QueryDictionary<StringValues> query)
+        {
+            using (var context = new NorthwindDbContext(_options))
+            {
+                var repository = new CustomersRepository(context);
+                var server = new GridServer<Customer>(repository.GetAll(), new QueryCollection(query),
+                    true, "customersGrid", columns)
+                        .Sortable()
+                        .WithPaging(10)
+                        .Filterable()
+                        .WithMultipleFilters()
+                        .Searchable(true, false);
+
+                // return items to displays
+                var items = server.ItemsToDisplay;
+                return items;
+            }
+        }
     }
 
     public interface ICustomerService
     {
         IEnumerable<string> GetCustomersNames();
         IEnumerable<SelectItem> GetAllCustomers();
+        ItemsDTO<Customer> GetCustomersGridRows(Action<IGridColumnCollection<Customer>> columns, QueryDictionary<StringValues> query);
     }
 }

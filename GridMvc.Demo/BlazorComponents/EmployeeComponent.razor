@@ -1,0 +1,92 @@
+﻿@using GridBlazor.Resources
+@using GridMvc.Demo.Models
+@using GridMvc.Demo.Resources
+@using GridMvc.Demo.Services
+@using GridShared.Columns
+@using Microsoft.Extensions.Primitives
+@using System.Globalization
+@using System.Threading.Tasks
+@inject IEmployeeService employeeService
+@inject IEmployeeFileService employeeFileService
+
+<h3>Employees</h3>
+
+@if (_task.IsCompleted)
+{
+    <div class="row">
+        <div class="col-md-12">
+            <GridComponent T="Employee" Grid="@_grid"></GridComponent>
+        </div>
+    </div>
+
+    <div class="row mt-3">
+        <div class="col-md-5">
+            <button type="button" class="btn btn-primary btn-md" @onclick="() => BackButtonClicked()">@Strings.Back</button>
+        </div>
+    </div>
+}
+else
+{
+    <p><em>Loading...</em></p>
+}
+
+@code
+{
+    private CGrid<Employee> _grid;
+    private Task _task;
+
+    [CascadingParameter(Name = "GridComponent")]
+    protected GridComponent<Order> GridComponent { get; set; }
+
+    protected override async Task OnParametersSetAsync()
+    {
+        var locale = CultureInfo.CurrentCulture;
+        SharedResource.Culture = locale;
+
+        var query = new QueryDictionary<StringValues>();
+
+        Action<IGridColumnCollection<Employee>> employeeColumns = c =>
+        {
+            c.Add(o => o.EmployeeID).SetPrimaryKey(true).Titled(SharedResource.Number);
+            c.Add(o => o.TitleOfCourtesy);
+            c.Add(o => o.FirstName);
+            c.Add(o => o.LastName);
+            c.Add(o => o.Title);
+            c.Add(o => o.BirthDate, true).Format("{0:yyyy-MM-dd}");
+            c.Add(o => o.HireDate).Format("{0:yyyy-MM-dd}");
+            c.Add().Encoded(false).Sanitized(false).SetWidth("5%")
+                .RenderValueAs(o => $"<img width='50' height='50' src='data:image/bmp;base64,{o.Base64String}' />")
+                .SetCrudHidden(true);
+            c.Add(o => o.Address, true);
+            c.Add(o => o.City, true);
+            c.Add(o => o.Region, true);
+            c.Add(o => o.PostalCode, true);
+            c.Add(o => o.Country, true);
+            c.Add(o => o.HomePhone, true);
+            c.Add(o => o.Extension, true);
+            c.Add(o => o.ReportsTo, true);
+            c.Add(o => o.Notes, true).SetInputType(InputType.TextArea);
+            c.Add(o => o.PhotoPath, true);
+            c.Add(true, "PhotoFile").Titled("Photo").SetInputFileType();
+        };
+
+        var client = new GridClient<Employee>(q => employeeService.GetEmployeesGridRows(employeeColumns, q),
+            query, false, "employeesGrid", employeeColumns, locale)
+            .Sortable()
+            .Filterable()
+            .SetStriped(true)
+            .Crud(true, employeeService, employeeFileService)
+            .WithMultipleFilters()
+            .WithGridItemsCount();
+
+        _grid = client.Grid;
+        // Set new items to grid
+        _task = client.UpdateGrid();
+        await _task;
+    }
+
+    protected void BackButtonClicked()
+    {
+        GridComponent.BackButton();
+    }
+}

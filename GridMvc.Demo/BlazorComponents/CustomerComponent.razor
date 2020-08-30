@@ -1,0 +1,76 @@
+﻿@using GridBlazor.Resources
+@using GridMvc.Demo.Models
+@using GridMvc.Demo.Resources
+@using GridMvc.Demo.Services
+@using Microsoft.Extensions.Primitives
+@using System.Globalization
+@using System.Threading.Tasks
+@inject ICustomerService customerService
+
+<h3>Customers</h3>
+
+@if (_task.IsCompleted)
+{
+    <div class="row">
+        <div class="col-md-12">
+            <GridComponent T="Customer" Grid="@_grid"></GridComponent>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-5">
+            <button type="button" class="btn btn-primary btn-md" @onclick="() => BackButtonClicked()">@Strings.Back</button>
+        </div>
+    </div>
+}
+else
+{
+    <p><em>Loading...</em></p>
+}
+
+@code
+{
+    private CGrid<Customer> _grid;
+    private Task _task;
+
+    [CascadingParameter(Name = "GridComponent")]
+    protected GridComponent<Order> GridComponent { get; set; }
+
+    protected override async Task OnParametersSetAsync()
+    {
+        var locale = CultureInfo.CurrentCulture;
+        SharedResource.Culture = locale;
+
+        var query = new QueryDictionary<StringValues>();
+
+        Action<IGridColumnCollection<Customer>> customerColumns = c =>
+        {
+            c.Add(o => o.CustomerID).Titled(SharedResource.Number).SetWidth(100);
+            c.Add(o => o.CompanyName).SetWidth(250);
+            c.Add(o => o.ContactName).SetWidth(250);
+            c.Add(o => o.Phone);
+            c.Add(o => o.Address).SetWidth(250);
+            c.Add(o => o.City).SetWidth(250);
+            c.Add(o => o.PostalCode);
+            c.Add(o => o.Country).SetWidth(250);
+        };
+
+        var client = new GridClient<Customer>(q => customerService.GetCustomersGridRows(customerColumns, q),
+        query, false, "customersGrid", customerColumns, locale)
+        .Sortable()
+        .Filterable()
+        .SetStriped(true)
+        .WithMultipleFilters()
+        .WithGridItemsCount();
+
+        _grid = client.Grid;
+        // Set new items to grid
+        _task = client.UpdateGrid();
+        await _task;
+    }
+
+    protected void BackButtonClicked()
+    {
+        GridComponent.BackButton();
+    }
+}

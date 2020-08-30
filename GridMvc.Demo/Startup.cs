@@ -50,6 +50,7 @@ namespace GridMvc.Demo
             services.AddScoped<IOrderService, OrderService>();
             services.AddScoped<ICustomerService, CustomerService>();
             services.AddScoped<IEmployeeService, EmployeeService>();
+            services.AddScoped<IEmployeeFileService, EmployeeFileService>();
             services.AddScoped<IShipperService, ShipperService>();
 
             services.Configure<RequestLocalizationOptions>(
