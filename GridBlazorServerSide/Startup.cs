@@ -4,20 +4,18 @@ using GridBlazorServerSide.Services;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Localization;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Options;
 using System.Collections.Generic;
 using System.Globalization;
+using GridShared.Data;
 
 namespace GridBlazorServerSide
 {
     public class Startup
     {
-        public static string ConnectionString = "Server=.\\SQLEXPRESS;Database=NorthWind;Trusted_Connection=True;MultipleActiveResultSets=true";
-
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
@@ -31,7 +29,7 @@ namespace GridBlazorServerSide
         {
             services.AddDbContext<NorthwindDbContext>(options =>
             {
-                options.UseSqlServer(ConnectionString);
+                options.UseGridBlazorDatabase();
                 //options.ConfigureWarnings(warnings => warnings.Ignore(RelationalEventId.QueryClientEvaluationWarning));
             });
 
