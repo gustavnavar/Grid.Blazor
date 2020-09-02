@@ -13,6 +13,13 @@ namespace GridShared.Data
         public static DbContextOptionsBuilder UseGridBlazorDatabase(this DbContextOptionsBuilder optionsBuilder)
         {
             var northwindDb = "../northwind.db";
+            if (!File.Exists(northwindDb))
+            {
+                using var resxStream = typeof(SharedDbContextUtils).Assembly.GetManifestResourceStream(
+                    $"{typeof(SharedDbContextUtils).Namespace}.northwind.db");
+                using var fs = new FileStream(northwindDb, FileMode.Create, FileAccess.ReadWrite);
+                resxStream.CopyTo(fs);
+            }
             return optionsBuilder.UseSqlite(new SqliteConnectionStringBuilder
             {
                 DataSource = northwindDb,

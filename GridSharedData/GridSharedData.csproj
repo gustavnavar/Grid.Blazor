@@ -15,4 +15,8 @@
       <ProjectReference Include="..\GridShared\GridShared.csproj" />
     </ItemGroup>
 
+    <ItemGroup>
+      <EmbeddedResource Include="northwind.db" />
+    </ItemGroup>
+
 </Project>
