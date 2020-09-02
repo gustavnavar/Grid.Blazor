@@ -1,8 +1,9 @@
 ﻿using System;
+using System.IO;
 using System.Linq;
+using Microsoft.Data.Sqlite;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
-using Npgsql;
 using Npgsql.NameTranslation;
 
 namespace GridShared.Data
@@ -11,12 +12,10 @@ namespace GridShared.Data
     {
         public static DbContextOptionsBuilder UseGridBlazorDatabase(this DbContextOptionsBuilder optionsBuilder)
         {
-            return optionsBuilder.UseNpgsql(new NpgsqlConnectionStringBuilder()
+            var northwindDb = "../northwind.db";
+            return optionsBuilder.UseSqlite(new SqliteConnectionStringBuilder
             {
-                Host = "localhost",
-                Database = "northwind",
-                SearchPath = "northwind",
-                Username = "postgres",
+                DataSource = northwindDb,
             }.ToString());
         }
         
