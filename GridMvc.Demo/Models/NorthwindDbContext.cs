@@ -2,7 +2,7 @@
 
 namespace GridMvc.Demo.Models
 {
-    public class NorthwindDbContext : DbContext
+    public class NorthwindDbContext : GridShared.Data.SharedDbContext<NorthwindDbContext>
     {
 
         public NorthwindDbContext(DbContextOptions<NorthwindDbContext> options)
@@ -27,6 +27,8 @@ namespace GridMvc.Demo.Models
                 .HasOne(r => r.Territory)
                 .WithMany(s => s.Employees)
                 .HasForeignKey(t => t.TerritoryID);
+
+            base.OnModelCreating(modelBuilder);
         }
 
         public DbSet<Category> Categories { get; set; }

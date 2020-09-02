@@ -15,6 +15,7 @@
 
  <ItemGroup>
     <ProjectReference Include="..\GridBlazorOData.Client\GridBlazorOData.Client.csproj" />
+    <ProjectReference Include="..\GridSharedData\GridSharedData.csproj" />
   </ItemGroup>
 
 </Project>
