@@ -13,7 +13,6 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Text.Json.Serialization;
 
 namespace GridBlazorClientSide.Shared.Models
 {
@@ -73,7 +72,6 @@ namespace GridBlazorClientSide.Shared.Models
         [NotMappedColumn]
         [ForeignKey("EmployeeID")]
         public virtual Employee Employee { get; set; }
-        [JsonIgnore]
         [GridColumn(Position = 17)]
         [NotMappedColumn]
         public virtual ICollection<OrderDetail> OrderDetails { get; set; }

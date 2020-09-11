@@ -25,7 +25,7 @@ namespace GridMvc.Demo.Services
             using (var context = new NorthwindDbContext(_options))
             {
                 var repository = new OrdersRepository(context);
-                var server = new GridServer<Order>(repository.GetAll(), new QueryCollection(query),
+                var server = new GridServer<Order>(repository.GetAll().Include(r => r.OrderDetails), new QueryCollection(query),
                     true, "ordersGrid", columns)
                         .Sortable()
                         .WithPaging(10)

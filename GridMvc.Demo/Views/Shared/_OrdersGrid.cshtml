@@ -18,7 +18,7 @@
 
     Action<IGridColumnCollection<Order>> columns = c =>
     {
-/* Adding not mapped column, that renders body, using inline Razor html helper */
+        /* Adding not mapped column, that renders body, using inline Razor html helper */
         c.Add()
             .Encoded(false)
             .Sanitized(false)
@@ -26,13 +26,13 @@
             .Css("hidden-xs") //hide on phones
             .RenderValueAs(o => $"<b><a class='modal_link' href='/Home/Edit/{o.OrderID}?returnUrl={returnUrl}&gridState={c.Grid.GetState()}'>Edit</a></b>");
 
-/* Adding "OrderID" column: */
+        /* Adding "OrderID" column: */
 
         c.Add(o => o.OrderID)
             .Titled(SharedResource.Number)
             .SetWidth(100);
 
-/* Adding "OrderDate" column: */
+        /* Adding "OrderDate" column: */
         c.Add(o => o.OrderDate, "OrderCustomDate")
             .Titled(SharedResource.OrderCustomDate)
             .SortInitialDirection(GridSortDirection.Descending)
@@ -42,14 +42,14 @@
             .SetWidth(110)
             .Max(true).Min(true);
 
-/* Adding "ShipVia" column: */
+        /* Adding "ShipVia" column: */
         c.Add(o => o.ShipVia)
                     .Titled("Via")
                     .SetWidth(250)
                     .RenderValueAs(o => o.Shipper?.CompanyName)
                     .SetListFilter(shipperList);
 
-/* Adding "CompanyName" column: */
+        /* Adding "CompanyName" column: */
         c.Add(o => o.Customer.CompanyName)
             .Titled(SharedResource.CompanyName)
             .SetWidth(250)
@@ -57,23 +57,27 @@
             .SetFilterWidgetType("CustomCompanyNameFilterWidget")
             .Max(true).Min(true);
 
-/* Adding "ContactName" column: */
+        /* Adding "ContactName" column: */
         c.Add(o => o.Customer.ContactName).Titled(SharedResource.ContactName).SetWidth(250)
             .Max(true).Min(true);
 
-/* Adding "Freight" column: */
+        /* Adding "Freight" column: */
         c.Add(o => o.Freight)
             .Titled(SharedResource.Freight)
             .SetWidth(100)
             .Format("{0:F}")
             .Sum(true).Average(true).Max(true).Min(true);
 
-/* Adding "Vip customer" column: */
+        /* Adding "Vip customer" column: */
         c.Add(o => o.Customer.IsVip)
             .Titled(SharedResource.IsVip)
             .SetWidth(70)
             .Css("hidden-xs") //hide on phones
             .RenderValueAs(o => o.Customer.IsVip ? Strings.BoolTrueLabel : Strings.BoolFalseLabel);
+
+        /* Adding "OrderDetails" column: */
+        c.Add(o => o.OrderDetails.Count)
+            .Titled("Details");
     };
 }
 

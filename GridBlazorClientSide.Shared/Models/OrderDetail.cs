@@ -9,6 +9,7 @@
 
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Text.Json.Serialization;
 
 namespace GridBlazorClientSide.Shared.Models
 {
@@ -22,6 +23,7 @@ namespace GridBlazorClientSide.Shared.Models
         [Range(0, 1, ErrorMessage = "Discount must be between 0 and 1.")]
         public float Discount { get; set; }
         [ForeignKey("OrderID")]
+        [JsonIgnore]
         public virtual Order Order { get; set; }
         [ForeignKey("ProductID")]
         public virtual Product Product { get; set; }

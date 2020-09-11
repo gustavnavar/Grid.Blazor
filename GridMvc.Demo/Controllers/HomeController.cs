@@ -12,6 +12,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Localization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ViewEngines;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Linq;
 using System.Net;
@@ -194,7 +195,7 @@ namespace GridMvc.Demo.Controllers
                 }
             }       
 
-            var model = new SGrid<Order>(_orderRepository.GetAll(), query, false, GridPager.DefaultAjaxPagerViewName);
+            var model = new SGrid<Order>(_orderRepository.GetAll().Include(r => r.OrderDetails), query, false, GridPager.DefaultAjaxPagerViewName);
 
             ViewBag.ActiveMenuTitle = "Subgrid";
             return View(model);
@@ -212,7 +213,7 @@ namespace GridMvc.Demo.Controllers
                 .ToList();
             ViewData["shipperList"] = shipperList;
 
-            var model = new SGrid<Order>(_orderRepository.GetAll(), Request.Query, false, GridPager.DefaultAjaxPagerViewName);
+            var model = new SGrid<Order>(_orderRepository.GetAll().Include(r => r.OrderDetails), Request.Query, false, GridPager.DefaultAjaxPagerViewName);
 
             return PartialView("_OrdersGrid", model);
         }

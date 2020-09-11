@@ -4,6 +4,7 @@ using GridBlazorClientSide.Shared.Models;
 using GridMvc.Server;
 using GridShared;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Linq;
 using System.Threading.Tasks;
@@ -59,6 +60,22 @@ namespace GridBlazorClientSide.Server.Controllers
             var repository = new OrdersRepository(_context);
             IGridServer<Order> server = new GridServer<Order>(repository.GetAll(), Request.Query,
                 true, "ordersGrid", ColumnCollections.OrderColumnsWithTotals)
+                    .WithPaging(10)
+                    .Sortable()
+                    .Filterable()
+                    .WithMultipleFilters()
+                    .WithGridItemsCount();
+
+            var items = server.ItemsToDisplay;
+            return Ok(items);
+        }
+
+        [HttpGet("[action]")]
+        public ActionResult GetOrdersGridWithCount()
+        {
+            var repository = new OrdersRepository(_context);
+            IGridServer<Order> server = new GridServer<Order>(repository.GetAll().Include(r => r.OrderDetails), Request.Query,
+                true, "ordersGrid", ColumnCollections.OrderColumnsCount)
                     .WithPaging(10)
                     .Sortable()
                     .Filterable()

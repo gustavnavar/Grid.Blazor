@@ -112,6 +112,9 @@ else
 
             /* Adding hidden "ShipCountry" column: */
             c.Add(o => o.ShipCountry, true);
+
+            /* Adding "OrderDetails" column: */
+            c.Add(o => o.OrderDetails.Count).Titled("Details").SetCrudHidden(true);
         };
 
         var client = new GridClient<Order>(q => orderService.GetOrdersGridRows(orderColumns, q),
