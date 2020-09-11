@@ -8,7 +8,7 @@ namespace GridShared.Data
 {
     public static class SharedDbContextUtils
     {
-        public static DbProvider DbProvider = DbProvider.Sqlite;
+        public static DbProvider DbProvider = DbProvider.SqlServer;
 
         public static string ConnectionString = "Server=.\\SQLEXPRESS;Database=NorthWind;Trusted_Connection=True;MultipleActiveResultSets=true";
 
