@@ -63,7 +63,7 @@ Then we have to modify the **GridODataClient** we used to create the main grid a
     {
         ...
 
-        var client = new GridODaraClient<Order>(httpClient, url, query, false, "ordersGrid", orderColumns, 10, locale)
+        var client = new GridODataClient<Order>(httpClient, url, query, false, "ordersGrid", orderColumns, 10, locale)
             .SetRowCssClasses(item => item.Customer.IsVip ? "success" : string.Empty)
             .Sortable()
             .Filterable()
