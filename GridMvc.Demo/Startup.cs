@@ -5,13 +5,13 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Localization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Options;
 using System.Collections.Generic;
 using System.Globalization;
+using GridShared.Data;
 
 namespace GridMvc.Demo
 {
@@ -29,7 +29,7 @@ namespace GridMvc.Demo
         {
             services.AddDbContext<NorthwindDbContext>(options =>
             {
-                options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection"));
+                options.UseGridBlazorDatabase();
                 //options.ConfigureWarnings(warnings => warnings.Ignore(RelationalEventId.QueryClientEvaluationWarning));
             });
 

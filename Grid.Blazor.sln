@@ -29,6 +29,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GridBlazorOData.Client", "G
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GridBlazorOData.Shared", "GridBlazorOData.Shared\GridBlazorOData.Shared.csproj", "{9E59D5E8-A7BE-4DE0-A8EF-396801F62D90}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GridSharedData", "GridSharedData\GridSharedData.csproj", "{D1864254-2B73-465A-A7C6-8E13B24A1B3B}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -87,6 +89,10 @@ Global
 		{9E59D5E8-A7BE-4DE0-A8EF-396801F62D90}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9E59D5E8-A7BE-4DE0-A8EF-396801F62D90}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{9E59D5E8-A7BE-4DE0-A8EF-396801F62D90}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D1864254-2B73-465A-A7C6-8E13B24A1B3B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D1864254-2B73-465A-A7C6-8E13B24A1B3B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D1864254-2B73-465A-A7C6-8E13B24A1B3B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D1864254-2B73-465A-A7C6-8E13B24A1B3B}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
