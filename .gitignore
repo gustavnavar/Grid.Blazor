@@ -59,3 +59,4 @@
 /GridBlazorOData.Server/GridBlazorOData.Server.csproj.user
 **/obj/
 /northwind.db
+/GridSharedData/bin/Debug/netstandard2.1
