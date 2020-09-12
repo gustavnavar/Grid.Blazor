@@ -69,7 +69,8 @@ namespace GridBlazorServerSide
                             new CultureInfo("sr-Cyrl-RS"),
                             new CultureInfo("sr-Latn-BA"),
                             new CultureInfo("sr-Cyrl-BA"),
-                            new CultureInfo("hr-HR")
+                            new CultureInfo("hr-HR"),
+                            new CultureInfo("fa-IR")
                         };
 
                     options.DefaultRequestCulture = new RequestCulture(culture: "en-US", uiCulture: "en-US");
