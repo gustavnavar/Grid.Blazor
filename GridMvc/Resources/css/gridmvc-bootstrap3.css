@@ -1,0 +1,104 @@
+﻿.table > tbody > tr > td.grid-button-cell {
+    padding: 5px 0 5px 0;
+}
+
+.pagination > li > button {
+    position: relative;
+    float: left;
+    padding: 6px 12px;
+    margin-left: -1px;
+    line-height: 1.42857143;
+    color: #337ab7;
+    text-decoration: none;
+    background-color: #fff;
+    border: 1px solid #ddd;
+}
+.pagination > li > button:hover {
+    z-index: 2;
+    color: #23527c;
+    background-color: #eee;
+}
+.pagination > li > button:focus {
+    z-index: 2;
+    color: #23527c;
+    border: 1px solid #ddd;
+}
+.pagination > li:first-child > button {
+    margin-left: 0;
+    border-top-left-radius: 4px;
+    border-bottom-left-radius: 4px;
+}
+.pagination > li:last-child > button {
+    border-top-right-radius: 4px;
+    border-bottom-right-radius: 4px;
+}
+.pagination > .active > button,
+.pagination > .active > button:hover,
+.pagination > .active > button:focus {
+    z-index: 3;
+    color: #fff;
+    cursor: default;
+    background-color: #337ab7;
+    border: 1px solid #337ab7;
+}
+.pagination > .disabled > button,
+.pagination > .disabled > button:hover,
+.pagination > .disabled > button:focus {
+    color: #777777;
+    cursor: not-allowed;
+    background-color: #fff;
+    border: 1px solid #fff;
+}
+.pagination-lg > li > button {
+    padding: 10px 16px;
+    font-size: 18px;
+    line-height: 1.3333333;
+}
+.pagination-lg > li:first-child > button {
+    border-top-left-radius: 6px;
+    border-bottom-left-radius: 6px;
+}
+.pagination-lg > li:last-child > button {
+    border-top-right-radius: 6px;
+    border-bottom-right-radius: 6px;
+}
+.pagination-sm > li > button {
+    padding: 5px 10px;
+    font-size: 12px;
+    line-height: 1.5;
+}
+.pagination-sm > li:first-child > button {
+    border-top-left-radius: 3px;
+    border-bottom-left-radius: 3px;
+}
+.pagination-sm > li:last-child > button {
+    border-top-right-radius: 3px;
+    border-bottom-right-radius: 3px;
+}
+.pager li > button {
+    display: inline-block;
+    padding: 5px 14px;
+    background-color: #fff;
+    border: 1px solid #ddd;
+    border-radius: 15px;
+}
+.pager li > button:hover {
+    text-decoration: none;
+    background-color: #ccc;
+    border: 1px solid #ddd;
+}
+.pager li > button:focus {
+    text-decoration: none;
+    border: 1px solid #ddd;
+}
+.pager .next > button {
+    float: right;
+}
+.pager .previous > button {
+    float: left;
+}
+.pager .disabled > button {
+    color: #777777;
+    cursor: not-allowed;
+    background-color: #fff;
+}
