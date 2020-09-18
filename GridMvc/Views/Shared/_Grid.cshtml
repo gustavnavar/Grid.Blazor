@@ -53,7 +53,7 @@ else
          data-multiplefilters="@Model.RenderOptions.AllowMultipleFilters.ToString().ToLower()"
          data-initfilters="@initialFilters" @(string.IsNullOrWhiteSpace(keys) ? "" : "data-keys=" + keys)
          dir="@Model.Direction.ToDirection()">
-        <div class="grid-wrap container">
+        <div class="grid-wrap">
             <div class="row">
                 <div class="col-md-6 grid-header-buttons">
                     @if (Model.ClearFiltersButtonEnabled)
