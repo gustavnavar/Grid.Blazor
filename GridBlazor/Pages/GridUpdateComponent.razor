@@ -87,6 +87,10 @@
                                         <input id="@column.FieldName" name="@column.FieldName" type="checkbox" class="form-control" disabled="disabled" readonly="readonly" value="false" />
                                     }
                                 }
+                                else if (type == typeof(string) && ((IGridColumn<T>)column).InputType == InputType.TextArea)
+                                {
+                                    <textarea id="@column.FieldName" name="@column.FieldName" class="form-control" rows="5" readonly="readonly" value="@column.GetFormatedValue(value)" />
+                                }
                                 else
                                 {
                                     <input id="@column.FieldName" name="@column.FieldName" class="form-control" readonly="readonly" value="@column.GetFormatedValue(value)" />
