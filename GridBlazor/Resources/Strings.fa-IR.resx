@@ -267,4 +267,16 @@
   <data name="Files" xml:space="preserve">
     <value>فایل ها</value>
   </data>
+  <data name="Code" xml:space="preserve">
+    <value>کد</value>
+  </data>
+  <data name="Confirm Code" xml:space="preserve">
+    <value>تایید کد</value>
+  </data>
+  <data name="ConfirmCodeError" xml:space="preserve">
+    <value>کد و کد تایید باید برابر باشد برای ذخیره این مورد</value>
+  </data>
+  <data name="DeleteConfirmCodeError" xml:space="preserve">
+    <value>کد و کد تایید باید برابر با حذف این مورد باشد</value>
+  </data>
 </root>

@@ -90,7 +90,7 @@
                 </div>
             </div>
         }
-        else if ((((ICGridColumn)column).SubGrids != null || column.DeleteComponentType != null) 
+        else if ((((ICGridColumn)column).SubGrids != null || column.DeleteComponentType != null)
             && string.IsNullOrWhiteSpace(column.TabGroup))
         {
             <div class="form-group row" style="@(column.CrudHidden.HasFlag(CrudHidden.DELETE)?"display:none;":"")">
@@ -130,6 +130,23 @@
                 </div>
             </div>
         }
+    }
+
+    @if (GridComponent.Grid.DeleteConfirmation)
+    {
+        <div class="form-group row">
+            <label class="col-form-label col-md-@GridComponent.Grid.DeleteConfirmationLabelWidth.ToString()">@Strings.Code</label>
+            <div class="col-md-@GridComponent.Grid.DeleteConfirmationWidth.ToString()">
+                <input class="form-control" id="code" name="code" readonly="readonly" type="text" @bind="_code">
+            </div>
+        </div>
+
+        <div class="form-group row">
+            <label class="col-form-label col-md-@GridComponent.Grid.DeleteConfirmationLabelWidth.ToString()">@Strings.Confirm_Code</label>
+            <div class="col-md-@GridComponent.Grid.DeleteConfirmationWidth.ToString()">
+                <input class="form-control" id="confirm_code" name="confirm_code" type="text" @bind="_confirmationCode">
+            </div>
+        </div>
     }
 
     <div style="display:flex;">

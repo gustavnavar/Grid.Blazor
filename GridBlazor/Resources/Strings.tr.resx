@@ -267,4 +267,19 @@
   <data name="Files" xml:space="preserve">
     <value>Dosyaları</value>
   </data>
+  <data name="Code" xml:space="preserve">
+    <value>Kod</value>
+  </data>
+  <data name="Confirm Code" xml:space="preserve">
+    <value>Kodu Onayla</value>
+  </data>
+  <data name="String" xml:space="preserve">
+    <value>Kod</value>
+  </data>
+  <data name="ConfirmCodeError" xml:space="preserve">
+    <value>Kod ve onay kodu bu öğeyi kaydetmek için eşit olmalıdır</value>
+  </data>
+  <data name="DeleteConfirmCodeError" xml:space="preserve">
+    <value>Kod ve onay kodu bu öğeyi silmek için eşit olmalıdır</value>
+  </data>
 </root>

@@ -16,6 +16,8 @@ namespace GridBlazor.Pages
         private bool _shouldRender = false;
         private QueryDictionary<RenderFragment> _renderFragments;
         private IEnumerable<string> _tabGroups;
+        private string _code = StringExtensions.RandomString(8);
+        private string _confirmationCode = "";
 
         public string Error { get; set; } = "";
 
@@ -93,6 +95,13 @@ namespace GridBlazor.Pages
 
         protected async Task DeleteItem()
         {
+            if (GridComponent.Grid.DeleteConfirmation && _code != _confirmationCode)
+            {
+                _shouldRender = true;
+                Error = Strings.DeleteConfirmCodeError;
+                return;
+            }
+
             try
             {
                 _tabGroups = null;

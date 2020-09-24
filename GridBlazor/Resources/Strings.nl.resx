@@ -267,4 +267,16 @@
   <data name="Files" xml:space="preserve">
     <value>Archief</value>
   </data>
+  <data name="Code" xml:space="preserve">
+    <value>Koden</value>
+  </data>
+  <data name="Confirm Code" xml:space="preserve">
+    <value>Bekreft Koden</value>
+  </data>
+  <data name="ConfirmCodeError" xml:space="preserve">
+    <value>Code en bevestigingscode moeten gelijk zijn om dit object op te slaan</value>
+  </data>
+  <data name="DeleteConfirmCodeError" xml:space="preserve">
+    <value>Code en bevestigingscode moeten gelijk zijn om dit item te verwijderen</value>
+  </data>
 </root>

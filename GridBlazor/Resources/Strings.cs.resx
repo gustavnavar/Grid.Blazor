@@ -267,4 +267,16 @@
   <data name="Files" xml:space="preserve">
     <value>Archiv</value>
   </data>
+  <data name="Code" xml:space="preserve">
+    <value>Kód</value>
+  </data>
+  <data name="Confirm Code" xml:space="preserve">
+    <value>Potvrdit Kód</value>
+  </data>
+  <data name="ConfirmCodeError" xml:space="preserve">
+    <value>Kód a potvrzovací kód musí být rovny pro uložení této položky</value>
+  </data>
+  <data name="DeleteConfirmCodeError" xml:space="preserve">
+    <value>Kód a potvrzovací kód se musí rovnat odstranění této položky.</value>
+  </data>
 </root>

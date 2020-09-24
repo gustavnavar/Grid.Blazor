@@ -267,4 +267,16 @@
   <data name="Files" xml:space="preserve">
     <value>Datoteke</value>
   </data>
+  <data name="Code" xml:space="preserve">
+    <value>Šifru</value>
+  </data>
+  <data name="Confirm Code" xml:space="preserve">
+    <value>Potvrda Šifre</value>
+  </data>
+  <data name="ConfirmCodeError" xml:space="preserve">
+    <value>Kôd i šifra potvrde moraju biti jednaki za čuvanje ovog artikla</value>
+  </data>
+  <data name="DeleteConfirmCodeError" xml:space="preserve">
+    <value>Šifra i šifra potvrde moraju biti jednake za brisanje ovog artikla</value>
+  </data>
 </root>

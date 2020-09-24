@@ -292,6 +292,36 @@ namespace GridBlazor
             return this;
         }
 
+        public IGridClient<T> SetCreateConfirmation(bool enabled, int? width = null, int? labelWidth = null)
+        {
+            _source.CreateConfirmation = enabled;
+            if (width != null)
+                _source.CreateConfirmationWidth = width.Value;
+            if (labelWidth != null)
+                _source.CreateConfirmationLabelWidth = labelWidth.Value;   
+            return this;
+        }
+
+        public IGridClient<T> SetUpdateConfirmation(bool enabled, int? width = null, int? labelWidth = null)
+        {
+            _source.UpdateConfirmation = enabled;
+            if (width != null)
+                _source.UpdateConfirmationWidth = width.Value;
+            if (labelWidth != null)
+                _source.UpdateConfirmationLabelWidth = labelWidth.Value;          
+            return this;
+        }
+
+        public IGridClient<T> SetDeleteConfirmation(bool enabled, int? width = null, int? labelWidth = null)
+        {
+            _source.DeleteConfirmation = enabled;
+            if (width != null)
+                _source.DeleteConfirmationWidth = width.Value;
+            if (labelWidth != null)
+                _source.DeleteConfirmationLabelWidth = labelWidth.Value;      
+            return this;
+        }
+
         public IGridClient<T> SetHeaderCrudButtons(bool enabled)
         {
             _source.HeaderCrudButtons = enabled;

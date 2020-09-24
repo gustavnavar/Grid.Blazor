@@ -83,6 +83,9 @@ else
                 .Filterable()
                 .SetStriped(true)
                 .ODataCrud(true)
+                .SetCreateConfirmation(true)
+                .SetUpdateConfirmation(true)
+                .SetDeleteConfirmation(true)
                 .WithMultipleFilters()
                 .WithGridItemsCount();
 

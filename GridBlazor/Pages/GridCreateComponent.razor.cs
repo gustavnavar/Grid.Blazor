@@ -20,6 +20,8 @@ namespace GridBlazor.Pages
         private bool _shouldRender = false;
         private QueryDictionary<RenderFragment> _renderFragments;
         private IEnumerable<string> _tabGroups;
+        private string _code = StringExtensions.RandomString(8);
+        private string _confirmationCode = "";
 
         public string Error { get; set; } = "";
         public QueryDictionary<string> ColumnErrors { get; set; } = new QueryDictionary<string>();
@@ -141,6 +143,13 @@ namespace GridBlazor.Pages
 
         protected async Task CreateItem()
         {
+            if (GridComponent.Grid.CreateConfirmation && _code != _confirmationCode)
+            {
+                _shouldRender = true;
+                Error = Strings.ConfirmCodeError;
+                return;
+            }
+
             try
             {
                 Error = "";

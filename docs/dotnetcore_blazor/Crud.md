@@ -240,6 +240,31 @@ And finally you have to load this ```javascript``` on the html page:
 
 You can see how it works clicking on the "Employees" button of this sample https://gridblazor.azurewebsites.net/embedded
 
+## Code confirmation to perform CRUD
+
+CRUD forms can include a code confirmation feature to make the create, update and delete more secure. 
+
+If you enable this feature, two fields are added at the end of the form:
+- the first one includes a randomly generated string
+- the second one is empty and the user must enter the same value of the first field to be able to save any item modification 
+
+You can configure this feature using the ```SetCreateConfirmation```, ```SetUpdateConfirmation``` and ```SetDeleteConfirmation``` of the ```GridClient``` object.
+These method have the following parameters:
+Parameter | Type | Description
+--------- | ---- | -----------
+enabled | bool | it enables code confirmation
+width | int (optional) | number to configure the input element width. The default value is 5
+labelWidth | int (optional) | number to configure the label element width. The default value is 2
+
+You can enable this feature as followw:
+```c#
+    var client = new GridClient<Order>(q => orderService.GetOrdersGridRows(columns, q), query, false, "ordersGrid", columns, locale)
+        .Crud(true, orderService)
+        .SetCreateConfirmation(true)
+        .SetUpdateConfirmation(true)
+        .SetDeleteConfirmation(true);
+```
+
 ## CRUD button labels
 
 ```GridBlazor``` uses buttons with a background image by default. You can change these images overriding their styles. But you can also use text labels. 

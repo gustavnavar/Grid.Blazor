@@ -131,6 +131,9 @@ else
             .WithGridItemsCount()
             .ChangePageSize(true)
             .Crud(true, orderService)
+            .SetCreateConfirmation(true)
+            .SetUpdateConfirmation(true)
+            .SetDeleteConfirmation(true)
             .AddButtonComponent<EmployeeComponent>("Employees", "Employees")
             .AddButtonComponent<CustomerComponent>("Customers", "Curstomers");
 

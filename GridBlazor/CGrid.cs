@@ -647,6 +647,33 @@ namespace GridBlazor
         /// </summary>
         public string DeleteLabel { get; set; }
 
+        // <summary>
+        ///     Create CRUD confirmation fields
+        /// </summary>
+        public bool CreateConfirmation { get; set; } = false;
+
+        public int CreateConfirmationWidth { get; set; } = 5;
+
+        public int CreateConfirmationLabelWidth { get; set; } = 2;
+
+        /// <summary>
+        ///     Update CRUD confirmation fields
+        /// </summary>
+        public bool UpdateConfirmation { get; set; } = false;
+
+        public int UpdateConfirmationWidth { get; set; } = 5;
+
+        public int UpdateConfirmationLabelWidth { get; set; } = 2;
+
+        /// <summary>
+        ///     Delete CRUD confirmation fields
+        /// </summary>
+        public bool DeleteConfirmation { get; set; } = false;
+
+        public int DeleteConfirmationWidth { get; set; } = 5;
+
+        public int DeleteConfirmationLabelWidth { get; set; } = 2;
+
         public bool HeaderCrudButtons { get; set; }
 
         #region Custom row css classes

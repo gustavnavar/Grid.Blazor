@@ -181,6 +181,21 @@ namespace GridBlazor
         IGridClient<T> SetCrudButtonLabels(string createLabel, string readLabel, string updateLabel, string deleteLabel);
 
         /// <summary>
+        ///     Configure delete confirmation fields
+        /// </summary>
+        IGridClient<T> SetCreateConfirmation(bool enabled, int? width = null, int? labelWidth = null);
+
+        /// <summary>
+        ///     Configure delete confirmation fields
+        /// </summary>
+        IGridClient<T> SetUpdateConfirmation(bool enabled, int? width = null, int? labelWidth = null);
+
+        /// <summary>
+        ///     Configure delete confirmation fields
+        /// </summary>
+        IGridClient<T> SetDeleteConfirmation(bool enabled, int? width = null, int? labelWidth = null);
+
+        /// <summary>
         ///     Configure CRUD buttons on the header
         /// </summary>
         IGridClient<T> SetHeaderCrudButtons(bool enabled);

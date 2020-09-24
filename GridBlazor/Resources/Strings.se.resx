@@ -144,6 +144,15 @@
   <data name="ClearFilterLabel" xml:space="preserve">
     <value>Rensa filter</value>
   </data>
+  <data name="Code" xml:space="preserve">
+    <value>Koden</value>
+  </data>
+  <data name="Confirm Code" xml:space="preserve">
+    <value>Bekräfta Kod</value>
+  </data>
+  <data name="ConfirmCodeError" xml:space="preserve">
+    <value>Kod och bekräftelsekod måste vara lika för att kunna spara det här objektet</value>
+  </data>
   <data name="Contains" xml:space="preserve">
     <value>Innehåller</value>
   </data>
@@ -158,6 +167,9 @@
   </data>
   <data name="Delete" xml:space="preserve">
     <value>Ta bort</value>
+  </data>
+  <data name="DeleteConfirmCodeError" xml:space="preserve">
+    <value>Kod och bekräftelsekod måste vara lika med att ta bort det här objektet</value>
   </data>
   <data name="DeleteError" xml:space="preserve">
     <value>Det uppstod ett fel vid raderingen av detta objekt</value>

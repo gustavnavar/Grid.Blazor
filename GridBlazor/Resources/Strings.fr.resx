@@ -267,4 +267,16 @@
   <data name="Files" xml:space="preserve">
     <value>Fichiers</value>
   </data>
+  <data name="Code" xml:space="preserve">
+    <value>Code</value>
+  </data>
+  <data name="Confirm Code" xml:space="preserve">
+    <value>Confirmer Code</value>
+  </data>
+  <data name="ConfirmCodeError" xml:space="preserve">
+    <value>Le code et le code de confirmation doivent être égaux pour enregistrer cet élément</value>
+  </data>
+  <data name="DeleteConfirmCodeError" xml:space="preserve">
+    <value>Le code et le code de confirmation doivent être égaux pour supprimer cet élément</value>
+  </data>
 </root>

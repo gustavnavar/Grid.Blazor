@@ -91,7 +91,7 @@
                                     InputFiles.Add(column.FieldName, reference);
                                 }
                                 <div class="input-group">
-                                    <input type="text" id="@column.FieldName" name="@column.FieldName" class="form-control  @(ColumnErrors.ContainsKey(@column.FieldName) ? "input-validation-error" : "")" value="@column.GetFormatedValue(value)">
+                                    <input type="text" id="@column.FieldName" name="@column.FieldName" class="form-control @(ColumnErrors.ContainsKey(@column.FieldName) ? "input-validation-error" : "")" value="@column.GetFormatedValue(value)">
                                     <span class="input-group-btn">
                                         <button type="button" class="btn btn-default btn-outline-secondary grid-button-input-file" @onclick="() => ButtonFileClicked(column.FieldName)">@Strings.Files</button>
                                     </span>
@@ -212,6 +212,23 @@
                     </div>
                 </div>
             }
+        }
+
+        @if (GridComponent.Grid.CreateConfirmation)
+        {
+            <div class="form-group row">
+                <label class="col-form-label col-md-@GridComponent.Grid.CreateConfirmationLabelWidth.ToString()">@Strings.Code</label>
+                <div class="col-md-@GridComponent.Grid.CreateConfirmationWidth.ToString()">
+                    <input class="form-control" id="code" name="code" readonly="readonly" type="text" @bind="_code">
+                </div>
+            </div>
+
+            <div class="form-group row">
+                <label class="col-form-label col-md-@GridComponent.Grid.CreateConfirmationLabelWidth.ToString()">@Strings.Confirm_Code</label>
+                <div class="col-md-@GridComponent.Grid.CreateConfirmationWidth.ToString()">
+                    <input class="form-control" id="confirm_code" name="confirm_code" type="text" @bind="_confirmationCode">
+                </div>
+            </div>
         }
 
         <div style="display:flex;">

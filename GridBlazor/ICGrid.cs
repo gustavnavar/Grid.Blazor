@@ -231,6 +231,32 @@ namespace GridBlazor
         /// </summary>
         string DeleteLabel { get; set; }
 
+        // <summary>
+        ///     Create CRUD confirmation fields
+        /// </summary>
+        bool CreateConfirmation { get; set; }
+
+        int CreateConfirmationWidth { get; set; }
+
+        int CreateConfirmationLabelWidth { get; set; }
+
+        /// <summary>
+        ///     Update CRUD confirmation fields
+        /// </summary>
+        bool UpdateConfirmation { get; set; }
+
+        int UpdateConfirmationWidth { get; set; }
+
+        int UpdateConfirmationLabelWidth { get; set; }
+
+        /// <summary>
+        ///     Delete CRUD confirmation fields
+        /// </summary>
+        bool DeleteConfirmation { get; set; }
+
+        int DeleteConfirmationWidth { get; set; }
+
+        int DeleteConfirmationLabelWidth { get; set; }
         /// <summary>
         ///     Header CRUD buttons
         /// </summary>

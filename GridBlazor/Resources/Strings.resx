@@ -267,4 +267,16 @@
   <data name="Files" xml:space="preserve">
     <value>Files</value>
   </data>
+  <data name="Code" xml:space="preserve">
+    <value>Code</value>
+  </data>
+  <data name="Confirm Code" xml:space="preserve">
+    <value>Confirm Code</value>
+  </data>
+  <data name="ConfirmCodeError" xml:space="preserve">
+    <value>Code and confirmation code must be equal to save this item</value>
+  </data>
+  <data name="DeleteConfirmCodeError" xml:space="preserve">
+    <value>Code and confirmation code must be equal to delete this item</value>
+  </data>
 </root>

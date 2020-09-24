@@ -50,6 +50,10 @@ If you need to support other languages, please send me the translation of the fo
 * Yes
 * Clear all filters
 * Clear filter
+* Code
+* Code and confirmation code must be equal to delete this item
+* Code and confirmation code must be equal to save this item
+* Confirm Code
 * Contains
 * Create item
 * There are no items to display

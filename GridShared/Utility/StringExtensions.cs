@@ -1,5 +1,6 @@
 ﻿using Microsoft.Extensions.Primitives;
 using System;
+using System.Linq;
 using System.Text;
 using System.Text.Json;
 
@@ -32,6 +33,14 @@ namespace GridShared.Utility
             text = text.Replace('-', '=');
             var base64EncodedBytes = Convert.FromBase64String(text);
             return Encoding.UTF8.GetString(base64EncodedBytes);
+        }
+
+        public static string RandomString(int length)
+        {
+            Random random = new Random();
+            const string chars = "abcdefghijklmnopqrstuvwxyz0123456789";
+            return new string(Enumerable.Repeat(chars, length)
+              .Select(s => s[random.Next(s.Length)]).ToArray());
         }
     }
 }

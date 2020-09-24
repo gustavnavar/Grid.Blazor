@@ -60,6 +60,9 @@ else
             .Filterable()
             .SetStriped(true)
             .Crud(true, orderService)
+            .SetCreateConfirmation(true)
+            .SetUpdateConfirmation(true)
+            .SetDeleteConfirmation(true)
             .WithMultipleFilters()
             .WithGridItemsCount();
 
