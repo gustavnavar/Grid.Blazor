@@ -39,6 +39,9 @@ Then you have to call the **SetLanguage** function with the required language va
 * Serbian
 * Croatian
 * Farsi
+* Basque
+* Catalan
+* Galician
 
 ## Right to left direction
 Those languages that require right to left direction are also supported. You must configure the grid to user RTL direction using the ```SetDirection``` method of the ```GridServer``` object:

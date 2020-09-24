@@ -89,6 +89,15 @@
     <EmbeddedResource Include="Resources\Strings.fa-IR.resx" LogicalName="GridBlazor.Resources.Strings.fa-IR.resources">
       <Generator></Generator>
     </EmbeddedResource>
+    <EmbeddedResource Include="Resources\Strings.gl-ES.resx" LogicalName="GridBlazor.Resources.Strings.gl-ES.resources">
+      <Generator></Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\Strings.eu-ES.resx" LogicalName="GridBlazor.Resources.Strings.eu-ES.resources">
+      <Generator></Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\Strings.ca-ES.resx" LogicalName="GridBlazor.Resources.Strings.ca-ES.resources">
+      <Generator></Generator>
+    </EmbeddedResource>
   </ItemGroup>
 
   <ItemGroup>

@@ -82,6 +82,15 @@
     <EmbeddedResource Include="Resources\Strings.fa-IR.resx" LogicalName="GridMvc.Resources.Strings.fa-IR.resources">
       <Generator></Generator>
     </EmbeddedResource>
+    <EmbeddedResource Include="Resources\Strings.eu-ES.resx" LogicalName="GridMvc.Resources.Strings.eu-ES.resources">
+      <Generator></Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\Strings.gl-ES.resx" LogicalName="GridMvc.Resources.Strings.gl-ES.resources">
+      <Generator></Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\Strings.ca-ES.resx" LogicalName="GridMvc.Resources.Strings.ca-ES.resources">
+      <Generator></Generator>
+    </EmbeddedResource>
     <EmbeddedResource Include="Resources\css\gridmvc.css" LogicalName="GridMvc.Resources.css.gridmvc.css" />
     <EmbeddedResource Include="Resources\css\gridmvc.min.css" LogicalName="GridMvc.Resources.css.gridmvc.min.css" />
     <EmbeddedResource Include="Resources\css\gridmvc-bootstrap3.css" LogicalName="GridMvc.Resources.css.gridmvc-bootstrap3.css" />
@@ -102,6 +111,9 @@
     <EmbeddedResource Include="Resources\js\gridmvc-lang-sr.js" LogicalName="GridMvc.Resources.js.gridmvc-lang-sr.js" />
     <EmbeddedResource Include="Resources\js\gridmvc-lang-hr.js" LogicalName="GridMvc.Resources.js.gridmvc-lang-hr.js" />
     <EmbeddedResource Include="Resources\js\gridmvc-lang-fa.js" LogicalName="GridMvc.Resources.js.gridmvc-lang-fa.js" />
+    <EmbeddedResource Include="Resources\js\gridmvc-lang-gl.js" LogicalName="GridMvc.Resources.js.gridmvc-lang-gl.js" />
+    <EmbeddedResource Include="Resources\js\gridmvc-lang-eu.js" LogicalName="GridMvc.Resources.js.gridmvc-lang-eu.js" />
+    <EmbeddedResource Include="Resources\js\gridmvc-lang-ca.js" LogicalName="GridMvc.Resources.js.gridmvc-lang-ca.js" />
     <EmbeddedResource Include="Resources\js\gridmvc-ajax.js" LogicalName="GridMvc.Resources.js.gridmvc-ajax.js" />
     <EmbeddedResource Include="Resources\js\gridmvc-ajax.min.js" LogicalName="GridMvc.Resources.js.gridmvc-ajax.min.js" />
   </ItemGroup>
@@ -117,7 +129,7 @@
   <ItemGroup>
     <Content Remove="bundleconfig.json" />
   </ItemGroup>
-  
+
   <ItemGroup>
     <Compile Update="Resources\Strings.Designer.cs">
       <DesignTime>True</DesignTime>
