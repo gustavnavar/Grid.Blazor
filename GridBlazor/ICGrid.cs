@@ -3,6 +3,7 @@ using GridShared;
 using GridShared.Columns;
 using GridShared.Filtering;
 using GridShared.Utility;
+using Microsoft.AspNetCore.Components;
 using Microsoft.Extensions.Primitives;
 using Microsoft.JSInterop;
 using System;
@@ -118,7 +119,7 @@ namespace GridBlazor
         /// <summary>
         ///     Get and set custom Delete component
         /// </summary>
-        QueryDictionary<(string Label, Type ComponentType, IList<Action<object>> Actions, IList<Func<object, Task>> Functions, object Object)> ButtonComponents { get; }
+        QueryDictionary<(string Label, Nullable<MarkupString> Content, Type ComponentType, IList<Action<object>> Actions, IList<Func<object, Task>> Functions, object Object)> ButtonComponents { get; }
 
         /// <summary>
         ///     Get and set custom create component actions

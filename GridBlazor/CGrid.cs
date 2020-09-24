@@ -12,6 +12,7 @@ using GridShared.Columns;
 using GridShared.DataAnnotations;
 using GridShared.Filtering;
 using GridShared.Utility;
+using Microsoft.AspNetCore.Components;
 using Microsoft.Extensions.Primitives;
 using Microsoft.JSInterop;
 using System;
@@ -139,8 +140,8 @@ namespace GridBlazor
             UpdateEnabled = false;
             DeleteEnabled = false;
 
-            ButtonComponents = new QueryDictionary<(string Label, Type ComponentType, IList<Action<object>> Actions,
-                IList<Func<object, Task>> Functions, object Object)>();
+            ButtonComponents = new QueryDictionary<(string Label, Nullable<MarkupString> Content, Type ComponentType, 
+                IList<Action<object>> Actions, IList<Func<object, Task>> Functions, object Object)>();
         }
 
         /// <summary>
@@ -447,7 +448,7 @@ namespace GridBlazor
 
         public object DeleteObject { get; internal set; }
 
-        public QueryDictionary<(string Label, Type ComponentType, IList<Action<object>> Actions, IList<Func<object, Task>> Functions, object Object)> ButtonComponents { get; internal set; }
+        public QueryDictionary<(string Label, Nullable<MarkupString> Content, Type ComponentType, IList<Action<object>> Actions, IList<Func<object, Task>> Functions, object Object)> ButtonComponents { get; internal set; }
 
         public bool Keyboard { get; internal set; } = false;
 

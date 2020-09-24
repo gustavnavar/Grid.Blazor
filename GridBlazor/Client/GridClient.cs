@@ -4,6 +4,7 @@ using GridBlazor.Resources;
 using GridShared;
 using GridShared.Columns;
 using GridShared.Utility;
+using Microsoft.AspNetCore.Components;
 using Microsoft.Extensions.Primitives;
 using System;
 using System.Collections.Generic;
@@ -499,47 +500,96 @@ namespace GridBlazor
 
         public IGridClient<T> AddButtonComponent<TComponent>(string name, string label)
         {
-            return AddButtonComponent<TComponent>(name, label, null, null, null);
+            return AddButtonComponent<TComponent>(name, label, null, null, null, null);
+        }
+
+        public IGridClient<T> AddButtonComponent<TComponent>(string name, string label, Nullable<MarkupString> content)
+        {
+            return AddButtonComponent<TComponent>(name, label, content, null, null, null);
         }
 
         public IGridClient<T> AddButtonComponent<TComponent>(string name, string label, IList<Action<object>> actions)
         {
-            return AddButtonComponent<TComponent>(name, label, actions, null, null);
+            return AddButtonComponent<TComponent>(name, label, null, actions, null, null);
+        }
+
+        public IGridClient<T> AddButtonComponent<TComponent>(string name, string label, Nullable<MarkupString> content,
+            IList<Action<object>> actions)
+        {
+            return AddButtonComponent<TComponent>(name, label, content, actions, null, null);
         }
 
         public IGridClient<T> AddButtonComponent<TComponent>(string name, string label, object obj)
         {
-            return AddButtonComponent<TComponent>(name, label, null, null, obj);
+            return AddButtonComponent<TComponent>(name, label, null, null, null, obj);
+        }
+
+        public IGridClient<T> AddButtonComponent<TComponent>(string name, string label, Nullable<MarkupString> content, 
+            object obj)
+        {
+            return AddButtonComponent<TComponent>(name, label, content, null, null, obj);
         }
 
         public IGridClient<T> AddButtonComponent<TComponent>(string name, string label, IList<Func<object, Task>> functions)
         {
-            return AddButtonComponent<TComponent>(name, label, null, functions, null);
+            return AddButtonComponent<TComponent>(name, label, null, null, functions, null);
+        }
+
+        public IGridClient<T> AddButtonComponent<TComponent>(string name, string label, Nullable<MarkupString> content, 
+            IList<Func<object, Task>> functions)
+        {
+            return AddButtonComponent<TComponent>(name, label, content, null, functions, null);
         }
 
         public IGridClient<T> AddButtonComponent<TComponent>(string name, string label, IList<Action<object>> actions,
             IList<Func<object, Task>> functions)
         {
-            return AddButtonComponent<TComponent>(name, label, actions, functions, null);
+            return AddButtonComponent<TComponent>(name, label, null, actions, functions, null);
         }
 
-        public IGridClient<T> AddButtonComponent<TComponent>(string name, string label, IList<Func<object, Task>> functions, object obj)
+        public IGridClient<T> AddButtonComponent<TComponent>(string name, string label, Nullable<MarkupString> content, 
+            IList<Action<object>> actions, IList<Func<object, Task>> functions)
         {
-            return AddButtonComponent<TComponent>(name, label, null, functions, obj);
+            return AddButtonComponent<TComponent>(name, label, content, actions, functions, null);
         }
 
-        public IGridClient<T> AddButtonComponent<TComponent>(string name, string label, IList<Action<object>> actions, object obj)
+        public IGridClient<T> AddButtonComponent<TComponent>(string name, string label, IList<Func<object, Task>> functions, 
+            object obj)
         {
-            return AddButtonComponent<TComponent>(name, label, actions, null, obj);
+            return AddButtonComponent<TComponent>(name, label, null, null, functions, obj);
         }
 
-        public IGridClient<T> AddButtonComponent<TComponent>(string name, string label, IList<Action<object>> actions,
+        public IGridClient<T> AddButtonComponent<TComponent>(string name, string label, Nullable<MarkupString> content, 
             IList<Func<object, Task>> functions, object obj)
+        {
+            return AddButtonComponent<TComponent>(name, label, content, null, functions, obj);
+        }
+
+        public IGridClient<T> AddButtonComponent<TComponent>(string name, string label, IList<Action<object>> actions, 
+            object obj)
+        {
+            return AddButtonComponent<TComponent>(name, label, null, actions, null, obj);
+        }
+
+        public IGridClient<T> AddButtonComponent<TComponent>(string name, string label, Nullable<MarkupString> content,
+            IList<Action<object>> actions, object obj)
+        {
+            return AddButtonComponent<TComponent>(name, label, content, actions, null, obj);
+        }
+
+        public IGridClient<T> AddButtonComponent<TComponent>(string name, string label, IList<Action<object>> actions, 
+            IList<Func<object, Task>> functions, object obj)
+        {
+            return AddButtonComponent<TComponent>(name, label, null, actions, functions, obj);
+        }
+
+        public IGridClient<T> AddButtonComponent<TComponent>(string name, string label, Nullable<MarkupString> content,
+            IList<Action<object>> actions, IList<Func<object, Task>> functions, object obj)
         {
             Type buttonComponent = typeof(TComponent);
             if (buttonComponent != null)
             {
-                _source.ButtonComponents.Add(name, (label, buttonComponent, actions, functions, obj));
+                _source.ButtonComponents.Add(name, (label, content, buttonComponent, actions, functions, obj));
             }
             return this;
         }

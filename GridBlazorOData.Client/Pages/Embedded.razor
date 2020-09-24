@@ -62,7 +62,7 @@ else
                 .SetStriped(true)
                 .WithMultipleFilters()
                 .WithGridItemsCount()
-                .AddButtonComponent<EmployeeComponent>("Employees", "Employee's Grid")
+                .AddButtonComponent<EmployeeComponent>("Employees", "Employee's Grid", (MarkupString)"<span class='oi oi-person' aria-hidden='true'></span>")
                 .AddButtonComponent<CustomerComponent>("Customers", "Curstomer's Grid");
 
         _grid = client.Grid;

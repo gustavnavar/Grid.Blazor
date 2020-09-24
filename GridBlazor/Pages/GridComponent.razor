@@ -156,7 +156,14 @@
                                 <div class="grid-button-components">
                                     @foreach (var key in Grid.ButtonComponents.Keys)
                                     {
-                                        <button class="grid-button grid-button-component btn btn-sm btn-outline-secondary" type="button" title="@Grid.ButtonComponents.Get(key).Label" @onclick="() => ButtonComponentHandler(key)" @onclick:stopPropagation>@Grid.ButtonComponents.Get(key).Label</button>
+                                        if (Grid.ButtonComponents.Get(key).Content.HasValue)
+                                        {
+                                            <button class="grid-button grid-button-component btn btn-sm btn-outline-secondary" type="button" title="@Grid.ButtonComponents.Get(key).Label" @onclick="() => ButtonComponentHandler(key)" @onclick:stopPropagation>@Grid.ButtonComponents.Get(key).Content.Value</button>
+                                        }
+                                        else
+                                        {
+                                            <button class="grid-button grid-button-component btn btn-sm btn-outline-secondary" type="button" title="@Grid.ButtonComponents.Get(key).Label" @onclick="() => ButtonComponentHandler(key)" @onclick:stopPropagation>@Grid.ButtonComponents.Get(key).Label</button>
+                                        }
                                     }
                                 </div>
                             }

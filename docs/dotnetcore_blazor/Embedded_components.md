@@ -15,12 +15,13 @@ Compoments can be embedded on a grid. These components can be started clicking o
             .AddButtonComponent<EmployeeComponent>("Employees", "Employee's Grid");
     ```
 
-    **AddButtonComponent** method has 2 required paramenter and 3 optional ones:
+    **AddButtonComponent** method has 2 required paramenter and 4 optional ones:
 
     Parameter | Type | Description
     --------- | ---- | -----------
-    Name| string | unique name in the grid to identify the embedded component
-    Label| string | label to be shown on the screen
+    Name | string | unique name in the grid to identify the embedded component
+    Label | string | label to be shown in the button
+    Content | MarkupString| html content to be shown in the button
     Actions | IList<Action<object>> (optional) | the parent component can pass a list of Actions to be used by the component
     Functions | IList<Func<object,Task>> (optional) | the parent component can pass a list of Functions to be used by the child component
     Object | object (optional) | the parent component can pass an object to be used by the component

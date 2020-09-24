@@ -1,5 +1,6 @@
 ﻿using GridBlazor.Pages;
 using GridShared;
+using Microsoft.AspNetCore.Components;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -356,7 +357,18 @@ namespace GridBlazor
         /// <summary>
         ///     Setup the Other Component
         /// </summary>
+        IGridClient<T> AddButtonComponent<TComponent>(string name, string label, Nullable<MarkupString> content);
+
+        /// <summary>
+        ///     Setup the Other Component
+        /// </summary>
         IGridClient<T> AddButtonComponent<TComponent>(string name, string label, IList<Action<object>> actions);
+
+        /// <summary>
+        ///     Setup the Other Component
+        /// </summary>
+        IGridClient<T> AddButtonComponent<TComponent>(string name, string label, Nullable<MarkupString> content,
+            IList<Action<object>> actions);
 
         /// <summary>
         ///     Setup the Other Component
@@ -366,7 +378,17 @@ namespace GridBlazor
         /// <summary>
         ///     Setup the Other Component
         /// </summary>
+        IGridClient<T> AddButtonComponent<TComponent>(string name, string label, Nullable<MarkupString> content, object obj);
+
+        /// <summary>
+        ///     Setup the Other Component
+        /// </summary>
         IGridClient<T> AddButtonComponent<TComponent>(string name, string label, IList<Action<object>> actions, object obj);
+
+        /// <summary>
+        ///     Setup the Other Component
+        /// </summary>
+        IGridClient<T> AddButtonComponent<TComponent>(string name, string label, Nullable<MarkupString> content, IList<Action<object>> actions, object obj);
 
         /// <summary>
         ///     Setup the Other Component
@@ -376,7 +398,17 @@ namespace GridBlazor
         /// <summary>
         ///     Setup the Other Component
         /// </summary>
+        IGridClient<T> AddButtonComponent<TComponent>(string name, string label, Nullable<MarkupString> content, IList<Func<object, Task>> functions);
+
+        /// <summary>
+        ///     Setup the Other Component
+        /// </summary>
         IGridClient<T> AddButtonComponent<TComponent>(string name, string label, IList<Action<object>> actions, IList<Func<object, Task>> functions);
+
+        /// <summary>
+        ///     Setup the Other Component
+        /// </summary>
+        IGridClient<T> AddButtonComponent<TComponent>(string name, string label, Nullable<MarkupString> content, IList<Action<object>> actions, IList<Func<object, Task>> functions);
 
         /// <summary>
         ///     Setup the Other Component
@@ -386,7 +418,18 @@ namespace GridBlazor
         /// <summary>
         ///     Setup the Other Component
         /// </summary>
+        IGridClient<T> AddButtonComponent<TComponent>(string name, string label, Nullable<MarkupString> content, IList<Func<object, Task>> functions, object obj);
+
+        /// <summary>
+        ///     Setup the Other Component
+        /// </summary>
         IGridClient<T> AddButtonComponent<TComponent>(string name, string label, IList<Action<object>> actions, IList<Func<object, Task>> functions,
+            object obj);
+
+        /// <summary>
+        ///     Setup the Other Component
+        /// </summary>
+        IGridClient<T> AddButtonComponent<TComponent>(string name, string label, Nullable<MarkupString> content, IList<Action<object>> actions, IList<Func<object, Task>> functions,
             object obj);
 
         /// <summary>
