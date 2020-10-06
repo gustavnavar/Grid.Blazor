@@ -258,7 +258,7 @@ This is an example of a CRUD form error:
 When the ```Grid``` receives data from the server and gets an HTTP error, the default behavior is to capture the exception and write the error on the console.
 In this case the client shows an epmty grid, but no error is shown to the user.
 
-There are 2 additional behaviors that can be configured using 2 boolean parameters of the ```HandleServerErrors``` method of the ``GridClient```:
+There are 2 additional behaviors that can be configured using 2 boolean parameters of the ```HandleServerErrors``` method of the ```GridClient```:
 
 Parameter | Description | Example
 --------- | ----------- | -------
