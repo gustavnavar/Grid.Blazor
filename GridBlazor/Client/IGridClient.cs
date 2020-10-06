@@ -552,6 +552,11 @@ namespace GridBlazor
         IGridClient<T> SetDirection(GridDirection dir);
 
         /// <summary>
+        ///    Handle UpdateGrid errors from the server
+        /// </summary>
+        IGridClient<T> HandleServerErrors(bool showOnGrid, bool throwExceptions);
+
+        /// <summary>
         ///    Get grid object
         /// </summary>
         CGrid<T> Grid { get; }

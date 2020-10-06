@@ -676,6 +676,12 @@ namespace GridBlazor
 
         public bool HeaderCrudButtons { get; set; }
 
+        public bool ShowErrorsOnGrid { get; set; } = false;
+
+        public bool ThrowExceptions { get; set; } = false;
+
+        public string Error { get; set; } = "";
+
         #region Custom row css classes
         public void SetRowCssClassesContraint(Func<T, string> contraint)
         {
@@ -937,6 +943,8 @@ namespace GridBlazor
 
         public async Task UpdateGrid()
         {
+            Error = "";
+
             if (ServerAPI == ServerAPI.OData)
                 await GetOData();
             else
@@ -1013,6 +1021,12 @@ namespace GridBlazor
             catch (Exception e)
             {
                 Console.WriteLine(e.Message);
+
+                if (ShowErrorsOnGrid)
+                    Error = e.Message;
+
+                if (ThrowExceptions)
+                    throw;
             }
         }
 
@@ -1096,6 +1110,12 @@ namespace GridBlazor
             catch (Exception e)
             {
                 Console.WriteLine(e.Message);
+
+                if (ShowErrorsOnGrid)
+                    Error = e.Message;
+
+                if (ThrowExceptions)
+                    throw;
             }
         }
     }

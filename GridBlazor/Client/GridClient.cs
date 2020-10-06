@@ -786,6 +786,13 @@ namespace GridBlazor
             return this;
         }
 
+        public IGridClient<T> HandleServerErrors(bool showOnGrid, bool throwExceptions)
+        {
+            _source.ShowErrorsOnGrid = showOnGrid;
+            _source.ThrowExceptions = throwExceptions;
+            return this;
+        }
+
         /// <summary>
         ///     Get grid object
         /// </summary>

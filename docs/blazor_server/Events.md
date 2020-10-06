@@ -250,4 +250,16 @@ This is an example of a CRUD form error:
 
 ![](../images/Crud_error.png)
 
+## Handle exceptions from the server
+
+When the ```Grid``` receives data from the server and gets an exception, the default behavior is to capture this exception and write the error on the console.
+In this case the client shows an epmty grid, but no error is shown to the user.
+
+There are 2 additional behaviors that can be configured using 2 boolean parameters of the ```HandleServerErrors``` method of the ``GridClient```:
+
+Parameter | Description | Example
+--------- | ----------- | -------
+bool showOnGrid | A message is shown on the top of the grid component | HandleServerErrors(true, false) 
+bool throwExceptions | An exception is thrown that has to be captured by your code. In this case you can write the exception on a log or show a message to the user | HandleServerErrors(false, true) 
+
 [<- Nested CRUD](Nested_crud.md) | [Embedded components on the grid ->](Embedded_components.md)

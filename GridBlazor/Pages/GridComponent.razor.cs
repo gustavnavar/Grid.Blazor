@@ -103,7 +103,10 @@ namespace GridBlazor.Pages
 
         protected RenderFragment CrudRender { get; set; }
 
-        public string Error { get; set; } = "";
+        public string Error { 
+            get { return Grid.Error; } 
+            set { Grid.Error = value; } 
+        }
 
         [Parameter]
         public ICGrid Grid { get; set; }

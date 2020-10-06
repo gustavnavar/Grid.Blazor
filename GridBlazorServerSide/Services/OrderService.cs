@@ -114,6 +114,37 @@ namespace GridBlazorServerSide.Services
             }
         }
 
+        public ItemsDTO<Order> GetOrdersWithErrorGridRows(Action<IGridColumnCollection<Order>> columns,
+           QueryDictionary<StringValues> query)
+        {
+            var random = new Random();
+            if (random.Next(2) == 0)
+                throw new Exception("Random server error");
+
+            using (var context = new NorthwindDbContext(_options))
+            {
+                var repository = new OrdersRepository(context);
+                var server = new GridServer<Order>(repository.GetAll(), new QueryCollection(query),
+                    true, "ordersGrid", columns)
+                        .Sortable()
+                        .WithPaging(10)
+                        .Filterable()
+                        .WithMultipleFilters()
+                        .Groupable(true)
+                        .Searchable(true, false, false);
+
+                // return items to displays
+                var items = server.ItemsToDisplay;
+
+                // uncomment the following lines are to test null responses
+                //items = null;
+                //items.Items = null;
+                //items.Pager = null;
+                return items;
+            }
+        }
+
+
         public async Task<Order> GetOrder(int OrderId)
         {
             using (var context = new NorthwindDbContext(_options))
@@ -233,6 +264,7 @@ namespace GridBlazorServerSide.Services
         ItemsDTO<Order> GetOrdersGridRowsWithCount(Action<IGridColumnCollection<Order>> columns, QueryDictionary<StringValues> query);
         ItemsDTO<Order> GetOrdersGridRows(QueryDictionary<StringValues> query);
         ItemsDTO<Order> GetOrdersGridRowsInMemory(Action<IGridColumnCollection<Order>> columns, QueryDictionary<StringValues> query);
+        ItemsDTO<Order> GetOrdersWithErrorGridRows(Action<IGridColumnCollection<Order>> columns, QueryDictionary<StringValues> query);
         Task<Order> GetOrder(int OrderId);
         Task UpdateAndSave(Order order);
         Task Add1ToFreight(int OrderId);

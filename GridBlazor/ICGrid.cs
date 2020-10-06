@@ -261,5 +261,17 @@ namespace GridBlazor
         ///     Header CRUD buttons
         /// </summary>
         bool HeaderCrudButtons { get; set; }
+
+        /// <summary>
+        ///     Header CRUD buttons
+        /// </summary>
+        bool ShowErrorsOnGrid { get; set; }
+
+        /// <summary>
+        ///     Header CRUD buttons
+        /// </summary>
+        bool ThrowExceptions { get; set; }
+
+        string Error { get; set; }
     }
 }
