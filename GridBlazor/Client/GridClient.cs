@@ -528,6 +528,12 @@ namespace GridBlazor
             return this;
         }
 
+        public IGridClient<T> SetEditAfterInsert(bool enable)
+        {
+            _source.EditAfterInsert = enable;
+            return this;
+        }
+
         public IGridClient<T> AddButtonComponent<TComponent>(string name, string label)
         {
             return AddButtonComponent<TComponent>(name, label, null, null, null, null);

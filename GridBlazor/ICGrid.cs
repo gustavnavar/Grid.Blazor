@@ -272,6 +272,14 @@ namespace GridBlazor
         /// </summary>
         bool ThrowExceptions { get; set; }
 
+        /// <summary>
+        ///     Error string to be shown on the view
+        /// </summary>
         string Error { get; set; }
+
+        /// <summary>
+        ///     Go to Edit form after insert row
+        /// </summary>
+        bool EditAfterInsert { get; set; }
     }
 }

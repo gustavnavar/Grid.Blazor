@@ -682,6 +682,8 @@ namespace GridBlazor
 
         public string Error { get; set; } = "";
 
+        public bool EditAfterInsert { get; set; } = false;
+
         #region Custom row css classes
         public void SetRowCssClassesContraint(Func<T, string> contraint)
         {

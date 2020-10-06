@@ -365,6 +365,11 @@ namespace GridBlazor
             object obj);
 
         /// <summary>
+        ///     Go to Edit form after insert row
+        /// </summary>
+        IGridClient<T> SetEditAfterInsert(bool enable);
+
+        /// <summary>
         ///     Setup the Other Component
         /// </summary>
         IGridClient<T> AddButtonComponent<TComponent>(string name, string label);

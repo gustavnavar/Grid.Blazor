@@ -955,10 +955,19 @@ namespace GridBlazor.Pages
                     if(((CGrid<T>)Grid).CrudFileService != null)
                         await ((CGrid<T>)Grid).CrudFileService.InsertFiles(_item, component.Files);
                     await OnAfterInsert(component);
-                    ((CGrid<T>)Grid).Mode = GridMode.Grid;
                     CrudRender = null;
-                    _fromCrud = true;
-                    await UpdateGrid();
+                    if (Grid.EditAfterInsert)
+                    {
+                        ((CGrid<T>)Grid).Mode = GridMode.Update;
+                        _shouldRender = true;
+                        StateHasChanged();
+                    }
+                    else
+                    {
+                        ((CGrid<T>)Grid).Mode = GridMode.Grid;
+                        _fromCrud = true;
+                        await UpdateGrid();
+                    }
                 }     
             }
             catch (Exception e)

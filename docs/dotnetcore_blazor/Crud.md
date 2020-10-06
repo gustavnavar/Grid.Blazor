@@ -19,15 +19,15 @@ These are the supported features:
 
 You can enable CRUD using the **Crud(bool enabled, ICrudDataService<T> crudDataService)** method of the **GridClient** object:
 ```c#   
-    var client = new GridClient<Order>(HttpClient, url, query, false, "ordersGrid", c => 
-            ColumnCollections.OrderColumnsWithCrud(c, NavigationManager.BaseUri), locale)
+    var client = new GridClient<Order>(q => orderService.GetOrdersGridRows(ColumnCollections.OrderColumns, q),
+        query, false, "ordersGrid", ColumnCollections.OrderColumns, locale)
         .Crud(true, orderService)
 ```
 
 You can also enable CRUD depending on a condition for each row using the **Crud(bool createEnabled, Func<T, bool> enabled, ICrudDataService<T> crudDataService)** method:
 ```c#   
-    var client = new GridClient<Order>(HttpClient, url, query, false, "ordersGrid", c => 
-            ColumnCollections.OrderColumnsWithCrud(c, NavigationManager.BaseUri), locale)
+    var client = new GridClient<Order>(q => orderService.GetOrdersGridRows(ColumnCollections.OrderColumns, q),
+        query, false, "ordersGrid", ColumnCollections.OrderColumns, locale)
         .Crud(true, r => r.Customer.IsVip, orderService)
 ```
 The create form can only be enabled using a ```bool``` parameter. But the read, update and delete forms can be enabled using a function that returns a ```bool```.

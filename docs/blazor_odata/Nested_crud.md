@@ -65,4 +65,18 @@ Then you have to define the subgrid that you want to show on the CRUD forms.
 ```
 This function is passed as parameter of the ```Subgrid``` method used on the first step. Of course subgrids must be configured with CRUD support using the ```ODataCrud()``` method of the ```GridODataClient``` object.
 
+## Showing the Update form just after inserting a row
+
+You can configure CRUD to show the Update form just after inserting a new row with the Create form. 
+It make sense to do it when you have nested grids and you want to create rows for the nested subgrid in the same step as creating the parent row.
+You can do it using the ```SetEditAfterInsert``` method of the ```GridODataClient``` object
+
+The configuration for this type of grid is as follows:
+
+```c#
+    var client = new GridODataClient<Order>(HttpClient, url, query, false, "ordersGrid", orderColumns, locale)
+        .ODataCrud(true)
+        .SetEditAfterInsert(true);
+```
+
 [<- CRUD](Crud.md) | [Events, exceptions and CRUD validation ->](Events.md)
