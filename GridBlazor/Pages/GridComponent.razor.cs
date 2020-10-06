@@ -44,7 +44,7 @@ namespace GridBlazor.Pages
         // CRUD buttons on the header
         internal bool HeaderCrudButtons = false;
 
-        protected ElementReference gridmvc;
+        internal ElementReference Gridmvc;
 
         public event Func<object, SortEventArgs, Task> SortChanged;
         public event Func<object, ExtSortEventArgs, Task> ExtSortChanged;
@@ -157,9 +157,6 @@ namespace GridBlazor.Pages
 
         [Parameter]
         public string GridEmptyTextCssClass { get; set; } = "grid-empty-text";
-
-        [Parameter]
-        public ScreenPosition ScreenPosition { get; set; }
 
         protected override void OnParametersSet()
         {
@@ -274,15 +271,10 @@ namespace GridBlazor.Pages
                 _isMonthSupported = await jSRuntime.InvokeAsync<bool>("gridJsFunctions.isMonthSupported");
             }
             
-            if ((firstRender || _fromCrud) && gridmvc.Id != null && Grid.Keyboard)
+            if ((firstRender || _fromCrud) && Gridmvc.Id != null && Grid.Keyboard)
             {
                 _fromCrud = false;
-                await SetFocus(gridmvc);
-            }
-
-            if (ScreenPosition == null && firstRender && gridmvc.Id != null)
-            {
-                ScreenPosition = await jSRuntime.InvokeAsync<ScreenPosition>("gridJsFunctions.getPosition", gridmvc);
+                await SetFocus(Gridmvc);
             }
 
             if (Grid.ComponentOptions.Selectable && Grid.ComponentOptions.InitSelection
@@ -1116,9 +1108,9 @@ namespace GridBlazor.Pages
 
         public async Task SetGridFocus()
         {
-            if (gridmvc.Id != null && Grid.Keyboard)
+            if (Gridmvc.Id != null && Grid.Keyboard)
             {
-                await SetFocus(gridmvc);
+                await SetFocus(Gridmvc);
             }
         }
 

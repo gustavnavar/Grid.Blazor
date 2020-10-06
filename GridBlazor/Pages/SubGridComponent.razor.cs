@@ -54,7 +54,6 @@ namespace GridBlazor.Pages
             Type gridComponentType = typeof(GridComponent<>).MakeGenericType(_grid.Type);
             builder.OpenComponent(++_sequence, gridComponentType);
             builder.AddAttribute(++_sequence, "Grid", _grid);
-            builder.AddAttribute(++_sequence, "ScreenPosition", GridComponent.ScreenPosition);
             if (OnRowClickedActions != null && OnRowClickedActions.Count() > 0)
             {
                 builder.AddAttribute(++_sequence, "OnRowClickedActions", OnRowClickedActions);

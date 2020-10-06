@@ -57,23 +57,23 @@ namespace GridBlazor.Pages
             {
                 await jSRuntime.InvokeVoidAsync("gridJsFunctions.focusElement", firstSelect);
                 ScreenPosition sp = await jSRuntime.InvokeAsync<ScreenPosition>("gridJsFunctions.getPosition", dateTimeFilter);
+                ScreenPosition gridComponentSP = await jSRuntime.InvokeAsync<ScreenPosition>("gridJsFunctions.getPosition", GridHeaderComponent.GridComponent.Gridmvc);
                 if (GridHeaderComponent.GridComponent.Grid.Direction == GridShared.GridDirection.RTL)
                 {
-                    if (sp != null && GridHeaderComponent.GridComponent.ScreenPosition != null
-                        && sp.X < Math.Max(25, GridHeaderComponent.GridComponent.ScreenPosition.X))
+                    if (sp != null && gridComponentSP != null && sp.X < Math.Max(25, gridComponentSP.X))
                     {
-                        _offset = -sp.X + Math.Max(25, GridHeaderComponent.GridComponent.ScreenPosition.X);
+                        _offset = -sp.X + Math.Max(25, gridComponentSP.X);
                         StateHasChanged();
                     }
                 }
                 else
                 {
-                    if (sp != null && GridHeaderComponent.GridComponent.ScreenPosition != null
-                        && sp.X + sp.Width > Math.Min(sp.InnerWidth, GridHeaderComponent.GridComponent.ScreenPosition.X
-                        + GridHeaderComponent.GridComponent.ScreenPosition.Width + 25))
+                    if (sp != null && gridComponentSP != null
+                        && sp.X + sp.Width > Math.Min(sp.InnerWidth, gridComponentSP.X
+                        + gridComponentSP.Width + 25))
                     {
-                        _offset = sp.X + sp.Width - Math.Min(sp.InnerWidth, GridHeaderComponent.GridComponent.ScreenPosition.X
-                        + GridHeaderComponent.GridComponent.ScreenPosition.Width + 25) + 25;
+                        _offset = sp.X + sp.Width - Math.Min(sp.InnerWidth, gridComponentSP.X
+                        + gridComponentSP.Width + 25) + 25;
                         StateHasChanged();
                     }
                 }

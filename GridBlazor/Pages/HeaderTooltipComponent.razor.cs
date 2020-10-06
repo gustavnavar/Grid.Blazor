@@ -30,23 +30,23 @@ namespace GridBlazor.Pages
             {
                 await jSRuntime.InvokeVoidAsync("gridJsFunctions.focusElement", tooltip);
                 ScreenPosition sp = await jSRuntime.InvokeAsync<ScreenPosition>("gridJsFunctions.getPosition", tooltip);
+                ScreenPosition gridComponentSP = await jSRuntime.InvokeAsync<ScreenPosition>("gridJsFunctions.getPosition", GridComponent.Gridmvc);
                 if (GridComponent.Grid.Direction == GridShared.GridDirection.RTL)
                 {
-                    if (sp != null && GridComponent.ScreenPosition != null
-                        && sp.X < Math.Max(35, GridComponent.ScreenPosition.X))
+                    if (sp != null && gridComponentSP != null && sp.X < Math.Max(35, gridComponentSP.X))
                     {
-                        _offset = -sp.X - Math.Max(35, GridComponent.ScreenPosition.X);
+                        _offset = -sp.X - Math.Max(35, gridComponentSP.X);
                         StateHasChanged();
                     }
                 }
                 else
                 {
-                    if (sp != null && GridComponent.ScreenPosition != null
-                        && sp.X + sp.Width > Math.Min(sp.InnerWidth, GridComponent.ScreenPosition.X
-                        + GridComponent.ScreenPosition.Width + 35))
+                    if (sp != null && gridComponentSP != null
+                        && sp.X + sp.Width > Math.Min(sp.InnerWidth, gridComponentSP.X
+                        + gridComponentSP.Width + 35))
                     {
-                        _offset = sp.X + sp.Width - Math.Min(sp.InnerWidth, GridComponent.ScreenPosition.X
-                        + GridComponent.ScreenPosition.Width + 35) - 35;
+                        _offset = sp.X + sp.Width - Math.Min(sp.InnerWidth, gridComponentSP.X
+                        + gridComponentSP.Width + 35) - 35;
                         StateHasChanged();
                     }
                 }
