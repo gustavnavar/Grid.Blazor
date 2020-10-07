@@ -647,6 +647,26 @@ namespace GridBlazor
         /// </summary>
         public string DeleteLabel { get; set; }
 
+        /// <summary>
+        ///     Create form label
+        /// </summary>
+        public string CreateFormLabel { get; set; }
+
+        /// <summary>
+        ///     Read form label
+        /// </summary>
+        public string ReadFormLabel { get; set; }
+
+        /// <summary>
+        ///     Update form label
+        /// </summary>
+        public string UpdateFormLabel { get; set; }
+
+        /// <summary>
+        ///     Delete form label
+        /// </summary>
+        public string DeleteFormLabel { get; set; }
+
         // <summary>
         ///     Create CRUD confirmation fields
         /// </summary>

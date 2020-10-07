@@ -140,11 +140,15 @@ namespace GridBlazor.Pages
 
         [Parameter]
         public string TableCssClass { get; set; } = "table grid-table";
+
         [Parameter]
         public string TableWrapCssClass { get; set; } = "table-wrap";
 
         [Parameter]
         public string GridHeaderCssClass { get; set; } = "grid-header";
+
+        [Parameter]
+        public string GridCrudHeaderCssClass { get; set; } = "grid-crud-header";
 
         [Parameter]
         public string GridCellCssClass { get; set; } = "grid-cell";

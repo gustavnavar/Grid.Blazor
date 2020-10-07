@@ -87,7 +87,8 @@ else
             .WithMultipleFilters()
             .WithGridItemsCount()
             .Selectable(true)
-            .SetHeaderCrudButtons(true);
+            .SetHeaderCrudButtons(true)
+            .SetCrudFormLabels("Add Order", "Order Details", "Edit Order", "Delete Order");
 
         _grid = client.Grid;
 

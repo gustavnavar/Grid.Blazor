@@ -5,7 +5,7 @@
 
 @typeparam T
 
-<h1>@Strings.Delete</h1>
+<div class="@GridComponent.GridCrudHeaderCssClass">@(string.IsNullOrWhiteSpace(GridComponent.Grid.DeleteFormLabel) ? Strings.Delete : GridComponent.Grid.DeleteFormLabel)</div>
 
 <p id="error" style="color:red;">@Error</p>
 <div class="form-horizontal">

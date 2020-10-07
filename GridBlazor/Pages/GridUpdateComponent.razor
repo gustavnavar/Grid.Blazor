@@ -7,7 +7,7 @@
 
 @typeparam T
 
-<h1>@Strings.Edit</h1>
+<div class="@GridComponent.GridCrudHeaderCssClass">@(string.IsNullOrWhiteSpace(GridComponent.Grid.UpdateFormLabel) ? Strings.Edit : GridComponent.Grid.UpdateFormLabel)</div>
 
 <EditForm Model="@Item" OnValidSubmit="@UpdateItem" @ref="Form">
     <DataAnnotationsValidator />

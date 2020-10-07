@@ -292,6 +292,15 @@ namespace GridBlazor
             return this;
         }
 
+        public IGridClient<T> SetCrudFormLabels(string createLabel, string readLabel, string updateLabel, string deleteLabel)
+        {
+            _source.CreateFormLabel = createLabel;
+            _source.ReadFormLabel = readLabel;
+            _source.UpdateFormLabel = updateLabel;
+            _source.DeleteFormLabel = deleteLabel;
+            return this;
+        }
+
         public IGridClient<T> SetCreateConfirmation(bool enabled, int? width = null, int? labelWidth = null)
         {
             _source.CreateConfirmation = enabled;

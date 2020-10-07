@@ -5,7 +5,7 @@
 
 @typeparam T
 
-<h1>@Strings.View</h1>
+<div class="@GridComponent.GridCrudHeaderCssClass">@(string.IsNullOrWhiteSpace(GridComponent.Grid.ReadFormLabel) ? Strings.View : GridComponent.Grid.ReadFormLabel)</div>
 
 <div class="form-horizontal">
     @foreach (var column in GridComponent.Grid.Columns)
