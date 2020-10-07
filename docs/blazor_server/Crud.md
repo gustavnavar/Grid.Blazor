@@ -278,6 +278,15 @@ You will have to use the ```SetCrudButtonLabels``` method of the ```GridClient``
         .SetCrudButtonLabels("Add", "View", "Edit", "Delete");
 ```
 
+## CRUD form labels
+
+You can change the default CRUD form titles using the ```SetCrudFormLabels``` method of the ```GridClient``` object for this:
+```c#
+    var client = new GridClient<Order>(q => orderService.GetOrdersGridRows(columns, q), query, false, "ordersGrid", columns, locale)
+        .Crud(true, orderService)
+        .SetCrudFormLabels("Add Order", "View Order", "Edit Order", "Delete Order");
+```
+
 ## CRUD buttons on the grid header
 
 You can have the all the CRUD buttons on the grid header instead of the grid rows. If you decide to use this layout you must configure the grid to allow row selection. Once you selects one row you can click on the "Edit", "View" and "Delete" buttons of the header.
