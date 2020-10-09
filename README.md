@@ -8,7 +8,7 @@ It supports .NET Core 3.1 and Blazor WebAssembly 3.2.0
 
 - GridMvcCore 3.0.0 does not support .Net Core 2.x. It requires .NET Core 3.1
 
-- GridBlazor 1.6.7 requires a change on the column defintion when selecting rows with checkboxes using the ```SetCheckboxColumn``` method. It's mandatory to identify the columns that are primary keys for the grid. You must do it using the SetPrimaryKey(true) method for the primary key columns' definitions:
+- GridBlazor 1.6.7 requires a change on the column definition when selecting rows with checkboxes using the ```SetCheckboxColumn``` method. It's mandatory to identify the columns that are primary keys for the grid. You must do it using the SetPrimaryKey(true) method for the primary key columns' definitions:
 
     ```c#
         c.Add("CheckboxColumn").SetCheckboxColumn(true, o => o.Customer.IsVip);
@@ -75,9 +75,9 @@ http://gridblazor.azurewebsites.net
 https://github.com/gustavnavar/Grid.Blazor/releases
 
 ## Folder description
-* [GridBlazor](./GridBlazor): Library to build de GridBlazor package
-* [GridMvc](./GridMvc): Library to build de GridMvcCore package
-* [GridShared](./GridShared): Library to build de GridShared package
+* [GridBlazor](./GridBlazor): Library to build the GridBlazor package
+* [GridMvc](./GridMvc): Library to build the GridMvcCore package
+* [GridShared](./GridShared): Library to build the GridShared package
 * [GridBlazorClientSide.Client](./GridBlazorClientSide.Client): Front-end project for the Blazor WebAssembly demo
 * [GridBlazorClientSide.Server](./GridBlazorClientSide.Server): Back-end project for the Blazor WebAssembly demo
 * [GridBlazorClientSide.Shared](./GridBlazorClientSide.Shared): Shared project for the Blazor WebAssembly demo
@@ -101,7 +101,7 @@ Alternatively, if you prefer to install a fresh version of the database you can 
         GO
     ```
 - change manually some values of the new IsVip column to True
-- review the datetime columns. Any missmatch between EF Core model and database definitions will produce an exception and filtering will not work as expected. If database columns are defined as ```datetime``` you must modify the ```NorthwindDbContext``` class including:
+- review the datetime columns. Any mismatch between EF Core model and database definitions will produce an exception and filtering will not work as expected. If database columns are defined as ```datetime``` you must modify the ```NorthwindDbContext``` class including:
     ```c#
         modelBuilder.Entity<Order>().Property(r => r.OrderDate).HasColumnType("datetime");
     ```
