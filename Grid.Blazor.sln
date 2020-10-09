@@ -29,7 +29,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GridBlazorOData.Client", "G
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GridBlazorOData.Shared", "GridBlazorOData.Shared\GridBlazorOData.Shared.csproj", "{9E59D5E8-A7BE-4DE0-A8EF-396801F62D90}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GridSharedData", "GridSharedData\GridSharedData.csproj", "{D1864254-2B73-465A-A7C6-8E13B24A1B3B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GridSharedData", "GridSharedData\GridSharedData.csproj", "{D1864254-2B73-465A-A7C6-8E13B24A1B3B}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -98,7 +98,7 @@ Global
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
-		SolutionGuid = {895FF79E-EBAE-48F1-BB99-DEE7E62B0DB6}
 		VisualSVNWorkingCopyRoot = .
+		SolutionGuid = {895FF79E-EBAE-48F1-BB99-DEE7E62B0DB6}
 	EndGlobalSection
 EndGlobal

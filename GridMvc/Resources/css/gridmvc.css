@@ -188,7 +188,7 @@ div[dir="rtl"] button.grid-button-excel { margin-left: 5px; margin-right: 0; }
 div[dir="rtl"] .grid-button-components { margin-left: 5px; margin-right: 0px; }
 .grid-button-components:first-child { margin-left: 0; }
 div[dir="rtl"] .grid-button-components:first-child { margin-right: 0; }
-button.grid-button-component { min-width: 32px; margin-right: 5px; background: -o-linear-gradient(top, #ddd 0%, #eee 100%);}
+button.grid-button-component { min-width: 32px; margin-right: 5px;     background: -o-linear-gradient(top, #ddd 0%, #eee 100%); background: -moz-linear-gradient(top, #ddd 0%, #eee 100%); background: -webkit-gradient(linear, left top, left bottom, color-stop(0,#ddd), color-stop(1, #eee)); }
 div[dir="rtl"] button.grid-button-component { margin-left: 5px; margin-right: 0; }
 
 /* Grid checkbox header */

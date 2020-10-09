@@ -108,6 +108,7 @@ namespace GridMvc.Demo
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapDefaultControllerRoute();
+                endpoints.MapRazorPages();
                 endpoints.MapBlazorHub();
             });
         }

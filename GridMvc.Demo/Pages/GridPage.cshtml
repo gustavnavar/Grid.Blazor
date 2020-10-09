@@ -1,0 +1,48 @@
+﻿@page
+@model GridMvc.Demo.Pages.GridPageModel
+
+@{
+    Layout = "_Layout";
+}
+
+<div class="row">
+    <div class="col-md-12">
+        <p>
+            This page demonstrates the possibilities of GridMvcCore. For more documentation, please
+            see: <a href="https://github.com/gustavnavar/Grid.Blazor">https://github.com/gustavnavar/Grid.Blazor</a>
+        </p>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-9">
+        <grid model="@Model.Grid" />
+    </div>
+    <div class="col-md-3">
+        <h4>
+            Order details
+        </h4>
+        <div id="order-content">
+            <p class="muted">
+                Select order to display detailed infomation
+            </p>
+        </div>
+    </div>
+</div>
+
+<script>
+    $(function () {
+        pageGrids.ordersGrid.addFilterWidget(new CustomersFilterWidget());
+
+        pageGrids.ordersGrid.onRowSelect(function (e) {
+            $.get("/Home/GetOrder?id=" + e.row.OrderID, function (data) {
+                if (data.status <= 0) {
+                    alert(data.message);
+                    return;
+                }
+                $("#order-content").html(data.content);
+            });
+        });
+    });
+</script>
+
