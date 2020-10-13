@@ -37,6 +37,7 @@ namespace GridShared.Columns
         IList<Action<object>> CrudActions { get; }
         IList<Func<object, Task>> CrudFunctions { get; }
         object CrudObject { get; }
+        bool EnableCard { get; }
 
         IGrid ParentGrid { get; }
         bool Hidden { get; set; }
@@ -215,84 +216,84 @@ namespace GridShared.Columns
         /// <summary>
         ///     Setup the custom render for component
         /// </summary>
-        IGridColumn<T> RenderCrudComponentAs<TComponent>();
+        IGridColumn<T> RenderCrudComponentAs<TComponent>(bool enableCard = true);
 
         /// <summary>
         ///     Setup the custom render for component
         /// </summary>
-        IGridColumn<T> RenderCrudComponentAs<TComponent>(IList<Action<object>> actions);
+        IGridColumn<T> RenderCrudComponentAs<TComponent>(IList<Action<object>> actions, bool enableCard = true);
 
         /// <summary>
         ///     Setup the custom render for component
         /// </summary>
-        IGridColumn<T> RenderCrudComponentAs<TComponent>(IList<Func<object, Task>> functions);
+        IGridColumn<T> RenderCrudComponentAs<TComponent>(IList<Func<object, Task>> functions, bool enableCard = true);
 
         /// <summary>
         ///     Setup the custom render for component
         /// </summary>
-        IGridColumn<T> RenderCrudComponentAs<TComponent>(IList<Action<object>> actions, IList<Func<object, Task>> functions);
+        IGridColumn<T> RenderCrudComponentAs<TComponent>(IList<Action<object>> actions, IList<Func<object, Task>> functions, bool enableCard = true);
 
         /// <summary>
         ///     Setup the custom render for component
         /// </summary>
-        IGridColumn<T> RenderCrudComponentAs<TComponent>(object obj);
+        IGridColumn<T> RenderCrudComponentAs<TComponent>(object obj, bool enableCard = true);
 
         /// <summary>
         ///     Setup the custom render for component
         /// </summary>
-        IGridColumn<T> RenderCrudComponentAs<TComponent>(IList<Action<object>> actions, object obj);
+        IGridColumn<T> RenderCrudComponentAs<TComponent>(IList<Action<object>> actions, object obj, bool enableCard = true);
 
         /// <summary>
         ///     Setup the custom render for component
         /// </summary>
-        IGridColumn<T> RenderCrudComponentAs<TComponent>(IList<Func<object, Task>> functions, object obj);
+        IGridColumn<T> RenderCrudComponentAs<TComponent>(IList<Func<object, Task>> functions, object obj, bool enableCard = true);
 
         /// <summary>
         ///     Setup the custom render for component
         /// </summary>
         IGridColumn<T> RenderCrudComponentAs<TComponent>(IList<Action<object>> actions, IList<Func<object, Task>> functions,
-            object obj);
+            object obj, bool enableCard = true);
 
         /// <summary>
         ///     Setup the custom render for component
         /// </summary>
-        IGridColumn<T> RenderCrudComponentAs<TCreateComponent, TReadComponent, TUpdateComponent, TDeleteComponent>();
+        IGridColumn<T> RenderCrudComponentAs<TCreateComponent, TReadComponent, TUpdateComponent, TDeleteComponent>(bool enableCard = true);
 
         /// <summary>
         ///     Setup the custom render for component
         /// </summary>
-        IGridColumn<T> RenderCrudComponentAs<TCreateComponent, TReadComponent, TUpdateComponent, TDeleteComponent>(IList<Action<object>> actions);
+        IGridColumn<T> RenderCrudComponentAs<TCreateComponent, TReadComponent, TUpdateComponent, TDeleteComponent>(IList<Action<object>> actions, bool enableCard = true);
 
         /// <summary>
         ///     Setup the custom render for component
         /// </summary>
-        IGridColumn<T> RenderCrudComponentAs<TCreateComponent, TReadComponent, TUpdateComponent, TDeleteComponent>(IList<Func<object, Task>> functions);
+        IGridColumn<T> RenderCrudComponentAs<TCreateComponent, TReadComponent, TUpdateComponent, TDeleteComponent>(IList<Func<object, Task>> functions, bool enableCard = true);
 
         /// <summary>
         ///     Setup the custom render for component
         /// </summary>
-        IGridColumn<T> RenderCrudComponentAs<TCreateComponent, TReadComponent, TUpdateComponent, TDeleteComponent>(IList<Action<object>> actions, IList<Func<object, Task>> functions);
+        IGridColumn<T> RenderCrudComponentAs<TCreateComponent, TReadComponent, TUpdateComponent, TDeleteComponent>(IList<Action<object>> actions, IList<Func<object, Task>> functions, bool enableCard = true);
 
         /// <summary>
         ///     Setup the custom render for component
         /// </summary>
-        IGridColumn<T> RenderCrudComponentAs<TCreateComponent, TReadComponent, TUpdateComponent, TDeleteComponent>(object obj);
+        IGridColumn<T> RenderCrudComponentAs<TCreateComponent, TReadComponent, TUpdateComponent, TDeleteComponent>(object obj, bool enableCard = true);
 
         /// <summary>
         ///     Setup the custom render for component
         /// </summary>
-        IGridColumn<T> RenderCrudComponentAs<TCreateComponent, TReadComponent, TUpdateComponent, TDeleteComponent>(IList<Action<object>> actions, object obj);
+        IGridColumn<T> RenderCrudComponentAs<TCreateComponent, TReadComponent, TUpdateComponent, TDeleteComponent>(IList<Action<object>> actions, object obj, bool enableCard = true);
 
         /// <summary>
         ///     Setup the custom render for component
         /// </summary>
-        IGridColumn<T> RenderCrudComponentAs<TCreateComponent, TReadComponent, TUpdateComponent, TDeleteComponent>(IList<Func<object, Task>> functions, object obj);
+        IGridColumn<T> RenderCrudComponentAs<TCreateComponent, TReadComponent, TUpdateComponent, TDeleteComponent>(IList<Func<object, Task>> functions, object obj, bool enableCard = true);
 
         /// <summary>
         ///     Setup the custom render for component
         /// </summary>
         IGridColumn<T> RenderCrudComponentAs<TCreateComponent, TReadComponent, TUpdateComponent, TDeleteComponent>(IList<Action<object>> actions, IList<Func<object, Task>> functions,
-            object obj);
+            object obj, bool enableCard = true);
 
         /// <summary>
         ///     Format column values with specified text pattern

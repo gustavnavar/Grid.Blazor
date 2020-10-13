@@ -29,6 +29,7 @@ namespace GridMvc.Columns
         public IList<Action<object>> CrudActions { get; private set; }
         public IList<Func<object, Task>> CrudFunctions { get; private set; }
         public object CrudObject { get; private set; }
+        public bool EnableCard { get; private set; } = true;
 
         protected Func<T, string> ValueConstraint;
         public string ValuePattern { get; protected set; }
@@ -273,86 +274,86 @@ namespace GridMvc.Columns
             return RenderComponentAs(typeof(TComponent), actions, functions, obj);
         }
 
-        public IGridColumn<T> RenderCrudComponentAs<TComponent>()
+        public IGridColumn<T> RenderCrudComponentAs<TComponent>(bool enableCard = true)
         {
-            return RenderCrudComponentAs<TComponent>(null, null, null);
+            return RenderCrudComponentAs<TComponent>(null, null, null, enableCard);
         }
 
-        public IGridColumn<T> RenderCrudComponentAs<TComponent>(IList<Action<object>> actions)
+        public IGridColumn<T> RenderCrudComponentAs<TComponent>(IList<Action<object>> actions, bool enableCard = true)
         {
-            return RenderCrudComponentAs<TComponent>(actions, null, null);
+            return RenderCrudComponentAs<TComponent>(actions, null, null, enableCard);
         }
 
-        public IGridColumn<T> RenderCrudComponentAs<TComponent>(IList<Func<object, Task>> functions)
+        public IGridColumn<T> RenderCrudComponentAs<TComponent>(IList<Func<object, Task>> functions, bool enableCard = true)
         {
-            return RenderCrudComponentAs<TComponent>(null, functions, null);
-        }
-
-        public IGridColumn<T> RenderCrudComponentAs<TComponent>(IList<Action<object>> actions,
-            IList<Func<object, Task>> functions)
-        {
-            return RenderCrudComponentAs<TComponent>(actions, functions, null);
-        }
-
-        public IGridColumn<T> RenderCrudComponentAs<TComponent>(object obj)
-        {
-            return RenderCrudComponentAs<TComponent>(null, null, obj);
-        }
-
-        public IGridColumn<T> RenderCrudComponentAs<TComponent>(IList<Action<object>> actions, object obj)
-        {
-            return RenderCrudComponentAs<TComponent>(actions, null, obj);
-        }
-
-        public IGridColumn<T> RenderCrudComponentAs<TComponent>(IList<Func<object, Task>> functions, object obj)
-        {
-            return RenderCrudComponentAs<TComponent>(null, functions, obj);
+            return RenderCrudComponentAs<TComponent>(null, functions, null, enableCard);
         }
 
         public IGridColumn<T> RenderCrudComponentAs<TComponent>(IList<Action<object>> actions,
-            IList<Func<object, Task>> functions, object obj)
+            IList<Func<object, Task>> functions, bool enableCard = true)
         {
-            return RenderCrudComponentAs<TComponent, TComponent, TComponent, TComponent>(actions, functions, obj);
+            return RenderCrudComponentAs<TComponent>(actions, functions, null, enableCard);
         }
 
-        public IGridColumn<T> RenderCrudComponentAs<TCreateComponent, TReadComponent, TUpdateComponent, TDeleteComponent>()
+        public IGridColumn<T> RenderCrudComponentAs<TComponent>(object obj, bool enableCard = true)
         {
-            return RenderCrudComponentAs<TCreateComponent, TReadComponent, TUpdateComponent, TDeleteComponent>(null, null, null);
+            return RenderCrudComponentAs<TComponent>(null, null, obj, enableCard);
         }
 
-        public IGridColumn<T> RenderCrudComponentAs<TCreateComponent, TReadComponent, TUpdateComponent, TDeleteComponent>(IList<Action<object>> actions)
+        public IGridColumn<T> RenderCrudComponentAs<TComponent>(IList<Action<object>> actions, object obj, bool enableCard = true)
         {
-            return RenderCrudComponentAs<TCreateComponent, TReadComponent, TUpdateComponent, TDeleteComponent>(actions, null, null);
+            return RenderCrudComponentAs<TComponent>(actions, null, obj, enableCard);
         }
 
-        public IGridColumn<T> RenderCrudComponentAs<TCreateComponent, TReadComponent, TUpdateComponent, TDeleteComponent>(IList<Func<object, Task>> functions)
+        public IGridColumn<T> RenderCrudComponentAs<TComponent>(IList<Func<object, Task>> functions, object obj, bool enableCard = true)
         {
-            return RenderCrudComponentAs<TCreateComponent, TReadComponent, TUpdateComponent, TDeleteComponent>(null, functions, null);
+            return RenderCrudComponentAs<TComponent>(null, functions, obj, enableCard);
+        }
+
+        public IGridColumn<T> RenderCrudComponentAs<TComponent>(IList<Action<object>> actions,
+            IList<Func<object, Task>> functions, object obj, bool enableCard = true)
+        {
+            return RenderCrudComponentAs<TComponent, TComponent, TComponent, TComponent>(actions, functions, obj, enableCard);
+        }
+
+        public IGridColumn<T> RenderCrudComponentAs<TCreateComponent, TReadComponent, TUpdateComponent, TDeleteComponent>(bool enableCard = true)
+        {
+            return RenderCrudComponentAs<TCreateComponent, TReadComponent, TUpdateComponent, TDeleteComponent>(null, null, null, enableCard);
+        }
+
+        public IGridColumn<T> RenderCrudComponentAs<TCreateComponent, TReadComponent, TUpdateComponent, TDeleteComponent>(IList<Action<object>> actions, bool enableCard = true)
+        {
+            return RenderCrudComponentAs<TCreateComponent, TReadComponent, TUpdateComponent, TDeleteComponent>(actions, null, null, enableCard);
+        }
+
+        public IGridColumn<T> RenderCrudComponentAs<TCreateComponent, TReadComponent, TUpdateComponent, TDeleteComponent>(IList<Func<object, Task>> functions, bool enableCard = true)
+        {
+            return RenderCrudComponentAs<TCreateComponent, TReadComponent, TUpdateComponent, TDeleteComponent>(null, functions, null, enableCard);
         }
 
         public IGridColumn<T> RenderCrudComponentAs<TCreateComponent, TReadComponent, TUpdateComponent, TDeleteComponent>(IList<Action<object>> actions,
-            IList<Func<object, Task>> functions)
+            IList<Func<object, Task>> functions, bool enableCard = true)
         {
-            return RenderCrudComponentAs<TCreateComponent, TReadComponent, TUpdateComponent, TDeleteComponent>(actions, functions, null);
+            return RenderCrudComponentAs<TCreateComponent, TReadComponent, TUpdateComponent, TDeleteComponent>(actions, functions, null, enableCard);
         }
 
-        public IGridColumn<T> RenderCrudComponentAs<TCreateComponent, TReadComponent, TUpdateComponent, TDeleteComponent>(object obj)
+        public IGridColumn<T> RenderCrudComponentAs<TCreateComponent, TReadComponent, TUpdateComponent, TDeleteComponent>(object obj, bool enableCard = true)
         {
-            return RenderCrudComponentAs<TCreateComponent, TReadComponent, TUpdateComponent, TDeleteComponent>(null, null, obj);
+            return RenderCrudComponentAs<TCreateComponent, TReadComponent, TUpdateComponent, TDeleteComponent>(null, null, obj, enableCard);
         }
 
-        public IGridColumn<T> RenderCrudComponentAs<TCreateComponent, TReadComponent, TUpdateComponent, TDeleteComponent>(IList<Action<object>> actions, object obj)
+        public IGridColumn<T> RenderCrudComponentAs<TCreateComponent, TReadComponent, TUpdateComponent, TDeleteComponent>(IList<Action<object>> actions, object obj, bool enableCard = true)
         {
-            return RenderCrudComponentAs<TCreateComponent, TReadComponent, TUpdateComponent, TDeleteComponent>(actions, null, obj);
+            return RenderCrudComponentAs<TCreateComponent, TReadComponent, TUpdateComponent, TDeleteComponent>(actions, null, obj, enableCard);
         }
 
-        public IGridColumn<T> RenderCrudComponentAs<TCreateComponent, TReadComponent, TUpdateComponent, TDeleteComponent>(IList<Func<object, Task>> functions, object obj)
+        public IGridColumn<T> RenderCrudComponentAs<TCreateComponent, TReadComponent, TUpdateComponent, TDeleteComponent>(IList<Func<object, Task>> functions, object obj, bool enableCard = true)
         {
-            return RenderCrudComponentAs<TCreateComponent, TReadComponent, TUpdateComponent, TDeleteComponent>(null, functions, obj);
+            return RenderCrudComponentAs<TCreateComponent, TReadComponent, TUpdateComponent, TDeleteComponent>(null, functions, obj, enableCard);
         }
 
         public IGridColumn<T> RenderCrudComponentAs<TCreateComponent, TReadComponent, TUpdateComponent, TDeleteComponent>(IList<Action<object>> actions,
-            IList<Func<object, Task>> functions, object obj)
+            IList<Func<object, Task>> functions, object obj, bool enableCard = true)
         {
             Type createComponentType = typeof(TCreateComponent);
             if (createComponentType.IsSubclassOf(typeof(ViewComponent)))
@@ -377,6 +378,7 @@ namespace GridMvc.Columns
             CrudActions = actions;
             CrudFunctions = functions;
             CrudObject = obj;
+            EnableCard = enableCard;
             return this;
         }
 
