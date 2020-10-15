@@ -591,6 +591,18 @@ namespace GridBlazor.Pages
         {
             await SetSelectFields();
             _item = (T)Activator.CreateInstance(typeof(T));
+            CreateHndlr();
+        }
+
+        public async Task CreateHandler(T item)
+        {
+            await SetSelectFields();
+            _item = item;
+            CreateHndlr();
+        }
+
+        private void CreateHndlr()
+        {
             if (Grid.FixedValues != null)
             {
                 foreach (var fixValue in Grid.FixedValues)
@@ -739,6 +751,33 @@ namespace GridBlazor.Pages
             ((CGrid<T>)Grid).Mode = GridMode.Form;
             if (componentType != null)
                 CrudRender = FormComponent(label, componentType, actions, functions, obj);
+            else
+                CrudRender = null;
+
+            _shouldRender = true;
+            StateHasChanged();
+        }
+
+        public void ButtonCrudComponentHandler(string key)
+        {
+            var buttonComponent = Grid.ButtonCrudComponents.Get(key);
+            StartFormCrudComponent(buttonComponent.Label, buttonComponent.ComponentType, buttonComponent.Actions,
+                    buttonComponent.Functions, buttonComponent.Object);
+        }
+
+        public void StartFormCrudComponent<TFormComponent>(string label, IList<Action<object>> actions,
+            IList<Func<object, Task>> functions, object obj)
+        {
+            StartFormCrudComponent(label, typeof(TFormComponent), actions, functions, obj);
+        }
+
+        public void StartFormCrudComponent(string label, Type componentType, IList<Action<object>> actions,
+            IList<Func<object, Task>> functions, object obj)
+        {
+            var returnMode = ((CGrid<T>)Grid).Mode;
+            ((CGrid<T>)Grid).Mode = GridMode.Form;
+            if (componentType != null)
+                CrudRender = FormCrudComponent(label, componentType, returnMode, actions, functions, obj);
             else
                 CrudRender = null;
 
@@ -926,6 +965,45 @@ namespace GridBlazor.Pages
                 builder.AddAttribute(++_sequence, "Object", obj);
             builder.CloseComponent();
         };
+
+        protected RenderFragment FormCrudComponent(string label, Type componentType, GridMode returnMode, 
+            IList<Action<object>> actions, IList<Func<object, Task>> functions, object obj) => builder =>
+            {
+                builder.OpenComponent<CascadingValue<GridComponent<T>>>(++_sequence);
+                builder.AddAttribute(++_sequence, "Value", this);
+                builder.AddAttribute(++_sequence, "Name", "GridComponent");
+                builder.AddAttribute(++_sequence, "ChildContent", FormCrudChildComponent(label, componentType, returnMode,
+                    actions, functions, obj));
+                builder.CloseComponent();
+            };
+
+        private RenderFragment FormCrudChildComponent(string label, Type componentType, GridMode returnMode,
+            IList<Action<object>> actions, IList<Func<object, Task>> functions, object obj) => builder =>
+            {
+                builder.OpenComponent(++_sequence, componentType);
+                var gridProperty = componentType.GetProperty("Grid");
+                if (gridProperty != null && gridProperty.PropertyType == typeof(CGrid<T>))
+                    builder.AddAttribute(++_sequence, "Grid", (CGrid<T>)Grid);
+                gridProperty = componentType.GetProperty("Label");
+                if (gridProperty != null)
+                    builder.AddAttribute(++_sequence, "Label", label);
+                gridProperty = componentType.GetProperty("Actions");
+                if (gridProperty != null)
+                    builder.AddAttribute(++_sequence, "Actions", actions);
+                gridProperty = componentType.GetProperty("Functions");
+                if (gridProperty != null)
+                    builder.AddAttribute(++_sequence, "Functions", functions);
+                gridProperty = componentType.GetProperty("Object");
+                if (gridProperty != null)
+                    builder.AddAttribute(++_sequence, "Object", obj);
+                gridProperty = componentType.GetProperty("ReturnMode");
+                if (gridProperty != null)
+                    builder.AddAttribute(++_sequence, "ReturnMode", returnMode);
+                gridProperty = componentType.GetProperty("Item");
+                if (gridProperty != null)
+                    builder.AddAttribute(++_sequence, "Item", _item);
+                builder.CloseComponent();
+            };
 
         public void BackButton()
         {

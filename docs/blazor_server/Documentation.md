@@ -30,5 +30,5 @@
 * [CRUD](Crud.md)
 * [Nested CRUD](Nested_crud.md)
 * [Events, exceptions and CRUD validation](Events.md)
-* [Embedded components on the grid](Embedded_components.md)
+* [Embedded components on a grid and on CRUD forms](Embedded_components.md)
 * [Export to Excel](Excel_export.md)

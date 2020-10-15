@@ -142,6 +142,9 @@ namespace GridBlazor
 
             ButtonComponents = new QueryDictionary<(string Label, Nullable<MarkupString> Content, Type ComponentType, 
                 IList<Action<object>> Actions, IList<Func<object, Task>> Functions, object Object)>();
+
+            ButtonCrudComponents = new QueryDictionary<(string Label, Nullable<MarkupString> Content, Type ComponentType, GridMode GridMode, 
+                IList<Action<object>> Actions, IList<Func<object, Task>> Functions, object Object)>();
         }
 
         /// <summary>
@@ -450,6 +453,8 @@ namespace GridBlazor
 
         public QueryDictionary<(string Label, Nullable<MarkupString> Content, Type ComponentType, IList<Action<object>> Actions, IList<Func<object, Task>> Functions, object Object)> ButtonComponents { get; internal set; }
 
+        public QueryDictionary<(string Label, Nullable<MarkupString> Content, Type ComponentType, GridMode GridMode, IList<Action<object>> Actions, IList<Func<object, Task>> Functions, object Object)> ButtonCrudComponents { get; internal set; }
+        
         public bool Keyboard { get; internal set; } = false;
 
         public ModifierKey ModifierKey { get; internal set; } = ModifierKey.CtrlKey;

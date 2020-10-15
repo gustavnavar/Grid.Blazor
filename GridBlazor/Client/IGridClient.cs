@@ -458,6 +458,89 @@ namespace GridBlazor
             object obj);
 
         /// <summary>
+        ///     Setup the Other Component
+        /// </summary>
+        IGridClient<T> AddButtonCrudComponent<TComponent>(string name, string label, bool createEnabled, bool readEnabled, bool updateEnabled, bool deleteEnabled);
+
+        /// <summary>
+        ///     Setup the Other Component
+        /// </summary>
+        IGridClient<T> AddButtonCrudComponent<TComponent>(string name, string label, bool createEnabled, bool readEnabled, bool updateEnabled, bool deleteEnabled, Nullable<MarkupString> content);
+
+        /// <summary>
+        ///     Setup the Other Component
+        /// </summary>
+        IGridClient<T> AddButtonCrudComponent<TComponent>(string name, string label, bool createEnabled, bool readEnabled, bool updateEnabled, bool deleteEnabled, IList<Action<object>> actions);
+
+        /// <summary>
+        ///     Setup the Other Component
+        /// </summary>
+        IGridClient<T> AddButtonCrudComponent<TComponent>(string name, string label, bool createEnabled, bool readEnabled, bool updateEnabled, bool deleteEnabled, Nullable<MarkupString> content,
+            IList<Action<object>> actions);
+
+        /// <summary>
+        ///     Setup the Other Component
+        /// </summary>
+        IGridClient<T> AddButtonCrudComponent<TComponent>(string name, string label, bool createEnabled, bool readEnabled, bool updateEnabled, bool deleteEnabled, object obj);
+
+        /// <summary>
+        ///     Setup the Other Component
+        /// </summary>
+        IGridClient<T> AddButtonCrudComponent<TComponent>(string name, string label, bool createEnabled, bool readEnabled, bool updateEnabled, bool deleteEnabled, Nullable<MarkupString> content, object obj);
+
+        /// <summary>
+        ///     Setup the Other Component
+        /// </summary>
+        IGridClient<T> AddButtonCrudComponent<TComponent>(string name, string label, bool createEnabled, bool readEnabled, bool updateEnabled, bool deleteEnabled, IList<Action<object>> actions, object obj);
+
+        /// <summary>
+        ///     Setup the Other Component
+        /// </summary>
+        IGridClient<T> AddButtonCrudComponent<TComponent>(string name, string label, bool createEnabled, bool readEnabled, bool updateEnabled, bool deleteEnabled, Nullable<MarkupString> content, IList<Action<object>> actions, object obj);
+
+        /// <summary>
+        ///     Setup the Other Component
+        /// </summary>
+        IGridClient<T> AddButtonCrudComponent<TComponent>(string name, string label, bool createEnabled, bool readEnabled, bool updateEnabled, bool deleteEnabled, IList<Func<object, Task>> functions);
+
+        /// <summary>
+        ///     Setup the Other Component
+        /// </summary>
+        IGridClient<T> AddButtonCrudComponent<TComponent>(string name, string label, bool createEnabled, bool readEnabled, bool updateEnabled, bool deleteEnabled, Nullable<MarkupString> content, IList<Func<object, Task>> functions);
+
+        /// <summary>
+        ///     Setup the Other Component
+        /// </summary>
+        IGridClient<T> AddButtonCrudComponent<TComponent>(string name, string label, bool createEnabled, bool readEnabled, bool updateEnabled, bool deleteEnabled, IList<Action<object>> actions, IList<Func<object, Task>> functions);
+
+        /// <summary>
+        ///     Setup the Other Component
+        /// </summary>
+        IGridClient<T> AddButtonCrudComponent<TComponent>(string name, string label, bool createEnabled, bool readEnabled, bool updateEnabled, bool deleteEnabled, Nullable<MarkupString> content, IList<Action<object>> actions, IList<Func<object, Task>> functions);
+
+        /// <summary>
+        ///     Setup the Other Component
+        /// </summary>
+        IGridClient<T> AddButtonCrudComponent<TComponent>(string name, string label, bool createEnabled, bool readEnabled, bool updateEnabled, bool deleteEnabled, IList<Func<object, Task>> functions, object obj);
+
+        /// <summary>
+        ///     Setup the Other Component
+        /// </summary>
+        IGridClient<T> AddButtonCrudComponent<TComponent>(string name, string label, bool createEnabled, bool readEnabled, bool updateEnabled, bool deleteEnabled, Nullable<MarkupString> content, IList<Func<object, Task>> functions, object obj);
+
+        /// <summary>
+        ///     Setup the Other Component
+        /// </summary>
+        IGridClient<T> AddButtonCrudComponent<TComponent>(string name, string label, bool createEnabled, bool readEnabled, bool updateEnabled, bool deleteEnabled, IList<Action<object>> actions, IList<Func<object, Task>> functions,
+            object obj);
+
+        /// <summary>
+        ///     Setup the Other Component
+        /// </summary>
+        IGridClient<T> AddButtonCrudComponent<TComponent>(string name, string label, bool createEnabled, bool readEnabled, bool updateEnabled, bool deleteEnabled, Nullable<MarkupString> content, IList<Action<object>> actions, IList<Func<object, Task>> functions,
+            object obj);
+
+        /// <summary>
         ///     Setup the text, which will displayed with empty items collection in the grid
         /// </summary>
         /// <param name="text">Grid empty text</param>

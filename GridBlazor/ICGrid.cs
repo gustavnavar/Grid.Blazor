@@ -117,9 +117,14 @@ namespace GridBlazor
         Type DeleteComponent { get; }
 
         /// <summary>
-        ///     Get and set custom Delete component
+        ///     Get and set custom Button components dictionary
         /// </summary>
         QueryDictionary<(string Label, Nullable<MarkupString> Content, Type ComponentType, IList<Action<object>> Actions, IList<Func<object, Task>> Functions, object Object)> ButtonComponents { get; }
+
+        // <summary>
+        ///     Get and set custom Button CRUD components dictionary
+        /// </summary>
+        QueryDictionary<(string Label, Nullable<MarkupString> Content, Type ComponentType, GridMode GridMode, IList<Action<object>> Actions, IList<Func<object, Task>> Functions, object Object)> ButtonCrudComponents { get; }
 
         /// <summary>
         ///     Get and set custom create component actions

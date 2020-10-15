@@ -9,6 +9,7 @@ using Microsoft.Extensions.Primitives;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace GridBlazorServerSide.Services
 {
@@ -60,9 +61,33 @@ namespace GridBlazorServerSide.Services
                 return items;
             }
         }
+
+        public async Task<Customer> Get(params object[] keys)
+        {
+            using (var context = new NorthwindDbContext(_options))
+            {
+                var repository = new CustomersRepository(context);
+                return await repository.GetById(keys[0].ToString());
+            }
+        }
+
+        public Task Insert(Customer item)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task Update(Customer item)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task Delete(params object[] keys)
+        {
+            throw new NotImplementedException();
+        }
     }
 
-    public interface ICustomerService
+    public interface ICustomerService : ICrudDataService<Customer>
     {
         IEnumerable<string> GetCustomersNames();
         IEnumerable<SelectItem> GetAllCustomers();

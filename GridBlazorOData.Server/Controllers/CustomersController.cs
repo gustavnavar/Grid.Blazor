@@ -27,8 +27,8 @@ namespace GridBlazorOData.Server.Controllers
         public async Task<IActionResult> Get(string key)
         {
             var repository = new CustomersRepository(_context);
-            Customer order = await repository.GetById(key);
-            return Ok(order);
+            Customer customer = await repository.GetById(key);
+            return Ok(customer);
         }
     }
 }

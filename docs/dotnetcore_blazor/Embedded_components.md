@@ -1,21 +1,24 @@
-## GridBlazor for ASP.NET Core MVC
+## Blazor client-side
 
-# Button components on the grid
+# Button components on a grid and on CRUD forms
 
 [Index](Documentation.md)
 
-Compoments can be embedded on a grid. These components can be started clicking on a button on the top of the grid or in the grid columns. On both cases they will be shown on the screen instead of the grid.
+Compoments can be embedded on a grid and/or on CRUD forms. 
 
-## Page definition
+## Button components on a grid
+These components can be started clicking on a button on the top of the grid or in the grid columns. On both cases they will be shown on the screen instead of the grid.
+
+### Page definition
 
 * If you want to use a button on the top of the grid to start the embedded component, you can use the **AddButtonComponent** method of the **GridClient** object to add a component:
-
+    
     ```c#
         var client = new GridClient<Order>(q => orderService.GetOrdersGridRows(columns, q), query, false, "ordersGrid", Columns, locale)
             .AddButtonComponent<EmployeeComponent>("Employees", "Employee's Grid");
     ```
 
-    **AddButtonComponent** method has 2 required paramenter and 4 optional ones:
+    **AddButtonComponent** method has 2 required parameter and 4 optional ones:
 
     Parameter | Type | Description
     --------- | ---- | -----------
@@ -26,10 +29,10 @@ Compoments can be embedded on a grid. These components can be started clicking o
     Functions | IList<Func<object,Task>> (optional) | the parent component can pass a list of Functions to be used by the child component
     Object | object (optional) | the parent component can pass an object to be used by the component
 
-    If you use any of these paramenters, you must use them when creating the component.
+    If you use any of these parameters, you must use them when creating the component.
 
 * If you want to use a button in a grid column to start the embedded component, you has to render a button in a grid cell custom column:
-
+    
     ```c#
         c.Add().Encoded(false).Sanitized(false).RenderComponentAs<ShipperButtonCell>();
     ```
@@ -72,7 +75,7 @@ Compoments can be embedded on a grid. These components can be started clicking o
         }
     ```
 
-## Component definition
+### Component definition
 
 You must also create the Blazor component that you want to embed. The 5 optional parameters are allowed:
 
@@ -92,5 +95,144 @@ This is an example of a grid with 2 additional components:
 
 ![](../images/Button_components.png)
 
+
+
+## Button components on CRUD forms
+These type of components can be started clicking on a button on the bottom of a CRUD form.
+
+### Page definition
+
+You have to use the **AddCrudButtonComponent** method of the **GridClient** object to add a component:
+    
+    ```c#
+        var client = new GridClient<Order>(q => orderService.GetOrdersGridRows(columns, q), query, false, "ordersGrid", Columns, locale)
+            .Crud(true, orderService)
+            .AddButtonCrudComponent<EmployeeFormComponent>("Employees", "Employee's Grid", true, true, true, true);
+    ```
+
+**AddCrudButtonComponent** method has 6 required parameters and 4 optional ones:
+
+    Parameter | Type | Description
+    --------- | ---- | -----------
+    Name | string | unique name in the grid to identify the embedded component
+    Label | string | label to be shown in the button
+    CreateEnabled |bool | enables the button component on the Create form
+    ReadEnabled | bool |  enables the button component on the Read form
+    UpdateEnabled | bool | enables the button component on the Update form
+    DeleteEnabled | bool | enables the button component on the Delete form
+    Content | MarkupString (optional) | html content to be shown in the button
+    Actions | IList<Action<object>> (optional) | the parent component can pass a list of Actions to be used by the component
+    Functions | IList<Func<object,Task>> (optional) | the parent component can pass a list of Functions to be used by the child component
+    Object | object (optional) | the parent component can pass an object to be used by the component
+ 
+### Component definition
+
+You must also create the Blazor component that you want to embed. It must implement the ```IFormCrudComponent<T>``` interface. There are 2 parameters required by this interface:
+Parameter | Type | Description
+--------- | ---- | -----------
+Item | T | Model of the parent CRUD form
+ReturnMode | GridMode | Mode of the grid to be shown when the components returns
+
+And there are 5 optional parameters:
+Parameter | Type | Description
+--------- | ---- | -----------
+GridComponent | GridComponent<T> (optional) | Cascading parameter to access the parent component
+Grid | CGrid<T> (optional) | Grid can be used to get any required information
+Actions | IList<Action<object>> (optional) | the parent component can pass a list of Actions to be used by the component
+Functions | IList<Func<object,Task>> (optional) | the parent component can pass a list of Functions to be used by the child component
+Object | object (optional) | the parent component can pass an object to be used by the component
+
+**Actions**, **Functions** and **Object** must be used when calling the **AddButtonCrudComponent** method, but **Grid** can be used without this requirement.
+ 
+The component can include any html elements as well as any event handling features.
+
+This is an example of component:
+    ```c#
+        @implements IFormCrudComponent<Order>
+        @inject ICrudDataService<Customer> customerService
+
+        <div class="@GridComponent.GridCrudHeaderCssClass">Customer</div>
+
+        @if (_customer == null)
+        {
+            <p><em>Loading...</em></p>
+        }
+        else
+        {
+            <div class="form-horizontal">
+                <div class="form-group row">
+                    <label class="col-form-label col-md-2">CustomerID</label>
+                    <div class="col-md-5">
+                        <input class="form-control" readonly="readonly" value="@_customer.CustomerID" />
+                    </div>
+                </div>
+
+                <div class="form-group row">
+                    <label class="col-form-label col-md-2">Company Name</label>
+                    <div class="col-md-5">
+                        <input class="form-control" readonly="readonly" value="@_customer.CompanyName" />
+                    </div>
+                </div>
+
+                <div class="form-group row">
+                    <label class="col-form-label col-md-2">Contact Name</label>
+                    <div class="col-md-5">
+                        <input class="form-control" readonly="readonly" value="@_customer.ContactName" />
+                    </div>
+                </div>
+
+                <div class="form-group row">
+                    <label class="col-form-label col-md-2">Country</label>
+                    <div class="col-md-5">
+                        <input class="form-control" readonly="readonly" value="@_customer.Country" />
+                    </div>
+                </div>
+        
+                <div style="display:flex;">
+                    <div>
+                        <button type="button" class="btn btn-primary btn-md" @onclick="() => BackButtonClicked()">Back</button>
+                    </div>
+                </div>
+            </div>
+        }
+
+        @code {
+            private Customer _customer;
+
+            [CascadingParameter(Name = "GridComponent")]
+            protected GridComponent<Order> GridComponent { get; set; }
+
+            [Parameter]
+            public Order Item { get; set; }
+
+            [Parameter]
+            public GridMode ReturnMode { get; set; }
+
+            protected override async Task OnParametersSetAsync()
+            {
+                if (string.IsNullOrWhiteSpace(Item.CustomerID))
+                    await BackButtonClicked();
+                else
+                    _customer = await customerService.Get(Item.CustomerID);
+            }
+
+            protected async Task BackButtonClicked()
+            {
+                if (ReturnMode == GridMode.Create)
+                    await GridComponent.CreateHandler(Item);
+                else if (ReturnMode == GridMode.Read)
+                    GridComponent.ReadHandler(Item);
+                else if (ReturnMode == GridMode.Update)
+                    await GridComponent.UpdateHandler(Item);
+                else if (ReturnMode == GridMode.Delete)
+                    GridComponent.DeleteHandler(Item);
+                else
+                    GridComponent.BackButton();
+            }
+        }
+    ```
+
+
+![](../images/Button_form_components.png)
 
 [<- Events](Events.md) | [Export to Excel ->](Excel_export.md)

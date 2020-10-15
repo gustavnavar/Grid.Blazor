@@ -1,0 +1,87 @@
+@using GridBlazorOData.Shared.Models
+@implements IFormCrudComponent<Order>
+@inject NavigationManager NavigationManager
+@inject HttpClient HttpClient
+
+<div class="@GridComponent.GridCrudHeaderCssClass">Customer</div>
+
+@if (_customer == null)
+{
+    <p><em>Loading...</em></p>
+}
+else
+{
+    <div class="form-horizontal">
+        <div class="form-group row">
+            <label class="col-form-label col-md-2">CustomerID</label>
+            <div class="col-md-5">
+                <input class="form-control" readonly="readonly" value="@_customer.CustomerID" />
+            </div>
+        </div>
+
+        <div class="form-group row">
+            <label class="col-form-label col-md-2">Company Name</label>
+            <div class="col-md-5">
+                <input class="form-control" readonly="readonly" value="@_customer.CompanyName" />
+            </div>
+        </div>
+
+        <div class="form-group row">
+            <label class="col-form-label col-md-2">Contact Name</label>
+            <div class="col-md-5">
+                <input class="form-control" readonly="readonly" value="@_customer.ContactName" />
+            </div>
+        </div>
+
+        <div class="form-group row">
+            <label class="col-form-label col-md-2">Country</label>
+            <div class="col-md-5">
+                <input class="form-control" readonly="readonly" value="@_customer.Country" />
+            </div>
+        </div>
+
+        <div style="display:flex;">
+            <div>
+                <button type="button" class="btn btn-primary btn-md" @onclick="() => BackButtonClicked()">Back</button>
+            </div>
+        </div>
+    </div>
+}
+
+@code {
+    private Customer _customer;
+
+    [CascadingParameter(Name = "GridComponent")]
+    protected GridComponent<Order> GridComponent { get; set; }
+
+    [Parameter]
+    public Order Item { get; set; }
+
+    [Parameter]
+    public GridMode ReturnMode { get; set; }
+
+    protected override async Task OnParametersSetAsync()
+    {
+        if (string.IsNullOrWhiteSpace(Item.CustomerID))
+            await BackButtonClicked();
+        else
+        {
+            string url = NavigationManager.BaseUri + $"odata/Customers/{Item.CustomerID}";
+            _customer = await HttpClient.GetFromJsonAsync<Customer>(url);
+        }
+    }
+
+    protected async Task BackButtonClicked()
+    {
+        if (ReturnMode == GridMode.Create)
+            await GridComponent.CreateHandler(Item);
+        else if (ReturnMode == GridMode.Read)
+            GridComponent.ReadHandler(Item);
+        else if (ReturnMode == GridMode.Update)
+            await GridComponent.UpdateHandler(Item);
+        else if (ReturnMode == GridMode.Delete)
+            GridComponent.DeleteHandler(Item);
+        else
+            GridComponent.BackButton();
+    }
+}

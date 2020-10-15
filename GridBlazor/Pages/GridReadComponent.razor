@@ -142,6 +142,24 @@
     <div style="display:flex;">
         <div>
             <button type="button" class="btn btn-primary btn-md" @onclick="() => BackButtonClicked()">@Strings.Back</button>
+            @if (GridComponent.Grid.ButtonCrudComponents != null && GridComponent.Grid.ButtonCrudComponents.Count() > 0)
+            {
+                @foreach (var key in GridComponent.Grid.ButtonCrudComponents.Keys)
+                {
+                    var buttonCrudComponent = GridComponent.Grid.ButtonCrudComponents.Get(key);
+                    if (buttonCrudComponent.GridMode.HasFlag(GridMode.Read))
+                    {
+                        if (buttonCrudComponent.Content.HasValue)
+                        {
+                            <button class="btn btn-primary btn-md" type="button" title="@buttonCrudComponent.Label" @onclick="() => GridComponent.ButtonCrudComponentHandler(key)" @onclick:stopPropagation>@buttonCrudComponent.Content.Value</button>
+                        }
+                        else
+                        {
+                            <button class="btn btn-primary btn-md" type="button" title="@buttonCrudComponent.Label" @onclick="() => GridComponent.ButtonCrudComponentHandler(key)" @onclick:stopPropagation>@buttonCrudComponent.Label</button>
+                        }
+                    }
+                }
+            }
         </div>
     </div>
 </div>

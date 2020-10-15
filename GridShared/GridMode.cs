@@ -1,12 +1,15 @@
-﻿namespace GridShared
+﻿using System;
+
+namespace GridShared
 {
+    [Flags]
     public enum GridMode
     {
-        Grid = 1,
-        Create = 2,
-        Read = 3,
+        Grid = 0,
+        Create = 1,
+        Read = 2,
         Update = 4,
-        Delete = 5,
-        Form = 6
+        Delete = 8,
+        Form = 16
     }
 }
