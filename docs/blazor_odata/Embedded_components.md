@@ -102,15 +102,18 @@ These type of components can be started clicking on a button on the bottom of a 
 
 ### Page definition
 
-You have to use the **AddCrudButtonComponent** method of the **GridODataClient** object to add a component:
-    
+You have to use the **AddCrudButtonComponent** method of the **GridODataClient** object to add a component. 
+
+There are 2 options:
+
+* Use booleans to enable buttons:
     ```c#
         var client = new GridODataClient<Order>(httpClient, url, query, false, "ordersGrid", Columns, locale)
             .ODataCrud(true)
             .AddButtonCrudComponent<EmployeeFormComponent>("Employees", "Employee's Grid", true, true, true, true);
     ```
 
-**AddCrudButtonComponent** method has 6 required parameters and 4 optional ones:
+    **AddCrudButtonComponent** method has 6 required parameters and 4 optional ones:
 
     Parameter | Type | Description
     --------- | ---- | -----------
@@ -120,6 +123,28 @@ You have to use the **AddCrudButtonComponent** method of the **GridODataClient**
     ReadEnabled | bool |  enables the button component on the Read form
     UpdateEnabled | bool | enables the button component on the Update form
     DeleteEnabled | bool | enables the button component on the Delete form
+    Content | MarkupString (optional) | html content to be shown in the button
+    Actions | IList<Action<object>> (optional) | the parent component can pass a list of Actions to be used by the component
+    Functions | IList<Func<object,Task>> (optional) | the parent component can pass a list of Functions to be used by the child component
+    Object | object (optional) | the parent component can pass an object to be used by the component
+
+* Use functions to enable buttons:
+    ```c#
+        var client = new GridODataClient<Order>(httpClient, url, query, false, "ordersGrid", Columns, locale)
+            .ODataCrud(true)
+            .AddButtonCrudComponent<EmployeeFormComponent>("Employees", "Employee's Grid", true, r => r.EmployeeID > 10, r => r.EmployeeID > 10, r => r.EmployeeID > 10);
+    ```
+
+    **AddCrudButtonComponent** method has 6 required parameters and 4 optional ones:
+
+    Parameter | Type | Description
+    --------- | ---- | -----------
+    Name | string | unique name in the grid to identify the embedded component
+    Label | string | label to be shown in the button
+    CreateEnabled |bool | enables the button component on the Create form
+    ReadEnabled | Func<T, bool> |  function returning a boolean to enable the button component on the Read form
+    UpdateEnabled | Func<T, bool> | function returning a boolean to enable the button component on the Update form
+    DeleteEnabled | Func<T, bool> | function returning a boolean to enable the button component on the Delete form
     Content | MarkupString (optional) | html content to be shown in the button
     Actions | IList<Action<object>> (optional) | the parent component can pass a list of Actions to be used by the component
     Functions | IList<Func<object,Task>> (optional) | the parent component can pass a list of Functions to be used by the child component

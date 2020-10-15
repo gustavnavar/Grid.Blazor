@@ -161,12 +161,13 @@
         <div>
             <button type="button" class="btn btn-primary btn-md" @onclick="() => DeleteItem()">@Strings.Delete</button>
             <button type="button" class="btn btn-primary btn-md" @onclick="() => BackButtonClicked()">@Strings.Back</button>
-            @if (GridComponent.Grid.ButtonCrudComponents != null && GridComponent.Grid.ButtonCrudComponents.Count() > 0)
+            @if (((CGrid<T>)GridComponent.Grid).ButtonCrudComponents != null && ((CGrid<T>)GridComponent.Grid).ButtonCrudComponents.Count() > 0)
             {
-                @foreach (var key in GridComponent.Grid.ButtonCrudComponents.Keys)
+                @foreach (var key in ((CGrid<T>)GridComponent.Grid).ButtonCrudComponents.Keys)
                 {
-                    var buttonCrudComponent = GridComponent.Grid.ButtonCrudComponents.Get(key);
-                    if (buttonCrudComponent.GridMode.HasFlag(GridMode.Delete))
+                    var buttonCrudComponent = ((CGrid<T>)GridComponent.Grid).ButtonCrudComponents.Get(key);
+                    if ((buttonCrudComponent.DeleteMode != null && buttonCrudComponent.DeleteMode(Item)) || 
+                        (buttonCrudComponent.DeleteMode == null && buttonCrudComponent.GridMode.HasFlag(GridMode.Delete)))
                     {
                         if (buttonCrudComponent.Content.HasValue)
                         {

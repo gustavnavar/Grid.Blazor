@@ -69,7 +69,7 @@ else
             .SetDeleteConfirmation(true)
             .WithMultipleFilters()
             .WithGridItemsCount()
-            .AddButtonCrudComponent<EmployeeFormComponent>("Employee", "Employee's Form", true, true, true, true, (MarkupString)"<span class='oi oi-person' aria-hidden='true'></span>")
+            .AddButtonCrudComponent<EmployeeFormComponent>("Employee", "Employee's Form", true, r => r.EmployeeID % 2 == 0, r => r.EmployeeID % 2 == 0, r => r.EmployeeID % 2 == 0, (MarkupString)"<span class='oi oi-person' aria-hidden='true'></span>")
             .AddButtonCrudComponent<CustomerFormComponent>("Customer", "Curstomer's Form", true, true, true, true);
 
         _grid = client.Grid;

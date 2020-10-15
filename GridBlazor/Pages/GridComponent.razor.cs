@@ -760,7 +760,7 @@ namespace GridBlazor.Pages
 
         public void ButtonCrudComponentHandler(string key)
         {
-            var buttonComponent = Grid.ButtonCrudComponents.Get(key);
+            var buttonComponent = ((CGrid<T>)Grid).ButtonCrudComponents.Get(key);
             StartFormCrudComponent(buttonComponent.Label, buttonComponent.ComponentType, buttonComponent.Actions,
                     buttonComponent.Functions, buttonComponent.Object);
         }

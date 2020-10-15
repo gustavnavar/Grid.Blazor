@@ -775,8 +775,151 @@ namespace GridBlazor
                     if (readEnabled) gridMode |= GridMode.Read;
                     if (updateEnabled) gridMode |= GridMode.Update;
                     if (deleteEnabled) gridMode |= GridMode.Delete;
-                    _source.ButtonCrudComponents.Add(name, (label, content, buttonComponent, gridMode, actions, functions, obj));
+                    _source.ButtonCrudComponents.Add(name, (label, content, buttonComponent, gridMode, null, null, null,
+                        actions, functions, obj));
                 }    
+            }
+            return this;
+        }
+
+        public IGridClient<T> AddButtonCrudComponent<TComponent>(string name, string label, bool createEnabled,
+            Func<T, bool> readEnabled, Func<T, bool> updateEnabled, Func<T, bool> deleteEnabled)
+        {
+            return AddButtonCrudComponent<TComponent>(name, label, createEnabled, readEnabled, updateEnabled,
+                deleteEnabled, null, null, null, null);
+        }
+
+        public IGridClient<T> AddButtonCrudComponent<TComponent>(string name, string label, bool createEnabled,
+            Func<T, bool> readEnabled, Func<T, bool> updateEnabled, Func<T, bool> deleteEnabled, Nullable<MarkupString> content)
+        {
+            return AddButtonCrudComponent<TComponent>(name, label, createEnabled, readEnabled, updateEnabled,
+                deleteEnabled, content, null, null, null);
+        }
+
+        public IGridClient<T> AddButtonCrudComponent<TComponent>(string name, string label, bool createEnabled,
+            Func<T, bool> readEnabled, Func<T, bool> updateEnabled, Func<T, bool> deleteEnabled, IList<Action<object>> actions)
+        {
+            return AddButtonCrudComponent<TComponent>(name, label, createEnabled, readEnabled, updateEnabled,
+                deleteEnabled, null, actions, null, null);
+        }
+
+        public IGridClient<T> AddButtonCrudComponent<TComponent>(string name, string label, bool createEnabled,
+            Func<T, bool> readEnabled, Func<T, bool> updateEnabled, Func<T, bool> deleteEnabled, Nullable<MarkupString> content,
+            IList<Action<object>> actions)
+        {
+            return AddButtonCrudComponent<TComponent>(name, label, createEnabled, readEnabled, updateEnabled,
+                deleteEnabled, content, actions, null, null);
+        }
+
+        public IGridClient<T> AddButtonCrudComponent<TComponent>(string name, string label, bool createEnabled,
+            Func<T, bool> readEnabled, Func<T, bool> updateEnabled, Func<T, bool> deleteEnabled, object obj)
+        {
+            return AddButtonCrudComponent<TComponent>(name, label, createEnabled, readEnabled, updateEnabled,
+                    deleteEnabled, null, null, null, obj);
+        }
+
+        public IGridClient<T> AddButtonCrudComponent<TComponent>(string name, string label, bool createEnabled,
+            Func<T, bool> readEnabled, Func<T, bool> updateEnabled, Func<T, bool> deleteEnabled, 
+            Nullable<MarkupString> content, object obj)
+        {
+            return AddButtonCrudComponent<TComponent>(name, label, createEnabled, readEnabled, updateEnabled,
+                deleteEnabled, content, null, null, obj);
+        }
+
+        public IGridClient<T> AddButtonCrudComponent<TComponent>(string name, string label, bool createEnabled,
+            Func<T, bool> readEnabled, Func<T, bool> updateEnabled, Func<T, bool> deleteEnabled, 
+            IList<Action<object>> actions, object obj)
+        {
+            return AddButtonCrudComponent<TComponent>(name, label, createEnabled, readEnabled, updateEnabled,
+                    deleteEnabled, null, actions, null, obj);
+        }
+
+        public IGridClient<T> AddButtonCrudComponent<TComponent>(string name, string label, bool createEnabled,
+            Func<T, bool> readEnabled, Func<T, bool> updateEnabled, Func<T, bool> deleteEnabled, Nullable<MarkupString> content,
+            IList<Action<object>> actions, object obj)
+        {
+            return AddButtonCrudComponent<TComponent>(name, label, createEnabled, readEnabled, updateEnabled,
+                    deleteEnabled, content, actions, null, obj);
+        }
+
+        public IGridClient<T> AddButtonCrudComponent<TComponent>(string name, string label, bool createEnabled,
+            Func<T, bool> readEnabled, Func<T, bool> updateEnabled, Func<T, bool> deleteEnabled, IList<Func<object, Task>> functions)
+        {
+            return AddButtonCrudComponent<TComponent>(name, label, createEnabled, readEnabled, updateEnabled,
+                    deleteEnabled, null, null, functions, null);
+        }
+
+        public IGridClient<T> AddButtonCrudComponent<TComponent>(string name, string label, bool createEnabled,
+            Func<T, bool> readEnabled, Func<T, bool> updateEnabled, Func<T, bool> deleteEnabled, Nullable<MarkupString> content,
+            IList<Func<object, Task>> functions)
+        {
+            return AddButtonCrudComponent<TComponent>(name, label, createEnabled, readEnabled, updateEnabled,
+                    deleteEnabled, content, null, functions, null);
+        }
+
+        public IGridClient<T> AddButtonCrudComponent<TComponent>(string name, string label, bool createEnabled,
+            Func<T, bool> readEnabled, Func<T, bool> updateEnabled, Func<T, bool> deleteEnabled, IList<Action<object>> actions,
+            IList<Func<object, Task>> functions)
+        {
+            return AddButtonCrudComponent<TComponent>(name, label, createEnabled, readEnabled, updateEnabled,
+                    deleteEnabled, null, actions, functions, null);
+        }
+
+        public IGridClient<T> AddButtonCrudComponent<TComponent>(string name, string label, bool createEnabled,
+            Func<T, bool> readEnabled, Func<T, bool> updateEnabled, Func<T, bool> deleteEnabled, Nullable<MarkupString> content,
+            IList<Action<object>> actions, IList<Func<object, Task>> functions)
+        {
+            return AddButtonCrudComponent<TComponent>(name, label, createEnabled, readEnabled, updateEnabled,
+                    deleteEnabled, content, actions, functions, null);
+        }
+
+        public IGridClient<T> AddButtonCrudComponent<TComponent>(string name, string label, bool createEnabled,
+            Func<T, bool> readEnabled, Func<T, bool> updateEnabled, Func<T, bool> deleteEnabled, 
+            IList<Func<object, Task>> functions, object obj)
+        {
+            return AddButtonCrudComponent<TComponent>(name, label, createEnabled, readEnabled, updateEnabled,
+                    deleteEnabled, null, null, functions, obj);
+        }
+
+        public IGridClient<T> AddButtonCrudComponent<TComponent>(string name, string label, bool createEnabled,
+            Func<T, bool> readEnabled, Func<T, bool> updateEnabled, Func<T, bool> deleteEnabled, Nullable<MarkupString> content,
+            IList<Func<object, Task>> functions, object obj)
+        {
+            return AddButtonCrudComponent<TComponent>(name, label, createEnabled, readEnabled, updateEnabled,
+                    deleteEnabled, content, null, functions, obj);
+        }
+
+        public IGridClient<T> AddButtonCrudComponent<TComponent>(string name, string label, bool createEnabled,
+            Func<T, bool> readEnabled, Func<T, bool> updateEnabled, Func<T, bool> deleteEnabled, IList<Action<object>> actions,
+            IList<Func<object, Task>> functions, object obj)
+        {
+            return AddButtonCrudComponent<TComponent>(name, label, createEnabled, readEnabled, updateEnabled,
+                    deleteEnabled, null, actions, functions, obj);
+        }
+
+        public IGridClient<T> AddButtonCrudComponent<TComponent>(string name, string label, bool createEnabled,
+            Func<T, bool> readEnabled, Func<T, bool> updateEnabled, Func<T, bool> deleteEnabled, Nullable<MarkupString> content,
+            IList<Action<object>> actions, IList<Func<object, Task>> functions, object obj)
+        {
+            Type buttonComponent = typeof(TComponent);
+
+            if (buttonComponent != null)
+            {
+                /// Get type arguments from any <see cref="IFormCrudComponent<>"/> interface 
+                /// in <paramref name="componentType"/> to make sure <see cref="T"/> is assignable to it
+                List<Type> typeArgs = (from iType in buttonComponent.GetInterfaces()
+                                       where iType.IsGenericType &&
+                                       iType.GetGenericTypeDefinition() == typeof(IFormCrudComponent<>)
+                                       select iType.GetGenericArguments()[0]).ToList();
+
+                if (typeArgs.Any(t => t.IsAssignableFrom(typeof(T))) &&
+                    buttonComponent.IsSubclassOf(typeof(ComponentBase)))
+                {
+                    GridMode gridMode = GridMode.Grid;
+                    if (createEnabled) gridMode |= GridMode.Create;
+                    _source.ButtonCrudComponents.Add(name, (label, content, buttonComponent, gridMode, readEnabled, 
+                        updateEnabled, deleteEnabled,actions, functions, obj));
+                }
             }
             return this;
         }

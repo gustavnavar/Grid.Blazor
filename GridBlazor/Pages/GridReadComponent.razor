@@ -142,12 +142,13 @@
     <div style="display:flex;">
         <div>
             <button type="button" class="btn btn-primary btn-md" @onclick="() => BackButtonClicked()">@Strings.Back</button>
-            @if (GridComponent.Grid.ButtonCrudComponents != null && GridComponent.Grid.ButtonCrudComponents.Count() > 0)
+            @if (((CGrid<T>)GridComponent.Grid).ButtonCrudComponents != null && ((CGrid<T>)GridComponent.Grid).ButtonCrudComponents.Count() > 0)
             {
-                @foreach (var key in GridComponent.Grid.ButtonCrudComponents.Keys)
+                @foreach (var key in ((CGrid<T>)GridComponent.Grid).ButtonCrudComponents.Keys)
                 {
-                    var buttonCrudComponent = GridComponent.Grid.ButtonCrudComponents.Get(key);
-                    if (buttonCrudComponent.GridMode.HasFlag(GridMode.Read))
+                    var buttonCrudComponent = ((CGrid<T>)GridComponent.Grid).ButtonCrudComponents.Get(key);
+                    if ((buttonCrudComponent.ReadMode != null && buttonCrudComponent.ReadMode(Item)) ||
+                        (buttonCrudComponent.ReadMode == null && buttonCrudComponent.GridMode.HasFlag(GridMode.Read)))
                     {
                         if (buttonCrudComponent.Content.HasValue)
                         {
