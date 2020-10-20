@@ -60,6 +60,8 @@ namespace GridBlazor.Columns
         public bool IsSorted { get; set; }
         public GridSortDirection? Direction { get; set; }
 
+        public GridSortDirection? InitialDirection { get; set; }
+
         public bool Hidden { get; set; }
 
         public CrudHidden CrudHidden { get; protected set; } = CrudHidden.NONE;

@@ -110,13 +110,6 @@ namespace GridBlazor
             EmptyGridText = Strings.DefaultGridEmptyText;
             Language = Strings.Lang;
 
-            _currentPagerODataProcessor = new PagerGridODataProcessor<T>(this);
-            _currentSortODataProcessor = new SortGridODataProcessor<T>(this, _settings.SortSettings);
-            _currentFilterODataProcessor = new FilterGridODataProcessor<T>(this, _settings.FilterSettings,
-                _settings.SearchSettings);
-            _currentSearchODataProcessor = new SearchGridODataProcessor<T>(this, _settings.SearchSettings);
-            _currentExpandODataProcessor = new ExpandGridODataProcessor<T>(this);
-
             _annotations = new GridAnnotationsProvider();
 
             //Set up column collection:
@@ -128,6 +121,14 @@ namespace GridBlazor
             ComponentOptions = new GridOptions();
 
             ApplyGridSettings();
+            SetInitSorting();
+
+            _currentPagerODataProcessor = new PagerGridODataProcessor<T>(this);
+            _currentSortODataProcessor = new SortGridODataProcessor<T>(this, _settings.SortSettings);
+            _currentFilterODataProcessor = new FilterGridODataProcessor<T>(this, _settings.FilterSettings,
+                _settings.SearchSettings);
+            _currentSearchODataProcessor = new SearchGridODataProcessor<T>(this, _settings.SearchSettings);
+            _currentExpandODataProcessor = new ExpandGridODataProcessor<T>(this);
 
             Pager = new GridPager(query);
 
@@ -249,6 +250,7 @@ namespace GridBlazor
         private void UpdateQueryAndSettings()
         {
             _settings = new QueryStringGridSettingsProvider(_query);
+            SetInitSorting();
             _columnsCollection.SortSettings = _settings.SortSettings;
             _columnsCollection.UpdateColumnsSorting();
             ((GridPager)_pager).Query = _query;
@@ -256,6 +258,25 @@ namespace GridBlazor
             _currentSortODataProcessor.UpdateSettings(_settings.SortSettings);
             _currentFilterODataProcessor.UpdateSettings(_settings.FilterSettings, _settings.SearchSettings);
             _currentSearchODataProcessor.UpdateSettings(_settings.SearchSettings);
+        }
+
+        // keeps initial sorting on the client for OData grids
+        private void SetInitSorting()
+        {
+            string[] sortings = Query.Get(((QueryStringSortSettings)_settings.SortSettings).ColumnQueryParameterName).Count > 0 ?
+                Query.Get(((QueryStringSortSettings)_settings.SortSettings).ColumnQueryParameterName).ToArray() : null;
+
+            if ((_settings.SortSettings.SortValues == null || _settings.SortSettings.SortValues.Count == 0)
+                && (sortings == null || sortings.Length == 0)
+                && string.IsNullOrWhiteSpace(_settings.SortSettings.ColumnName))
+            {
+                var column = _columnsCollection.FirstOrDefault(r => ((ICGridColumn)r).InitialDirection.HasValue);
+                if (column != null)
+                {
+                    _settings.SortSettings.ColumnName = column.Name;
+                    _settings.SortSettings.Direction = ((ICGridColumn)column).InitialDirection.Value;
+                }
+            }  
         }
 
         /// <summary>

@@ -160,6 +160,11 @@ namespace GridBlazor.Columns
             {
                 IsSorted = true;
                 Direction = direction;
+                InitialDirection = direction;
+
+                // added to enable initial sorting
+                _grid.Settings.SortSettings.ColumnName = Name;
+                _grid.Settings.SortSettings.Direction = direction;
             }
             return this;
         }

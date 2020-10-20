@@ -1,4 +1,5 @@
 ﻿using GridShared;
+using GridShared.Sorting;
 using GridShared.Utility;
 using System;
 using System.Threading.Tasks;
@@ -16,6 +17,8 @@ namespace GridBlazor.Columns
         ///     Subgrid clients
         /// </summary>
         Func<object[], bool, bool, bool, bool, Task<IGrid>> SubGrids { get; }
+
+        GridSortDirection? InitialDirection { get; }
 
         /// <summary>
         ///     Get foreign key values for subgrid records
