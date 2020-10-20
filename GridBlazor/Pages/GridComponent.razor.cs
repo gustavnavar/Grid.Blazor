@@ -72,9 +72,9 @@ namespace GridBlazor.Pages
         [Inject]
         private IJSRuntime jSRuntime { get; set; }
 
-        internal int SelectedRow { get; set; } = -1;
+        public int SelectedRow { get; internal set; } = -1;
 
-        internal List<int> SelectedRows { get; set; } = new List<int>();
+        public List<int> SelectedRows { get; internal set; } = new List<int>();
 
         [Obsolete("This property is obsolete. Use the new Checkboxes parameter.", true)]
         public QueryDictionary<List<int>> CheckedRows { get; internal set; } = new QueryDictionary<List<int>>();
