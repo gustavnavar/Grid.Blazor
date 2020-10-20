@@ -282,8 +282,7 @@
                     @foreach (var key in ((CGrid<T>)GridComponent.Grid).ButtonCrudComponents.Keys)
                     {
                         var buttonCrudComponent = ((CGrid<T>)GridComponent.Grid).ButtonCrudComponents.Get(key);
-                        if ((buttonCrudComponent.UpdateMode != null && buttonCrudComponent.UpdateMode(Item)) ||
-                        (buttonCrudComponent.UpdateMode == null && buttonCrudComponent.GridMode.HasFlag(GridMode.Update)))
+                        if (_buttonCrudComponentVisibility.Get(key))
                         {
                             if (buttonCrudComponent.Content.HasValue)
                             {

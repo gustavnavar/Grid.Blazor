@@ -1,5 +1,6 @@
 ﻿using GridBlazor.Columns;
 using GridBlazor.Resources;
+using GridShared;
 using GridShared.Columns;
 using GridShared.Utility;
 using Microsoft.AspNetCore.Components;
@@ -16,6 +17,7 @@ namespace GridBlazor.Pages
         private bool _shouldRender = false;
         private QueryDictionary<RenderFragment> _renderFragments;
         private IEnumerable<string> _tabGroups;
+        private QueryDictionary<bool> _buttonCrudComponentVisibility = new QueryDictionary<bool>();
         private string _code = StringExtensions.RandomString(8);
         private string _confirmationCode = "";
 
@@ -71,6 +73,24 @@ namespace GridBlazor.Pages
             _tabGroups = GridComponent.Grid.Columns
                 .Where(r => !string.IsNullOrWhiteSpace(r.TabGroup) && _renderFragments.Keys.Any(s => s.Equals(r.Name)))
                 .Select(r => r.TabGroup).Distinct();
+
+            if (((CGrid<T>)GridComponent.Grid).ButtonCrudComponents != null && ((CGrid<T>)GridComponent.Grid).ButtonCrudComponents.Count() > 0)
+            {
+                foreach(var key in ((CGrid<T>)GridComponent.Grid).ButtonCrudComponents.Keys)
+                {
+                    var buttonCrudComponent = ((CGrid<T>)GridComponent.Grid).ButtonCrudComponents.Get(key);
+                    if ((buttonCrudComponent.DeleteMode != null && buttonCrudComponent.DeleteMode(Item)) ||
+                        (buttonCrudComponent.DeleteModeAsync != null && await buttonCrudComponent.DeleteModeAsync(Item)) ||
+                        (buttonCrudComponent.GridMode.HasFlag(GridMode.Delete)))
+                    {
+                        _buttonCrudComponentVisibility.Add(key, true);
+                    }
+                    else
+                    {
+                        _buttonCrudComponentVisibility.Add(key, false);
+                    }
+                }
+            }
 
             _shouldRender = true;
         }

@@ -1,4 +1,5 @@
 ﻿using GridBlazor.Columns;
+using GridShared;
 using GridShared.Columns;
 using GridShared.Utility;
 using Microsoft.AspNetCore.Components;
@@ -15,6 +16,7 @@ namespace GridBlazor.Pages
         private bool _shouldRender = false;
         private QueryDictionary<RenderFragment> _renderFragments;
         private IEnumerable<string> _tabGroups;
+        private QueryDictionary<bool> _buttonCrudComponentVisibility = new QueryDictionary<bool>();
 
         public QueryDictionary<VariableReference> Children { get; private set; } = new QueryDictionary<VariableReference>();
 
@@ -66,6 +68,24 @@ namespace GridBlazor.Pages
             _tabGroups = GridComponent.Grid.Columns
                 .Where(r => !string.IsNullOrWhiteSpace(r.TabGroup) && _renderFragments.Keys.Any(s => s.Equals(r.Name)))
                 .Select(r => r.TabGroup).Distinct();
+
+            if (((CGrid<T>)GridComponent.Grid).ButtonCrudComponents != null && ((CGrid<T>)GridComponent.Grid).ButtonCrudComponents.Count() > 0)
+            {
+                foreach (var key in ((CGrid<T>)GridComponent.Grid).ButtonCrudComponents.Keys)
+                {
+                    var buttonCrudComponent = ((CGrid<T>)GridComponent.Grid).ButtonCrudComponents.Get(key);
+                    if ((buttonCrudComponent.ReadMode != null && buttonCrudComponent.ReadMode(Item)) ||
+                        (buttonCrudComponent.ReadModeAsync != null && await buttonCrudComponent.ReadModeAsync(Item)) ||
+                        (buttonCrudComponent.GridMode.HasFlag(GridMode.Read)))
+                    {
+                        _buttonCrudComponentVisibility.Add(key, true);
+                    }
+                    else
+                    {
+                        _buttonCrudComponentVisibility.Add(key, false);
+                    }
+                }
+            }
 
             _shouldRender = true;
         }

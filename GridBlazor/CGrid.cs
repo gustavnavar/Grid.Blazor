@@ -146,6 +146,7 @@ namespace GridBlazor
 
             ButtonCrudComponents = new QueryDictionary<(string Label, Nullable<MarkupString> Content, Type ComponentType, 
                 GridMode GridMode, Func<T, bool> ReadMode, Func<T, bool> UpdateMode, Func<T, bool> DeleteMode,
+                Func<T, Task<bool>> ReadModeAsync, Func<T, Task<bool>> UpdateModeAsync, Func<T, Task<bool>> DeleteModeAsync,
                 IList<Action<object>> Actions, IList<Func<object, Task>> Functions, object Object)>();
         }
 
@@ -475,7 +476,7 @@ namespace GridBlazor
 
         public QueryDictionary<(string Label, Nullable<MarkupString> Content, Type ComponentType, IList<Action<object>> Actions, IList<Func<object, Task>> Functions, object Object)> ButtonComponents { get; internal set; }
 
-        public QueryDictionary<(string Label, Nullable<MarkupString> Content, Type ComponentType, GridMode GridMode, Func<T,bool> ReadMode, Func<T, bool> UpdateMode, Func<T, bool> DeleteMode, IList<Action<object>> Actions, IList<Func<object, Task>> Functions, object Object)> ButtonCrudComponents { get; internal set; }
+        public QueryDictionary<(string Label, Nullable<MarkupString> Content, Type ComponentType, GridMode GridMode, Func<T,bool> ReadMode, Func<T, bool> UpdateMode, Func<T, bool> DeleteMode, Func<T, Task<bool>> ReadModeAsync, Func<T, Task<bool>> UpdateModeAsync, Func<T, Task<bool>> DeleteModeAsync, IList<Action<object>> Actions, IList<Func<object, Task>> Functions, object Object)> ButtonCrudComponents { get; internal set; }
         
         public bool Keyboard { get; internal set; } = false;
 

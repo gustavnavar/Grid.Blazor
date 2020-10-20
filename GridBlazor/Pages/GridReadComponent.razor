@@ -147,8 +147,7 @@
                 @foreach (var key in ((CGrid<T>)GridComponent.Grid).ButtonCrudComponents.Keys)
                 {
                     var buttonCrudComponent = ((CGrid<T>)GridComponent.Grid).ButtonCrudComponents.Get(key);
-                    if ((buttonCrudComponent.ReadMode != null && buttonCrudComponent.ReadMode(Item)) ||
-                        (buttonCrudComponent.ReadMode == null && buttonCrudComponent.GridMode.HasFlag(GridMode.Read)))
+                    if (_buttonCrudComponentVisibility.Get(key))
                     {
                         if (buttonCrudComponent.Content.HasValue)
                         {

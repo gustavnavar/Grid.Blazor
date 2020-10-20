@@ -166,8 +166,7 @@
                 @foreach (var key in ((CGrid<T>)GridComponent.Grid).ButtonCrudComponents.Keys)
                 {
                     var buttonCrudComponent = ((CGrid<T>)GridComponent.Grid).ButtonCrudComponents.Get(key);
-                    if ((buttonCrudComponent.DeleteMode != null && buttonCrudComponent.DeleteMode(Item)) || 
-                        (buttonCrudComponent.DeleteMode == null && buttonCrudComponent.GridMode.HasFlag(GridMode.Delete)))
+                    if (_buttonCrudComponentVisibility.Get(key))
                     {
                         if (buttonCrudComponent.Content.HasValue)
                         {
