@@ -321,7 +321,7 @@ namespace GridBlazor.Pages
                 else if (Mode == GridMode.Read)
                 {
                     var item = await ((CGrid<T>)Grid).CrudDataService.Get(Keys);
-                    ReadHandler(item);
+                    await ReadHandler(item);
                 }
                 else if (Mode == GridMode.Update)
                 {
@@ -330,7 +330,7 @@ namespace GridBlazor.Pages
                 else if (Mode == GridMode.Delete)
                 {
                     var item = await ((CGrid<T>)Grid).CrudDataService.Get(Keys);
-                    DeleteHandler(item);
+                    await DeleteHandler(item);
                 }
             }
         }
@@ -620,25 +620,40 @@ namespace GridBlazor.Pages
             StateHasChanged();
         }
 
-        public void ReadHandler(object item)
+        public async Task ReadHandler(object item)
         {
-            _item = (T)item;
-            ((CGrid<T>)Grid).Mode = GridMode.Read;
-            if (Grid.ReadComponent != null)
-                CrudRender = ReadCrudComponent();
-            else
-                CrudRender = null;
-
-            _shouldRender = true;
-            StateHasChanged();
+            var keys = Grid.GetPrimaryKeyValues(item);
+            await ReadHandler(keys);
         }
 
-        public void ReadSelectedHandler()
+        public async Task ReadHandler(object[] keys)
+        {
+            try
+            {
+                _item = await ((CGrid<T>)Grid).CrudDataService.Get(keys);
+                ((CGrid<T>)Grid).Mode = GridMode.Read;
+                if (Grid.ReadComponent != null)
+                    CrudRender = ReadCrudComponent();
+                else
+                    CrudRender = null;
+
+                _shouldRender = true;
+                StateHasChanged();
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+                ((CGrid<T>)Grid).Mode = GridMode.Grid;
+                throw;
+            }
+        }
+
+        public async Task ReadSelectedHandler()
         {
             if (SelectedRow != -1)
             {
                 var item = Grid.ItemsToDisplay.ElementAt(SelectedRow);
-                ReadHandler(item);
+                await ReadHandler(item);
             }
             else
                 ShowError(Strings.SelectionReadError);
@@ -700,25 +715,39 @@ namespace GridBlazor.Pages
                 ShowError(Strings.SelectionUpdateError);
         }
 
-        public void DeleteHandler(object item)
+        public async Task DeleteHandler(object item)
         {
-            _item = (T)item;
-            ((CGrid<T>)Grid).Mode = GridMode.Delete;
-            if (Grid.DeleteComponent != null)
-                CrudRender = DeleteCrudComponent();
-            else
-                CrudRender = null;
+            var keys = Grid.GetPrimaryKeyValues(item);
+            await DeleteHandler(keys);
+        }
+        public async Task DeleteHandler(object[] keys)
+        {
+            try
+            {
+                _item = await ((CGrid<T>)Grid).CrudDataService.Get(keys);
+                ((CGrid<T>)Grid).Mode = GridMode.Delete;
+                if (Grid.DeleteComponent != null)
+                    CrudRender = DeleteCrudComponent();
+                else
+                    CrudRender = null;
 
-            _shouldRender = true;
-            StateHasChanged();
+                _shouldRender = true;
+                StateHasChanged();
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+                ((CGrid<T>)Grid).Mode = GridMode.Grid;
+                throw;
+            }
         }
 
-        public void DeleteSelectedHandler()
+        public async Task DeleteSelectedHandler()
         {
             if (SelectedRow != -1)
             {
                 var item = Grid.ItemsToDisplay.ElementAt(SelectedRow);
-                DeleteHandler(item);
+                await DeleteHandler(item);
             }
             else
                 ShowError(Strings.SelectionDeleteError);
