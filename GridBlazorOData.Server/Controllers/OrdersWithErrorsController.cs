@@ -1,13 +1,8 @@
 ﻿using GridBlazorOData.Server.Models;
-using GridBlazorOData.Shared.Models;
-using Microsoft.AspNet.OData;
-using Microsoft.AspNet.OData.Routing;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.OData.Query;
+using Microsoft.AspNetCore.OData.Routing.Controllers;
 using System;
-using System.Linq;
-using System.Net;
-using System.Threading.Tasks;
 
 namespace GridBlazorOData.Server.Controllers
 {

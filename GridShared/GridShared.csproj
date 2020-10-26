@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>netstandard2.1</TargetFramework>
+    <TargetFrameworks>netstandard2.1;net5.0</TargetFrameworks>
     <LangVersion>8.0</LangVersion>
     <Version>3.1.13</Version>
     <Title>GridShared</Title>
@@ -13,10 +13,16 @@
     <PackageLicenseExpression>LGPL-2.1-only</PackageLicenseExpression>
   </PropertyGroup>
 
-  <ItemGroup>
-    <PackageReference Include="Microsoft.AspNetCore.Http.Features" Version="3.1.6" />
-    <PackageReference Include="Microsoft.Extensions.Primitives" Version="3.1.6" />
-    <PackageReference Include="System.Text.Json" Version="4.7.2" />
+  <ItemGroup Condition="'$(TargetFramework)' == 'net5.0'">
+    <PackageReference Include="Microsoft.AspNetCore.Http.Features" Version="5.0.0-rc.2.20475.17" />
+    <PackageReference Include="Microsoft.Extensions.Primitives" Version="5.0.0-rc.2.20475.5" />
+    <PackageReference Include="System.Text.Json" Version="5.0.0-rc.2.20475.5" />
+  </ItemGroup>
+
+  <ItemGroup Condition="'$(TargetFramework)' == 'netstandard2.1'">
+    <PackageReference Include="Microsoft.AspNetCore.Http.Features" Version="3.1" />
+    <PackageReference Include="Microsoft.Extensions.Primitives" Version="3.1" />
+    <PackageReference Include="System.Text.Json" Version="4.7" />
   </ItemGroup>
 
 </Project>

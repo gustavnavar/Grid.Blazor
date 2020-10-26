@@ -1,6 +1,6 @@
 ﻿using GridBlazorOData.Shared.Models;
-using Microsoft.AspNet.OData.Builder;
 using Microsoft.OData.Edm;
+using Microsoft.OData.ModelBuilder;
 
 namespace GridBlazorOData.Server.Models
 {

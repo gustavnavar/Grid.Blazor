@@ -1,9 +1,7 @@
 using GridBlazorClientSide.Shared.Models;
-using GridMvc.Server;
 using GridShared;
 using GridShared.Utility;
 using Microsoft.AspNetCore.Components;
-using Microsoft.AspNetCore.Http.Internal;
 using Microsoft.Extensions.Primitives;
 using System;
 using System.Collections.Generic;
@@ -29,6 +27,7 @@ namespace GridBlazorClientSide.Client.Services
         public async Task<ItemsDTO<Order>> GetOrdersGridRowsInMemory(Action<IGridColumnCollection<Order>> columns,
             QueryDictionary<StringValues> query)
         {
+            /**
             var server = new GridServer<Order>(await GetAll(), new QueryCollection(query), true, "ordersGrid", columns)
                         .Sortable()
                         .WithPaging(10)
@@ -39,6 +38,8 @@ namespace GridBlazorClientSide.Client.Services
 
             // return items to displays
             var items = server.ItemsToDisplay;
+            */
+            var items = new ItemsDTO<Order>();
             return items;
         }
 

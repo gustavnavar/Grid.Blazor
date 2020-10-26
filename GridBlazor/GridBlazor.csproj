@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk.Razor">
 
   <PropertyGroup>
-    <TargetFramework>netstandard2.1</TargetFramework>
+    <TargetFrameworks>netstandard2.1;net5.0</TargetFrameworks>
     <RazorLangVersion>3.0</RazorLangVersion>
     <LangVersion>8.0</LangVersion>
     <GenerateEmbeddedFilesManifest>True</GenerateEmbeddedFilesManifest>
@@ -23,16 +23,27 @@
     </AssemblyAttribute>
   </ItemGroup>
 
-  <ItemGroup>
-    <PackageReference Include="Agno.BlazorInputFile" Version="0.2.1" />
-    <PackageReference Include="Microsoft.AspNetCore.Components" Version="3.1.6" />
-    <PackageReference Include="Microsoft.AspNetCore.Components.Web" Version="3.1.6" />
-    <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="3.1.6" />
-    <PackageReference Include="Microsoft.Extensions.Primitives" Version="3.1.6" />
-    <PackageReference Include="System.Net.Http.Json" Version="3.2.1" />
-    <PackageReference Include="DocumentFormat.OpenXml" Version="2.11.3" />
+  <ItemGroup Condition="'$(TargetFramework)' == 'net5.0'">
+    <PackageReference Include="Microsoft.AspNetCore.Components" Version="5.0.0-rc.2.20475.17" />
+    <PackageReference Include="Microsoft.AspNetCore.Components.Web" Version="5.0.0-rc.2.20475.17" />
+    <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="5.0.0-rc.2.20475.5" />
+    <PackageReference Include="Microsoft.Extensions.Primitives" Version="5.0.0-rc.2.20475.5" />
+    <PackageReference Include="System.Net.Http.Json" Version="5.0.0-rc.2.20475.5" />
   </ItemGroup>
 
+  <ItemGroup Condition="'$(TargetFramework)' == 'netstandard2.1'">
+    <PackageReference Include="Microsoft.AspNetCore.Components" Version="3.1" />
+    <PackageReference Include="Microsoft.AspNetCore.Components.Web" Version="3.1" />
+    <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="3.1" />
+    <PackageReference Include="Microsoft.Extensions.Primitives" Version="3.1" />
+    <PackageReference Include="System.Net.Http.Json" Version="3.2" />
+  </ItemGroup>
+
+  <ItemGroup>
+        <PackageReference Include="Agno.BlazorInputFile" Version="0.2.1" />
+    <PackageReference Include="DocumentFormat.OpenXml" Version="2.11" />
+  </ItemGroup>
+  
   <ItemGroup>
     <EmbeddedResource Include="Resources\Strings.resx" LogicalName="GridBlazor.Resources.Strings.resources">
       <Generator>PublicResXFileCodeGenerator</Generator>

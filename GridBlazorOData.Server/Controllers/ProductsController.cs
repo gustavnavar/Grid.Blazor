@@ -1,7 +1,8 @@
 ﻿using GridBlazorOData.Server.Models;
 using GridBlazorOData.Shared.Models;
-using Microsoft.AspNet.OData;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.OData.Query;
+using Microsoft.AspNetCore.OData.Routing.Controllers;
 using System.Threading.Tasks;
 
 namespace GridBlazorOData.Server.Controllers
