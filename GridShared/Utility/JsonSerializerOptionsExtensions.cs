@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Linq;
 using System.Text.Json;
+using System.Text.Json.Serialization;
 
 namespace GridShared.Utility
 {
@@ -18,6 +19,8 @@ namespace GridShared.Utility
                 }
             // required for Blazor WA
             jsonOptions.Converters.Add(new ODataDateTimeConverter());
+
+            jsonOptions.Converters.Add(new JsonStringEnumConverter(null));
             return jsonOptions;
         }
 
