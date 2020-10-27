@@ -1061,9 +1061,7 @@ namespace GridBlazor.Pages
                     CrudRender = null;
                     if (Grid.EditAfterInsert)
                     {
-                        ((CGrid<T>)Grid).Mode = GridMode.Update;
-                        _shouldRender = true;
-                        StateHasChanged();
+                        await UpdateHandler(_item);
                     }
                     else
                     {
