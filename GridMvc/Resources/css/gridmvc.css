@@ -162,7 +162,7 @@ button.grid-button-header-label-edit { height:34px; margin-right: 5px; }
 div[dir="rtl"] button.grid-button-header-label-edit { margin-left: 5px; margin-right: 0; }
 button.grid-button-header-label-delete { height:34px; margin-right: 5px; }
 div[dir="rtl"] button.grid-button-header-label-delete { margin-left: 5px; margin-right: 0; }
-td.grid-button-cell { padding: 5px 0px 5px 0px; }
+td.grid-button-cell { padding: 5px 0px 5px 0px; width: 34px; }
 .input-validation-error { border: 1px solid red; }
 .field-validation-error { color: red; }
 button.grid-button-input-file { border-radius: 0 4px 4px 0; background-image: linear-gradient(#ddd, #eee); font-weight:bold; }
