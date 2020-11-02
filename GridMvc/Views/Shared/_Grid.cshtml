@@ -59,7 +59,7 @@ else
                     @if (Model.ClearFiltersButtonEnabled)
                     {
                         <div class="grid-all-filters-clear">
-                            <button class="grid-button grid-button-all-filters-clear btn btn-default btn-outline-secondary" title="@Strings.ClearAllFilters" data-all-filters-clear-url="@_removeAllFilters" type="button"></button>
+                            <button class="grid-button grid-button-all-filters-clear btn btn-default btn-primary" title="@Strings.ClearAllFilters" data-all-filters-clear-url="@_removeAllFilters" type="button"></button>
                         </div>
                     }
                     @if (Model.EnablePaging && Model.Pager.ChangePageSize)

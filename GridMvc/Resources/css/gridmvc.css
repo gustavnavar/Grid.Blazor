@@ -84,6 +84,8 @@ div[dir="rtl"] .subgrid-caret::after { content: "\25C1"; }
 div[dir="rtl"] .subgrid-caret-down::after { content: "\25E3"; }
 
 /* Grid buttons */
+.grid-button { background-color: #333; }
+.grid-button:hover { border-color: #666; }
 .grid-buttons { display:inline-flex; width:100%; justify-content:space-between; }
 
 /* Grid header buttons */

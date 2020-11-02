@@ -5,11 +5,11 @@
 <div class="grid-search col-md-6" data-search-url="@_seachUrl">
     <div class="input-group">
         <span class="input-group-btn">
-            <button class="grid-button btn btn-default btn-outline-secondary grid-search-apply" type="button" @onclick="ApplyButtonClicked"></button>
+            <button class="grid-button btn btn-default btn-primary grid-search-apply" type="button" @onclick="ApplyButtonClicked"></button>
         </span>
         <input type="text" @ref="SearchInput" class="form-control grid-search-input" @bind="_searchValue" @onkeyup="InputSearchKeyup" @onclick:stopPropagation placeholder="@Strings.SearchFor" />
         <span class="input-group-btn">
-            <button class="grid-button btn btn-default btn-outline-secondary grid-search-clear" type="button" @onclick="ClearButtonClicked"></button>
+            <button class="grid-button btn btn-default btn-primary grid-search-clear" type="button" @onclick="ClearButtonClicked"></button>
         </span>
     </div>
 </div>

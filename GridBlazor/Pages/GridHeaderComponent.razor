@@ -10,12 +10,12 @@
             <div class="grid-header-checkbox">
                 @if (_allChecked == null || _showAllChecked == false)
                 {
-                    <input class="grid-header-checkbox-input" type='checkbox' @onchange="HeaderCheckboxChanged" @onclick:stopPropagation>
+                    <input class="grid-header-checkbox-input" type='checkbox' @onchange="CheckboxChangeHandler" @onclick:stopPropagation>
                     <span class="null-checkbox"></span>
                 }
                 else
                 {
-                    <input type='checkbox' checked="@_allChecked" @onchange="HeaderCheckboxChanged" @onclick:stopPropagation>
+                    <input type='checkbox' checked="@_allChecked" @onchange="CheckboxChangeHandler" @onclick:stopPropagation>
                 }
             </div>
         }

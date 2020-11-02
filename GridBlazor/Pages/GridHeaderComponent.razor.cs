@@ -239,7 +239,7 @@ namespace GridBlazor.Pages
             }
         }
 
-        protected async Task HeaderCheckboxChanged()
+        protected async Task CheckboxChangeHandler()
         {        
             if (Column.HeaderCheckbox)
             {

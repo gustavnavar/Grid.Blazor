@@ -90,7 +90,7 @@
                             @if (Grid.ClearFiltersButtonEnabled)
                             {
                                 <div class="grid-all-filters-clear">
-                                    <button class="grid-button grid-button-all-filters-clear btn btn-default btn-outline-secondary" type="button" title="@Strings.ClearAllFilters" @onclick="RemoveAllFilters" @onclick:stopPropagation></button>
+                                    <button class="grid-button grid-button-all-filters-clear btn btn-default btn-primary" type="button" title="@Strings.ClearAllFilters" @onclick="RemoveAllFilters" @onclick:stopPropagation></button>
                                 </div>
                             }
                             @if (Grid.CreateEnabled)
@@ -98,7 +98,7 @@
                                 <div class="grid-crud">
                                     @if (string.IsNullOrWhiteSpace(Grid.CreateLabel))
                                     {
-                                        <button class="grid-button grid-button-add btn btn-sm btn-outline-secondary" type="button" title="@Strings.CreateItem" @onclick="CreateHandler" @onclick:stopPropagation></button>
+                                        <button class="grid-button grid-button-add btn btn-sm btn-primary" type="button" title="@Strings.CreateItem" @onclick="CreateHandler" @onclick:stopPropagation></button>
                                     }
                                     else
                                     {
@@ -111,7 +111,7 @@
                                 <div class="grid-crud">
                                     @if (string.IsNullOrWhiteSpace(Grid.ReadLabel))
                                     {
-                                        <button class='grid-button grid-button-header-view btn btn-sm btn-outline-secondary' title="@Strings.ReadItem" @onclick="@(e => ReadSelectedHandler())" type="button" @onclick:stopPropagation></button>
+                                        <button class='grid-button grid-button-header-view btn btn-sm btn-primary' title="@Strings.ReadItem" @onclick="@(e => ReadSelectedHandler())" type="button" @onclick:stopPropagation></button>
                                     }
                                     else
                                     {
@@ -124,7 +124,7 @@
                                 <div class="grid-crud">
                                     @if (string.IsNullOrWhiteSpace(Grid.UpdateLabel))
                                     {
-                                        <button class='grid-button grid-button-header-edit btn btn-sm btn-outline-secondary' title="@Strings.UpdateItem" @onclick="@(e => UpdateSelectedHandler())" type="button" @onclick:stopPropagation></button>
+                                        <button class='grid-button grid-button-header-edit btn btn-sm btn-primary' title="@Strings.UpdateItem" @onclick="@(e => UpdateSelectedHandler())" type="button" @onclick:stopPropagation></button>
                                     }
                                     else
                                     {
@@ -137,7 +137,7 @@
                                 <div class="grid-crud">
                                     @if (string.IsNullOrWhiteSpace(Grid.DeleteLabel))
                                     {
-                                        <button class='grid-button grid-button-header-delete btn btn-sm btn-outline-secondary' title="@Strings.DeleteItem" @onclick="@(e => DeleteSelectedHandler())" type="button" @onclick:stopPropagation></button>
+                                        <button class='grid-button grid-button-header-delete btn btn-sm btn-primary' title="@Strings.DeleteItem" @onclick="@(e => DeleteSelectedHandler())" type="button" @onclick:stopPropagation></button>
                                     }
                                     else
                                     {
@@ -148,7 +148,7 @@
                             @if (Grid.ExcelExport)
                             {
                                 <div class="grid-excel">
-                                    <button class="grid-button grid-button-excel btn btn-sm btn-outline-secondary" type="button" title="Excel" @onclick="ExcelHandler" @onclick:stopPropagation></button>
+                                    <button class="grid-button grid-button-excel btn btn-sm btn-primary" type="button" title="Excel" @onclick="ExcelHandler" @onclick:stopPropagation></button>
                                 </div>
                             }
                             @if (Grid.ButtonComponents != null && Grid.ButtonComponents.Count() > 0)
@@ -158,11 +158,11 @@
                                     {
                                         if (Grid.ButtonComponents.Get(key).Content.HasValue)
                                         {
-                                            <button class="grid-button grid-button-component btn btn-sm btn-outline-secondary" type="button" title="@Grid.ButtonComponents.Get(key).Label" @onclick="() => ButtonComponentHandler(key)" @onclick:stopPropagation>@Grid.ButtonComponents.Get(key).Content.Value</button>
+                                            <button class="grid-button grid-button-component btn btn-sm btn-primary" type="button" title="@Grid.ButtonComponents.Get(key).Label" @onclick="() => ButtonComponentHandler(key)" @onclick:stopPropagation>@Grid.ButtonComponents.Get(key).Content.Value</button>
                                         }
                                         else
                                         {
-                                            <button class="grid-button grid-button-component btn btn-sm btn-outline-secondary" type="button" title="@Grid.ButtonComponents.Get(key).Label" @onclick="() => ButtonComponentHandler(key)" @onclick:stopPropagation>@Grid.ButtonComponents.Get(key).Label</button>
+                                            <button class="grid-button grid-button-component btn btn-sm btn-primary" type="button" title="@Grid.ButtonComponents.Get(key).Label" @onclick="() => ButtonComponentHandler(key)" @onclick:stopPropagation>@Grid.ButtonComponents.Get(key).Label</button>
                                         }
                                     }
                                 </div>
