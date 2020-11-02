@@ -101,6 +101,7 @@ namespace GridBlazor.Pages
             Type gridComponentType = typeof(GridComponent<>).MakeGenericType(grid.Type);
             builder.OpenComponent(++_sequence, gridComponentType);
             builder.AddAttribute(++_sequence, "Grid", grid);
+            builder.AddComponentReferenceCapture(++_sequence, r => reference.Variable = r);
             builder.CloseComponent();
         };
 
