@@ -120,6 +120,8 @@ namespace GridBlazor.Pages
         [Parameter]
         public IQueryDictionary<Type> CustomFilters { get; set; }
 
+        // Mode parameter is only used to get an intial value for the grid.
+        // Grid.Mode is the attribute that really controls the grid component visualization mode 
         [Parameter]
         public GridMode Mode { get; set; }
 
@@ -164,6 +166,8 @@ namespace GridBlazor.Pages
 
         protected override void OnParametersSet()
         {
+            ((CGrid<T>)Grid).GridComponent = this;
+
             _filterComponents = new QueryDictionary<Type>();
             _filterComponents.Add("System.String", typeof(TextFilterComponent<T>));
             _filterComponents.Add("System.Guid", typeof(TextFilterComponent<T>));

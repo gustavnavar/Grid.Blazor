@@ -150,6 +150,8 @@ namespace GridBlazor
                 IList<Action<object>> Actions, IList<Func<object, Task>> Functions, object Object)>();
         }
 
+        public GridComponent<T> GridComponent { get; set; }
+
         /// <summary>
         /// Total count of items in the grid
         /// </summary>
