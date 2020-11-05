@@ -1084,6 +1084,7 @@ namespace GridBlazor
 
         private async Task GetOData()
         {
+            var jsonOptions = new JsonSerializerOptions().AddOdataSupport();
             try
             {
                 // Preprocessor (filter and sorting)
@@ -1110,7 +1111,8 @@ namespace GridBlazor
                     allParameters = "&" + allParameters;
                 else
                     allParameters = "?" + allParameters;
-                ODataDTO<T> response = await HttpClient.GetFromJsonAsync<ODataDTO<T>>(Url + allParameters);
+                ODataDTO<T> response = await HttpClient.GetFromJsonAsync<ODataDTO<T>>(
+                    Url + allParameters, jsonOptions);
                 if (response == null)
                 {
                     Console.WriteLine("Response is null");
@@ -1149,7 +1151,8 @@ namespace GridBlazor
                     allParameters = "?" + allParameters;
 
                 //  get processed items
-                response = await HttpClient.GetFromJsonAsync<ODataDTO<T>>(Url + allParameters);
+                response = await HttpClient.GetFromJsonAsync<ODataDTO<T>>(
+                    Url + allParameters, jsonOptions);
                 if (response == null ||  response.Value == null)
                 {
                     Console.WriteLine("Response is null");

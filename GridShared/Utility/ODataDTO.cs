@@ -9,6 +9,7 @@ namespace GridShared.Utility
         public string Context { get; set; }
         [JsonPropertyName("@odata.count")]
         public int ItemsCount { get; set; }
+        [JsonPropertyName("value")]
         public IEnumerable<T> Value { get; set; }
 
         public ODataDTO()

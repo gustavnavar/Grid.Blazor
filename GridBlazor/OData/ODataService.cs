@@ -13,6 +13,7 @@ namespace GridBlazor.OData
         private readonly HttpClient _httpClient;
         private readonly string _url;
         private readonly CGrid<T> _grid;
+        private readonly JsonSerializerOptions _jsonOptions = new JsonSerializerOptions().AddOdataSupport();
 
         public ODataService(HttpClient httpClient, string url, CGrid<T> grid)
         {
@@ -24,13 +25,13 @@ namespace GridBlazor.OData
         public async Task<T> Get(params object[] keys)
         {
             string url = GetUrl(_grid, _url, keys);
-            return await _httpClient.GetFromJsonAsync<T>(url);
+            return await _httpClient.GetFromJsonAsync<T>(url,_jsonOptions);
         }
 
         public async Task<T> Add(T item)
         {
-            var jsonOptions = new JsonSerializerOptions().AddOdataSupport();
-            var response = await _httpClient.PostAsJsonAsync<T>(_url, item, jsonOptions);
+            
+            var response = await _httpClient.PostAsJsonAsync<T>(_url, item, _jsonOptions);
             if (response.IsSuccessStatusCode)
             {
                 return await response.Content.ReadFromJsonAsync<T>();     
@@ -51,8 +52,7 @@ namespace GridBlazor.OData
             var keys = _grid.GetPrimaryKeyValues(item);
             string url = GetUrl(_grid, _url, keys);
 
-            var jsonOptions = new JsonSerializerOptions().AddOdataSupport();
-            var response = await _httpClient.PutAsJsonAsync<T>(url, item, jsonOptions);
+            var response = await _httpClient.PutAsJsonAsync<T>(url, item, _jsonOptions);
             if (!response.IsSuccessStatusCode)
             {
                 throw new GridException("ODATA-02", "Error updating the order");
