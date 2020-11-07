@@ -58,6 +58,8 @@ namespace GridMvc.Columns
 
         public bool Hidden { get; set; }
 
+        public bool? ExcelHidden { get; set; }
+
         public CrudHidden CrudHidden { get; protected set; } = CrudHidden.NONE;
 
         public bool ReadOnlyOnUpdate { get; protected set; } = false;
@@ -409,6 +411,12 @@ namespace GridMvc.Columns
         public IGridColumn<T> Min(bool enabled)
         {
             IsMinEnabled = enabled;
+            return this;
+        }
+
+        public IGridColumn<T> SetExcelHidden(bool? excelHidden)
+        {
+            ExcelHidden = excelHidden;
             return this;
         }
 

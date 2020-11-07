@@ -64,6 +64,8 @@ namespace GridBlazor.Columns
 
         public bool Hidden { get; set; }
 
+        public bool? ExcelHidden { get; set; }
+
         public CrudHidden CrudHidden { get; protected set; } = CrudHidden.NONE;
 
         public bool ReadOnlyOnUpdate { get; protected set; } = false;
@@ -471,6 +473,12 @@ namespace GridBlazor.Columns
             return this;
         }
 
+        public IGridColumn<T> SetExcelHidden(bool? excelHidden)
+        {
+            ExcelHidden = excelHidden;
+            return this;
+        }
+
         public IGridColumn<T> SetCrudHidden(bool all)
         {
             return SetCrudHidden(all, all, all, all);
@@ -707,6 +715,5 @@ namespace GridBlazor.Columns
         #endregion
 
         public IColumnTotals<T> Totals { get; }
-
     }
 }

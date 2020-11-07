@@ -41,6 +41,7 @@ namespace GridShared.Columns
 
         IGrid ParentGrid { get; }
         bool Hidden { get; set; }
+        bool? ExcelHidden { get; set; }
         CrudHidden CrudHidden { get; }
         bool ReadOnlyOnUpdate { get; }
         bool IsPrimaryKey { get; }
@@ -329,6 +330,12 @@ namespace GridShared.Columns
         ///     Sets the column as hidden in all crud views
         /// </summary>
         IGridColumn<T> SetCrudHidden(bool all);
+
+        /// <summary>
+        ///     Sets the column as hidden for excel export, 
+        ///     overriding the default Hidden value (if not null)
+        /// </summary>
+        IGridColumn<T> SetExcelHidden(bool? all);
 
         /// <summary>
         ///     Sets the column as readonly on update.
