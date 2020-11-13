@@ -128,7 +128,7 @@ namespace GridBlazor
             var header = new List<ExcelCell>();
             foreach (IGridColumn column in columns)
             {
-                if (!column.Hidden)
+                if (!(column.ExcelHidden ?? column.Hidden))
                 {
                     header.Add(new ExcelCell(column.Title));
                 }
@@ -140,7 +140,7 @@ namespace GridBlazor
                 List<ExcelCell> row = new List<ExcelCell>();
                 foreach (IGridColumn column in columns)
                 {
-                    if (!column.Hidden)
+                    if (!(column.ExcelHidden ?? column.Hidden))
                     {
                         var cell = column.GetCell(item) as GridCell;
                         cell.Encode = false;
