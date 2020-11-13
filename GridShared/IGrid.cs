@@ -100,6 +100,21 @@ namespace GridShared
         bool DeleteEnabled { get; }
 
         /// <summary>
+        ///     Get value for table layout
+        /// </summary>
+        TableLayout TableLayout { get; }
+
+        /// <summary>
+        ///     Get value for table width
+        /// </summary>
+        string Width { get; }
+
+        /// <summary>
+        ///     Get value for table height
+        /// </summary>
+        string Height { get; }
+
+        /// <summary>
         ///     Get all css classes mapped to the item
         /// </summary>
         string GetRowCssClasses(object item);

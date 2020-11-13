@@ -4,122 +4,122 @@
 
 @if (Visible)
 {
-    <div class="dropdown dropdown-menu grid-dropdown opened" style="display:block;@(GridHeaderComponent.GridComponent.Grid.Direction == GridShared.GridDirection.RTL ? _offset > 0 ? "margin-right:-" + _offset.ToString() + "px;" : "" : _offset > 0 ? "margin-left:-" + _offset.ToString() + "px;" : "")" @ref="dateTimeFilter" @onkeyup="FilterKeyup" @onclick:stopPropagation @onkeyup:stopPropagation>
-        <div class="grid-dropdown-arrow" style="@(GridHeaderComponent.GridComponent.Grid.Direction == GridShared.GridDirection.RTL ? _offset > 0 ? "margin-right:" + _offset.ToString() + "px" : "" : _offset > 0 ? "margin-left:" + _offset.ToString() + "px" : "")"></div>
-        <div class="grid-dropdown-inner">
-            <div class="grid-popup-widget">
-                <div class="grid-filter-body">
-                    @for (int i = 0; i < _filters.Count(); i++)
+<div class="dropdown dropdown-menu grid-dropdown opened" style="display:block;position:relative;@("margin-left:" + _offset.ToString() + "px;")" @ref="dateTimeFilter" @onkeyup="FilterKeyup" @onclick:stopPropagation @onkeyup:stopPropagation>
+    <div class="grid-dropdown-arrow" style="@("margin-left:" + (-_offset).ToString() + "px;")"></div>
+    <div class="grid-dropdown-inner">
+        <div class="grid-popup-widget">
+            <div class="grid-filter-body">
+                @for (int i = 0; i < _filters.Count(); i++)
+                {
+                    int j = i;
+                    if (j == 1)
                     {
-                        int j = i;
-                        if (j == 1)
-                        {
-                            <div class="form-group" style="display:flex;justify-content:center;">
-                                <div>
-                                    <select class="grid-filter-cond form-control" @bind="_condition">
-                                        <option value="1">@Strings.And</option>
-                                        <option value="2">@Strings.Or</option>
-                                    </select>
-                                </div>
-                            </div>
-                        }
-                        else if (j > 1)
-                        {
-                            <div class="form-group row" style="display:flex;justify-content:center;">
-                                <div>
-                                    <select class="grid-filter-cond form-control" disabled="disabled" value="@_condition">
-                                        <option value="1">@Strings.And</option>
-                                        <option value="2">@Strings.Or</option>
-                                    </select>
-                                </div>
-                            </div>
-                        }
-                        <div class="form-group row">
-                            <div class="col-md-5">
-                                @if (j == 0)
-                                {
-                                    <label class="control-label"><b>@Strings.FilterTypeLabel:</b></label>
-                                    <div>
-                                        <select @ref="firstSelect" class="grid-filter-type form-control" @bind="_filters[j].Type">
-                                            <option value="1">@Strings.Equal</option>
-                                            <option value="10">@Strings.NotEqual</option>
-                                            <option value="5">@Strings.GreaterThan</option>
-                                            <option value="6">@Strings.LessThan</option>
-                                            <option value="7">@Strings.GreaterThanOrEquals</option>
-                                            <option value="8">@Strings.LessThanOrEquals</option>
-                                            @if (GridHeaderComponent.Column.Filter.IsNullable)
-                                            {
-                                                <option value="11">@Strings.IsNull</option>
-                                                <option value="12">@Strings.IsNotNull</option>
-                                            }
-                                        </select>
-                                    </div>
-                                }
-                                else
-                                {
-                                    <div>
-                                        <select class="grid-filter-type form-control" @bind="_filters[j].Type">
-                                            <option value="1">@Strings.Equal</option>
-                                            <option value="10">@Strings.NotEqual</option>
-                                            <option value="5">@Strings.GreaterThan</option>
-                                            <option value="6">@Strings.LessThan</option>
-                                            <option value="7">@Strings.GreaterThanOrEquals</option>
-                                            <option value="8">@Strings.LessThanOrEquals</option>
-                                            @if (GridHeaderComponent.Column.Filter.IsNullable)
-                                            {
-                                                <option value="11">@Strings.IsNull</option>
-                                                <option value="12">@Strings.IsNotNull</option>
-                                            }
-                                        </select>
-                                    </div>
-                                }
-                            </div>
-                            <div class="col-md-7">
-                                @if (j == 0)
-                                {
-                                    <label class="control-label"><b>@Strings.FilterValueLabel:</b></label>
-                                }
-                                <div>
-                                    @if (GridHeaderComponent.GridComponent._isMonthSupported)
-                                    {
-                                        <input type="month" placeholder="yyyy-mm" class="grid-filter-input form-control" value="@_filters[j].Value" @onchange="(ChangeEventArgs __e) => _filters[j].Value = __e.Value.ToString()" />
-                                    }
-                                    else
-                                    {
-                                        <input type="text" placeholder="yyyy-mm" class="grid-filter-input form-control" value="@_filters[j].Value" @onchange="(ChangeEventArgs __e) => _filters[j].Value = __e.Value.ToString()" />
-                                    }
-                                </div>
+                        <div class="form-group" style="display:flex;justify-content:center;">
+                            <div>
+                                <select class="grid-filter-cond form-control" @bind="_condition">
+                                    <option value="1">@Strings.And</option>
+                                    <option value="2">@Strings.Or</option>
+                                </select>
                             </div>
                         </div>
                     }
-                    <div class="grid-buttons">
-                        <div class="grid-filter-buttons">
-                            <button type="button" class="btn btn-primary" @onclick="ApplyButtonClicked">
-                                @Strings.ApplyFilterButtonText
-                            </button>
+                    else if (j > 1)
+                    {
+                        <div class="form-group row" style="display:flex;justify-content:center;">
+                            <div>
+                                <select class="grid-filter-cond form-control" disabled="disabled" value="@_condition">
+                                    <option value="1">@Strings.And</option>
+                                    <option value="2">@Strings.Or</option>
+                                </select>
+                            </div>
                         </div>
-                        <div class="grid-filter-buttons">
-                            <button type="button" class="btn btn-primary" @onclick="() => AddColumnFilterValue()"><b>+</b></button>
-                            @if (_filters.Length > 1)
+                    }
+                    <div class="form-group row">
+                        <div class="col-md-5 my-2">
+                            @if (j == 0)
                             {
-                                <button type="button" class="btn btn-primary" @onclick="() => RemoveColumnFilterValue()"><b>-</b></button>
+                                <label class="control-label"><b>@Strings.FilterTypeLabel:</b></label>
+                                <div>
+                                    <select @ref="firstSelect" class="grid-filter-type form-control" @bind="_filters[j].Type">
+                                        <option value="1">@Strings.Equal</option>
+                                        <option value="10">@Strings.NotEqual</option>
+                                        <option value="5">@Strings.GreaterThan</option>
+                                        <option value="6">@Strings.LessThan</option>
+                                        <option value="7">@Strings.GreaterThanOrEquals</option>
+                                        <option value="8">@Strings.LessThanOrEquals</option>
+                                        @if (GridHeaderComponent.Column.Filter.IsNullable)
+                                        {
+                                            <option value="11">@Strings.IsNull</option>
+                                            <option value="12">@Strings.IsNotNull</option>
+                                        }
+                                    </select>
+                                </div>
+                            }
+                            else
+                            {
+                                <div>
+                                    <select class="grid-filter-type form-control" @bind="_filters[j].Type">
+                                        <option value="1">@Strings.Equal</option>
+                                        <option value="10">@Strings.NotEqual</option>
+                                        <option value="5">@Strings.GreaterThan</option>
+                                        <option value="6">@Strings.LessThan</option>
+                                        <option value="7">@Strings.GreaterThanOrEquals</option>
+                                        <option value="8">@Strings.LessThanOrEquals</option>
+                                        @if (GridHeaderComponent.Column.Filter.IsNullable)
+                                        {
+                                            <option value="11">@Strings.IsNull</option>
+                                            <option value="12">@Strings.IsNotNull</option>
+                                        }
+                                    </select>
+                                </div>
                             }
                         </div>
+                        <div class="col-md-7 my-2">
+                            @if (j == 0)
+                            {
+                                <label class="control-label"><b>@Strings.FilterValueLabel:</b></label>
+                            }
+                            <div>
+                                @if (GridHeaderComponent.GridComponent.IsMonthSupported)
+                                {
+                                    <input type="month" placeholder="yyyy-mm" class="grid-filter-input form-control" value="@_filters[j].Value" @onchange="(ChangeEventArgs __e) => _filters[j].Value = __e.Value.ToString()" />
+                                }
+                                else
+                                {
+                                    <input type="text" placeholder="yyyy-mm" class="grid-filter-input form-control" value="@_filters[j].Value" @onchange="(ChangeEventArgs __e) => _filters[j].Value = __e.Value.ToString()" />
+                                }
+                            </div>
+                        </div>
+                    </div>
+                }
+                <div class="grid-buttons">
+                    <div class="grid-filter-buttons">
+                        <button type="button" class="btn btn-primary" @onclick="ApplyButtonClicked">
+                            @Strings.ApplyFilterButtonText
+                        </button>
+                    </div>
+                    <div class="grid-filter-buttons">
+                        <button type="button" class="btn btn-primary" @onclick="() => AddColumnFilterValue()"><b>+</b></button>
+                        @if (_filters.Length > 1)
+                        {
+                            <button type="button" class="btn btn-primary" @onclick="() => RemoveColumnFilterValue()"><b>-</b></button>
+                        }
                     </div>
                 </div>
             </div>
-            <div class="grid-popup-additional">
-                @if (_clearVisible)
-                {
-                    <ul class="menu-list">
-                        <li>
-                            <a class="grid-filter-clear" href="javascript:void(0);" @onclick="ClearButtonClicked">
-                                @Strings.ClearFilterLabel
-                            </a>
-                        </li>
-                    </ul>
-                }
-            </div>
+        </div>
+        <div class="grid-popup-additional">
+            @if (_clearVisible)
+            {
+                <ul class="menu-list">
+                    <li>
+                        <a class="grid-filter-clear" href="javascript:void(0);" @onclick="ClearButtonClicked">
+                            @Strings.ClearFilterLabel
+                        </a>
+                    </li>
+                </ul>
+            }
         </div>
     </div>
+</div>
 }

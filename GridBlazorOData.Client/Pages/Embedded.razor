@@ -48,10 +48,10 @@ else
             c.Add(o => o.OrderID).Titled(SharedResource.Number).SetWidth(100);
             c.Add(o => o.OrderDate, "OrderCustomDate").Titled(SharedResource.OrderCustomDate).SetWidth(120).RenderComponentAs<TooltipCell>();
             c.Add(o => o.Customer.CompanyName).Titled(SharedResource.CompanyName).SetWidth(250);
-            c.Add(o => o.Customer.ContactName).Titled(SharedResource.ContactName).SetWidth(250);
+            c.Add(o => o.Customer.ContactName).Titled(SharedResource.ContactName);
             c.Add(o => o.Customer.Country, true);
-            c.Add(o => o.Freight).Titled(SharedResource.Freight).Format("{0:F}");
-            c.Add(o => o.Customer.IsVip).Titled(SharedResource.IsVip).SetWidth(70).Css("hidden-xs").RenderValueAs(o => o.Customer.IsVip ? Strings.BoolTrueLabel : Strings.BoolFalseLabel);
+            c.Add(o => o.Freight).Titled(SharedResource.Freight).SetWidth(150).Format("{0:F}");
+            c.Add(o => o.Customer.IsVip).Titled(SharedResource.IsVip).SetWidth(90).Css("hidden-xs").RenderValueAs(o => o.Customer.IsVip ? Strings.BoolTrueLabel : Strings.BoolFalseLabel);
         };
 
         string url = NavigationManager.BaseUri + "odata/Orders";

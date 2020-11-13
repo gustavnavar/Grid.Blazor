@@ -141,6 +141,7 @@ EmptyText | Setup the text displayed for all empty items in the grid | GridServe
 WithGridItemsCount | Allows the grid to show items count | GridServer<Order>(...).WithGridItemsCount();
 SetRowCssClasses | Setup specific row css classes | GridServer<Order>(...).SetRowCssClasses(item => item.Customer.IsVip ? "success" : string.Empty);
 SetDirection | Allows the grid to be show in right to left direction | GridServer<Order>(...).SetDirection(GridDirection.RTL);
+SetTableLayout | Configure fixed dimensions for the grid | GridServer<Order>(...).SetTableLayout(TableLayout.Fixed, "1200px", "400px");
 
 ## Grid configuration
 
@@ -172,6 +173,7 @@ EmptyText | Setup the text displayed for all empty items in the grid | Html.Grid
 WithGridItemsCount | Allows the grid to show items count | Html.Grid(Model).WithGridItemsCount();
 SetRowCssClasses | Setup specific row css classes | Html.Grid(Model).SetRowCssClasses(item => item.Customer.IsVip ? "success" : string.Empty);
 SetDirection | Allows the grid to be show in right to left direction | Html.Grid(Model).SetDirection(GridDirection.RTL);
+SetTableLayout | Configure fixed dimensions for the grid | Html.Grid(Model).SetTableLayout(TableLayout.Fixed, "1200px", "400px");
 
 For more documentation about column options, please see: [Custom columns](Custom_columns.md).
 

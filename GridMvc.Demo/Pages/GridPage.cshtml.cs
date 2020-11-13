@@ -60,7 +60,7 @@ namespace GridMvc.Demo.Pages
                 c.Add()
                     .Encoded(false)
                     .Sanitized(false)
-                    .SetWidth(30)
+                    .SetWidth(60)
                     .Css("hidden-xs") //hide on phones
                     .RenderComponentAs<ButtonCellViewComponent>(returnUrl);
 
@@ -113,7 +113,7 @@ namespace GridMvc.Demo.Pages
                 /* Adding "Vip customer" column: */
                 c.Add(o => o.Customer.IsVip)
                     .Titled(SharedResource.IsVip)
-                    .SetWidth(70)
+                    .SetWidth(80)
                     .Css("hidden-xs") //hide on phones
                     .RenderValueAs(o => o.Customer.IsVip ? Strings.BoolTrueLabel : Strings.BoolFalseLabel);
             };
@@ -130,7 +130,8 @@ namespace GridMvc.Demo.Pages
                 .Selectable(true)
                 .SetStriped(true)
                 .ChangePageSize(true)
-                .WithGridItemsCount();
+                .WithGridItemsCount()
+                .SetTableLayout(TableLayout.Fixed, "1000px", "400px");
 
             Grid = server.Grid;
 

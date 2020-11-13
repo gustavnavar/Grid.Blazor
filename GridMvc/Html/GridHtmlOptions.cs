@@ -259,6 +259,16 @@ namespace GridMvc.Html
             return this;
         }
 
+        public IGridHtmlOptions<T> SetTableLayout(TableLayout tableLayout, string width = null, string height = null)
+        {
+            _source.TableLayout = tableLayout;
+            if (!string.IsNullOrWhiteSpace(width))
+                _source.Width = width;
+            if (!string.IsNullOrWhiteSpace(height))
+                _source.Height = height;
+            return this;
+        }
+
         public GridRenderOptions RenderOptions
         {
             get { return _source.RenderOptions; }

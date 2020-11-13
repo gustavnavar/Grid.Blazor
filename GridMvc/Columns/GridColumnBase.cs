@@ -39,7 +39,7 @@ namespace GridMvc.Columns
         public bool EncodeEnabled { get; protected set; }
         public bool SanitizeEnabled { get; set; }
 
-        public string Width { get; set; }
+        public abstract string Width { get; set; }
 
         public int CrudWidth { get; set; } = 5;
 

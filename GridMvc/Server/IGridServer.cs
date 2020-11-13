@@ -167,6 +167,11 @@ namespace GridMvc.Server
         IGridServer<T> SetDirection(GridDirection dir);
 
         /// <summary>
+        ///    Setup the table layout and dimensions
+        /// </summary>
+        IGridServer<T> SetTableLayout(TableLayout tableLayout, string width = null, string height = null);
+
+        /// <summary>
         ///     Items, displaying in the grid view
         /// </summary>
         ItemsDTO<T> ItemsToDisplay { get; }

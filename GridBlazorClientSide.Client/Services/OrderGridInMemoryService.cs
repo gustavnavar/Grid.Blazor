@@ -39,6 +39,8 @@ namespace GridBlazorClientSide.Client.Services
             // return items to displays
             var items = server.ItemsToDisplay;
             */
+
+            await Task.CompletedTask;
             var items = new ItemsDTO<Order>();
             return items;
         }

@@ -201,4 +201,4 @@ Then it's possible to create a **QueryCollection** object and pass it to the vie
         @await Html.Grid(Model, query).Named("ordersGrid").Columns(columns).RenderAsync()
      ```
 
-[<- Subgrids](Subgrids.md)
+[<- Subgrids](Subgrids.md) | [Grid dimensions ->](Grid_dimensions.md)

@@ -49,7 +49,8 @@ else
             .Filterable()
             .SetStriped(true)
             .WithMultipleFilters()
-            .WithGridItemsCount();
+            .WithGridItemsCount()
+            .SetTableLayout(TableLayout.Fixed, "1200px", "400px");
 
         _grid = client.Grid;
         // Set new items to grid

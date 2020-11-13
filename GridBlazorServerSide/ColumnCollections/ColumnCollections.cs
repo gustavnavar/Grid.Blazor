@@ -25,11 +25,10 @@ namespace GridBlazorServerSide.ColumnCollections
             .SetWidth(120).RenderComponentAs<TooltipCell>();
 
             /* Adding "CompanyName" column: */
-            c.Add(o => o.Customer.CompanyName).Titled(SharedResource.CompanyName)
-            .SetWidth(250);
+            c.Add(o => o.Customer.CompanyName).Titled(SharedResource.CompanyName).SetWidth(250);
 
             /* Adding "ContactName" column: */
-            c.Add(o => o.Customer.ContactName).Titled(SharedResource.ContactName).SetWidth(250);
+            c.Add(o => o.Customer.ContactName).Titled(SharedResource.ContactName);
 
             /* Adding "Customer.Country" hidden column: */
             c.Add(o => o.Customer.Country, true);
@@ -37,10 +36,11 @@ namespace GridBlazorServerSide.ColumnCollections
             /* Adding "Freight" column: */
             c.Add(o => o.Freight)
             .Titled(SharedResource.Freight)
+            .SetWidth(150)
             .Format("{0:F}");
 
             /* Adding "Vip customer" column: */
-            c.Add(o => o.Customer.IsVip).Titled(SharedResource.IsVip).SetWidth(70).Css("hidden-xs") //hide on phones
+            c.Add(o => o.Customer.IsVip).Titled(SharedResource.IsVip).SetWidth(90).Css("hidden-xs") //hide on phones
             .RenderValueAs(o => o.Customer.IsVip ? Strings.BoolTrueLabel : Strings.BoolFalseLabel);
         };
 
@@ -54,11 +54,10 @@ namespace GridBlazorServerSide.ColumnCollections
             .SetWidth(120).RenderComponentAs<TooltipCell>();
 
             /* Adding "CompanyName" column: */
-            c.Add(o => o.Customer.CompanyName, comparer).Titled(SharedResource.CompanyName)
-            .SetWidth(250);
+            c.Add(o => o.Customer.CompanyName, comparer).Titled(SharedResource.CompanyName).SetWidth(250);
 
             /* Adding "ContactName" column: */
-            c.Add(o => o.Customer.ContactName).Titled(SharedResource.ContactName).SetWidth(250);
+            c.Add(o => o.Customer.ContactName).Titled(SharedResource.ContactName);
 
             /* Adding "Customer.Country" hidden column: */
             c.Add(o => o.Customer.Country, true);
@@ -66,10 +65,11 @@ namespace GridBlazorServerSide.ColumnCollections
             /* Adding "Freight" column: */
             c.Add(o => o.Freight)
             .Titled(SharedResource.Freight)
+            .SetWidth(150)
             .Format("{0:F}");
 
             /* Adding "Vip customer" column: */
-            c.Add(o => o.Customer.IsVip).Titled(SharedResource.IsVip).SetWidth(70).Css("hidden-xs") //hide on phones
+            c.Add(o => o.Customer.IsVip).Titled(SharedResource.IsVip).SetWidth(90).Css("hidden-xs") //hide on phones
             .RenderValueAs(o => o.Customer.IsVip ? Strings.BoolTrueLabel : Strings.BoolFalseLabel);
         };
 
@@ -84,22 +84,22 @@ namespace GridBlazorServerSide.ColumnCollections
             .Max(true).Min(true);
 
             /* Adding "CompanyName" column: */
-            c.Add(o => o.Customer.CompanyName).Titled(SharedResource.CompanyName)
-            .SetWidth(250)
+            c.Add(o => o.Customer.CompanyName).Titled(SharedResource.CompanyName).SetWidth(250)
             .Max(true).Min(true);
 
             /* Adding "ContactName" column: */
-            c.Add(o => o.Customer.ContactName).Titled(SharedResource.ContactName).SetWidth(250)
+            c.Add(o => o.Customer.ContactName).Titled(SharedResource.ContactName)
             .Max(true).Min(true);
 
             /* Adding "Freight" column: */
             c.Add(o => o.Freight)
             .Titled(SharedResource.Freight)
             .Format("{0:F}")
+            .SetWidth(150)
             .Sum(true).Average(true).Max(true).Min(true);
 
             /* Adding "Vip customer" column: */
-            c.Add(o => o.Customer.IsVip).Titled(SharedResource.IsVip).SetWidth(70).Css("hidden-xs") //hide on phones
+            c.Add(o => o.Customer.IsVip).Titled(SharedResource.IsVip).SetWidth(90).Css("hidden-xs") //hide on phones
             .RenderValueAs(o => o.Customer.IsVip ? Strings.BoolTrueLabel : Strings.BoolFalseLabel);
         };
 
@@ -113,13 +113,12 @@ namespace GridBlazorServerSide.ColumnCollections
             .SetWidth(120).RenderComponentAs<TooltipCell>();
 
             /* Adding "CompanyName" column: */
-            c.Add(o => o.Customer.CompanyName).Titled(SharedResource.CompanyName)
+            c.Add(o => o.Customer.CompanyName).Titled(SharedResource.CompanyName).SetWidth(250)
             .ThenSortBy(o => o.ShipVia)
-            .ThenSortByDescending(o => o.Freight)
-            .SetWidth(250);
+            .ThenSortByDescending(o => o.Freight);
 
             /* Adding "ContactName" column: */
-            c.Add(o => o.Customer.ContactName).Titled(SharedResource.ContactName).SetWidth(250);
+            c.Add(o => o.Customer.ContactName).Titled(SharedResource.ContactName);
 
             /* Adding "ShipVia" column: */
             c.Add(o => o.ShipVia).Titled("Via");
@@ -127,10 +126,11 @@ namespace GridBlazorServerSide.ColumnCollections
             /* Adding "Freight" column: */
             c.Add(o => o.Freight)
             .Titled(SharedResource.Freight)
+            .SetWidth(150)
             .Format("{0:F}");
 
             /* Adding "Vip customer" column: */
-            c.Add(o => o.Customer.IsVip).Titled(SharedResource.IsVip).SetWidth(70).Css("hidden-xs") //hide on phones
+            c.Add(o => o.Customer.IsVip).Titled(SharedResource.IsVip).SetWidth(90).Css("hidden-xs") //hide on phones
             .RenderValueAs(o => o.Customer.IsVip ? Strings.BoolTrueLabel : Strings.BoolFalseLabel);
         };
 
@@ -148,15 +148,15 @@ namespace GridBlazorServerSide.ColumnCollections
             .Format("{0:yyyy-MM-dd}").SetWidth(120);
 
             /* Adding "CompanyName" column: */
-            c.Add(o => o.Customer.CompanyName).Titled(SharedResource.CompanyName)
-            .SetWidth(250);
+            c.Add(o => o.Customer.CompanyName).Titled(SharedResource.CompanyName).SetWidth(250);
 
             /* Adding "ContactName" column: */
-            c.Add(o => o.Customer.ContactName).Titled(SharedResource.ContactName).SetWidth(250);
+            c.Add(o => o.Customer.ContactName).Titled(SharedResource.ContactName);
 
             /* Adding "Freight" column: */
             c.Add(o => o.Freight)
             .Titled(SharedResource.Freight)
+            .SetWidth(150)
             .Format("{0:F}");
 
             /* Adding not mapped column, that renders body, using inline Razor html helper */
@@ -164,7 +164,7 @@ namespace GridBlazorServerSide.ColumnCollections
             .RenderComponentAs<ButtonDbUpdate>(functions);
 
             /* Adding "Vip customer" column: */
-            c.Add(o => o.Customer.IsVip).Titled(SharedResource.IsVip).SetWidth(70).Css("hidden-xs") //hide on phones
+            c.Add(o => o.Customer.IsVip).Titled(SharedResource.IsVip).SetWidth(90).Css("hidden-xs") //hide on phones
             .RenderValueAs(o => o.Customer.IsVip ? Strings.BoolTrueLabel : Strings.BoolFalseLabel);
         };
 
@@ -181,19 +181,19 @@ namespace GridBlazorServerSide.ColumnCollections
             .SetWidth(120).RenderComponentAs<TooltipCell>();
 
             /* Adding "CompanyName" column: */
-            c.Add(o => o.Customer.CompanyName).Titled(SharedResource.CompanyName)
-            .SetWidth(250);
+            c.Add(o => o.Customer.CompanyName).Titled(SharedResource.CompanyName).SetWidth(250);
 
             /* Adding "ContactName" column: */
-            c.Add(o => o.Customer.ContactName).Titled(SharedResource.ContactName).SetWidth(250);
+            c.Add(o => o.Customer.ContactName).Titled(SharedResource.ContactName);
 
             /* Adding "Freight" column: */
             c.Add(o => o.Freight)
             .Titled(SharedResource.Freight)
+            .SetWidth(150)
             .Format("{0:F}");
 
             /* Adding "Vip customer" column: */
-            c.Add(o => o.Customer.IsVip).Titled(SharedResource.IsVip).SetWidth(70).Css("hidden-xs") //hide on phones
+            c.Add(o => o.Customer.IsVip).Titled(SharedResource.IsVip).SetWidth(90).Css("hidden-xs") //hide on phones
             .RenderValueAs(o => o.Customer.IsVip ? Strings.BoolTrueLabel : Strings.BoolFalseLabel);
         };
 
@@ -211,15 +211,16 @@ namespace GridBlazorServerSide.ColumnCollections
             .SetWidth(250);
 
             /* Adding "ContactName" column: */
-            c.Add(o => o.Customer.ContactName).Titled(SharedResource.ContactName).SetWidth(250);
+            c.Add(o => o.Customer.ContactName).Titled(SharedResource.ContactName);
 
             /* Adding "Freight" column: */
             c.Add(o => o.Freight)
             .Titled(SharedResource.Freight)
+            .SetWidth(150)
             .Format("{0:F}");
 
             /* Adding "Vip customer" column: */
-            c.Add(o => o.Customer.IsVip).Titled(SharedResource.IsVip).SetWidth(70).Css("hidden-xs") //hide on phones
+            c.Add(o => o.Customer.IsVip).Titled(SharedResource.IsVip).SetWidth(90).Css("hidden-xs") //hide on phones
             .RenderValueAs(o => o.Customer.IsVip ? Strings.BoolTrueLabel : Strings.BoolFalseLabel);
 
             c.Add(o => o.OrderDetails.Count).Titled("Details");
@@ -254,15 +255,16 @@ namespace GridBlazorServerSide.ColumnCollections
             .SetWidth(250).SetCrudHidden(true).SetReadOnlyOnUpdate(true);
 
             /* Adding "ContactName" column: */
-            c.Add(o => o.Customer.ContactName).Titled(SharedResource.ContactName).SetWidth(250).SetCrudHidden(true);
+            c.Add(o => o.Customer.ContactName).Titled(SharedResource.ContactName).SetCrudHidden(true);
 
             /* Adding "Freight" column: */
             c.Add(o => o.Freight)
             .Titled(SharedResource.Freight)
+            .SetWidth(150)
             .Format("{0:F}");
 
             /* Adding "Vip customer" column: */
-            c.Add(o => o.Customer.IsVip).Titled(SharedResource.IsVip).SetWidth(70).Css("hidden-xs") //hide on phones
+            c.Add(o => o.Customer.IsVip).Titled(SharedResource.IsVip).SetWidth(90).Css("hidden-xs") //hide on phones
             .RenderValueAs(o => o.Customer.IsVip ? Strings.BoolTrueLabel : Strings.BoolFalseLabel).SetCrudHidden(true);
 
             /* Adding hidden "RequiredDate" column: */
@@ -321,15 +323,16 @@ namespace GridBlazorServerSide.ColumnCollections
             .SetWidth(250).SetCrudHidden(true).SetReadOnlyOnUpdate(true);
 
             /* Adding "ContactName" column: */
-            c.Add(o => o.Customer.ContactName).Titled(SharedResource.ContactName).SetWidth(250).SetCrudHidden(true);
+            c.Add(o => o.Customer.ContactName).Titled(SharedResource.ContactName).SetCrudHidden(true);
 
             /* Adding "Freight" column: */
             c.Add(o => o.Freight)
             .Titled(SharedResource.Freight)
+            .SetWidth(150)
             .Format("{0:F}");
 
             /* Adding "Vip customer" column: */
-            c.Add(o => o.Customer.IsVip).Titled(SharedResource.IsVip).SetWidth(70).Css("hidden-xs") //hide on phones
+            c.Add(o => o.Customer.IsVip).Titled(SharedResource.IsVip).SetWidth(90).Css("hidden-xs") //hide on phones
             .RenderValueAs(o => o.Customer.IsVip ? Strings.BoolTrueLabel : Strings.BoolFalseLabel).SetCrudHidden(true);
 
             /* Adding hidden "RequiredDate" column: */
@@ -388,15 +391,16 @@ namespace GridBlazorServerSide.ColumnCollections
             .SetWidth(250).SetCrudHidden(true).SetReadOnlyOnUpdate(true);
             
             /* Adding "ContactName" column: */
-            c.Add(o => o.Customer.ContactName).Titled(SharedResource.ContactName).SetWidth(250).SetCrudHidden(true);
+            c.Add(o => o.Customer.ContactName).Titled(SharedResource.ContactName).SetCrudHidden(true);
             
             /* Adding "Freight" column: */
             c.Add(o => o.Freight)
             .Titled(SharedResource.Freight)
+            .SetWidth(150)
             .Format("{0:F}");
             
             /* Adding "Vip customer" column: */
-            c.Add(o => o.Customer.IsVip).Titled(SharedResource.IsVip).SetWidth(70).Css("hidden-xs") //hide on phones
+            c.Add(o => o.Customer.IsVip).Titled(SharedResource.IsVip).SetWidth(90).Css("hidden-xs") //hide on phones
             .RenderValueAs(o => o.Customer.IsVip ? Strings.BoolTrueLabel : Strings.BoolFalseLabel).SetCrudHidden(true);
         };
 
@@ -427,7 +431,7 @@ namespace GridBlazorServerSide.ColumnCollections
             .Format("{0:F}");
 
             /* Adding "Vip customer" column: */
-            c.Add(o => o.Customer.IsVip).Titled(SharedResource.IsVip).SetWidth(70).Css("hidden-xs") //hide on phones
+            c.Add(o => o.Customer.IsVip).Titled(SharedResource.IsVip).SetWidth(90).Css("hidden-xs") //hide on phones
             .RenderValueAs(o => o.Customer.IsVip ? Strings.BoolTrueLabel : Strings.BoolFalseLabel);
         };
 
@@ -448,7 +452,7 @@ namespace GridBlazorServerSide.ColumnCollections
             .SetWidth(250);
 
             /* Adding "ContactName" column: */
-            c.Add(o => o.Customer.ContactName).Titled(SharedResource.ContactName).SetWidth(250);
+            c.Add(o => o.Customer.ContactName).Titled(SharedResource.ContactName);
 
             /* Adding "Customer.Country" hidden column: */
             c.Add(o => o.Customer.Country, true);
@@ -456,10 +460,11 @@ namespace GridBlazorServerSide.ColumnCollections
             /* Adding "Freight" column: */
             c.Add(o => o.Freight)
             .Titled(SharedResource.Freight)
+            .SetWidth(150)
             .Format("{0:F}");
 
             /* Adding "Vip customer" column: */
-            c.Add(o => o.Customer.IsVip).Titled(SharedResource.IsVip).SetWidth(70).Css("hidden-xs") //hide on phones
+            c.Add(o => o.Customer.IsVip).Titled(SharedResource.IsVip).SetWidth(90).Css("hidden-xs") //hide on phones
             .RenderValueAs(o => o.Customer.IsVip ? Strings.BoolTrueLabel : Strings.BoolFalseLabel);
         };
 
@@ -502,7 +507,7 @@ namespace GridBlazorServerSide.ColumnCollections
             .Max(true).Min(true);
 
             /* Adding "ContactName" column: */
-            c.Add(o => o.Customer.ContactName).Titled(SharedResource.ContactName).SetWidth(250)
+            c.Add(o => o.Customer.ContactName).Titled(SharedResource.ContactName)
             .SetCrudHidden(true)
             .Max(true).Min(true);
 
@@ -510,10 +515,11 @@ namespace GridBlazorServerSide.ColumnCollections
             c.Add(o => o.Freight)
             .Titled(SharedResource.Freight)
             .Format("{0:F}")
+            .SetWidth(150)
             .Sum(true).Average(true).Max(true).Min(true);
 
             /* Adding "Vip customer" column: */
-            c.Add(o => o.Customer.IsVip).Titled(SharedResource.IsVip).SetWidth(70).Css("hidden-xs") //hide on phones
+            c.Add(o => o.Customer.IsVip).Titled(SharedResource.IsVip).SetWidth(90).Css("hidden-xs") //hide on phones
             .RenderValueAs(o => o.Customer.IsVip ? Strings.BoolTrueLabel : Strings.BoolFalseLabel).SetCrudHidden(true);
 
             c.Add().Encoded(false).Sanitized(false).SetWidth("5%").SetCrudHidden(true)
@@ -562,13 +568,13 @@ namespace GridBlazorServerSide.ColumnCollections
             c.Add(o => o.Customer.CompanyName).Titled(SharedResource.CompanyName).SetWidth(250);
 
             /* Adding "ContactName" column: */
-            c.Add(o => o.Customer.ContactName).Titled(SharedResource.ContactName).SetWidth(250);
+            c.Add(o => o.Customer.ContactName).Titled(SharedResource.ContactName);
 
             /* Adding "Freight" column: */
-            c.Add(o => o.Freight).Titled(SharedResource.Freight).Format("{0:F}");
+            c.Add(o => o.Freight).Titled(SharedResource.Freight).SetWidth(150).Format("{0:F}");
 
             /* Adding "Vip customer" column: */
-            c.Add(o => o.Customer.IsVip).Titled(SharedResource.IsVip).SetWidth(70).RenderValueAs(o => o.Customer.IsVip ? Strings.BoolTrueLabel : Strings.BoolFalseLabel);
+            c.Add(o => o.Customer.IsVip).Titled(SharedResource.IsVip).SetWidth(90).RenderValueAs(o => o.Customer.IsVip ? Strings.BoolTrueLabel : Strings.BoolFalseLabel);
         };
 
         public static Action<IGridColumnCollection<OrderDetail>> OrderDetailColumns = c =>

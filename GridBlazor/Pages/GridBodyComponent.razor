@@ -1,0 +1,51 @@
+﻿@typeparam T
+
+@if (GridComponent.Grid.DisplayingItemsCount == 0)
+{
+    <tr class="@GridComponent.GridEmptyTextCssClass">
+        @if (GridComponent.HasSubGrid)
+        {
+            <td class="@GridComponent.GridCellCssClass" data-name="" style="width:36.5px;"></td>
+        }
+        @if ((GridComponent.Grid.ReadEnabled || ((CGrid<T>)GridComponent.Grid).FuncReadEnabled != null) && !GridComponent.HeaderCrudButtons)
+        {
+            <td class="@GridComponent.GridButtonCellCssClass" data-name="" style="width:35px;"></td>
+        }
+        @if ((GridComponent.Grid.UpdateEnabled || ((CGrid<T>)GridComponent.Grid).FuncUpdateEnabled != null) && !GridComponent.HeaderCrudButtons)
+        {
+            <td class="@GridComponent.GridButtonCellCssClass" data-name="" style="width:35px;"></td>
+        }
+        @if ((GridComponent.Grid.DeleteEnabled || ((CGrid<T>)GridComponent.Grid).FuncDeleteEnabled != null) && !GridComponent.HeaderCrudButtons)
+        {
+            <td class="@GridComponent.GridButtonCellCssClass" data-name="" style="width:35px;"></td>
+        }
+        @if (GridComponent.RequiredTotalsColumn)
+        {
+            <td class="@GridComponent.GridCellCssClass" data-name="" style="width:90px;"></td>
+        }
+        <td colspan="@GridComponent.Grid.Columns.Count()">
+            @GridComponent.Grid.EmptyGridText
+        </td>
+    </tr>
+}
+else
+{
+    int i = 0;
+    if (GridComponent.Grid.GroupingEnabled)
+    {
+        <GridGroupRowsComponent T="@T" Grid="@GridComponent.Grid" Values="@(new List<Tuple<string, object>>())" HasSubGrid="@GridComponent.HasSubGrid" RequiredTotalsColumn="@GridComponent.RequiredTotalsColumn" ItemsToDisplay="@GridComponent.Grid.ItemsToDisplay" IsVisible="true" RowId="@i"></GridGroupRowsComponent>
+    }
+    else
+    {
+        foreach (object item in GridComponent.Grid.ItemsToDisplay)
+        {
+            int capturedI = i;
+            <GridRowComponent T="@T" Grid="@GridComponent.Grid" HasSubGrid="@GridComponent.HasSubGrid" RequiredTotalsColumn="@GridComponent.RequiredTotalsColumn" Item="@item" GridPosition="@capturedI"></GridRowComponent>
+            i++;
+        }
+    }
+}
+@if (GridComponent.HasTotals)
+{
+    <GridTotalsComponent T="@T" Grid="@GridComponent.Grid"></GridTotalsComponent>
+}

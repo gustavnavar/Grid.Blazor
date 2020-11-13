@@ -67,5 +67,10 @@
     click: function (element) {
         if (element)
             element.click();
+    },
+    scrollFixedSizeTable: function (gridTableHead, gridTableBody) {
+        document.getElementById(gridTableBody).onscroll = function () {
+            document.getElementById(gridTableHead).scrollLeft = this.scrollLeft;
+        };
     }
 }

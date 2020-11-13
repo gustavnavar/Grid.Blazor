@@ -23,7 +23,6 @@ This is an example of a grid with an export to Excel button:
 
 ![](../images/Excel.png)
 
-
-[<- Embedded components on the grid](Embedded_components.md)
-
 Grid columns can be customised as hidden (or not) specifically when exporting to Excel; either by calling SetExcelHidden(bool?) or setting the ExcelHidden property on the column definition.
+
+[<- Embedded components on the grid](Embedded_components.md) | [Grid dimensions ->](Grid_dimensions.md)

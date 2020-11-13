@@ -94,8 +94,12 @@ namespace GridBlazor.Pages
             if (GridComponent.Grid.Direction == GridDirection.RTL)
                 _cssStyles = string.Concat(_cssStyles, " text-align:right;direction:rtl;").Trim();
 
-            if (!string.IsNullOrWhiteSpace(Column.Width))
-                _cssStyles = string.Concat(_cssStyles, " width:", Column.Width, ";").Trim();
+            // tables with fixed layout don't need to set up column width on the header
+            if (GridComponent.Grid.TableLayout == TableLayout.Auto)
+            {
+                if (!string.IsNullOrWhiteSpace(Column.Width))
+                    _cssStyles = string.Concat(_cssStyles, " width:", Column.Width, ";").Trim();
+            }
 
             List<string> cssFilterClasses = new List<string>();
             cssFilterClasses.Add(FilterButtonCss);

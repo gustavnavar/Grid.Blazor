@@ -62,5 +62,6 @@ OverrideODataExpand | Override the list of subclasses to expand with OData | Gri
 AddToOnAfterRender | Add a Func<GridComponent<T>, bool, Task> to be executed at the end of the ```OnAfterRenderAsync``` method of the grid component | GridODataClient<Order>(...).AddToOnAfterRender(OnAfterDepartmentRender);
 SetDirection | Allows the grid to be show in right to left direction | GridODataClient<Order>(...).SetDirection(GridDirection.RTL);
 HandleServerErrors | Allows errors from the server to be handled by grid client | GridODataClient<Order>(...).HandleServerErrors(true, false);
+SetTableLayout | Configure fixed dimensions for the grid | GridODataClient<Order>(...).SetTableLayout(TableLayout.Fixed, "1200px", "400px");
 
 [<- Quick start](Quick_start.md) | [Keyboard navigation ->](Keyboard_navigation.md)

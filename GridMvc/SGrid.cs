@@ -302,6 +302,21 @@ namespace GridMvc
         /// </summary>
         public GridDirection Direction { get; set; } = GridDirection.LTR;
 
+        /// <summary>
+        ///     Get value for table layout
+        /// </summary>
+        public TableLayout TableLayout { get; internal set; } = TableLayout.Auto;
+
+        /// <summary>
+        ///     Get value for table width
+        /// </summary>
+        public string Width { get; internal set; } = "auto";
+
+        /// <summary>
+        ///     Get value for table height
+        /// </summary>
+        public string Height { get; internal set; } = "auto";
+
         #endregion IGrid Members
 
         /// <summary>

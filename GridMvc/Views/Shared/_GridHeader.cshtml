@@ -48,7 +48,7 @@
     var queryBuilder = new CustomQueryStringBuilder(_settings.FilterSettings.Query);
 
     var exceptQueryParameters = new List<string>
-{
+    {
         QueryStringFilterSettings.DefaultTypeQueryParameter,
         QueryStringFilterSettings.DefaultClearInitFilterQueryParameter
     };
@@ -73,9 +73,13 @@
     }
     _cssClass = ((GridStyledColumn)Model).GetCssClassesString() + " " + ThClass;
 
-    if (!string.IsNullOrWhiteSpace(Model.Width))
+    // tables with fixed layout don't need to set up column width on the header
+    if (Model.ParentGrid.TableLayout == TableLayout.Auto)
     {
-        _cssStyles = string.Concat(_cssStyles, " width:", Model.Width, ";").Trim();
+        if (!string.IsNullOrWhiteSpace(Model.Width))
+        {
+            _cssStyles = string.Concat(_cssStyles, " width:", Model.Width, ";").Trim();
+        }
     }
 
     if (Model.ParentGrid.Direction == GridDirection.RTL)

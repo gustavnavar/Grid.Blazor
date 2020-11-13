@@ -71,7 +71,7 @@ namespace GridMvc.Demo.Controllers
                 c.Add()
                     .Encoded(false)
                     .Sanitized(false)
-                    .SetWidth(30)
+                    .SetWidth(60)
                     .Css("hidden-xs") //hide on phones
                     .RenderComponentAs<ButtonCellViewComponent>(returnUrl);
 
@@ -124,12 +124,12 @@ namespace GridMvc.Demo.Controllers
                 /* Adding "Vip customer" column: */
                 c.Add(o => o.Customer.IsVip)
                     .Titled(SharedResource.IsVip)
-                    .SetWidth(70)
+                    .SetWidth(80)
                     .Css("hidden-xs") //hide on phones
                     .RenderValueAs(o => o.Customer.IsVip ? Strings.BoolTrueLabel : Strings.BoolFalseLabel);
             };
 
-            var server = new GridServer<Order>(_orderRepository.GetAll(), query, false, "ordersGrid", 
+            var server = new GridServer<Order>(_orderRepository.GetAll(), query, false, "ordersGrid",
                 columns, 10, locale)
                 .SetRowCssClasses(item => item.Customer.IsVip ? "success" : string.Empty)
                 .Sortable()
@@ -496,7 +496,7 @@ namespace GridMvc.Demo.Controllers
                 c.Add()
                     .Encoded(false)
                     .Sanitized(false)
-                    .SetWidth(30)
+                    .SetWidth(60)
                     .Css("hidden-xs") //hide on phones
                     .RenderComponentAs<ButtonCellViewComponent>(returnUrl);
 
@@ -544,7 +544,7 @@ namespace GridMvc.Demo.Controllers
                 /* Adding "Vip customer" column: */
                 c.Add(o => o.Customer.IsVip)
                     .Titled(SharedResource.IsVip)
-                    .SetWidth(70)
+                    .SetWidth(80)
                     .Css("hidden-xs") //hide on phones
                     .RenderValueAs(o => o.Customer.IsVip ? Strings.BoolTrueLabel : Strings.BoolFalseLabel);
             };

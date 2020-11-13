@@ -4,38 +4,38 @@
 
 @if (Visible)
 {
-    <div class="dropdown dropdown-menu grid-dropdown opened" style="display:block;@(GridHeaderComponent.GridComponent.Grid.Direction == GridShared.GridDirection.RTL ? _offset > 0 ? "margin-right:-" + _offset.ToString() + "px;" : "" : _offset > 0 ? "margin-left:-" + _offset.ToString() + "px;" : "")" @ref="boolFilter" @onkeyup="FilterKeyup" @onclick:stopPropagation @onkeyup:stopPropagation>
-        <div class="grid-dropdown-arrow" style="@(GridHeaderComponent.GridComponent.Grid.Direction == GridShared.GridDirection.RTL ? _offset > 0 ? "margin-right:" + _offset.ToString() + "px" : "" : _offset > 0 ? "margin-left:" + _offset.ToString() + "px" : "")"></div>
-        <div class="grid-dropdown-inner">
-            <div class="grid-popup-widget">
-                <div class="grid-filter-body">
-                    <label><b>@Strings.FilterValueLabel:</b></label>
-                    <ul class="menu-list">
-                        <li>
-                            <a class="grid-filter-choose@(_filterValue != null && _filterValue.ToLower() == "true" ? " choose-selected" : "")" data-value="true" href="javascript:void(0);" @onclick="ApplyTrueButtonClicked">
-                                @Strings.BoolTrueLabel
-                            </a>
-                        </li>
-                        <li>
-                            <a class="grid-filter-choose@(_filterValue != null && _filterValue.ToLower() == "false" ? " choose-selected" : "")" data-value="false" href="javascript:void(0);" @onclick="ApplyFalseButtonClicked">
-                                @Strings.BoolFalseLabel
-                            </a>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-            <div class="grid-popup-additional">
-                @if (_clearVisible)
-                {
-                    <ul class="menu-list">
-                        <li>
-                            <a class="grid-filter-clear" href="javascript:void(0);" @onclick="ClearButtonClicked">
-                                @Strings.ClearFilterLabel
-                            </a>
-                        </li>
-                    </ul>
-                }
+<div class="dropdown dropdown-menu grid-dropdown opened" style="display:block;position:relative;@("margin-left:" + _offset.ToString() + "px;")" @ref="boolFilter" @onkeyup="FilterKeyup" @onclick:stopPropagation @onkeyup:stopPropagation>
+    <div class="grid-dropdown-arrow" style="@("margin-left:" + (-_offset).ToString() + "px;")"></div>
+    <div class="grid-dropdown-inner">
+        <div class="grid-popup-widget">
+            <div class="grid-filter-body">
+                <label><b>@Strings.FilterValueLabel:</b></label>
+                <ul class="menu-list">
+                    <li>
+                        <a class="grid-filter-choose@(_filterValue != null && _filterValue.ToLower() == "true" ? " choose-selected" : "")" data-value="true" href="javascript:void(0);" @onclick="ApplyTrueButtonClicked">
+                            @Strings.BoolTrueLabel
+                        </a>
+                    </li>
+                    <li>
+                        <a class="grid-filter-choose@(_filterValue != null && _filterValue.ToLower() == "false" ? " choose-selected" : "")" data-value="false" href="javascript:void(0);" @onclick="ApplyFalseButtonClicked">
+                            @Strings.BoolFalseLabel
+                        </a>
+                    </li>
+                </ul>
             </div>
         </div>
+        <div class="grid-popup-additional">
+            @if (_clearVisible)
+            {
+                <ul class="menu-list">
+                    <li>
+                        <a class="grid-filter-clear" href="javascript:void(0);" @onclick="ClearButtonClicked">
+                            @Strings.ClearFilterLabel
+                        </a>
+                    </li>
+                </ul>
+            }
+        </div>
     </div>
+</div>
 }

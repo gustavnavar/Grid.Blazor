@@ -1,0 +1,26 @@
+﻿@using GridShared.Columns
+
+@model IGridColumn
+
+@{
+    const string HiddenStyle = "display:none;";
+    string _cssStyles;
+
+    if (Model.Hidden)
+    {
+        _cssStyles = HiddenStyle;
+    }
+    else
+    {
+        _cssStyles = "";
+    }
+
+    if (!string.IsNullOrWhiteSpace(Model.Width))
+    {
+        _cssStyles = string.Concat(_cssStyles, " width:", Model.Width, ";").Trim();
+    }
+}
+
+<col style="@_cssStyles" />
+
+
