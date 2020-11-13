@@ -164,7 +164,7 @@ else
     {
         DateTime date;
         DateTime.TryParse(e.Value.ToString(), out date);
-        if (date != null && date != default(DateTime))
+        if (date != default(DateTime))
             _order.OrderDate = date;
     }
 
@@ -172,7 +172,7 @@ else
     {
         DateTime date;
         DateTime.TryParse(e.Value.ToString(), out date);
-        if (date != null && date != default(DateTime))
+        if (date != default(DateTime))
             _order.RequiredDate = date;
     }
 
@@ -180,7 +180,7 @@ else
     {
         DateTime date;
         DateTime.TryParse(e.Value.ToString(), out date);
-        if (date != null && date != default(DateTime))
+        if (date != default(DateTime))
             _order.ShippedDate = date;
     }
 

@@ -201,25 +201,30 @@ GridMvc = (function ($) {
 
     gridMvc.prototype.setupPopupInitialPosition = function (popup) {
         var drop = popup.find(".grid-dropdown");
+        var table = drop.closest(".grid-table");
         if (this.options.dir === "rtl") {
             function getInfo() {
                 var arrow = popup.find(".grid-dropdown-arrow");
-                return { arrow: arrow, currentDropRight: parseInt(drop.css("right")), currentArrowRight: parseInt(arrow.css("right")) };
+                return { arrow: arrow, currentDropLeft: parseInt(drop.css("left")), currentArrowLeft: parseInt(arrow.css("left")) };
             }
             var dropLeft = drop.offset().left;
+            var dropWidth = drop.width();
+            var tableParentLeft = table.parent().offset().left;
+            var tableParentWidth = table.parent().width();
+            var tableScrollLeft = table.scrollLeft();
+            var offsetRight = tableParentLeft + tableParentWidth - (dropLeft + dropWidth);
             var info;
-            if (dropLeft < 0) {
+            if (offsetRight < 0) {
                 info = getInfo();
-                info.arrow.css({ right: Math.trunc(info.currentArrowRight - dropLeft + 10) + "px" });
-                drop.css({ right: Math.trunc(info.currentDropRight + dropLeft - 10) + "px" });
+                info.arrow.css({ left: Math.trunc(info.currentArrowLeft - offsetRight) + "px" });
+                drop.css({ left: Math.trunc(info.currentDropLeft + offsetRight) + "px" });
                 return;
             }
-            var dropWidth = drop.width();
-            var offsetLeft = $(window).width() - (dropLeft + dropWidth);
+            var offsetLeft = dropLeft - tableParentLeft;
             if (offsetLeft < 0) {
                 info = getInfo();
-                info.arrow.css({ right: Math.trunc(info.currentArrowRight + offsetLeft - 5) + "px" });
-                drop.css({ right: Math.trunc(info.currentDropRight - offsetLeft + 5) + "px" });
+                info.arrow.css({ left: Math.trunc(info.currentArrowLeft + offsetLeft) + "px" });
+                drop.css({ left: Math.trunc(info.currentDropLeft - offsetLeft) + "px" });
             }
         }
         else {
@@ -236,7 +241,10 @@ GridMvc = (function ($) {
                 return;
             }
             var dropWidth = drop.width();
-            var offsetRight = $(window).width() + $(window).scrollLeft() - (dropLeft + dropWidth);
+            var tableParentLeft = table.parent().offset().left;
+            var tableParentWidth = table.parent().width();
+            var tableScrollLeft = table.scrollLeft();
+            var offsetRight = tableParentLeft + tableParentWidth + tableScrollLeft - (dropLeft + dropWidth);
             if (offsetRight < 0) {
                 info = getInfo();
                 info.arrow.css({ left: Math.trunc(info.currentArrowLeft - offsetRight + 5) + "px" });
@@ -248,7 +256,7 @@ GridMvc = (function ($) {
     // Returns layout of filter popup menu
     //
     gridMvc.prototype.filterMenuHtml = function () {
-        return '<div class="dropdown dropdown-menu grid-dropdown" style="display: none;">\
+        return '<div class="dropdown dropdown-menu grid-dropdown" style="display: none; position: relative;">\
                     <div class="grid-dropdown-arrow"></div>\
                     <div class="grid-dropdown-inner">\
                             <div class="grid-popup-widget"></div>\
@@ -851,7 +859,7 @@ TextFilterWidget = (function ($) {
                         </div>';
             }
             html += '<div class="form-group row">\
-                        <div class="col-md-6">';
+                        <div class="col-md-6 my-2">';
             if (i === 0) {
                 html +=     '<label class="control-label">' + this.lang.filterTypeLabel + '</label>';
             }         
@@ -867,7 +875,7 @@ TextFilterWidget = (function ($) {
                                 </select>\
                             </div>\
                         </div>\
-                        <div class="col-md-6">';
+                        <div class="col-md-6 my-2">';
             if (i === 0) {
                 html +=     '<label class="control-label">' + this.lang.filterValueLabel + '</label>';
             }   
@@ -1051,7 +1059,7 @@ NumberFilterWidget = (function ($) {
                         </div>';
             }
             html += '<div class="form-group row">\
-                        <div class="col-md-6">';
+                        <div class="col-md-6 my-2">';
             if (i === 0) {
                 html += '<label class="control-label">' + this.lang.filterTypeLabel + '</label>';
             }
@@ -1070,7 +1078,7 @@ NumberFilterWidget = (function ($) {
             html +=             '</select>\
                             </div >\
                         </div>\
-                        <div class="col-md-6">';
+                        <div class="col-md-6 my-2">';
             if (i === 0) {
                 html +=     '<label class="control-label">' + this.lang.filterValueLabel + '</label>';
             }
@@ -1274,7 +1282,7 @@ DateTimeFilterWidget = (function ($) {
                         </div>';
             }
             html += '<div class="form-group row">\
-                        <div class="col-md-6">';
+                        <div class="col-md-6 my-2">';
             if (i === 0) {
                 html += '<label class="control-label">' + this.lang.filterTypeLabel + '</label>';
             }
@@ -1293,7 +1301,7 @@ DateTimeFilterWidget = (function ($) {
             html +=             '</select>\
                             </div>\
                         </div>\
-                        <div class="col-md-6">';
+                        <div class="col-md-6 my-2">';
             if (i === 0) {
                 html +=     '<label class="control-label">' + this.lang.filterValueLabel + '</label>';
             }

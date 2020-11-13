@@ -34,3 +34,4 @@
 * [Events, exceptions and CRUD validation](Events.md)
 * [Embedded components on a grid and on CRUD forms](Embedded_components.md)
 * [Export to Excel](Excel_export.md)
+* [Grid dimensions](Grid_dimensions.md)

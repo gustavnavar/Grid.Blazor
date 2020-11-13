@@ -810,6 +810,11 @@ namespace GridBlazor
         IGridClient<T> SetDirection(GridDirection dir);
 
         /// <summary>
+        ///    Setup the table layout and dimensions
+        /// </summary>
+        IGridClient<T> SetTableLayout(TableLayout tableLayout, string width = null, string height = null);
+
+        /// <summary>
         ///    Handle UpdateGrid errors from the server
         /// </summary>
         IGridClient<T> HandleServerErrors(bool showOnGrid, bool throwExceptions);

@@ -55,7 +55,7 @@ namespace GridMvc.Demo.Components
                 c.Add()
                     .Encoded(false)
                     .Sanitized(false)
-                    .SetWidth(30)
+                    .SetWidth(60)
                     .Css("hidden-xs") //hide on phones
                     .RenderValueAs(o => $"<b><a class='modal_link' href='javascript:void(0);' onclick='editOrder({o.OrderID})'>Edit</a></b>");
 
@@ -103,7 +103,7 @@ namespace GridMvc.Demo.Components
                 /* Adding "Vip customer" column: */
                 c.Add(o => o.Customer.IsVip)
                     .Titled(SharedResource.IsVip)
-                    .SetWidth(70)
+                    .SetWidth(80)
                     .Css("hidden-xs") //hide on phones
                     .RenderValueAs(o => o.Customer.IsVip ? Strings.BoolTrueLabel : Strings.BoolFalseLabel);
             };

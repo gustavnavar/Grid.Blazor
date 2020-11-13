@@ -247,6 +247,16 @@ namespace GridMvc.Server
             return this;
         }
 
+        public IGridServer<T> SetTableLayout(TableLayout tableLayout, string width = null, string height = null)
+        {
+            _source.TableLayout = tableLayout;
+            if (!string.IsNullOrWhiteSpace(width))
+                _source.Width = width;
+            if (!string.IsNullOrWhiteSpace(height))
+                _source.Height = height;
+            return this;
+        }
+
         /// <summary>
         ///     Items, displaying in the grid view
         /// </summary>

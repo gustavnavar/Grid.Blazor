@@ -147,9 +147,9 @@ else
             c.Add(o => o.ShipVia).Titled("Via").SetWidth(250).RenderValueAs(o => o.Shipper == null ? "" : o.Shipper.CompanyName).SetSelectField(true, o => o.Shipper == null ? "" : o.Shipper.ShipperID.ToString() + " - " + o.Shipper.CompanyName, () => GetAllShippers(NavigationManager.BaseUri)).SetListFilter(_shippers);
             c.Add(o => o.OrderDate, "OrderCustomDate").Titled(SharedResource.OrderCustomDate).SetCellCssClassesContraint(o => o.OrderDate.HasValue && o.OrderDate.Value >= DateTime.Parse("1997-01-01") ? "red" : "").SetInputType(InputType.DateTimeLocal).SetFilterWidgetType("DateTimeLocal").Format("{0:yyyy-MM-dd HH:mm}").SetWidth(120);
             c.Add(o => o.Customer.CompanyName).Titled(SharedResource.CompanyName).SetWidth(250).SetCrudHidden(true).SetReadOnlyOnUpdate(true).SetFilterWidgetType("CompanyNameFilter");
-            c.Add(o => o.Customer.ContactName).Titled(SharedResource.ContactName).SetWidth(250).SetCrudHidden(true);
-            c.Add(o => o.Freight).Titled(SharedResource.Freight).Format("{0:F}");
-            c.Add(o => o.Customer.IsVip).Titled(SharedResource.IsVip).SetWidth(70).Css("hidden-xs").RenderValueAs(o => o.Customer.IsVip ? Strings.BoolTrueLabel : Strings.BoolFalseLabel).SetCrudHidden(true);
+            c.Add(o => o.Customer.ContactName).Titled(SharedResource.ContactName).SetCrudHidden(true);
+            c.Add(o => o.Freight).Titled(SharedResource.Freight).SetWidth(150).Format("{0:F}");
+            c.Add(o => o.Customer.IsVip).Titled(SharedResource.IsVip).SetWidth(90).Css("hidden-xs").RenderValueAs(o => o.Customer.IsVip ? Strings.BoolTrueLabel : Strings.BoolFalseLabel).SetCrudHidden(true);
             c.Add().Encoded(false).Sanitized(false).SetWidth("5%").SetCrudHidden(true).RenderValueAs(o => $"<img width='50' height='50' src='data:image/bmp;base64,{o.Employee.Base64String}' />");
             c.Add(o => o.RequiredDate, true).Format("{0:yyyy-MM-dd}");
             c.Add(o => o.ShippedDate, true).Format("{0:yyyy-MM-dd}");

@@ -5,52 +5,52 @@
 
 @if (Visible)
 {
-    <div class="dropdown dropdown-menu grid-dropdown opened" style="display:block;@(GridHeaderComponent.GridComponent.Grid.Direction == GridShared.GridDirection.RTL ? _offset > 0 ? "margin-right:-" + _offset.ToString() + "px;" : "" : _offset > 0 ? "margin-left:-" + _offset.ToString() + "px;" : "")" @ref="listFilter" @onkeyup="FilterKeyup" @onclick:stopPropagation @onkeyup:stopPropagation tabindex="-1">
-        <div class="grid-dropdown-arrow" style="@(GridHeaderComponent.GridComponent.Grid.Direction == GridShared.GridDirection.RTL ? _offset > 0 ? "margin-right:" + _offset.ToString() + "px" : "" : _offset > 0 ? "margin-left:" + _offset.ToString() + "px" : "")"></div>
-        <div class="grid-dropdown-inner">
-            <div class="grid-popup-widget">
-                <div class="grid-filter-body">
-                    <label><b>@Strings.FilterValueLabel:</b></label>
-                    <ul class="menu-list">
-                        @foreach (var data in GridHeaderComponent.Column.FilterWidgetData as IEnumerable<SelectItem>)
-                        {
-                            bool isChecked = _filters.Any(x => x.Type.Equals("1") && x.Value.Equals(data.Value));
-                            <li>
-                                <label>
-                                    @if (isChecked)
-                                    {
-                                        <input type="checkbox" class="grid-filter-list" checked value="@isChecked" @onclick="e => MyClickHandler(e, isChecked, data.Value)" />
-                                    }
-                                    else
-                                    {
-                                        <input type="checkbox" class="grid-filter-list" value="@isChecked" @onclick="e => MyClickHandler(e, isChecked, data.Value)" />
-                                    }
-                                    @data.Title
-                                </label>
-                            </li>
-                        }
-                    </ul>
-                    <div class="grid-buttons">
-                        <div class="grid-filter-buttons">
-                            <button type="button" class="btn btn-primary" @onclick="ApplyButtonClicked">
-                                @Strings.ApplyFilterButtonText
-                            </button>
-                        </div>
+<div class="dropdown dropdown-menu grid-dropdown opened" style="display:block;position:relative;@("margin-left:" + _offset.ToString() + "px;")" @ref="listFilter" @onkeyup="FilterKeyup" @onclick:stopPropagation @onkeyup:stopPropagation tabindex="-1">
+    <div class="grid-dropdown-arrow" style="@("margin-left:" + (-_offset).ToString() + "px;")"></div>
+    <div class="grid-dropdown-inner">
+        <div class="grid-popup-widget">
+            <div class="grid-filter-body">
+                <label><b>@Strings.FilterValueLabel:</b></label>
+                <ul class="menu-list">
+                    @foreach (var data in GridHeaderComponent.Column.FilterWidgetData as IEnumerable<SelectItem>)
+                    {
+                        bool isChecked = _filters.Any(x => x.Type.Equals("1") && x.Value.Equals(data.Value));
+                        <li>
+                            <label>
+                                @if (isChecked)
+                                {
+                                    <input type="checkbox" class="grid-filter-list" checked value="@isChecked" @onclick="e => MyClickHandler(e, isChecked, data.Value)" />
+                                }
+                                else
+                                {
+                                    <input type="checkbox" class="grid-filter-list" value="@isChecked" @onclick="e => MyClickHandler(e, isChecked, data.Value)" />
+                                }
+                                @data.Title
+                            </label>
+                        </li>
+                    }
+                </ul>
+                <div class="grid-buttons">
+                    <div class="grid-filter-buttons">
+                        <button type="button" class="btn btn-primary" @onclick="ApplyButtonClicked">
+                            @Strings.ApplyFilterButtonText
+                        </button>
                     </div>
                 </div>
             </div>
-            <div class="grid-popup-additional">
-                @if (_clearVisible)
-                {
-                    <ul class="menu-list">
-                        <li>
-                            <a class="grid-filter-clear" href="javascript:void(0);" @onclick="ClearButtonClicked">
-                                @Strings.ClearFilterLabel
-                            </a>
-                        </li>
-                    </ul>
-                }
-            </div>
+        </div>
+        <div class="grid-popup-additional">
+            @if (_clearVisible)
+            {
+                <ul class="menu-list">
+                    <li>
+                        <a class="grid-filter-clear" href="javascript:void(0);" @onclick="ClearButtonClicked">
+                            @Strings.ClearFilterLabel
+                        </a>
+                    </li>
+                </ul>
+            }
         </div>
     </div>
+</div>
 }

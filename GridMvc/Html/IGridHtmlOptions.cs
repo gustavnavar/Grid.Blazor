@@ -166,6 +166,12 @@ namespace GridMvc.Html
         IGridHtmlOptions<T> SetDirection(GridDirection dir);
 
         /// <summary>
+        ///    Setup the table layout and dimensions
+        /// </summary>
+        IGridHtmlOptions<T> SetTableLayout(TableLayout tableLayout, string width = null, string height = null);
+
+
+        /// <summary>
         ///     Obviously render Grid markup
         /// </summary>
         /// <returns>Grid html layout</returns>

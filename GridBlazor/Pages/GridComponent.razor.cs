@@ -26,9 +26,11 @@ namespace GridBlazor.Pages
         private int _sequence = 0;
         private bool _fromCrud = false;
         private bool _shouldRender = false;
-        protected bool _hasSubGrid = false;
-        protected bool _hasTotals = false;
-        protected bool _requiredTotalsColumn = false;
+        internal bool HasSubGrid = false;
+        internal bool HasTotals = false;
+        internal bool RequiredTotalsColumn = false;
+        private string gridTableHead = Guid.NewGuid().ToString("N");
+        private string gridTableBody = Guid.NewGuid().ToString("N");
         protected string _changePageSizeUrl;
         protected int _pageSize;
         internal bool[] IsSubGridVisible;
@@ -37,14 +39,16 @@ namespace GridBlazor.Pages
         protected T _item;
 
         // browser input type support
-        internal bool _isDateTimeLocalSupported = false;
-        internal bool _isWeekSupported = false;
-        internal bool _isMonthSupported = false;
+        internal bool IsDateTimeLocalSupported = false;
+        internal bool IsWeekSupported = false;
+        internal bool IsMonthSupported = false;
 
         // CRUD buttons on the header
         internal bool HeaderCrudButtons = false;
 
         internal ElementReference Gridmvc;
+        internal ElementReference GridTable;
+        internal ElementReference GridTableWrap;
 
         public event Func<object, SortEventArgs, Task> SortChanged;
         public event Func<object, ExtSortEventArgs, Task> ExtSortChanged;
@@ -214,9 +218,9 @@ namespace GridBlazor.Pages
                 OnRowClicked = OnRowClickedActions.First();
             }
 
-            _hasSubGrid = Grid.SubGridKeys != null && Grid.SubGridKeys.Length > 0;
-            _hasTotals = Grid.IsSumEnabled || Grid.IsAverageEnabled || Grid.IsMaxEnabled || Grid.IsMinEnabled;
-            _requiredTotalsColumn = _hasTotals
+            HasSubGrid = Grid.SubGridKeys != null && Grid.SubGridKeys.Length > 0;
+            HasTotals = Grid.IsSumEnabled || Grid.IsAverageEnabled || Grid.IsMaxEnabled || Grid.IsMinEnabled;
+            RequiredTotalsColumn = HasTotals
                 && FirstColumn != null
                 && (FirstColumn.IsSumEnabled || FirstColumn.IsAverageEnabled
                     || FirstColumn.IsMaxEnabled || FirstColumn.IsMinEnabled);
@@ -241,7 +245,7 @@ namespace GridBlazor.Pages
         private void InitCheckboxAndSubGridVars()
         {
             Checkboxes = new QueryDictionary<Dictionary<int, CheckboxComponent<T>>>();
-            if (_hasSubGrid)
+            if (HasSubGrid)
             {
                 IsSubGridVisible = new bool[Grid.Pager.PageSize];
                 for (int i = 0; i < IsSubGridVisible.Length; i++)
@@ -249,7 +253,7 @@ namespace GridBlazor.Pages
                     IsSubGridVisible[i] = false;
                 }
             }
-            if (_hasSubGrid)
+            if (HasSubGrid)
             {
                 InitSubGrid = new bool[Grid.Pager.PageSize];
                 for (int i = 0; i < InitSubGrid.Length; i++)
@@ -274,9 +278,11 @@ namespace GridBlazor.Pages
         {
             if (firstRender)
             {
-                _isDateTimeLocalSupported = await jSRuntime.InvokeAsync<bool>("gridJsFunctions.isDateTimeLocalSupported");
-                _isWeekSupported = await jSRuntime.InvokeAsync<bool>("gridJsFunctions.isWeekSupported");
-                _isMonthSupported = await jSRuntime.InvokeAsync<bool>("gridJsFunctions.isMonthSupported");
+                IsDateTimeLocalSupported = await jSRuntime.InvokeAsync<bool>("gridJsFunctions.isDateTimeLocalSupported");
+                IsWeekSupported = await jSRuntime.InvokeAsync<bool>("gridJsFunctions.isWeekSupported");
+                IsMonthSupported = await jSRuntime.InvokeAsync<bool>("gridJsFunctions.isMonthSupported");
+                if (Grid.TableLayout != TableLayout.Auto)
+                    await jSRuntime.InvokeVoidAsync("gridJsFunctions.scrollFixedSizeTable", gridTableHead, gridTableBody);
             }
             
             if ((firstRender || _fromCrud) && Gridmvc.Id != null && Grid.Keyboard)

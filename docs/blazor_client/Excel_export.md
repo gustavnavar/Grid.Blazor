@@ -24,4 +24,4 @@ This is an example of a grid with an export to Excel button:
 ![](../images/Excel.png)
 
 
-[<- Embedded components on the grid](Embedded_components.md)
+[<- Embedded components on the grid](Embedded_components.md) | [Grid dimensions ->](Grid_dimensions.md)

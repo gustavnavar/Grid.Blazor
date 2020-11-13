@@ -53,7 +53,10 @@ namespace GridBlazor.Columns
         private readonly CGrid<T> _grid;
 
         private readonly List<IColumnOrderer<T>> _orderers = new List<IColumnOrderer<T>>();
+
         private string _filterWidgetTypeName;
+
+        private string _width;
 
         public GridColumn(Expression<Func<T, TDataType>> expression, CGrid<T> grid) : this(expression, null, grid)
         { }
@@ -130,6 +133,21 @@ namespace GridBlazor.Columns
         public override IGrid ParentGrid
         {
             get { return _grid; }
+        }
+
+        public override string Width
+        {
+            get
+            {
+                if (string.IsNullOrWhiteSpace(_width) && ParentGrid.TableLayout == TableLayout.Fixed)
+                    return "12em";
+                else
+                    return _width;
+            }
+            set
+            {
+                _width = value;
+            }
         }
 
         public override bool HasConstraint => _constraint != null;

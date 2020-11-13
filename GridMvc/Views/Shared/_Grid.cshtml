@@ -37,6 +37,8 @@
     int _pageSize = Model.Pager.ChangePageSize && Model.Pager.QueryPageSize > 0 ? Model.Pager.QueryPageSize : Model.Pager.PageSize;
     exceptQueryParameters = new List<string> { QueryStringFilterSettings.DefaultTypeQueryParameter, QueryStringFilterSettings.DefaultClearInitFilterQueryParameter };
     string _removeAllFilters = queryBuilder.GetQueryStringExcept(exceptQueryParameters);
+    string gridTableHead = Guid.NewGuid().ToString("N");
+    string gridTableBody = Guid.NewGuid().ToString("N");
 }
 
 @if (Model.RenderOptions.RenderRowsOnly)
@@ -82,28 +84,133 @@ else
             {
                 @await Html.PartialAsync("_GridExtSortHeader", Model)
             }
-            <table class="table @(Model.RenderOptions.Striped && hasSubGrid ? "substriped" : Model.RenderOptions.Striped ? "striped" : "") grid-table">
-                @* Draw grid header *@
-                <thead>
-                    <tr>
-                        @if (hasSubGrid)
-                        {
-                            <th class="grid-header" style="width:20px;"></th>
-                        }
-                        @if (requiredTotalsColumn)
-                        {
-                            <th class="grid-header" style="width:60px;"></th>
-                        }
-                        @foreach (IGridColumn column in Model.Columns)
-                        {
-                            @await Html.PartialAsync("_GridHeader", column)
-                        }
-                    </tr>
-                </thead>
-                <tbody>
-                    @await Html.PartialAsync("_GridBody", Model)
-                </tbody>
-            </table>
+            @if (Model.TableLayout == TableLayout.Auto)
+            {
+                <div class="grid-table-wrap">
+                    <table class="table @(Model.RenderOptions.Striped && hasSubGrid ? "substriped" : Model.RenderOptions.Striped ? "striped" : "") grid-table">
+                    @* Draw grid header *@
+                    <thead>
+                        <tr>
+                            @if (hasSubGrid)
+                            {
+                                <th class="grid-header" style="width:20px;"></th>
+                            }
+                            @if (requiredTotalsColumn)
+                            {
+                                <th class="grid-header" style="width:60px;"></th>
+                            }
+                            @foreach (IGridColumn column in Model.Columns)
+                            {
+                                @await Html.PartialAsync("_GridHeader", column)
+                            }
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @await Html.PartialAsync("_GridBody", Model)
+                    </tbody>
+                </table>
+                </div>
+            }
+            else
+            {
+                <div id="@gridTableHead" class="grid-table-head" style="@(Model.Width == null ? "" : "width:" + Model.Width + ";")">
+                    <table class="table grid-table" style="table-layout:fixed;">
+                        <colgroup>
+                            @if (hasSubGrid)
+                            {
+                                <col style="width:2em;" />
+                            }
+                            @if (requiredTotalsColumn)
+                            {
+                                <col style="width:5em;" />
+                            }
+                            @foreach (IGridColumn column in Model.Columns)
+                            {
+                                @await Html.PartialAsync("_GridCol", column)
+                            }
+                            @if (Model.Height != null)
+                            {
+                                <col style="width:16px;" />
+                            }
+                        </colgroup>
+                        @* Draw grid header *@
+                        <thead>
+                            <tr>
+                                @if (hasSubGrid)
+                                {
+                                    <th class="grid-header">
+                                        <div class="grid-header-group">
+                                            <div class="grid-header-title" data-column="">
+                                                <span data-column=""></span>
+                                            </div>
+                                        </div>
+                                    </th>
+                                }
+                                @if (requiredTotalsColumn)
+                                {
+                                    <th class="grid-header">
+                                        <div class="grid-header-group">
+                                            <div class="grid-header-title" data-column="">
+                                                <span data-column=""></span>
+                                            </div>
+                                        </div>
+                                    </th>
+                                }
+                                @foreach (IGridColumn column in Model.Columns)
+                                {
+                                    @await Html.PartialAsync("_GridHeader", column)
+                                }
+                                @if (Model.Height != null)
+                                {
+                                    <th></th>
+                                }
+                            </tr>
+                        </thead>
+                        <tbody style="display:none;">
+                            <tr>
+                                @if (hasSubGrid)
+                                {
+                                    <td></td>
+                                }
+                                @if (requiredTotalsColumn)
+                                {
+                                    <td></td>
+                                }
+                                @foreach (IGridColumn column in Model.Columns)
+                                {
+                                    <td></td>
+                                }
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div id="@gridTableBody" class="grid-table-body" style="@(Model.Width == null ? "" : "width:" + Model.Width + ";")@(Model.Height == null ? "" : "height:" + Model.Height + ";")">
+                    <table class="table grid-table @(Model.RenderOptions.Striped && hasSubGrid ? "substriped" : Model.RenderOptions.Striped ? "striped" : "")" style="table-layout:fixed;">
+                        <colgroup>
+                            @if (hasSubGrid)
+                            {
+                                <col style="width:2em;" />
+                            }
+                            @if (requiredTotalsColumn)
+                            {
+                                <col style="width:5em;" />
+                            }
+                            @foreach (IGridColumn column in Model.Columns)
+                            {
+                                @await Html.PartialAsync("_GridCol", column)
+                            }
+                        </colgroup>
+                        <tbody>
+                            @await Html.PartialAsync("_GridBody", Model)
+                        </tbody>
+                    </table>
+                </div>
+                <script>
+                    document.getElementById("@gridTableBody").onscroll = function () {
+                        document.getElementById("@gridTableHead").scrollLeft = this.scrollLeft;
+                    };
+                </script>
+            }
             <div class="grid-footer">
                 @if (Model.EnablePaging && Model.Pager != null)
                 {

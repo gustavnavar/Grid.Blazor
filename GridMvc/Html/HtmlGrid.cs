@@ -121,6 +121,21 @@ namespace GridMvc.Html
             set { _source.Direction = value; }
         }
 
+        public TableLayout TableLayout
+        {
+            get { return _source.TableLayout; }
+        }
+
+        public string Width
+        {
+            get { return _source.Width; }
+        }
+
+        public string Height
+        {
+            get { return _source.Height; }
+        }
+
         string IGrid.GetRowCssClasses(object item)
         {
             return _source.GetRowCssClasses(item);

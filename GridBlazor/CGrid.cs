@@ -383,6 +383,21 @@ namespace GridBlazor
         public GridDirection Direction { get; set; } = GridDirection.LTR;
 
         /// <summary>
+        ///     Get value for table layout
+        /// </summary>
+        public TableLayout TableLayout { get; internal set; } = TableLayout.Auto;
+
+        /// <summary>
+        ///     Get value for table width
+        /// </summary>
+        public string Width { get; internal set; } = "auto";
+
+        /// <summary>
+        ///     Get value for table height
+        /// </summary>
+        public string Height { get; internal set; } = "auto";
+
+        /// <summary>
         ///     Get and set export to an Excel file
         /// </summary>
         public bool ExcelExport { get; internal set; }
