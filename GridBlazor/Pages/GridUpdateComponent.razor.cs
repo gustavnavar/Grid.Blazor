@@ -229,10 +229,10 @@ namespace GridBlazor.Pages
         {
             var inputFile = InputFiles.Get(fieldName);
             var type = inputFile.Variable.GetType();
-            if (type == typeof(Agno.BlazorInputFile.InputFile) 
-                && ((Agno.BlazorInputFile.InputFile)inputFile.Variable).InputFileElement.Id != null)
+            if (type == typeof(AgnoInputFile) 
+                && ((AgnoInputFile)inputFile.Variable).InputFileElement.Id != null)
             {
-                await jSRuntime.InvokeVoidAsync("gridJsFunctions.click", (ElementReference)((Agno.BlazorInputFile.InputFile)inputFile.Variable).InputFileElement);
+                await jSRuntime.InvokeVoidAsync("gridJsFunctions.click", (ElementReference)((AgnoInputFile)inputFile.Variable).InputFileElement);
             }
         }
 

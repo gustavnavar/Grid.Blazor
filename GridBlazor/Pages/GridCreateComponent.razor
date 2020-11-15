@@ -97,11 +97,11 @@
                                     </span>
                                     @if (column.MultipleInput)
                                     {
-                                        <Agno.BlazorInputFile.InputFile name="@(column.FieldName + "-file")" multiple style="display:none;" @ref="reference.Variable" OnFileChange="(files) => OnFileChange(column, files)" />
+                                        <AgnoInputFile name="@(column.FieldName + "-file")" multiple style="display:none;" @ref="reference.Variable" OnFileChange="(files) => OnFileChange(column, files)" />
                                     }
                                     else
                                     {
-                                        <Agno.BlazorInputFile.InputFile name="@(column.FieldName + "-file")" style="display:none;" @ref="reference.Variable" OnFileChange="(files) => OnFileChange(column, files)" />
+                                        <AgnoInputFile name="@(column.FieldName + "-file")" style="display:none;" @ref="reference.Variable" OnFileChange="(files) => OnFileChange(column, files)" />
                                     }
                                 </div>
                             }

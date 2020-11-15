@@ -40,7 +40,7 @@
   </ItemGroup>
 
   <ItemGroup>
-        <PackageReference Include="Agno.BlazorInputFile" Version="0.2.1" />
+    <PackageReference Include="Agno.BlazorInputFile" Version="0.3.0" />
     <PackageReference Include="DocumentFormat.OpenXml" Version="2.11" />
   </ItemGroup>
   
