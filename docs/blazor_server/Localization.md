@@ -23,7 +23,7 @@ English is the default laguage. But you can use other languages. You have to cre
 * Turkish
 * Czech
 * Slovenian
-* Sweden
+* Swedish
 * Serbian
 * Croatian
 * Farsi
