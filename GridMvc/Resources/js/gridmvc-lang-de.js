@@ -1,5 +1,5 @@
 ﻿/***
-* Grid.Mvc gernam language (de-DE)
+* Grid.Mvc german language (de-DE)
 */
 window.GridMvc = window.GridMvc || {};
 window.GridMvc.lang = window.GridMvc.lang || {};
