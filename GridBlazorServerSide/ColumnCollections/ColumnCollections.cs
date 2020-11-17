@@ -486,7 +486,7 @@ namespace GridBlazorServerSide.ColumnCollections
             c.Add(o => o.ShipVia).Titled("Via")
             .SetWidth(250).RenderValueAs(o => o.Shipper == null ? "" : o.Shipper.CompanyName)
             .SetSelectField(true, o => o.Shipper == null ? "" : o.Shipper.ShipperID.ToString() + " - " + o.Shipper.CompanyName, h)
-            .SetListFilter(h.Invoke());
+            .SetListFilter(h.Invoke(), true, true);
 
             /* Adding "OrderDate" column: */
             c.Add(o => o.OrderDate, "OrderCustomDate").Titled(SharedResource.OrderCustomDate)

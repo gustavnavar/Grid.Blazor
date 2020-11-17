@@ -56,7 +56,7 @@ else
                 .SetWidth(250).RenderValueAs(o => o.Shipper == null ? "" : o.Shipper.CompanyName)
                 .SetSelectField(true, o => o.Shipper == null ? "" : o.Shipper.ShipperID.ToString() + " - " + o.Shipper.CompanyName,
                     shipperService.GetAllShippers)
-                .SetListFilter(shipperService.GetAllShippers());
+                .SetListFilter(shipperService.GetAllShippers(), true, true);
 
             /* Adding "OrderDate" column: */
             c.Add(o => o.OrderDate, "OrderCustomDate").Titled(SharedResource.OrderCustomDate)

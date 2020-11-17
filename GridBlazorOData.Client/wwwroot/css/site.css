@@ -122,9 +122,10 @@ table.table tr.success {
     }
 
     .sidebar {
-        width: 180px;
+        width: 200px;
         height: 100vh;
         position: sticky;
+        overflow-y: scroll;
         top: 0;
     }
 

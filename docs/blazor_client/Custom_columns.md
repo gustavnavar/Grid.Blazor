@@ -158,6 +158,7 @@ If the grid is configured for CRUD operations, the tooltip will also appear hove
 If you want to use a tooltip for a column yo can do it by calling the **SetTooltip** method in the column definition:
 ```c#
     c.Add(o => o.OrderID).SetTooltip("Order ID is ... ");
+```
 
 ## Column settings
 

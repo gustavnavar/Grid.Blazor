@@ -167,7 +167,8 @@ namespace GridMvc.Columns
             return this;
         }
 
-        public override IGridColumn<T> SetListFilter(IEnumerable<SelectItem> selectItems)
+        public override IGridColumn<T> SetListFilter(IEnumerable<SelectItem> selectItems, bool includeIsNull = false, 
+            bool includeIsNotNull = false)
         {
             return SetFilterWidgetType(SelectItem.ListFilter, selectItems);
         }

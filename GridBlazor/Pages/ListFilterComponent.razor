@@ -12,7 +12,7 @@
             <div class="grid-filter-body">
                 <label><b>@Strings.FilterValueLabel:</b></label>
                 <ul class="menu-list">
-                    @foreach (var data in GridHeaderComponent.Column.FilterWidgetData as IEnumerable<SelectItem>)
+                    @foreach (var data in _selectList)
                     {
                         bool isChecked = _filters.Any(x => x.Type.Equals("1") && x.Value.Equals(data.Value));
                         <li>
@@ -26,6 +26,40 @@
                                     <input type="checkbox" class="grid-filter-list" value="@isChecked" @onclick="e => MyClickHandler(e, isChecked, data.Value)" />
                                 }
                                 @data.Title
+                            </label>
+                        </li>
+                    }
+                    @if (_includeIsNull)
+                    {
+                        bool isChecked = _filters.Any(x => x.Type.Equals("11"));
+                        <li>
+                            <label>
+                                @if (isChecked)
+                                {
+                                    <input type="checkbox" class="grid-filter-list" checked value="@isChecked" @onclick="e => IsNullHandler(e, isChecked)" />
+                                }
+                                else
+                                {
+                                    <input type="checkbox" class="grid-filter-list" value="@isChecked" @onclick="e => IsNullHandler(e, isChecked)" />
+                                }
+                                @Strings.IsNull
+                            </label>
+                        </li>
+                    }
+                    @if (_includeIsNotNull)
+                    {
+                        bool isChecked = _filters.Any(x => x.Type.Equals("12"));
+                        <li>
+                            <label>
+                                @if (isChecked)
+                                {
+                                    <input type="checkbox" class="grid-filter-list" checked value="@isChecked" @onclick="e => IsNotNullHandler(e, isChecked)" />
+                                }
+                                else
+                                {
+                                    <input type="checkbox" class="grid-filter-list" value="@isChecked" @onclick="e => IsNotNullHandler(e, isChecked)" />
+                                }
+                                @Strings.IsNotNull
                             </label>
                         </li>
                     }

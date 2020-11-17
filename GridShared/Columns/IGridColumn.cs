@@ -549,7 +549,7 @@ namespace GridShared.Columns
         ///     Specify a list filter widget type for this column
         /// </summary>
         /// <param name="selectItems">List of selectable items</param>
-        IGridColumn<T> SetListFilter(IEnumerable<SelectItem> selectItems);
+        IGridColumn<T> SetListFilter(IEnumerable<SelectItem> selectItems, bool includeIsNull = false, bool includeIsNotNull = false);
     }
 
     public interface IFilterableColumn : IColumn

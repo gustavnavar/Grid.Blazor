@@ -1,4 +1,5 @@
-﻿using GridShared.Filtering;
+﻿using GridShared;
+using GridShared.Filtering;
 using GridShared.Utility;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Web;
@@ -14,6 +15,9 @@ namespace GridBlazor.Pages
         protected bool _clearVisible = false;
         protected List<Filter> _filters;
         protected int _offset = 0;
+        protected IEnumerable<SelectItem> _selectList = new List<SelectItem>();
+        protected bool _includeIsNull = false;
+        protected bool _includeIsNotNull = false;
 
         protected ElementReference listFilter;
 
@@ -39,6 +43,11 @@ namespace GridBlazor.Pages
                    new Filter(r.FilterType.ToString("d"), r.FilterValue)).ToList();
             _clearVisible = filterSettings.Count() > 0;
             _filters = filterSettings.ToList();
+
+            if (GridHeaderComponent.Column.FilterWidgetData.GetType() == typeof((IEnumerable<SelectItem>, bool, bool)))
+            {
+                (_selectList, _includeIsNull, _includeIsNotNull) = ((IEnumerable<SelectItem>, bool, bool))GridHeaderComponent.Column.FilterWidgetData;
+            }
         }
 
         protected override async Task OnAfterRenderAsync(bool firstRender)
@@ -73,6 +82,36 @@ namespace GridBlazor.Pages
             else
             {
                 AddColumnFilterValue(value);
+            }
+            StateHasChanged();
+        }
+
+        private void IsNullHandler(MouseEventArgs e, bool isChecked)
+        {
+            if (isChecked)
+            {
+                var filters = _filters.Where(r => r.Type == GridFilterType.IsNull.ToString("d"));
+                for (int i = filters.Count() - 1; i >= 0; i--)
+                    _filters.Remove(filters.ElementAt(i));
+            }
+            else
+            {
+                _filters.Add(new Filter(GridFilterType.IsNull.ToString("d"), ""));
+            }
+            StateHasChanged();
+        }
+
+        private void IsNotNullHandler(MouseEventArgs e, bool isChecked)
+        {
+            if (isChecked)
+            {
+                var filters = _filters.Where(r => r.Type == GridFilterType.IsNotNull.ToString("d"));
+                for (int i = filters.Count() - 1; i >= 0; i--)
+                    _filters.Remove(filters.ElementAt(i));
+            }
+            else
+            {
+                _filters.Add(new Filter(GridFilterType.IsNotNull.ToString("d"), ""));
             }
             StateHasChanged();
         }

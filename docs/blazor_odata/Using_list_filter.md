@@ -35,7 +35,7 @@ Then you have to add the column using the ```SetListFilter``` method of the ```G
 ```c#
     c.Add(o => o.ShipVia)
         .RenderValueAs(o => o.Shipper.CompanyName)
-        .SetListFilter(_shippers);
+        .SetListFilter(_shippers, true, true);
 ``` 
 
 [<- Filtering](Filtering.md) | [Using a date time filter ->](Using_datetime_filter.md)
