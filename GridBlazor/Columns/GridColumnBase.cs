@@ -58,6 +58,7 @@ namespace GridBlazor.Columns
         public string FieldName { get; protected set; }
 
         public bool IsSorted { get; set; }
+        
         public GridSortDirection? Direction { get; set; }
 
         public GridSortDirection? InitialDirection { get; set; }

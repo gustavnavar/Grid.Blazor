@@ -213,16 +213,13 @@ namespace GridBlazor.Columns
 
         internal void UpdateColumnsSorting()
         {
-            if (!string.IsNullOrEmpty(SortSettings.ColumnName))
+            foreach (IGridColumn gridColumn in this)
             {
-                foreach (IGridColumn gridColumn in this)
-                {
-                    gridColumn.IsSorted = gridColumn.Name == SortSettings.ColumnName;
-                    if (gridColumn.Name == SortSettings.ColumnName)
-                        gridColumn.Direction = SortSettings.Direction;
-                    else
-                        gridColumn.Direction = null;
-                }
+                gridColumn.IsSorted = gridColumn.Name == SortSettings.ColumnName;
+                if (gridColumn.Name == SortSettings.ColumnName)
+                    gridColumn.Direction = SortSettings.Direction;
+                else
+                    gridColumn.Direction = null;
             }
         }
     }

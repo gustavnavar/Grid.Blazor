@@ -210,16 +210,13 @@ namespace GridMvc.Columns
 
         internal void UpdateColumnsSorting()
         {
-            if (!string.IsNullOrEmpty(_sortSettings.ColumnName))
+            foreach (IGridColumn gridColumn in this)
             {
-                foreach (IGridColumn gridColumn in this)
-                {
-                    gridColumn.IsSorted = gridColumn.Name == _sortSettings.ColumnName;
-                    if (gridColumn.Name == _sortSettings.ColumnName)
-                        gridColumn.Direction = _sortSettings.Direction;
-                    else
-                        gridColumn.Direction = null;
-                }
+                gridColumn.IsSorted = gridColumn.Name == _sortSettings.ColumnName;
+                if (gridColumn.Name == _sortSettings.ColumnName)
+                    gridColumn.Direction = _sortSettings.Direction;
+                else
+                    gridColumn.Direction = null;
             }
         }
     }

@@ -452,6 +452,14 @@ namespace GridBlazor.Pages
             await OnSortChanged();
         }
 
+        public async Task GetSortUrl(string columnQueryParameterName, string directionQueryParameterName)
+        {
+            Grid.RemoveQueryParameter(columnQueryParameterName);
+            Grid.RemoveQueryParameter(directionQueryParameterName);
+            await UpdateGrid();
+            await OnSortChanged();
+        }
+
         protected virtual async Task OnSortChanged()
         {
             SortEventArgs args = new SortEventArgs();

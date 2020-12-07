@@ -115,10 +115,6 @@
 
     string GetSortUrl(string columnName, GridSortDirection? direction)
     {
-        //switch direction for link:
-        GridSortDirection newDir = direction == GridSortDirection.Ascending
-            ? GridSortDirection.Descending : GridSortDirection.Ascending;
-
         //determine current url:
         var builder = new CustomQueryStringBuilder(_settings.SortSettings.Query);
         string url = builder.GetQueryStringExcept(new[]
@@ -127,18 +123,66 @@
             ((QueryStringSortSettings)_settings.SortSettings).ColumnQueryParameterName,
             ((QueryStringSortSettings)_settings.SortSettings).DirectionQueryParameterName
         });
-        if (string.IsNullOrEmpty(url))
+
+        if (Model.IsSorted)
         {
-            url = "?";
+            if (Model.Direction == GridSortDirection.Ascending)
+            {
+                if (string.IsNullOrEmpty(url))
+                {
+                    url = "?";
+                }
+                else
+                {
+                    url += "&";
+                }
+
+                return string.Format("{0}{1}={2}&{3}={4}", url,
+                    ((QueryStringSortSettings)_settings.SortSettings).ColumnQueryParameterName, columnName,
+                    ((QueryStringSortSettings)_settings.SortSettings).DirectionQueryParameterName,
+                    ((int)GridSortDirection.Descending).ToString(CultureInfo.InvariantCulture));
+            }
+            else
+            {
+                if(Model.InitialDirection.HasValue)
+                {
+                    if (string.IsNullOrEmpty(url))
+                    {
+                        url = "?";
+                    }
+                    else
+                    {
+                        url += "&";
+                    }
+
+                    return string.Format("{0}{1}={2}&{3}={4}", url,
+                        ((QueryStringSortSettings)_settings.SortSettings).ColumnQueryParameterName, columnName,
+                        ((QueryStringSortSettings)_settings.SortSettings).DirectionQueryParameterName,
+                        ((int)GridSortDirection.Ascending).ToString(CultureInfo.InvariantCulture));
+                }
+                else if (string.IsNullOrEmpty(url))
+                {
+                    url = "?";
+                }
+                return url;
+            }
         }
         else
         {
-            url += "&";
+            if (string.IsNullOrEmpty(url))
+            {
+                url = "?";
+            }
+            else
+            {
+                url += "&";
+            }
+
+            return string.Format("{0}{1}={2}&{3}={4}", url,
+                ((QueryStringSortSettings)_settings.SortSettings).ColumnQueryParameterName, columnName,
+                ((QueryStringSortSettings)_settings.SortSettings).DirectionQueryParameterName,
+                ((int)GridSortDirection.Ascending).ToString(CultureInfo.InvariantCulture));
         }
-        return string.Format("{0}{1}={2}&{3}={4}", url,
-            ((QueryStringSortSettings)_settings.SortSettings).ColumnQueryParameterName, columnName,
-            ((QueryStringSortSettings)_settings.SortSettings).DirectionQueryParameterName,
-            ((int)newDir).ToString(CultureInfo.InvariantCulture));
     }
 }
 

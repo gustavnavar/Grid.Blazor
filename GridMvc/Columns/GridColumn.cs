@@ -175,6 +175,8 @@ namespace GridMvc.Columns
 
         public override IGridColumn<T> SortInitialDirection(GridSortDirection direction)
         {
+            InitialDirection = direction;
+
             if (string.IsNullOrEmpty(_grid.Settings.SortSettings.ColumnName))
             {
                 IsSorted = true;

@@ -406,7 +406,9 @@
                         e.preventDefault();
 
                         var search = $(this).attr('href');
-                        self.gridSort = search.substr(search.match(/grid-column=\w+/).index);
+                        var searchMatch = search.match(/grid-column=\w+/);
+                        if (searchMatch)
+                            self.gridSort = search.substr(searchMatch.index);
 
                         // load new data
                         self.loadPage();

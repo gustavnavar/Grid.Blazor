@@ -2,6 +2,7 @@
 @using GridMvc.Demo.Models
 @using GridMvc.Demo.Resources
 @using GridMvc.Demo.Services
+@using GridShared.Sorting
 @using Microsoft.Extensions.Primitives
 @using System.Globalization
 @using System.Threading.Tasks
@@ -60,7 +61,7 @@ else
 
             /* Adding "OrderDate" column: */
             c.Add(o => o.OrderDate, "OrderCustomDate").Titled(SharedResource.OrderCustomDate)
-                //.SortInitialDirection(GridSortDirection.Descending)
+                .SortInitialDirection(GridSortDirection.Descending)
                 .SetCellCssClassesContraint(o => o.OrderDate.HasValue && o.OrderDate.Value >= DateTime.Parse("1997-01-01") ? "red" : "")
                 .Format("{0:yyyy-MM-dd}").SetWidth(120)
                 .Max(true).Min(true);

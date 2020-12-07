@@ -26,11 +26,11 @@
                 {
                     if (Column.IsSorted)
                     {
-                        <a href="javascript:void(0);" @onclick="TitleButtonClicked" data-column="@Column.Name" data-sorted="@(Column.Direction == GridSortDirection.Ascending ? "asc" : "desc")">@Column.Title</a>
+                        <button type="button" @onclick="TitleButtonClicked" data-column="@Column.Name" data-sorted="@(Column.Direction == GridSortDirection.Ascending ? "asc" : "desc")">@Column.Title</button>
                     }
                     else
                     {
-                        <a href="javascript:void(0);" @onclick="TitleButtonClicked" data-column="@Column.Name">@Column.Title</a>
+                        <button type="button" @onclick="TitleButtonClicked" data-column="@Column.Name">@Column.Title</button>
                     }
                 }
                 else
@@ -48,11 +48,18 @@
             <div class="@_cssSortingClass" @onmouseover="DisplayTooltip" @onmouseout="HideTooltip">
                 @if (Column.SortEnabled)
                 {
-                    <button @onclick="TitleButtonClicked" type="button">@Column.Title</button>
+                    if (Column.IsSorted)
+                    {
+                        <button type="button" @onclick="TitleButtonClicked" data-column="@Column.Name" data-sorted="@(Column.Direction == GridSortDirection.Ascending ? "asc" : "desc")">@Column.Title</button>
+                    }
+                    else
+                    {
+                        <button type="button" @onclick="TitleButtonClicked" data-column="@Column.Name">@Column.Title</button>
+                    }
                 }
                 else
                 {
-                    <span>@Column.Title</span>
+                    <span data-column="@Column.Name">@Column.Title</span>
                 }
                 @if (Column.IsSorted)
                 {

@@ -175,11 +175,12 @@ namespace GridBlazor.Columns
 
         public override IGridColumn<T> SortInitialDirection(GridSortDirection direction)
         {
+            InitialDirection = direction;
+
             if (string.IsNullOrEmpty(_grid.Settings.SortSettings.ColumnName))
             {
                 IsSorted = true;
                 Direction = direction;
-                InitialDirection = direction;
 
                 // added to enable initial sorting
                 _grid.Settings.SortSettings.ColumnName = Name;

@@ -510,6 +510,11 @@ namespace GridShared.Columns
         ///     Sort direction of current column
         /// </summary>
         GridSortDirection? Direction { get; set; }
+
+        /// <summary>
+        ///     Initial sort direction of current column
+        /// </summary>
+        GridSortDirection? InitialDirection { get; set; }
     }
 
     public interface IFilterableColumn<T>
