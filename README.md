@@ -6,6 +6,8 @@ It supports .NET Core 3.1 and 5.0, and Blazor WebAssembly 3.2.0 and 5.0
 
 ## Notes
 
+- Sorting is implmented on GridBlazor 2.1.2, GridMvcCore 4.1.2 and newer versions following this sequence "no sort" -> "sort ascending" -> "sort descending" -> "no sort" and so on when a column title is clicked 
+
 - GridMvcCore 3.0.0 does not support .Net Core 2.x. It requires .NET Core 3.1
 
 - GridBlazor 1.6.7 requires a change on the column definition when selecting rows with checkboxes using the ```SetCheckboxColumn``` method. It's mandatory to identify the columns that are primary keys for the grid. You must do it using the SetPrimaryKey(true) method for the primary key columns' definitions:
