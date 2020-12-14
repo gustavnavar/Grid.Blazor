@@ -38,6 +38,11 @@ namespace GridBlazor
         /// </summary>
         Func<object[], Task<ICGrid>> SubGrids { get; }
 
+        /// <summary>
+        ///     Subgrids state
+        /// </summary>
+        bool SubGridsOpened { get; }
+
         Type Type { get; }
 
         string Url { get; }

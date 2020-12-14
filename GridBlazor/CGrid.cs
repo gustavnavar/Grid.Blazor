@@ -538,6 +538,11 @@ namespace GridBlazor
         /// </summary>
         public Func<object[], Task<ICGrid>> SubGrids { get; set;  }
 
+        /// <summary>
+        ///     Subgrids state
+        /// </summary>
+        public bool SubGridsOpened { get; set; } = false;
+
         public Type Type { get { return typeof(T); } }
 
         /// <summary>

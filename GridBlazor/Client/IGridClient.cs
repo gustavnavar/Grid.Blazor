@@ -765,6 +765,11 @@ namespace GridBlazor
         IGridClient<T> SubGrid(Func<object[], Task<ICGrid>> subGrids, params (string,string)[] keys);
 
         /// <summary>
+        ///    Allow grid to show a SubGrid
+        /// </summary>
+        IGridClient<T> SubGrid(Func<object[], Task<ICGrid>> subGrids, bool allOpened, params (string, string)[] keys);
+
+        /// <summary>
         ///     Configure keyboard utilization
         /// </summary>
         IGridClient<T> SetKeyboard(bool enable);

@@ -99,7 +99,7 @@ Finally we have to modify the **GridClient** we used to create the main grid add
             .WithMultipleFilters()
             .Searchable(true, false)
             .WithGridItemsCount()
-            .SubGrid(subGrids, "OrderID");
+            .SubGrid(subGrids, ("OrderID","OrderID"));
 
     }
 ```
@@ -109,6 +109,7 @@ Finally we have to modify the **GridClient** we used to create the main grid add
 Parameter | Type | Description
 --------- | ---- | -----------
 subGrids | Func<object[], Task<ICGrid>> | function that creates subgrids defined in the step before
-keys | params string[] | variable number of strings with the names of required columns to find records for the subgrid
+allOpended | bool (optional) | boolean to configure if all subgrids are open or close when the grid is initialized or updated. The default value is false.
+keys | params (string, string)[] | variable number of tuples of strings with the names of required columns to find records for the subgrid (foreign keys). The first value of the tuple is the name of property of the parent grid and the second value is the name of property of the child grid.
 
 [<- Render button, checkbox, etc. in a grid cell](Render_button_checkbox_etc_in_a_grid_cell.md) | [Passing grid state as parameter ->](Passing_grid_state_as_parameter.md)

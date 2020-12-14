@@ -250,7 +250,7 @@ namespace GridBlazor.Pages
                 IsSubGridVisible = new bool[Grid.Pager.PageSize];
                 for (int i = 0; i < IsSubGridVisible.Length; i++)
                 {
-                    IsSubGridVisible[i] = false;
+                    IsSubGridVisible[i] = Grid.SubGridsOpened;
                 }
             }
             if (HasSubGrid)
