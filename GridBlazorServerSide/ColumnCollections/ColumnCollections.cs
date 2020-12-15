@@ -753,14 +753,18 @@ namespace GridBlazorServerSide.ColumnCollections
 
         public static Action<IGridColumnCollection<Customer>> CustomerColumns = c =>
         {
-            c.Add(o => o.CustomerID).Titled(SharedResource.Number).SetWidth(100);
+            c.Add(o => o.CustomerID).SetPrimaryKey(true).Titled(SharedResource.Number).SetWidth(100);
             c.Add(o => o.CompanyName).SetWidth(250);
             c.Add(o => o.ContactName).SetWidth(250);
+            c.Add(o => o.ContactTitle, true);
             c.Add(o => o.Phone);
+            c.Add(o => o.Fax, true);
             c.Add(o => o.Address).SetWidth(250);
             c.Add(o => o.City).SetWidth(250);
             c.Add(o => o.PostalCode);
             c.Add(o => o.Country).SetWidth(250);
+            c.Add(o => o.IsVip).Titled(SharedResource.IsVip).SetWidth(90).SetToggleSwitch(true, Strings.BoolTrueLabel, Strings.BoolFalseLabel)
+                .RenderValueAs(o => o.IsVip ? Strings.BoolTrueLabel : Strings.BoolFalseLabel);
         };
     }
 }

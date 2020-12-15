@@ -253,6 +253,14 @@ Other fields that you want to be shown as dropdowns with a closed list can also 
 
 All fields to be included in the CRUD forms but not in the grid as columns should be configured as hidden (e.g. ```Add(o => o.RequiredDate, true)```).
 
+Boolean columns are shown as checkboxes on CRUD forms by default. But they can also be shown as sliders using the ```SetToggleSwitch``` method in the column definition (e.g. ````SetToggleSwitch(true, "Yes", "No")```).
+The ```SetToggleSwitch``` method has 3 required parameters:
+Parameter | Description
+--------- | -----------
+enabled | boolean to configure if the boolean field is shown as a slider
+trueLabel | optional string to define the checked value label
+falseLabel | optional string to define the unchecked value label
+
 All columns required to be included in the Update form as **read only** should be configured using the ```SetReadOnlyOnUpdate(true)``` method.
 
 If a column is a date that has to be shown as ```date```, ```time```, ```week```, ```month``` or ```datetime-local``` in the CRUD forms, the column definition should use the  **SetInputType** method in order to get the correct format.

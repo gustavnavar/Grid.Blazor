@@ -80,7 +80,7 @@ Then we have to modify the **GridClient** we used to create the main grid adding
 Parameter | Type | Description
 --------- | ---- | -----------
 subGrids | Func<object[], Task<ICGrid>> | function that creates subgrids defined in the step before
-allOpended | bool (optional) | boolean to configure if all subgrids are open or close when the grid is initialized or updated. The default value is false.
+allOpended | bool (optional) | boolean to configure if all subgrids are opened or closed when the grid is initialized or updated. The default value is false.
 keys | params (string, string)[] | variable number of tuples of strings with the names of required columns to find records for the subgrid (foreign keys). The first value of the tuple is the name of property of the parent grid and the second value is the name of property of the child grid.
 
 Finally we have to add an action to the back-end controller to get rows for subgrids. An example of this type of action is: 

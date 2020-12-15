@@ -1,4 +1,5 @@
-﻿using GridShared;
+﻿using GridMvc.Resources;
+using GridShared;
 using GridShared.Columns;
 using GridShared.Filtering;
 using GridShared.Grouping;
@@ -89,6 +90,12 @@ namespace GridMvc.Columns
         public InputType InputType { get; protected set; }
 
         public bool MultipleInput { get; protected set; } = false;
+
+        public bool ToggleSwitch { get; protected set; } = false;
+
+        public string TrueLabel { get; protected set; } = Strings.BoolTrueLabel;
+
+        public string FalseLabel { get; protected set; } = Strings.BoolFalseLabel;
 
         public bool IsSumEnabled { get; set; } = false;
 
@@ -623,6 +630,14 @@ namespace GridMvc.Columns
         public IGridColumn<T> SetTooltip(string value)
         {
             TooltipValue = value;
+            return this;
+        }
+
+        public IGridColumn<T> SetToggleSwitch(bool enabled, string trueLabel = null, string falseLabel = null)
+        {
+            ToggleSwitch = enabled;
+            TrueLabel = trueLabel;
+            FalseLabel = falseLabel;
             return this;
         }
 

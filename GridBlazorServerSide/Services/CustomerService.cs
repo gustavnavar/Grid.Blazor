@@ -71,19 +71,56 @@ namespace GridBlazorServerSide.Services
             }
         }
 
-        public Task Insert(Customer item)
+        public async Task Insert(Customer item)
         {
-            throw new NotImplementedException();
+            using (var context = new NorthwindDbContext(_options))
+            {
+                try
+                {
+                    var repository = new CustomersRepository(context);
+                    await repository.Insert(item);
+                    repository.Save();
+                }
+                catch (Exception e)
+                {
+                    throw new GridException("CUSSRV-01", e);
+                }
+            }
         }
 
-        public Task Update(Customer item)
+        public async Task Update(Customer item)
         {
-            throw new NotImplementedException();
+            using (var context = new NorthwindDbContext(_options))
+            {
+                try
+                {
+                    var repository = new CustomersRepository(context);
+                    await repository.Update(item);
+                    repository.Save();
+                }
+                catch (Exception e)
+                {
+                    throw new GridException(e);
+                }
+            }
         }
 
-        public Task Delete(params object[] keys)
+        public async Task Delete(params object[] keys)
         {
-            throw new NotImplementedException();
+            using (var context = new NorthwindDbContext(_options))
+            {
+                try
+                {
+                    var customer = await Get(keys);
+                    var repository = new CustomersRepository(context);
+                    repository.Delete(customer);
+                    repository.Save();
+                }
+                catch (Exception)
+                {
+                    throw new GridException("Error deleting the customer");
+                }
+            }
         }
     }
 

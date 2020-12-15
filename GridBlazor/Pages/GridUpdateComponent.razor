@@ -41,7 +41,7 @@
                     {
                         <label for="@column.FieldName" class="col-form-label col-md-@column.CrudLabelWidth.ToString()">@column.Title</label>
                     }
-                    <div class="@(type == typeof(bool) ? "col-md-1" : "col-md-" + column.CrudWidth.ToString())">
+                    <div class="@(type == typeof(bool) && !column.ToggleSwitch ? "col-md-1" : "col-md-" + column.CrudWidth.ToString())">
                         @if (column.IsPrimaryKey)
                         {
                             <input id="@column.FieldName" name="@column.FieldName" class="form-control" readonly="readonly" value="@column.GetFormatedValue(value)" />
@@ -80,11 +80,35 @@
                                 {
                                     if (value != null && (bool)value == true)
                                     {
-                                        <input id="@column.FieldName" name="@column.FieldName" type="checkbox" class="form-control" disabled="disabled" readonly="readonly" checked="checked" value="true" />
+                                        if (column.ToggleSwitch)
+                                        {
+                                            <label class="col-form-label">@column.FalseLabel</label>
+                                            <label class="grid-switch">
+                                                <input id="@column.FieldName" name="@column.FieldName" type="checkbox" class="form-control" disabled="disabled" readonly="readonly" checked="checked" value="true" />
+                                                <span class="grid-slider round"></span>
+                                            </label>
+                                            <label class="col-form-label">@column.TrueLabel</label>
+                                        }
+                                        else
+                                        {
+                                            <input id="@column.FieldName" name="@column.FieldName" type="checkbox" class="form-control" disabled="disabled" readonly="readonly" checked="checked" value="true" />
+                                        }
                                     }
                                     else
                                     {
-                                        <input id="@column.FieldName" name="@column.FieldName" type="checkbox" class="form-control" disabled="disabled" readonly="readonly" value="false" />
+                                        if (column.ToggleSwitch)
+                                        {
+                                            <label class="col-form-label">@column.FalseLabel</label>
+                                            <label class="grid-switch">
+                                                <input id="@column.FieldName" name="@column.FieldName" type="checkbox" class="form-control" disabled="disabled" readonly="readonly" value="false" />
+                                                <span class="grid-slider round"></span>
+                                            </label>
+                                            <label class="col-form-label">@column.TrueLabel</label>
+                                        }
+                                        else
+                                        {
+                                            <input id="@column.FieldName" name="@column.FieldName" type="checkbox" class="form-control" disabled="disabled" readonly="readonly" value="false" />
+                                        }
                                     }
                                 }
                                 else if (type == typeof(string) && ((IGridColumn<T>)column).InputType == InputType.TextArea)
@@ -187,11 +211,35 @@
                                 {
                                     if (value != null && (bool)value == true)
                                     {
-                                        <input id="@column.FieldName" name="@column.FieldName" type="checkbox" class="form-control @(ColumnErrors.ContainsKey(@column.FieldName) ? "input-validation-error" : "")" checked="checked" value="true" @onchange="(e) => ChangeValue(e, column)" />
+                                        if (column.ToggleSwitch)
+                                        {
+                                            <label class="col-form-label">@column.FalseLabel</label>
+                                            <label class="grid-switch">
+                                                <input id="@column.FieldName" name="@column.FieldName" type="checkbox" class="form-control @(ColumnErrors.ContainsKey(@column.FieldName) ? "input-validation-error" : "")" checked="checked" value="true" @onchange="(e) => ChangeValue(e, column)" />
+                                                <span class="grid-slider round"></span>
+                                            </label>
+                                            <label class="col-form-label">@column.TrueLabel</label>
+                                        }
+                                        else
+                                        {
+                                            <input id="@column.FieldName" name="@column.FieldName" type="checkbox" class="form-control @(ColumnErrors.ContainsKey(@column.FieldName) ? "input-validation-error" : "")" checked="checked" value="true" @onchange="(e) => ChangeValue(e, column)" />
+                                        }
                                     }
                                     else
                                     {
-                                        <input id="@column.FieldName" name="@column.FieldName" type="checkbox" class="form-control @(ColumnErrors.ContainsKey(@column.FieldName) ? "input-validation-error" : "")" value="false" @onchange="(e) => ChangeValue(e, column)" />
+                                        if (column.ToggleSwitch)
+                                        {
+                                            <label class="col-form-label">@column.FalseLabel</label>
+                                            <label class="grid-switch">
+                                                <input id="@column.FieldName" name="@column.FieldName" type="checkbox" class="form-control @(ColumnErrors.ContainsKey(@column.FieldName) ? "input-validation-error" : "")" value="false" @onchange="(e) => ChangeValue(e, column)" />
+                                                <span class="grid-slider round"></span>
+                                            </label>
+                                            <label class="col-form-label">@column.TrueLabel</label>
+                                        }
+                                        else
+                                        {
+                                            <input id="@column.FieldName" name="@column.FieldName" type="checkbox" class="form-control @(ColumnErrors.ContainsKey(@column.FieldName) ? "input-validation-error" : "")" value="false" @onchange="(e) => ChangeValue(e, column)" />
+                                        }
                                     }
                                 }
                                 else

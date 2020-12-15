@@ -18,11 +18,14 @@
         </div>
     </div>
 
-    <div class="row">
-        <div class="col-md-5">
-            <button type="button" class="btn btn-primary btn-md" @onclick="() => BackButtonClicked()">@Strings.Back</button>
+    @if (_grid.Mode == GridMode.Grid)
+    {
+        <div class="row">
+            <div class="col-md-5">
+                <button type="button" class="btn btn-primary btn-md" @onclick="() => BackButtonClicked()">@Strings.Back</button>
+            </div>
         </div>
-    </div>
+    }
 }
 else
 {
@@ -33,6 +36,7 @@ else
 {
     private CGrid<Customer> _grid;
     private Task _task;
+    private GridMode _mode;
 
     [CascadingParameter(Name = "GridComponent")]
     protected GridComponent<Order> GridComponent { get; set; }
@@ -49,13 +53,25 @@ else
             .Sortable()
             .Filterable()
             .SetStriped(true)
+            .Crud(false, true, true, false, customerService)
             .WithMultipleFilters()
-            .WithGridItemsCount();
+            .WithGridItemsCount()
+            .AddToOnAfterRender(OnAfterGridRender);
 
         _grid = client.Grid;
         // Set new items to grid
         _task = client.UpdateGrid();
         await _task;
+    }
+
+    protected async Task OnAfterGridRender(GridComponent<Customer> gridComponent, bool firstRender)
+    {
+        if (gridComponent.Grid.Mode != _mode)
+        {
+            _mode = gridComponent.Grid.Mode;
+            StateHasChanged();
+        }
+        await Task.CompletedTask;
     }
 
     protected void BackButtonClicked()

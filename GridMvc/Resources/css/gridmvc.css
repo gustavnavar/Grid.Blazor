@@ -201,3 +201,25 @@ div[dir="rtl"] button.grid-button-component { margin-left: 5px; margin-right: 0;
     .grid-header-checkbox-input ~ .null-checkbox::before { position: absolute; top: 1rem; display: block; width: .9rem; height: .9rem; pointer-events: none; content: ""; border: 0.5px solid #666; border-radius: 3px; background-color: #ccc; }
 
 div[dir="rtl"] label { display: flex; }
+
+/* The switch - the box around the slider */
+.grid-switch { position: relative; display: inline-block; width: 50px; height: 24px; margin-left: 16px; margin-right: 16px; margin-bottom: -8px; }
+
+    /* Hide default HTML checkbox */
+    .grid-switch input { display: none; }
+
+/* The slider */
+.grid-slider { position: absolute; cursor: pointer; top: 0; left: 0; right: 0; bottom: 0; background-color: #ccc; -webkit-transition: .4s; transition: .4s; }
+
+    .grid-slider:before { position: absolute; content: ""; height: 16px; width: 16px; left: 4px; bottom: 4px; background-color: white; -webkit-transition: .4s; transition: .4s; }
+
+input:checked + .grid-slider { background-color: #ccc; }
+
+input:focus + .grid-slider { box-shadow: 0 0 1px #ccc; }
+
+input:checked + .grid-slider:before { -webkit-transform: translateX(26px); -ms-transform: translateX(26px); transform: translateX(26px); }
+
+/* Rounded sliders */
+.grid-slider.round { border-radius: 24px; }
+
+    .grid-slider.round:before { border-radius: 50%; }

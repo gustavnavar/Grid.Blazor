@@ -51,6 +51,9 @@ namespace GridShared.Columns
         bool SingleCheckbox { get; }
         string TooltipValue { get; }
         bool MultipleInput { get; }
+        bool ToggleSwitch { get; }
+        string TrueLabel { get; }
+        string FalseLabel { get; }
     }
 
     /// <summary>
@@ -391,6 +394,11 @@ namespace GridShared.Columns
         ///    Allow grid header to show a tooltip
         /// </summary>
         IGridColumn<T> SetTooltip(string value);
+
+        /// <summary>
+        ///    Allow grid header to show a tooltip
+        /// </summary>
+        IGridColumn<T> SetToggleSwitch(bool enabled, string trueLabel = null, string falseLabel = null);
     }
 
     public interface IColumn
