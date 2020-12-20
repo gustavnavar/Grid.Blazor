@@ -577,6 +577,22 @@ namespace GridBlazor
         }
 
         /// <summary>
+        ///     Get primary keys for CRUD
+        /// </summary>
+        public string[] GetPrimaryKeys()
+        {
+            List<string> values = new List<string>();
+            foreach (var column in Columns)
+            {
+                if (column.IsPrimaryKey)
+                {
+                    values.Add(column.FieldName);
+                }
+            }
+            return values.ToArray();
+        }
+
+        /// <summary>
         ///     Fixed column values for the grid
         /// </summary>
         public QueryDictionary<object> FixedValues { get; set; } = null;

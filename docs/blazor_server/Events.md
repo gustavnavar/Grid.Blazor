@@ -199,6 +199,130 @@ Notice that all handlers must be async.
 
 In this sample ```OrderValidator``` is a class that validates the ```Order``` object to be modified. If it's a valid item the event returns ```true```.  If the item is not valid the event writes an error on the form and returns ```false```. 
 
+
+## Events for subgrids and nested CRUD subgrids
+
+If you want to define events for a subgrid and/or a nested CRUD subgrid you must handle in the ```OnAfterRender``` method of the subgrid component. 
+The ```AddToOnAfterRender``` method of the ```GridClient``` object allows to define those events for subgrids
+
+```c#
+<GridComponent @ref="_gridComponent" T="Order" Grid="@_grid"></GridComponent>
+
+@code
+{
+    private GridComponent<Order> _gridComponent;
+    private bool _areEventsLoaded = false;
+    ...
+
+    protected override async Task OnParametersSetAsync()
+    {
+        var locale = CultureInfo.CurrentCulture;
+        SharedResource.Culture = locale;
+
+        Func<object[], bool, bool, bool, bool, Task<IGrid>> subGrids = async (keys, create, read, update, delete) =>
+        {
+            var subGridQuery = new QueryDictionary<StringValues>();
+
+            Action<IGridColumnCollection<OrderDetail>> subGridColumns = c => ColumnCollections.OrderDetailColumnsCrud(c,
+                productService.GetAllProducts);
+
+            var subGridClient = new GridClient<OrderDetail>(q => orderDetailService.GetOrderDetailsGridRows(subGridColumns, keys, q),
+                subGridQuery, false, "orderDetailsGrid" + keys[0].ToString(), subGridColumns, locale)
+                    .Sortable()
+                    .Filterable()
+                    .SetStriped(true)
+                    .Crud(create, read, update, delete, orderDetailService)
+                    .WithMultipleFilters()
+                    .WithGridItemsCount()
+                    .AddToOnAfterRender(OnAfterOrderDetailRender);
+
+            await subGridClient.UpdateGrid();
+            return subGridClient.Grid;
+        };
+
+        var query = new QueryDictionary<StringValues>();
+
+        Action<IGridColumnCollection<Order>> columns = c => ColumnCollections.OrderColumnsWithNestedCrud(c,
+            customerService.GetAllCustomers, employeeService.GetAllEmployees, shipperService.GetAllShippers, subGrids);
+
+        var client = new GridClient<Order>(q => orderService.GetOrdersGridRows(columns, q),
+            query, false, "ordersGrid", columns, locale)
+            .Sortable()
+            .Filterable()
+            .SetStriped(true)
+            .Crud(true, orderService)
+            .WithMultipleFilters()
+            .WithGridItemsCount();
+
+        _grid = client.Grid;
+
+        // Set new items to grid
+        _task = client.UpdateGrid();
+        await _task;
+    }
+
+    private async Task OnAfterOrderDetailRender(GridComponent<OrderDetail> gridComponent, bool firstRender)
+    {
+        if (firstRender)
+        {
+            gridComponent.BeforeInsert += BeforeInsertOrderDetail;
+            gridComponent.BeforeUpdate += BeforeUpdateOrderDetail;
+            gridComponent.BeforeDelete += BeforeDeleteOrderDetail;
+
+            await Task.CompletedTask;
+        }
+    }
+
+    private async Task<bool> BeforeInsertOrderDetail(GridCreateComponent<OrderDetail> component, OrderDetail item)
+    {
+        var orderDetailValidator = new OrderDetailValidator();
+        var valid = await orderDetailValidator.ValidateAsync(item);
+
+        if (!valid.IsValid)
+        {
+            component.Error = "Insert operation returned one or more errors";
+            foreach (var error in valid.Errors)
+            {
+                component.ColumnErrors.AddParameter(error.PropertyName, error.ErrorMessage);
+            }
+        }
+
+        return valid.IsValid;
+    }
+
+    private async Task<bool> BeforeUpdateOrderDetail(GridUpdateComponent<OrderDetail> component, OrderDetail item)
+    {
+        var orderDetailValidator = new OrderDetailValidator();
+        var valid = await orderDetailValidator.ValidateAsync(item);
+
+        if (!valid.IsValid)
+        {
+            component.Error = "Update operation returned one or more errors";
+            foreach (var error in valid.Errors)
+            {
+                component.ColumnErrors.AddParameter(error.PropertyName, error.ErrorMessage);
+            }
+        }
+
+        return valid.IsValid;
+    }
+
+    private async Task<bool> BeforeDeleteOrderDetail(GridDeleteComponent<OrderDetail> component, OrderDetail item)
+    {
+        var orderDetailValidator = new OrderDetailValidator();
+        var valid = await orderDetailValidator.ValidateAsync(item);
+
+        if (!valid.IsValid)
+        {
+            component.Error = valid.ToString();
+        }
+
+        return valid.IsValid;
+    }    
+
+```
+
+
 ## Exceptions and messages on the CRUD forms
 
 ```GridException``` is provided to throw exceptions from the ```ICrudDataService<T>``` services used for data persistence. The ```GridException``` message will be shown on the CRUD forms.

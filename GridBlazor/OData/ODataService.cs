@@ -1,5 +1,6 @@
 ﻿using GridShared.OData;
 using GridShared.Utility;
+using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
 using System.Net.Http.Json;
@@ -71,14 +72,25 @@ namespace GridBlazor.OData
 
         public static string GetUrl(CGrid<T> grid, string url, params object[] keys)
         {
+            var keyNames = grid.GetPrimaryKeys();
+
             string expandParameters = grid.CurrentExpandODataProcessor.Process();
             if (url.Contains("?"))
                 expandParameters = "&" + expandParameters;
             else
                 expandParameters = "?" + expandParameters;
 
-            return url + "(" + string.Join(",", keys.Select(x => x.ToString())) + ")" + expandParameters;
-
+            if (keyNames.Length != keys.Length || keys.Length == 1)
+                return url + "(" + string.Join(",", keys.Select(x => x.ToString())) + ")" + expandParameters;
+            else
+            {
+                var keysUrl = new List<string>(); ;
+                for (int i = 0; i < keys.Length; i++)
+                {
+                    keysUrl.Add(keyNames[i] + "=" + keys[i].ToString());
+                }
+                return url + "(" + string.Join(",", keysUrl.Select(x => x.ToString())) + ")" + expandParameters;
+            }
         }
     }
 }

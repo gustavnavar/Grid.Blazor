@@ -24,7 +24,7 @@
 {
     <div class="row">
         <div class="col-md-12">
-            <GridComponent T="Order" Grid="@_grid" Mode="_mode" Keys="_keys"></GridComponent>
+            <GridComponent T="Order" @ref="_gridComponent" Grid="@_grid" Mode="_mode" Keys="_keys"></GridComponent>
         </div>
     </div>
 }
@@ -36,9 +36,11 @@ else
 @code
 {
     private CGrid<Order> _grid;
+    private GridComponent<Order> _gridComponent;
     private object[] _keys;
     private GridMode _mode;
     private Task _task;
+    private bool _areEventsLoaded = false;
 
     [Parameter]
     public string OrderId { get; set; }
@@ -64,10 +66,11 @@ else
                     .Sortable()
                     .Filterable()
                     .SetStriped(true)
-                    .Crud(create, r => r.Quantity > 15 && read, r => r.Quantity > 15  || update, 
+                    .Crud(create, r => r.Quantity > 15 && read, r => r.Quantity > 15  || update,
                         r => r.Quantity > 15 || delete, orderDetailService)
                     .WithMultipleFilters()
-                    .WithGridItemsCount();
+                    .WithGridItemsCount()
+                    .AddToOnAfterRender(OnAfterOrderDetailRender);
 
             await subGridClient.UpdateGrid();
             return subGridClient.Grid;
@@ -119,5 +122,122 @@ else
         // Set new items to grid
         _task = client.UpdateGrid();
         await _task;
+    }
+
+    protected override void OnAfterRender(bool firstRender)
+    {
+        if (_gridComponent != null && !_areEventsLoaded)
+        {
+            _gridComponent.BeforeInsert += BeforeInsert;
+            _gridComponent.BeforeUpdate += BeforeUpdate;
+            _gridComponent.BeforeDelete += BeforeDelete;
+            _areEventsLoaded = true;
+        }
+    }
+
+    private async Task<bool> BeforeInsert(GridCreateComponent<Order> component, Order item)
+    {
+        var orderValidator = new OrderValidator();
+        var valid = await orderValidator.ValidateAsync(item);
+
+        if (!valid.IsValid)
+        {
+            component.Error = "Insert operation returned one or more errors";
+            foreach (var error in valid.Errors)
+            {
+                component.ColumnErrors.AddParameter(error.PropertyName, error.ErrorMessage);
+            }
+        }
+
+        return valid.IsValid;
+    }
+
+    private async Task<bool> BeforeUpdate(GridUpdateComponent<Order> component, Order item)
+    {
+        var orderValidator = new OrderValidator();
+        var valid = await orderValidator.ValidateAsync(item);
+
+        if (!valid.IsValid)
+        {
+            component.Error = "Update operation returned one or more errors";
+            foreach (var error in valid.Errors)
+            {
+                component.ColumnErrors.AddParameter(error.PropertyName, error.ErrorMessage);
+            }
+        }
+
+        return valid.IsValid;
+    }
+
+    private async Task<bool> BeforeDelete(GridDeleteComponent<Order> component, Order item)
+    {
+        var orderValidator = new OrderValidator();
+        var valid = await orderValidator.ValidateAsync(item);
+
+        if (!valid.IsValid)
+        {
+            component.Error = valid.ToString();
+        }
+
+        return valid.IsValid;
+    }
+
+    private async Task OnAfterOrderDetailRender(GridComponent<OrderDetail> gridComponent, bool firstRender)
+    {
+        if (firstRender)
+        {
+            gridComponent.BeforeInsert += BeforeInsertOrderDetail;
+            gridComponent.BeforeUpdate += BeforeUpdateOrderDetail;
+            gridComponent.BeforeDelete += BeforeDeleteOrderDetail;
+
+            await Task.CompletedTask;
+        }
+    }
+
+    private async Task<bool> BeforeInsertOrderDetail(GridCreateComponent<OrderDetail> component, OrderDetail item)
+    {
+        var orderDetailValidator = new OrderDetailValidator();
+        var valid = await orderDetailValidator.ValidateAsync(item);
+
+        if (!valid.IsValid)
+        {
+            component.Error = "Insert operation returned one or more errors";
+            foreach (var error in valid.Errors)
+            {
+                component.ColumnErrors.AddParameter(error.PropertyName, error.ErrorMessage);
+            }
+        }
+
+        return valid.IsValid;
+    }
+
+    private async Task<bool> BeforeUpdateOrderDetail(GridUpdateComponent<OrderDetail> component, OrderDetail item)
+    {
+        var orderDetailValidator = new OrderDetailValidator();
+        var valid = await orderDetailValidator.ValidateAsync(item);
+
+        if (!valid.IsValid)
+        {
+            component.Error = "Update operation returned one or more errors";
+            foreach (var error in valid.Errors)
+            {
+                component.ColumnErrors.AddParameter(error.PropertyName, error.ErrorMessage);
+            }
+        }
+
+        return valid.IsValid;
+    }
+
+    private async Task<bool> BeforeDeleteOrderDetail(GridDeleteComponent<OrderDetail> component, OrderDetail item)
+    {
+        var orderDetailValidator = new OrderDetailValidator();
+        var valid = await orderDetailValidator.ValidateAsync(item);
+
+        if (!valid.IsValid)
+        {
+            component.Error = valid.ToString();
+        }
+
+        return valid.IsValid;
     }
 }

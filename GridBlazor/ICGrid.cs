@@ -59,6 +59,11 @@ namespace GridBlazor
         /// </summary>
         object[] GetPrimaryKeyValues(object item);
 
+        /// <summary>
+        ///     Get primary keys for CRUD
+        /// </summary>
+        string[] GetPrimaryKeys();
+
         IGridSettingsProvider Settings { get; }
 
         IEnumerable<object> SelectedItems { get; set; }

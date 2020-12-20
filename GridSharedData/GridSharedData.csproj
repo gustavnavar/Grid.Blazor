@@ -8,9 +8,9 @@
 
     <ItemGroup>
         <PackageReference Include="Microsoft.AspNetCore.Mvc.Core" Version="2.2.5" />
-        <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="5.0.0" />
-        <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="5.0.0" />
-        <PackageReference Include="Npgsql" Version="5.0.0-preview1" />
+        <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="5.0.1" />
+        <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="5.0.1" />
+        <PackageReference Include="Npgsql" Version="5.0.1.1" />
     </ItemGroup>
 
     <ItemGroup>
