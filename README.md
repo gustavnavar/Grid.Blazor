@@ -75,7 +75,9 @@ It supports .NET Core 3.1 and 5.0, and Blazor WebAssembly 3.2.0 and 5.0
     ```
 
 ## Demo 
-http://gridblazor.azurewebsites.net
+- Blazor server-side: http://gridblazor.azurewebsites.net
+- Blazor WASM: http://gridblazorwasm.azurewebsites.net
+- Blazor WASM with OData back-end: http://gridblazorodata.azurewebsites.net
 
 ## Change Log
 https://github.com/gustavnavar/Grid.Blazor/releases
