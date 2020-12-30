@@ -97,10 +97,11 @@ namespace GridShared.Filtering.Types
             return Expression.Equal(upperFirstExpr, upperValueExpr);
         }
 
+        #region OData
+
         public override string GetFilterExpression(string columnName, string value, GridFilterType filterType)
         {
             value = GetStringValue(value).ToLower();
-            columnName = "tolower(" + columnName + ")";
 
             //base implementation of building filter expressions
             filterType = GetValidType(filterType);
@@ -121,5 +122,7 @@ namespace GridShared.Filtering.Types
                     throw new ArgumentOutOfRangeException();
             }
         }
+
+        #endregion
     }
 }

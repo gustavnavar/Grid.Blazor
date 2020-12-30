@@ -37,6 +37,20 @@ namespace GridBlazor.Pages
 
         protected override void OnParametersSet()
         {
+            // Remove 'z' at the end of values if grid uses an OData back-end      
+            if (GridHeaderComponent.GridComponent.Grid.ServerAPI == ServerAPI.OData)
+            {
+                var filters = FilterSettings.ToArray();
+                for (int i = 0; i < filters.Count(); i++)
+                {
+                    if (filters[i].FilterType != GridFilterType.Condition)
+                    {
+                        var date = DateTime.Parse(filters[i].FilterValue);
+                        filters[i].FilterValue = date.ToString("yyyy'-'MM'-'dd'T'HH':'mm");
+                    }
+                }
+                FilterSettings = filters.ToList();
+            }
             _condition = FilterSettings.SingleOrDefault(r => r != ColumnFilterValue.Null
                 && r.FilterType == GridFilterType.Condition).FilterValue;
             if (string.IsNullOrWhiteSpace(_condition))
@@ -91,6 +105,17 @@ namespace GridBlazor.Pages
         protected async Task ApplyButtonClicked()
         {
             FilterCollection filters = new FilterCollection(_filters);
+            
+            // Add 'z' at the end of values if grid uses an OData back-end
+            if (GridHeaderComponent.GridComponent.Grid.ServerAPI == ServerAPI.OData)
+            {
+                foreach (var filter in filters)
+                {
+                    DateTime date = DateTime.Parse(filter.Value);
+                    filter.Value = ODataDateTimeConverter.ToDateString(date);
+                }
+            }
+            
             if(filters.Count() > 1)
                 filters.Add(GridFilterType.Condition.ToString("d"), _condition);
             await GridHeaderComponent.AddFilter(filters);

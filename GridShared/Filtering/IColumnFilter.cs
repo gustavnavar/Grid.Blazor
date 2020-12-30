@@ -12,8 +12,9 @@ namespace GridShared.Filtering
     {
         bool IsNullable { get; }
 
-        // get OData string
+        #region OData
         bool IsTextColumn();
         string GetFilter(IEnumerable<ColumnFilterValue> values);
+        #endregion
     }
 }

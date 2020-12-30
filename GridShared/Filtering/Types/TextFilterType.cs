@@ -97,6 +97,8 @@ namespace GridShared.Filtering.Types
             return Expression.Equal(upperFirstExpr, upperValueExpr);
         }
 
+        #region OData
+
         public override string GetFilterExpression(string columnName, string value, GridFilterType filterType)
         {
             value = GetStringValue(value).ToLower();
@@ -130,5 +132,7 @@ namespace GridShared.Filtering.Types
         {
             return "'" + value.Replace("'", "''") + "'";
         }
+
+        #endregion
     }
 }

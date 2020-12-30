@@ -176,6 +176,7 @@ namespace GridShared.Filtering
             return binaryExpression;
         }
 
+        #region OData
         public string GetFilter(IEnumerable<ColumnFilterValue> values)
         {
             string result = "";
@@ -261,5 +262,6 @@ namespace GridShared.Filtering
 
             return filterType.GetType() == typeof(TextFilterType);
         }
+        #endregion
     }
 }

@@ -72,6 +72,10 @@ namespace GridShared.Filtering.Types
             }
         }
 
+        #endregion
+
+        #region OData
+        
         public virtual string GetFilterExpression(string columnName, string value, GridFilterType filterType)
         {
             value = GetStringValue(value);

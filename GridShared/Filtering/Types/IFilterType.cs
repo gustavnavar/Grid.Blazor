@@ -26,8 +26,12 @@ namespace GridShared.Filtering.Types
 
         Expression GetFilterExpression(Expression leftExpr, string value, GridFilterType filterType);
 
+        #region OData
+
         string GetFilterExpression(string columnName, string value, GridFilterType filterType);
 
         string GetStringValue(string value);
+
+        #endregion
     }
 }
