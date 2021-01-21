@@ -1,11 +1,11 @@
 ﻿@page "/trucks"
-@using GridBlazorServerSide.Models
-@using GridBlazorServerSide.Resources
-@using GridBlazorServerSide.Services
+@using GridBlazorOData.Client.Resources
+@using GridBlazorOData.Shared.Models
 @using Microsoft.Extensions.Primitives
 @using System.Globalization
 @using System.Threading.Tasks
-@inject ITruckService truckService
+@inject NavigationManager NavigationManager
+@inject HttpClient HttpClient
 
 @if (_task.IsCompleted)
 {
@@ -30,16 +30,20 @@ else
         var locale = CultureInfo.CurrentCulture;
         SharedResource.Culture = locale;
 
+        var trucks = new PersonType[] { PersonType.Driver, PersonType.Owner, PersonType.DriverAndOwner }
+                .Select(r => new SelectItem(r.ToString(), r.ToText()));
+
         Action<IGridColumnCollection<Truck>> columns = c =>
         {
             c.Add(t => t.Description).Titled("Description");
             c.Add(t => t.Person.FullName).Titled("Person");
-            c.Add(t => t.Type).Titled("Type").RenderValueAs(r => r.Type?.ToText()).SetListFilter(truckService.GetTypes(), true, true);
+            c.Add(t => t.Type).Titled("Type").RenderValueAs(r => r.Type?.ToText()).SetListFilter(trucks, true, true);
         };
 
         var query = new QueryDictionary<StringValues>();
-        var client = new GridClient<Truck>(q => truckService.GetTrucksGridRows(columns, q),
-            query, false, "trucksGrid", columns, locale)
+        string url = NavigationManager.BaseUri + "odata/Trucks";
+
+        var client = new GridODataClient<Truck>(HttpClient, url, query, false, "trucksGrid", columns, 10, locale)
             .Sortable()
             .Filterable()
             .ClearFiltersButton(true)

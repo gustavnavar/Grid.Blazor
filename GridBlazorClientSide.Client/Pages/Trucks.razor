@@ -1,11 +1,10 @@
 ﻿@page "/trucks"
-@using GridBlazorServerSide.Models
-@using GridBlazorServerSide.Resources
-@using GridBlazorServerSide.Services
+@using GridBlazorClientSide.Shared.Models
 @using Microsoft.Extensions.Primitives
 @using System.Globalization
 @using System.Threading.Tasks
-@inject ITruckService truckService
+@inject NavigationManager NavigationManager
+@inject HttpClient HttpClient
 
 @if (_task.IsCompleted)
 {
@@ -25,21 +24,17 @@ else
     private CGrid<Truck> _grid;
     private Task _task;
 
+    public static IEnumerable<SelectItem> Types = new PersonType[] { PersonType.Driver, PersonType.Owner, PersonType.DriverAndOwner }
+               .Select(r => new SelectItem(r.ToString(), r.ToText()));
+
     protected override async Task OnParametersSetAsync()
     {
         var locale = CultureInfo.CurrentCulture;
-        SharedResource.Culture = locale;
-
-        Action<IGridColumnCollection<Truck>> columns = c =>
-        {
-            c.Add(t => t.Description).Titled("Description");
-            c.Add(t => t.Person.FullName).Titled("Person");
-            c.Add(t => t.Type).Titled("Type").RenderValueAs(r => r.Type?.ToText()).SetListFilter(truckService.GetTypes(), true, true);
-        };
 
         var query = new QueryDictionary<StringValues>();
-        var client = new GridClient<Truck>(q => truckService.GetTrucksGridRows(columns, q),
-            query, false, "trucksGrid", columns, locale)
+        string url = NavigationManager.BaseUri + "api/SampleData/GetTrucksGrid";
+
+        var client = new GridClient<Truck>(HttpClient, url, query, false, "trucksGrid", Trucks.Columns, locale)
             .Sortable()
             .Filterable()
             .ClearFiltersButton(true)
@@ -53,4 +48,11 @@ else
         _task = client.UpdateGrid();
         await _task;
     }
+
+    public static Action<IGridColumnCollection<Truck>> Columns = c =>
+    {
+        c.Add(t => t.Description).Titled("Description");
+        c.Add(t => t.Person.FullName).Titled("Person");
+        c.Add(t => t.Type).Titled("Type").RenderValueAs(r => r.Type?.ToText()).SetListFilter(Trucks.Types, true, true);
+    };
 }

@@ -1,41 +1,41 @@
-﻿using GridBlazorServerSide.Models;
-using GridMvc.Server;
-using GridShared;
-using GridShared.Utility;
-using Microsoft.AspNetCore.Http;
-using Microsoft.Extensions.Primitives;
-using System;
+﻿using GridBlazorOData.Shared.Models;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.OData.Query;
+using Microsoft.AspNetCore.OData.Routing.Controllers;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace GridBlazorServerSide.Services
+namespace GridBlazorOData.Server.Controllers
 {
-    public class TruckService : ITruckService
+    public class TrucksController : ODataController
     {
-        public ItemsDTO<Truck> GetTrucksGridRows(Action<IGridColumnCollection<Truck>> columns,
-            QueryDictionary<StringValues> query)
+        public TrucksController()
         {
-            var server = new GridServer<Truck>(GetAll(), new QueryCollection(query),
-                    true, "trucksGrid", columns)
-                        .Sortable()
-                        .WithPaging(10)
-                        .Filterable()
-                        .WithMultipleFilters()
-                        .Groupable(true)
-                        .Searchable(true, false, false);
+        }
 
-            // return items to displays
-            var items = server.ItemsToDisplay;
-            return items;
+        [EnableQuery]
+        public IActionResult Get()
+        {
+            var trucks = GetAll();
+            return Ok(trucks);
+        }
+
+        [EnableQuery]
+        public IActionResult Get(int key)
+        {
+            Truck truck = GetAll().SingleOrDefault(r => r.Id == key);
+            return Ok(truck);
         }
 
         private IEnumerable<Truck> GetAll()
         {
             var trucks = new List<Truck>();
-            trucks.Add(new Truck {
+            trucks.Add(new Truck
+            {
                 Id = 1,
                 Description = "Truck 1",
-                Person = new Person {
+                Person = new Person
+                {
                     Id = 1,
                     FirstName = "Person",
                     LastName = "1"
@@ -102,18 +102,5 @@ namespace GridBlazorServerSide.Services
             });
             return trucks;
         }
-
-        public IEnumerable<SelectItem> GetTypes()
-        {
-            return new PersonType[] { PersonType.Driver, PersonType.Owner, PersonType.DriverAndOwner }
-                .Select(r => new SelectItem(r.ToString(), r.ToText()));
-        }
-    }
-
-    public interface ITruckService
-    {
-        ItemsDTO<Truck> GetTrucksGridRows(Action<IGridColumnCollection<Truck>> columns,
-            QueryDictionary<StringValues> query);
-        IEnumerable<SelectItem> GetTypes();
     }
 }

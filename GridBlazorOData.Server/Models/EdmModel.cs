@@ -18,6 +18,7 @@ namespace GridBlazorOData.Server.Models
             builder.EntityType<Employee>().Property(r => r.Base64String);
             builder.EntitySet<Shipper>("Shippers");
             builder.EntitySet<Product>("Products");
+            builder.EntitySet<Truck>("Trucks");
             return builder.GetEdmModel();
         }
     }
