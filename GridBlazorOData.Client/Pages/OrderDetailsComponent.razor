@@ -1,0 +1,76 @@
+﻿@using GridBlazor.Resources
+@using GridBlazorOData.Shared.Models
+@using Microsoft.Extensions.Primitives
+@using System.Globalization
+@using System.Threading.Tasks
+@inject NavigationManager NavigationManager
+@inject HttpClient HttpClient
+
+<div class="row">
+    <div class="col-md-12">
+        <GridComponent T="OrderDetail" Grid="@_grid"></GridComponent>
+    </div>
+</div>
+
+<div class="form-group">
+    <div class="col-md-5">
+        <button type="button" class="btn btn-primary btn-md" @onclick="BackButtonClicked">@Strings.Back</button>
+    </div>
+</div>
+
+@code
+{
+    private CGrid<OrderDetail> _grid;
+    private Task _task;
+    private Order _order;
+
+    [CascadingParameter(Name = "GridComponent")]
+    protected GridComponent<Order> GridComponent { get; set; }
+
+    [Parameter]
+    public object Object { get; set; }
+
+    protected override async Task OnParametersSetAsync()
+    {
+        if (Object.GetType() == typeof(Order))
+        {
+            _order = (Order)Object;
+        }
+        else
+        {
+            _order = null;
+        }
+
+        var locale = CultureInfo.CurrentCulture;
+
+        var query = new QueryDictionary<StringValues>();
+
+        Action<IGridColumnCollection<OrderDetail>> columns = c =>
+        {
+            c.Add(o => o.OrderID, true).SetWidth(100);
+            c.Add(o => o.ProductID).Titled("ProdId").SetWidth(100);
+            c.Add(o => o.Product.ProductName).Titled("ProdName").SetWidth(250);
+            c.Add(o => o.Quantity).Titled("Quant").SetWidth(100).Format("{0:F}");
+            c.Add(o => o.UnitPrice).Titled("Unit Price").SetWidth(100).Format("{0:F}");
+            c.Add(o => o.Discount).Titled("Disc").SetWidth(100).Format("{0:F}");
+        };
+
+        string url = NavigationManager.BaseUri + $"odata/Orders({_order.OrderID.ToString()})/OrderDetails";
+        var client = new GridODataClient<OrderDetail>(HttpClient, url, query, false, "orderDetailsGrid", columns, 10, locale)
+            .Sortable()
+            .Filterable()
+            .SetStriped(true)
+            .WithMultipleFilters()
+            .WithGridItemsCount();
+
+        _grid = client.Grid;
+        // Set new items to grid
+        _task = client.UpdateGrid();
+        await _task;
+    }
+
+    protected void BackButtonClicked()
+    {
+        GridComponent.BackButton();
+    }
+}
