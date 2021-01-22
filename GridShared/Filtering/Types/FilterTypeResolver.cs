@@ -15,6 +15,7 @@ namespace GridShared.Filtering.Types
             _filterCollection.Add(new Int16FilterType());
             _filterCollection.Add(new BooleanFilterType());
             _filterCollection.Add(new DateTimeFilterType());
+            _filterCollection.Add(new DateTimeOffsetFilterType());
             _filterCollection.Add(new DecimalFilterType());
             _filterCollection.Add(new ByteFilterType());
             _filterCollection.Add(new SingleFilterType());
