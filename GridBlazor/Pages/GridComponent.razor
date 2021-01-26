@@ -10,7 +10,11 @@
 
 @if (Grid != null)
 {
-    if (Grid.Mode == GridMode.Grid)
+    if (_spinner)
+    {
+        <div class="grid-spinner"></div>    
+    }
+    else if (Grid.Mode == GridMode.Grid)
     {
         if (Grid.ComponentOptions.RenderRowsOnly)
         {

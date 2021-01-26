@@ -14,23 +14,5 @@
       "enabled": true,
       "renameLocals": true
     }
-  },
-  {
-    "outputFileName": "wwwroot/js/gridmvc-ajax.min.js",
-    "inputFiles": [
-      "wwwroot/js/gridmvc-ajax.js"
-    ]
-  },
-  {
-    "outputFileName": "wwwroot/js/gridmvc.min.js",
-    "inputFiles": [
-      "wwwroot/js/gridmvc.js"
-    ]
-  },
-  {
-    "outputFileName": "wwwroot/css/Gridmvc.min.css",
-    "inputFiles": [
-      "wwwroot/css/Gridmvc.css"
-    ]
   }
 ]

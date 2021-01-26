@@ -26,6 +26,7 @@ namespace GridBlazor.Pages
         private int _sequence = 0;
         private bool _fromCrud = false;
         private bool _shouldRender = false;
+        private bool _spinner = false;
         internal bool HasSubGrid = false;
         internal bool HasTotals = false;
         internal bool RequiredTotalsColumn = false;
@@ -1069,6 +1070,7 @@ namespace GridBlazor.Pages
                 bool isValid = await OnBeforeInsert(component);
                 if (isValid)
                 {
+                    ShowSpinner();
                     if (Grid.ServerAPI == ServerAPI.OData)
                         _item = await ((ICrudODataService<T>)((CGrid<T>)Grid).CrudDataService).Add(_item);
                     else
@@ -1076,6 +1078,7 @@ namespace GridBlazor.Pages
                     if(((CGrid<T>)Grid).CrudFileService != null)
                         await ((CGrid<T>)Grid).CrudFileService.InsertFiles(_item, component.Files);
                     await OnAfterInsert(component);
+                    HideSpinner();
                     CrudRender = null;
                     if (Grid.EditAfterInsert)
                     {
@@ -1120,10 +1123,12 @@ namespace GridBlazor.Pages
                 bool isValid = await OnBeforeUpdate(component);
                 if (isValid)
                 {
+                    ShowSpinner();
                     if (((CGrid<T>)Grid).CrudFileService != null)
                         _item = await((CGrid<T>)Grid).CrudFileService.UpdateFiles(_item, component.Files);
                     await ((CGrid<T>)Grid).CrudDataService.Update(_item);
                     await OnAfterUpdate(component);
+                    HideSpinner();
                     ((CGrid<T>)Grid).Mode = GridMode.Grid;
                     CrudRender = null;
                     _fromCrud = true;
@@ -1161,11 +1166,13 @@ namespace GridBlazor.Pages
                 bool isValid = await OnBeforeDelete(component);
                 if (isValid)
                 {
+                    ShowSpinner();
                     var keys = Grid.GetPrimaryKeyValues(_item);
                     if (((CGrid<T>)Grid).CrudFileService != null)
                         await ((CGrid<T>)Grid).CrudFileService.DeleteFiles(keys);
                     await ((CGrid<T>)Grid).CrudDataService.Delete(keys);
                     await OnAfterDelete(component);
+                    HideSpinner();
                     ((CGrid<T>)Grid).Mode = GridMode.Grid;
                     CrudRender = null;
                     _fromCrud = true;
@@ -1244,6 +1251,20 @@ namespace GridBlazor.Pages
         public async Task SetFocus(ElementReference element)
         {
             await jSRuntime.InvokeVoidAsync("gridJsFunctions.focusElement", element);
+        }
+
+        public void ShowSpinner()
+        {
+            _spinner = true;
+            _shouldRender = true;
+            StateHasChanged();
+        }
+
+        public void HideSpinner()
+        {
+            _spinner = false;
+            _shouldRender = true;
+            StateHasChanged();
         }
 
         public async Task GridComponentKeyup(KeyboardEventArgs e)
