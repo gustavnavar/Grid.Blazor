@@ -120,8 +120,16 @@ namespace GridBlazor.Pages
             if (Column.FilterEnabled)
                 FilterWidgetRender = CreateFilterWidgetComponent();
 
-            if(!string.IsNullOrWhiteSpace(Column.Name))
+            if (!string.IsNullOrWhiteSpace(Column.Name))
+            {
+                if (GridComponent.HeaderComponents.ContainsKey(Column.Name))
+                {
+                    var headerComponent = GridComponent.HeaderComponents.Get(Column.Name);
+                    _allChecked = headerComponent._allChecked;
+                    _showAllChecked = headerComponent._showAllChecked;
+                }
                 GridComponent.HeaderComponents.AddParameter(Column.Name, this);
+            }
         }
 
         private RenderFragment CreateFilterWidgetComponent() => builder =>
