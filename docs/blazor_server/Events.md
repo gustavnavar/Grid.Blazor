@@ -18,9 +18,11 @@ These events are provided to allow running tasks on changing grid items:
 - ```Func<GridCreateComponent<T>, T, Task<bool>> BeforeInsert```: it's fired before an item is inserted
 - ```Func<GridCreateComponent<T>, T, Task<bool>> BeforeUpdate```: it's fired before an item is updated
 - ```Func<GridCreateComponent<T>, T, Task<bool>> BeforeDelete```: it's fired before an item is deleted
+- ```Func<T, Task<bool>> BeforeBack```: it's fired when the Back button of a CRUD from is pressed
 - ```Func<GridCreateComponent<T>, T, Task> AfterInsert```: it's fired after an item is inserted
 - ```Func<GridCreateComponent<T>, T, Task> AfterUpdate```: it's fired after an item is updated
 - ```Func<GridCreateComponent<T>, T, Task> AfterDelete```: it's fired after an item is deleted
+- ```Func<T, Task> AfterBack```: it's fired after the Back button of a CRUD from is pressed 
 
 These events are provided to allow running tasks on changing [Checkbox columns](Selecting_row.md#setcheckboxcolumn-method) :
 - ```Func<CheckboxEventArgs<T>, Task> HeaderCheckboxChanged```: it's fired when a header checkbox is changed

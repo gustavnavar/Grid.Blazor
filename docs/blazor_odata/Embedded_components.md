@@ -267,13 +267,13 @@ This is an example of component:
                 if (ReturnMode == GridMode.Create)
                     await GridComponent.CreateHandler(Item);
                 else if (ReturnMode == GridMode.Read)
-                    GridComponent.ReadHandler(Item);
+                    await GridComponent.ReadHandler(Item);
                 else if (ReturnMode == GridMode.Update)
                     await GridComponent.UpdateHandler(Item);
                 else if (ReturnMode == GridMode.Delete)
-                    GridComponent.DeleteHandler(Item);
+                    await GridComponent.DeleteHandler(Item);
                 else
-                    GridComponent.BackButton();
+                    await GridComponent.Back();
             }
         }
     ```

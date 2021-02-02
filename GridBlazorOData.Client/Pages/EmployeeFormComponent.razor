@@ -82,6 +82,6 @@ else
         else if (ReturnMode == GridMode.Delete)
             await GridComponent.DeleteHandler(Item);
         else
-            GridComponent.BackButton();
+            await GridComponent.Back();
     }
 }

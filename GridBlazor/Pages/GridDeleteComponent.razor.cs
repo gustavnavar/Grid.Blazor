@@ -144,9 +144,9 @@ namespace GridBlazor.Pages
             }
         }
 
-        protected void BackButtonClicked()
+        protected async Task BackButtonClicked()
         {
-            GridComponent.BackButton();
+            await GridComponent.Back();
         }
     }
 }

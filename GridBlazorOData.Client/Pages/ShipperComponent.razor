@@ -46,8 +46,8 @@
         _shipper = (Shipper)Object;
     }
 
-    protected void BackButtonClicked()
+    protected async Task BackButtonClicked()
     {
-        GridComponent.BackButton();
+        await GridComponent.Back();
     }
 }

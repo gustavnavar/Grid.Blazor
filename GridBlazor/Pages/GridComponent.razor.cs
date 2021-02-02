@@ -61,10 +61,12 @@ namespace GridBlazor.Pages
         public event Func<GridCreateComponent<T>, T, Task<bool>> BeforeInsert;
         public event Func<GridUpdateComponent<T>, T, Task<bool>> BeforeUpdate;
         public event Func<GridDeleteComponent<T>, T, Task<bool>> BeforeDelete;
+        public event Func<T, Task<bool>> BeforeBack;
 
         public event Func<GridCreateComponent<T>, T, Task> AfterInsert;
         public event Func<GridUpdateComponent<T>, T, Task> AfterUpdate;
         public event Func<GridDeleteComponent<T>, T, Task> AfterDelete;
+        public event Func<T, Task> AfterBack;
 
         public event Func<Task> BeforeRefreshGrid;
         public event Func<Task> AfterRefreshGrid;
@@ -1053,6 +1055,7 @@ namespace GridBlazor.Pages
                 builder.CloseComponent();
             };
 
+        [Obsolete("This method is obsolete. Use the new async Back() method.", true)]
         public void BackButton()
         {
             ((CGrid<T>)Grid).Mode = GridMode.Grid;
@@ -1061,6 +1064,39 @@ namespace GridBlazor.Pages
 
             _shouldRender = true;
             StateHasChanged();
+        }
+
+        public async Task Back()
+        {
+            bool isValid = await OnBeforeBack();
+            if (isValid)
+            {
+                ((CGrid<T>)Grid).Mode = GridMode.Grid;
+                CrudRender = null;
+                _fromCrud = true;
+
+                await OnAfterBack();
+
+                _shouldRender = true;
+                StateHasChanged();
+            }
+        }
+
+        protected virtual async Task<bool> OnBeforeBack()
+        {
+            if (BeforeBack != null)
+            {
+                return await BeforeBack.Invoke(_item);
+            }
+            return true;
+        }
+
+        protected virtual async Task OnAfterBack()
+        {
+            if (AfterBack != null)
+            {
+                await AfterBack.Invoke(_item);
+            }
         }
 
         public async Task CreateItem(GridCreateComponent<T> component)
