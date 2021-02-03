@@ -14,15 +14,25 @@ GridBlazor component provides some events to notify other classes or objects whe
 - ```Func<object, FilterEventArgs, Task> FilterChanged```: it's fired when a filter is created, changed or removed
 - ```Func<object, SearchEventArgs, Task> SearchChanged```: it's fired when the a new word is searched or search has been cleared 
 
+These events are provided to allow running tasks while opening and closing (only pressing the Back button, but not when saving items) CRUD forms:
+- ```Func<GridComponent<T>, T, Task<bool>> BeforeCreateForm```: it's fired when the Add button to open a Create form is pressed
+- ```Func<GridComponent<T>, T, Task> AfterCreateForm```: it's fired after the Add button to open a Create form is pressed 
+- ```Func<GridComponent<T>, T, Task<bool>> BeforeReadForm```: it's fired when the View button to open a Read form is pressed
+- ```Func<GridComponent<T>, T, Task> AfterReadForm```: it's fired after the Wiew button to open a Read form is pressed 
+- ```Func<GridComponent<T>, T, Task<bool>> BeforeUpdateForm```: it's fired when the Edit button to open a Update form is pressed
+- ```Func<GridComponent<T>, T, Task> AfterUpdateForm```: it's fired after the Edit button to open a Update form is pressed 
+- ```Func<GridComponent<T>, T, Task<bool>> BeforeDeleteForm```: it's fired when the button to open a Delete form is pressed
+- ```Func<GridComponent<T>, T, Task> AfterDeleteForm```: it's fired after the button to open a Delete form is pressed 
+- ```Func<GridComponent<T>, T, Task<bool>> BeforeBack```: it's fired when the Back button of a CRUD form is pressed
+- ```Func<GridComponent<T>, T, Task> AfterBack```: it's fired after the Back button of a CRUD form is pressed 
+
 These events are provided to allow running tasks on changing grid items:
 - ```Func<GridCreateComponent<T>, T, Task<bool>> BeforeInsert```: it's fired before an item is inserted
 - ```Func<GridCreateComponent<T>, T, Task<bool>> BeforeUpdate```: it's fired before an item is updated
 - ```Func<GridCreateComponent<T>, T, Task<bool>> BeforeDelete```: it's fired before an item is deleted
-- ```Func<T, Task<bool>> BeforeBack```: it's fired when the Back button of a CRUD from is pressed
 - ```Func<GridCreateComponent<T>, T, Task> AfterInsert```: it's fired after an item is inserted
 - ```Func<GridCreateComponent<T>, T, Task> AfterUpdate```: it's fired after an item is updated
 - ```Func<GridCreateComponent<T>, T, Task> AfterDelete```: it's fired after an item is deleted
-- ```Func<T, Task> AfterBack```: it's fired after the Back button of a CRUD from is pressed 
 
 These events are provided to allow running tasks on changing [Checkbox columns](Selecting_row.md#setcheckboxcolumn-method) :
 - ```Func<CheckboxEventArgs<T>, Task> HeaderCheckboxChanged```: it's fired when a header checkbox is changed

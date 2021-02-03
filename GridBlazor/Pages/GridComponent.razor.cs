@@ -58,15 +58,24 @@ namespace GridBlazor.Pages
         public event Func<object, SearchEventArgs, Task> SearchChanged;
         public event Func<object, PagerEventArgs, Task> PagerChanged;
 
-        public event Func<GridCreateComponent<T>, T, Task<bool>> BeforeInsert;
-        public event Func<GridUpdateComponent<T>, T, Task<bool>> BeforeUpdate;
-        public event Func<GridDeleteComponent<T>, T, Task<bool>> BeforeDelete;
-        public event Func<T, Task<bool>> BeforeBack;
+        public event Func<GridComponent<T>, T, Task<bool>> BeforeCreateForm;
+        public event Func<GridComponent<T>, T, Task> AfterCreateForm;
+        public event Func<GridComponent<T>, T, Task<bool>> BeforeReadForm;
+        public event Func<GridComponent<T>, T, Task> AfterReadForm;
+        public event Func<GridComponent<T>, T, Task<bool>> BeforeUpdateForm;
+        public event Func<GridComponent<T>, T, Task> AfterUpdateForm;
+        public event Func<GridComponent<T>, T, Task<bool>> BeforeDeleteForm;
+        public event Func<GridComponent<T>, T, Task> AfterDeleteForm;
 
+        public event Func<GridComponent<T>, T, Task<bool>> BeforeBack;
+        public event Func<GridComponent<T>, T, Task> AfterBack;
+
+        public event Func<GridCreateComponent<T>, T, Task<bool>> BeforeInsert;
         public event Func<GridCreateComponent<T>, T, Task> AfterInsert;
+        public event Func<GridUpdateComponent<T>, T, Task<bool>> BeforeUpdate;
         public event Func<GridUpdateComponent<T>, T, Task> AfterUpdate;
-        public event Func<GridDeleteComponent<T>, T, Task> AfterDelete;
-        public event Func<T, Task> AfterBack;
+        public event Func<GridDeleteComponent<T>, T, Task<bool>> BeforeDelete;
+        public event Func<GridDeleteComponent<T>, T, Task> AfterDelete;     
 
         public event Func<Task> BeforeRefreshGrid;
         public event Func<Task> AfterRefreshGrid;
@@ -612,33 +621,56 @@ namespace GridBlazor.Pages
         {
             await SetSelectFields();
             _item = (T)Activator.CreateInstance(typeof(T));
-            CreateHndlr();
+            await CreateHndlr();
         }
 
         public async Task CreateHandler(T item)
         {
             await SetSelectFields();
             _item = item;
-            CreateHndlr();
+            await CreateHndlr();
         }
 
-        private void CreateHndlr()
+        private async Task CreateHndlr()
         {
-            if (Grid.FixedValues != null)
+            bool isValid = await OnBeforeCreateForm();
+            if (isValid)
             {
-                foreach (var fixValue in Grid.FixedValues)
+                if (Grid.FixedValues != null)
                 {
-                    _item.GetType().GetProperty(fixValue.Key).SetValue(_item, fixValue.Value);
+                    foreach (var fixValue in Grid.FixedValues)
+                    {
+                        _item.GetType().GetProperty(fixValue.Key).SetValue(_item, fixValue.Value);
+                    }
                 }
-            }
-            ((CGrid<T>)Grid).Mode = GridMode.Create;
-            if (Grid.CreateComponent != null)
-                CrudRender = CreateCrudComponent();
-            else
-                CrudRender = null;
+                ((CGrid<T>)Grid).Mode = GridMode.Create;
+                if (Grid.CreateComponent != null)
+                    CrudRender = CreateCrudComponent();
+                else
+                    CrudRender = null;
 
-            _shouldRender = true;
-            StateHasChanged();
+                await OnAfterCreateForm();
+
+                _shouldRender = true;
+                StateHasChanged();
+            }
+        }
+
+        protected virtual async Task<bool> OnBeforeCreateForm()
+        {
+            if (BeforeCreateForm != null)
+            {
+                return await BeforeCreateForm.Invoke(this, _item);
+            }
+            return true;
+        }
+
+        protected virtual async Task OnAfterCreateForm()
+        {
+            if (AfterCreateForm != null)
+            {
+                await AfterCreateForm.Invoke(this, _item);
+            }
         }
 
         public async Task ReadHandler(object item)
@@ -652,14 +684,20 @@ namespace GridBlazor.Pages
             try
             {
                 _item = await ((CGrid<T>)Grid).CrudDataService.Get(keys);
-                ((CGrid<T>)Grid).Mode = GridMode.Read;
-                if (Grid.ReadComponent != null)
-                    CrudRender = ReadCrudComponent();
-                else
-                    CrudRender = null;
+                bool isValid = await OnBeforeReadForm();
+                if (isValid)
+                {
+                    ((CGrid<T>)Grid).Mode = GridMode.Read;
+                    if (Grid.ReadComponent != null)
+                        CrudRender = ReadCrudComponent();
+                    else
+                        CrudRender = null;
 
-                _shouldRender = true;
-                StateHasChanged();
+                    await OnAfterReadForm();
+
+                    _shouldRender = true;
+                    StateHasChanged();
+                }
             }
             catch (Exception e)
             {
@@ -678,6 +716,23 @@ namespace GridBlazor.Pages
             }
             else
                 ShowError(Strings.SelectionReadError);
+        }
+
+        protected virtual async Task<bool> OnBeforeReadForm()
+        {
+            if (BeforeReadForm != null)
+            {
+                return await BeforeReadForm.Invoke(this, _item);
+            }
+            return true;
+        }
+
+        protected virtual async Task OnAfterReadForm()
+        {
+            if (AfterReadForm != null)
+            {
+                await AfterReadForm.Invoke(this, _item);
+            }
         }
 
         public void ShowError(string error)
@@ -708,14 +763,20 @@ namespace GridBlazor.Pages
             try
             {
                 _item = await ((CGrid<T>)Grid).CrudDataService.Get(keys);
-                ((CGrid<T>)Grid).Mode = GridMode.Update;
-                if (Grid.UpdateComponent != null)
-                    CrudRender = UpdateCrudComponent();
-                else
-                    CrudRender = null;
+                bool isValid = await OnBeforeUpdateForm();
+                if (isValid)
+                {
+                    ((CGrid<T>)Grid).Mode = GridMode.Update;
+                    if (Grid.UpdateComponent != null)
+                        CrudRender = UpdateCrudComponent();
+                    else
+                        CrudRender = null;
 
-                _shouldRender = true;
-                StateHasChanged();
+                    await OnAfterUpdateForm();
+
+                    _shouldRender = true;
+                    StateHasChanged();
+                }
             }
             catch (Exception e)
             {
@@ -736,6 +797,23 @@ namespace GridBlazor.Pages
                 ShowError(Strings.SelectionUpdateError);
         }
 
+        protected virtual async Task<bool> OnBeforeUpdateForm()
+        {
+            if (BeforeUpdateForm != null)
+            {
+                return await BeforeUpdateForm.Invoke(this, _item);
+            }
+            return true;
+        }
+
+        protected virtual async Task OnAfterUpdateForm()
+        {
+            if (AfterUpdateForm != null)
+            {
+                await AfterUpdateForm.Invoke(this, _item);
+            }
+        }
+
         public async Task DeleteHandler(object item)
         {
             var keys = Grid.GetPrimaryKeyValues(item);
@@ -746,14 +824,20 @@ namespace GridBlazor.Pages
             try
             {
                 _item = await ((CGrid<T>)Grid).CrudDataService.Get(keys);
-                ((CGrid<T>)Grid).Mode = GridMode.Delete;
-                if (Grid.DeleteComponent != null)
-                    CrudRender = DeleteCrudComponent();
-                else
-                    CrudRender = null;
+                bool isValid = await OnBeforeDeleteForm();
+                if (isValid)
+                {
+                    ((CGrid<T>)Grid).Mode = GridMode.Delete;
+                    if (Grid.DeleteComponent != null)
+                        CrudRender = DeleteCrudComponent();
+                    else
+                        CrudRender = null;
 
-                _shouldRender = true;
-                StateHasChanged();
+                    await OnAfterDeleteForm();
+
+                    _shouldRender = true;
+                    StateHasChanged();
+                }
             }
             catch (Exception e)
             {
@@ -772,6 +856,23 @@ namespace GridBlazor.Pages
             }
             else
                 ShowError(Strings.SelectionDeleteError);
+        }
+
+        protected virtual async Task<bool> OnBeforeDeleteForm()
+        {
+            if (BeforeDeleteForm != null)
+            {
+                return await BeforeDeleteForm.Invoke(this, _item);
+            }
+            return true;
+        }
+
+        protected virtual async Task OnAfterDeleteForm()
+        {
+            if (AfterDeleteForm != null)
+            {
+                await AfterDeleteForm.Invoke(this, _item);
+            }
         }
 
         public async Task ExcelHandler()
@@ -1086,7 +1187,7 @@ namespace GridBlazor.Pages
         {
             if (BeforeBack != null)
             {
-                return await BeforeBack.Invoke(_item);
+                return await BeforeBack.Invoke(this, _item);
             }
             return true;
         }
@@ -1095,7 +1196,7 @@ namespace GridBlazor.Pages
         {
             if (AfterBack != null)
             {
-                await AfterBack.Invoke(_item);
+                await AfterBack.Invoke(this, _item);
             }
         }
 
