@@ -1404,6 +1404,44 @@ namespace GridBlazor.Pages
             StateHasChanged();
         }
 
+        public void ShowCrudButtons()
+        {
+            if (Grid.Mode == GridMode.Read && Grid.ReadComponent == null && ReadComponent != null
+                && (Grid.ReadEnabled || (((CGrid<T>)Grid).FuncReadEnabled != null && ((CGrid<T>)Grid).FuncReadEnabled(_item))))
+            {
+                ReadComponent.ShowCrudButtons();
+            }
+            else if (Grid.Mode == GridMode.Update && Grid.UpdateComponent == null && UpdateComponent != null
+                && (Grid.UpdateEnabled || (((CGrid<T>)Grid).FuncUpdateEnabled != null && ((CGrid<T>)Grid).FuncUpdateEnabled(_item))))
+            {
+                UpdateComponent.ShowCrudButtons();
+            }
+            else if (Grid.Mode == GridMode.Delete && Grid.DeleteComponent == null && DeleteComponent != null
+                && (Grid.DeleteEnabled || (((CGrid<T>)Grid).FuncDeleteEnabled != null && ((CGrid<T>)Grid).FuncDeleteEnabled(_item))))
+            {
+                DeleteComponent.ShowCrudButtons();
+            }
+        }
+
+        public void HideCrudButtons()
+        {
+            if (Grid.Mode == GridMode.Read && Grid.ReadComponent == null && ReadComponent != null
+                && (Grid.ReadEnabled || (((CGrid<T>)Grid).FuncReadEnabled != null && ((CGrid<T>)Grid).FuncReadEnabled(_item))))
+            {
+                ReadComponent.HideCrudButtons();
+            }
+            else if (Grid.Mode == GridMode.Update && Grid.UpdateComponent == null && UpdateComponent != null
+                && (Grid.UpdateEnabled || (((CGrid<T>)Grid).FuncUpdateEnabled != null && ((CGrid<T>)Grid).FuncUpdateEnabled(_item))))
+            {
+                UpdateComponent.HideCrudButtons();
+            }
+            else if (Grid.Mode == GridMode.Delete && Grid.DeleteComponent == null && DeleteComponent != null
+                && (Grid.DeleteEnabled || (((CGrid<T>)Grid).FuncDeleteEnabled != null && ((CGrid<T>)Grid).FuncDeleteEnabled(_item))))
+            {
+                DeleteComponent.HideCrudButtons();
+            }
+        }
+
         public async Task GridComponentKeyup(KeyboardEventArgs e)
         {
             if (Grid.Keyboard

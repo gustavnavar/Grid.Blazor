@@ -129,7 +129,7 @@
                     <label class="col-form-label col-md-@column.CrudLabelWidth.ToString()">@column.Title</label>
                 }
                 <div class="col-md-@((12 - column.CrudLabelWidth).ToString())">
-                     @if (column.EnableCard)
+                    @if (column.EnableCard)
                     {
                         <div class="card panel panel-default">
                             <div class="card-body panel-body">@_renderFragments.Get(column.Name)</div>
@@ -183,8 +183,9 @@
 
     <div style="display:flex;">
         <div>
-            <button type="button" class="btn btn-primary btn-md" @onclick="() => DeleteItem()">@Strings.Delete</button>
-            <button type="button" class="btn btn-primary btn-md" @onclick="() => BackButtonClicked()">@Strings.Back</button>
+            <CascadingValue Value=@this Name="GridDeleteComponent">
+                <GridDeleteButtonsComponent @ref="GridDeleteButtonsComponent" T="@T"></GridDeleteButtonsComponent>
+            </CascadingValue>
             @if (((CGrid<T>)GridComponent.Grid).ButtonCrudComponents != null && ((CGrid<T>)GridComponent.Grid).ButtonCrudComponents.Count() > 0)
             {
                 @foreach (var key in ((CGrid<T>)GridComponent.Grid).ButtonCrudComponents.Keys)

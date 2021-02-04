@@ -17,11 +17,14 @@ namespace GridBlazor.Pages
         private bool _shouldRender = false;
         private QueryDictionary<RenderFragment> _renderFragments;
         private IEnumerable<string> _tabGroups;
+        internal bool _buttonsVisibility = true;
         private QueryDictionary<bool> _buttonCrudComponentVisibility = new QueryDictionary<bool>();
         private string _code = StringExtensions.RandomString(8);
         private string _confirmationCode = "";
 
         public string Error { get; set; } = "";
+
+        public GridDeleteButtonsComponent<T> GridDeleteButtonsComponent { get; private set; }
 
         public QueryDictionary<VariableReference> Children { get; private set; } = new QueryDictionary<VariableReference>();
 
@@ -115,12 +118,25 @@ namespace GridBlazor.Pages
             _shouldRender = false;
         }
 
-        protected async Task DeleteItem()
+        public void ShowCrudButtons()
+        {
+            _buttonsVisibility = true;
+            GridDeleteButtonsComponent.Render();
+        }
+
+        public void HideCrudButtons()
+        {
+            _buttonsVisibility = false;
+            GridDeleteButtonsComponent.Render();
+        }
+
+        public async Task DeleteItem()
         {
             if (GridComponent.Grid.DeleteConfirmation && _code != _confirmationCode)
             {
                 _shouldRender = true;
                 Error = Strings.DeleteConfirmCodeError;
+                StateHasChanged();
                 return;
             }
 
@@ -144,7 +160,7 @@ namespace GridBlazor.Pages
             }
         }
 
-        protected async Task BackButtonClicked()
+        public async Task BackButtonClicked()
         {
             await GridComponent.Back();
         }

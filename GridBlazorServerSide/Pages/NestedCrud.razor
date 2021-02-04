@@ -195,6 +195,16 @@ else
             gridComponent.BeforeUpdate += BeforeUpdateOrderDetail;
             gridComponent.BeforeDelete += BeforeDeleteOrderDetail;
 
+            gridComponent.AfterInsert += AfterInsertOrderDetail;
+            gridComponent.AfterUpdate += AfterUpdateOrderDetail;
+            gridComponent.AfterDelete += AfterDeleteOrderDetail;
+            gridComponent.AfterBack += AfterBack;
+
+            gridComponent.AfterCreateForm += AfterFormOrderDetail;
+            gridComponent.AfterReadForm += AfterFormOrderDetail;
+            gridComponent.AfterUpdateForm += AfterFormOrderDetail;
+            gridComponent.AfterDeleteForm += AfterFormOrderDetail;
+
             await Task.CompletedTask;
         }
     }
@@ -244,5 +254,35 @@ else
         }
 
         return valid.IsValid;
+    }
+
+    private async Task AfterInsertOrderDetail(GridCreateComponent<OrderDetail> component, OrderDetail item)
+    {
+        _gridComponent.ShowCrudButtons();
+        await Task.CompletedTask;
+    }
+
+    private async Task AfterUpdateOrderDetail(GridUpdateComponent<OrderDetail> component, OrderDetail item)
+    {
+        _gridComponent.ShowCrudButtons();
+        await Task.CompletedTask;
+    }
+
+    private async Task AfterDeleteOrderDetail(GridDeleteComponent<OrderDetail> component, OrderDetail item)
+    {
+        _gridComponent.ShowCrudButtons();
+        await Task.CompletedTask;
+    }
+
+    private async Task AfterBack(GridComponent<OrderDetail> component, OrderDetail item)
+    {
+        _gridComponent.ShowCrudButtons();
+        await Task.CompletedTask;
+    }
+
+    private async Task AfterFormOrderDetail(GridComponent<OrderDetail> gridComponent, OrderDetail item)
+    {
+        _gridComponent.HideCrudButtons();
+        await Task.CompletedTask;
     }
 }

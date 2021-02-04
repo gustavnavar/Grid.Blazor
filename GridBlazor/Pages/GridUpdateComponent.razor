@@ -323,8 +323,9 @@
 
         <div style="display:flex;">
             <div>
-                <button type="submit" class="btn btn-primary btn-md">@Strings.Save</button>
-                <button type="button" class="btn btn-primary btn-md" @onclick="() => BackButtonClicked()">@Strings.Back</button>
+                <CascadingValue Value=@this Name="GridUpdateComponent">
+                    <GridUpdateButtonsComponent @ref="GridUpdateButtonsComponent" T="@T"></GridUpdateButtonsComponent>
+                </CascadingValue>
                 @if (((CGrid<T>)GridComponent.Grid).ButtonCrudComponents != null && ((CGrid<T>)GridComponent.Grid).ButtonCrudComponents.Count() > 0)
                 {
                     @foreach (var key in ((CGrid<T>)GridComponent.Grid).ButtonCrudComponents.Keys)

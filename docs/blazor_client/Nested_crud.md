@@ -72,4 +72,132 @@ The configuration for this type of grid is as follows:
         .SetEditAfterInsert(true);
 ```
 
+## Hiding the parent CRUD form buttons when opening a child CRUD form
+
+When you have 2 nested CRUD forms, "Save" and "Back" buttons for both forms are shown on the screen by default. 
+This can cause some problems for users not knowing which "Save" or "Back" button to press.
+You can avoid it hidding the parent CRUD form buttons, so the user has to save or close the child form before doing any action on the parent form.
+
+In order to get this behavior you have to configure the following events for child grid:
+- AfterCreateForm: call a function to hide the parent form buttons
+- AfterReadForm: call a function to hide the parent form buttons
+- AfterUpdateForm: call a function to hide the parent form buttons
+- AfterDeleteForm: call a function to hide the parent form buttons
+- AfterInsert: call a function to show the parent form buttons
+- AfterUpdate: call a function to show the parent form buttons
+- AfterDelete: call a function to show the parent form buttons
+- AfterBack: call a function to show the parent form buttons
+
+Events are explained in more detail in the [next section](Events.md)
+
+You can hide or show CRUD form buttons using the ```ShowCrudButtons``` and ```HideCrudButtons``` methods of the parent ```GridComponent``` object.
+
+This is an example implementing this feature:
+
+```c#
+<GridComponent @ref="_gridComponent" T="Order" Grid="@_grid"></GridComponent>
+
+@code
+{
+    private GridComponent<Order> _gridComponent;
+    private bool _areEventsLoaded = false;
+    ...
+
+    protected override async Task OnParametersSetAsync()
+    {
+        var locale = CultureInfo.CurrentCulture;
+
+        Func<object[], bool, bool, bool, bool, Task<IGrid>> subGrids = async (keys, create, read, update, delete) =>
+        {
+            var subGridQuery = new QueryDictionary<StringValues>();
+            string subGridUrl = NavigationManager.BaseUri + "api/SampleData/GetOrderDetailsGridWithCrud?OrderId="
+                + keys[0].ToString();
+
+            Action<IGridColumnCollection<OrderDetail>> subGridColumns = c => ColumnCollections.OrderDetailColumnsCrud(c,
+                NavigationManager.BaseUri);
+
+            var subGridClient = new GridClient<OrderDetail>(HttpClient, subGridUrl, subGridQuery, false,
+                "orderDetailsGrid" + keys[0].ToString(), subGridColumns, locale)
+                    .Sortable()
+                    .Filterable()
+                    .SetStriped(true)
+                    .Crud(create, read, update, delete, orderDetailService)
+                    .WithMultipleFilters()
+                    .WithGridItemsCount()
+                    .AddToOnAfterRender(OnAfterOrderDetailRender);
+
+            await subGridClient.UpdateGrid();
+            return subGridClient.Grid;
+        };
+
+        var query = new QueryDictionary<StringValues>();
+        string url = NavigationManager.BaseUri + "api/SampleData/OrderColumnsWithSubgridCrud";
+
+        var client = new GridClient<Order>(HttpClient, url, query, false, "ordersGrid", c =>
+            ColumnCollections.OrderColumnsWithNestedCrud(c, NavigationManager.BaseUri, subGrids), locale)
+            .Sortable()
+            .Filterable()
+            .SetStriped(true)
+            .Crud(true, orderService)
+            .WithMultipleFilters()
+            .WithGridItemsCount();
+
+        _grid = client.Grid;
+
+        // Set new items to grid
+        _task = client.UpdateGrid();
+        await _task;
+    }
+
+    private async Task OnAfterOrderDetailRender(GridComponent<OrderDetail> gridComponent, bool firstRender)
+    {
+        if (firstRender)
+        {
+            gridComponent.AfterInsert += AfterInsertOrderDetail;
+            gridComponent.AfterUpdate += AfterUpdateOrderDetail;
+            gridComponent.AfterDelete += AfterDeleteOrderDetail;
+            gridComponent.AfterBack += AfterBack;
+
+            gridComponent.AfterCreateForm += AfterFormOrderDetail;
+            gridComponent.AfterReadForm += AfterFormOrderDetail;
+            gridComponent.AfterUpdateForm += AfterFormOrderDetail;
+            gridComponent.AfterDeleteForm += AfterFormOrderDetail;
+
+            await Task.CompletedTask;
+        }
+    }
+
+    private async Task AfterInsertOrderDetail(GridCreateComponent<OrderDetail> component, OrderDetail item)
+    {
+        _gridComponent.ShowCrudButtons();
+        await Task.CompletedTask;
+    }
+
+    private async Task AfterUpdateOrderDetail(GridUpdateComponent<OrderDetail> component, OrderDetail item)
+    {
+        _gridComponent.ShowCrudButtons();
+        await Task.CompletedTask;
+    }
+
+    private async Task AfterDeleteOrderDetail(GridDeleteComponent<OrderDetail> component, OrderDetail item)
+    {
+        _gridComponent.ShowCrudButtons();
+        await Task.CompletedTask;
+    }
+
+    private async Task AfterBack(GridComponent<OrderDetail> component, OrderDetail item)
+    {
+        _gridComponent.ShowCrudButtons();
+        await Task.CompletedTask;
+    }
+
+    private async Task AfterFormOrderDetail(GridComponent<OrderDetail> gridComponent, OrderDetail item)
+    {
+        _gridComponent.HideCrudButtons();
+        await Task.CompletedTask;
+    }
+}
+```
+
+
 [<- CRUD](Crud.md) | [Events, exceptions and CRUD validation ->](Events.md)
