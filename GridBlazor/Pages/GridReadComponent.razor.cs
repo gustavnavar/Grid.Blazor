@@ -16,7 +16,7 @@ namespace GridBlazor.Pages
         private bool _shouldRender = false;
         private QueryDictionary<RenderFragment> _renderFragments;
         private IEnumerable<string> _tabGroups;
-        internal bool _buttonsVisibility = true;
+        internal int _buttonsVisibility = 0;
         private QueryDictionary<bool> _buttonCrudComponentVisibility = new QueryDictionary<bool>();
 
         public GridReadButtonsComponent<T> GridReadButtonsComponent { get; private set; }
@@ -115,13 +115,13 @@ namespace GridBlazor.Pages
 
         public void ShowCrudButtons()
         {
-            _buttonsVisibility = true;
+            _buttonsVisibility ++;
             GridReadButtonsComponent.Render();
         }
 
         public void HideCrudButtons()
         {
-            _buttonsVisibility = false;
+            _buttonsVisibility --;
             GridReadButtonsComponent.Render();
         }
 

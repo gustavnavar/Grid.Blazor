@@ -1,6 +1,6 @@
 ﻿@using GridBlazor.Resources
 @typeparam T
-@if (GridReadComponent._buttonsVisibility)
+@if (GridReadComponent._buttonsVisibility == 0)
 {
     <button type="button" class="btn btn-primary btn-md" @onclick="() => GridReadComponent.BackButtonClicked()">@Strings.Back</button>
 }

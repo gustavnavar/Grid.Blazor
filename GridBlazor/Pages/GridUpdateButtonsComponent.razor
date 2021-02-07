@@ -1,6 +1,6 @@
 ﻿@using GridBlazor.Resources
 @typeparam T
-@if (GridUpdateComponent._buttonsVisibility)
+@if (GridUpdateComponent._buttonsVisibility == 0)
 {
     <button type="submit" class="btn btn-primary btn-md">@Strings.Save</button>
     <button type="button" class="btn btn-primary btn-md" @onclick="() => GridUpdateComponent.BackButtonClicked()">@Strings.Back</button>
