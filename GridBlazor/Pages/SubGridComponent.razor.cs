@@ -38,7 +38,7 @@ namespace GridBlazor.Pages
                 _visible = GridComponent.IsSubGridVisible[GridPosition];
                 _init = GridComponent.InitSubGrid[GridPosition];
 
-                if (_visible && (_grid == null || _init))
+                if (_visible && (_grid == null || _init || (_grid != null && _grid.FixedValues != Values)))
                 {
                     GridComponent.InitSubGrid[GridPosition] = false;
                     _grid = await GridComponent.Grid.SubGrids(Values.Values.ToArray());
