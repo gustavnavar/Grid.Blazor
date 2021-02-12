@@ -68,6 +68,14 @@
         if (element)
             element.click();
     },
+    showElement: function (element) {
+        if (element)
+            element.style.display = "block";
+    },
+    hideElement: function (element) {
+        if (element)
+            element.style.display = "none";
+    },
     scrollFixedSizeTable: function (gridTableHead, gridTableBody) {
         document.getElementById(gridTableBody).onscroll = function () {
             document.getElementById(gridTableHead).scrollLeft = this.scrollLeft;
