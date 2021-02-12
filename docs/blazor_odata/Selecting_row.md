@@ -25,6 +25,7 @@ There are optional parameters to control selection behavior:
     It's value can be ```true``` and ```false```.
     By default this parameter's value is ```false```.
     You can select multiple rows while pressing the [Ctrl] key
+    You select multiple adjacent rows by clicking on the first row holding down the [Shift] key and then clicking on the last row of the interval keeping the [Shift] key held down
 
 Rows configured in this way will be highlighted when selected.
 

@@ -362,10 +362,11 @@ namespace GridBlazor.Pages
         internal void RowClicked(int i, object item, MouseEventArgs args)
         {
             //If user clicked on a row withouth Control key, unselect all rows
-            if ((Grid.ModifierKey == ModifierKey.CtrlKey && !args.CtrlKey)
-                || (Grid.ModifierKey == ModifierKey.AltKey && !args.AltKey)
-                || (Grid.ModifierKey == ModifierKey.ShiftKey && !args.ShiftKey)
-                || (Grid.ModifierKey == ModifierKey.MetaKey && !args.MetaKey))
+            if ((!args.CtrlKey && !args.AltKey && !args.ShiftKey && !args.MetaKey)
+                || ( !((Grid.ModifierKey == ModifierKey.CtrlKey || Grid.SelectionKey == ModifierKey.CtrlKey) && args.CtrlKey)
+                    && !((Grid.ModifierKey == ModifierKey.AltKey || Grid.SelectionKey == ModifierKey.AltKey) && args.AltKey)
+                    && !((Grid.ModifierKey == ModifierKey.ShiftKey || Grid.SelectionKey == ModifierKey.ShiftKey) && args.ShiftKey)
+                    && !((Grid.ModifierKey == ModifierKey.MetaKey || Grid.SelectionKey == ModifierKey.MetaKey) && args.MetaKey)))
             {
                 SelectedRows.Clear();
                 Grid.SelectedItems = new List<object>();
@@ -374,18 +375,58 @@ namespace GridBlazor.Pages
             //If Grid is MultiSelectable, add selected row to list of rows
             if (Grid.ComponentOptions.MultiSelectable)
             {
-                SelectedRow = -1;
-                //If selected row is already part of collection, remove it
-                if (SelectedRows.Contains(i))
+                //Multiple row selection using the SHIFT key
+                if ((Grid.SelectionKey == ModifierKey.CtrlKey && args.CtrlKey)
+                    || (Grid.SelectionKey == ModifierKey.AltKey && args.AltKey)
+                    || (Grid.SelectionKey == ModifierKey.ShiftKey && args.ShiftKey)
+                    || (Grid.SelectionKey == ModifierKey.MetaKey && args.MetaKey))
                 {
-                    SelectedRows.Remove(i);
-                    Grid.SelectedItems = Grid.SelectedItems.Except(new[] { item });
+                    // second row selection
+                    if (SelectedRow != -1)
+                    {
+                        if (i > SelectedRow)
+                        {
+                            for (int j = SelectedRow; j <= i; j++)
+                            {
+                                SelectedRows.Add(j);
+                                Grid.SelectedItems = Grid.SelectedItems.Concat(new[] { Grid.ItemsToDisplay.ElementAt(j) });
+                            }
+                        }
+                        else
+                        {
+                            for (int j = i; j <= SelectedRow; j++)
+                            {
+                                SelectedRows.Add(j);
+                                Grid.SelectedItems = Grid.SelectedItems.Concat(new[] { Grid.ItemsToDisplay.ElementAt(j) });
+                            }
+                        }
+                        //reset first row selection
+                        SelectedRow = -1;
+                    }
+                    // first row selection
+                    else
+                    {
+                        SelectedRow = i;
+                        SelectedRows.Clear();
+                        Grid.SelectedItems = new List<object>();
+                    }
                 }
+                //Multiple row selection clicking one by one
                 else
                 {
-                    SelectedRows.Add(i);
-                    Grid.SelectedItems = Grid.SelectedItems.Concat(new[] { item });
-                }
+                    SelectedRow = -1;
+                    //If selected row is already part of collection, remove it
+                    if (SelectedRows.Contains(i))
+                    {
+                        SelectedRows.Remove(i);
+                        Grid.SelectedItems = Grid.SelectedItems.Except(new[] { item });
+                    }
+                    else
+                    {
+                        SelectedRows.Add(i);
+                        Grid.SelectedItems = Grid.SelectedItems.Concat(new[] { item });
+                    }
+                }                
             }
             else
             {

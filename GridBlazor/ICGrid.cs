@@ -196,6 +196,13 @@ namespace GridBlazor
         /// </summary>
         ModifierKey ModifierKey { get; }
 
+
+        /// <summary>
+        ///     Get and set the modifier selection key
+        /// </summary>
+        Nullable<ModifierKey> SelectionKey { get;  }
+
+
         /// <summary>
         ///     Get and set keyboard utilization
         /// </summary>

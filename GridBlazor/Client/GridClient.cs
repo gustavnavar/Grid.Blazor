@@ -1176,9 +1176,13 @@ namespace GridBlazor
         /// <summary>
         ///     Configure the modifier key
         /// </summary>
-        public IGridClient<T> SetModifierKey(ModifierKey modifierKey)
+        public IGridClient<T> SetModifierKey(ModifierKey modifierKey, ModifierKey selectionKey = ModifierKey.ShiftKey)
         {
             _source.ModifierKey = modifierKey;
+            if(modifierKey != selectionKey)
+                _source.SelectionKey = selectionKey;
+            else if(_source.SelectionKey == modifierKey)
+                _source.SelectionKey = null;
             return this;
         }
 

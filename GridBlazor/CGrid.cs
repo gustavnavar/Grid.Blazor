@@ -498,6 +498,7 @@ namespace GridBlazor
         public bool Keyboard { get; internal set; } = false;
 
         public ModifierKey ModifierKey { get; internal set; } = ModifierKey.CtrlKey;
+        public Nullable<ModifierKey> SelectionKey { get; internal set; } = ModifierKey.ShiftKey;
 
         /// <summary>
         ///     Sum enabled for some columns

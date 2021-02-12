@@ -777,7 +777,7 @@ namespace GridBlazor
         /// <summary>
         ///     Configure the modifier key
         /// </summary>
-        IGridClient<T> SetModifierKey(ModifierKey modifierKey);
+        IGridClient<T> SetModifierKey(ModifierKey modifierKey, ModifierKey selectionKey = ModifierKey.ShiftKey);
 
         /// <summary>
         ///     Allow grid to export to an Excel file
