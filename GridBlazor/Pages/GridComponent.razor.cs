@@ -1262,6 +1262,7 @@ namespace GridBlazor.Pages
                     CrudRender = null;
                     if (Grid.EditAfterInsert)
                     {
+                        await Grid.UpdateGrid();
                         await UpdateHandler(_item);
                     }
                     else
