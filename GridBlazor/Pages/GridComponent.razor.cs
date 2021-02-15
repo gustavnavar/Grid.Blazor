@@ -1275,6 +1275,7 @@ namespace GridBlazor.Pages
             }
             catch (Exception e)
             {
+                await HideSpinner();
                 Console.WriteLine(e.Message);
                 throw;
             }
@@ -1318,6 +1319,7 @@ namespace GridBlazor.Pages
             }
             catch (Exception e)
             {
+                await HideSpinner();
                 Console.WriteLine(e.Message);
                 throw;
             }
@@ -1362,6 +1364,7 @@ namespace GridBlazor.Pages
             }
             catch (Exception e)
             {
+                await HideSpinner();
                 Console.WriteLine(e.Message);
                 throw;
             }
