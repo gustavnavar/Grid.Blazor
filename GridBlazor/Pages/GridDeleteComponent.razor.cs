@@ -150,6 +150,7 @@ namespace GridBlazor.Pages
                 await OnParametersSetAsync();
                 _shouldRender = true;
                 Error = string.IsNullOrWhiteSpace(e.Code) ? e.Message : e.Code + " - " + e.Message;
+                StateHasChanged();
             }
             catch (Exception e)
             {
@@ -157,6 +158,7 @@ namespace GridBlazor.Pages
                 await OnParametersSetAsync();
                 _shouldRender = true;
                 Error = Strings.DeleteError;
+                StateHasChanged();
             }
         }
 
