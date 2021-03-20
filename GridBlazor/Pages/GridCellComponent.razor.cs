@@ -37,6 +37,8 @@ namespace GridBlazor.Pages
         protected override void OnParametersSet()
         {
             _componentType = Column.ComponentType;
+            _cell = default;
+            _cellRender = default;
             if (_componentType != null)
                 _cellRender = CreateComponent(_sequence, GridComponent, _componentType, Column, Item, 
                     RowId, false, new VariableReference(ChildComponent));
