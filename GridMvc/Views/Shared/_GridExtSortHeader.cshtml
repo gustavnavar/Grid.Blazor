@@ -38,7 +38,7 @@
             }
             var exceptParameterValues = new List<Tuple<string, string>>();
             exceptParameterValues.Add(new Tuple<string, string>(ColumnOrderValue.DefaultSortingQueryParameter, column.ToString()));
-            string hrefCancel = queryBuilder.GetQueryStringExcept(exceptParameterValues);
+            string hrefCancel = Context.Request.Path + queryBuilder.GetQueryStringExcept(exceptParameterValues);
             string href = hrefCancel;
             if (href.Length > 0)
             {

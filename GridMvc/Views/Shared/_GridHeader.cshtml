@@ -103,7 +103,7 @@
     }
     _cssSortingClass = string.Join(" ", cssSortingClass);
 
-    string _href = GetSortUrl(Model.Name, Model.Direction);
+    string _href = Context.Request.Path + GetSortUrl(Model.Name, Model.Direction);
 
     string GetPagerQueryParameterName(IGridPager pager)
     {
