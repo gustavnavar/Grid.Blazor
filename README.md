@@ -8,6 +8,25 @@ This back-end component can be one of the following ones:
 
 It supports .NET Core 3.1 and 5.0, and Blazor WebAssembly 3.2.0 and 5.0
 
+## Demo 
+- Blazor server-side: http://gridblazor.azurewebsites.net
+- Blazor WASM: http://gridblazorwasm.azurewebsites.net
+- Blazor WASM with OData back-end: http://gridblazorodata.azurewebsites.net
+
+## Documentation
+There are native C# Grid components for Blazor client-side and server-side, and for ASP.NET Core MVC.
+
+You can find the specific documentation for each environment clicking the following links:
+* [Documentation for Blazor client-side](./docs/blazor_client/Documentation.md)
+* [Documentation for Blazor client-side with OData back-end](./docs/blazor_odata/Documentation.md)
+* [Documentation for Blazor server-side](./docs/blazor_server/Documentation.md)
+* [Documentation for ASP.NET Core MVC](./docs/dotnetcore/Documentation.md)
+* [Using GridBlazor component for ASP.NET Core MVC](./docs/dotnetcore_blazor/Documentation.md)
+
+This is an example of a table of items using this component:
+
+![Image of GridBlazor](./docs/images/GridBlazor.png)
+
 ## Notes
 
 - Sorting is implemented on GridBlazor 2.1.2, GridMvcCore 4.1.2 and newer versions following this sequence "no sort" -> "sort ascending" -> "sort descending" -> "no sort" and so on when a column title is clicked 
@@ -74,11 +93,6 @@ It supports .NET Core 3.1 and 5.0, and Blazor WebAssembly 3.2.0 and 5.0
         var client = new GridClient<Order>(httpClient, url, query, false, "ordersGrid", Columns).ClearFiltersButton(true);
     ```
 
-## Demo 
-- Blazor server-side: http://gridblazor.azurewebsites.net
-- Blazor WASM: http://gridblazorwasm.azurewebsites.net
-- Blazor WASM with OData back-end: http://gridblazorodata.azurewebsites.net
-
 ## Change Log
 https://github.com/gustavnavar/Grid.Blazor/releases
 
@@ -114,19 +128,4 @@ Alternatively, if you prefer to install a fresh version of the database you can 
         modelBuilder.Entity<Order>().Property(r => r.OrderDate).HasColumnType("datetime");
     ```
     for each datetime column. Or you can change all database columns' type to ```datetime2(7)```.
-
-## Documentation
-There are native C# Grid components for Blazor client-side and server-side, and for ASP.NET Core MVC.
-
-You can find the specific documentation for each environment clicking the following links:
-* [Documentation for Blazor client-side](./docs/blazor_client/Documentation.md)
-* [Documentation for Blazor client-side with OData back-end](./docs/blazor_odata/Documentation.md)
-* [Documentation for Blazor server-side](./docs/blazor_server/Documentation.md)
-* [Documentation for ASP.NET Core MVC](./docs/dotnetcore/Documentation.md)
-* [Using GridBlazor component for ASP.NET Core MVC](./docs/dotnetcore_blazor/Documentation.md)
-
-This is an example of a table of items using this component:
-
-![Image of GridBlazor](./docs/images/GridBlazor.png)
-
 
