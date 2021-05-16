@@ -35,7 +35,7 @@ namespace GridBlazor.OData
             var response = await _httpClient.PostAsJsonAsync<T>(_url, item, _jsonOptions);
             if (response.IsSuccessStatusCode)
             {
-                return await response.Content.ReadFromJsonAsync<T>();     
+                return await response.Content.ReadFromJsonAsync<T>(_jsonOptions);     
             }
             else
             {
