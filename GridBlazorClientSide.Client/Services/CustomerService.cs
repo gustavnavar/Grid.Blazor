@@ -27,7 +27,11 @@ namespace GridBlazorClientSide.Client.Services
         public async Task Insert(Customer item)
         {
             var response = await _httpClient.PostAsJsonAsync(_baseUri + $"api/Customer", item);
-            if (!response.IsSuccessStatusCode)
+            if (response.IsSuccessStatusCode)
+            {
+                item.CustomerID = await response.Content.ReadAsStringAsync();
+            }
+            else
             {
                 throw new GridException("CUSSRV-01", "Error creating the customer");
             }

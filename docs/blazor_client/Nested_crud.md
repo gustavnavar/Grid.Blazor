@@ -72,6 +72,73 @@ The configuration for this type of grid is as follows:
         .SetEditAfterInsert(true);
 ```
 
+The server webservice must return de key of the new record. This is a sample:
+```c#
+    [HttpPost]
+    public async Task<ActionResult> Create([FromBody] Order order)
+    {
+        if (ModelState.IsValid)
+        {
+            if (order == null)
+            {
+                return BadRequest();
+            }
+
+            var repository = new OrdersRepository(_context);
+            try
+            {
+                await repository.Insert(order);
+                repository.Save();
+
+                return Ok(order.OrderID);
+            }
+            catch (Exception e)
+            {
+                return BadRequest(new
+                {
+                    message = e.Message.Replace('{', '(').Replace('}', ')')
+                });
+            }
+        }
+        return BadRequest(new
+        {
+            message = "ModelState is not valid"
+        });
+    }
+```
+
+And finally the client implementation of the ```ICrudDataService``` must get the returned key and update its value in the client:
+```c#
+    public class OrderService : ICrudDataService<Order>
+    {
+        private readonly HttpClient _httpClient;
+        private readonly string _baseUri;
+
+        public OrderService(HttpClient httpClient, NavigationManager navigationManager)
+        {
+            _httpClient = httpClient;
+            _baseUri = navigationManager.BaseUri;
+        }
+
+        ...
+
+        public async Task Insert(Order item)
+        {
+            var response = await _httpClient.PostAsJsonAsync(_baseUri + $"api/Order", item);
+            if (response.IsSuccessStatusCode)
+            {
+                item.OrderID = Convert.ToInt32(await response.Content.ReadAsStringAsync());
+            }
+            else
+            {
+                throw new GridException("ORDSRV-01", "Error creating the order");
+            }
+        }
+
+        ...
+    }
+```
+
 ## Hiding the parent CRUD form buttons when opening a child CRUD form
 
 When you have 2 nested CRUD forms, "Save" and "Back" buttons for both forms are shown on the screen by default. 

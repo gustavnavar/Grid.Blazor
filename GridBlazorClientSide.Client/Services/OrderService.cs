@@ -2,6 +2,7 @@ using GridBlazorClientSide.Shared.Models;
 using GridShared;
 using GridShared.Utility;
 using Microsoft.AspNetCore.Components;
+using System;
 using System.Net.Http;
 using System.Net.Http.Json;
 using System.Threading.Tasks;
@@ -29,7 +30,11 @@ namespace GridBlazorClientSide.Client.Services
         public async Task Insert(Order item)
         {
             var response = await _httpClient.PostAsJsonAsync(_baseUri + $"api/Order", item);
-            if (!response.IsSuccessStatusCode)
+            if (response.IsSuccessStatusCode)
+            {
+                item.OrderID = Convert.ToInt32(await response.Content.ReadAsStringAsync());
+            }
+            else
             {
                 throw new GridException("ORDSRV-01", "Error creating the order");
             }

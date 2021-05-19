@@ -70,7 +70,8 @@ else
                         r => r.Quantity > 15 || delete, orderDetailService)
                     .WithMultipleFilters()
                     .WithGridItemsCount()
-                    .AddToOnAfterRender(OnAfterOrderDetailRender);
+                    .AddToOnAfterRender(OnAfterOrderDetailRender)
+                    .SetEditAfterInsert(true);
 
             await subGridClient.UpdateGrid();
             return subGridClient.Grid;
@@ -86,7 +87,8 @@ else
             .SetStriped(true)
             .Crud(true, r => r.Customer.IsVip, r => !r.Customer.IsVip, r => r.Customer.IsVip, orderService)
             .WithMultipleFilters()
-            .WithGridItemsCount();
+            .WithGridItemsCount()
+            .SetEditAfterInsert(true);
 
         _grid = client.Grid;
 

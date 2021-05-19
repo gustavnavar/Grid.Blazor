@@ -46,7 +46,7 @@ namespace GridBlazorClientSide.Server.Controllers
                     await repository.Insert(customer);
                     repository.Save();
 
-                    return Ok();
+                    return Ok(customer.CustomerID);
                 }
                 catch (Exception e)
                 {
