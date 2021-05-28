@@ -69,7 +69,6 @@ namespace GridBlazor.OData
                 throw new GridException("ODATA-03", "Error deleting the order");
             }
         }
-
         public static string GetUrl(CGrid<T> grid, string url, params object[] keys)
         {
             var keyNames = grid.GetPrimaryKeys();
@@ -80,17 +79,17 @@ namespace GridBlazor.OData
             else
                 expandParameters = "?" + expandParameters;
 
-            if (keyNames.Length != keys.Length || keys.Length == 1)
-                return url + "(" + string.Join(",", keys.Select(x => x.ToString())) + ")" + expandParameters;
-            else
+            bool includeKeyname = !(keyNames.Length != keys.Length || keys.Length == 1);
+
+            var keysUrl = new List<string>(); ;
+            for (int i = 0; i < keys.Length; i++)
             {
-                var keysUrl = new List<string>(); ;
-                for (int i = 0; i < keys.Length; i++)
-                {
-                    keysUrl.Add(keyNames[i] + "=" + keys[i].ToString());
-                }
-                return url + "(" + string.Join(",", keysUrl.Select(x => x.ToString())) + ")" + expandParameters;
+                string keyDelimiter = int.TryParse(keys[i].ToString(), out int n) ? string.Empty : "'";
+                string keyName = includeKeyname ? $"{keyNames[i]}=" : string.Empty;
+                keysUrl.Add($"{keyName}{keyDelimiter}{keys[i]}{keyDelimiter}");
             }
+            return url + "(" + string.Join(",", keysUrl.Select(x => x.ToString())) + ")" + expandParameters;
+
         }
     }
 }
