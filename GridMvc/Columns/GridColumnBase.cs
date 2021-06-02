@@ -69,7 +69,7 @@ namespace GridMvc.Columns
 
         public CrudHidden CrudHidden { get; protected set; } = CrudHidden.NONE;
 
-        public bool ReadOnlyOnUpdate { get; protected set; } = false;
+        public Func<T,bool> ReadOnlyOnUpdate { get; protected set; } = x => false;
 
         public bool IsPrimaryKey { get; protected set; } = false;
 
@@ -450,7 +450,13 @@ namespace GridMvc.Columns
 
         public IGridColumn<T> SetReadOnlyOnUpdate(bool enabled)
         {
-            ReadOnlyOnUpdate = enabled;
+            ReadOnlyOnUpdate = x => enabled;
+            return this;
+        }
+
+        public IGridColumn<T> SetReadOnlyOnUpdate(Func<T, bool> readOnlyOnUpdate)
+        {
+            ReadOnlyOnUpdate = readOnlyOnUpdate;
             return this;
         }
 

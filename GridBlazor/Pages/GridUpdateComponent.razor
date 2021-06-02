@@ -30,7 +30,7 @@
                 {
                     continue;
                 }
-                <div class="form-group row" style="@(column.CrudHidden.HasFlag(CrudHidden.UPDATE) && !column.ReadOnlyOnUpdate ? "display:none;" : "")">
+                <div class="form-group row" style="@(column.CrudHidden.HasFlag(CrudHidden.UPDATE) && !((IGridColumn<T>)column).ReadOnlyOnUpdate(Item) ? "display:none;" : "")">
                     @if (!string.IsNullOrWhiteSpace(column.TooltipValue))
                     {
                         <div class="col-md-@column.CrudLabelWidth.ToString()">
@@ -48,7 +48,7 @@
                         }
                         else if (((IGridColumn<T>)column).IsSelectField.IsSelectKey)
                         {
-                            if (column.ReadOnlyOnUpdate)
+                            if (((IGridColumn<T>)column).ReadOnlyOnUpdate(Item))
                             {
                                 string text = ((IGridColumn<T>)column).GetFormatedValue(((IGridColumn<T>)column).IsSelectField.Expression, Item);
                                 <input id="@column.FieldName" name="@column.FieldName" class="form-control" readonly="readonly" value="@text" />
@@ -74,7 +74,7 @@
                         }
                         else
                         {
-                            if (column.ReadOnlyOnUpdate)
+                            if (((IGridColumn<T>)column).ReadOnlyOnUpdate(Item))
                             {
                                 if (type == typeof(bool))
                                 {
@@ -257,7 +257,7 @@
             else if ((((ICGridColumn)column).SubGrids != null || column.UpdateComponentType != null)
                 && string.IsNullOrWhiteSpace(column.TabGroup))
             {
-                <div class="form-group row" style="@(column.CrudHidden.HasFlag(CrudHidden.UPDATE) && !column.ReadOnlyOnUpdate ? "display:none;" : "")">
+                <div class="form-group row" style="@(column.CrudHidden.HasFlag(CrudHidden.UPDATE) && !((IGridColumn<T>)column).ReadOnlyOnUpdate(Item) ? "display:none;" : "")">
                     @if (!string.IsNullOrWhiteSpace(column.TooltipValue))
                     {
                         <div class="col-md-@column.CrudLabelWidth.ToString()">
