@@ -81,13 +81,13 @@ namespace GridBlazor.OData
                 expandParameters = "?" + expandParameters;
 
             if (keyNames.Length != keys.Length || keys.Length == 1)
-                return url + "(" + string.Join(",", keys.Select(x => x.ToString())) + ")" + expandParameters;
+                return url + "(" + string.Join(",", keys.Select(x => x.GetType() == typeof(string) ? "'" + x + "'" : x.ToString())) + ")" + expandParameters;
             else
             {
                 var keysUrl = new List<string>(); ;
                 for (int i = 0; i < keys.Length; i++)
                 {
-                    keysUrl.Add(keyNames[i] + "=" + keys[i].ToString());
+                    keysUrl.Add(keyNames[i] + "=" + (keys[i].GetType() == typeof(string) ? "'" + keys[i] + "'" : keys[i].ToString()));
                 }
                 return url + "(" + string.Join(",", keysUrl.Select(x => x.ToString())) + ")" + expandParameters;
             }

@@ -53,6 +53,12 @@ namespace GridMvc
 
         public SGrid(IEnumerable<T> items, IQueryCollection query, bool renderOnlyRows,
             string pagerViewName = GridPager.DefaultPagerViewName, IColumnBuilder<T> columnBuilder = null)
+            : this(items, QueryDictionary<StringValues>.Convert(query), renderOnlyRows, pagerViewName, columnBuilder)
+        {
+        }
+
+        public SGrid(IEnumerable<T> items, QueryDictionary<StringValues> query, bool renderOnlyRows,
+            string pagerViewName = GridPager.DefaultPagerViewName, IColumnBuilder<T> columnBuilder = null)
             : this(items, query, columnBuilder)
         {
             var urlParameters = CustomQueryStringBuilder.Convert(query);
@@ -68,11 +74,15 @@ namespace GridMvc
         }
 
         public SGrid(IEnumerable<T> items, IQueryCollection query, IColumnBuilder<T> columnBuilder = null)
+            : this(items, QueryDictionary<StringValues>.Convert(query), columnBuilder)
+        { }
+
+        public SGrid(IEnumerable<T> items, QueryDictionary<StringValues> query, IColumnBuilder<T> columnBuilder = null)
             : base(items)
         {
             #region init default properties
 
-            Query = QueryDictionary<StringValues>.Convert(query);
+            Query = query;
 
             //set up sort settings:
             _settings = new QueryStringGridSettingsProvider(Query);
