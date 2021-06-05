@@ -42,7 +42,7 @@ The steps are:
                     columns.Add(foo => foo.Title);
                     columns.Add(foo => foo.Description);
                 };
-                var server = new GridServer<Order>(items, Request.Query, false, "ordersGrid", columns);
+                var server = new GridServer<Foo>(items, Request.Query, false, "fooGrid", columns);
 
                 return View(server.Grid);
             }
