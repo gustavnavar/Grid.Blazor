@@ -285,7 +285,7 @@ namespace GridBlazor
         /// <summary>
         ///     Provides url used by the grid
         /// </summary>
-        public string Url { get; internal set; }
+        public string Url { get; set; }
 
         public HttpClient HttpClient 
         {
