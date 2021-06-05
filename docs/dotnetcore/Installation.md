@@ -40,7 +40,7 @@ These are the steps for the installation of the **GridMvc** component:
     <script src="~/js/gridmvc-lang-de.js" type="text/javascript"></script>
     <script src="~/lib/bootstrap-datepicker/locales/bootstrap-datepicker.de.min.js" type="text/javascript"></script>
     ```
-    It will call the required style sheet and script files. The **gridmvc-lang-xx.js** file will be loaded from the **GridMvCore** nuget package, so it is not necessary to copy it to you project.
+    It will call the required style sheet and script files. The **gridmvc-lang-xx.js** file will be loaded from the **GridMvCore** nuget package, so it is not necessary to copy it to your project.
 
 ## Client side object model support (optional)
 
