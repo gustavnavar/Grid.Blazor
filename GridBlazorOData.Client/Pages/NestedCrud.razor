@@ -88,8 +88,8 @@ else
         Action<IGridColumnCollection<Order>, string> columns = (c, baseUri) =>
         {
             c.Add(o => o.OrderID).SetPrimaryKey(true).Titled(SharedResource.Number).SetTooltip("Order ID is ... ").SetWidth(100);
-            c.Add(o => o.CustomerID, true).SetSelectField(true, o => o.Customer.CustomerID + " - " + o.Customer.CompanyName, () => GetAllCustomers(baseUri));
-            c.Add(o => o.EmployeeID, true).SetSelectField(true, o => o.Employee.EmployeeID.ToString() + " - " + o.Employee.FirstName + " " + o.Employee.LastName, () => GetAllEmployees(baseUri));
+            c.Add(o => o.CustomerID, true).SetSelectField(true, o => o.Customer.CustomerID + " - " + o.Customer.CompanyName, o => GetAllCustomers(baseUri));
+            c.Add(o => o.EmployeeID, true).SetSelectField(true, o => o.Employee.EmployeeID.ToString() + " - " + o.Employee.FirstName + " " + o.Employee.LastName, o => GetAllEmployees(baseUri));
             c.Add(o => o.ShipVia, true).SetSelectField(true, o => o.Shipper == null ? "" : o.Shipper.ShipperID.ToString() + " - " + o.Shipper.CompanyName, () => GetAllShippers(baseUri));
             c.Add(o => o.OrderDate, "OrderCustomDate").Titled(SharedResource.OrderCustomDate).SetInputType(InputType.Month).SetFilterWidgetType("Month").Format("{0:yyyy-MM}").SetWidth(120);
             c.Add(o => o.Customer.CompanyName).Titled(SharedResource.CompanyName).SetWidth(250).SetCrudHidden(true).SetReadOnlyOnUpdate(true);

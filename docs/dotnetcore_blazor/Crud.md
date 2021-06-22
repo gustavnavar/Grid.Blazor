@@ -103,7 +103,7 @@ Parameter | Description
 --------- | -----------
 enabled | boolean to configure if the field is shown as a ```<select>``` html element
 expression | function to get the selected value for update and delete forms (it must return an string value)
-selectItemExpr| function to get the values and titles to be shown in the drop-down of create and update forms (it must return an ```IEnumerable<SelectItem>```)
+selectItemExpr| function to get the values and titles to be shown in the drop-down of create and update forms (it can has no parameter or the row item as a parameter, the and it must return a ```IEnumerable<SelectItem>```)
 
 The type of fields currently supported as foreign keys are:
 - string
@@ -182,9 +182,9 @@ This is an example of column definition:
     {
         c.Add(o => o.OrderID).SetPrimaryKey(true);
         c.Add(o => o.CustomerID, true).SetSelectField(true, o => o.Customer.CustomerID + " - " + o.Customer.CompanyName,
-            customerService.GetAllCustomers);
+            o => customerService.GetAllCustomers());
         c.Add(o => o.EmployeeID, true).SetSelectField(true, o => o.Employee.EmployeeID.ToString() 
-            + " - " + o.Employee.FirstName + " " + o.Employee.LastName, employeeService.GetAllEmployees);
+            + " - " + o.Employee.FirstName + " " + o.Employee.LastName, o => employeeService.GetAllEmployees());
         c.Add(o => o.ShipVia, true).SetSelectField(true, o => o.Shipper == null ? "" : o.Shipper.ShipperID.ToString() 
             + " - " + o.Shipper.CompanyName, shipperService.GetAllShippers);
         c.Add(o => o.OrderDate, "OrderCustomDate").Titled(SharedResource.OrderCustomDate).Format("{0:yyyy-MM-dd}").SetCrudWidth(3);

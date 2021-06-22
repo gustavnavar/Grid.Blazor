@@ -215,7 +215,8 @@ Parameter | Description
 --------- | -----------
 enabled | boolean to configure if the field is shown as a ```<select>``` html element
 expression | function to get the selected value for update and delete forms (it must return an string value)
-url | absolute path for the web service to get the values and titles to be shown in the drop-down element of create and update forms (it must return an ```IEnumerable<SelectItem>```)
+url (*) | absolute path for the web service to get the values and titles to be shown in the drop-down element of create and update forms (it must return a ```IEnumerable<SelectItem>```)
+(*) a function that returns an absolute path for the web service is also allowed
 
 The type of fields currently supported as foreign keys are:
 - string
@@ -290,9 +291,9 @@ This is an example of column definition:
     {
         c.Add(o => o.OrderID).SetPrimaryKey(true);
         c.Add(o => o.CustomerID, true).SetSelectField(true, o => o.Customer.CustomerID + " - " 
-            + o.Customer.CompanyName, path + $"api/SampleData/GetAllCustomers");
+            + o.Customer.CompanyName, o => path + $"api/SampleData/GetAllCustomers");
         c.Add(o => o.EmployeeID, true).SetSelectField(true, o => o.Employee.EmployeeID.ToString() + " - " 
-            + o.Employee.FirstName + " " + o.Employee.LastName, path + $"api/SampleData/GetAllEmployees");
+            + o.Employee.FirstName + " " + o.Employee.LastName, o => path + $"api/SampleData/GetAllEmployees");
         c.Add(o => o.ShipVia, true).SetSelectField(true, o => o.Shipper == null ? "" : o.Shipper.ShipperID.ToString() 
             + " - " + o.Shipper.CompanyName, path + $"api/SampleData/GetAllShippers");
         c.Add(o => o.OrderDate, "OrderCustomDate").Titled(SharedResource.OrderCustomDate).Format("{0:yyyy-MM-dd}").SetCrudWidth(3);

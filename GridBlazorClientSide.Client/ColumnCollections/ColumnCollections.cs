@@ -233,10 +233,10 @@ namespace GridBlazorClientSide.Client.ColumnCollections
             c.Add(o => o.OrderID).SetPrimaryKey(true).Titled(SharedResource.Number).SetWidth(100);
 
             /* Adding "CustomerID" column: */
-            c.Add(o => o.CustomerID, true).SetSelectField(true, o => o.Customer.CustomerID + " - " + o.Customer.CompanyName, path + $"api/SampleData/GetAllCustomers");
+            c.Add(o => o.CustomerID, true).SetSelectField(true, o => o.Customer.CustomerID + " - " + o.Customer.CompanyName, o=> path + $"api/SampleData/GetAllCustomers");
 
             /* Adding "EmployeeID" column: */
-            c.Add(o => o.EmployeeID, true).SetSelectField(true, o => o.Employee.EmployeeID.ToString() + " - " + o.Employee.FirstName + " " + o.Employee.LastName, path + $"api/SampleData/GetAllEmployees");
+            c.Add(o => o.EmployeeID, true).SetSelectField(true, o => o.Employee.EmployeeID.ToString() + " - " + o.Employee.FirstName + " " + o.Employee.LastName, o => path + $"api/SampleData/GetAllEmployees");
 
             /* Adding "ShipVia" column: */
             c.Add(o => o.ShipVia, true).SetSelectField(true, o => o.Shipper == null ? "" : o.Shipper.ShipperID.ToString() + " - " + o.Shipper.CompanyName, path + $"api/SampleData/GetAllShippers");
@@ -291,7 +291,7 @@ namespace GridBlazorClientSide.Client.ColumnCollections
             c.Add(o => o.ShipCountry, true);
 
             /* Adding not mapped column, that renders a component */
-            c.Add(true).Titled("Images").RenderCrudComponentAs<Carousel, Carousel, NullComponent, NullComponent>();
+            c.Add(true).Titled("Images").RenderCrudComponentAs<Carousel, Carousel, Carousel, NullComponent>();
         };
 
         public static Action<IGridColumnCollection<Order>, string, Func<object[], bool, bool, bool, bool, Task<IGrid>>>
@@ -301,10 +301,10 @@ namespace GridBlazorClientSide.Client.ColumnCollections
             c.Add(o => o.OrderID).SetPrimaryKey(true).Titled(SharedResource.Number).SetTooltip("Order ID is ... ").SetWidth(100);
 
             /* Adding "CustomerID" column: */
-            c.Add(o => o.CustomerID, true).SetSelectField(true, o => o.Customer.CustomerID + " - " + o.Customer.CompanyName, path + $"api/SampleData/GetAllCustomers");
+            c.Add(o => o.CustomerID, true).SetSelectField(true, o => o.Customer.CustomerID + " - " + o.Customer.CompanyName, o => path + $"api/SampleData/GetAllCustomers");
 
             /* Adding "EmployeeID" column: */
-            c.Add(o => o.EmployeeID, true).SetSelectField(true, o => o.Employee.EmployeeID.ToString() + " - " + o.Employee.FirstName + " " + o.Employee.LastName, path + $"api/SampleData/GetAllEmployees");
+            c.Add(o => o.EmployeeID, true).SetSelectField(true, o => o.Employee.EmployeeID.ToString() + " - " + o.Employee.FirstName + " " + o.Employee.LastName, o => path + $"api/SampleData/GetAllEmployees");
 
             /* Adding "ShipVia" column: */
             c.Add(o => o.ShipVia, true).SetSelectField(true, o => o.Shipper == null ? "" : o.Shipper.ShipperID.ToString() + " - " + o.Shipper.CompanyName, path + $"api/SampleData/GetAllShippers");
@@ -370,10 +370,10 @@ namespace GridBlazorClientSide.Client.ColumnCollections
             c.Add(o => o.OrderID).SetPrimaryKey(true).Titled(SharedResource.Number).SetWidth(100);
 
             /* Adding "CustomerID" column: */
-            c.Add(o => o.CustomerID, true).SetSelectField(true, o => o.Customer.CustomerID + " - " + o.Customer.CompanyName, path + $"api/SampleData/GetAllCustomers");
+            c.Add(o => o.CustomerID, true).SetSelectField(true, o => o.Customer.CustomerID + " - " + o.Customer.CompanyName, o => path + $"api/SampleData/GetAllCustomers");
 
             /* Adding "EmployeeID" column: */
-            c.Add(o => o.EmployeeID, true).SetSelectField(true, o => o.Employee.EmployeeID.ToString() + " - " + o.Employee.FirstName + " " + o.Employee.LastName, path + $"api/SampleData/GetAllEmployees");
+            c.Add(o => o.EmployeeID, true).SetSelectField(true, o => o.Employee.EmployeeID.ToString() + " - " + o.Employee.FirstName + " " + o.Employee.LastName, o => path + $"api/SampleData/GetAllEmployees");
 
             /* Adding "ShipVia" column: */
             c.Add(o => o.ShipVia, true).SetSelectField(true, o => o.Shipper == null ? "" : o.Shipper.ShipperID.ToString() + " - " + o.Shipper.CompanyName, path + $"api/SampleData/GetAllShippers");
@@ -472,10 +472,10 @@ namespace GridBlazorClientSide.Client.ColumnCollections
             c.Add(o => o.OrderID).SetPrimaryKey(true).Titled(SharedResource.Number).SetTooltip("Order ID is ... ").SetWidth(100);
 
             /* Adding "CustomerID" column: */
-            c.Add(o => o.CustomerID, true).SetSelectField(true, o => o.Customer.CustomerID + " - " + o.Customer.CompanyName, path + $"api/SampleData/GetAllCustomers");
+            c.Add(o => o.CustomerID, true).SetSelectField(true, o => o.Customer.CustomerID + " - " + o.Customer.CompanyName, o => path + $"api/SampleData/GetAllCustomers");
 
             /* Adding "EmployeeID" column: */
-            c.Add(o => o.EmployeeID, true).SetSelectField(true, o => o.Employee.EmployeeID.ToString() + " - " + o.Employee.FirstName + " " + o.Employee.LastName, path + $"api/SampleData/GetAllEmployees");
+            c.Add(o => o.EmployeeID, true).SetSelectField(true, o => o.Employee.EmployeeID.ToString() + " - " + o.Employee.FirstName + " " + o.Employee.LastName, o => path + $"api/SampleData/GetAllEmployees");
 
             /* Adding "ShipVia" column: */
             c.Add(o => o.ShipVia).Titled("Via")

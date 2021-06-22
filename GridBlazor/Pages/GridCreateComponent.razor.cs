@@ -1,5 +1,6 @@
 ﻿using Agno.BlazorInputFile;
 using GridBlazor.Resources;
+using GridShared;
 using GridShared.Columns;
 using GridShared.Utility;
 using Microsoft.AspNetCore.Components;
@@ -30,6 +31,8 @@ namespace GridBlazor.Pages
         public QueryDictionary<VariableReference> InputFiles { get; private set; } = new QueryDictionary<VariableReference>();
         public QueryDictionary<IFileListEntry[]> Files { get; private set; } = new QueryDictionary<IFileListEntry[]>();
 
+        public QueryDictionary<IEnumerable<SelectItem>> SelectItems { get; private set; } = new QueryDictionary<IEnumerable<SelectItem>>();
+
         public EditForm Form { get; private set; }
 
         [Inject]
@@ -41,7 +44,7 @@ namespace GridBlazor.Pages
         [Parameter]
         public T Item { get; set; }
 
-        protected override void OnParametersSet()
+        protected override async Task OnParametersSetAsync()
         {
             _renderFragments = new QueryDictionary<RenderFragment>();
             foreach (var column in GridComponent.Grid.Columns)
@@ -61,6 +64,15 @@ namespace GridBlazor.Pages
             _tabGroups = GridComponent.Grid.Columns
                 .Where(r => !string.IsNullOrWhiteSpace(r.TabGroup) && _renderFragments.Keys.Any(s => s.Equals(r.Name)))
                 .Select(r => r.TabGroup).Distinct();
+
+            foreach (var column in GridComponent.Grid.Columns)
+            {
+                if (((IGridColumn<T>)column).IsSelectColumn.IsSelectKey)
+                {
+                    var selectItem = await ((IGridColumn<T>)column).SelectItemExpr(Item);
+                    SelectItems.Add(column.Name, selectItem);
+                }
+            }
 
             _shouldRender = true;
         }

@@ -35,6 +35,8 @@ namespace GridBlazor.Pages
         public QueryDictionary<VariableReference> InputFiles { get; private set; } = new QueryDictionary<VariableReference>();
         public QueryDictionary<IFileListEntry[]> Files { get; private set; } = new QueryDictionary<IFileListEntry[]>();
 
+        public QueryDictionary<IEnumerable<SelectItem>> SelectItems { get; private set; } = new QueryDictionary<IEnumerable<SelectItem>>();
+
         public EditForm Form { get; private set; }
 
         [Inject]
@@ -105,6 +107,15 @@ namespace GridBlazor.Pages
                     {
                         _buttonCrudComponentVisibility.Add(key, false);
                     }
+                }
+            }
+
+            foreach (var column in GridComponent.Grid.Columns)
+            {
+                if (((IGridColumn<T>)column).IsSelectColumn.IsSelectKey)
+                {
+                    var selectItem = await ((IGridColumn<T>)column).SelectItemExpr(Item);
+                    SelectItems.Add(column.Name, selectItem);
                 }
             }
 

@@ -118,7 +118,7 @@ else
 
         // build the column collection passing an action list with the action executed by the ButtonCell component
         Action<IGridColumnCollection<Order>> orderColumns = c => ColumnCollections.OrderColumnsAllFeatures(c,
-            customerService.GetAllCustomers, employeeService.GetAllEmployees, shipperService.GetAllShippers,
+            c => customerService.GetAllCustomers(), c => employeeService.GetAllEmployees(), shipperService.GetAllShippers,
             crudSubGrids);
 
         var query = new QueryDictionary<StringValues>();

@@ -57,7 +57,7 @@ else
         var query = new QueryDictionary<StringValues>();
 
         Action<IGridColumnCollection<Order>> columns = c => ColumnCollections.OrderColumnsWithCrud(c,
-            customerService.GetAllCustomers, employeeService.GetAllEmployees, shipperService.GetAllShippers);
+            c => customerService.GetAllCustomers(), c => employeeService.GetAllEmployees(), shipperService.GetAllShippers);
         var client = new GridClient<Order>(q => orderService.GetOrdersGridRows(columns, q),
             query, false, "ordersGrid", columns, locale)
             .Sortable()

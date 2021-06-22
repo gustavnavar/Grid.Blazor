@@ -57,8 +57,8 @@ else
         Action<IGridColumnCollection<Order>, string> columns = (c, baseUri) =>
         {
             c.Add(o => o.OrderID).SetPrimaryKey(true).Titled(SharedResource.Number).SetWidth(100);
-            c.Add(o => o.CustomerID, true).SetSelectField(true, o => o.Customer.CustomerID + " - " + o.Customer.CompanyName, () => GetAllCustomers(baseUri));
-            c.Add(o => o.EmployeeID, true).SetSelectField(true, o => o.Employee.EmployeeID.ToString() + " - " + o.Employee.FirstName + " " + o.Employee.LastName, () => GetAllEmployees(baseUri));
+            c.Add(o => o.CustomerID, true).SetSelectField(true, o => o.Customer.CustomerID + " - " + o.Customer.CompanyName, o => GetAllCustomers(baseUri));
+            c.Add(o => o.EmployeeID, true).SetSelectField(true, o => o.Employee.EmployeeID.ToString() + " - " + o.Employee.FirstName + " " + o.Employee.LastName, o => GetAllEmployees(baseUri));
             c.Add(o => o.ShipVia, true).SetSelectField(true, o => o.Shipper == null ? "" : o.Shipper.ShipperID.ToString() + " - " + o.Shipper.CompanyName, () => GetAllShippers(baseUri));
             c.Add(o => o.OrderDate, "OrderCustomDate").Titled(SharedResource.OrderCustomDate).SetInputType(InputType.Week).SetFilterWidgetType("Week").RenderValueAs(o => DateTimeUtils.GetWeekDateTimeString(o.OrderDate)).SetWidth(120).SetCrudWidth(3);
             c.Add(o => o.Customer.CompanyName).Titled(SharedResource.CompanyName).SetWidth(250).SetCrudHidden(true).SetReadOnlyOnUpdate(true);
@@ -73,7 +73,7 @@ else
             c.Add(o => o.ShipPostalCode, true);
             c.Add(o => o.ShipRegion, true);
             c.Add(o => o.ShipCountry, true);
-            c.Add(true).Titled("Images").RenderCrudComponentAs<Carousel, Carousel, NullComponent, NullComponent>();
+            c.Add(true).Titled("Images").RenderCrudComponentAs<Carousel, Carousel, Carousel, NullComponent>();
         };
 
         string url = NavigationManager.BaseUri + "odata/Orders";

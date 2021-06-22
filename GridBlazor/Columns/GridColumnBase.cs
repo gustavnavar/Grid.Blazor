@@ -88,6 +88,11 @@ namespace GridBlazor.Columns
 
         public IEnumerable<SelectItem> SelectItems { get; set; }
 
+        public (bool IsSelectKey, Func<T, string> Expression, Func<T, string> Url, Func<T, IEnumerable<SelectItem>> SelectItemExpr,
+            Func<T, Task<IEnumerable<SelectItem>>> SelectItemExprAsync) IsSelectColumn { get; protected set; }
+            = (false, null, null, null, null);
+        public Func<T, Task<IEnumerable<SelectItem>>> SelectItemExpr { get; set; }
+
         public InputType InputType { get; protected set; }
 
         public bool MultipleInput { get; protected set; } = false;
@@ -519,6 +524,7 @@ namespace GridBlazor.Columns
         public IGridColumn<T> SetSelectField(bool enabled, Func<T, string> expression, Func<IEnumerable<SelectItem>> selectItemExpr)
         {
             IsSelectField = (enabled, expression, null, selectItemExpr, null);
+            IsSelectColumn = (false, null, null, null, null);
             InputType = InputType.None;
             return this;
         }
@@ -526,6 +532,7 @@ namespace GridBlazor.Columns
         public IGridColumn<T> SetSelectField(bool enabled, Func<T, string> expression, Func<Task<IEnumerable<SelectItem>>> selectItemExprAsync)
         {
             IsSelectField = (enabled, expression, null, null, selectItemExprAsync);
+            IsSelectColumn = (false, null, null, null, null);
             InputType = InputType.None;
             return this;
         }
@@ -533,6 +540,31 @@ namespace GridBlazor.Columns
         public IGridColumn<T> SetSelectField(bool enabled, Func<T, string> expression, string url)
         {
             IsSelectField = (enabled, expression, url, null, null);
+            IsSelectColumn = (false, null, null, null, null);
+            InputType = InputType.None;
+            return this;
+        }
+
+        public IGridColumn<T> SetSelectField(bool enabled, Func<T, string> expression, Func<T, IEnumerable<SelectItem>> selectItemExpr)
+        {
+            IsSelectField = (false, null, null, null, null);
+            IsSelectColumn = (enabled, expression, null, selectItemExpr, null);
+            InputType = InputType.None;
+            return this;
+        }
+
+        public IGridColumn<T> SetSelectField(bool enabled, Func<T, string> expression, Func<T, Task<IEnumerable<SelectItem>>> selectItemExprAsync)
+        {
+            IsSelectField = (false, null, null, null, null);
+            IsSelectColumn = (enabled, expression, null, null, selectItemExprAsync);
+            InputType = InputType.None;
+            return this;
+        }
+
+        public IGridColumn<T> SetSelectField(bool enabled, Func<T, string> expression, Func<T, string> url)
+        {
+            IsSelectField = (false, null, null, null, null);
+            IsSelectColumn = (enabled, expression, url, null, null);
             InputType = InputType.None;
             return this;
         }
@@ -540,6 +572,7 @@ namespace GridBlazor.Columns
         public IGridColumn<T> SetInputType(InputType inputType)
         {
             IsSelectField = (false, null, null, null, null);
+            IsSelectColumn = (false, null, null, null, null);
             InputType = inputType;
             return this;
         }
@@ -547,6 +580,7 @@ namespace GridBlazor.Columns
         public IGridColumn<T> SetInputFileType(bool? multiple = null)
         {
             IsSelectField = (false, null, null, null, null);
+            IsSelectColumn = (false, null, null, null, null);
             InputType = InputType.File;
             if (multiple.HasValue)
                 MultipleInput = multiple.Value;

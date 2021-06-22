@@ -42,6 +42,11 @@
                         string text = ((IGridColumn<T>)column).GetFormatedValue(((IGridColumn<T>)column).IsSelectField.Expression, Item);
                         <input id="@column.FieldName" class="form-control" readonly="readonly" value="@text" />
                     }
+                    else if (((IGridColumn<T>)column).IsSelectColumn.IsSelectKey)
+                    {
+                        string text = ((IGridColumn<T>)column).GetFormatedValue(((IGridColumn<T>)column).IsSelectColumn.Expression, Item);
+                        <input id="@column.FieldName" class="form-control" readonly="readonly" value="@text" />
+                    }
                     else if (type == typeof(bool))
                     {
                         if (value != null && (bool)value == true)

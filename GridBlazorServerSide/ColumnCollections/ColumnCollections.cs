@@ -226,8 +226,8 @@ namespace GridBlazorServerSide.ColumnCollections
             c.Add(o => o.OrderDetails.Count).Titled("Details");
         };
 
-        public static Action<IGridColumnCollection<Order>, Func<IEnumerable<SelectItem>>,
-            Func<IEnumerable<SelectItem>>, Func<IEnumerable<SelectItem>>> 
+        public static Action<IGridColumnCollection<Order>, Func<Order, IEnumerable<SelectItem>>,
+            Func<Order, IEnumerable<SelectItem>>, Func<IEnumerable<SelectItem>>> 
             OrderColumnsWithCrud  = (c, f, g, h) =>
         {
             /* Adding "OrderID" column: */
@@ -292,11 +292,11 @@ namespace GridBlazorServerSide.ColumnCollections
             c.Add(o => o.ShipCountry, true);
 
             /* Adding not mapped column, that renders a component */
-            c.Add(true).Titled("Images").RenderCrudComponentAs<Carousel, Carousel, NullComponent, NullComponent>();
+            c.Add(true).Titled("Images").RenderCrudComponentAs<Carousel, Carousel, Carousel, NullComponent>();
         };
 
-        public static Action<IGridColumnCollection<Order>, Func<IEnumerable<SelectItem>>,
-            Func<IEnumerable<SelectItem>>, Func<IEnumerable<SelectItem>>, Func<object[], bool, bool, bool, bool, Task<IGrid>>> 
+        public static Action<IGridColumnCollection<Order>, Func<Order, IEnumerable<SelectItem>>,
+            Func<Order, IEnumerable<SelectItem>>, Func<IEnumerable<SelectItem>>, Func<object[], bool, bool, bool, bool, Task<IGrid>>> 
             OrderColumnsWithNestedCrud  = (c, f, g, h, subgrids) =>
         {
             /* Adding "OrderID" column: */
@@ -366,8 +366,8 @@ namespace GridBlazorServerSide.ColumnCollections
             c.Add(true).Titled("Images").RenderCrudComponentAs<NullComponent, NullComponent, Carousel, Carousel>().SetTabGroup("tabGroup1");
         };
 
-        public static Action<IGridColumnCollection<Order>, Func<IEnumerable<SelectItem>>,
-            Func<IEnumerable<SelectItem>>, Func<IEnumerable<SelectItem>>>
+        public static Action<IGridColumnCollection<Order>, Func<Order, IEnumerable<SelectItem>>,
+            Func<Order, IEnumerable<SelectItem>>, Func<IEnumerable<SelectItem>>>
             OrderColumnsWithCustomCrud = (c, f, g, h) =>
         {
             /* Adding "OrderID" column: */
@@ -468,8 +468,8 @@ namespace GridBlazorServerSide.ColumnCollections
             .RenderValueAs(o => o.Customer.IsVip ? Strings.BoolTrueLabel : Strings.BoolFalseLabel);
         };
 
-        public static Action<IGridColumnCollection<Order>, Func<IEnumerable<SelectItem>>,
-            Func<IEnumerable<SelectItem>>, Func<IEnumerable<SelectItem>>,
+        public static Action<IGridColumnCollection<Order>, Func<Order, IEnumerable<SelectItem>>,
+            Func<Order, IEnumerable<SelectItem>>, Func<IEnumerable<SelectItem>>,
             Func<object[], bool, bool, bool, bool, Task<IGrid>>> 
             OrderColumnsAllFeatures = (c, f, g, h, subgrids) =>
         {

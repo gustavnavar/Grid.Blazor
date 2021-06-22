@@ -20,6 +20,11 @@ namespace GridShared.Columns
         (bool IsSelectKey, Func<T,string> Expression, string Url, Func<IEnumerable<SelectItem>> SelectItemExpr, 
             Func<Task<IEnumerable<SelectItem>>> SelectItemExprAsync) IsSelectField { get; }
         IEnumerable<SelectItem> SelectItems { get; set; }
+        (bool IsSelectKey, Func<T, string> Expression, Func<T,string> Url, Func<T, IEnumerable<SelectItem>> SelectItemExpr,
+           Func<T, Task<IEnumerable<SelectItem>>> SelectItemExprAsync) IsSelectColumn
+        { get; }
+        Func<T, Task<IEnumerable<SelectItem>>> SelectItemExpr { get; set; }
+
         InputType InputType { get; }
     }
 
@@ -376,6 +381,21 @@ namespace GridShared.Columns
         ///     Sets the column as select for CRUD components
         /// </summary>
         IGridColumn<T> SetSelectField(bool enabled, Func<T, string> expression, string url);
+
+        /// <summary>
+        ///     Sets the column as select for CRUD components
+        /// </summary>
+        IGridColumn<T> SetSelectField(bool enabled, Func<T, string> expression, Func<T, IEnumerable<SelectItem>> selectItemExpr);
+
+        /// <summary>
+        ///     Sets the column as select for CRUD components
+        /// </summary>
+        IGridColumn<T> SetSelectField(bool enabled, Func<T, string> expression, Func<T, Task<IEnumerable<SelectItem>>> selectItemExprAsync);
+
+        /// <summary>
+        ///     Sets the column as select for CRUD components
+        /// </summary>
+        IGridColumn<T> SetSelectField(bool enabled, Func<T, string> expression, Func<T, string> url);
 
         /// <summary>
         ///     Sets the column input type for CRUD components

@@ -142,8 +142,8 @@ else
         Action<IGridColumnCollection<Order>> orderColumns = c =>
         {
             c.Add(o => o.OrderID).SetPrimaryKey(true).Titled(SharedResource.Number).SetTooltip("Order ID is ... ").SetWidth(100);
-            c.Add(o => o.CustomerID, true).SetSelectField(true, o => o.Customer.CustomerID + " - " + o.Customer.CompanyName, () => GetAllCustomers(NavigationManager.BaseUri));
-            c.Add(o => o.EmployeeID, true).SetSelectField(true, o => o.Employee.EmployeeID.ToString() + " - " + o.Employee.FirstName + " " + o.Employee.LastName, () => GetAllEmployees(NavigationManager.BaseUri));
+            c.Add(o => o.CustomerID, true).SetSelectField(true, o => o.Customer.CustomerID + " - " + o.Customer.CompanyName, o => GetAllCustomers(NavigationManager.BaseUri));
+            c.Add(o => o.EmployeeID, true).SetSelectField(true, o => o.Employee.EmployeeID.ToString() + " - " + o.Employee.FirstName + " " + o.Employee.LastName, o => GetAllEmployees(NavigationManager.BaseUri));
             c.Add(o => o.ShipVia).Titled("Via").SetWidth(250).RenderValueAs(o => o.Shipper == null ? "" : o.Shipper.CompanyName).SetSelectField(true, o => o.Shipper == null ? "" : o.Shipper.ShipperID.ToString() + " - " + o.Shipper.CompanyName, () => GetAllShippers(NavigationManager.BaseUri)).SetListFilter(_shippers, true, true);
             c.Add(o => o.OrderDate, "OrderCustomDate").Titled(SharedResource.OrderCustomDate).SetCellCssClassesContraint(o => o.OrderDate.HasValue && o.OrderDate.Value >= DateTime.Parse("1997-01-01") ? "red" : "").SetInputType(InputType.DateTimeLocal).SetFilterWidgetType("DateTimeLocal").Format("{0:yyyy-MM-dd HH:mm}").SetWidth(120);
             c.Add(o => o.Customer.CompanyName).Titled(SharedResource.CompanyName).SetWidth(250).SetCrudHidden(true).SetReadOnlyOnUpdate(true).SetFilterWidgetType("CompanyNameFilter");

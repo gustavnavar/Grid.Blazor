@@ -987,6 +987,7 @@ namespace GridBlazor.Pages
             foreach (var column in Grid.Columns)
             {
                 var isSelectField = ((IGridColumn<T>)column).IsSelectField;
+                var isSelectColumn = ((IGridColumn<T>)column).IsSelectColumn;
                 if (isSelectField.IsSelectKey)
                 {
                     try
@@ -1001,14 +1002,36 @@ namespace GridBlazor.Pages
                         }
                         else
                         {
-                            var selectItems = await Grid.HttpClient.GetFromJsonAsync<SelectItem[]>(isSelectField.Url);
-                            ((IGridColumn<T>)column).SelectItems = selectItems.ToList();
+                            ((IGridColumn<T>)column).SelectItems = await Grid.HttpClient.GetFromJsonAsync<IEnumerable<SelectItem>>(isSelectField.Url);
                         }
                     }
                     catch (Exception e)
                     {
                         Console.WriteLine(e.Message);
                         ((IGridColumn<T>)column).SelectItems = new List<SelectItem>();
+                    }
+                }
+                else if (isSelectColumn.IsSelectKey)
+                {
+                    try
+                    {
+                        if (isSelectColumn.SelectItemExpr != null)
+                        {
+                            ((IGridColumn<T>)column).SelectItemExpr = async c => await Task.FromResult(isSelectColumn.SelectItemExpr(c));
+                        }
+                        else if (isSelectColumn.SelectItemExprAsync != null)
+                        {
+                            ((IGridColumn<T>)column).SelectItemExpr = isSelectColumn.SelectItemExprAsync;
+                        }
+                        else
+                        {
+                            ((IGridColumn<T>)column).SelectItemExpr = async c => await Grid.HttpClient.GetFromJsonAsync<IEnumerable<SelectItem>>(isSelectColumn.Url(c));
+                        }
+                    }
+                    catch (Exception e)
+                    {
+                        Console.WriteLine(e.Message);
+                        ((IGridColumn<T>)column).SelectItemExpr = async c => await Task.FromResult(new List<SelectItem>());
                     }
                 }
             }
