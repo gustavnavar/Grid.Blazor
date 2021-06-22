@@ -3,6 +3,7 @@
 .grid-table-wrap { overflow:auto; }
 .grid-table-head { overflow:hidden; }
 .grid-table-body { overflow:auto; }
+.grid-error { color:red; }
 table.grid-table { margin: 0; }
     table.grid-table .grid-wrap { padding: 0; position: relative; }
     table.grid-table .grid-empty-text { color: #666; }

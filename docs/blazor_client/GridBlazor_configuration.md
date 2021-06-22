@@ -25,6 +25,7 @@ GridCellCssClass | ```string``` (optional) | Html classes used by the cell eleme
 GridButtonCellCssClass | ```string``` (optional) | Html classes used by the button elements of CRUD grids (it overrides default parameter) | ```<GridComponent T="Order" Grid="@_grid" GridButtonCellCssClass="grid-button-cell-alt" />```
 GridSubGridCssClass | ```string``` (optional) | Html classes used by the subgrid elements (it overrides default parameter) | ```<GridComponent T="Order" Grid="@_grid" GridSubGridCssClass="grid-subgrid-alt" />```
 GridEmptyTextCssClass | ```string``` (optional) | Html classes used by the empty cell elements (it overrides default parameter) | ```<GridComponent T="Order" Grid="@_grid" GridEmptyTextCssClass="grid-empty-text-alt" />```
+GridErrorCssClass | ```string``` (optional) | Html classes used by the error message element (it overrides default parameter) | ```<GridComponent T="Order" Grid="@_grid" GridErrorCssClass="grid-error-alt" />```
 
 ## GridClient parameters
 
