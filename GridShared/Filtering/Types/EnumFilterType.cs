@@ -22,6 +22,7 @@ namespace GridShared.Filtering.Types
         public override string GetFilterExpression(string columnName, string value, GridFilterType filterType)
         {
             value = GetStringValue(value).ToLower();
+//            value = GetStringValue(value);
 
             //base implementation of building filter expressions
             filterType = GetValidType(filterType);
@@ -30,6 +31,7 @@ namespace GridShared.Filtering.Types
             {
                 case GridFilterType.Equals:
                     return columnName + " eq " + TargetType.FullName + "'" + value + "'";
+                    //return columnName + " eq "  + "'" + value + "'";
                 default:
                     throw new ArgumentOutOfRangeException();
             }
