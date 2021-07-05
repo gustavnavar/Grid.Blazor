@@ -10,6 +10,7 @@ using Microsoft.JSInterop;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Globalization;
 using System.Linq;
 using System.Reflection;
 using System.Threading.Tasks;
@@ -181,7 +182,27 @@ namespace GridBlazor.Pages
                     {
                         try
                         {
-                            var value = typeConverter.ConvertFrom(e.Value.ToString());
+                            object value = null;
+                            // if is number type
+                            if (type == typeof(decimal) || type == typeof(float) || type == typeof(double) || type == typeof(byte) || type == typeof(short) || type == typeof(int) || type == typeof(long) ||
+                                type == typeof(decimal?) || type == typeof(float?) || type == typeof(double?) || type == typeof(byte?) || type == typeof(short?) || type == typeof(int?) || type == typeof(long?))
+                            {
+                                string thousandSeparator = ",";
+                                if (thousandSeparator == CultureInfo.CurrentCulture.NumberFormat.NumberDecimalSeparator)
+                                {
+                                    thousandSeparator = "."; // separators are inverted compared to EN, like is in DE and some other european languages
+                                }
+                                string valueText = e.Value.ToString();
+                                if (valueText.Contains(thousandSeparator))
+                                {
+                                    valueText = valueText.Replace(thousandSeparator, ""); // removes thousands separator if exist so that parsing can be correctly done
+                                }
+                                value = typeConverter.ConvertFrom(valueText);
+                            }
+                            else
+                            {
+                                value = typeConverter.ConvertFrom(e.Value.ToString());
+                            }
                             SetValue(value, column);
                         }
                         catch (Exception)
