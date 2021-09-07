@@ -83,7 +83,7 @@ The steps to build a grid razor page using data annotations with **GridBlazor** 
             private CGrid<Foo> _grid;
             private Task _task;
 
-            protected override async Task OnInitAsync()
+            protected override async Task OnParametersSetAsync()
             {
                 var query = new QueryDictionary<StringValues>();
                 query.Add("grid-page", "2");

@@ -41,8 +41,7 @@ namespace GridBlazorOData.Server
                     });
             });
 
-            services.AddControllers();
-            services.AddOData(opt => opt.AddModel("odata", EdmModel.GetEdmModel())
+            services.AddControllers().AddOData(opt => opt.AddRouteComponents("odata", EdmModel.GetEdmModel())
                 .Select().Expand().Filter().OrderBy().SetMaxTop(null).Count());
         }
 

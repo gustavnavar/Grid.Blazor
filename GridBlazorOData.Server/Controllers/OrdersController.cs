@@ -1,10 +1,9 @@
 ﻿using GridBlazorOData.Server.Models;
 using GridBlazorOData.Shared.Models;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.OData.Deltas;
 using Microsoft.AspNetCore.OData.Formatter;
-using Microsoft.AspNetCore.OData.Formatter.Value;
 using Microsoft.AspNetCore.OData.Query;
-using Microsoft.AspNetCore.OData.Routing.Attributes;
 using Microsoft.AspNetCore.OData.Routing.Controllers;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -151,8 +150,7 @@ namespace GridBlazorOData.Server.Controllers
         }
 
         [EnableQuery]
-        [HttpGet]
-        [ODataRoute("Orders({keyOrderID})/OrderDetails")]
+        [HttpGet("Orders({keyOrderID})/OrderDetails")]
         public IActionResult GetOrderDetails(int keyOrderID)
         {
             var repository = new OrderDetailsRepository(_context);
@@ -161,8 +159,7 @@ namespace GridBlazorOData.Server.Controllers
         }
 
         [EnableQuery]
-        [HttpGet]
-        [ODataRoute("Orders({orderID})/OrderDetails({keyOrderID},{keyProductID})")]
+        [HttpGet("Orders({orderID})/OrderDetails({keyOrderID},{keyProductID})")]
         public async Task<IActionResult> GetOrderDetails([FromODataUri] int keyOrderID, [FromODataUri] int keyProductID)
         {
             var repository = new OrderDetailsRepository(_context);
@@ -170,8 +167,7 @@ namespace GridBlazorOData.Server.Controllers
             return Ok(orderDetail);
         }
 
-        [HttpPost]
-        [ODataRoute("Orders({keyOrderID})/OrderDetails")]
+        [HttpPost("Orders({keyOrderID})/OrderDetails")]
         public async Task<IActionResult> PostToOrderDetails([FromODataUri] int keyOrderID, [FromBody] OrderDetail orderdetail)
         {
             if (!ModelState.IsValid)
@@ -201,8 +197,7 @@ namespace GridBlazorOData.Server.Controllers
             }
         }
 
-        [HttpPatch]
-        [ODataRoute("Orders({orderID})/OrderDetails({keyOrderID},{keyProductID})")]
+        [HttpPatch("Orders({orderID})/OrderDetails({keyOrderID},{keyProductID})")]
         public async Task<IActionResult> PatchToOrderDetails([FromODataUri] int keyOrderID, [FromODataUri] int keyProductID,
             [FromBody] Delta<OrderDetail> orderDetail)
         {
@@ -236,8 +231,7 @@ namespace GridBlazorOData.Server.Controllers
             return Updated(entity);
         }
 
-        [HttpPut]
-        [ODataRoute("Orders({orderID})/OrderDetails({keyOrderID},{keyProductID})")]
+        [HttpPut("Orders({orderID})/OrderDetails({keyOrderID},{keyProductID})")]
         public async Task<IActionResult> PutToOrderDetails([FromODataUri] int keyOrderID, [FromODataUri] int keyProductID,
             [FromBody] OrderDetail orderDetail)
         {
@@ -270,8 +264,7 @@ namespace GridBlazorOData.Server.Controllers
             return Updated(orderDetail);
         }
 
-        [HttpDelete]
-        [ODataRoute("Orders({orderID})/OrderDetails({keyOrderID},{keyProductID})")]
+        [HttpDelete("Orders({orderID})/OrderDetails({keyOrderID},{keyProductID})")]
         public async Task<ActionResult> DeleteToOrderDetails([FromODataUri] int keyOrderID, [FromODataUri] int keyProductID)
         {
             var repository = new OrderDetailsRepository(_context);
