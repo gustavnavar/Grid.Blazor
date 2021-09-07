@@ -346,6 +346,18 @@ namespace GridShared.Columns
         IGridColumn<T> SetExcelHidden(bool? all);
 
         /// <summary>
+        ///     Sets the column as readonly on create.
+        /// </summary>
+        IGridColumn<T> SetReadOnlyOnCreate(bool enabled);
+
+        Func<T, bool> ReadOnlyOnCreate { get; }
+
+        /// <summary>
+        ///     Sets the column as readonly on create.
+        /// </summary>
+        IGridColumn<T> SetReadOnlyOnCreate(Func<T, bool> expression);
+
+        /// <summary>
         ///     Sets the column as readonly on update.
         /// </summary>
         IGridColumn<T> SetReadOnlyOnUpdate(bool enabled);

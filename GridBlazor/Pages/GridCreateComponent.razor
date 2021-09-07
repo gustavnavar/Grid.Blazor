@@ -44,48 +44,113 @@
                 <div class="@(type == typeof(bool) && !column.ToggleSwitch ? "col-md-1" : "col-md-" + column.CrudWidth.ToString())">
                     @if (((IGridColumn<T>)column).IsSelectField.IsSelectKey)
                     {
-                        var selectedValue = column.GetFormatedValue(value);
-                        <select id="@column.FieldName" name="@column.FieldName" class="form-control" value="@selectedValue" @onchange="(e) => ChangeValue(e, column)">
-                            <option value="">@Strings.SelectItem</option>
-                            @foreach (var selectItem in ((IGridColumn<T>)column).SelectItems)
-                            {
-                                if (selectItem.Value == selectedValue)
+                        if (((IGridColumn<T>)column).ReadOnlyOnCreate(Item))
+                        {
+                            string text = ((IGridColumn<T>)column).GetFormatedValue(((IGridColumn<T>)column).IsSelectField.Expression, Item);
+                            <input id="@column.FieldName" name="@column.FieldName" class="form-control" readonly="readonly" value="@text" />
+                        }
+                        else
+                        {
+                            var selectedValue = column.GetFormatedValue(value);
+                            <select id="@column.FieldName" name="@column.FieldName" class="form-control" value="@selectedValue" @onchange="(e) => ChangeValue(e, column)">
+                                <option value="">@Strings.SelectItem</option>
+                                @foreach (var selectItem in ((IGridColumn<T>)column).SelectItems)
                                 {
-                                    <option value="@selectItem.Value" selected="selected">@selectItem.Title</option>
+                                    if (selectItem.Value == selectedValue)
+                                    {
+                                        <option value="@selectItem.Value" selected="selected">@selectItem.Title</option>
+                                    }
+                                    else
+                                    {
+                                        <option value="@selectItem.Value">@selectItem.Title</option>
+                                    }
                                 }
-                                else
-                                {
-                                    <option value="@selectItem.Value">@selectItem.Title</option>
-                                }
-                            }
-                        </select>
+                            </select>
+                        }
                     }
                     else if (((IGridColumn<T>)column).IsSelectColumn.IsSelectKey)
                     {
-                        var selectedValue = column.GetFormatedValue(value);
-                        <select id="@column.FieldName" name="@column.FieldName" class="form-control" value="@selectedValue" @onchange="(e) => ChangeValue(e, column)">
-                            <option value="">@Strings.SelectItem</option>
-                            @{       
-                                var selectItems = SelectItems.Get(column.Name);
-                                if (selectItems != null && selectItems.Count() > 0)
-                                {
-                                    foreach (var selectItem in selectItems)
+                        if (((IGridColumn<T>)column).ReadOnlyOnCreate(Item))
+                        {
+                            string text = ((IGridColumn<T>)column).GetFormatedValue(((IGridColumn<T>)column).IsSelectColumn.Expression, Item);
+                            <input id="@column.FieldName" name="@column.FieldName" class="form-control" readonly="readonly" value="@text" />
+                        }
+                        else
+                        {
+                            var selectedValue = column.GetFormatedValue(value);
+                            <select id="@column.FieldName" name="@column.FieldName" class="form-control" value="@selectedValue" @onchange="(e) => ChangeValue(e, column)">
+                                <option value="">@Strings.SelectItem</option>
+                                @{       
+                                    var selectItems = SelectItems.Get(column.Name);
+                                    if (selectItems != null && selectItems.Count() > 0)
                                     {
-                                        if (selectItem.Value == selectedValue)
+                                        foreach (var selectItem in selectItems)
                                         {
-                                            <option value="@selectItem.Value" selected="selected">@selectItem.Title</option>
-                                        }
-                                        else
-                                        {
-                                            <option value="@selectItem.Value">@selectItem.Title</option>
+                                            if (selectItem.Value == selectedValue)
+                                            {
+                                                <option value="@selectItem.Value" selected="selected">@selectItem.Title</option>
+                                            }
+                                            else
+                                            {
+                                                <option value="@selectItem.Value">@selectItem.Title</option>
+                                            }
                                         }
                                     }
                                 }
-                            }
-                        </select>
+                            </select>
+                        }
                     }
                     else
                     {
+                        if (((IGridColumn<T>)column).ReadOnlyOnUpdate(Item))
+                        {
+                            if (type == typeof(bool))
+                            {
+                                if (value != null && (bool)value == true)
+                                {
+                                    if (column.ToggleSwitch)
+                                    {
+                                        <label class="col-form-label">@column.FalseLabel</label>
+                                        <label class="grid-switch">
+                                            <input id="@column.FieldName" name="@column.FieldName" type="checkbox" class="form-control" disabled="disabled" readonly="readonly" checked="checked" value="true" />
+                                            <span class="grid-slider round"></span>
+                                        </label>
+                                        <label class="col-form-label">@column.TrueLabel</label>
+                                    }
+                                    else
+                                    {
+                                        <input id="@column.FieldName" name="@column.FieldName" type="checkbox" class="form-control" disabled="disabled" readonly="readonly" checked="checked" value="true" />
+                                    }
+                                }
+                                else
+                                {
+                                    if (column.ToggleSwitch)
+                                    {
+                                        <label class="col-form-label">@column.FalseLabel</label>
+                                        <label class="grid-switch">
+                                            <input id="@column.FieldName" name="@column.FieldName" type="checkbox" class="form-control" disabled="disabled" readonly="readonly" value="false" />
+                                            <span class="grid-slider round"></span>
+                                        </label>
+                                        <label class="col-form-label">@column.TrueLabel</label>
+                                    }
+                                    else
+                                    {
+                                        <input id="@column.FieldName" name="@column.FieldName" type="checkbox" class="form-control" disabled="disabled" readonly="readonly" value="false" />
+                                    }
+                                }
+                            }
+                            else if (type == typeof(string) && ((IGridColumn<T>)column).InputType == InputType.TextArea)
+                            {
+                                <textarea id="@column.FieldName" name="@column.FieldName" class="form-control" rows="5" readonly="readonly" value="@column.GetFormatedValue(value)" />
+                            }
+                            else
+                            {
+                                <input id="@column.FieldName" name="@column.FieldName" class="form-control" readonly="readonly" value="@column.GetFormatedValue(value)" />
+                            }
+                        }
+                        else
+                        {
+                                    
                         if (column.IsPrimaryKey && column.IsAutoGeneratedKey)
                         {
                             <input id="@column.FieldName" name="@column.FieldName" class="form-control" readonly="readonly" value="@column.GetFormatedValue(value)" />
@@ -217,6 +282,7 @@
                         <span class="field-validation-error">
                             <span>@ColumnErrors.Get(column.FieldName)</span>
                         </span>
+                        }
                     }
                 </div>
                 </div>
