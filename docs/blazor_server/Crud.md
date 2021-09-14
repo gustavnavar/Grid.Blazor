@@ -155,8 +155,8 @@ enabled | boolean to configure if the boolean field is shown as a slider
 trueLabel | optional string to define the checked value label
 falseLabel | optional string to define the unchecked value label
 
-All columns required to be included in the Update form as **read only** should be configured using the ```SetReadOnlyOnUpdate(true)``` method.
-You can also configure the "read only on update" behavior for each row depending on its values using the ```SetReadOnlyOnUpdate(Func<T, bool> readOnlyOnUpdate)``` method.
+All columns required to be included in the Create and/or Update forms as **read only** should be configured using the ```SetReadOnlyOnCreate(true)``` and ```SetReadOnlyOnUpdate(true)``` methods.
+You can also configure the "read only on create" and/or "read only on update" behaviors for each row depending on its values using the ```SetReadOnlyOnCreate(Func<T, bool> readOnlyOnUpdate)``` and ```SetReadOnlyOnUpdate(Func<T, bool> readOnlyOnUpdate)``` methods.
 
 If a column is a date that has to be shown as ```date```, ```time```, ```week```, ```month``` or ```datetime-local``` in the CRUD forms, the column definition should use the  **SetInputType** method in order to get the correct format.
 

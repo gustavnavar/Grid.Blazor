@@ -30,7 +30,7 @@
                 {
                     continue;
                 }
-                <div class="form-group row" style="@(column.CrudHidden.HasFlag(CrudHidden.CREATE)?"display:none;":"")">
+                <div class="form-group row" style="@(column.CrudHidden.HasFlag(CrudHidden.CREATE)  && !((IGridColumn<T>)column).ReadOnlyOnCreate(Item) ?"display:none;":"")">
                     @if (!string.IsNullOrWhiteSpace(column.TooltipValue))
                     {
                         <div class="col-md-@column.CrudLabelWidth.ToString()">
@@ -102,7 +102,7 @@
                     }
                     else
                     {
-                        if (((IGridColumn<T>)column).ReadOnlyOnUpdate(Item))
+                        if (((IGridColumn<T>)column).ReadOnlyOnCreate(Item))
                         {
                             if (type == typeof(bool))
                             {
@@ -289,7 +289,7 @@
             }
             else if (column.CreateComponentType != null && string.IsNullOrWhiteSpace(column.TabGroup))
             {
-                <div class="form-group row" style="@(column.CrudHidden.HasFlag(CrudHidden.CREATE) ? "display:none;" : "")">
+                <div class="form-group row" style="@(column.CrudHidden.HasFlag(CrudHidden.CREATE) && !((IGridColumn<T>)column).ReadOnlyOnCreate(Item) ? "display:none;" : "")">
                     @if (!string.IsNullOrWhiteSpace(column.TooltipValue))
                     {
                         <div class="col-md-@column.CrudLabelWidth.ToString()">
