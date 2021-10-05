@@ -26,7 +26,9 @@ namespace GridBlazor.OData
         public async Task<T> Get(params object[] keys)
         {
             string url = GetUrl(_grid, _url, keys);
-            return await _httpClient.GetFromJsonAsync<T>(url,_jsonOptions);
+            var dto = await _httpClient.GetFromJsonAsync<ODataDTO<T>>(url,_jsonOptions);
+            var e = dto.Value.FirstOrDefault();
+            return e;
         }
 
         public async Task<T> Add(T item)
