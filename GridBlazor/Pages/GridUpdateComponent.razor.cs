@@ -116,7 +116,7 @@ namespace GridBlazor.Pages
                 if (((IGridColumn<T>)column).IsSelectColumn.IsSelectKey)
                 {
                     var selectItem = await ((IGridColumn<T>)column).SelectItemExpr(Item);
-                    SelectItems.Add(column.Name, selectItem);
+                    SelectItems.AddParameter(column.Name, selectItem);
                 }
             }
 
