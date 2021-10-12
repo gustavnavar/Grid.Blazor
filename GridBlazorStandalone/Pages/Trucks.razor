@@ -1,0 +1,57 @@
+﻿@page "/trucks"
+@using GridBlazorStandalone.Models
+@using GridBlazorStandalone.Services
+@using Microsoft.Extensions.Primitives
+@using System.Globalization
+@using System.Threading.Tasks
+@inject ITruckService truckService
+
+@if (_task.IsCompleted)
+{
+    <div class="row">
+        <div class="col-md-12">
+            <GridComponent T="Truck" Grid="@_grid"></GridComponent>
+        </div>
+    </div>
+}
+else
+{
+    <p><em>Loading...</em></p>
+}
+
+@code
+{
+    private CGrid<Truck> _grid;
+    private Task _task;
+
+    public static IEnumerable<SelectItem> Types = new PersonType[] { PersonType.Driver, PersonType.Owner, PersonType.DriverAndOwner }
+               .Select(r => new SelectItem(r.ToString(), r.ToText()));
+
+    protected override async Task OnParametersSetAsync()
+    {
+        var locale = CultureInfo.CurrentCulture;
+
+        var query = new QueryDictionary<StringValues>();
+        var client = new GridClient<Truck>(q => truckService.GetTrucksGridRows(Trucks.Columns, q), 
+            query, false, "trucksGrid", Trucks.Columns, locale)
+            .Sortable()
+            .Filterable()
+            .ClearFiltersButton(true)
+            .SetStriped(true)
+            .WithMultipleFilters()
+            .WithGridItemsCount()
+            .Searchable(true, false, false);
+
+        _grid = client.Grid;
+        // Set new items to grid
+        _task = client.UpdateGrid();
+        await _task;
+    }
+
+    public static Action<IGridColumnCollection<Truck>> Columns = c =>
+    {
+        c.Add(t => t.Description).Titled("Description");
+        c.Add(t => t.Person.FullName).Titled("Person");
+        c.Add(t => t.Type).Titled("Type").RenderValueAs(r => r.Type?.ToText()).SetListFilter(Trucks.Types, true, true);
+    };
+}

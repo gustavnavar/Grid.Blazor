@@ -1,5 +1,5 @@
-﻿using GridMvc.Demo.Models;
-using GridMvc.Pagination;
+﻿using GridCore.Pagination;
+using GridMvc.Demo.Models;
 using GridMvc.Server;
 using GridShared;
 using GridShared.Utility;

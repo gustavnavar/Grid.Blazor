@@ -1,4 +1,5 @@
-﻿using GridMvc.Columns;
+﻿using GridCore.Columns;
+using GridMvc.Columns;
 using GridMvc.DataAnnotations;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;

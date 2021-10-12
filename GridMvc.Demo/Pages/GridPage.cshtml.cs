@@ -1,4 +1,5 @@
 using GridBlazor.Resources;
+using GridCore;
 using GridMvc.Demo.Components;
 using GridMvc.Demo.Models;
 using GridMvc.Demo.Resources;
@@ -27,7 +28,7 @@ namespace GridMvc.Demo.Pages
             _shippersRepository = new ShippersRepository(context);
         }
 
-        public SGrid<Order> Grid { get; set; }
+        public ISGrid<Order> Grid { get; set; }
 
         public IActionResult OnGet(string gridState = "")
         {

@@ -60,3 +60,5 @@
 **/obj/
 /northwind.db
 /GridSharedData/bin/Debug/netstandard2.1
+/GridCore/bin
+/GridCore/obj

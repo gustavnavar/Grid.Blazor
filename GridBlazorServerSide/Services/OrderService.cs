@@ -1,9 +1,8 @@
 using GridBlazorServerSide.Data;
 using GridBlazorServerSide.Models;
-using GridMvc.Server;
+using GridCore.Server;
 using GridShared;
 using GridShared.Utility;
-using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Primitives;
 using System;
@@ -27,8 +26,7 @@ namespace GridBlazorServerSide.Services
             using (var context = new NorthwindDbContext(_options))
             {
                 var repository = new OrdersRepository(context);
-                var server = new GridServer<Order>(repository.GetAll(), new QueryCollection(query),
-                    true, "ordersGrid", columns)
+                var server = new GridCoreServer<Order>(repository.GetAll(), query, true, "ordersGrid", columns)
                         .Sortable()
                         .WithPaging(10)
                         .Filterable()
@@ -53,8 +51,7 @@ namespace GridBlazorServerSide.Services
             using (var context = new NorthwindDbContext(_options))
             {
                 var repository = new OrdersRepository(context);
-                var server = new GridServer<Order>(repository.GetAll().Include(r => r.OrderDetails), new QueryCollection(query),
-                    true, "ordersGrid", columns)
+                var server = new GridCoreServer<Order>(repository.GetAll().Include(r => r.OrderDetails), query, true, "ordersGrid", columns)
                         .Sortable()
                         .WithPaging(10)
                         .Filterable()
@@ -78,8 +75,7 @@ namespace GridBlazorServerSide.Services
             using (var context = new NorthwindDbContext(_options))
             {
                 var repository = new OrdersRepository(context);
-                var server = new GridServer<Order>(repository.GetAll(), new QueryCollection(query),
-                    true, "ordersGrid", null)
+                var server = new GridCoreServer<Order>(repository.GetAll(), query, true, "ordersGrid", null)
                         .AutoGenerateColumns()
                         .Sortable()
                         .WithPaging(10)
@@ -99,8 +95,7 @@ namespace GridBlazorServerSide.Services
             using (var context = new NorthwindDbContext(_options))
             {
                 var repository = new OrdersRepository(context);
-                var server = new GridServer<Order>(repository.GetAll().ToList(), new QueryCollection(query),
-                    true, "ordersGrid", columns)
+                var server = new GridCoreServer<Order>(repository.GetAll().ToList(), query, true, "ordersGrid", columns)
                         .Sortable()
                         .WithPaging(10)
                         .Filterable()
@@ -124,8 +119,7 @@ namespace GridBlazorServerSide.Services
             using (var context = new NorthwindDbContext(_options))
             {
                 var repository = new OrdersRepository(context);
-                var server = new GridServer<Order>(repository.GetAll(), new QueryCollection(query),
-                    true, "ordersGrid", columns)
+                var server = new GridCoreServer<Order>(repository.GetAll(), query, true, "ordersGrid", columns)
                         .Sortable()
                         .WithPaging(10)
                         .Filterable()

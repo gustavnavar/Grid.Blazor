@@ -1,4 +1,5 @@
-﻿using GridMvc.Pagination;
+﻿using GridCore;
+using GridCore.Pagination;
 using GridShared;
 using Microsoft.AspNetCore.Html;
 using System;

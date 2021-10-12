@@ -1,7 +1,7 @@
-﻿@using GridMvc
-@using GridMvc.Filtering
-@using GridMvc.Pagination
-@using GridMvc.Resources
+﻿@using GridCore
+@using GridCore.Filtering
+@using GridCore.Pagination
+@using GridCore.Resources
 @using GridShared
 @using GridShared.Columns
 @using GridShared.Filtering
@@ -88,27 +88,27 @@ else
             {
                 <div class="grid-table-wrap">
                     <table class="table @(Model.RenderOptions.Striped && hasSubGrid ? "substriped" : Model.RenderOptions.Striped ? "striped" : "") grid-table">
-                    @* Draw grid header *@
-                    <thead>
-                        <tr>
-                            @if (hasSubGrid)
-                            {
-                                <th class="grid-header" style="width:20px;"></th>
-                            }
-                            @if (requiredTotalsColumn)
-                            {
-                                <th class="grid-header" style="width:60px;"></th>
-                            }
-                            @foreach (IGridColumn column in Model.Columns)
-                            {
-                                @await Html.PartialAsync("_GridHeader", column)
-                            }
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @await Html.PartialAsync("_GridBody", Model)
-                    </tbody>
-                </table>
+                        @* Draw grid header *@
+                        <thead>
+                            <tr>
+                                @if (hasSubGrid)
+                                {
+                                    <th class="grid-header" style="width:20px;"></th>
+                                }
+                                @if (requiredTotalsColumn)
+                                {
+                                    <th class="grid-header" style="width:60px;"></th>
+                                }
+                                @foreach (IGridColumn column in Model.Columns)
+                                {
+                                    @await Html.PartialAsync("_GridHeader", column)
+                                }
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @await Html.PartialAsync("_GridBody", Model)
+                        </tbody>
+                    </table>
                 </div>
             }
             else

@@ -385,17 +385,17 @@ namespace GridBlazor
         /// <summary>
         ///     Get value for table layout
         /// </summary>
-        public TableLayout TableLayout { get; internal set; } = TableLayout.Auto;
+        public TableLayout TableLayout { get; set; } = TableLayout.Auto;
 
         /// <summary>
         ///     Get value for table width
         /// </summary>
-        public string Width { get; internal set; } = "auto";
+        public string Width { get; set; } = "auto";
 
         /// <summary>
         ///     Get value for table height
         /// </summary>
-        public string Height { get; internal set; } = "auto";
+        public string Height { get; set; } = "auto";
 
         /// <summary>
         ///     Get and set export to an Excel file

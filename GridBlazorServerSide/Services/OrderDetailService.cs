@@ -1,9 +1,8 @@
 using GridBlazorServerSide.Data;
 using GridBlazorServerSide.Models;
-using GridMvc.Server;
+using GridCore.Server;
 using GridShared;
 using GridShared.Utility;
-using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Primitives;
 using System;
@@ -28,8 +27,7 @@ namespace GridBlazorServerSide.Services
                 int orderId;
                 int.TryParse(keys[0].ToString(), out orderId);
                 var repository = new OrderDetailsRepository(context);
-                var server = new GridServer<OrderDetail>(repository.GetForOrder(orderId), new QueryCollection(query),
-                    true, "orderDetailssGrid" + keys[0].ToString(), columns)
+                var server = new GridCoreServer<OrderDetail>(repository.GetForOrder(orderId), query, true, "orderDetailssGrid" + keys[0].ToString(), columns)
                         .Sortable()
                         .WithPaging(10)
                         .Filterable()

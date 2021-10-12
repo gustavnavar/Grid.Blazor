@@ -1,8 +1,8 @@
-﻿using GridMvc.Demo.Components;
+﻿using GridCore.Pagination;
+using GridCore.Resources;
+using GridMvc.Demo.Components;
 using GridMvc.Demo.Models;
 using GridMvc.Demo.Resources;
-using GridMvc.Pagination;
-using GridMvc.Resources;
 using GridMvc.Server;
 using GridShared;
 using GridShared.Filtering;

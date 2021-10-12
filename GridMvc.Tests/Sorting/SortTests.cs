@@ -1,14 +1,15 @@
-﻿using GridShared.Sorting;
-using GridMvc.Filtering;
+﻿using GridCore;
+using GridCore.Filtering;
+using GridCore.Searching;
+using GridShared.Sorting;
+using GridShared.Utility;
 using Microsoft.AspNetCore.Http;
+using Microsoft.Extensions.Primitives;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using GridMvc.Searching;
-using GridShared.Utility;
-using Microsoft.Extensions.Primitives;
 
 namespace GridMvc.Tests.Sorting
 {

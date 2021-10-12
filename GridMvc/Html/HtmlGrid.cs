@@ -39,6 +39,7 @@ namespace GridMvc.Html
         public bool EnablePaging
         {
             get { return _source.EnablePaging; }
+            set { _source.EnablePaging = value; }
         }
 
         bool IGrid.SearchingEnabled {
@@ -78,11 +79,13 @@ namespace GridMvc.Html
         public string EmptyGridText
         {
             get { return _source.EmptyGridText; }
+            set { _source.EmptyGridText = value; }
         }
 
         public string Language
         {
             get { return _source.Language; }
+            set { _source.Language = value; }
         }
 
         public ISanitizer Sanitizer
@@ -124,16 +127,19 @@ namespace GridMvc.Html
         public TableLayout TableLayout
         {
             get { return _source.TableLayout; }
+            set { _source.TableLayout = value; }
         }
 
         public string Width
         {
             get { return _source.Width; }
+            set { _source.Width = value; }
         }
 
         public string Height
         {
             get { return _source.Height; }
+            set { _source.Height = value; }
         }
 
         string IGrid.GetRowCssClasses(object item)

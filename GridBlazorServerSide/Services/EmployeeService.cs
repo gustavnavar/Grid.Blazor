@@ -1,9 +1,8 @@
 using GridBlazorServerSide.Data;
 using GridBlazorServerSide.Models;
-using GridMvc.Server;
+using GridCore.Server;
 using GridShared;
 using GridShared.Utility;
-using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Primitives;
 using System;
@@ -28,8 +27,7 @@ namespace GridBlazorServerSide.Services
             using (var context = new NorthwindDbContext(_options))
             {
                 var repository = new EmployeeRepository(context);
-                var server = new GridServer<Employee>(repository.GetAll(), new QueryCollection(query),
-                    true, "employeesGrid", columns)
+                var server = new GridCoreServer<Employee>(repository.GetAll(), query, true, "employeesGrid", columns)
                         .Sortable()
                         .WithPaging(10)
                         .Filterable()

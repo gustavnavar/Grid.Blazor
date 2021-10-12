@@ -1,8 +1,7 @@
 ﻿using GridBlazorServerSide.Models;
-using GridMvc.Server;
+using GridCore.Server;
 using GridShared;
 using GridShared.Utility;
-using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Primitives;
 using System;
 using System.Collections.Generic;
@@ -15,8 +14,7 @@ namespace GridBlazorServerSide.Services
         public ItemsDTO<Truck> GetTrucksGridRows(Action<IGridColumnCollection<Truck>> columns,
             QueryDictionary<StringValues> query)
         {
-            var server = new GridServer<Truck>(GetAll(), new QueryCollection(query),
-                    true, "trucksGrid", columns)
+            var server = new GridCoreServer<Truck>(GetAll(), query, true, "trucksGrid", columns)
                         .Sortable()
                         .WithPaging(10)
                         .Filterable()

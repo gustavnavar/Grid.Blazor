@@ -1,0 +1,78 @@
+﻿@page "/checkbox"
+@using GridBlazorStandalone.ColumnCollections
+@using GridBlazorStandalone.Models
+@using GridBlazorStandalone.Services
+@using Microsoft.Extensions.Primitives
+@using System.Globalization
+@using System.Threading.Tasks
+@inject IOrderService orderService
+
+<h1>Grid Sample</h1>
+
+<p>
+    This page contains a grid with a checkbox column
+</p>
+
+<p>
+    This component demonstrates an standalone GridBlazor client-side grid. For more information, please see: <a href="https://github.com/gustavnavar/Grid.Blazor">https://github.com/gustavnavar/Grid.Blazor</a>
+</p>
+
+@if (_task.IsCompleted)
+{
+    <div class="row mb-3">
+        <button type="button" class="btn btn-primary" @onclick="ButtonHandler" @onclick:stopPropagation>Change First</button>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <GridComponent @ref="component" T="Order" Grid="@_grid"></GridComponent>
+        </div>
+    </div>
+}
+else
+{
+    <p><em>Loading...</em></p>
+}
+
+@code
+{
+    private CGrid<Order> _grid;
+    private Task _task;
+    private GridComponent<Order> component;
+    private bool _shouldRender = false;
+
+    protected override async Task OnParametersSetAsync()
+    {
+        var locale = CultureInfo.CurrentCulture;
+
+        var query = new QueryDictionary<StringValues>();
+        var client = new GridClient<Order>(q => orderService.GetOrdersGridRows(ColumnCollections.OrderColumnsCheckbox, q), query, 
+            false, "ordersGrid", ColumnCollections.OrderColumnsCheckbox, locale)
+            .Sortable()
+            .Filterable()
+            .SetStriped(true)
+            .WithMultipleFilters()
+            .WithGridItemsCount();
+
+        _grid = client.Grid;
+        // Set new items to grid
+        _task = client.UpdateGrid();
+        await _task;
+        _shouldRender = true;
+    }
+
+    protected override void OnAfterRender(bool firstRender)
+    {
+        _shouldRender = false;
+    }
+
+    protected override bool ShouldRender()
+    {
+        return _shouldRender;
+    }
+
+    public async Task ButtonHandler()
+    {
+        var checkedRows = component.Checkboxes.Get("CheckboxColumn");
+        await checkedRows[0].SetChecked(!checkedRows[0].IsChecked());
+    }
+}

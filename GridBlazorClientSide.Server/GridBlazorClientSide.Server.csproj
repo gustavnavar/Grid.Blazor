@@ -12,7 +12,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\GridBlazorClientSide.Client\GridBlazorClientSide.Client.csproj" />
-    <ProjectReference Include="..\GridMvc\GridMvc.csproj" />
+    <ProjectReference Include="..\GridCore\GridCore.csproj" />
     <ProjectReference Include="..\GridSharedData\GridSharedData.csproj" />
   </ItemGroup>
 

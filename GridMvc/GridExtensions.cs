@@ -9,21 +9,20 @@ using System.Collections.Generic;
 using System.IO;
 using System.Text.Encodings.Web;
 using Microsoft.AspNetCore.Http;
+using GridCore;
 
 namespace GridMvc
 {
     public static class GridExtensions
     {
-        internal const string DefaultPartialViewName = "_Grid";
-
         public static HtmlGrid<T> Grid<T>(this IHtmlHelper helper, IEnumerable<T> items, IViewEngine viewEngine = null)
         {
-            return Grid(helper, items, DefaultPartialViewName);
+            return Grid(helper, items, GridRenderOptions.DefaultPartialViewName);
         }
 
         public static HtmlGrid<T> Grid<T>(this IHtmlHelper helper, IEnumerable<T> items, IQueryCollection query, IViewEngine viewEngine = null)
         {
-            return Grid(helper, items, query, DefaultPartialViewName);
+            return Grid(helper, items, query, GridRenderOptions.DefaultPartialViewName);
         }
 
         public static HtmlGrid<T> Grid<T>(this IHtmlHelper helper, IEnumerable<T> items, string viewName, IViewEngine viewEngine = null)
@@ -43,7 +42,7 @@ namespace GridMvc
         public static HtmlGrid<T> Grid<T>(this IHtmlHelper helper, SGrid<T> sourceGrid, IViewEngine viewEngine = null)
         {
             //wrap source grid:
-            var htmlGrid = new HtmlGrid<T>(helper, sourceGrid, DefaultPartialViewName);
+            var htmlGrid = new HtmlGrid<T>(helper, sourceGrid, GridRenderOptions.DefaultPartialViewName);
             return htmlGrid;
         }
 

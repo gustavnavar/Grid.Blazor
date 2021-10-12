@@ -27,7 +27,7 @@ namespace GridShared
         /// <summary>
         ///     Enable paging view
         /// </summary>
-        bool EnablePaging { get; }
+        bool EnablePaging { get; set; }
 
         /// <summary>
         ///     Set or get default value of searching
@@ -62,12 +62,12 @@ namespace GridShared
         /// <summary>
         ///     Text in empty grid (no items for display)
         /// </summary>
-        string EmptyGridText { get; }
+        string EmptyGridText { get; set; }
 
         /// <summary>
         ///     Returns the current Grid language
         /// </summary>
-        string Language { get; }
+        string Language { get; set; }
 
         /// <summary>
         ///     Object that sanitize grid column values from dangerous content
@@ -102,17 +102,17 @@ namespace GridShared
         /// <summary>
         ///     Get value for table layout
         /// </summary>
-        TableLayout TableLayout { get; }
+        TableLayout TableLayout { get; set; }
 
         /// <summary>
         ///     Get value for table width
         /// </summary>
-        string Width { get; }
+        string Width { get; set; }
 
         /// <summary>
         ///     Get value for table height
         /// </summary>
-        string Height { get; }
+        string Height { get; set; }
 
         /// <summary>
         ///     Get all css classes mapped to the item

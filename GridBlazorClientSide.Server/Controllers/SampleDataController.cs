@@ -2,7 +2,7 @@
 using GridBlazorClientSide.Client.Pages;
 using GridBlazorClientSide.Server.Models;
 using GridBlazorClientSide.Shared.Models;
-using GridMvc.Server;
+using GridCore.Server;
 using GridShared;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -27,7 +27,7 @@ namespace GridBlazorClientSide.Server.Controllers
         public ActionResult GetOrdersGrid()
         {
             var repository = new OrdersRepository(_context);
-            IGridServer<Order> server = new GridServer<Order>(repository.GetAll(), Request.Query,
+            IGridServer<Order> server = new GridCoreServer<Order>(repository.GetAll(), Request.Query,
                 true, "ordersGrid", ColumnCollections.OrderColumns)
                     .WithPaging(10)
                     .Sortable()
@@ -43,7 +43,7 @@ namespace GridBlazorClientSide.Server.Controllers
         public ActionResult GetOrdersGridordersAutoGenerateColumns()
         {
             var repository = new OrdersRepository(_context);
-            IGridServer<Order> server = new GridServer<Order>(repository.GetAll(), Request.Query,
+            IGridServer<Order> server = new GridCoreServer<Order>(repository.GetAll(), Request.Query,
                 true, "ordersGrid", null)
                     .AutoGenerateColumns()
                     .WithPaging(10)
@@ -60,7 +60,7 @@ namespace GridBlazorClientSide.Server.Controllers
         public ActionResult GetOrdersGridWithTotals()
         {
             var repository = new OrdersRepository(_context);
-            IGridServer<Order> server = new GridServer<Order>(repository.GetAll(), Request.Query,
+            IGridServer<Order> server = new GridCoreServer<Order>(repository.GetAll(), Request.Query,
                 true, "ordersGrid", ColumnCollections.OrderColumnsWithTotals)
                     .WithPaging(10)
                     .Sortable()
@@ -76,7 +76,7 @@ namespace GridBlazorClientSide.Server.Controllers
         public ActionResult GetOrdersGridWithCount()
         {
             var repository = new OrdersRepository(_context);
-            IGridServer<Order> server = new GridServer<Order>(repository.GetAll().Include(r => r.OrderDetails), Request.Query,
+            IGridServer<Order> server = new GridCoreServer<Order>(repository.GetAll().Include(r => r.OrderDetails), Request.Query,
                 true, "ordersGrid", ColumnCollections.OrderColumnsCount)
                     .WithPaging(10)
                     .Sortable()
@@ -92,7 +92,7 @@ namespace GridBlazorClientSide.Server.Controllers
         public ActionResult GetOrdersGridSearchable()
         {
             var repository = new OrdersRepository(_context);
-            IGridServer<Order> server = new GridServer<Order>(repository.GetAll(), Request.Query,
+            IGridServer<Order> server = new GridCoreServer<Order>(repository.GetAll(), Request.Query,
                 true, "ordersGrid", ColumnCollections.OrderColumns)
                     .WithPaging(10)
                     .Sortable()
@@ -109,7 +109,7 @@ namespace GridBlazorClientSide.Server.Controllers
         public ActionResult GetOrdersGridGroupable()
         {
             var repository = new OrdersRepository(_context);
-            IGridServer<Order> server = new GridServer<Order>(repository.GetAll(), Request.Query,
+            IGridServer<Order> server = new GridCoreServer<Order>(repository.GetAll(), Request.Query,
                 true, "ordersGrid", ColumnCollections.OrderColumnsGroupable)
                     .WithPaging(10)
                     .Sortable()
@@ -126,7 +126,7 @@ namespace GridBlazorClientSide.Server.Controllers
         public ActionResult GetOrdersGridWithSubgrids()
         {
             var repository = new OrdersRepository(_context);
-            IGridServer<Order> server = new GridServer<Order>(repository.GetAll(), Request.Query,
+            IGridServer<Order> server = new GridCoreServer<Order>(repository.GetAll(), Request.Query,
                 true, "ordersGrid", ColumnCollections.OrderColumnsWithSubgrids)
                     .WithPaging(10)
                     .Sortable()
@@ -142,7 +142,7 @@ namespace GridBlazorClientSide.Server.Controllers
         public ActionResult OrderColumnsWithEdit()
         {
             var repository = new OrdersRepository(_context);
-            IGridServer<Order> server = new GridServer<Order>(repository.GetAll(), Request.Query,
+            IGridServer<Order> server = new GridCoreServer<Order>(repository.GetAll(), Request.Query,
                 true, "ordersGrid", c => ColumnCollections.OrderColumnsWithEdit(c, null, null))
                     .WithPaging(10)
                     .Sortable()
@@ -158,7 +158,7 @@ namespace GridBlazorClientSide.Server.Controllers
         public ActionResult OrderColumnsWithCrud()
         {
             var repository = new OrdersRepository(_context);
-            IGridServer<Order> server = new GridServer<Order>(repository.GetAll(), Request.Query,
+            IGridServer<Order> server = new GridCoreServer<Order>(repository.GetAll(), Request.Query,
                 true, "ordersGrid", c => ColumnCollections.OrderColumnsWithCrud(c, null))
                     .WithPaging(10)
                     .Sortable()
@@ -174,7 +174,7 @@ namespace GridBlazorClientSide.Server.Controllers
         public ActionResult OrderColumnsWithSubgridCrud()
         {
             var repository = new OrdersRepository(_context);
-            IGridServer<Order> server = new GridServer<Order>(repository.GetAll(), Request.Query,
+            IGridServer<Order> server = new GridCoreServer<Order>(repository.GetAll(), Request.Query,
                 true, "ordersGrid", c => ColumnCollections.OrderColumnsWithNestedCrud(c, null, null))
                     .WithPaging(10)
                     .Sortable()
@@ -194,7 +194,7 @@ namespace GridBlazorClientSide.Server.Controllers
                 return BadRequest();
 
             var repository = new OrdersRepository(_context);
-            IGridServer<Order> server = new GridServer<Order>(repository.GetAll(), Request.Query,
+            IGridServer<Order> server = new GridCoreServer<Order>(repository.GetAll(), Request.Query,
                 true, "ordersGrid", ColumnCollections.OrderColumns)
                     .WithPaging(10)
                     .Sortable()
@@ -210,7 +210,7 @@ namespace GridBlazorClientSide.Server.Controllers
         public ActionResult GetOrdersGridAllFeatures()
         {
             var repository = new OrdersRepository(_context);
-            IGridServer<Order> server = new GridServer<Order>(repository.GetAll(), Request.Query,
+            IGridServer<Order> server = new GridCoreServer<Order>(repository.GetAll(), Request.Query,
                 true, "ordersGrid", c => ColumnCollections.OrderColumnsAllFeatures(c, null, null, null))
                     .WithPaging(10)
                     .Sortable()
@@ -274,7 +274,7 @@ namespace GridBlazorClientSide.Server.Controllers
         {
             var orderDetails = (new OrderDetailsRepository(_context)).GetForOrder(OrderId);
 
-            var server = new GridServer<OrderDetail>(orderDetails, Request.Query,
+            var server = new GridCoreServer<OrderDetail>(orderDetails, Request.Query,
                     false, "orderDetailsGrid" + OrderId.ToString(), ColumnCollections.OrderDetailColumns)
                         .WithPaging(10)
                         .Sortable()
@@ -290,7 +290,7 @@ namespace GridBlazorClientSide.Server.Controllers
         {
             var orderDetails = (new OrderDetailsRepository(_context)).GetForOrder(OrderId);
 
-            var server = new GridServer<OrderDetail>(orderDetails, Request.Query,
+            var server = new GridCoreServer<OrderDetail>(orderDetails, Request.Query,
                     false, "orderDetailsGrid" + OrderId.ToString(), c => ColumnCollections.OrderDetailColumnsCrud(c, null))
                         .WithPaging(10)
                         .Sortable()
@@ -306,7 +306,7 @@ namespace GridBlazorClientSide.Server.Controllers
         {
             var orderDetails = (new OrderDetailsRepository(_context)).GetForOrder(OrderId);
 
-            var server = new GridServer<OrderDetail>(orderDetails, Request.Query,
+            var server = new GridCoreServer<OrderDetail>(orderDetails, Request.Query,
                     false, "orderDetailsGrid" + OrderId.ToString(), c => ColumnCollections.OrderDetailColumnsAllFeatures(c, null))
                         .WithPaging(10)
                         .Sortable()
@@ -321,7 +321,7 @@ namespace GridBlazorClientSide.Server.Controllers
         public ActionResult GetCustomersGrid()
         {
             var repository = new CustomersRepository(_context);
-            IGridServer<Customer> server = new GridServer<Customer>(repository.GetAll(), Request.Query,
+            IGridServer<Customer> server = new GridCoreServer<Customer>(repository.GetAll(), Request.Query,
                 true, "customersGrid", ColumnCollections.CustomersColumns)
                     .WithPaging(10)
                     .Sortable()
@@ -401,7 +401,7 @@ namespace GridBlazorClientSide.Server.Controllers
         public ActionResult GetEmployeesGrid()
         {
             var repository = new EmployeeRepository(_context);
-            IGridServer<Employee> server = new GridServer<Employee>(repository.GetAll(), Request.Query,
+            IGridServer<Employee> server = new GridCoreServer<Employee>(repository.GetAll(), Request.Query,
                 true, "employeesGrid", ColumnCollections.EmployeeColumns)
                     .WithPaging(10)
                     .Sortable()
@@ -444,7 +444,7 @@ namespace GridBlazorClientSide.Server.Controllers
         public ActionResult GetTrucksGrid()
         {
             var repository = new EmployeeRepository(_context);
-            IGridServer<Truck> server = new GridServer<Truck>(GetAllTrucks(), Request.Query,
+            IGridServer<Truck> server = new GridCoreServer<Truck>(GetAllTrucks(), Request.Query,
                 true, "trucksGrid", Trucks.Columns)
                     .WithPaging(10)
                     .Sortable()

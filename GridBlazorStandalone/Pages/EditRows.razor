@@ -1,0 +1,88 @@
+﻿@page "/editrows"
+@page "/editrows/{GridState}"
+@using GridBlazorStandalone.ColumnCollections
+@using GridBlazorStandalone.Models
+@using GridBlazorStandalone.Services
+@using Microsoft.Extensions.Primitives
+@using System.Globalization
+@using System.Threading.Tasks
+@inject IOrderService orderService
+
+<h1>Edit rows</h1>
+
+<p>
+    This page contains a grid that allows order edit. Its grid state is passed to the edit page, so it can be returned to this page mantaining the grid state.
+</p>
+
+<p>
+    This component demonstrates an standalone GridBlazor client-side grid. For more information, please see: <a href="https://github.com/gustavnavar/Grid.Blazor">https://github.com/gustavnavar/Grid.Blazor</a>
+</p>
+
+@if (_task.IsCompleted)
+{
+    <div class="row">
+        <div class="col-md-12">
+            <GridComponent @ref="Component" T="Order" Grid="@_grid"></GridComponent>
+        </div>
+    </div>
+}
+else
+{
+    <p><em>Loading...</em></p>
+}
+
+@code
+{
+    private CGrid<Order> _grid;
+    private Task _task;
+    private GridComponent<Order> Component;
+
+    [Parameter]
+    public string GridState { get; set; }
+
+    protected override async Task OnParametersSetAsync()
+    {
+        var locale = CultureInfo.CurrentCulture;
+
+        // build the column collection passing the return url string
+        Action<IGridColumnCollection<Order>> columns = c =>
+            ColumnCollections.OrderColumnsWithEdit(c, new List<Func<object, Task>>() { MyFirstFunction, MySecondFunction },
+                "editrows");
+
+        var query = new QueryDictionary<StringValues>();
+        if (!string.IsNullOrWhiteSpace(GridState))
+        {
+            try
+            {
+                query = StringExtensions.GetQuery(GridState);
+            }
+            catch (Exception)
+            {
+                // do nothing, GridState was not a valid state
+            }
+        }
+        var client = new GridClient<Order>(q => orderService.GetOrdersGridRows(columns, q), query, false, "ordersGrid", columns, locale)
+            .Sortable()
+            .Filterable()
+            .SetStriped(true)
+            .WithMultipleFilters()
+            .WithGridItemsCount();
+
+        _grid = client.Grid;
+        // Set new items to grid
+        _task = client.UpdateGrid();
+        await _task;
+    }
+
+    private async Task MyFirstFunction(object item)
+    {
+        await orderService.Add1ToFreight(((Order)item).OrderID);
+        await Component.UpdateGrid();
+    }
+
+    private async Task MySecondFunction(object item)
+    {
+        await orderService.Subtract1ToFreight(((Order)item).OrderID);
+        await Component.UpdateGrid();
+    }
+}

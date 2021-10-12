@@ -1,4 +1,4 @@
-﻿using GridMvc.Pagination;
+﻿using GridCore.Pagination;
 using GridShared.Utility;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Primitives;

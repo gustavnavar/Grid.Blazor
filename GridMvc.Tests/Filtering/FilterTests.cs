@@ -1,5 +1,6 @@
-﻿using GridMvc.Searching;
-using GridMvc.Sorting;
+﻿using GridCore;
+using GridCore.Searching;
+using GridCore.Sorting;
 using GridShared.Filtering;
 using GridShared.Utility;
 using Microsoft.AspNetCore.Http;
