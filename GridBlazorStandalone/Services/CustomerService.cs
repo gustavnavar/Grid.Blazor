@@ -82,8 +82,7 @@ namespace GridBlazorStandalone.Services
             var customer = Customers.SingleOrDefault(r => r.CustomerID == item.CustomerID);
             if (customer != null)
             {
-                Customers.Remove(customer);
-                Customers.Add(item);
+                customer = item;
                 await Task.CompletedTask;
             }
             else

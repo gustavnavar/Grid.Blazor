@@ -153,8 +153,7 @@ namespace GridBlazorStandalone.Services
             var order = Orders.SingleOrDefault(r => r.OrderID == item.OrderID);
             if (order != null)
             {
-                Orders.Remove(order);
-                Orders.Add(item);
+                order = item;
                 await Task.CompletedTask;
             }
             else

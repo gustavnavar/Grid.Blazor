@@ -79,8 +79,7 @@ namespace GridBlazorStandalone.Services
             var shipper = Shippers.SingleOrDefault(r => r.ShipperID == item.ShipperID);
             if (shipper != null)
             {
-                Shippers.Remove(shipper);
-                Shippers.Add(item);
+                shipper = item;
                 await Task.CompletedTask;
             }
             else

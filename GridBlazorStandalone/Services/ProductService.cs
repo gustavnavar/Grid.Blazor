@@ -78,8 +78,7 @@ namespace GridBlazorStandalone.Services
             var product = Products.SingleOrDefault(r => r.ProductID == item.ProductID);
             if (product != null)
             {
-                Products.Remove(product);
-                Products.Add(item);
+                product = item;
                 await Task.CompletedTask;
             }
             else

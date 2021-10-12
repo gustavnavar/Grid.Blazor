@@ -84,8 +84,7 @@ namespace GridBlazorStandalone.Services
             var employee = Employees.SingleOrDefault(r => r.EmployeeID == item.EmployeeID);
             if (employee != null)
             {
-                Employees.Remove(employee);
-                Employees.Add(item);
+                employee = item;
                 await Task.CompletedTask;
             }
             else

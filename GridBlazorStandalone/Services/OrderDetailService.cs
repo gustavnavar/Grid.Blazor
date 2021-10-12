@@ -95,8 +95,7 @@ namespace GridBlazorStandalone.Services
             var orderDetail = OrderDetails.SingleOrDefault(r => r.OrderID == item.OrderID && r.ProductID == item.ProductID);
             if (orderDetail != null)
             {
-                OrderDetails.Remove(orderDetail);
-                OrderDetails.Add(item);
+                orderDetail = item;
                 await Task.CompletedTask;
             }
             else
