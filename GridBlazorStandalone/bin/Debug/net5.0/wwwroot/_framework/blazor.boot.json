@@ -3,7 +3,7 @@
   "config": [ ],
   "debugBuild": true,
   "entryAssembly": "GridBlazorStandalone",
-  "icuDataMode": 0,
+  "icuDataMode": 1,
   "linkerEnabled": false,
   "resources": {
     "assembly": {
@@ -42,8 +42,6 @@
       "Microsoft.Extensions.Primitives.dll": "sha256-f2PgoftqEkKRuuiAk6S1MHygOuqZBHzB0HOB3vR93TU=",
       "Microsoft.JSInterop.dll": "sha256-tDvn5GW+7NGvLe6n9\/tTh669tukuSpdtM4Oxhjs9GNY=",
       "Microsoft.JSInterop.WebAssembly.dll": "sha256-TZF2KGZRSev\/gMKjN7GoplW2xZPrK+yI4lECdonDwC4=",
-      "Microsoft.Win32.SystemEvents.dll": "sha256-QV6B1p\/dQJO7qHvPN0JZr5UKKFp+s9zZSnViNcpgVN8=",
-      "System.Drawing.Common.dll": "sha256-7uPT5rut3tQSDW1wIYatIZCwr80dn7EjO3JUFel1bS0=",
       "System.IO.Packaging.dll": "sha256-giT6HwwUyd8\/EV3Bolo6APHDQKOExNFqmItX8S06Hyw=",
       "System.IO.Pipelines.dll": "sha256-3ET+mpR7F058YRj9YaLHOVXBqOW6iUxtIpeiKPYw4PA=",
       "Microsoft.CSharp.dll": "sha256-SEwnf+OVKlIODJVwpgEv6vIGOQgiwk4qjESezL0QxA8=",
@@ -214,14 +212,14 @@
       "GridBlazor.dll": "sha256-hjTlrxDm\/+9h4HyrJfY7gfiVBFjgfGqQEapBePx7SVw=",
       "GridCore.dll": "sha256-N0Di3s49wk15OSJl50SDzigAUsa7jPwp6S5RdBTN+7g=",
       "GridShared.dll": "sha256-9fIgL0MxHgpiyb878vki\/8r2FaE08oF0l2rakPVo6vk=",
-      "GridBlazorStandalone.dll": "sha256-UiJNCzFp9fgNHrruVmqutaaOhWDtLmbX04R7IRE8l98="
+      "GridBlazorStandalone.dll": "sha256-5oFB+4uEFlqbhAdlCJlA4KHma8EHpNedLrxwgQyoPgQ="
     },
     "lazyAssembly": null,
     "pdb": {
       "GridBlazor.pdb": "sha256-NvO6W2wVRiNgPGNAfBUEIYqjfU\/XFx4dyCAOIOPAoi8=",
       "GridCore.pdb": "sha256-rafJfECyZ\/obspdV3Xel30hs9NWQQQrtC3KJwG+Hpdo=",
       "GridShared.pdb": "sha256-DlvSg1aVArftySfICVVQW3\/ubaKd+eu35I+bh6qzhEE=",
-      "GridBlazorStandalone.pdb": "sha256-C7Fs8pq5ixlbee9q41UWrDObMJCMe\/Jh3sLODMxmhxc="
+      "GridBlazorStandalone.pdb": "sha256-CMgnIZHO6+XyQEW5H+kkmuX9Iv96eQacWvS7+prhDUc="
     },
     "runtime": {
       "dotnet.timezones.blat": "sha256-PvlHrby1PYtdX46ITs6pB8iDNqXNcewh8Eoa\/Gm2+GM=",
@@ -234,42 +232,42 @@
     },
     "satelliteResources": {
       "cs-CZ": {
-        "cs-CZ\/GridBlazorStandalone.resources.dll": "sha256-Qy2oXIpFu+lXt2x7knewuVERAjGCz+OGvgz1IRtSoOM="
+        "cs-CZ\/GridBlazorStandalone.resources.dll": "sha256-z9W1i\/RPRn8XB0uCLBywnKvckqd4nhDqFWLFagpM5zs="
       },
       "de-DE": {
-        "de-DE\/GridBlazorStandalone.resources.dll": "sha256-PlhX2mwQbRHvOlV2f91iO3xmIb1lNgzH5lT\/KkCv4JE="
+        "de-DE\/GridBlazorStandalone.resources.dll": "sha256-UF4MfWTRHvJqCPcjsn0GKCBl\/zxbSeymnuOfygfPY44="
       },
       "es-ES": {
-        "es-ES\/GridBlazorStandalone.resources.dll": "sha256-20UtLg9ArwT07w+fafgJJ\/kPdkVWyXinA+k0Ov3y0uE="
+        "es-ES\/GridBlazorStandalone.resources.dll": "sha256-zK55VFTaEMsF8izQdM4Lp7zWJp+ooU1BfYH1uihD\/aM="
       },
       "fr-FR": {
-        "fr-FR\/GridBlazorStandalone.resources.dll": "sha256-EwPz5JQTUaNs52qY+iHF1qHtC8tiMQiuu9HgpzXphRI="
+        "fr-FR\/GridBlazorStandalone.resources.dll": "sha256-seGc2FBmFEpEsPZ92AHUQtYvW919neRl36MYFdB3J5c="
       },
       "hr-HR": {
-        "hr-HR\/GridBlazorStandalone.resources.dll": "sha256-Es8XBzIh4ZP6tRDqSU07i82NJRkIeIHVh0ItxtGPEiw="
+        "hr-HR\/GridBlazorStandalone.resources.dll": "sha256-fNryhkKw8tLz44Zi0PLAvrJgZ3kpHR460Ha83PWSKck="
       },
       "it-IT": {
-        "it-IT\/GridBlazorStandalone.resources.dll": "sha256-5Fir3zbKkVrlyCE5kZnLh3snPkaloidWDhoGTk+8tAc="
+        "it-IT\/GridBlazorStandalone.resources.dll": "sha256-+i+LQzwDvTV4UQmkpx7j1J8XjBmSIMf7Q\/92cDkfJxs="
       },
       "nb-NO": {
-        "nb-NO\/GridBlazorStandalone.resources.dll": "sha256-AjG4wuohRsEYg\/ce\/pz62dMyH4MvOwzRgRMQKHqyf\/4=",
+        "nb-NO\/GridBlazorStandalone.resources.dll": "sha256-klKI0RR9s5a2+665\/a9Ej2pYhzpVjfW6KzPYj8AEGhs=",
         "nb-NO\/GridBlazor.resources.dll": "sha256-rKQI+IfhCcopmmmBCblno9ts2fnGZTihWYLr2rI1W\/I=",
         "nb-NO\/GridCore.resources.dll": "sha256-TgDUX3G8Tz5\/c+0xSw1Dc0N2LkoRC98mxI5HFyaLG58="
       },
       "nl-NL": {
-        "nl-NL\/GridBlazorStandalone.resources.dll": "sha256-nPU5zygFaApZPYqouOKcMWHx1ssAcT36qqFOxr3f7p8="
+        "nl-NL\/GridBlazorStandalone.resources.dll": "sha256-DLNicKosUzZz8MM8tsnPEG3agUsslFDF5jxzOcY+TIU="
       },
       "ru-RU": {
-        "ru-RU\/GridBlazorStandalone.resources.dll": "sha256-XLkaO33JhoCPdlxxxWqFr9\/2Iw3k3Ncnwq0jFYeIPsw="
+        "ru-RU\/GridBlazorStandalone.resources.dll": "sha256-tS8vHqRbdk0ngjW7tHbaYZmtd9DZrhUNdF1uygAxiuo="
       },
       "se-SE": {
-        "se-SE\/GridBlazorStandalone.resources.dll": "sha256-uMh\/JEocO\/5+nRBI99LHkf4wSlHSbCfkcmfBq6+iGEI="
+        "se-SE\/GridBlazorStandalone.resources.dll": "sha256-7eo28WyaBzywn0NMgxZHvO9WV+cZlWJ\/R+PUI1cxjWQ="
       },
       "sl-SI": {
-        "sl-SI\/GridBlazorStandalone.resources.dll": "sha256-wcXZBjNb2akOJCuFtGRSkQZ+9AQ7TOragOOgtAOpT3M="
+        "sl-SI\/GridBlazorStandalone.resources.dll": "sha256-zVkNvZmEarvWqzTKbBqWJt+xWdMijSkkmHiUkoCycG8="
       },
       "tr-TR": {
-        "tr-TR\/GridBlazorStandalone.resources.dll": "sha256-wrvOf1D1AGeXFaO0M71JwMVhdmOW7zMu48jOKyzd7vU="
+        "tr-TR\/GridBlazorStandalone.resources.dll": "sha256-qh8uxmxSNkv4C\/qkpIyvVKcjWjVDyfR9m889EOjDtDI="
       },
       "bg": {
         "bg\/GridBlazor.resources.dll": "sha256-j1uo6ZiHpp3Qk+lK8wa8BkBvvo6M7R48iNlYEK542VE=",

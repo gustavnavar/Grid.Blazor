@@ -2,15 +2,8 @@
 
   <PropertyGroup>
     <TargetFramework>net5.0</TargetFramework>
+    <BlazorWebAssemblyLoadAllGlobalizationData>true</BlazorWebAssemblyLoadAllGlobalizationData>
   </PropertyGroup>
-
-  <ItemGroup>
-    <Content Remove="wwwroot\sample-data\northwind.db" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <EmbeddedResource Include="wwwroot\sample-data\northwind.db" />
-  </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="BlazorStrap" Version="1.3.3" />
