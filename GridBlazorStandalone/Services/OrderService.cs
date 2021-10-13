@@ -136,9 +136,20 @@ namespace GridBlazorStandalone.Services
 
         public async Task Insert(Order item)
         {
+            if(item.OrderID == 0)
+                item.OrderID = Orders.Max(r => r.OrderID) + 1;
+
             var order = Orders.SingleOrDefault(r => r.OrderID == item.OrderID);
             if (order == null)
             {
+                if(!string.IsNullOrWhiteSpace(item.CustomerID))
+                    item.Customer = CustomerService.Customers.SingleOrDefault(r => r.CustomerID == item.CustomerID);
+                if(item.ShipVia.HasValue)
+                    item.Shipper = ShipperService.Shippers.SingleOrDefault(r => r.ShipperID == item.ShipVia.Value);
+                if (item.EmployeeID.HasValue)
+                    item.Employee = EmployeeService.Employees.SingleOrDefault(r => r.EmployeeID == item.EmployeeID.Value);
+                item.OrderDetails = OrderDetailService.OrderDetails.Where(r => r.OrderID == item.OrderID).ToList();
+
                 Orders.Add(item);
                 await Task.CompletedTask;
             }
@@ -153,6 +164,14 @@ namespace GridBlazorStandalone.Services
             var order = Orders.SingleOrDefault(r => r.OrderID == item.OrderID);
             if (order != null)
             {
+                if (!string.IsNullOrWhiteSpace(item.CustomerID))
+                    item.Customer = CustomerService.Customers.SingleOrDefault(r => r.CustomerID == item.CustomerID);
+                if (item.ShipVia.HasValue)
+                    item.Shipper = ShipperService.Shippers.SingleOrDefault(r => r.ShipperID == item.ShipVia.Value);
+                if (item.EmployeeID.HasValue)
+                    item.Employee = EmployeeService.Employees.SingleOrDefault(r => r.EmployeeID == item.EmployeeID.Value);
+                item.OrderDetails = OrderDetailService.OrderDetails.Where(r => r.OrderID == item.OrderID).ToList();
+
                 order = item;
                 await Task.CompletedTask;
             }

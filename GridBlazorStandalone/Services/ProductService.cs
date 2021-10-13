@@ -61,6 +61,9 @@ namespace GridBlazorStandalone.Services
 
         public async Task Insert(Product item)
         {
+            if (item.ProductID == 0)
+                item.ProductID = Products.Max(r => r.ProductID) + 1;
+
             var product = Products.SingleOrDefault(r => r.ProductID == item.ProductID);
             if (product == null)
             {

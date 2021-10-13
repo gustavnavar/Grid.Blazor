@@ -65,6 +65,9 @@ namespace GridBlazorStandalone.Services
 
         public async Task Insert(Customer item)
         {
+            if (string.IsNullOrWhiteSpace(item.CustomerID))
+                item.CustomerID = Guid.NewGuid().ToString("N");
+
             var customer = Customers.SingleOrDefault(r => r.CustomerID == item.CustomerID);
             if (customer == null)
             {

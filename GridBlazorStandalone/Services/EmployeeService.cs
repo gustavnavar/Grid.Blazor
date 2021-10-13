@@ -64,7 +64,9 @@ namespace GridBlazorStandalone.Services
         public async Task Insert(Employee item)
         {
             item.Base64String = null;
-            item.EmployeeID = Employees.Max(r => r.EmployeeID) + 1;
+
+            if (item.EmployeeID == 0)
+                item.EmployeeID = Employees.Max(r => r.EmployeeID) + 1;
 
             if (!Employees.Any(r => r.EmployeeID == item.EmployeeID))
             {

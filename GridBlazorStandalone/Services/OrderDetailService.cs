@@ -81,6 +81,8 @@ namespace GridBlazorStandalone.Services
             var orderDetail = OrderDetails.SingleOrDefault(r => r.OrderID == item.OrderID && r.ProductID == item.ProductID);
             if (orderDetail == null)
             {
+                item.Product = ProductService.Products.SingleOrDefault(r => r.ProductID == item.ProductID);
+
                 OrderDetails.Add(item);
                 await Task.CompletedTask;
             }
@@ -95,6 +97,8 @@ namespace GridBlazorStandalone.Services
             var orderDetail = OrderDetails.SingleOrDefault(r => r.OrderID == item.OrderID && r.ProductID == item.ProductID);
             if (orderDetail != null)
             {
+                item.Product = ProductService.Products.SingleOrDefault(r => r.ProductID == item.ProductID);
+
                 orderDetail = item;
                 await Task.CompletedTask;
             }

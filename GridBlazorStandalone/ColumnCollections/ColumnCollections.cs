@@ -174,7 +174,7 @@ namespace GridBlazorStandalone.ColumnCollections
             c.Add("CheckboxColumn").SetCheckboxColumn(true, o => o.Customer.IsVip).SetWidth(40);
 
             /* Adding "OrderID" column: */
-            c.Add(o => o.OrderID).SetPrimaryKey(true).Titled(SharedResource.Number).SetWidth(100);
+            c.Add(o => o.OrderID).SetPrimaryKey(true, false).Titled(SharedResource.Number).SetWidth(100);
 
             /* Adding "OrderDate" column: */
             c.Add(o => o.OrderDate, "OrderCustomDate").Titled(SharedResource.OrderCustomDate)
@@ -200,7 +200,7 @@ namespace GridBlazorStandalone.ColumnCollections
         public static Action<IGridColumnCollection<Order>> OrderColumnsCount = c =>
         {
             /* Adding "OrderID" column: */
-            c.Add(o => o.OrderID).SetPrimaryKey(true).Titled(SharedResource.Number).SetWidth(100);
+            c.Add(o => o.OrderID).SetPrimaryKey(true, false).Titled(SharedResource.Number).SetWidth(100);
 
             /* Adding "OrderDate" column: */
             c.Add(o => o.OrderDate, "OrderCustomDate").Titled(SharedResource.OrderCustomDate)
@@ -231,7 +231,7 @@ namespace GridBlazorStandalone.ColumnCollections
             OrderColumnsWithCrud = (c, f, g, h) =>
             {
                 /* Adding "OrderID" column: */
-                c.Add(o => o.OrderID).SetPrimaryKey(true).Titled(SharedResource.Number).SetWidth(100);
+                c.Add(o => o.OrderID).SetPrimaryKey(true, false).Titled(SharedResource.Number).SetWidth(100);
 
                 /* Adding "CustomerID" column: */
                 c.Add(o => o.CustomerID, true).SetSelectField(true, o => o.Customer.CustomerID + " - " + o.Customer.CompanyName, f);
@@ -300,7 +300,7 @@ namespace GridBlazorStandalone.ColumnCollections
             OrderColumnsWithNestedCrud = (c, f, g, h, subgrids) =>
             {
                 /* Adding "OrderID" column: */
-                c.Add(o => o.OrderID).SetPrimaryKey(true).Titled(SharedResource.Number).SetTooltip("Order ID is ... ").SetWidth(100);
+                c.Add(o => o.OrderID).SetPrimaryKey(true, false).Titled(SharedResource.Number).SetTooltip("Order ID is ... ").SetWidth(100);
 
                 /* Adding "CustomerID" column: */
                 c.Add(o => o.CustomerID, true).SetSelectField(true, o => o.Customer.CustomerID + " - " + o.Customer.CompanyName, f);
@@ -371,7 +371,7 @@ namespace GridBlazorStandalone.ColumnCollections
             OrderColumnsWithCustomCrud = (c, f, g, h) =>
             {
                 /* Adding "OrderID" column: */
-                c.Add(o => o.OrderID).SetPrimaryKey(true).Titled(SharedResource.Number).SetWidth(100);
+                c.Add(o => o.OrderID).SetPrimaryKey(true, false).Titled(SharedResource.Number).SetWidth(100);
 
                 /* Adding "CustomerID" column: */
                 c.Add(o => o.CustomerID, true).SetSelectField(true, o => o.Customer.CustomerID + " - " + o.Customer.CompanyName, f);
@@ -474,7 +474,7 @@ namespace GridBlazorStandalone.ColumnCollections
             OrderColumnsAllFeatures = (c, f, g, h, subgrids) =>
             {
                 /* Adding "OrderID" column: */
-                c.Add(o => o.OrderID).SetPrimaryKey(true).Titled(SharedResource.Number).SetTooltip("Order ID is ... ").SetWidth(100);
+                c.Add(o => o.OrderID).SetPrimaryKey(true, false).Titled(SharedResource.Number).SetTooltip("Order ID is ... ").SetWidth(100);
 
                 /* Adding "CustomerID" column: */
                 c.Add(o => o.CustomerID, true).SetSelectField(true, o => o.Customer.CustomerID + " - " + o.Customer.CompanyName, f);
@@ -728,7 +728,7 @@ namespace GridBlazorStandalone.ColumnCollections
 
         public static Action<IGridColumnCollection<Employee>> EmployeeColumns = c =>
         {
-            c.Add(o => o.EmployeeID).SetPrimaryKey(true).Titled(SharedResource.Number);
+            c.Add(o => o.EmployeeID).SetPrimaryKey(true, false).Titled(SharedResource.Number);
             c.Add(o => o.TitleOfCourtesy);
             c.Add(o => o.FirstName);
             c.Add(o => o.LastName);
@@ -753,7 +753,7 @@ namespace GridBlazorStandalone.ColumnCollections
 
         public static Action<IGridColumnCollection<Customer>> CustomerColumns = c =>
         {
-            c.Add(o => o.CustomerID).SetPrimaryKey(true).Titled(SharedResource.Number).SetWidth(100);
+            c.Add(o => o.CustomerID).SetPrimaryKey(true, false).Titled(SharedResource.Number).SetWidth(100);
             c.Add(o => o.CompanyName).SetWidth(250);
             c.Add(o => o.ContactName).SetWidth(250);
             c.Add(o => o.ContactTitle, true);

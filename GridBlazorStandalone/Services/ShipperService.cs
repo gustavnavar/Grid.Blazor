@@ -62,6 +62,9 @@ namespace GridBlazorStandalone.Services
 
         public async Task Insert(Shipper item)
         {
+            if (item.ShipperID == 0)
+                item.ShipperID = Shippers.Max(r => r.ShipperID) + 1;
+
             var shipper = Shippers.SingleOrDefault(r => r.ShipperID == item.ShipperID);
             if (shipper == null)
             {
