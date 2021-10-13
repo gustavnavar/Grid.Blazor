@@ -40,6 +40,9 @@ namespace GridCore
         protected IGridItemsProcessor<T> _pagerProcessor;
         protected IGridSettingsProvider _settings;
 
+        public SGridCore()
+        { }
+
         public SGridCore(IEnumerable<T> items, IQueryCollection query, bool renderOnlyRows,
             string pagerViewName = GridPager.DefaultPagerViewName, IColumnBuilder<T> columnBuilder = null)
             : this(items, QueryDictionary<StringValues>.Convert(query), renderOnlyRows, pagerViewName, columnBuilder)
@@ -67,6 +70,7 @@ namespace GridCore
         { }
 
         public SGridCore(IEnumerable<T> items, QueryDictionary<StringValues> query, IColumnBuilder<T> columnBuilder = null)
+            : this()
         {
             BeforeItems = items.AsQueryable();
 
