@@ -55,11 +55,12 @@ The steps to build a grid razor page using **GridBlazor** are:
 2. You have to register the service in the **Program** class:
 
     ```c#
-        public void ConfigureServices(IServiceCollection services)
+        public static async Task Main(string[] args)
         {
+            var builder = WebAssemblyHostBuilder.CreateDefault(args);
             ...
 
-            services.AddScoped<OrderService>();
+            builder.Services.AddScoped<OrderService>();
             
             ...
         }
