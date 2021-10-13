@@ -23,7 +23,7 @@ We have to add a service method to get rows for subgrids. An example of this typ
             int orderId;
             int.TryParse(keys[0].ToString(), out orderId);
             var repository = new OrderDetailsRepository(_context);
-            var server = new GridServer<OrderDetail>(repository.GetForOrder(orderId), new QueryCollection(query),
+            var server = new GridCoreServer<OrderDetail>(repository.GetForOrder(orderId), new QueryCollection(query),
                 true, "orderDetailssGrid" + keys[0].ToString(), columns)
                     .Sortable()
                     .WithPaging(10)

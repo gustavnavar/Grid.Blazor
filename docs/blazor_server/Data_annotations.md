@@ -47,7 +47,7 @@ The steps to build a grid razor page using data annotations with **GridBlazor** 
             public ItemsDTO<Foo> GetFooGridRows(QueryDictionary<StringValues> query)
             {
                 var repository = new FooRepository(_context);
-                var server = new GridServer<Foo>(repository.GetAll(), new QueryCollection(query),
+                var server = new GridCoreServer<Foo>(repository.GetAll(), new QueryCollection(query),
                     true, "fooGrid", null).AutoGenerateColumns();
 
                 // return items to displays
@@ -59,9 +59,9 @@ The steps to build a grid razor page using data annotations with **GridBlazor** 
     **Notes**:
     * The method must have 1 parameter, a dictionary to pass query parameters such as **grid-page**. It must be ot type **QueryDictionary<StringValues>**
 
-    * The **columns** parameter passed to the **GridServer** constructor must be **null**
+    * The **columns** parameter passed to the **GridCoreServer** constructor must be **null**
 
-    * You must use the **AutoGenerateColumns** method of the **GridServer**
+    * You must use the **AutoGenerateColumns** method of the **GridCoreServer**
 
 2. Create a razor page to render the grid. The page file must have a .razor extension. An example of razor page is:
 
@@ -110,7 +110,7 @@ The steps to build a grid razor page using data annotations with **GridBlazor** 
 You can add custom columns after or before this method is called, for example:
 
 ```c#
-    var server = new GridServer<Foo>(...).AutoGenerateColumns().Columns(columns=>columns.Add(foo=>foo.Child.Price))
+    var server = new GridCoreServer<Foo>(...).AutoGenerateColumns().Columns(columns=>columns.Add(foo=>foo.Child.Price))
 ```
 
 ```c#
@@ -120,7 +120,7 @@ You can add custom columns after or before this method is called, for example:
 You can also overwrite grid options. For example using the **WithPaging** method:
 
 ```c#
-    var server = new GridServer<Foo>(...).AutoGenerateColumns().WithPaging(10)
+    var server = new GridCoreServer<Foo>(...).AutoGenerateColumns().WithPaging(10)
 ```
 
 **Note:** If you use the ```Position``` custom option to order the columns, you must use it on all the columns of the table including the ones using the ```NotMappedColumn``` attribute. If you don't do it the ```AutoGenerateColumns``` will throw an exception.

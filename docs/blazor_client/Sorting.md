@@ -1,11 +1,11 @@
-## Blazor client-side
+## Blazor WASM with GridCore back-end
 
 # Sorting
 
 [Index](Documentation.md)
 
 ## Regular Sorting
-You can enable sorting for all columns of a grid using the **Sortable** method for both **GridClient** and **GridServer** objects:
+You can enable sorting for all columns of a grid using the **Sortable** method for both **GridClient** and **GridCoreServer** objects:
 * Client project
     ```c#
         var client = new GridClient<Order>(httpClient, url, query, false, "ordersGrid", Columns, locale)
@@ -14,7 +14,7 @@ You can enable sorting for all columns of a grid using the **Sortable** method f
 
 * Server project
     ```c#
-        var server = new GridServer<Order>(repository.GetAll(), Request.Query, true, "ordersGrid", columns, 10)
+        var server = new GridCoreServer<Order>(repository.GetAll(), Request.Query, true, "ordersGrid", columns, 10)
             .Sortable();
     ```
 
@@ -24,7 +24,7 @@ Sorting at grid level has precendence over sorting defined at column level.
 
 
 ## Extended Sorting
-You can also configure extended sorting using the **ExtSortable** method for both **GridClient** and **GridServer** objects:
+You can also configure extended sorting using the **ExtSortable** method for both **GridClient** and **GridCoreServer** objects:
 * Client project
     ```c#
         var client = new GridClient<Order>(httpClient, url, query, false, "ordersGrid", Columns, locale)
@@ -33,7 +33,7 @@ You can also configure extended sorting using the **ExtSortable** method for bot
 
 * Server project
     ```c#
-        var server = new GridServer<Order>(repository.GetAll(), Request.Query, true, "ordersGrid", columns, 10)
+        var server = new GridCoreServer<Order>(repository.GetAll(), Request.Query, true, "ordersGrid", columns, 10)
             .ExtSortable();
     ```
 

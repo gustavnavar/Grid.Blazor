@@ -31,7 +31,7 @@ The steps to build a grid razor page using **GridBlazor** are:
                     QueryDictionary<StringValues> query)
             {
                 var repository = new OrdersRepository(_context);
-                var server = new GridServer<Order>(repository.GetAll(), new QueryCollection(query), 
+                var server = new GridCoreServer<Order>(repository.GetAll(), new QueryCollection(query), 
                     true, "ordersGrid", columns, 10);
             
                 // return items to displays
@@ -45,9 +45,9 @@ The steps to build a grid razor page using **GridBlazor** are:
         * the first one is a lambda expression with the column definition of type **Action<IGridColumnCollection<T>>**
         * the second one is a dictionary to pass query parameters such as **grid-page**. It must be ot type **QueryDictionary<StringValues>**
 
-    * You can use multiple methods of the **GridServer** object to configure a grid on the server. For example:
+    * You can use multiple methods of the **GridCoreServer** object to configure a grid on the server. For example:
         ```c#
-            var server = new GridServer<Order>(repository.GetAll(), Request.Query, true, "ordersGrid", columns, 10)
+            var server = new GridCoreServer<Order>(repository.GetAll(), Request.Query, true, "ordersGrid", columns, 10)
                 .Sortable()
                 .Filterable()
                 .WithMultipleFilters();
@@ -134,7 +134,7 @@ The steps to build a grid razor page using **GridBlazor** are:
                 .WithMultipleFilters();
         ```
 
-    * The **GridClient** object used on the razor page and the **GridServer** object on the service must have compatible settings.
+    * The **GridClient** object used on the razor page and the **GridCoreServer** object on the service must have compatible settings.
 
     * You must call the **UpdateGrid** method of the **GridClient** object at the end of the **OnParametersSetAsync** of the razor page because it will request for the required rows to the server
 

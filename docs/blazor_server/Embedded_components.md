@@ -1,4 +1,4 @@
-## Blazor client-side
+## Blazor server-side
 
 # Button components on a grid and on CRUD forms
 

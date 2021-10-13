@@ -1,4 +1,4 @@
-## Blazor client-side
+## Blazor WASM with GridCore back-end
 
 # Render button, checkbox, etc. in a grid cell
 

@@ -1,4 +1,4 @@
-## Blazor client-side
+## Blazor WASM with GridCore back-end
 
 # Quick start with GridBlazor
 
@@ -92,7 +92,7 @@ The steps to build a grid razor page using **GridBlazor** are:
             public ActionResult GetOrdersGridForSample()
             {
                 var repository = new OrdersRepository(_context);
-                var server = new GridServer<Order>(repository.GetAll(), Request.Query,
+                var server = new GridCoreServer<Order>(repository.GetAll(), Request.Query,
                     true, "ordersGrid", GridSample.Columns, 10);
 
                 // return items to displays
@@ -131,17 +131,17 @@ The steps to build a grid razor page using **GridBlazor** are:
     * **T**: type of the model items
     * **Grid**: grid object that has to be created in the **OnParametersSetAsync** method of the razor page
 
-* You should use a **GridServer** object in the server controller action. 
+* You should use a **GridCoreServer** object in the server controller action. 
 
-* You can use multiple methods of the **GridServer** object to configure a grid on the server. For example:
+* You can use multiple methods of the **GridCoreServer** object to configure a grid on the server. For example:
     ```c#
-        var server = new GridServer<Order>(repository.GetAll(), Request.Query, true, "ordersGrid", columns, 10)
+        var server = new GridCoreServer<Order>(repository.GetAll(), Request.Query, true, "ordersGrid", columns, 10)
                 .Sortable()
                 .Filterable()
                 .WithMultipleFilters();
     ```
 
-* The **GridClient** object on the client project and the **GridServer** object on the server project must have compatible settings.
+* The **GridClient** object on the client project and the **GridCoreServer** object on the server project must have compatible settings.
 
 * The server action returns a json including the model rows to be shown on the grid and other information requirired for paging, etc. The object type returned by the action must be **ItemsDTO<T>**.
 

@@ -1,4 +1,4 @@
-## Blazor client-side
+## Blazor WASM with GridCore back-end
 
 # Keyboard navigation
 

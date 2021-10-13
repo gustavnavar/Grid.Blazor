@@ -1,4 +1,4 @@
-## Blazor client-side
+## Blazor WASM with GridCore back-end
 
 # Filtering
 
@@ -14,7 +14,7 @@ You can enable the filtering option for your columns. To enable this functionali
 ```
 After that you can filter this column. 
 
-You can enable filtering for all columns of a grid using the **Filterable** method for both **GridClient** and **GridServer** objects:
+You can enable filtering for all columns of a grid using the **Filterable** method for both **GridClient** and **GridCoreServer** objects:
 
 * Client project
     ```c#
@@ -24,7 +24,7 @@ You can enable filtering for all columns of a grid using the **Filterable** meth
 
 * Server project
     ```c#
-        var server = new GridServer<Order>(repository.GetAll(), Request.Query, true, "ordersGrid", columns, 10)
+        var server = new GridCoreServer<Order>(repository.GetAll(), Request.Query, true, "ordersGrid", columns, 10)
             .Filterable();
     ```
 

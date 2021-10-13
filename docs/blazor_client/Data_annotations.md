@@ -1,4 +1,4 @@
-## Blazor client-side
+## Blazor WASM with GridCore back-end
 
 # Data annotations
 
@@ -93,7 +93,7 @@ The steps to build a grid razor page using data annotations with **GridBlazor** 
             public ActionResult GetFooAutoGenerateColumns()
             {
                 var repository = new FooRepository(_context);
-                var server = new GridServer<Foo>(repository.GetAll(), Request.Query,
+                var server = new GridCoreServer<Foo>(repository.GetAll(), Request.Query,
                     true, "fooGrid", null).AutoGenerateColumns();
 
                 // return items to displays
@@ -103,16 +103,16 @@ The steps to build a grid razor page using data annotations with **GridBlazor** 
     ```
 
     **Notes**:
-    * The **columns** parameter passed to the **GridServer** constructor must be **null**
+    * The **columns** parameter passed to the **GridCoreServer** constructor must be **null**
 
-    * You must use the **AutoGenerateColumns** method of the **GridServer**
+    * You must use the **AutoGenerateColumns** method of the **GridCoreServer**
 
 **GridBlazor** will generate columns based on your data annotations when the **AutoGenerateColumns** method is invoked. 
 
 You can add custom columns after or before this method is called, for example:
 
 ```c#
-    var server = new GridServer<Foo>(...).AutoGenerateColumns().Columns(columns=>columns.Add(foo=>foo.Child.Price))
+    var server = new GridCoreServer<Foo>(...).AutoGenerateColumns().Columns(columns=>columns.Add(foo=>foo.Child.Price))
 ```
 
 ```c#
@@ -122,7 +122,7 @@ You can add custom columns after or before this method is called, for example:
 You can also overwrite grid options. For example using the **WithPaging** method:
 
 ```c#
-    var server = new GridServer<Foo>(...).AutoGenerateColumns().WithPaging(10)
+    var server = new GridCoreServer<Foo>(...).AutoGenerateColumns().WithPaging(10)
 ```
 
 **Note:** If you use the ```Position``` custom option to order the columns, you must use it on all the columns of the table including the ones using the ```NotMappedColumn``` attribute. If you don't do it the ```AutoGenerateColumns``` will throw an exception.

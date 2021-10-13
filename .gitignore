@@ -62,6 +62,8 @@
 /GridSharedData/bin/Debug/netstandard2.1
 /GridCore/bin
 /GridCore/obj
+/GridCore/Properties/PublishProfiles
 /GridBlazorStandalone/GridBlazorStandalone.csproj.user
 /GridBlazorStandalone/bin
 /GridBlazorStandalone/obj
+/GridSharedData/bin/Debug/net6.0

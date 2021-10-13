@@ -8,7 +8,7 @@ You can enable the searching option for your grid. Searching allows to search fo
 
 ![](../images/Searching.png)
 
-You can enable searching for all columns of a grid using the **Searchable** method for both **GridClient** and **GridServer** objects:
+You can enable searching for all columns of a grid using the **Searchable** method for both **GridClient** and **GridCoreServer** objects:
 
 * razor page
     ```c#
@@ -18,7 +18,7 @@ You can enable searching for all columns of a grid using the **Searchable** meth
 
 * service method
     ```c#
-        var server = new GridServer<Order>(repository.GetAll(), Request.Query, true, "ordersGrid", columns, 10)
+        var server = new GridCoreServer<Order>(repository.GetAll(), Request.Query, true, "ordersGrid", columns, 10)
             .Searchable(true, false, true)
     ```
 

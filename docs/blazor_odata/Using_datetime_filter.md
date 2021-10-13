@@ -1,4 +1,4 @@
-## Blazor client-side with OData back-end
+## Blazor WASM with OData back-end
 
 # Using a date time filter
 

@@ -1,4 +1,4 @@
-## Blazor client-side with OData back-end
+## Blazor WASM with OData back-end
 
 # Passing grid state as parameter
 

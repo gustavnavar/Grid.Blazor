@@ -1,4 +1,4 @@
-## Blazor client-side
+## Blazor WASM with OData back-end
 
 # Button components on a grid and on CRUD forms
 

@@ -8,7 +8,7 @@ The **GridBlazor** component installation is straightforward. Just follow these 
 
 1. Create a new Blazor server-side solution using the **Blazor Server App** template
 
-2. Install [**GridBlazor**](http://nuget.org/packages/GridBlazor/) and [**GridMvcCore**](http://nuget.org/packages/GridMvcCore/) nuget packages on the project.
+2. Install [**GridBlazor**](http://nuget.org/packages/GridBlazor/) and [**GridCore**](http://nuget.org/packages/GridCore/) nuget packages on the project.
 
 3. Add the following lines to the **_Host.cshtml** view or directly to the page:
     ```html

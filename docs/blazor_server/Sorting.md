@@ -5,7 +5,7 @@
 [Index](Documentation.md)
 
 ## Regular Sorting
-You can enable sorting for all columns of a grid using the **Sortable** method for both **GridClient** and **GridServer** objects:
+You can enable sorting for all columns of a grid using the **Sortable** method for both **GridClient** and **GridCoreServer** objects:
 * razor page
     ```c#
         var client = new GridClient<Order>(q => orderService.GetOrdersGridRows(columns, q), query, false, "ordersGrid", Columns, locale)
@@ -14,7 +14,7 @@ You can enable sorting for all columns of a grid using the **Sortable** method f
 
 * service method
     ```c#
-        var server = new GridServer<Order>(repository.GetAll(), Request.Query, true, "ordersGrid", columns, 10)
+        var server = new GridCoreServer<Order>(repository.GetAll(), Request.Query, true, "ordersGrid", columns, 10)
             .Sortable()
     ```
 
@@ -24,7 +24,7 @@ Sorting at grid level has precendence over sorting defined at column level.
 
 
 ## Extended Sorting
-You can also configure extended sorting using the **ExtSortable** method for both **GridClient** and **GridServer** objects:
+You can also configure extended sorting using the **ExtSortable** method for both **GridClient** and **GridCoreServer** objects:
 * razor page
     ```c#
         var client = new GridClient<Order>(q => orderService.GetOrdersGridRows(columns, q), query, false, "ordersGrid", Columns, locale)
@@ -33,7 +33,7 @@ You can also configure extended sorting using the **ExtSortable** method for bot
 
 * service method
     ```c#
-        var server = new GridServer<Order>(repository.GetAll(), Request.Query, true, "ordersGrid", columns, 10)
+        var server = new GridCoreServer<Order>(repository.GetAll(), Request.Query, true, "ordersGrid", columns, 10)
             .ExtSortable()
     ```
 In this case you can drag the column title and drop it on the sorting area. You can add multiple columns at the same time and select if sorting is ascending or descending column by column.

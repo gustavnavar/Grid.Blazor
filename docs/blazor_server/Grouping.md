@@ -4,7 +4,7 @@
 
 [Index](Documentation.md)
 
-You can enable grouping for all columns of a grid using the **Groupable** method for both **GridClient** and **GridServer** objects:
+You can enable grouping for all columns of a grid using the **Groupable** method for both **GridClient** and **GridCoreServer** objects:
 * razor page
     ```c#
         var client = new GridClient<Order>(q => orderService.GetOrdersGridRows(columns, q), query, false, "ordersGrid", Columns, locale)
@@ -13,7 +13,7 @@ You can enable grouping for all columns of a grid using the **Groupable** method
 
 * service method
     ```c#
-        var server = new GridServer<Order>(repository.GetAll(), Request.Query, true, "ordersGrid", columns, 10)
+        var server = new GridCoreServer<Order>(repository.GetAll(), Request.Query, true, "ordersGrid", columns, 10)
             .Groupable()
     ```
 

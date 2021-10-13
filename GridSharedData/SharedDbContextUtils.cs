@@ -1,6 +1,7 @@
 ﻿using Microsoft.Data.Sqlite;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Metadata;
 using Npgsql.NameTranslation;
 using System.IO;
 
@@ -48,7 +49,9 @@ namespace GridShared.Data
                     {
                         foreach (var property in entity.GetProperties())
                         {
-                            property.SetColumnName(mapper.TranslateMemberName(property.GetColumnName()));
+                            var storeObjectIdentifier = StoreObjectIdentifier.Create((IReadOnlyEntityType)property, StoreObjectType.Table);
+                            if(storeObjectIdentifier.HasValue)
+                                property.SetColumnName(mapper.TranslateMemberName(property.GetColumnName(storeObjectIdentifier.Value)));
                         }
 
                         entity.SetTableName(mapper.TranslateTypeName(entity.GetTableName()));

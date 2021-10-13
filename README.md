@@ -2,23 +2,25 @@
 
 GridBlazor is a Blazor component that shows data in a grid. It requires a back-end component that performs paging, sorting, filtering and others. 
 
-This back-end component can be one of the following ones:
-- GridMvcCore, that it is a fork from https://gridmvc.codeplex.com/ supporting ASP.Net Core 3.1 and ASP.Net 5.0
+This back-end component can be one of the following:
+- GridCore (v.5.0.0-preview-1 or later), supporting ASP.Net Core 3.1 and ASP.Net 5.0 and ASP.Net 6.0 RC2. GridMvcCore, that it is a fork from https://gridmvc.codeplex.com/, was working for earlier versions. But GridMvcCore is only required for ASP.NET MVC projects now.
 - an OData back-end. All samples are based on Microsoft.AspNetCore.OData library, but it can be any other OData provider.
 
-It supports .NET Core 3.1 and 5.0, and Blazor WebAssembly 3.2.0 and 5.0
+It supports .NET Core 3.1 and 5.0 and 6.0-RC2, and Blazor WebAssembly 3.2.0 and 5.0 and 6.0-RC2
 
 ## Demo 
 - Blazor server-side: http://gridblazor.azurewebsites.net
-- Blazor WASM: http://gridblazorwasm.azurewebsites.net
+- Blazor WASM with GridCore back-end: http://gridblazorwasm.azurewebsites.net
 - Blazor WASM with OData back-end: http://gridblazorodata.azurewebsites.net
+- Blazor WASM with data local in the client: http://gridblazorlocal.azurewebsites.net
 
 ## Documentation
 There are native C# Grid components for Blazor client-side and server-side, and for ASP.NET Core MVC.
 
 You can find the specific documentation for each environment clicking the following links:
-* [Documentation for Blazor client-side](./docs/blazor_client/Documentation.md)
-* [Documentation for Blazor client-side with OData back-end](./docs/blazor_odata/Documentation.md)
+* [Documentation for Blazor WASM with GridCore back-end](./docs/blazor_client/Documentation.md)
+* [Documentation for Blazor WASM with OData back-end](./docs/blazor_odata/Documentation.md)
+* [Documentation for Blazor WASM with local data](./docs/blazor_local/Documentation.md)
 * [Documentation for Blazor server-side](./docs/blazor_server/Documentation.md)
 * [Documentation for ASP.NET Core MVC](./docs/dotnetcore/Documentation.md)
 * [Using GridBlazor component for ASP.NET Core MVC](./docs/dotnetcore_blazor/Documentation.md)
@@ -27,7 +29,34 @@ This is an example of a table of items using this component:
 
 ![Image of GridBlazor](./docs/images/GridBlazor.png)
 
+
+## Migration to GridBlazor 3.0.0 and GridCore 5.0.0
+
+1. You have to remove the package ```GridMvcCore``` and install the package ```GridCore```, and upgrade the ```GridBlazor``` package
+
+2. You must replace all ```GridServer``` instances by ```GridCore``` ones
+
+3. The ```Grid``` property of the ```GridCore``` object has an ```ISGrid<T>``` type, instead of ```SGrid<T>``` it was before. You should change any reference to this property to reflect this change.
+
+4. Some classes have been moved from the ```GridMvc``` package to the ```GridCore``` one. Change all required ```using ...``` as needed.
+
+
+## Migration to GridBlazor 3.0.0 and GridMvc 5.0.0
+
+1. You have to upgrade the ```GridMvcCore``` and ```GridBlazor``` packages
+
+2. The ```Grid``` property of the ```GridServer``` object is of type ```ISGrid<T>```, instead of ```SGrid<T>``` it was before. You should change any reference to this property to reflect this change.
+
+3. Some classes have been moved from the ```GridMvc``` package to the ```GridCore``` one. Change all required ```using ...``` as needed.
+
+
 ## Notes
+
+- GridBlazor 3.0.0 supports .Net 6.0 RC2
+
+- GridMvcCore has been split in 2 parts from version 5.0.0 on:
+    - GridCore: it includes all code necessary for the back-end Blazor applications (data processing, filtering, sorting, etc.), excluding all MVC dependencies (Razor view and pages rendering).
+    - GridMvcCore: it only includes all MVC dependencies required for rendering Razor views and pages.
 
 - Sorting is implemented on GridBlazor 2.1.2, GridMvcCore 4.1.2 and newer versions following this sequence "no sort" -> "sort ascending" -> "sort descending" -> "no sort" and so on when a column title is clicked 
 
@@ -99,6 +128,7 @@ https://github.com/gustavnavar/Grid.Blazor/releases
 ## Folder description
 * [GridBlazor](./GridBlazor): Library to build the GridBlazor package
 * [GridMvc](./GridMvc): Library to build the GridMvcCore package
+* [GridCore](./GridCore): Library to build the GridCore package
 * [GridShared](./GridShared): Library to build the GridShared package
 * [GridBlazorClientSide.Client](./GridBlazorClientSide.Client): Front-end project for the Blazor WebAssembly demo
 * [GridBlazorClientSide.Server](./GridBlazorClientSide.Server): Back-end project for the Blazor WebAssembly demo
@@ -106,6 +136,7 @@ https://github.com/gustavnavar/Grid.Blazor/releases
 * [GridBlazorOData.Client](./GridBlazorOData.Client): Front-end project for the Blazor WebAssembly with OData server demo
 * [GridBlazorOData.Server](./GridBlazorOData.Server): Back-end project implementing an OData server for the Blazor WebAssembly demo
 * [GridBlazorOData.Shared](./GridBlazorOData.Shared): Shared project for the Blazor WebAssembly with OData server demo
+* [GridBlazorStandalone](./GridBlazorStandalone): Project for the Blazor WebAssembly with local data demo
 * [GridBlazorServerSide](./GridBlazorServerSide): Blazor Server App demo
 * [GridMvc.Demo](./GridMvc.Demo): ASP.NET Core MVC demo
 * [GridBlazor.Tests](./GridBlazor.Tests): Unit tests for the GridBlazor library
