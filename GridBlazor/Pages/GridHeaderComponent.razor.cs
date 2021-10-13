@@ -26,6 +26,7 @@ namespace GridBlazor.Pages
         private const string FilterButtonCss = "grid-filter-btn";
 
         private int _sequence = 0;
+        private bool _shouldRender = false;
         protected bool _isFilterVisible = false;
         protected bool _isTooltipVisible = false;
         protected List<ColumnFilterValue> _filterSettings;
@@ -130,6 +131,13 @@ namespace GridBlazor.Pages
                 }
                 GridComponent.HeaderComponents.AddParameter(Column.Name, this);
             }
+
+            _shouldRender = true;
+        }
+
+        protected override bool ShouldRender()
+        {
+            return _shouldRender;
         }
 
         private RenderFragment CreateFilterWidgetComponent() => builder =>
@@ -165,6 +173,7 @@ namespace GridBlazor.Pages
                 GridComponent.FilterButtonClicked += HideFilter;
                 GridComponent.RowCheckboxChanged += RowCheckboxChanged;
             }
+            _shouldRender = false;
         }
 
         /// <summary>
@@ -205,6 +214,7 @@ namespace GridBlazor.Pages
                 await GridComponent.GetSortUrl(SortingSettings.ColumnQueryParameterName, Column.Name, SortingSettings.DirectionQueryParameterName, 
                     ((int)GridSortDirection.Ascending).ToString(CultureInfo.InvariantCulture));
             }
+            _shouldRender = true;
         }
 
         public async Task FilterIconClicked()
@@ -214,7 +224,8 @@ namespace GridBlazor.Pages
 
             //switch visibility for the filter dialog:
             _isFilterVisible = !isVisible;
-                
+
+            _shouldRender = true;
             StateHasChanged();
             await GridComponent.SetGridFocus();
         }
@@ -224,6 +235,7 @@ namespace GridBlazor.Pages
             if (!string.IsNullOrWhiteSpace(Column.TooltipValue))
             {
                 _isTooltipVisible = true;
+                _shouldRender = true;
                 StateHasChanged();
                 await GridComponent.SetGridFocus();
             }
@@ -234,6 +246,7 @@ namespace GridBlazor.Pages
             if (!string.IsNullOrWhiteSpace(Column.TooltipValue))
             {
                 _isTooltipVisible = false;
+                _shouldRender = true;
                 StateHasChanged();
                 await GridComponent.SetGridFocus();
             }
@@ -242,6 +255,7 @@ namespace GridBlazor.Pages
         public async Task AddFilter(FilterCollection filters)
         {
             _isFilterVisible = !_isFilterVisible;
+            _shouldRender = true;
             StateHasChanged();
             await GridComponent.AddFilter(Column, filters);
         }
@@ -249,6 +263,7 @@ namespace GridBlazor.Pages
         public async Task RemoveFilter()
         {
             _isFilterVisible = !_isFilterVisible;
+            _shouldRender = true;
             StateHasChanged();
             await GridComponent.RemoveFilter(Column);
         }
@@ -258,6 +273,7 @@ namespace GridBlazor.Pages
             var values = GridComponent.Grid.Settings.SortSettings.SortValues;
             var maxId = values.Any() ? values.Max(x => x.Id) + 1 : 1;
             GridComponent.Payload = new ColumnOrderValue(Column.Name, Column.Direction ?? GridSortDirection.Ascending, maxId);
+            _shouldRender = true;
         }
 
         private void HideFilter()
@@ -265,6 +281,7 @@ namespace GridBlazor.Pages
             if (_isFilterVisible)
             {
                 _isFilterVisible = false;
+                _shouldRender = true;
                 StateHasChanged();
             }
         }
@@ -314,6 +331,7 @@ namespace GridBlazor.Pages
                     _allChecked = null;
                     _showAllChecked = false;
                 }
+                _shouldRender = true;
                 StateHasChanged();
                 await Task.CompletedTask;
             }
@@ -346,6 +364,7 @@ namespace GridBlazor.Pages
                     args.Value = CheckboxValue.Unchecked;
                 }
                 await GridComponent.OnHeaderCheckboxChanged(args);
+                _shouldRender = true;
                 StateHasChanged();
             }
         }
