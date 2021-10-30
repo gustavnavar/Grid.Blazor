@@ -11,8 +11,6 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Drawing;
-using System.Drawing.Imaging;
 using System.IO;
 using System.Text.Json.Serialization;
 
@@ -68,12 +66,7 @@ namespace GridBlazorClientSide.Shared.Models
                         {
                             int offset = 78;
                             ms.Write(Photo, offset, Photo.Length - offset);
-                            var bmp = new Bitmap(ms);
-                            using (var jpegms = new MemoryStream())
-                            {
-                                bmp.Save(jpegms, ImageFormat.Jpeg);
-                                _base64Str = Convert.ToBase64String(jpegms.ToArray());
-                            }
+                            _base64Str = Convert.ToBase64String(ms.ToArray());
                         }
                     }
                 }

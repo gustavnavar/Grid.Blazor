@@ -132,18 +132,20 @@
                 {
                     <label class="col-form-label col-md-@column.CrudLabelWidth.ToString()">@column.Title</label>
                 }
-                <div class="col-md-@((12 - column.CrudLabelWidth).ToString())">
-                    @if (column.EnableCard)
-                    {
+                @if (column.EnableCard)
+                {
+                    <div class="col-md-@((12 - column.CrudLabelWidth).ToString())">
                         <div class="card panel panel-default">
                             <div class="card-body panel-body">@_renderFragments.Get(column.Name)</div>
                         </div>
-                    }
-                    else
-                    {
+                     </div>
+                 }
+                 else
+                 {
+                    <div class="col-md-@(column.CrudWidth.ToString())">
                         @_renderFragments.Get(column.Name)
-                    }
-                </div>
+                     </div>
+                 }
             </div>
         }
     }
