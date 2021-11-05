@@ -172,7 +172,7 @@ You can configure the width of the column input element using the ```SetCrudWidt
 And finally all columns included in the grid but not in the CRUD forms should be configured as "CRUD hidden" using the ```SetCrudHidden(true)``` method.
 
 **Notes**: 
-- You can have more granularity in the "CRUD hidden" configuration. You can use the ```SetCrudHidden(bool create, bool read, bool update, bool delete)``` method to configure the columns that will be hidden on each type of form.
+- You can have more granularity in the "CRUD hidden" configuration. You can use the ```SetCrudHidden(bool create, bool read, bool update, bool delete)``` method to configure the columns that will be hidden on each type of form. You can also use the ```SetCrudHidden(Func<T,bool> create, Func<T,bool> read, Func<T,bool> update, Func<T,bool> delete)``` method to configure the columns that will be hidden on each type of form depending on the value of ```T``` properties.
 - You can have more granularity in the components configuration.  You can use the ```RenderCrudComponentAs<TCreateComponent, TReadComponent, TUpdateComponent, TDeleteComponent>``` method to configure the components that will be shown on each type of form. Id you don't want to show any component for a specific type of form you must use ```NullComponent```
 
 This is an example of column definition:

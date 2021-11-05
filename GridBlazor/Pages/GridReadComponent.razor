@@ -24,7 +24,7 @@
             {
                 continue;
             }
-            <div class="form-group row" style="@(column.CrudHidden.HasFlag(CrudHidden.READ)?"display:none;":"")">
+            <div class="form-group row" style="@(((IGridColumn<T>)column).CrudHidden(Item).HasFlag(CrudHidden.READ)?"display:none;":"")">
                 @if (!string.IsNullOrWhiteSpace(column.TooltipValue))
                 {
                     <div class="col-md-@column.CrudLabelWidth.ToString()">
@@ -121,7 +121,7 @@
         else if ((((ICGridColumn)column).SubGrids != null || column.ReadComponentType != null)
             && string.IsNullOrWhiteSpace(column.TabGroup))
         {
-            <div class="form-group row" style="@(column.CrudHidden.HasFlag(CrudHidden.READ)?"display:none;":"")">
+            <div class="form-group row" style="@(((IGridColumn<T>)column).CrudHidden(Item).HasFlag(CrudHidden.READ)?"display:none;":"")">
                 @if (!string.IsNullOrWhiteSpace(column.TooltipValue))
                 {
                     <div class="col-md-@column.CrudLabelWidth.ToString()">

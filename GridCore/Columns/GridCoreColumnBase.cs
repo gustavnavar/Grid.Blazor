@@ -69,7 +69,7 @@ namespace GridCore.Columns
 
         public bool? ExcelHidden { get; set; }
 
-        public CrudHidden CrudHidden { get; protected set; } = CrudHidden.NONE;
+        public Func<T, CrudHidden> CrudHidden { get; protected set; } = x => GridShared.Columns.CrudHidden.NONE;
 
         public Func<T, bool> ReadOnlyOnCreate { get; protected set; } = x => false;
 
@@ -489,12 +489,44 @@ namespace GridCore.Columns
             return this;
         }
 
+        public IGridColumn<T> SetCrudHidden(Func<T, bool> create, Func<T, bool> read, Func<T, bool> update, Func<T, bool> delete)
+        {
+            CrudHidden = r =>
+            {
+                var crudHidden = GridShared.Columns.CrudHidden.NONE;
+                if (create(r)) crudHidden |= GridShared.Columns.CrudHidden.CREATE;
+                if (read((r))) crudHidden |= GridShared.Columns.CrudHidden.READ;
+                if (update(r)) crudHidden |= GridShared.Columns.CrudHidden.UPDATE;
+                if (delete(r)) crudHidden |= GridShared.Columns.CrudHidden.DELETE;
+                return crudHidden;
+            };
+            return this;
+        }
+
+
+        public IGridColumn<T> SetCrudHidden(Func<T, bool> all)
+        {
+            CrudHidden = r =>
+            {
+                var crudHidden = GridShared.Columns.CrudHidden.NONE;
+                if (all(r)) crudHidden |= GridShared.Columns.CrudHidden.CREATE | GridShared.Columns.CrudHidden.READ |
+                        GridShared.Columns.CrudHidden.UPDATE | GridShared.Columns.CrudHidden.DELETE;
+                return crudHidden;
+            };
+            return this;
+        }
+
         public IGridColumn<T> SetCrudHidden(bool create, bool read, bool update, bool delete)
         {
-            if (create) CrudHidden |= CrudHidden.CREATE;
-            if (read) CrudHidden |= CrudHidden.READ;
-            if (update) CrudHidden |= CrudHidden.UPDATE;
-            if (delete) CrudHidden |= CrudHidden.DELETE;
+            CrudHidden = r =>
+            {
+                var crudHidden = GridShared.Columns.CrudHidden.NONE;
+                if (create) crudHidden |= GridShared.Columns.CrudHidden.CREATE;
+                if (read) crudHidden |= GridShared.Columns.CrudHidden.READ;
+                if (update) crudHidden |= GridShared.Columns.CrudHidden.UPDATE;
+                if (delete) crudHidden |= GridShared.Columns.CrudHidden.DELETE;
+                return crudHidden;
+            };
 
             return this;
         }
