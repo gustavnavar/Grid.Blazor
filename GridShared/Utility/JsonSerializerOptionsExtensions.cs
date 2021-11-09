@@ -9,7 +9,11 @@ namespace GridShared.Utility
     {
         public static JsonSerializerOptions AddOdataSupport(this JsonSerializerOptions jsonOptions)
         {
+#if NETSTANDARD2_1
             jsonOptions.IgnoreNullValues = true;
+#else
+            jsonOptions.DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull;
+#endif
             // required for Blazor WA
             var converters = jsonOptions.Converters.Where(r => r.CanConvert(typeof(DateTime)));
             if (converters != null)
@@ -32,7 +36,11 @@ namespace GridShared.Utility
 
         public static JsonSerializerOptions AddByteArraySupport(this JsonSerializerOptions jsonOptions)
         {
+#if NETSTANDARD2_1
             jsonOptions.IgnoreNullValues = true;
+#else
+            jsonOptions.DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull;
+#endif
             // required for Blazor WA
             var converters = jsonOptions.Converters.Where(r => r.CanConvert(typeof(byte[])));
             if (converters != null)

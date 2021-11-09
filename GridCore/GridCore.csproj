@@ -7,7 +7,7 @@
     <EnableDefaultEmbeddedResourceItems>False</EnableDefaultEmbeddedResourceItems>
     <Product>GridCore</Product>
     <PackageId>GridCore</PackageId>
-    <Version>5.0.0-preview-3</Version>
+    <Version>5.0.0</Version>
     <Title>GridCore</Title>
     <Description>Grid core component</Description>
     <Summary>Grid core component</Summary>
@@ -18,8 +18,8 @@
   </PropertyGroup>
 
   <ItemGroup Condition="'$(TargetFramework)' == 'net6.0'">
-    <PackageReference Include="Microsoft.AspNetCore.Components" Version="6.0.0-rc.2.21480.10" />
-    <PackageReference Include="Microsoft.Extensions.FileProviders.Embedded" Version="6.0.0-rc.2.21480.10" />
+    <PackageReference Include="Microsoft.AspNetCore.Components" Version="6.0" />
+    <PackageReference Include="Microsoft.Extensions.FileProviders.Embedded" Version="6.0" />
   </ItemGroup>
   
   <ItemGroup Condition="'$(TargetFramework)' == 'net5.0'">

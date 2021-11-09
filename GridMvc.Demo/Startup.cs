@@ -43,8 +43,7 @@ namespace GridMvc.Demo
 
             services.AddMvc()
                 .AddViewLocalization()
-                .AddDataAnnotationsLocalization()
-                .SetCompatibilityVersion(CompatibilityVersion.Version_3_0);
+                .AddDataAnnotationsLocalization();
 
             services.AddScoped<LanguageFilter>();
             services.AddScoped<IOrderService, OrderService>();
