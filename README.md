@@ -3,10 +3,10 @@
 GridBlazor is a Blazor component that shows data in a grid. It requires a back-end component that performs paging, sorting, filtering and others. 
 
 This back-end component can be one of the following:
-- GridCore (v.5.0.0-preview-1 or later), supporting ASP.Net Core 3.1 and ASP.Net 5.0 and ASP.Net 6.0 RC2. GridMvcCore, that it is a fork from https://gridmvc.codeplex.com/, was working for earlier versions. But GridMvcCore is only required for ASP.NET MVC projects now.
+- GridCore (v.5.0.0 or later), supporting ASP.Net Core 3.1 and ASP.Net 5.0 and ASP.Net 6.0. GridMvcCore, that it is a fork from https://gridmvc.codeplex.com/, was working for earlier versions. But GridMvcCore is only required for ASP.NET MVC projects now.
 - an OData back-end. All samples are based on Microsoft.AspNetCore.OData library, but it can be any other OData provider.
 
-It supports .NET Core 3.1 and 5.0 and 6.0-RC2, and Blazor WebAssembly 3.2.0 and 5.0 and 6.0-RC2
+It supports .NET Core 3.1 and 5.0 and 6.0, and Blazor WebAssembly 3.2.0 and 5.0 and 6.0
 
 ## Demo 
 - Blazor server-side: http://gridblazor.azurewebsites.net
@@ -52,7 +52,7 @@ This is an example of a table of items using this component:
 
 ## Notes
 
-- GridBlazor 3.0.0 supports .Net 6.0 RC2
+- GridBlazor 3.0.0 supports .Net 6.0
 
 - GridMvcCore has been split in 2 parts from version 5.0.0 on:
     - GridCore: it includes all code necessary for the back-end Blazor applications (data processing, filtering, sorting, etc.), excluding all MVC dependencies (Razor view and pages rendering).
