@@ -48,6 +48,9 @@ namespace GridBlazor.Pages
         protected override async Task OnParametersSetAsync()
         {
             _renderFragments = new QueryDictionary<RenderFragment>();
+            Children = new QueryDictionary<VariableReference>();
+            SelectItems = new QueryDictionary<IEnumerable<SelectItem>>();
+
             foreach (var column in GridComponent.Grid.Columns)
             {
                 // Name must have a non empty value
@@ -57,8 +60,8 @@ namespace GridBlazor.Pages
                 if (column.CreateComponentType != null)
                 {
                     VariableReference reference = new VariableReference();
-                    Children.Add(column.Name, reference);
-                    _renderFragments.Add(column.Name, GridCellComponent<T>.CreateComponent(_sequence,
+                    Children.AddParameter(column.Name, reference);
+                    _renderFragments.AddParameter(column.Name, GridCellComponent<T>.CreateComponent(_sequence,
                         GridComponent, column.CreateComponentType, column, Item, null, true, reference));
                 }
             }
@@ -165,10 +168,7 @@ namespace GridBlazor.Pages
             if (!column.MultipleInput && files.Length > 1)
                 files = new IFileListEntry[] { files[0] };
 
-            if (Files.ContainsKey(column.FieldName))
-                Files[column.FieldName] = files;
-            else
-                Files.Add(column.FieldName, files);
+            Files.AddParameter(column.FieldName, files);
 
             _shouldRender = true;
             StateHasChanged();

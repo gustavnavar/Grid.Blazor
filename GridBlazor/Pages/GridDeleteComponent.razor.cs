@@ -37,6 +37,8 @@ namespace GridBlazor.Pages
         protected override async Task OnParametersSetAsync()
         {
             _renderFragments = new QueryDictionary<RenderFragment>();
+            Children = new QueryDictionary<VariableReference>();
+
             foreach (var column in GridComponent.Grid.Columns)
             {
                 // Name must have a non empty value
@@ -50,27 +52,14 @@ namespace GridBlazor.Pages
                     grid.Direction = GridComponent.Grid.Direction;
                     grid.FixedValues = values;
                     VariableReference reference = new VariableReference();
-                    if (Children.ContainsKey(column.Name))
-                        Children[column.Name] = reference;
-                    else
-                        Children.Add(column.Name, reference);
-                    if (_renderFragments.ContainsKey(column.Name))
-                        _renderFragments[column.Name] = CreateSubGridComponent(grid, reference);
-                    else
-                        _renderFragments.Add(column.Name, CreateSubGridComponent(grid, reference));
+                    Children.AddParameter(column.Name, reference);
+                    _renderFragments.AddParameter(column.Name, CreateSubGridComponent(grid, reference));
                 }
                 else if (column.DeleteComponentType != null)
                 {
                     VariableReference reference = new VariableReference();
-                    if (Children.ContainsKey(column.Name))
-                        Children[column.Name] = reference;
-                    else
-                        Children.Add(column.Name, reference);
-                    if (_renderFragments.ContainsKey(column.Name))
-                        _renderFragments[column.Name] = GridCellComponent<T>.CreateComponent(_sequence,
-                            GridComponent, column.DeleteComponentType, column, Item, null, true, reference);
-                    else
-                        _renderFragments.Add(column.Name, GridCellComponent<T>.CreateComponent(_sequence,
+                    Children.AddParameter(column.Name, reference);
+                    _renderFragments.AddParameter(column.Name, GridCellComponent<T>.CreateComponent(_sequence,
                             GridComponent, column.DeleteComponentType, column, Item, null, true, reference));
                 }
             }
@@ -87,11 +76,11 @@ namespace GridBlazor.Pages
                         (buttonCrudComponent.DeleteModeAsync != null && await buttonCrudComponent.DeleteModeAsync(Item)) ||
                         (buttonCrudComponent.GridMode.HasFlag(GridMode.Delete)))
                     {
-                        _buttonCrudComponentVisibility.Add(key, true);
+                        _buttonCrudComponentVisibility.AddParameter(key, true);
                     }
                     else
                     {
-                        _buttonCrudComponentVisibility.Add(key, false);
+                        _buttonCrudComponentVisibility.AddParameter(key, false);
                     }
                 }
             }

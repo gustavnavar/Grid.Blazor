@@ -76,8 +76,7 @@ else
                         r => r.Quantity > 15 || delete)
                     .WithMultipleFilters()
                     .WithGridItemsCount()
-                    .AddToOnAfterRender(OnAfterOrderDetailRender)
-                    .SetEditAfterInsert(true);
+                    .AddToOnAfterRender(OnAfterOrderDetailRender);
 
             await subgridClient.UpdateGrid();
             return subgridClient.Grid;
