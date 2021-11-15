@@ -83,7 +83,7 @@ GridBlazor distinguishes among letters with diacritics by default. If you filter
 Anyway, it is possible to override the default behavior, so GridBlazor will return any record containing "brú", "brû" or "brü". 
 
 The solution to be implemented in case of data stored locally is as follows:
-    1- you must create the following static function with an string parameter and returning an string (other functions removing diacritics are also supported):
+    1. you must create the following static function with an string parameter and returning an string (other functions removing diacritics are also supported):
         ```c#
             public class StringUtils
             {
@@ -108,7 +108,7 @@ The solution to be implemented in case of data stored locally is as follows:
                 }
             }
         ```
-    2- and finally you must call the ```SetRemoveDiacritics``` method of the ```GridCoreServer``` class:
+    2. and finally you must call the ```SetRemoveDiacritics``` method of the ```GridCoreServer``` class:
         ```c#
             var server = new GridCoreServer<Order>(Orders, query, true, "ordersGrid", columns)
                 .Filterable()
