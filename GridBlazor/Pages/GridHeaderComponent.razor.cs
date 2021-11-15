@@ -36,6 +36,8 @@ namespace GridBlazor.Pages
         private bool? _allChecked = null;
         private bool _showAllChecked = false;
 
+        protected string _dropClass = "";
+
         protected string _cssStyles;
         protected string _cssClass;
         protected string _cssFilterClass;
@@ -274,6 +276,35 @@ namespace GridBlazor.Pages
             var maxId = values.Any() ? values.Max(x => x.Id) + 1 : 1;
             GridComponent.Payload = new ColumnOrderValue(Column.Name, Column.Direction ?? GridSortDirection.Ascending, maxId);
             _shouldRender = true;
+        }
+
+        protected void HandleDragEnter()
+        {
+            if (!GridComponent.Grid.RearrangeColumnEnabled)
+                return;
+
+            _dropClass = "grid-header-drag-over";
+            _shouldRender = true;
+        }
+
+        protected void HandleDragLeave()
+        {
+            if (!GridComponent.Grid.RearrangeColumnEnabled)
+                return;
+
+            _dropClass = "";
+            _shouldRender = true;
+        }
+
+        protected async Task HandleDrop()
+        {
+            if (!GridComponent.Grid.RearrangeColumnEnabled)
+                return;
+
+            _dropClass = "";
+            _shouldRender = true;
+
+            await GridComponent.HandleColumnRearranged(this);
         }
 
         private void HideFilter()

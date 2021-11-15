@@ -920,6 +920,25 @@ namespace GridBlazor.Pages
                 await AfterDeleteForm.Invoke(this, _item);
             }
         }
+        
+        public async Task HandleColumnRearranged(GridHeaderComponent<T> gridHeaderComponent)
+        {
+            if (Payload == ColumnOrderValue.Null)
+                return;
+
+            var payload = Payload;
+            Payload = ColumnOrderValue.Null;
+            if (gridHeaderComponent.Column.Name == payload.ColumnName)
+                return;
+
+            var source = Grid.Columns.FirstOrDefault(c => c.Name == payload.ColumnName);
+            if (source is null)
+                return;
+
+            await Grid.InsertColumn(gridHeaderComponent.Column, source);
+            _shouldRender = true;
+            StateHasChanged();
+        }
 
         public async Task ExcelHandler()
         {

@@ -1,0 +1,58 @@
+﻿@page "/rearrangeable"
+@using GridBlazorClientSide.Client.ColumnCollections
+@using GridBlazorClientSide.Shared.Models
+@using Microsoft.Extensions.Primitives
+@using System.Globalization
+@using System.Threading.Tasks
+@inject NavigationManager NavigationManager
+@inject HttpClient HttpClient
+
+<h1>Rearrangeable Grid</h1>
+
+<p>
+    This page contains a grid with grid clomuns rearrange. Column titles can be dragged and dropped on each other to change order.
+</p>
+
+<p>
+    This component demonstrates a GridBlazor client-side grid. For more information, please see: <a href="https://github.com/gustavnavar/Grid.Blazor">https://github.com/gustavnavar/Grid.Blazor</a>
+</p>
+
+@if (_task.IsCompleted)
+{
+    <div class="row">
+        <div class="col-md-12">
+            <GridComponent T="Order" Grid="@_grid"></GridComponent>
+        </div>
+    </div>
+}
+else
+{
+    <p><em>Loading...</em></p>
+}
+
+@code
+{
+    private CGrid<Order> _grid;
+    private Task _task;
+
+    protected override async Task OnParametersSetAsync()
+    {
+        var locale = CultureInfo.CurrentCulture;
+
+        var query = new QueryDictionary<StringValues>();
+        string url = NavigationManager.BaseUri + "api/SampleData/GetOrdersGridGroupable";
+        var client = new GridClient<Order>(HttpClient, url, query, false, "ordersGrid", 
+            ColumnCollections.OrderColumnsGroupable, locale)
+            .Sortable()
+            .Filterable()
+            .SetStriped(true)
+            .WithMultipleFilters()
+            .WithGridItemsCount()
+            .RearrangeableColumns(true);
+
+        _grid = client.Grid;
+        // Set new items to grid
+        _task = client.UpdateGrid();
+        await _task;
+    }
+}

@@ -168,6 +168,8 @@ namespace GridBlazor
         public bool GroupingEnabled { get; set; }
 
         public bool ClearFiltersButtonEnabled { get; set; } = false;
+        
+        public bool RearrangeColumnEnabled { get; set; }
 
         /// <summary>
         ///     Items, displaying in the grid view
@@ -591,6 +593,20 @@ namespace GridBlazor
                 }
             }
             return values.ToArray();
+        }
+
+        public Task InsertColumn(IGridColumn targetColumn, IGridColumn insertingColumn)
+        {
+            var removed = _columnsCollection.Remove(insertingColumn);
+            if (!removed)
+                return Task.CompletedTask;
+            
+            var index = _columnsCollection.IndexOf(targetColumn);
+            if (index == -1)
+                return Task.CompletedTask;
+
+            _columnsCollection.Insert(index, insertingColumn);
+            return Task.CompletedTask;
         }
 
         /// <summary>

@@ -43,6 +43,11 @@ namespace GridBlazor
         /// </summary>
         bool SubGridsOpened { get; }
 
+        /// <summary>
+        ///     Set or get default value of rearrange column
+        /// </summary>
+        public bool RearrangeColumnEnabled { get; set; }
+
         Type Type { get; }
 
         string Url { get; }
@@ -90,6 +95,8 @@ namespace GridBlazor
         void RemoveAllFilters();
 
         Task DownloadExcel(IJSRuntime js, string filename);
+
+        Task InsertColumn(IGridColumn targetColumn, IGridColumn insertingColumn);
 
         /// <summary>
         ///     Get and set export to an Excel file

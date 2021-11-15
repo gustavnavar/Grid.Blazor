@@ -201,10 +201,30 @@ div[dir="rtl"] button.grid-button-component { margin-left: 5px; margin-right: 0;
 .grid-header-checkbox-input { opacity: 0; }
     .grid-header-checkbox-input ~ .null-checkbox::before { position: absolute; top: 1rem; display: block; width: .9rem; height: .9rem; pointer-events: none; content: ""; border: 0.5px solid #666; border-radius: 3px; background-color: #ccc; }
 
-div[dir="rtl"] label { display: flex; }
+div[dir="rtl"] label {
+    display: flex;
+}
+
+/* Grid drag over header */
+.grid-header-drag-over {
+    border: 1px solid lightblue;
+    border-radius: 5px;
+}
+
+.grid-column-rearrange-insert-placeholder{
+    margin-left: -0.25rem;
+}
 
 /* The switch - the box around the slider */
-.grid-switch { position: relative; display: inline-block; width: 50px; height: 24px; margin-left: 16px; margin-right: 16px; margin-bottom: -8px; }
+.grid-switch {
+    position: relative;
+    display: inline-block;
+    width: 50px;
+    height: 24px;
+    margin-left: 16px;
+    margin-right: 16px;
+    margin-bottom: -8px;
+}
 
     /* Hide default HTML checkbox */
     .grid-switch input { display: none; }
