@@ -85,7 +85,8 @@ The solution to be implemented will depend on the back-end used to return the gr
 
 - for grids using Entity Framework Core it will be necessary to create a stored function on the database, a static method that will call it and configure the ```GridCoreServer``` object:
     1- For SQL Server you should open the ```SQL Server Studio Management``` tool and execute the following SQL query on your database to create the ```RemoveDiacritics``` function: 
-        ```SQL
+        
+       ```
             CREATE FUNCTION [dbo].[RemoveDiacritics] (
                 @input varchar(max)
             )   RETURNS varchar(max)
@@ -99,7 +100,8 @@ The solution to be implemented will depend on the back-end used to return the gr
             END
         ``` 
     2- then you must create the following static function with an string parameter and returning an string. This function will only work from a LINQ expression and it will call the stored function defined before:
-        ```c#
+        
+       ```c#
             public class NorthwindDbContext : GridShared.Data.SharedDbContext<NorthwindDbContext>
             {
  
@@ -113,7 +115,8 @@ The solution to be implemented will depend on the back-end used to return the gr
             }
         ```
     3- and finally you must call the ```SetRemoveDiacritics``` method of the ```GridCoreServer``` class:
-        ```c#
+        
+       ```c#
             var server = new GridCoreServer<Order>(repository.GetAll(), Request.Query, true, "ordersGrid", ColumnCollections.OrderColumns)
                 .Filterable()
                 .SetRemoveDiacritics<NorthwindDbContext>("RemoveDiacritics");
@@ -121,7 +124,8 @@ The solution to be implemented will depend on the back-end used to return the gr
 
 - for data stored in memory you must create the static function that will remove diacritics and configure the ```GridCoreServer``` object:
     1- you must create the following static function with an string parameter and returning an string (other functions removing diacritics are also supported):
-        ```c#
+        
+       ```c#
             public class StringUtils
             {
  
@@ -146,10 +150,11 @@ The solution to be implemented will depend on the back-end used to return the gr
             }
         ```
     2- and finally you must call the ```SetRemoveDiacritics``` method of the ```GridCoreServer``` class:
-        ```c#
+        
+       ```c#
             var server = new GridCoreServer<Order>(repository.GetAll(), Request.Query, true, "ordersGrid", ColumnCollections.OrderColumns)
                 .Filterable()
                 .SetRemoveDiacritics<StringUtils>("RemoveDiacritics");
-        ```
+       ```
 
 [<- Searching](Searching.md) | [Using a list filter->](Using_list_filter.md)
