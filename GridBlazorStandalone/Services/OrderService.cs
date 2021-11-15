@@ -40,7 +40,8 @@ namespace GridBlazorStandalone.Services
                         .Filterable()
                         .WithMultipleFilters()
                         .Groupable(true)
-                        .Searchable(true, false, false);
+                        .Searchable(true, false, false)
+                        .SetRemoveDiacritics<StringUtils>("RemoveDiacritics");
 
             var items = server.ItemsToDisplay;
             return items;
@@ -55,7 +56,8 @@ namespace GridBlazorStandalone.Services
                         .Filterable()
                         .WithMultipleFilters()
                         .Groupable(true)
-                        .Searchable(true, false, false);
+                        .Searchable(true, false, false)
+                        .SetRemoveDiacritics<StringUtils>("RemoveDiacritics");
 
             var items = server.ItemsToDisplay;
             return items;
@@ -70,7 +72,8 @@ namespace GridBlazorStandalone.Services
                         .Filterable()
                         .WithMultipleFilters()
                         .Groupable(true)
-                        .Searchable(true, false, false);
+                        .Searchable(true, false, false)
+                        .SetRemoveDiacritics<StringUtils>("RemoveDiacritics");
 
             // return items to displays
             var items = server.ItemsToDisplay;
@@ -94,7 +97,8 @@ namespace GridBlazorStandalone.Services
                         .Filterable()
                         .WithMultipleFilters()
                         .Groupable(true)
-                        .Searchable(true, false, false);
+                        .Searchable(true, false, false)
+                        .SetRemoveDiacritics<StringUtils>("RemoveDiacritics");
 
             // return items to displays
             var items = server.ItemsToDisplay;

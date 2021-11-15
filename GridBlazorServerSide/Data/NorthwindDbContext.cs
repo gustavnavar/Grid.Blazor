@@ -1,5 +1,6 @@
 ﻿using GridBlazorServerSide.Models;
 using Microsoft.EntityFrameworkCore;
+using System;
 
 namespace GridBlazorServerSide.Data
 {
@@ -32,6 +33,12 @@ namespace GridBlazorServerSide.Data
             base.OnModelCreating(modelBuilder);
         }
 
+        [DbFunction("RemoveDiacritics", "dbo")]
+        public static string RemoveDiacritics(string input)
+        {
+            throw new NotImplementedException("This method can only be called in LINQ-to-Entities!");
+        }
+
         public DbSet<Category> Categories { get; set; }
         public DbSet<Customer> Customers { get; set; }
         public DbSet<Employee> Employees { get; set; }
@@ -42,6 +49,5 @@ namespace GridBlazorServerSide.Data
         public DbSet<Shipper> Shippers { get; set; }
         public DbSet<Supplier> Suppliers { get; set; }
         public DbSet<Territory> Territories { get; set; }
-
     }
 }

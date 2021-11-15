@@ -34,7 +34,8 @@ namespace GridShared.Filtering.Types
             return value;
         }
 
-        public override Expression GetFilterExpression(Expression leftExpr, string value, GridFilterType filterType)
+        public override Expression GetFilterExpression(Expression leftExpr, string value, GridFilterType filterType,
+            MethodInfo removeDiacritics)
         {
             //base implementation of building filter expressions
             filterType = GetValidType(filterType);

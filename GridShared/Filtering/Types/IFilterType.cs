@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Linq.Expressions;
+using System.Reflection;
 
 namespace GridShared.Filtering.Types
 {
@@ -24,7 +25,8 @@ namespace GridShared.Filtering.Types
         /// <returns></returns>
         object GetTypedValue(string value);
 
-        Expression GetFilterExpression(Expression leftExpr, string value, GridFilterType filterType);
+        Expression GetFilterExpression(Expression leftExpr, string value, GridFilterType filterType, 
+            MethodInfo removeDiacritics = null);
 
         #region OData
 

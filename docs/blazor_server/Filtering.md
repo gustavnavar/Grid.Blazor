@@ -76,4 +76,81 @@ Pressing the **+** and **-** buttons you can add multiple options to filter. You
 
 You can also create your own filter widgets.
 
+# Disable diacritics distinction
+
+GridBlazor distinguishes among letters with diacritics by default. If you filter by the term "bru, it will return all records that contains "bru", but it won't returns any record containing "brú", "brû" or "brü". 
+
+Anyway, it is possible to override the default behavior, so GridBlazor will return any record containing "brú", "brû" or "brü". 
+
+The solution to be implemented will depend on the back-end used to return the grid data. I will describe the following 2 cases:
+
+- for grids using Entity Framework Core it will be necessary to create a stored function on the database, a static method that will call it and configure the ```GridCoreServer``` object:
+    1- For SQL Server you should open the ```SQL Server Studio Management``` tool and execute the following SQL query on your database to create the ```RemoveDiacritics``` function: 
+        ```SQL
+            CREATE FUNCTION [dbo].[RemoveDiacritics] (
+                @input varchar(max)
+            )   RETURNS varchar(max)
+
+            AS BEGIN
+                DECLARE @result VARCHAR(max);
+
+                select @result = @input collate SQL_Latin1_General_CP1253_CI_AI
+
+                return @result
+            END
+        ``` 
+    2- then you must create the following static function with an string parameter and returning an string. This function will only work from a LINQ expression and it will call the stored function defined before:
+        ```c#
+            public class NorthwindDbContext : GridShared.Data.SharedDbContext<NorthwindDbContext>
+            {
+ 
+                ...
+
+                [DbFunction("RemoveDiacritics", "dbo")]
+                public static string RemoveDiacritics(string input)
+                {
+                     throw new NotImplementedException("This method can only be called using LINQ");
+                }
+            }
+        ```
+    3- and finally you must call the ```SetRemoveDiacritics``` method of the ```GridCoreServer``` class:
+        ```c#
+            var server = new GridCoreServer<Order>(repository.GetAll(), Request.Query, true, "ordersGrid", columns, 10)
+                .Filterable()
+                .SetRemoveDiacritics<NorthwindDbContext>("RemoveDiacritics");
+        ```
+
+- for data stored in memory you must create the static function that will remove diacritics and configure the ```GridCoreServer``` object:
+    1- you must create the following static function with an string parameter and returning an string (other functions removing diacritics are also supported):
+        ```c#
+            public class StringUtils
+            {
+ 
+                ...
+
+                public static string RemoveDiacritics(string text)
+                {
+                    var normalizedString = text.Normalize(NormalizationForm.FormD);
+                    var stringBuilder = new StringBuilder();
+
+                    foreach (var c in normalizedString)
+                    {
+                        var unicodeCategory = CharUnicodeInfo.GetUnicodeCategory(c);
+                        if (unicodeCategory != UnicodeCategory.NonSpacingMark)
+                        {
+                            stringBuilder.Append(c);
+                        }
+                    }
+
+                    return stringBuilder.ToString().Normalize(NormalizationForm.FormC);
+                }
+            }
+        ```
+    2- and finally you must call the ```SetRemoveDiacritics``` method of the ```GridCoreServer``` class:
+        ```c#
+            var server = new GridCoreServer<Order>(repository.GetAll(), Request.Query, true, "ordersGrid", columns, 10)
+                .Filterable()
+                .SetRemoveDiacritics<StringUtils>("RemoveDiacritics");
+        ```
+
 [<- Searching](Searching.md) | [Using a list filter ->](Using_list_filter.md)

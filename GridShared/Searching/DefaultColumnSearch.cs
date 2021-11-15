@@ -19,7 +19,8 @@ namespace GridShared.Searching
 
         #region IColumnFilter<T> Members
 
-        public Expression GetExpression(string value, bool onlyTextColumns, ParameterExpression parameter)
+        public Expression GetExpression(string value, bool onlyTextColumns, ParameterExpression parameter, 
+            MethodInfo removeDiacritics = null)
         {
             if (string.IsNullOrWhiteSpace(value))
                 return null;
@@ -92,9 +93,16 @@ namespace GridShared.Searching
 
                 MethodInfo toUpper = typeof(string).GetMethod("ToUpper", new Type[] { });
                 firstExpression = Expression.Call(firstExpression, toUpper);
-                MethodInfo miContains = typeof(string).GetMethod("Contains", new[] { typeof(string) });
                 Expression valueExpression = Expression.Constant(value);
                 valueExpression = Expression.Call(valueExpression, toUpper);
+
+                if (removeDiacritics != null)
+                {
+                    firstExpression = Expression.Call(removeDiacritics, firstExpression);
+                    valueExpression = Expression.Call(removeDiacritics, valueExpression);
+                }
+
+                MethodInfo miContains = typeof(string).GetMethod("Contains", new[] { typeof(string) });
                 Expression containsExpression = Expression.Call(firstExpression, miContains, valueExpression);
 
                 if (containsExpression == null) return null;

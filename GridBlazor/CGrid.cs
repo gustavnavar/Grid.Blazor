@@ -250,6 +250,8 @@ namespace GridBlazor
             */
         }
 
+        public MethodInfo RemoveDiacritics { get; set; } = null;
+
         private void UpdateQueryAndSettings()
         {
             _settings = new QueryStringGridSettingsProvider(_query);

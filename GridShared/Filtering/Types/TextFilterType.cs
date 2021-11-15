@@ -36,7 +36,8 @@ namespace GridShared.Filtering.Types
             return value;
         }
 
-        public override Expression GetFilterExpression(Expression leftExpr, string value, GridFilterType filterType)
+        public override Expression GetFilterExpression(Expression leftExpr, string value, GridFilterType filterType,
+            MethodInfo removeDiacritics)
         {
             //Custom implementation of string filter type. Case insensitive compartion.
 
@@ -51,20 +52,20 @@ namespace GridShared.Filtering.Types
             {
                 case GridFilterType.Equals:
                 case GridFilterType.IsNull:
-                    binaryExpression = GetCaseInsensitiveСomparation(string.Empty, leftExpr, valueExpr);
+                    binaryExpression = GetCaseInsensitiveСomparation(string.Empty, leftExpr, valueExpr, removeDiacritics);
                     break;
                 case GridFilterType.NotEquals:
                 case GridFilterType.IsNotNull:
-                    binaryExpression = GetCaseInsensitiveСomparation("NotEquals", leftExpr, valueExpr);
+                    binaryExpression = GetCaseInsensitiveСomparation("NotEquals", leftExpr, valueExpr, removeDiacritics);
                     break;
                 case GridFilterType.Contains:
-                    binaryExpression = GetCaseInsensitiveСomparation("Contains", leftExpr, valueExpr);
+                    binaryExpression = GetCaseInsensitiveСomparation("Contains", leftExpr, valueExpr, removeDiacritics);
                     break;
                 case GridFilterType.StartsWith:
-                    binaryExpression = GetCaseInsensitiveСomparation("StartsWith", leftExpr, valueExpr);
+                    binaryExpression = GetCaseInsensitiveСomparation("StartsWith", leftExpr, valueExpr, removeDiacritics);
                     break;
                 case GridFilterType.EndsWidth:
-                    binaryExpression = GetCaseInsensitiveСomparation("EndsWith", leftExpr, valueExpr);
+                    binaryExpression = GetCaseInsensitiveСomparation("EndsWith", leftExpr, valueExpr, removeDiacritics);
                     break;
                 default:
                     throw new ArgumentOutOfRangeException();
@@ -72,13 +73,20 @@ namespace GridShared.Filtering.Types
             return binaryExpression;
         }
 
-        private Expression GetCaseInsensitiveСomparation(string methodName, Expression leftExpr, Expression rightExpr)
+        private Expression GetCaseInsensitiveСomparation(string methodName, Expression leftExpr, Expression rightExpr,
+            MethodInfo removeDiacritics)
         {
             Type targetType = TargetType;
             //case insensitive compartion:
             MethodInfo miUpper = targetType.GetMethod("ToUpper", new Type[] {});
             MethodCallExpression upperValueExpr = Expression.Call(rightExpr, miUpper);
             MethodCallExpression upperFirstExpr = Expression.Call(leftExpr, miUpper);
+
+            if (removeDiacritics != null)
+            {
+                upperFirstExpr = Expression.Call(removeDiacritics, upperFirstExpr);
+                upperValueExpr = Expression.Call(removeDiacritics, upperValueExpr);
+            }
 
             if (!string.IsNullOrEmpty(methodName))
             {

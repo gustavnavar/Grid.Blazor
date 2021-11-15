@@ -41,7 +41,8 @@ namespace GridBlazorStandalone.Services
                 .WithMultipleFilters()
                 .WithGridItemsCount()
                 .Groupable(true)
-                .Searchable(true, false, false);
+                .Searchable(true, false, false)
+                .SetRemoveDiacritics<StringUtils>("RemoveDiacritics");
 
             var items = server.ItemsToDisplay;
             return items;

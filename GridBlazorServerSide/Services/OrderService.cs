@@ -26,13 +26,15 @@ namespace GridBlazorServerSide.Services
             using (var context = new NorthwindDbContext(_options))
             {
                 var repository = new OrdersRepository(context);
+
                 var server = new GridCoreServer<Order>(repository.GetAll(), query, true, "ordersGrid", columns)
                         .Sortable()
                         .WithPaging(10)
                         .Filterable()
                         .WithMultipleFilters()
                         .Groupable(true)                        
-                        .Searchable(true, false, false);
+                        .Searchable(true, false, false)
+                        .SetRemoveDiacritics<NorthwindDbContext>("RemoveDiacritics");
 
                 // return items to displays
                 var items = server.ItemsToDisplay;

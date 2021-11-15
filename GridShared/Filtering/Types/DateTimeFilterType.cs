@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Globalization;
 using System.Linq.Expressions;
+using System.Reflection;
 
 namespace GridShared.Filtering.Types
 {
@@ -14,7 +15,8 @@ namespace GridShared.Filtering.Types
             get { return typeof(DateTime); }
         }
 
-        public override Expression GetFilterExpression(Expression leftExpr, string value, GridFilterType filterType)
+        public override Expression GetFilterExpression(Expression leftExpr, string value, GridFilterType filterType,
+            MethodInfo removeDiacritics)
         {
             //var dateExpr = Expression.Property(leftExpr, leftExpr.Type, "Date");
 
@@ -32,7 +34,7 @@ namespace GridShared.Filtering.Types
             //    return Expression.And(left, right);
             //}
 
-            return base.GetFilterExpression(leftExpr, value, filterType);
+            return base.GetFilterExpression(leftExpr, value, filterType, removeDiacritics);
         }
 
         /// <summary>

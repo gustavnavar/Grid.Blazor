@@ -34,7 +34,8 @@ namespace GridMvc.Demo.Services
                         .Filterable()
                         .WithMultipleFilters()
                         .Groupable(true)
-                        .Searchable(true, false, false);
+                        .Searchable(true, false, false)
+                        .SetRemoveDiacritics<NorthwindDbContext>("RemoveDiacritics");
 
                 // return items to displays
                 var items = server.ItemsToDisplay;

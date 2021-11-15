@@ -28,7 +28,7 @@ namespace GridBlazorClientSide.Client.Services
             QueryDictionary<StringValues> query)
         {
             /**
-            var server = new GridServer<Order>(await GetAll(), query, true, "ordersGrid", columns)
+            var server = new GridCoreServer<Order>(await GetAll(), query, true, "ordersGrid", columns)
                         .Sortable()
                         .WithPaging(10)
                         .Filterable()

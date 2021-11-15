@@ -1,6 +1,7 @@
 ﻿using GridShared;
 using GridShared.Utility;
 using System;
+using System.Reflection;
 
 namespace GridCore.Server
 {
@@ -170,6 +171,11 @@ namespace GridCore.Server
         ///    Setup the table layout and dimensions
         /// </summary>
         IGridServer<T> SetTableLayout(TableLayout tableLayout, string width = null, string height = null);
+
+        /// <summary>
+        ///    Setup the table layout and dimensions
+        /// </summary>
+        IGridServer<T> SetRemoveDiacritics<R>(string methodName);
 
         /// <summary>
         ///     Items, displaying in the grid view

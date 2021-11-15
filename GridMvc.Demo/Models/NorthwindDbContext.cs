@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using System;
 
 namespace GridMvc.Demo.Models
 {
@@ -29,6 +30,12 @@ namespace GridMvc.Demo.Models
                 .HasForeignKey(t => t.TerritoryID);
 
             base.OnModelCreating(modelBuilder);
+        }
+
+        [DbFunction("RemoveDiacritics", "dbo")]
+        public static string RemoveDiacritics(string input)
+        {
+            throw new NotImplementedException("This method can only be called in LINQ-to-Entities!");
         }
 
         public DbSet<Category> Categories { get; set; }

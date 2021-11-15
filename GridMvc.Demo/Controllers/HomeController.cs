@@ -141,7 +141,8 @@ namespace GridMvc.Demo.Controllers
                 .Selectable(true)
                 .SetStriped(true)
                 .ChangePageSize(true)
-                .WithGridItemsCount();
+                .WithGridItemsCount()
+                .SetRemoveDiacritics<NorthwindDbContext>("RemoveDiacritics");
 
             return View(server.Grid);
         }
@@ -265,7 +266,8 @@ namespace GridMvc.Demo.Controllers
                         .Filterable()
                         .SetStriped(true)
                         .WithMultipleFilters()
-                        .WithGridItemsCount();
+                        .WithGridItemsCount()
+                        .SetRemoveDiacritics<NorthwindDbContext>("RemoveDiacritics");
 
             return PartialView("_SubGrid", server.Grid);
         }
@@ -366,7 +368,8 @@ namespace GridMvc.Demo.Controllers
                         .SetStriped(true)
                         .WithMultipleFilters()
                         .WithGridItemsCount()
-                        .SetDirection(GridDirection.RTL);
+                        .SetDirection(GridDirection.RTL)
+                        .SetRemoveDiacritics<NorthwindDbContext>("RemoveDiacritics");
 
             return PartialView("_SubGrid", server.Grid);
         }
@@ -561,7 +564,8 @@ namespace GridMvc.Demo.Controllers
                 .Selectable(true)
                 .SetStriped(true)
                 .ChangePageSize(true)
-                .WithGridItemsCount();
+                .WithGridItemsCount()
+                .SetRemoveDiacritics<NorthwindDbContext>("RemoveDiacritics");
 
             return View(server.Grid);
         }
@@ -596,7 +600,8 @@ namespace GridMvc.Demo.Controllers
                 .Selectable(true)
                 .SetStriped(true)
                 .ChangePageSize(true)
-                .WithGridItemsCount();
+                .WithGridItemsCount()
+                .SetRemoveDiacritics<NorthwindDbContext>("RemoveDiacritics");
 
             return View(server.Grid);
         }

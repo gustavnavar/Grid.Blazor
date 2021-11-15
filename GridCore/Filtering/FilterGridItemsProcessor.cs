@@ -46,7 +46,7 @@ namespace GridCore.Filtering
                                                                  }
                                                              : _settings.FilteredColumns.GetByColumn(column);
 
-                items = ((IColumnFilter<T>)gridColumn.Filter).ApplyFilter(items, options);
+                items = ((IColumnFilter<T>)gridColumn.Filter).ApplyFilter(items, options, _grid.RemoveDiacritics);
             }
             return items;
         }

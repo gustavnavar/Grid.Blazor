@@ -52,7 +52,8 @@ namespace GridMvc.Demo.Services
                         .WithPaging(10)
                         .Filterable()
                         .WithMultipleFilters()
-                        .Searchable(true, false);
+                        .Searchable(true, false)
+                        .SetRemoveDiacritics<NorthwindDbContext>("RemoveDiacritics");
 
                 // return items to displays
                 var items = server.ItemsToDisplay;

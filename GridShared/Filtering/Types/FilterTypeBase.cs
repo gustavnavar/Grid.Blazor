@@ -31,7 +31,8 @@ namespace GridShared.Filtering.Types
         /// <returns></returns>
         public abstract Type TargetType { get; }
 
-        public virtual Expression GetFilterExpression(Expression leftExpr, string value, GridFilterType filterType)
+        public virtual Expression GetFilterExpression(Expression leftExpr, string value, GridFilterType filterType,
+            MethodInfo removeDiacritics)
         {
             //base implementation of building filter expressions
             filterType = GetValidType(filterType);

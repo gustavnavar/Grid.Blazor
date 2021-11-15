@@ -1,11 +1,12 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 
 namespace GridShared.Filtering
 {
     public interface IColumnFilter<T> : IColumnFilter
     {
-        IQueryable<T> ApplyFilter(IQueryable<T> items, IEnumerable<ColumnFilterValue> values);
+        IQueryable<T> ApplyFilter(IQueryable<T> items, IEnumerable<ColumnFilterValue> values, MethodInfo removeDiacritics = null);
     }
 
     public interface IColumnFilter

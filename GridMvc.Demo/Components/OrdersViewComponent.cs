@@ -121,7 +121,8 @@ namespace GridMvc.Demo.Components
                 .Selectable(true)
                 .SetStriped(true)
                 .ChangePageSize(true)
-                .WithGridItemsCount();
+                .WithGridItemsCount()
+                .SetRemoveDiacritics<NorthwindDbContext>("RemoveDiacritics");
             var factory = Task<IViewComponentResult>.Factory;
 
             return await factory.StartNew(() => View(server.Grid));

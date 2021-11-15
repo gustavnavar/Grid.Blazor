@@ -28,7 +28,8 @@ namespace GridShared.Filtering
 
         #region IColumnFilter<T> Members
 
-        public IQueryable<T> ApplyFilter(IQueryable<T> items, IEnumerable<ColumnFilterValue> values)
+        public IQueryable<T> ApplyFilter(IQueryable<T> items, IEnumerable<ColumnFilterValue> values,
+            MethodInfo removeDiacritics = null)
         {
             if (values == null && values.Where(r => r != ColumnFilterValue.Null).Count() <= 0)
                 throw new ArgumentNullException("values");
@@ -41,7 +42,7 @@ namespace GridShared.Filtering
 
             values = values.Where(r => r != ColumnFilterValue.Null && r.FilterType != GridFilterType.Condition);
 
-            Expression<Func<T, bool>> expr = GetFilterExpression(values, condition);
+            Expression<Func<T, bool>> expr = GetFilterExpression(values, condition, removeDiacritics);
             if (expr == null)
                 return items;
             return items.Where(expr);
@@ -50,7 +51,7 @@ namespace GridShared.Filtering
         #endregion
 
         private Expression<Func<T, bool>> GetFilterExpression(IEnumerable<ColumnFilterValue> values,
-            GridFilterCondition condition)
+            GridFilterCondition condition, MethodInfo removeDiacritics)
         {
             Expression binaryExpression = null;
             foreach (var value in values)
@@ -58,7 +59,7 @@ namespace GridShared.Filtering
                 if (value == ColumnFilterValue.Null)
                     continue;
 
-                Expression expression = GetExpression(value);
+                Expression expression = GetExpression(value, removeDiacritics);
                 if (expression != null)
                 {
                     if (binaryExpression == null)
@@ -79,7 +80,7 @@ namespace GridShared.Filtering
             return Expression.Lambda<Func<T, bool>>(binaryExpression, entityParam);
         }
 
-        private Expression GetExpression(ColumnFilterValue value)
+        private Expression GetExpression(ColumnFilterValue value, MethodInfo removeDiacritics)
         {
             //get target type:
             Type targetType = IsNullable ? Nullable.GetUnderlyingType(_pi.PropertyType) : _pi.PropertyType;
@@ -120,7 +121,7 @@ namespace GridShared.Filtering
             {
                 value.FilterValue = "";
                 if (targetType == typeof(string))
-                    return GetExpression(binaryExpression, value, targetType);
+                    return GetExpression(binaryExpression, value, targetType, removeDiacritics);
                 else if (IsNullable)
                     return binaryExpression == null ?
                         Expression.Equal(_expression.Body, Expression.Constant(null)) :
@@ -132,7 +133,7 @@ namespace GridShared.Filtering
             {
                 value.FilterValue = "";
                 if (targetType == typeof(string))
-                    return GetExpression(binaryExpression, value, targetType);
+                    return GetExpression(binaryExpression, value, targetType, removeDiacritics);
                 else if (IsNullable)
                     return binaryExpression == null ?
                         Expression.NotEqual(_expression.Body, Expression.Constant(null)) :
@@ -142,11 +143,12 @@ namespace GridShared.Filtering
             }
             else
             {
-                return GetExpression(binaryExpression, value, targetType);
+                return GetExpression(binaryExpression, value, targetType, removeDiacritics);
             }
         }
 
-        private Expression GetExpression(Expression binaryExpression, ColumnFilterValue value, Type targetType)
+        private Expression GetExpression(Expression binaryExpression, ColumnFilterValue value, Type targetType,
+            MethodInfo removeDiacritics)
         {
             IFilterType filterType = _typeResolver.GetFilterType(targetType);
 
@@ -155,7 +157,7 @@ namespace GridShared.Filtering
                                        ? Expression.Property(_expression.Body, _pi.PropertyType.GetProperty("Value"))
                                        : _expression.Body;
 
-            var filterExpression = filterType.GetFilterExpression(firstExpr, value.FilterValue, value.FilterType);
+            var filterExpression = filterType.GetFilterExpression(firstExpr, value.FilterValue, value.FilterType, removeDiacritics);
 
             if (filterExpression == null) return null;
 

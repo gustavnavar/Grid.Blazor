@@ -164,6 +164,8 @@ namespace GridCore
             }
         }
 
+        public MethodInfo RemoveDiacritics { get; set; } = null;
+
         /// <summary>
         ///     Items, displaying in the grid view
         /// </summary>

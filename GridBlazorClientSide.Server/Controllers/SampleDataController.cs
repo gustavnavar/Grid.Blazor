@@ -33,7 +33,8 @@ namespace GridBlazorClientSide.Server.Controllers
                     .Sortable()
                     .Filterable()
                     .WithMultipleFilters()
-                    .WithGridItemsCount();
+                    .WithGridItemsCount()
+                    .SetRemoveDiacritics<NorthwindDbContext>("RemoveDiacritics");
 
             var items = server.ItemsToDisplay;
             return Ok(items);
@@ -50,7 +51,8 @@ namespace GridBlazorClientSide.Server.Controllers
                     .Sortable()
                     .Filterable()
                     .WithMultipleFilters()
-                    .WithGridItemsCount();
+                    .WithGridItemsCount()
+                    .SetRemoveDiacritics<NorthwindDbContext>("RemoveDiacritics");
 
             var items = server.ItemsToDisplay;
             return Ok(items);
@@ -66,7 +68,8 @@ namespace GridBlazorClientSide.Server.Controllers
                     .Sortable()
                     .Filterable()
                     .WithMultipleFilters()
-                    .WithGridItemsCount();
+                    .WithGridItemsCount()
+                    .SetRemoveDiacritics<NorthwindDbContext>("RemoveDiacritics");
 
             var items = server.ItemsToDisplay;
             return Ok(items);
@@ -82,7 +85,8 @@ namespace GridBlazorClientSide.Server.Controllers
                     .Sortable()
                     .Filterable()
                     .WithMultipleFilters()
-                    .WithGridItemsCount();
+                    .WithGridItemsCount()
+                    .SetRemoveDiacritics<NorthwindDbContext>("RemoveDiacritics");
 
             var items = server.ItemsToDisplay;
             return Ok(items);
@@ -99,7 +103,8 @@ namespace GridBlazorClientSide.Server.Controllers
                     .Filterable()
                     .WithMultipleFilters()
                     .WithGridItemsCount()
-                    .Searchable(true, false, false);
+                    .Searchable(true, false, false)
+                    .SetRemoveDiacritics<NorthwindDbContext>("RemoveDiacritics");
 
             var items = server.ItemsToDisplay;
             return Ok(items);
@@ -116,7 +121,8 @@ namespace GridBlazorClientSide.Server.Controllers
                     .Filterable()
                     .WithMultipleFilters()
                     .WithGridItemsCount()
-                    .Groupable(true);
+                    .Groupable(true)
+                    .SetRemoveDiacritics<NorthwindDbContext>("RemoveDiacritics");
 
             var items = server.ItemsToDisplay;
             return Ok(items);
@@ -131,7 +137,8 @@ namespace GridBlazorClientSide.Server.Controllers
                     .WithPaging(10)
                     .Sortable()
                     .Filterable()
-                    .WithMultipleFilters();
+                    .WithMultipleFilters()
+                    .SetRemoveDiacritics<NorthwindDbContext>("RemoveDiacritics");
 
             var items = server.ItemsToDisplay;
 
@@ -148,7 +155,8 @@ namespace GridBlazorClientSide.Server.Controllers
                     .Sortable()
                     .Filterable()
                     .WithMultipleFilters()
-                    .WithGridItemsCount();
+                    .WithGridItemsCount()
+                    .SetRemoveDiacritics<NorthwindDbContext>("RemoveDiacritics");
 
             var items = server.ItemsToDisplay;
             return Ok(items);
@@ -164,7 +172,8 @@ namespace GridBlazorClientSide.Server.Controllers
                     .Sortable()
                     .Filterable()
                     .WithMultipleFilters()
-                    .WithGridItemsCount();
+                    .WithGridItemsCount()
+                    .SetRemoveDiacritics<NorthwindDbContext>("RemoveDiacritics");
 
             var items = server.ItemsToDisplay;
             return Ok(items);
@@ -180,7 +189,8 @@ namespace GridBlazorClientSide.Server.Controllers
                     .Sortable()
                     .Filterable()
                     .WithMultipleFilters()
-                    .WithGridItemsCount();
+                    .WithGridItemsCount()
+                    .SetRemoveDiacritics<NorthwindDbContext>("RemoveDiacritics");
 
             var items = server.ItemsToDisplay;
             return Ok(items);
@@ -200,7 +210,8 @@ namespace GridBlazorClientSide.Server.Controllers
                     .Sortable()
                     .Filterable()
                     .WithMultipleFilters()
-                    .WithGridItemsCount();
+                    .WithGridItemsCount()
+                    .SetRemoveDiacritics<NorthwindDbContext>("RemoveDiacritics");
 
             var items = server.ItemsToDisplay;
             return Ok(items);
@@ -216,7 +227,8 @@ namespace GridBlazorClientSide.Server.Controllers
                     .Sortable()
                     .Filterable()
                     .WithMultipleFilters()
-                    .Searchable(true, false);
+                    .Searchable(true, false)
+                    .SetRemoveDiacritics<NorthwindDbContext>("RemoveDiacritics");
 
             var items = server.ItemsToDisplay;
 
@@ -279,7 +291,8 @@ namespace GridBlazorClientSide.Server.Controllers
                         .WithPaging(10)
                         .Sortable()
                         .Filterable()
-                        .WithMultipleFilters();
+                        .WithMultipleFilters()
+                        .SetRemoveDiacritics<NorthwindDbContext>("RemoveDiacritics");
 
             var items = server.ItemsToDisplay;
             return Ok(items);
@@ -295,7 +308,8 @@ namespace GridBlazorClientSide.Server.Controllers
                         .WithPaging(10)
                         .Sortable()
                         .Filterable()
-                        .WithMultipleFilters();
+                        .WithMultipleFilters()
+                        .SetRemoveDiacritics<NorthwindDbContext>("RemoveDiacritics");
 
             var items = server.ItemsToDisplay;
             return Ok(items);
@@ -311,7 +325,8 @@ namespace GridBlazorClientSide.Server.Controllers
                         .WithPaging(10)
                         .Sortable()
                         .Filterable()
-                        .WithMultipleFilters();
+                        .WithMultipleFilters()
+                        .SetRemoveDiacritics<NorthwindDbContext>("RemoveDiacritics");
 
             var items = server.ItemsToDisplay;
             return Ok(items);
@@ -327,7 +342,8 @@ namespace GridBlazorClientSide.Server.Controllers
                     .Sortable()
                     .Filterable()
                     .WithMultipleFilters()
-                    .WithGridItemsCount();
+                    .WithGridItemsCount()
+                    .SetRemoveDiacritics<NorthwindDbContext>("RemoveDiacritics");
 
             var items = server.ItemsToDisplay;
             return Ok(items);
@@ -407,7 +423,8 @@ namespace GridBlazorClientSide.Server.Controllers
                     .Sortable()
                     .Filterable()
                     .WithMultipleFilters()
-                    .WithGridItemsCount();
+                    .WithGridItemsCount()
+                    .SetRemoveDiacritics<NorthwindDbContext>("RemoveDiacritics");
 
             var items = server.ItemsToDisplay;
             return Ok(items);
@@ -450,7 +467,8 @@ namespace GridBlazorClientSide.Server.Controllers
                     .Sortable()
                     .Filterable()
                     .WithMultipleFilters()
-                    .WithGridItemsCount();
+                    .WithGridItemsCount()
+                    .SetRemoveDiacritics<NorthwindDbContext>("RemoveDiacritics");
 
             var items = server.ItemsToDisplay;
             return Ok(items);

@@ -31,7 +31,8 @@ namespace GridBlazorServerSide.Services
                         .Sortable()
                         .WithPaging(10)
                         .Filterable()
-                        .WithMultipleFilters();
+                        .WithMultipleFilters()
+                        .SetRemoveDiacritics<NorthwindDbContext>("RemoveDiacritics");
 
                 // return items to displays
                 var items = server.ItemsToDisplay;

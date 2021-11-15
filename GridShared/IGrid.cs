@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Reflection;
 
 namespace GridShared
 {
@@ -113,6 +114,11 @@ namespace GridShared
         ///     Get value for table height
         /// </summary>
         string Height { get; set; }
+
+        /// <summary>
+        ///     Database function to remove diacritics
+        /// </summary>
+        MethodInfo RemoveDiacritics { get; set; }
 
         /// <summary>
         ///     Get all css classes mapped to the item

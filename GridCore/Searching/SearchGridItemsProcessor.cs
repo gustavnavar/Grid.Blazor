@@ -49,12 +49,12 @@ namespace GridCore.Searching
                     if (binaryExpression == null)
                     {
                         binaryExpression = gridColumn.Search.GetExpression(_settings.SearchValue, 
-                            _grid.SearchingOnlyTextColumns, parameter);
+                            _grid.SearchingOnlyTextColumns, parameter, _grid.RemoveDiacritics);
                     }                      
                     else
                     {
                         Expression expression = gridColumn.Search.GetExpression(_settings.SearchValue, 
-                            _grid.SearchingOnlyTextColumns, parameter);
+                            _grid.SearchingOnlyTextColumns, parameter, _grid.RemoveDiacritics);
                         if (expression != null)
                         {
                             binaryExpression = Expression.OrElse(binaryExpression, expression);

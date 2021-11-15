@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc.Rendering;
 using System;
 using System.Collections.Generic;
+using System.Reflection;
 
 namespace GridMvc.Html
 {
@@ -140,6 +141,12 @@ namespace GridMvc.Html
         {
             get { return _source.Height; }
             set { _source.Height = value; }
+        }
+
+        public MethodInfo RemoveDiacritics
+        {
+            get { return _source.RemoveDiacritics; }
+            set { _source.RemoveDiacritics = value; }
         }
 
         string IGrid.GetRowCssClasses(object item)

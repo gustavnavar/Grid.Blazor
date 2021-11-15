@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Primitives;
 using System;
 using System.Collections.Generic;
+using System.Reflection;
 
 namespace GridCore.Server
 
@@ -272,6 +273,13 @@ namespace GridCore.Server
                 _source.Width = width;
             if (!string.IsNullOrWhiteSpace(height))
                 _source.Height = height;
+            return this;
+        }
+
+        public IGridServer<T> SetRemoveDiacritics<R>(string methodName)
+        {
+            MethodInfo removeDiacritics = typeof(R).GetMethod(methodName, new[] { typeof(string) });
+            _source.RemoveDiacritics = removeDiacritics;
             return this;
         }
 

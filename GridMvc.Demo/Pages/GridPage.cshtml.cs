@@ -132,7 +132,8 @@ namespace GridMvc.Demo.Pages
                 .SetStriped(true)
                 .ChangePageSize(true)
                 .WithGridItemsCount()
-                .SetTableLayout(TableLayout.Fixed, "1000px", "400px");
+                .SetTableLayout(TableLayout.Fixed, "1000px", "400px")
+                .SetRemoveDiacritics<NorthwindDbContext>("RemoveDiacritics");
 
             Grid = server.Grid;
 
