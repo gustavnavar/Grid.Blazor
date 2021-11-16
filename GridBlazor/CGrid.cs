@@ -595,19 +595,24 @@ namespace GridBlazor
             return values.ToArray();
         }
 
-        public Task InsertColumn(IGridColumn targetColumn, IGridColumn insertingColumn)
+        private static readonly Task<bool> InsertColumnSucceded = Task.FromResult(true);
+        private static readonly Task<bool> InsertColumnFailed = Task.FromResult(false);
+        /// <inheritdoc/>
+        public Task<bool> InsertColumn(IGridColumn targetColumn, IGridColumn insertingColumn)
         {
+
             var currentPossition = _columnsCollection.IndexOf(insertingColumn);
             var targetPossition = _columnsCollection.IndexOf(targetColumn);
             if (currentPossition == -1 || targetPossition == -1 || currentPossition == targetPossition)
-                return Task.CompletedTask;
+                return InsertColumnFailed;
             
             var index = currentPossition > targetPossition ? targetPossition : targetPossition - 1;
             var removed = _columnsCollection.Remove(insertingColumn);
-            if (removed)
-                _columnsCollection.Insert(index, insertingColumn);
-            
-            return Task.CompletedTask;
+            if (!removed)
+                return InsertColumnFailed;
+
+            _columnsCollection.Insert(index, insertingColumn);
+            return InsertColumnSucceded;
         }
 
         /// <summary>

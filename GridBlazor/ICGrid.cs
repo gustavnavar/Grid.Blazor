@@ -101,8 +101,8 @@ namespace GridBlazor
         /// </summary>
         /// <param name="targetColumn">Column which will be moved</param>
         /// <param name="insertingColumn">Column before which it will be inserted</param>
-        /// <returns></returns>
-        Task InsertColumn(IGridColumn targetColumn, IGridColumn insertingColumn);
+        /// <returns>Retruns true if column was sucessfully inserted before target otherwise false</returns>
+        Task<bool> InsertColumn(IGridColumn targetColumn, IGridColumn insertingColumn);
 
         /// <summary>
         ///     Get and set export to an Excel file

@@ -935,7 +935,10 @@ namespace GridBlazor.Pages
             if (source is null)
                 return;
 
-            await Grid.InsertColumn(gridHeaderComponent.Column, source);
+            var updated = await Grid.InsertColumn(gridHeaderComponent.Column, source);
+            if (!updated)
+                return;
+
             _shouldRender = true;
             StateHasChanged();
         }
