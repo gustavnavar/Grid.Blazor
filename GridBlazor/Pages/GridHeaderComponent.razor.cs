@@ -8,6 +8,7 @@ using GridShared.Filtering;
 using GridShared.Sorting;
 using GridShared.Utility;
 using Microsoft.AspNetCore.Components;
+using Microsoft.AspNetCore.Components.Web;
 using Microsoft.Extensions.Primitives;
 using System;
 using System.Collections.Generic;
@@ -282,9 +283,10 @@ namespace GridBlazor.Pages
         {
             if (!GridComponent.Grid.RearrangeColumnEnabled)
                 return;
-
+            
             _dropClass = "grid-header-drag-over";
             _shouldRender = true;
+            Console.WriteLine("DragEnter");
         }
 
         protected void HandleDragLeave()
@@ -294,6 +296,7 @@ namespace GridBlazor.Pages
 
             _dropClass = "";
             _shouldRender = true;
+            Console.WriteLine("DragLeave");
         }
 
         protected async Task HandleDrop()

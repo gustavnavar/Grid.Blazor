@@ -64,6 +64,9 @@ namespace GridBlazor.Tests.Client
             _client.Groupable(false);
             Assert.IsFalse(_client.Grid.ExtSortingEnabled);
             Assert.IsFalse(_client.Grid.GroupingEnabled);
+
+            _client.RearrangeableColumns(true);
+            Assert.IsTrue(_client.Grid.RearrangeColumnEnabled);
         }
     }
 }

@@ -40,7 +40,7 @@ else
         var locale = CultureInfo.CurrentCulture;
 
         var query = new QueryDictionary<StringValues>();
-        string url = NavigationManager.BaseUri + "api/SampleData/GetOrdersGridGroupable";
+        string url = NavigationManager.BaseUri + "api/SampleData/GetOrdersGridRearrangeableColumns";
         var client = new GridClient<Order>(HttpClient, url, query, false, "ordersGrid", 
             ColumnCollections.OrderColumnsGroupable, locale)
             .Sortable()

@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using System;
 
 namespace GridBlazorClientSide.Server
 {
@@ -22,6 +23,9 @@ namespace GridBlazorClientSide.Server
         // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
         public void ConfigureServices(IServiceCollection services)
         {
+            var dbProviderText = Configuration.GetValue<string>("DbProvider");
+            if (Enum.TryParse<DbProvider>(dbProviderText, out var dbProvider))
+                SharedDbContextUtils.DbProvider = dbProvider;
 
             services.AddDbContext<NorthwindDbContext>(options =>
             {

@@ -597,15 +597,16 @@ namespace GridBlazor
 
         public Task InsertColumn(IGridColumn targetColumn, IGridColumn insertingColumn)
         {
-            var removed = _columnsCollection.Remove(insertingColumn);
-            if (!removed)
+            var currentPossition = _columnsCollection.IndexOf(insertingColumn);
+            var targetPossition = _columnsCollection.IndexOf(targetColumn);
+            if (currentPossition == -1 || targetPossition == -1)
                 return Task.CompletedTask;
             
-            var index = _columnsCollection.IndexOf(targetColumn);
-            if (index == -1)
-                return Task.CompletedTask;
-
-            _columnsCollection.Insert(index, insertingColumn);
+            var index = currentPossition > targetPossition ? targetPossition : targetPossition - 1;
+            var removed = _columnsCollection.Remove(insertingColumn);
+            if (removed)
+                _columnsCollection.Insert(index, insertingColumn);
+            
             return Task.CompletedTask;
         }
 

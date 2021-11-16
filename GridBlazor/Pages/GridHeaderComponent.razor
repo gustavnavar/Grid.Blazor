@@ -3,13 +3,13 @@
 
 @typeparam T
 
-<th class="@_cssClass" style="@_cssStyles">
-    <div class="grid-header-group"
-        @ondragenter="@(() => HandleDragEnter())" 
-        @ondragleave="@(() => HandleDragLeave())" 
-        @ondrop="HandleDrop" 
-        ondragover="event.preventDefault();"
-    >
+<th class="@_cssClass @_dropClass" style="@_cssStyles"
+    @ondragenter="HandleDragEnter" 
+    @ondragleave="HandleDragLeave" 
+    @ondrop="HandleDrop" 
+    ondragover="event.preventDefault();"
+>
+    <div class="grid-header-group">
         @if (GridComponent.Grid.RearrangeColumnEnabled
                 && !string.IsNullOrEmpty(_dropClass))
         {

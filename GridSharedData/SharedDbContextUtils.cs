@@ -49,11 +49,11 @@ namespace GridShared.Data
                     {
                         foreach (var property in entity.GetProperties())
                         {
-                            var storeObjectIdentifier = StoreObjectIdentifier.Create((IReadOnlyEntityType)property, StoreObjectType.Table);
+                            var storeObjectIdentifier = StoreObjectIdentifier.Create(property.DeclaringEntityType, StoreObjectType.Table);
                             if(storeObjectIdentifier.HasValue)
                                 property.SetColumnName(mapper.TranslateMemberName(property.GetColumnName(storeObjectIdentifier.Value)));
                         }
-
+                    
                         entity.SetTableName(mapper.TranslateTypeName(entity.GetTableName()));
                     }
                     break;

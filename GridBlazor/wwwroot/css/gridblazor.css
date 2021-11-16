@@ -18,7 +18,21 @@ table.grid-table { margin: 0; }
         table.grid-table .grid-header > .grid-header-group > .grid-header-title > button { font-weight: bold; color: #007bff; background-color: white; border: none }
         table.grid-table .grid-header > .grid-header-group > .grid-header-title > button:hover { color: #0056b3; text-decoration: underline }
         table.grid-table .grid-header > .grid-header-group > .grid-header-title > button:focus { outline: 0; }
-        
+
+    /* Grid header drag over  */
+    table.grid-table .grid-header.grid-header-drag-over {
+        border: 1px solid lightblue;
+        border-radius: 16px;
+    }
+    
+    table.grid-table .grid-header.grid-header-drag-over * {
+        pointer-events: none;
+    }
+
+    table.grid-table .grid-header > .grid-header-group .grid-column-rearrange-insert-placeholder {
+        margin-left: -12px;
+    }
+
     /* Grid body */
     table.grid-table tr.grid-row-selected td { background: #4888C2 !important; color: white; }
     table.grid-table tr.grid-row-selected a { color: white; }
@@ -203,16 +217,6 @@ div[dir="rtl"] button.grid-button-component { margin-left: 5px; margin-right: 0;
 
 div[dir="rtl"] label {
     display: flex;
-}
-
-/* Grid drag over header */
-.grid-header-drag-over {
-    border: 1px solid lightblue;
-    border-radius: 5px;
-}
-
-.grid-column-rearrange-insert-placeholder{
-    margin-left: -0.25rem;
 }
 
 /* The switch - the box around the slider */
