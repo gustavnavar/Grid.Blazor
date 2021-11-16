@@ -168,6 +168,8 @@ namespace GridBlazor
         public bool GroupingEnabled { get; set; }
 
         public bool ClearFiltersButtonEnabled { get; set; } = false;
+        
+        public bool RearrangeColumnEnabled { get; set; }
 
         /// <summary>
         ///     Items, displaying in the grid view
@@ -593,6 +595,26 @@ namespace GridBlazor
                 }
             }
             return values.ToArray();
+        }
+
+        private static readonly Task<bool> InsertColumnSucceded = Task.FromResult(true);
+        private static readonly Task<bool> InsertColumnFailed = Task.FromResult(false);
+        /// <inheritdoc/>
+        public Task<bool> InsertColumn(IGridColumn targetColumn, IGridColumn insertingColumn)
+        {
+
+            var currentPossition = _columnsCollection.IndexOf(insertingColumn);
+            var targetPossition = _columnsCollection.IndexOf(targetColumn);
+            if (currentPossition == -1 || targetPossition == -1 || currentPossition == targetPossition)
+                return InsertColumnFailed;
+            
+            var index = currentPossition > targetPossition ? targetPossition : targetPossition - 1;
+            var removed = _columnsCollection.Remove(insertingColumn);
+            if (!removed)
+                return InsertColumnFailed;
+
+            _columnsCollection.Insert(index, insertingColumn);
+            return InsertColumnSucceded;
         }
 
         /// <summary>

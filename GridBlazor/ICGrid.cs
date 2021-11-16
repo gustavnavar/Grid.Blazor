@@ -43,6 +43,11 @@ namespace GridBlazor
         /// </summary>
         bool SubGridsOpened { get; }
 
+        /// <summary>
+        ///     Set or get default value of rearrange column
+        /// </summary>
+        public bool RearrangeColumnEnabled { get; set; }
+
         Type Type { get; }
 
         string Url { get; }
@@ -90,6 +95,14 @@ namespace GridBlazor
         void RemoveAllFilters();
 
         Task DownloadExcel(IJSRuntime js, string filename);
+
+        /// <summary>
+        /// Changes postion of instertingColumn to appear before targetColumn
+        /// </summary>
+        /// <param name="targetColumn">Column which will be moved</param>
+        /// <param name="insertingColumn">Column before which it will be inserted</param>
+        /// <returns>Retruns true if column was sucessfully inserted before target otherwise false</returns>
+        Task<bool> InsertColumn(IGridColumn targetColumn, IGridColumn insertingColumn);
 
         /// <summary>
         ///     Get and set export to an Excel file

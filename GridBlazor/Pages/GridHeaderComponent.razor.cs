@@ -8,6 +8,7 @@ using GridShared.Filtering;
 using GridShared.Sorting;
 using GridShared.Utility;
 using Microsoft.AspNetCore.Components;
+using Microsoft.AspNetCore.Components.Web;
 using Microsoft.Extensions.Primitives;
 using System;
 using System.Collections.Generic;
@@ -35,6 +36,8 @@ namespace GridBlazor.Pages
         protected StringValues _clearInitFilter;
         private bool? _allChecked = null;
         private bool _showAllChecked = false;
+
+        protected string _dropClass = "";
 
         protected string _cssStyles;
         protected string _cssClass;
@@ -274,6 +277,37 @@ namespace GridBlazor.Pages
             var maxId = values.Any() ? values.Max(x => x.Id) + 1 : 1;
             GridComponent.Payload = new ColumnOrderValue(Column.Name, Column.Direction ?? GridSortDirection.Ascending, maxId);
             _shouldRender = true;
+        }
+
+        protected void HandleDragEnter()
+        {
+            if (!GridComponent.Grid.RearrangeColumnEnabled)
+                return;
+            
+            _dropClass = "grid-header-drag-over";
+            _shouldRender = true;
+            Console.WriteLine("DragEnter");
+        }
+
+        protected void HandleDragLeave()
+        {
+            if (!GridComponent.Grid.RearrangeColumnEnabled)
+                return;
+
+            _dropClass = "";
+            _shouldRender = true;
+            Console.WriteLine("DragLeave");
+        }
+
+        protected async Task HandleDrop()
+        {
+            if (!GridComponent.Grid.RearrangeColumnEnabled)
+                return;
+
+            _dropClass = "";
+            _shouldRender = true;
+
+            await GridComponent.HandleColumnRearranged(this);
         }
 
         private void HideFilter()

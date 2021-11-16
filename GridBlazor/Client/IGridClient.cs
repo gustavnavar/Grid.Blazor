@@ -100,6 +100,16 @@ namespace GridBlazor
         ///     Enable or disable grouping
         /// </summary>
         IGridClient<T> Groupable(bool enable);
+        
+        /// <summary>
+        ///     Enable column rearrange
+        /// </summary>
+        IGridClient<T> RearrangeableColumns();
+
+        /// <summary>
+        ///     Enable or disable column rearrange
+        /// </summary>
+        IGridClient<T> RearrangeableColumns(bool enable);
 
         /// <summary>
         ///     Enable or disable visibility of ClearFiltersButton

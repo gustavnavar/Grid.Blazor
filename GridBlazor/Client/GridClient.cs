@@ -187,6 +187,17 @@ namespace GridBlazor
             return this;
         }
 
+        public IGridClient<T> RearrangeableColumns()
+        {
+            return RearrangeableColumns(true);
+        }
+
+        public IGridClient<T> RearrangeableColumns(bool enable)
+        {
+            _source.RearrangeColumnEnabled = enable;
+            return this;
+        }
+
         public IGridClient<T> ClearFiltersButton(bool enable)
         {
             _source.ClearFiltersButtonEnabled = enable;
