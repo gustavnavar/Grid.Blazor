@@ -96,6 +96,12 @@ namespace GridBlazor
 
         Task DownloadExcel(IJSRuntime js, string filename);
 
+        /// <summary>
+        /// Changes postion of instertingColumn to appear before targetColumn
+        /// </summary>
+        /// <param name="targetColumn">Column which will be moved</param>
+        /// <param name="insertingColumn">Column before which it will be inserted</param>
+        /// <returns></returns>
         Task InsertColumn(IGridColumn targetColumn, IGridColumn insertingColumn);
 
         /// <summary>

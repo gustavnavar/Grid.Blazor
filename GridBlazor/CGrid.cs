@@ -599,7 +599,7 @@ namespace GridBlazor
         {
             var currentPossition = _columnsCollection.IndexOf(insertingColumn);
             var targetPossition = _columnsCollection.IndexOf(targetColumn);
-            if (currentPossition == -1 || targetPossition == -1)
+            if (currentPossition == -1 || targetPossition == -1 || currentPossition == targetPossition)
                 return Task.CompletedTask;
             
             var index = currentPossition > targetPossition ? targetPossition : targetPossition - 1;
