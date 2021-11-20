@@ -123,7 +123,7 @@
                                         }
                                         else
                                         {
-                                            <input id="@column.FieldName" name="@column.FieldName" type="checkbox" class="form-control" disabled="disabled" readonly="readonly" checked="checked" value="true" />
+                                            <input id="@column.FieldName" name="@column.FieldName" type="checkbox" class="form-check" disabled="disabled" readonly="readonly" checked="checked" value="true" />
                                         }
                                     }
                                     else
@@ -139,7 +139,7 @@
                                         }
                                         else
                                         {
-                                            <input id="@column.FieldName" name="@column.FieldName" type="checkbox" class="form-control" disabled="disabled" readonly="readonly" value="false" />
+                                            <input id="@column.FieldName" name="@column.FieldName" type="checkbox" class="form-check" disabled="disabled" readonly="readonly" value="false" />
                                         }
                                     }
                                 }
@@ -254,7 +254,7 @@
                                         }
                                         else
                                         {
-                                            <input id="@column.FieldName" name="@column.FieldName" type="checkbox" class="form-control @(ColumnErrors.ContainsKey(@column.FieldName) ? "input-validation-error" : "")" checked="checked" value="true" @onchange="(e) => ChangeValue(e, column)" />
+                                            <input id="@column.FieldName" name="@column.FieldName" type="checkbox" class="form-check @(ColumnErrors.ContainsKey(@column.FieldName) ? "input-validation-error" : "")" checked="checked" value="true" @onchange="(e) => ChangeValue(e, column)" />
                                         }
                                     }
                                     else
@@ -270,7 +270,7 @@
                                         }
                                         else
                                         {
-                                            <input id="@column.FieldName" name="@column.FieldName" type="checkbox" class="form-control @(ColumnErrors.ContainsKey(@column.FieldName) ? "input-validation-error" : "")" value="false" @onchange="(e) => ChangeValue(e, column)" />
+                                            <input id="@column.FieldName" name="@column.FieldName" type="checkbox" class="form-check @(ColumnErrors.ContainsKey(@column.FieldName) ? "input-validation-error" : "")" value="false" @onchange="(e) => ChangeValue(e, column)" />
                                         }
                                     }
                                 }

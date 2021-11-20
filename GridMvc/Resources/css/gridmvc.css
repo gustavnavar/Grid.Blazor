@@ -93,7 +93,7 @@ div[dir="rtl"] .subgrid-caret-down::after { content: "\25E3"; }
 .grid-buttons { display:inline-flex; width:100%; justify-content:space-between; }
 
 /* Grid header buttons */
-.grid-header-buttons { display:inline-flex; width:100%; }
+.grid-header-buttons { display:inline-flex; }
 
 /* Grid search */
 .grid-search { margin-top: 10px; margin-bottom: 10px; }
