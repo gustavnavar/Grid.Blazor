@@ -134,6 +134,38 @@ namespace GridBlazorStandalone.ColumnCollections
             .RenderValueAs(o => o.Customer.IsVip ? Strings.BoolTrueLabel : Strings.BoolFalseLabel);
         };
 
+        public static Action<IGridColumnCollection<Order>> OrderColumnsRearrangeable = c =>
+        {
+            /* Adding "OrderID" column: */
+            c.Add(o => o.OrderID).Titled(SharedResource.Number).SetWidth(100);
+
+            /* Adding "OrderDate" column: */
+            c.Add(o => o.OrderDate, "OrderCustomDate").Titled(SharedResource.OrderCustomDate)
+            .SetWidth(120).RenderComponentAs<TooltipCell>();
+
+            /* Adding "CompanyName" column: */
+            c.Add(o => o.Customer.CompanyName).Titled(SharedResource.CompanyName)
+            .ThenSortBy(o => o.ShipVia)
+            .ThenSortByDescending(o => o.Freight)
+            .SetWidth(250);
+
+            /* Adding "ContactName" column: */
+            c.Add(o => o.Customer.ContactName).Titled(SharedResource.ContactName);
+
+            /* Adding "ShipVia" column: */
+            c.Add(o => o.ShipVia).Titled("Via");
+
+            /* Adding "Freight" column: */
+            c.Add(o => o.Freight)
+            .Titled(SharedResource.Freight)
+            .SetWidth(150)
+            .Format("{0:F}");
+
+            /* Adding "Vip customer" column: */
+            c.Add(o => o.Customer.IsVip).Titled(SharedResource.IsVip).SetWidth(90).Css("hidden-xs") //hide on phones
+            .RenderValueAs(o => o.Customer.IsVip ? Strings.BoolTrueLabel : Strings.BoolFalseLabel);
+        };
+
         public static Action<IGridColumnCollection<Order>, IList<Func<object, Task>>, object>
             OrderColumnsWithEdit = (c, functions, obj) =>
             {

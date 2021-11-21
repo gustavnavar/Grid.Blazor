@@ -15,6 +15,7 @@
 * [Totals](Totals.md)
 * [Sorting](Sorting.md)
 * [Grouping](Grouping.md)
+* [Rearrange columns](RearrangeColumns.md)
 * [Selecting row](Selecting_row.md)
 * [Searching](Searching.md)
 * [Filtering](Filtering.md)

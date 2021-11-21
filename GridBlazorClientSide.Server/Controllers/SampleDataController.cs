@@ -129,23 +129,6 @@ namespace GridBlazorClientSide.Server.Controllers
         }
 
         [HttpGet("[action]")]
-        public ActionResult GetOrdersGridRearrangeableColumns()
-        {
-            var repository = new OrdersRepository(_context);
-            IGridServer<Order> server = new GridCoreServer<Order>(repository.GetAll(), Request.Query,
-                true, "ordersGrid", ColumnCollections.OrderColumnsRearrangeable)
-                    .WithPaging(10)
-                    .Sortable()
-                    .Filterable()
-                    .WithMultipleFilters()
-                    .WithGridItemsCount()
-                    ;
-
-            var items = server.ItemsToDisplay;
-            return Ok(items);
-        }
-
-        [HttpGet("[action]")]
         public ActionResult GetOrdersGridWithSubgrids()
         {
             var repository = new OrdersRepository(_context);

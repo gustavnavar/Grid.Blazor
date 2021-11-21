@@ -1,13 +1,13 @@
-## Blazor WASM with GridCore back-end
+## Blazor WASM with OData back-end
 
 # Grouping
 
 [Index](Documentation.md)
 
-You can enable rearrange column order by drag and drop a grid using the **RearrangeableColumns** method for **GridClient** objects:
+You can enable rearrange column order by drag and drop a grid using the **RearrangeableColumns** method for **GridODataClient** objects:
 * razor page
     ```c#
-        var client = new GridClient<Order>(httpClient, url, query, false, "ordersGrid", Columns, locale)
+        var client = new GridODataClient<Order>(httpClient, url, query, false, "ordersGrid", columns, 10, locale)
             .RearrangeableColumns()
     ```
 

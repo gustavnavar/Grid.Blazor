@@ -1,4 +1,4 @@
-## Blazor WASM with local data
+## Blazor server-side
 
 # Grouping
 

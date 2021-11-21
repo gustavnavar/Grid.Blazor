@@ -1,11 +1,11 @@
 ﻿@page "/rearrangeable"
-@using GridBlazorClientSide.Client.ColumnCollections
-@using GridBlazorClientSide.Shared.Models
+@using GridBlazorStandalone.ColumnCollections
+@using GridBlazorStandalone.Models
+@using GridBlazorStandalone.Services
 @using Microsoft.Extensions.Primitives
 @using System.Globalization
 @using System.Threading.Tasks
-@inject NavigationManager NavigationManager
-@inject HttpClient HttpClient
+@inject IOrderService orderService
 
 <h1>Rearrangeable Grid</h1>
 
@@ -14,7 +14,7 @@
 </p>
 
 <p>
-    This component demonstrates a GridBlazor client-side grid. For more information, please see: <a href="https://github.com/gustavnavar/Grid.Blazor">https://github.com/gustavnavar/Grid.Blazor</a>
+    This component demonstrates an standalone GridBlazor client-side grid. For more information, please see: <a href="https://github.com/gustavnavar/Grid.Blazor">https://github.com/gustavnavar/Grid.Blazor</a>
 </p>
 
 @if (_task.IsCompleted)
@@ -40,9 +40,8 @@ else
         var locale = CultureInfo.CurrentCulture;
 
         var query = new QueryDictionary<StringValues>();
-        string url = NavigationManager.BaseUri + "api/SampleData/GetOrdersGrid";
-        var client = new GridClient<Order>(HttpClient, url, query, false, "ordersGrid", 
-            ColumnCollections.OrderColumnsRearrangeable, locale)
+        var client = new GridClient<Order>(q => orderService.GetOrdersGridRows(ColumnCollections.OrderColumnsRearrangeable, q), 
+            query, false, "ordersGrid", ColumnCollections.OrderColumnsRearrangeable, locale)
             .Sortable()
             .Filterable()
             .SetStriped(true)

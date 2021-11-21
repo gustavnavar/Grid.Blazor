@@ -1,4 +1,4 @@
-## Blazor WASM with GridCore back-end
+## GridBlazor for ASP.NET Core MVC
 
 # Grouping
 
@@ -7,7 +7,7 @@
 You can enable rearrange column order by drag and drop a grid using the **RearrangeableColumns** method for **GridClient** objects:
 * razor page
     ```c#
-        var client = new GridClient<Order>(httpClient, url, query, false, "ordersGrid", Columns, locale)
+        var client = new GridClient<Order>(q => orderService.GetOrdersGridRows(columns, q), query, false, "ordersGrid", Columns, locale)
             .RearrangeableColumns()
     ```
 
