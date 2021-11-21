@@ -144,6 +144,9 @@
   <data name="FilterButtonTooltipText" xml:space="preserve">
     <value>Bu sütuna göre filtrele</value>
   </data>
+  <data name="Goto" xml:space="preserve">
+    <value>Git</value>
+  </data>
   <data name="GroupingText" xml:space="preserve">
     <value>Gruplamak için sütunları buraya bırakın</value>
   </data>

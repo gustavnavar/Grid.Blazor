@@ -279,4 +279,7 @@
   <data name="DeleteConfirmCodeError" xml:space="preserve">
     <value>Kodeak eta berrespen-kodeak berdinak izan behar dute elementu hau kentzeko</value>
   </data>
+  <data name="Goto" xml:space="preserve">
+    <value>Joan</value>
+  </data>
 </root>

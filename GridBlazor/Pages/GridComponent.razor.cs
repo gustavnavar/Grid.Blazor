@@ -31,8 +31,8 @@ namespace GridBlazor.Pages
         internal bool RequiredTotalsColumn = false;
         private string gridTableHead = Guid.NewGuid().ToString("N");
         private string gridTableBody = Guid.NewGuid().ToString("N");
-        protected string _changePageSizeUrl;
-        protected int _pageSize;
+        internal string ChangePageSizeUrl;
+        internal int PageSize;
         internal bool[] IsSubGridVisible;
         internal bool[] InitSubGrid;
         protected IQueryDictionary<Type> _filterComponents;
@@ -103,7 +103,7 @@ namespace GridBlazor.Pages
 
         public QueryDictionary<GridHeaderComponent<T>> HeaderComponents { get; private set; }
 
-        public ElementReference PageSizeInput { get; private set; }
+        public ElementReference PageSizeInput { get; internal set; }
 
         public GridSearchComponent<T> SearchComponent { get; private set; }
 
@@ -253,8 +253,8 @@ namespace GridBlazor.Pages
 
             var queryBuilder = new CustomQueryStringBuilder(Grid.Settings.SearchSettings.Query);
             var exceptQueryParameters = new List<string> { GridPager.DefaultPageSizeQueryParameter };
-            _changePageSizeUrl = queryBuilder.GetQueryStringExcept(exceptQueryParameters);
-            _pageSize = Grid.Pager.ChangePageSize && Grid.Pager.QueryPageSize > 0 ? Grid.Pager.QueryPageSize : Grid.Pager.PageSize;
+            ChangePageSizeUrl = queryBuilder.GetQueryStringExcept(exceptQueryParameters);
+            PageSize = Grid.Pager.ChangePageSize && Grid.Pager.QueryPageSize > 0 ? Grid.Pager.QueryPageSize : Grid.Pager.PageSize;
 
             _shouldRender = true;
         }
@@ -1445,16 +1445,16 @@ namespace GridBlazor.Pages
 
         public async Task InputPageSizeBlur()
         {
-            if (_pageSize > 0)
+            if (PageSize > 0)
             {
-                Grid.Pager.PageSize = _pageSize;
-                Grid.AddQueryParameter(GridPager.DefaultPageSizeQueryParameter, _pageSize.ToString());
+                Grid.Pager.PageSize = PageSize;
+                Grid.AddQueryParameter(GridPager.DefaultPageSizeQueryParameter, PageSize.ToString());
                 await UpdateGrid();
                 await OnPagerChanged();
             }
             else
             {
-                _pageSize = Grid.Pager.PageSize;
+                PageSize = Grid.Pager.PageSize;
                 _shouldRender = true;
                 StateHasChanged();
             }
@@ -1464,7 +1464,7 @@ namespace GridBlazor.Pages
         {
             if (pageSize > 0)
             {
-                _pageSize = pageSize;
+                PageSize = pageSize;
                 Grid.Pager.PageSize = pageSize;
                 Grid.AddQueryParameter(GridPager.DefaultPageSizeQueryParameter, pageSize.ToString());
                 await UpdateGrid();

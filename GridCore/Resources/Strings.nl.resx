@@ -144,6 +144,9 @@
   <data name="FilterButtonTooltipText" xml:space="preserve">
     <value>Filter deze kolom</value>
   </data>
+  <data name="Goto" xml:space="preserve">
+    <value>Ga naar</value>
+  </data>
   <data name="GroupingText" xml:space="preserve">
     <value>Zet kolommen hier neer voor kolomgroepering</value>
   </data>

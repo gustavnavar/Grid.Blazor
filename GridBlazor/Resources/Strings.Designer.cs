@@ -19,13 +19,13 @@ namespace GridBlazor.Resources {
     // class via a tool like ResGen or Visual Studio.
     // To add or remove a member, edit your .ResX file then rerun ResGen
     // with the /str option, or rebuild your VS project.
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "16.0.0.0")]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "17.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
     public class Strings {
         
         private static global::System.Resources.ResourceManager resourceMan;
-        
+              
         [global::System.Diagnostics.CodeAnalysis.SuppressMessageAttribute("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
         internal Strings() {
         }
@@ -293,6 +293,15 @@ namespace GridBlazor.Resources {
         public static string FilterValueLabel {
             get {
                 return ResourceManager.GetString("FilterValueLabel", System.Globalization.CultureInfo.CurrentCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Go to.
+        /// </summary>
+        public static string Goto {
+            get {
+                return ResourceManager.GetString("Goto", System.Globalization.CultureInfo.CurrentCulture);
             }
         }
         

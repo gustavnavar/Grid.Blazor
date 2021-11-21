@@ -279,4 +279,7 @@
   <data name="DeleteConfirmCodeError" xml:space="preserve">
     <value>Šifra i kôd potvrde moraju biti jednaki za brisanje ove stavke</value>
   </data>
+  <data name="Goto" xml:space="preserve">
+    <value>Menj</value>
+  </data>
 </root>

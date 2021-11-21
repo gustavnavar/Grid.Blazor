@@ -282,4 +282,7 @@
   <data name="DeleteConfirmCodeError" xml:space="preserve">
     <value>Kod ve onay kodu bu öğeyi silmek için eşit olmalıdır</value>
   </data>
+  <data name="Goto" xml:space="preserve">
+    <value>Git</value>
+  </data>
 </root>

@@ -144,6 +144,9 @@
   <data name="FilterButtonTooltipText" xml:space="preserve">
     <value>فیلتر کردن این ستون</value>
   </data>
+  <data name="Goto" xml:space="preserve">
+    <value>برو به</value>
+  </data>
   <data name="GroupingText" xml:space="preserve">
     <value>برای دسته بندی، ستون را اینجا بیاندازید</value>
   </data>

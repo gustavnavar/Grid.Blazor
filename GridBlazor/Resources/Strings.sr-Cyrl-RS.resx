@@ -279,4 +279,7 @@
   <data name="DeleteConfirmCodeError" xml:space="preserve">
     <value>Шифра и шифра потврде морају бити једнаке за брисање овог артикла</value>
   </data>
+  <data name="Goto" xml:space="preserve">
+    <value>Иди на</value>
+  </data>
 </root>

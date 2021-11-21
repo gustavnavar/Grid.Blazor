@@ -59,6 +59,7 @@ GridMvc = (function ($) {
         this.initExtSort();
         this.initGroup();
         this.initChangePageSize();
+        this.initGotoPage();
         this.initRemoveAllFilters();
     };
     //
@@ -650,7 +651,7 @@ GridMvc = (function ($) {
     * Methods that provides functionality for changing page size
     */
     /***
-    * Method search all search buttons and register 'onclick' event handlers:
+    * Method search all grid-change-page-size input elements and register 'keydown' event handlers:
     */
     gridMvc.prototype.initChangePageSize = function () {
         var self = this;
@@ -695,6 +696,60 @@ GridMvc = (function ($) {
         var url = "";
         if (pageSize) {
             url += "grid-pagesize=" + encodeURIComponent(pageSize);
+        }
+        return url;
+    };
+
+    /***
+    * ============= GO TO PAGE =============
+    * Methods that provides functionality for going to a page
+    */
+    /***
+    * Method search all grid-goto-page-input input elements and register 'keydown' event handlers:
+    */
+    gridMvc.prototype.initGotoPage = function () {
+        var self = this;
+        this.jqContainer.find(".grid-goto-page-input").each(function () {
+            $(this).keydown(function (e) {
+                if (e.keyCode === 9 || e.keyCode === 13) {
+                    var page = $(this).val();
+                    var x = parseInt(page, 10);
+                    if (x > 0) {
+                        self.goTo(page);
+                    }
+                    else {
+                        $(this).val(this.defaultValue);
+                    }
+                }
+            });
+        });
+    };
+
+    //
+    // Applies selected page number by redirecting to another url:
+    //
+    gridMvc.prototype.goTo = function (page) {
+        var x = parseInt(page, 10);
+        if (x <= 0) {
+            return;
+        }
+        var url = "";
+        var gridGotoPage = this.jqContainer.find(".grid-goto-page").first();
+        if (gridGotoPage) {
+            url = gridGotoPage.attr("data-goto-page-url") || "";
+        }
+
+        if (url.length > 0)
+            url += "&";
+        url += this.getGotoPageQueryData(page);
+
+        window.location.search = url;
+    };
+
+    gridMvc.prototype.getGotoPageQueryData = function (page) {
+        var url = "";
+        if (page) {
+            url += "grid-page=" + encodeURIComponent(page);
         }
         return url;
     };

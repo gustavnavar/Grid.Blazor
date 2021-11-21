@@ -144,6 +144,9 @@
   <data name="FilterButtonTooltipText" xml:space="preserve">
     <value>Filtriraj ovu kolonu</value>
   </data>
+  <data name="Goto" xml:space="preserve">
+    <value>Menj</value>
+  </data>
   <data name="GroupingText" xml:space="preserve">
     <value>Povucite ovdje kolone za grupiranje</value>
   </data>

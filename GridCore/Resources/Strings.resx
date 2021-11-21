@@ -144,6 +144,9 @@
   <data name="FilterButtonTooltipText" xml:space="preserve">
     <value>Filter this column</value>
   </data>
+  <data name="Goto" xml:space="preserve">
+    <value>Go to</value>
+  </data>
   <data name="GroupingText" xml:space="preserve">
     <value>Drop columns here for column grouping</value>
   </data>

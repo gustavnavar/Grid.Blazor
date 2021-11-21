@@ -90,6 +90,11 @@
             self.pageSize = this.getPageSizeQueryData(pageSize);
             self.loadPage();
         },
+        gotoPage: function (page) {
+            var self = this;
+            self.currentPage = page;
+            self.loadPage();
+        },
         removeAllFilters: function () {
             var self = this;
             self.gridColumnFilters = null;
@@ -464,6 +469,22 @@
                     });
                 });
 
+                self.jqContainer.find(".grid-goto-page-input").each(function () {
+                    $(this).keydown(function (e) {
+                        if (e.keyCode === 9 || e.keyCode === 13) {
+                            e.preventDefault();
+                            var page = $(this).val();
+                            var x = parseInt(page, 10);
+                            if (x > 0) {
+                                self.gotoPage(page);
+                            }
+                            else {
+                                $(this).val(this.defaultValue);
+                            }
+                        }
+                    });
+                });
+
                 self.jqContainer.find(".grid-button-all-filters-clear").each(function () {
                     $(this).click(function (e) {
                         e.preventDefault();
@@ -733,7 +754,7 @@
             self.setupPagerLinkEvents();
             self.initFilters();
             self.initSearch();
-            self.initChangePageSize();
+            self.initChangePageSize();;
             self.initExtSort();      
             self.initSubGrids();
         },

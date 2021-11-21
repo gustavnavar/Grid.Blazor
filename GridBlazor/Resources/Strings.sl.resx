@@ -270,4 +270,7 @@
   <data name="DeleteConfirmCodeError" xml:space="preserve">
     <value>Koda in potrditvena koda morata biti enaki za brisanje tega artikla</value>
   </data>
+  <data name="Goto" xml:space="preserve">
+    <value>Pojdi do</value>
+  </data>
 </root>

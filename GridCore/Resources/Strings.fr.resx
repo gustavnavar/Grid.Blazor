@@ -174,4 +174,7 @@
   <data name="BoolTrueLabel" xml:space="preserve">
     <value>Oui</value>
   </data>
+  <data name="Goto" xml:space="preserve">
+    <value>Aller à</value>
+  </data>
 </root>

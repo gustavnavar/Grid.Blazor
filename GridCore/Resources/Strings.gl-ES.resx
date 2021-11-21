@@ -174,4 +174,7 @@
   <data name="BoolTrueLabel" xml:space="preserve">
     <value>Si</value>
   </data>
+  <data name="Goto" xml:space="preserve">
+    <value>Ir a</value>
+  </data>
 </root>

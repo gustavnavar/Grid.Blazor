@@ -144,6 +144,9 @@
   <data name="FilterButtonTooltipText" xml:space="preserve">
     <value>Филтрирај ову колону</value>
   </data>
+  <data name="Goto" xml:space="preserve">
+    <value>Иди на</value>
+  </data>
   <data name="GroupingText" xml:space="preserve">
     <value>Превуците овде колоне за груписање</value>
   </data>

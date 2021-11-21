@@ -4,4 +4,9 @@
     <ShowAllFiles>false</ShowAllFiles>
     <_LastSelectedProfileId>C:\Users\GustauNavarro\source\repos\Grid.Blazor\GridCore\Properties\PublishProfiles\FolderProfile.pubxml</_LastSelectedProfileId>
   </PropertyGroup>
+  <ItemGroup>
+    <EmbeddedResource Update="Resources\Strings.resx">
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+  </ItemGroup>
 </Project>

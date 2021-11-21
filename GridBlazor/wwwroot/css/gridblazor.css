@@ -20,18 +20,9 @@ table.grid-table { margin: 0; }
         table.grid-table .grid-header > .grid-header-group > .grid-header-title > button:focus { outline: 0; }
 
     /* Grid header drag over  */
-    table.grid-table .grid-header.grid-header-drag-over {
-        border: 1px solid lightblue;
-        border-radius: 16px;
-    }
-    
-    table.grid-table .grid-header.grid-header-drag-over * {
-        pointer-events: none;
-    }
-
-    table.grid-table .grid-header > .grid-header-group .grid-column-rearrange-insert-placeholder {
-        margin-left: -12px;
-    }
+    table.grid-table .grid-header.grid-header-drag-over { border: 1px solid lightblue; border-radius: 16px; }
+    table.grid-table .grid-header.grid-header-drag-over * { pointer-events: none; }
+    table.grid-table .grid-header > .grid-header-group .grid-column-rearrange-insert-placeholder { margin-left: -12px; }
 
     /* Grid body */
     table.grid-table tr.grid-row-selected td { background: #4888C2 !important; color: white; }
@@ -80,10 +71,10 @@ div[dir="rtl"] .grid-dropdown-arrow { left: 255px; }
 div[dir="rtl"] .grid-dropdown input.grid-filter-list { margin: 5px 20px 5px 10px; }
 
 /*Grid footer*/
-.grid-footer { display: inline-flex; width: 100%; justify-content: space-between; }
-.grid-itemscount { display: inline-flex; margin-top: 10px; }
+.grid-footer { display: inline-flex; width: 100%; margin-top: 10px; justify-content: space-between; }
+.grid-itemscount { display: inline-flex; margin-top: 6px; }
 .grid-itemscount-label, .grid-itemscount-caption  { margin-left: 5px; margin-right: 5px; }
-.grid-pager { margin-top: 20px; }
+.grid-pager-sizer { display: inline-flex; }
 .grid-pager ul { padding: 0; }
 .page-link:focus { box-shadow: none; }
 .page-item:first-child .page-link { border-radius: 4px 0 0 4px; }
@@ -119,9 +110,11 @@ div[dir="rtl"] button.grid-search-clear { border-radius: 4px 0 0 4px;}
 input.grid-search-input {height: 34px; border-color: #ccc; }
 
 /* Grid change page size */
-.grid-change-page-size { display:inline-flex; width: 250px; margin: 10px 20px; }
-.grid-change-page-size label { margin: 6px 10px; }
-.grid-change-page-size-input { display:inline; width: 60px; margin-left:5px;  margin-right:5px; }
+.grid-change-page-size, .grid-goto-page { display:inline-flex; margin: 0px 20px; }
+.grid-change-page-size { width: 250px; }
+.grid-goto-page { width: 150px; }
+.grid-change-page-size label, .grid-goto-page label { margin: 6px 10px; }
+.grid-change-page-size-input, .grid-goto-page-input { display:inline; width: 60px; margin-left:5px;  margin-right:5px; }
 
 /* Grid extended sorting */
 .grid-extsort-droppable { height: 42px; width: 100%; margin-bottom:10px; border: 1px solid #ccc; border-radius: 4px; }
@@ -215,20 +208,10 @@ div[dir="rtl"] button.grid-button-component { margin-left: 5px; margin-right: 0;
 .grid-header-checkbox-input { opacity: 0; }
     .grid-header-checkbox-input ~ .null-checkbox::before { position: absolute; top: 1rem; display: block; width: .9rem; height: .9rem; pointer-events: none; content: ""; border: 0.5px solid #666; border-radius: 3px; background-color: #ccc; }
 
-div[dir="rtl"] label {
-    display: flex;
-}
+div[dir="rtl"] label { display: flex; }
 
 /* The switch - the box around the slider */
-.grid-switch {
-    position: relative;
-    display: inline-block;
-    width: 50px;
-    height: 24px;
-    margin-left: 16px;
-    margin-right: 16px;
-    margin-bottom: -8px;
-}
+.grid-switch { position: relative; display: inline-block; width: 50px; height: 24px; margin-left: 16px; margin-right: 16px; margin-bottom: -8px; }
 
     /* Hide default HTML checkbox */
     .grid-switch input { display: none; }

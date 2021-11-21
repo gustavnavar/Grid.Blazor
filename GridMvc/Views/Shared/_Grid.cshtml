@@ -6,6 +6,7 @@
 @using GridShared.Columns
 @using GridShared.Filtering
 @using GridShared.Utility
+@using Microsoft.AspNetCore.Mvc.ModelBinding
 @model ISGrid
 
 @if (Model == null) { return; }
@@ -34,7 +35,12 @@
     var queryBuilder = new CustomQueryStringBuilder(Model.Settings.SearchSettings.Query);
     var exceptQueryParameters = new List<string> { GridPager.DefaultPageSizeQueryParameter };
     string _changePageSizeUrl = queryBuilder.GetQueryStringExcept(exceptQueryParameters);
-    int _pageSize = Model.Pager.ChangePageSize && Model.Pager.QueryPageSize > 0 ? Model.Pager.QueryPageSize : Model.Pager.PageSize;
+    exceptQueryParameters = new List<string> { GridPager.DefaultPageQueryParameter };
+    string _goToUrl = queryBuilder.GetQueryStringExcept(exceptQueryParameters);
+    var pagerViewData = new ViewDataDictionary(new EmptyModelMetadataProvider(), new ModelStateDictionary());
+    pagerViewData.Add("changePageSizeUrl", _changePageSizeUrl);
+    pagerViewData.Add("enablePaging", Model.EnablePaging);
+    pagerViewData.Add("goToUrl", _goToUrl);
     exceptQueryParameters = new List<string> { QueryStringFilterSettings.DefaultTypeQueryParameter, QueryStringFilterSettings.DefaultClearInitFilterQueryParameter };
     string _removeAllFilters = queryBuilder.GetQueryStringExcept(exceptQueryParameters);
     string gridTableHead = Guid.NewGuid().ToString("N");
@@ -62,16 +68,6 @@ else
                     {
                         <div class="grid-all-filters-clear">
                             <button class="grid-button grid-button-all-filters-clear btn btn-default btn-primary" title="@Strings.ClearAllFilters" data-all-filters-clear-url="@_removeAllFilters" type="button"></button>
-                        </div>
-                    }
-                    @if (Model.EnablePaging && Model.Pager.ChangePageSize)
-                    {
-                        <div class="grid-change-page-size form-group" data-change-page-size-url="@_changePageSizeUrl">
-                            <label class="control-label"><b>@Strings.Show</b></label>
-                            <div>
-                                <input class="form-control grid-change-page-size-input" value="@_pageSize" />
-                            </div>
-                            <label class="control-label"><b>@Strings.Items</b></label>
                         </div>
                     }
                 </div>
@@ -214,7 +210,7 @@ else
             <div class="grid-footer">
                 @if (Model.EnablePaging && Model.Pager != null)
                 {
-                    @await Html.PartialAsync(Model.Pager.TemplateName, Model.Pager)
+                    @await Html.PartialAsync(Model.Pager.TemplateName, Model.Pager, pagerViewData)
                 }
                 @if (Model.RenderOptions.ShowGridItemsCount)
                 {

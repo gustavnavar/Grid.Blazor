@@ -279,4 +279,7 @@
   <data name="DeleteConfirmCodeError" xml:space="preserve">
     <value>O código e o código de confirmación deben ser os mesmos para eliminar este elemento</value>
   </data>
+  <data name="Goto" xml:space="preserve">
+    <value>Ir a</value>
+  </data>
 </root>

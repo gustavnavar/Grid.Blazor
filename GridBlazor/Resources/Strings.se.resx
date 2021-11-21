@@ -201,6 +201,9 @@
   <data name="FilterValueLabel" xml:space="preserve">
     <value>Värde</value>
   </data>
+  <data name="Goto" xml:space="preserve">
+    <value>Gå till</value>
+  </data>
   <data name="GreaterThan" xml:space="preserve">
     <value>Större än</value>
   </data>

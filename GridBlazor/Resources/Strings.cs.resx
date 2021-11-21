@@ -279,4 +279,7 @@
   <data name="DeleteConfirmCodeError" xml:space="preserve">
     <value>Kód a potvrzovací kód se musí rovnat odstranění této položky.</value>
   </data>
+  <data name="String1" xml:space="preserve">
+    <value>Jít do</value>
+  </data>
 </root>

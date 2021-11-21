@@ -169,16 +169,6 @@
                                         }
                                     </div>
                                 }
-                                @if (Grid.EnablePaging && Grid.Pager.ChangePageSize)
-                                {
-                                    <div class="grid-change-page-size form-group" data-change-page-size-url="@_changePageSizeUrl">
-                                        <label class="control-label"><b>@Strings.Show</b></label>
-                                        <div>
-                                            <input @ref="PageSizeInput" class="form-control grid-change-page-size-input" @bind="_pageSize" @onkeyup="InputPageSizeKeyup" @onblur="InputPageSizeBlur" @onclick:stopPropagation />
-                                        </div>
-                                        <label class="control-label"><b>@Strings.Items</b></label>
-                                    </div>
-                                }
                             </div>
                             @if (Grid.SearchingEnabled)
                             {
