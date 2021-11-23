@@ -17,6 +17,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\GridBlazorClientSide.Shared\GridBlazorClientSide.Shared.csproj" />
+	<ProjectReference Include="..\GridCore\GridCore.csproj" />
     <ProjectReference Include="..\GridBlazor\GridBlazor.csproj" />
   </ItemGroup>
 
