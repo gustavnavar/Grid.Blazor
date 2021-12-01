@@ -107,7 +107,7 @@ input.grid-search-input {height: 34px; border-color: #ccc; }
 /* Grid change page size */
 .grid-change-page-size, .grid-goto-page { display:inline-flex; margin: 0px 20px; }
 .grid-change-page-size { width: 250px; }
-.grid-goto-page { width: 150px; }
+.grid-goto-page { width: 180px; }
 .grid-change-page-size label, .grid-goto-page label { margin: 6px 10px; }
 .grid-change-page-size-input, .grid-goto-page-input { display:inline; width: 60px; margin-left:5px;  margin-right:5px; }
 
