@@ -6,6 +6,7 @@
 @using System.Globalization
 @using System.Threading.Tasks
 @inject IOrderService orderService
+@inject ICustomerService customerService
 
 <h1>Groupable Grid</h1>
 
@@ -39,9 +40,14 @@ else
     {
         var locale = CultureInfo.CurrentCulture;
 
+        var companyNamesList = customerService.GetCustomersNames()
+            .Select(name => new SelectItem(name, name))
+            .ToArray();
+        var columns = ColumnCollections.OrderColumnsGroupable(companyNamesList);
+
         var query = new QueryDictionary<StringValues>();
-        var client = new GridClient<Order>(q => orderService.GetOrdersGridRows(ColumnCollections.OrderColumnsGroupable, q), 
-            query, false, "ordersGrid", ColumnCollections.OrderColumnsGroupable, locale)
+        var client = new GridClient<Order>(q => orderService.GetOrdersGridRows(columns, q), 
+            query, false, "ordersGrid", columns, locale)
             .Sortable()
             .Filterable()
             .SetStriped(true)

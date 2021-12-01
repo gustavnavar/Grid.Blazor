@@ -38,14 +38,17 @@ else
     protected override async Task OnParametersSetAsync()
     {
         var locale = CultureInfo.CurrentCulture;
-
-        var companyNamesList = await HttpClient.GetFromJsonAsync<SelectItem[]>(NavigationManager.BaseUri + $"api/SampleData/GetAllCustomers");
-        var orderColumnsGroupable = ColumnCollections.OrderColumnsGroupable(companyNamesList);
+        
+        var companyNames = await HttpClient.GetFromJsonAsync<string[]>(NavigationManager.BaseUri + $"api/SampleData/GetCustomersNames");
+        var companyNamesArray = companyNames?
+            .Select(name => new SelectItem(name, name))
+            .ToArray() ?? Array.Empty<SelectItem>();
+        var columns = ColumnCollections.OrderColumnsGroupable(companyNamesArray);
 
         var query = new QueryDictionary<StringValues>();
         string url = NavigationManager.BaseUri + "api/SampleData/GetOrdersGridGroupable";
         var client = new GridClient<Order>(HttpClient, url, query, false, "ordersGrid", 
-            orderColumnsGroupable, locale)
+            columns, locale)
             .Sortable()
             .Filterable()
             .SetStriped(true)
