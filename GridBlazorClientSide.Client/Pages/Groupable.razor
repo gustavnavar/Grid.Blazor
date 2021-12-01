@@ -39,10 +39,13 @@ else
     {
         var locale = CultureInfo.CurrentCulture;
 
+        var companyNamesList = await HttpClient.GetFromJsonAsync<SelectItem[]>(NavigationManager.BaseUri + $"api/SampleData/GetAllCustomers");
+        var orderColumnsGroupable = ColumnCollections.OrderColumnsGroupable(companyNamesList);
+
         var query = new QueryDictionary<StringValues>();
         string url = NavigationManager.BaseUri + "api/SampleData/GetOrdersGridGroupable";
         var client = new GridClient<Order>(HttpClient, url, query, false, "ordersGrid", 
-            ColumnCollections.OrderColumnsGroupable, locale)
+            orderColumnsGroupable, locale)
             .Sortable()
             .Filterable()
             .SetStriped(true)
