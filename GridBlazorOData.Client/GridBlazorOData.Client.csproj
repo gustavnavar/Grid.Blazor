@@ -8,7 +8,7 @@
 
   <ItemGroup>
     <PackageReference Include="BlazorStrap" Version="1.5.1" />
-    <PackageReference Include="FluentValidation" Version="10.3.3" />
+    <PackageReference Include="FluentValidation" Version="10.3.4" />
     <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly" Version="6.0.0" />
     <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.DevServer" Version="6.0.0" PrivateAssets="all" />
     <PackageReference Include="Microsoft.Extensions.Localization" Version="6.0.0" />
