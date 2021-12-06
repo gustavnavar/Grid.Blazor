@@ -617,6 +617,20 @@ namespace GridBlazor.Pages
             await OnSearchChanged();
         }
 
+        public async Task InitGrouping(IList<ColumnOrderValue> payloads)
+        {
+            await InitExtSorting(payloads);
+        }
+
+        public async Task InitExtSorting(IList<ColumnOrderValue> payloads)
+        {
+            foreach (var payload in payloads)
+            {
+                Payload = payload;
+                await AddExtSorting();
+            }
+        }
+
         public async Task AddExtSorting()
         {
             Grid.AddQueryString(ColumnOrderValue.DefaultSortingQueryParameter, Payload.ToString());

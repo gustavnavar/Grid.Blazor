@@ -1,9 +1,16 @@
-﻿using System;
+﻿using GridShared.Grouping;
+using System;
 using System.Collections.Generic;
 using System.Reflection;
 
 namespace GridShared
 {
+    public interface IGrid<T> : IGrid
+    {
+        IColumnGroup<T> GetGroup(string columnName);
+        IList<object> GetGroupValues(IColumnGroup<T> group, IEnumerable<object> items);
+    }
+
     /// <summary>
     ///     Grid.Mvc interface
     /// </summary>
@@ -39,6 +46,11 @@ namespace GridShared
         ///     Set or get default value of extended sorting
         /// </summary>
         bool ExtSortingEnabled { get; set; }
+
+        /// <summary>
+        ///     Hide extended sorting / grouping header
+        /// </summary>
+        bool HiddenExtSortingHeader { get; set; }
 
         /// <summary>
         ///     Set or get default value of grouping
@@ -134,11 +146,6 @@ namespace GridShared
         ///     Grid direction
         /// </summary>
         GridDirection Direction { get; set; }
-
-        /// <summary>
-        ///     Get column values to display
-        /// </summary>
-        IList<object> GetValuesToDisplay(string columnName, IEnumerable<object> items);
 
         /// <summary>
         ///     Grid items to display

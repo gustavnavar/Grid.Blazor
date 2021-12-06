@@ -11,6 +11,7 @@ using GridShared;
 using GridShared.Columns;
 using GridShared.DataAnnotations;
 using GridShared.Filtering;
+using GridShared.Grouping;
 using GridShared.Utility;
 using Microsoft.AspNetCore.Components;
 using Microsoft.Extensions.Primitives;
@@ -30,7 +31,7 @@ namespace GridBlazor
     /// <summary>
     ///     Grid.Mvc base class
     /// </summary>
-    public class CGrid<T> : ICGrid
+    public class CGrid<T> : ICGrid<T>
     {
         private Func<T, string> _rowCssClassesContraint;
 
@@ -62,7 +63,7 @@ namespace GridBlazor
         {
         }
 
-        [Obsolete("This constructor is obsolete. Use one including an HttpClient parameter.", false)]
+        [Obsolete("This constructor is obsolete. Use one including an HttpClient parameter.", true)]
         public CGrid(string url, IQueryDictionary<StringValues> query, bool renderOnlyRows,
             Action<IGridColumnCollection<T>> columns = null, CultureInfo cultureInfo = null, 
             IColumnBuilder<T> columnBuilder = null)
@@ -165,6 +166,8 @@ namespace GridBlazor
 
         public bool ExtSortingEnabled { get; set; }
 
+        public bool HiddenExtSortingHeader { get; set; } = false;
+
         public bool GroupingEnabled { get; set; }
 
         public bool ClearFiltersButtonEnabled { get; set; } = false;
@@ -193,7 +196,7 @@ namespace GridBlazor
             return Items;
         }
 
-        internal IGridColumnCollection<T> Columns
+        public IGridColumnCollection<T> Columns
         {
             get { return _columnsCollection; }
         }
@@ -1007,12 +1010,32 @@ namespace GridBlazor
             return query.GridStateEncode();
         }
 
+        public string GetLink()
+        {
+            return ((GridPager)_pager).GetLink(); ;
+        }
+
         public IList<object> GetValuesToDisplay(string columnName, IEnumerable<object> items)
         {
             var column = Columns.SingleOrDefault(r => r.Name == columnName);
             if (column == null)
                 return new List<object>();
             return ((IGridColumn<T>)column).Group.GetColumnValues((items as IEnumerable<T>).AsQueryable()).ToList();
+        }
+
+        public IList<object> GetGroupValues(IColumnGroup<T> group, IEnumerable<object> items)
+        {
+            if(group == null)
+                return new List<object>();
+            return group.GetColumnValues((items as IEnumerable<T>).AsQueryable()).ToList();
+        }
+
+        public IColumnGroup<T> GetGroup(string columnName)
+        {
+            var column = Columns.SingleOrDefault(r => r.Name == columnName);
+            if (column == null)
+                return null;
+            return ((IGridColumn<T>)column).Group;
         }
 
         public IEnumerable<object> GetItemsToDisplay(IList<Tuple<string, object>> values, IEnumerable<object> items)
@@ -1079,7 +1102,7 @@ namespace GridBlazor
                 }
                 else
                 {
-                    string urlParameters = ((GridPager)_pager).GetLink();
+                    string urlParameters = GetLink();
                     if (Url.Contains("?"))
                         urlParameters = urlParameters.Replace("?", "&");
                     response = await HttpClient.GetFromJsonAsync<ItemsDTO<T>>(Url + urlParameters);       
@@ -1143,28 +1166,81 @@ namespace GridBlazor
             }
         }
 
+        public string GetODataExpandParameters()
+        {
+            return _currentExpandODataProcessor.Process();
+        }
+
+        public string GetODataFilterParameters()
+        {
+            return _currentFilterODataProcessor.Process();
+        }
+
+        public string GetODataPagerParameters()
+        {
+            return _currentPagerODataProcessor.Process();
+        }
+
+        public string GetODataSortParameters()
+        {
+            return _currentSortODataProcessor.Process();
+        }
+
+        public string GetODataPreProcessorParameters()
+        {
+            // Preprocessor (filter and expand)
+            string preProcessorParameters = "$count=true";
+
+            string expandParameters = GetODataExpandParameters();
+            if (!string.IsNullOrWhiteSpace(expandParameters))
+                preProcessorParameters += "&" + expandParameters;
+
+            string filterParameters = GetODataFilterParameters();
+            if (!string.IsNullOrWhiteSpace(filterParameters))
+                preProcessorParameters += "&" + filterParameters;
+
+            // $search is not supported by OData WebApi
+            /**
+            string searchParameters = _currentSearchODataProcessor.Process();
+            if (!string.IsNullOrWhiteSpace(searchParameters))
+                preProcessorParameters += "&" + searchParameters;
+            */
+
+            return preProcessorParameters;
+        }
+
+        public string GetODataProcessorParameters()
+        {
+            // Processor parameters (paging and sorting)
+            string processorParameters = "";
+            if (string.IsNullOrWhiteSpace(processorParameters))
+                processorParameters = GetODataPagerParameters();
+            else
+            {
+                string pagerParameters = GetODataPagerParameters();
+                if (!string.IsNullOrWhiteSpace(pagerParameters))
+                    processorParameters += "&" + pagerParameters;
+            }
+
+            if (string.IsNullOrWhiteSpace(processorParameters))
+                processorParameters = GetODataSortParameters();
+            else
+            {
+                string sortParameters = GetODataSortParameters();
+                if (!string.IsNullOrWhiteSpace(sortParameters))
+                    processorParameters += "&" + sortParameters;
+            }
+
+            return processorParameters;
+        }
+
         private async Task GetOData()
         {
             var jsonOptions = new JsonSerializerOptions().AddOdataSupport();
             try
             {
-                // Preprocessor (filter and sorting)
-                string preProcessorParameters = "$count=true";
-
-                string expandParameters = _currentExpandODataProcessor.Process();
-                if (!string.IsNullOrWhiteSpace(expandParameters))
-                    preProcessorParameters += "&" + expandParameters;
-
-                string filterParameters = _currentFilterODataProcessor.Process();
-                if (!string.IsNullOrWhiteSpace(filterParameters))
-                    preProcessorParameters += "&" + filterParameters;
-
-                // $search is not supported by OData WebApi
-                /**
-                string searchParameters = _currentSearchODataProcessor.Process();
-                if (!string.IsNullOrWhiteSpace(searchParameters))
-                    preProcessorParameters += "&" + searchParameters;
-                */
+                // Preprocessor (filter and expand)
+                string preProcessorParameters = GetODataPreProcessorParameters();
 
                 //  get count of preprocessed items
                 string allParameters = preProcessorParameters + "&$top=0";
@@ -1182,24 +1258,7 @@ namespace GridBlazor
                 ((GridPager)_pager).ItemsCount = response.ItemsCount;
 
                 // Processor parameters (paging and sorting)
-                string processorParameters = "";
-                if (string.IsNullOrWhiteSpace(processorParameters))
-                    processorParameters = _currentPagerODataProcessor.Process();
-                else
-                {
-                    string pagerParameters = _currentPagerODataProcessor.Process();
-                    if (!string.IsNullOrWhiteSpace(pagerParameters))
-                        processorParameters += "&" + pagerParameters;
-                }
-
-                if (string.IsNullOrWhiteSpace(processorParameters))
-                    processorParameters = _currentSortODataProcessor.Process();
-                else
-                {
-                    string sortParameters = _currentSortODataProcessor.Process();
-                    if (!string.IsNullOrWhiteSpace(sortParameters))
-                        processorParameters += "&" + sortParameters;
-                }
+                string processorParameters = GetODataProcessorParameters();
 
                 // All parameters
                 allParameters = preProcessorParameters;

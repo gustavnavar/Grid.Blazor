@@ -162,7 +162,14 @@ namespace GridCore.Server
         {
             _source.ExtSortingEnabled = enable;
             return this;
-        }      
+        }
+
+        public IGridServer<T> ExtSortable(bool enable, bool hidden)
+        {
+            _source.ExtSortingEnabled = enable;
+            _source.HiddenExtSortingHeader = hidden;
+            return this;
+        }
 
         public IGridServer<T> Groupable()
         {
@@ -173,6 +180,14 @@ namespace GridCore.Server
         {
             _source.ExtSortingEnabled = enable;
             _source.GroupingEnabled = enable;
+            return this;
+        }
+
+        public IGridServer<T> Groupable(bool enable, bool hidden)
+        {
+            _source.ExtSortingEnabled = enable;
+            _source.GroupingEnabled = enable;
+            _source.HiddenExtSortingHeader = hidden;
             return this;
         }
 

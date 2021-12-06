@@ -198,6 +198,28 @@ namespace GridBlazorStandalone.Services
             }
         }
 
+        public async Task<decimal?> GetMaxFreight(string clientName, QueryDictionary<StringValues> query)
+        {
+            var server = new GridCoreServer<Order>(Orders.Where(o => o.Customer.CompanyName == clientName), query, true, "ordersGrid", null)
+                .AutoGenerateColumns()
+                .Sortable()
+                .Filterable()
+                .WithMultipleFilters()
+                .SetRemoveDiacritics<StringUtils>("RemoveDiacritics");
+            return await Task.FromResult(server.ItemsToDisplay.Items.Max(r => r.Freight));
+        }
+
+        public async Task<decimal?> GetMinFreight(string clientName, QueryDictionary<StringValues> query)
+        {
+            var server = new GridCoreServer<Order>(Orders.Where(o => o.Customer.CompanyName == clientName), query, true, "ordersGrid", null)
+                .AutoGenerateColumns()
+                .Sortable()
+                .Filterable()
+                .WithMultipleFilters()
+                .SetRemoveDiacritics<StringUtils>("RemoveDiacritics");
+            return await Task.FromResult(server.ItemsToDisplay.Items.Min(r => r.Freight));
+        }
+
         private static void Init()
         {
             _orders = new List<Order>();
@@ -1082,5 +1104,7 @@ namespace GridBlazorStandalone.Services
         ItemsDTO<Order> GetOrdersWithErrorGridRows(Action<IGridColumnCollection<Order>> columns, QueryDictionary<StringValues> query);
         Task Add1ToFreight(int OrderId);
         Task Subtract1ToFreight(int OrderId);
+        Task<decimal?> GetMaxFreight(string clientName, QueryDictionary<StringValues> query);
+        Task<decimal?> GetMinFreight(string clientName, QueryDictionary<StringValues> query);
     }
 }

@@ -741,6 +741,11 @@ namespace GridBlazor.Columns
             return (type, value);
         }
 
+        public void SetGroupLabel(Func<object, Task<string>> function)
+        {
+            Group.GroupLabel = function;
+        }
+
         public abstract bool FilterEnabled { get; set; }
 
         public ColumnFilterValue InitialFilterSettings { get; set; }

@@ -104,18 +104,38 @@ namespace GridBlazorClientSide.Client.ColumnCollections
             .RenderValueAs(o => o.Customer.IsVip ? Strings.BoolTrueLabel : Strings.BoolFalseLabel);
         };
 
-        public static Func<SelectItem[], Action<IGridColumnCollection<Order>>> OrderColumnsExtSorting
-            = customerNames => OrderColumnsGroupableExtSorting(o => { }, customerNames);
+        public static Action<IGridColumnCollection<Order>> OrderColumnsExtSorting = c =>
+        {
+            /* Adding "OrderID" column: */
+            c.Add(o => o.OrderID).Titled(SharedResource.Number).SetWidth(100);
 
-        public static Func<SelectItem[], Action<IGridColumnCollection<Order>>> OrderColumnsGroupable 
-            = customerNames => OrderColumnsGroupableExtSorting(o =>
-                {
-                    o.ShowSelectAllButtons = true;
-                    o.ShowSearchInput = true;
-                }, customerNames);
+            /* Adding "OrderDate" column: */
+            c.Add(o => o.OrderDate, "OrderCustomDate").Titled(SharedResource.OrderCustomDate)
+            .SetWidth(120).RenderComponentAs<TooltipCell>();
 
-        private static Func<Action<ListFilterOptions>, SelectItem[], Action<IGridColumnCollection<Order>>> OrderColumnsGroupableExtSorting 
-        = (filterOptionsAction, customerNames) => c =>
+            /* Adding "CompanyName" column: */
+            c.Add(o => o.Customer.CompanyName).Titled(SharedResource.CompanyName).SetWidth(250)
+            .ThenSortBy(o => o.ShipVia)
+            .ThenSortByDescending(o => o.Freight);
+
+            /* Adding "ContactName" column: */
+            c.Add(o => o.Customer.ContactName).Titled(SharedResource.ContactName);
+
+            /* Adding "ShipVia" column: */
+            c.Add(o => o.ShipVia).Titled("Via");
+
+            /* Adding "Freight" column: */
+            c.Add(o => o.Freight)
+            .Titled(SharedResource.Freight)
+            .SetWidth(150)
+            .Format("{0:F}");
+
+            /* Adding "Vip customer" column: */
+            c.Add(o => o.Customer.IsVip).Titled(SharedResource.IsVip).SetWidth(90).Css("hidden-xs") //hide on phones
+            .RenderValueAs(o => o.Customer.IsVip ? Strings.BoolTrueLabel : Strings.BoolFalseLabel);
+        };
+
+        public static Action<IGridColumnCollection<Order>, Func<object, Task<string>>> OrderColumnsGroupable = (c, customerNameLabel) =>
         {
             /* Adding "OrderID" column: */
             c.Add(o => o.OrderID).Titled(SharedResource.Number).SetWidth(100);
@@ -126,11 +146,10 @@ namespace GridBlazorClientSide.Client.ColumnCollections
 
             /* Adding "CompanyName" column: */
             c.Add(o => o.Customer.CompanyName).Titled(SharedResource.CompanyName)
-                .ThenSortBy(o => o.ShipVia)
-                .ThenSortByDescending(o => o.Freight)
-                .SetWidth(250)
-                .SetListFilter(customerNames, filterOptionsAction)
-                ;
+            .ThenSortBy(o => o.ShipVia)
+            .ThenSortByDescending(o => o.Freight)
+            .SetWidth(250)
+            .SetGroupLabel(customerNameLabel);
 
             /* Adding "ContactName" column: */
             c.Add(o => o.Customer.ContactName).Titled(SharedResource.ContactName);

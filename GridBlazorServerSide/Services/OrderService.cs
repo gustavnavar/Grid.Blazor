@@ -252,6 +252,50 @@ namespace GridBlazorServerSide.Services
                 }
             }
         }
+
+        public async Task<decimal?> GetMaxFreight(string clientName, QueryDictionary<StringValues> query)
+        {
+            using (var context = new NorthwindDbContext(_options))
+            {
+                try
+                {
+                    var repository = new OrdersRepository(context);
+                    var server = new GridCoreServer<Order>(repository.GetForClient(clientName), query, true, "ordersGrid", null)
+                        .AutoGenerateColumns()
+                        .Sortable()
+                        .Filterable()
+                        .WithMultipleFilters()
+                        .SetRemoveDiacritics<NorthwindDbContext>("RemoveDiacritics");
+                    return await Task.FromResult(server.ItemsToDisplay.Items.Max(r => r.Freight));
+                }
+                catch (Exception)
+                {
+                    throw new GridException("Error getting max freight");
+                }
+            }
+        }
+
+        public async Task<decimal?> GetMinFreight(string clientName, QueryDictionary<StringValues> query)
+        {
+            using (var context = new NorthwindDbContext(_options))
+            {
+                try
+                {
+                    var repository = new OrdersRepository(context);
+                    var server = new GridCoreServer<Order>(repository.GetForClient(clientName), query, true, "ordersGrid", null)
+                        .AutoGenerateColumns()
+                        .Sortable()
+                        .Filterable()
+                        .WithMultipleFilters()
+                        .SetRemoveDiacritics<NorthwindDbContext>("RemoveDiacritics");
+                    return await Task.FromResult(server.ItemsToDisplay.Items.Min(r => r.Freight));
+                }
+                catch (Exception)
+                {
+                    throw new GridException("Error etting min freight");
+                }
+            }
+        }
     }
 
     public interface IOrderService : ICrudDataService<Order>
@@ -265,5 +309,7 @@ namespace GridBlazorServerSide.Services
         Task UpdateAndSave(Order order);
         Task Add1ToFreight(int OrderId);
         Task Subtract1ToFreight(int OrderId);
+        Task<decimal?> GetMaxFreight(string clientName, QueryDictionary<StringValues> query);
+        Task<decimal?> GetMinFreight(string clientName, QueryDictionary<StringValues> query);
     }
 }

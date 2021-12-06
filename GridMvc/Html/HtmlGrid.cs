@@ -1,4 +1,5 @@
 ﻿using GridShared;
+using GridShared.Grouping;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using System;
 using System.Collections.Generic;
@@ -9,7 +10,7 @@ namespace GridMvc.Html
     /// <summary>
     ///     Grid adapter for html helper
     /// </summary>
-    public class HtmlGrid<T> : GridHtmlOptions<T>, IGrid
+    public class HtmlGrid<T> : GridHtmlOptions<T>, IGrid<T>
     {
         public HtmlGrid(IHtmlHelper helper, SGrid<T> source, string viewName)
             : base(helper, source, viewName)
@@ -63,6 +64,12 @@ namespace GridMvc.Html
         {
             get { return _source.ExtSortingEnabled; }
             set { _source.ExtSortingEnabled = value; }
+        }
+
+        public bool HiddenExtSortingHeader
+        {
+            get { return _source.HiddenExtSortingHeader; }
+            set { _source.HiddenExtSortingHeader = value; }
         }
 
         public bool GroupingEnabled
@@ -162,6 +169,16 @@ namespace GridMvc.Html
         public IList<object> GetValuesToDisplay(string columnName, IEnumerable<object> items)
         {
             return _source.GetValuesToDisplay(columnName, items);
+        }
+
+        public IList<object> GetGroupValues(IColumnGroup<T> group, IEnumerable<object> items)
+        {
+            return _source.GetGroupValues(group, items);
+        }
+
+        public IColumnGroup<T> GetGroup(string columnName)
+        {
+            return _source.GetGroup(columnName);
         }
 
         public IEnumerable<object> GetItemsToDisplay(IList<Tuple<string, object>> values, IEnumerable<object> items)

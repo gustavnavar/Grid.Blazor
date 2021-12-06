@@ -23,9 +23,9 @@
             {
                 count++;
             }
-            GridGroupRowsComponent<T> child;
-            string columnValueStr = columnValue == null ? "" : columnValue.ToString();
-            if (Children.TryGetValue(columnValueStr, out child))
+            (GridGroupRowsComponent<T> Component, string Label) child;
+            string key = columnValue == null ? "" : columnValue.ToString();
+            if (Children.TryGetValue(key, out child))
             {
                 int capturedI = RowId + itemsCount;
                 <tr class="grid-group-row">
@@ -34,12 +34,12 @@
                         {
                             <span class="grid-group-tab"></span>
                         }
-                        <span class="@(child.IsVisible ? "grid-group grid-group-caret-down" : "grid-group grid-group-caret")" @onclick="() => HandleGrouping(columnValueStr)" @onclick:stopPropagation>&nbsp;</span>
-                        <span>@_column?.Title: @_column?.GetFormatedValue(columnValue)</span>
+                        <span class="@(child.Component.IsVisible ? "grid-group grid-group-caret-down" : "grid-group grid-group-caret")" @onclick="() => HandleGrouping(key)" @onclick:stopPropagation>&nbsp;</span>
+                        <div style="display:inline-block;">@((MarkupString)child.Label)</div>
                     </td>
                 </tr>
                 <CascadingValue Value=@GridComponent Name="GridComponent">
-                    <GridGroupRowsComponent @ref="child" T="@T" Grid="@Grid" Values="@values" HasSubGrid="@HasSubGrid" RequiredTotalsColumn="@RequiredTotalsColumn" ItemsToDisplay="@itemsToDisplay" IsVisible="@child.IsVisible" RowId="@capturedI"></GridGroupRowsComponent>
+                    <GridGroupRowsComponent @ref="child.Component" T="@T" Grid="@Grid" Values="@values" HasSubGrid="@HasSubGrid" RequiredTotalsColumn="@RequiredTotalsColumn" ItemsToDisplay="@itemsToDisplay" IsVisible="@child.Component.IsVisible" RowId="@capturedI"></GridGroupRowsComponent>
                 </CascadingValue>
                 itemsCount += itemsToDisplay.Count();
             }

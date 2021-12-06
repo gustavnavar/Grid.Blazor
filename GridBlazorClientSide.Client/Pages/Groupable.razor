@@ -1,6 +1,8 @@
 ﻿@page "/groupable"
 @using GridBlazorClientSide.Client.ColumnCollections
 @using GridBlazorClientSide.Shared.Models
+@using GridBlazor.Pagination
+@using GridShared.Sorting
 @using Microsoft.Extensions.Primitives
 @using System.Globalization
 @using System.Threading.Tasks
@@ -34,6 +36,7 @@ else
 {
     private CGrid<Order> _grid;
     private Task _task;
+    private bool _initGrouping = false;
 
     protected override async Task OnParametersSetAsync()
     {
@@ -47,8 +50,8 @@ else
 
         var query = new QueryDictionary<StringValues>();
         string url = NavigationManager.BaseUri + "api/SampleData/GetOrdersGridGroupable";
-        var client = new GridClient<Order>(HttpClient, url, query, false, "ordersGrid", 
-            columns, locale)
+        Action<IGridColumnCollection<Order>> columns = c => ColumnCollections.OrderColumnsGroupable(c, SetCustomerNameLabel);
+        var client = new GridClient<Order>(HttpClient, url, query, false, "ordersGrid", columns, locale)
             .Sortable()
             .Filterable()
             .SetStriped(true)
@@ -60,5 +63,34 @@ else
         // Set new items to grid
         _task = client.UpdateGrid();
         await _task;
+    }
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (_grid.GridComponent != null && !_initGrouping)
+        {
+            var payloads = new List<ColumnOrderValue>();
+            payloads.Add(new ColumnOrderValue("Customer.CompanyName", GridSortDirection.Ascending, 1));
+            payloads.Add(new ColumnOrderValue("ShipVia", GridSortDirection.Ascending, 2));
+            await _grid.GridComponent.InitGrouping(payloads);
+            _initGrouping = true;
+        }
+    }
+
+    protected async Task<string> SetCustomerNameLabel(object value)
+    {
+        if (value.GetType() == typeof(string))
+        {
+            decimal? max;
+            decimal? min;
+            var clientName = (string)value;
+            var urlParameters = _grid.GetLink().Replace("?", "&");
+            string url = NavigationManager.BaseUri + $"api/SampleData/GetMaxFreight?clientName={clientName}";
+            max = (await HttpClient.GetFromJsonAsync<Order>(url + urlParameters))?.Freight;
+            url = NavigationManager.BaseUri + $"api/SampleData/GetMinFreight?clientName={clientName}";
+            min = (await HttpClient.GetFromJsonAsync<Order>(url + urlParameters))?.Freight;
+            return clientName + "<span class='ml-5'>Max Freight: " + max?.ToString() + "</span><span class='ml-5'>Min Freight: " + min?.ToString() + "</span>";
+        }
+        return value.ToString();
     }
 }

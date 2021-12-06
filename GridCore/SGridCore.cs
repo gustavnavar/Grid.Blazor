@@ -9,6 +9,7 @@ using GridCore.Totals;
 using GridShared;
 using GridShared.Columns;
 using GridShared.DataAnnotations;
+using GridShared.Grouping;
 using GridShared.Totals;
 using GridShared.Utility;
 using Microsoft.AspNetCore.Http;
@@ -124,6 +125,8 @@ namespace GridCore
         public bool SearchingHiddenColumns { get; set; }
 
         public bool ExtSortingEnabled { get; set; }
+
+        public bool HiddenExtSortingHeader { get; set; } = false;
 
         public bool GroupingEnabled { get; set; }
 
@@ -458,6 +461,21 @@ namespace GridCore
             if (column == null)
                 return new List<object>();
             return ((IGridColumn<T>)column).Group.GetColumnValues((items as IEnumerable<T>).AsQueryable()).ToList();
+        }
+
+        public IList<object> GetGroupValues(IColumnGroup<T> group, IEnumerable<object> items)
+        {
+            if (group == null)
+                return new List<object>();
+            return group.GetColumnValues((items as IEnumerable<T>).AsQueryable()).ToList();
+        }
+
+        public IColumnGroup<T> GetGroup(string columnName)
+        {
+            var column = Columns.SingleOrDefault(r => r.Name == columnName);
+            if (column == null)
+                return null;
+            return ((IGridColumn<T>)column).Group;
         }
 
         public IEnumerable<object> GetItemsToDisplay(IList<Tuple<string, object>> values, IEnumerable<object> items)

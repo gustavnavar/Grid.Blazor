@@ -113,20 +113,16 @@ namespace GridBlazorClientSide.Server.Controllers
         [HttpGet("[action]")]
         public ActionResult GetOrdersGridExtSorting()
         {
-            var customersRepository = new CustomersRepository(_context);
-            var customers = GetAllCustomersImpl(customersRepository);
-
-            var columns = ColumnCollections.OrderColumnsExtSorting(customers);
             var repository = new OrdersRepository(_context);
             IGridServer<Order> server = new GridCoreServer<Order>(repository.GetAll(), Request.Query,
-                    true, "ordersGrid", columns)
-                .WithPaging(10)
-                .Sortable()
-                .Filterable()
-                .WithMultipleFilters()
-                .WithGridItemsCount()
-                .Groupable(true)
-                .SetRemoveDiacritics<NorthwindDbContext>("RemoveDiacritics");
+                true, "ordersGrid", ColumnCollections.OrderColumnsExtSorting)
+                    .WithPaging(10)
+                    .Sortable()
+                    .Filterable()
+                    .WithMultipleFilters()
+                    .WithGridItemsCount()
+                    .Groupable(true)
+                    .SetRemoveDiacritics<NorthwindDbContext>("RemoveDiacritics");
 
             var items = server.ItemsToDisplay;
             return Ok(items);
@@ -141,7 +137,7 @@ namespace GridBlazorClientSide.Server.Controllers
             var columns = ColumnCollections.OrderColumnsGroupable(customers);
             var repository = new OrdersRepository(_context);
             IGridServer<Order> server = new GridCoreServer<Order>(repository.GetAll(), Request.Query,
-                true, "ordersGrid", columns)
+                true, "ordersGrid", c => ColumnCollections.OrderColumnsGroupable(c, null))
                     .WithPaging(10)
                     .Sortable()
                     .Filterable()
@@ -152,6 +148,32 @@ namespace GridBlazorClientSide.Server.Controllers
 
             var items = server.ItemsToDisplay;
             return Ok(items);
+        }
+
+        [HttpGet("[action]")]
+        public ActionResult GetMaxFreight(string clientName)
+        {
+            var repository = new OrdersRepository(_context);
+            var server = new GridCoreServer<Order>(repository.GetForClient(clientName), Request.Query, true, "ordersGrid", null)
+                .AutoGenerateColumns()
+                .Sortable()
+                .Filterable()
+                .WithMultipleFilters()
+                .SetRemoveDiacritics<NorthwindDbContext>("RemoveDiacritics");
+            return Ok(new Order() { Freight = server.ItemsToDisplay.Items.Max(r => r.Freight) });
+        }
+
+        [HttpGet("[action]")]
+        public ActionResult GetMinFreight(string clientName)
+        {
+            var repository = new OrdersRepository(_context);
+            var server = new GridCoreServer<Order>(repository.GetForClient(clientName), Request.Query, true, "ordersGrid", null)
+                .AutoGenerateColumns()
+                .Sortable()
+                .Filterable()
+                .WithMultipleFilters()
+                .SetRemoveDiacritics<NorthwindDbContext>("RemoveDiacritics");
+            return Ok(new Order() { Freight = server.ItemsToDisplay.Items.Min(r => r.Freight) });
         }
 
         [HttpGet("[action]")]

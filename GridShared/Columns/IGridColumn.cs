@@ -25,7 +25,6 @@ namespace GridShared.Columns
         { get; }
         Func<T, Task<IEnumerable<SelectItem>>> SelectItemExpr { get; set; }
         Func<T, CrudHidden> CrudHidden { get; }
-        InputType InputType { get; }
     }
 
     public interface IGridColumn : ISortableColumn, IFilterableColumn
@@ -58,6 +57,8 @@ namespace GridShared.Columns
         bool ToggleSwitch { get; }
         string TrueLabel { get; }
         string FalseLabel { get; }
+        InputType InputType { get; }
+        void SetGroupLabel(Func<object, Task<string>> function);
     }
 
     /// <summary>

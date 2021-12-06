@@ -13,6 +13,10 @@ using System.Threading.Tasks;
 
 namespace GridBlazor
 {
+    public interface ICGrid<T> : ICGrid, IGrid<T>
+    {
+    }
+
     /// <summary>
     ///     Grid.Mvc interface
     /// </summary>
@@ -242,6 +246,36 @@ namespace GridBlazor
         bool ODataOverrideExpandList { get; set; }
 
         /// <summary>
+        ///     Get OData pre-processor parameters (expand and filter)
+        /// </summary>
+        string GetODataPreProcessorParameters();
+
+        /// <summary>
+        ///     Get OData processor parameters (sorting and paging)
+        /// </summary>
+        string GetODataProcessorParameters();
+
+        /// <summary>
+        ///     Get OData expand parameter
+        /// </summary>
+        string GetODataExpandParameters();
+
+        /// <summary>
+        ///     Get OData filter parameter
+        /// </summary>
+        string GetODataFilterParameters();
+
+        /// <summary>
+        ///     Get OData pager parameter
+        /// </summary>
+        string GetODataPagerParameters();
+
+        /// <summary>
+        ///     Get OData sort parameter
+        /// </summary>
+        string GetODataSortParameters();
+
+        /// <summary>
         ///     Create button label
         /// </summary>
         string CreateLabel { get; set; }
@@ -331,5 +365,11 @@ namespace GridBlazor
         ///     Go to Edit form after insert row
         /// </summary>
         bool EditAfterInsert { get; set; }
+
+        /// <summary>
+        ///     Get column values to display
+        /// </summary>
+        [Obsolete("This method is obsolete. Use the new async GetGroupValues() method.", false)]
+        IList<object> GetValuesToDisplay(string columnName, IEnumerable<object> items);
     }
 }
