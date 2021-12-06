@@ -31,7 +31,7 @@ namespace GridBlazor
             //WithPaging(_source.Pager.PageSize);
         }
 
-        [Obsolete("This constructor is obsolete. Use one including an HttpClient parameter.", false)]
+        [Obsolete("This constructor is obsolete. Use one including an HttpClient parameter.", true)]
         public GridClient(string url, IQueryDictionary<StringValues> query, bool renderOnlyRows, 
             string gridName, Action<IGridColumnCollection<T>> columns = null, CultureInfo cultureInfo = null,
             IColumnBuilder<T> columnBuilder = null)
@@ -175,6 +175,13 @@ namespace GridBlazor
             return this;
         }
 
+        public IGridClient<T> ExtSortable(bool enable, bool hidden)
+        {
+            _source.ExtSortingEnabled = enable;
+            _source.HiddenExtSortingHeader = hidden;
+            return this;
+        }
+
         public IGridClient<T> Groupable()
         {
             return Groupable(true);
@@ -184,6 +191,14 @@ namespace GridBlazor
         {
             _source.ExtSortingEnabled = enable;
             _source.GroupingEnabled = enable;
+            return this;
+        }
+
+        public IGridClient<T> Groupable(bool enable, bool hidden)
+        {
+            _source.ExtSortingEnabled = enable;
+            _source.GroupingEnabled = enable;
+            _source.HiddenExtSortingHeader = hidden;
             return this;
         }
 
@@ -1143,7 +1158,7 @@ namespace GridBlazor
         /// <summary>
         ///    Allow grid to show a SubGrid
         /// </summary>
-        [Obsolete("This method is obsolete. Use one including an '(string,string)[]' keys parameter.", false)]
+        [Obsolete("This method is obsolete. Use one including an '(string,string)[]' keys parameter.", true)]
         public IGridClient<T> SubGrid(Func<object[], Task<ICGrid>> subGrids, params string[] keys)
         {
             var tupleKeys = new (string, string)[keys.Length];

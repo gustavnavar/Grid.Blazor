@@ -90,6 +90,11 @@ namespace GridCore.Server
         IGridServer<T> ExtSortable(bool enable);
 
         /// <summary>
+        ///     Hide extended sorting header
+        /// </summary>
+        IGridServer<T> ExtSortable(bool enable, bool hidden);
+
+        /// <summary>
         ///     Enable grouping
         /// </summary>
         IGridServer<T> Groupable();
@@ -98,6 +103,11 @@ namespace GridCore.Server
         ///     Enable or disable grouping
         /// </summary>
         IGridServer<T> Groupable(bool enable);
+
+        /// <summary>
+        ///     Hide grouping header
+        /// </summary>
+        IGridServer<T> Groupable(bool enable, bool hidden);
 
         /// <summary>
         ///     Enable or disable visibility of ClearFiltersButton

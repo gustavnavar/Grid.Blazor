@@ -92,6 +92,11 @@ namespace GridMvc.Html
         IGridHtmlOptions<T> ExtSortable(bool enable);
 
         /// <summary>
+        ///     Hide grouping header
+        /// </summary>
+        IGridHtmlOptions<T> Groupable(bool enable, bool hidden);
+
+        /// <summary>
         ///     Enable grouping
         /// </summary>
         IGridHtmlOptions<T> Groupable();
@@ -100,6 +105,11 @@ namespace GridMvc.Html
         ///     Enable or disable grouping
         /// </summary>
         IGridHtmlOptions<T> Groupable(bool enable);
+
+        /// <summary>
+        ///     Hide extended sorting header
+        /// </summary>
+        IGridHtmlOptions<T> ExtSortable(bool enable, bool hidden);
 
         /// <summary>
         ///     Enable or disable visibility of ClearFiltersButton

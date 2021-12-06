@@ -161,6 +161,13 @@ namespace GridMvc.Html
             return this;
         }
 
+        public IGridHtmlOptions<T> ExtSortable(bool enable, bool hidden)
+        {
+            _source.ExtSortingEnabled = enable;
+            _source.HiddenExtSortingHeader = hidden;
+            return this;
+        }
+
         public IGridHtmlOptions<T> Groupable()
         {
             return Groupable(true);
@@ -170,6 +177,14 @@ namespace GridMvc.Html
         {
             _source.ExtSortingEnabled = enable;
             _source.GroupingEnabled = enable;
+            return this;
+        }
+
+        public IGridHtmlOptions<T> Groupable(bool enable, bool hidden)
+        {
+            _source.ExtSortingEnabled = enable;
+            _source.GroupingEnabled = enable;
+            _source.HiddenExtSortingHeader = hidden;
             return this;
         }
 

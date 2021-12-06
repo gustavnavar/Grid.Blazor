@@ -53,6 +53,11 @@ namespace GridBlazorServerSide.Data
         {
             Context.SaveChanges();
         }
+
+        public IQueryable<Order> GetForClient(string companyName)
+        {
+            return EfDbSet.Where(o => o.Customer.CompanyName == companyName);
+        }
     }
 
     public interface IOrdersRepository
@@ -61,5 +66,6 @@ namespace GridBlazorServerSide.Data
         Task Update(Order order);
         void Delete(Order order);
         void Save();
+        IQueryable<Order> GetForClient(string companyName);
     }
 }

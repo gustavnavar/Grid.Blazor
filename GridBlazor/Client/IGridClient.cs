@@ -92,6 +92,11 @@ namespace GridBlazor
         IGridClient<T> ExtSortable(bool enable);
 
         /// <summary>
+        ///     Hide extended sorting header
+        /// </summary>
+        IGridClient<T> ExtSortable(bool enable, bool hidden);
+
+        /// <summary>
         ///     Enable grouping
         /// </summary>
         IGridClient<T> Groupable();
@@ -100,7 +105,12 @@ namespace GridBlazor
         ///     Enable or disable grouping
         /// </summary>
         IGridClient<T> Groupable(bool enable);
-        
+
+        /// <summary>
+        ///     Hide grouping header
+        /// </summary>
+        IGridClient<T> Groupable(bool enable, bool hidden);
+
         /// <summary>
         ///     Enable column rearrange
         /// </summary>
@@ -766,7 +776,7 @@ namespace GridBlazor
         /// <summary>
         ///    Allow grid to show a SubGrid
         /// </summary>
-        [Obsolete("This method is obsolete. Use one including an '(string,string)[]' keys parameter.", false)]
+        [Obsolete("This method is obsolete. Use one including an '(string,string)[]' keys parameter.", true)]
         IGridClient<T> SubGrid(Func<object[], Task<ICGrid>> subGrids, params string[] keys);
 
         /// <summary>

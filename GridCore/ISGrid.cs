@@ -8,7 +8,7 @@ using System.Collections.Generic;
 
 namespace GridCore
 {
-    public interface ISGrid<T> : ISGrid
+    public interface ISGrid<T> : ISGrid, IGrid<T>
     {
         new IGridColumnCollection<T> Columns { get; }
 
@@ -49,5 +49,11 @@ namespace GridCore
         bool DefaultFilteringEnabled { get; set; }
 
         void AutoGenerateColumns();
+
+        /// <summary>
+        ///     Get column values to display
+        /// </summary>
+
+        IList<object> GetValuesToDisplay(string columnName, IEnumerable<object> items);
     }
 }

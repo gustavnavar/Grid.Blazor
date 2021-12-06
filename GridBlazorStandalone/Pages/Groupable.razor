@@ -2,6 +2,7 @@
 @using GridBlazorStandalone.ColumnCollections
 @using GridBlazorStandalone.Models
 @using GridBlazorStandalone.Services
+@using GridShared.Sorting
 @using Microsoft.Extensions.Primitives
 @using System.Globalization
 @using System.Threading.Tasks
@@ -40,8 +41,9 @@ else
         var locale = CultureInfo.CurrentCulture;
 
         var query = new QueryDictionary<StringValues>();
-        var client = new GridClient<Order>(q => orderService.GetOrdersGridRows(ColumnCollections.OrderColumnsGroupable, q), 
-            query, false, "ordersGrid", ColumnCollections.OrderColumnsGroupable, locale)
+        Action<IGridColumnCollection<Order>> columns = c => ColumnCollections.OrderColumnsGroupable(c, SetCustomerNameLabel);
+        var client = new GridClient<Order>(q => orderService.GetOrdersGridRows(columns, q), 
+            query, false, "ordersGrid", columns, locale)
             .Sortable()
             .Filterable()
             .SetStriped(true)
@@ -53,5 +55,29 @@ else
         // Set new items to grid
         _task = client.UpdateGrid();
         await _task;
+    }
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender)
+        {
+            var payloads = new List<ColumnOrderValue>();
+            payloads.Add(new ColumnOrderValue("Customer.CompanyName", GridSortDirection.Ascending, 1));
+            payloads.Add(new ColumnOrderValue("ShipVia", GridSortDirection.Ascending, 2));
+            await _grid.GridComponent.InitGrouping(payloads);
+        }
+    }
+
+    protected async Task<string> SetCustomerNameLabel(object value)
+    {
+        if (value.GetType() == typeof(string))
+        {
+            var clientName = (string)value;
+            var query = _grid.Query;
+            var max = await orderService.GetMaxFreight(clientName, query);
+            var min = await orderService.GetMinFreight(clientName, query);
+            return clientName + "<span class='ml-5'>Max Freight: " + max.ToString() + "</span><span class='ml-5'>Min Freight: " + min.ToString() + "</span>";
+        }
+        return value.ToString();
     }
 }

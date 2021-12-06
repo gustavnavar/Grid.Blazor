@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Components;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace GridBlazor.Pages
 {
@@ -13,7 +14,7 @@ namespace GridBlazor.Pages
         protected IGridColumn _column;
         protected IEnumerable<object> _columnValues;
 
-        public QueryDictionary<GridGroupRowsComponent<T>> Children { get; private set; }
+        public QueryDictionary<(GridGroupRowsComponent<T> Component, string Label)> Children { get; private set; }
 
         [CascadingParameter(Name = "GridComponent")]
         protected GridComponent<T> GridComponent { get; private set; }
@@ -39,30 +40,44 @@ namespace GridBlazor.Pages
         [Parameter]
         public int RowId { get; set; }
 
-        protected override void OnParametersSet()
+        protected override async Task OnParametersSetAsync()
         {
             if (Grid.Settings.SortSettings.SortValues.Count > Values.Count)
             {
                 _columnName = Grid.Settings.SortSettings.SortValues.OrderBy(r => r.Id).ElementAt(Values.Count).ColumnName;
                 _column = Grid.Columns.SingleOrDefault(r => r.Name == _columnName);
-                _columnValues = Grid.GetValuesToDisplay(_columnName, ItemsToDisplay).Distinct();
+                var group = (Grid as ICGrid<T>).GetGroup(_columnName);
+                _columnValues = (Grid as ICGrid<T>).GetGroupValues(group, ItemsToDisplay).Distinct();
 
-                Children = new QueryDictionary<GridGroupRowsComponent<T>>();
+                Children = new QueryDictionary<(GridGroupRowsComponent<T> Component, string Label)>();
                 foreach (object columnValue in _columnValues)
                 {
                     var child = new GridGroupRowsComponent<T>();
                     child.IsVisible = true;
-                    Children.Add(columnValue != null ? columnValue.ToString(): "", child);
+                    string label = _column?.Title + ": ";
+                    if (columnValue != null && group != null && group.GroupLabel != null)
+                        label += await group.GroupLabel(columnValue);
+                    else
+                        label += _column?.GetFormatedValue(columnValue);
+                    try
+                    {
+                        string key = columnValue != null ? columnValue.ToString() : "";
+                        Children.Add(key, (child, label));
+                    }
+                    catch (ArgumentException)
+                    {
+                        // do nothing because key is already in dictionary
+                    }
                 }
             }
         }
 
-        protected void HandleGrouping(string groupId)
+        protected void HandleGrouping(string key)
         {
-            GridGroupRowsComponent<T> child;
-            if (Children.TryGetValue(groupId, out child))
+            (GridGroupRowsComponent<T> Component, string Label) child;
+            if (Children.TryGetValue(key, out child))
             {
-                child.IsVisible = !child.IsVisible;
+                child.Component.IsVisible = !child.Component.IsVisible;
             }
         }
     }

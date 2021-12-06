@@ -15,7 +15,7 @@
     _groupUrl = queryBuilder.GetQueryStringExcept(exceptQueryParameters);
 }
 
-<div id="grid-extsort-@Model.RenderOptions.GridName" class="input-group grid-extsort-droppable" data-extsort-url="@_groupUrl">
+<div id="grid-extsort-@Model.RenderOptions.GridName" class="input-group grid-extsort-droppable" data-extsort-url="@_groupUrl" style="display:@(Model.HiddenExtSortingHeader ? "none;" : "flex;" )">
     @if (sortedColumns.Count() == 0)
     {
         if (Model.GroupingEnabled)

@@ -2,12 +2,15 @@
 using System.Linq;
 using System.Linq.Expressions;
 using System.Reflection;
+using System.Threading.Tasks;
 
 namespace GridShared.Grouping
 {
     public class DefaultColumnGroup<T, TData> : IColumnGroup<T>
     {
         private readonly Expression<Func<T, TData>> _expression;
+        
+        public Func<object, Task<string>> GroupLabel { get; set; }
 
         public DefaultColumnGroup(Expression<Func<T, TData>> expression)
         {

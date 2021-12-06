@@ -1,6 +1,7 @@
 ﻿@page "/extsorting"
 @using GridBlazorClientSide.Client.ColumnCollections
 @using GridBlazorClientSide.Shared.Models
+@using GridShared.Sorting
 @using Microsoft.Extensions.Primitives
 @using System.Globalization
 @using System.Threading.Tasks
@@ -34,14 +35,15 @@ else
 {
     private CGrid<Order> _grid;
     private Task _task;
+    private bool _initExtSorting = false;
 
     protected override async Task OnParametersSetAsync()
     {
         var locale = CultureInfo.CurrentCulture;
 
         var query = new QueryDictionary<StringValues>();
-        string url = NavigationManager.BaseUri + "api/SampleData/GetOrdersGridGroupable";
-        var client = new GridClient<Order>(HttpClient, url, query, false, "ordersGrid", ColumnCollections.OrderColumnsGroupable, locale)
+        string url = NavigationManager.BaseUri + "api/SampleData/GetOrdersGridExtSorting";
+        var client = new GridClient<Order>(HttpClient, url, query, false, "ordersGrid", ColumnCollections.OrderColumnsExtSorting, locale)
             .Sortable()
             .Filterable()
             .SetStriped(true)
@@ -53,5 +55,16 @@ else
         // Set new items to grid
         _task = client.UpdateGrid();
         await _task;
+    }
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (_grid.GridComponent != null && !_initExtSorting)
+        {
+            var payloads = new List<ColumnOrderValue>();
+            payloads.Add(new ColumnOrderValue("Customer.CompanyName", GridSortDirection.Ascending, 1));
+            await _grid.GridComponent.InitExtSorting(payloads);
+            _initExtSorting = true;
+        }
     }
 }
