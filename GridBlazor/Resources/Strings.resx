@@ -282,4 +282,13 @@
   <data name="Goto" xml:space="preserve">
     <value>Go to</value>
   </data>
+  <data name="SelectVisibleFilterButtonText" xml:space="preserve">
+    <value>Select visible</value>
+  </data>
+  <data name="UnselectVisibleFilterButtonText" xml:space="preserve">
+    <value>Unselect visible</value>
+  </data>
+  <data name="SearchFilterListInputText" xml:space="preserve">
+    <value>Search phrase</value>
+  </data>
 </root>

@@ -167,10 +167,22 @@ namespace GridBlazor.Columns
             return this;
         }
 
-        public override IGridColumn<T> SetListFilter(IEnumerable<SelectItem> selectItems, bool includeIsNull = false, 
-            bool includeIsNotNull = false)
+        public override IGridColumn<T> SetListFilter(IEnumerable<SelectItem> selectItems,
+            bool includeIsNull = false, bool includeIsNotNull = false)
         {
-            return SetFilterWidgetType(SelectItem.ListFilter, (selectItems, includeIsNull, includeIsNotNull));
+            return SetListFilter(selectItems, o =>
+            {
+                o.IncludeIsNotNull = includeIsNotNull;
+                o.IncludeIsNull = includeIsNull;
+            });
+        }
+
+        public override IGridColumn<T> SetListFilter(IEnumerable<SelectItem> selectItems, Action<ListFilterOptions> optionsAction)
+        {
+            var options = new ListFilterOptions();
+            optionsAction?.Invoke(options);
+
+            return SetFilterWidgetType(SelectItem.ListFilter, (selectItems, options));
         }
 
         public override IGridColumn<T> SortInitialDirection(GridSortDirection direction)

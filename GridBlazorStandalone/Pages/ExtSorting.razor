@@ -7,6 +7,7 @@
 @using System.Globalization
 @using System.Threading.Tasks
 @inject IOrderService orderService
+@inject ICustomerService customerService
 
 <h1>Extended Sorting Grid</h1>
 
@@ -39,6 +40,11 @@ else
     protected override async Task OnParametersSetAsync()
     {
         var locale = CultureInfo.CurrentCulture;
+        
+        var companyNamesList = customerService.GetCustomersNames()
+            .Select(name => new SelectItem(name, name))
+            .ToArray();
+        var columns = ColumnCollections.OrderColumnsExtSorting(companyNamesList);
 
         var query = new QueryDictionary<StringValues>();
         var client = new GridClient<Order>(q => orderService.GetOrdersGridRows(ColumnCollections.OrderColumnsExtSorting, q), 

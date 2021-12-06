@@ -7,6 +7,7 @@
 @using System.Globalization
 @using System.Threading.Tasks
 @inject IOrderService orderService
+@inject ICustomerService customerService
 
 <h1>Groupable Grid</h1>
 
@@ -39,6 +40,11 @@ else
     protected override async Task OnParametersSetAsync()
     {
         var locale = CultureInfo.CurrentCulture;
+
+        var companyNamesList = customerService.GetCustomersNames()
+            .Select(name => new SelectItem(name, name))
+            .ToArray();
+        var columns = ColumnCollections.OrderColumnsGroupable(companyNamesList);
 
         var query = new QueryDictionary<StringValues>();
         Action<IGridColumnCollection<Order>> columns = c => ColumnCollections.OrderColumnsGroupable(c, SetCustomerNameLabel);

@@ -110,12 +110,16 @@ namespace GridBlazorStandalone.ColumnCollections
 
             /* Adding "OrderDate" column: */
             c.Add(o => o.OrderDate, "OrderCustomDate").Titled(SharedResource.OrderCustomDate)
-            .SetWidth(120).RenderComponentAs<TooltipCell>();
+                .SetWidth(120).RenderComponentAs<TooltipCell>();
 
             /* Adding "CompanyName" column: */
-            c.Add(o => o.Customer.CompanyName).Titled(SharedResource.CompanyName).SetWidth(250)
-            .ThenSortBy(o => o.ShipVia)
-            .ThenSortByDescending(o => o.Freight);
+            c.Add(o => o.Customer.CompanyName)
+                .Titled(SharedResource.CompanyName)
+                .ThenSortBy(o => o.ShipVia)
+                .ThenSortByDescending(o => o.Freight)
+                .SetWidth(250)
+                .SetListFilter(customerNames, filterOptionsAction)
+                ;
 
             /* Adding "ContactName" column: */
             c.Add(o => o.Customer.ContactName).Titled(SharedResource.ContactName);
@@ -125,13 +129,13 @@ namespace GridBlazorStandalone.ColumnCollections
 
             /* Adding "Freight" column: */
             c.Add(o => o.Freight)
-            .Titled(SharedResource.Freight)
-            .SetWidth(150)
-            .Format("{0:F}");
+                .Titled(SharedResource.Freight)
+                .SetWidth(150)
+                .Format("{0:F}");
 
             /* Adding "Vip customer" column: */
             c.Add(o => o.Customer.IsVip).Titled(SharedResource.IsVip).SetWidth(90).Css("hidden-xs") //hide on phones
-            .RenderValueAs(o => o.Customer.IsVip ? Strings.BoolTrueLabel : Strings.BoolFalseLabel);
+                .RenderValueAs(o => o.Customer.IsVip ? Strings.BoolTrueLabel : Strings.BoolFalseLabel);
         };
 
         public static Action<IGridColumnCollection<Order>, Func<object, Task<string>>> OrderColumnsGroupable = (c, customerNameLabel) =>

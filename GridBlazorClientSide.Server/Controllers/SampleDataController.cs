@@ -131,6 +131,10 @@ namespace GridBlazorClientSide.Server.Controllers
         [HttpGet("[action]")]
         public ActionResult GetOrdersGridGroupable()
         {
+            var customersRepository = new CustomersRepository(_context);
+            var customers = GetAllCustomersImpl(customersRepository);
+
+            var columns = ColumnCollections.OrderColumnsGroupable(customers);
             var repository = new OrdersRepository(_context);
             IGridServer<Order> server = new GridCoreServer<Order>(repository.GetAll(), Request.Query,
                 true, "ordersGrid", c => ColumnCollections.OrderColumnsGroupable(c, null))
@@ -290,10 +294,14 @@ namespace GridBlazorClientSide.Server.Controllers
         public ActionResult GetAllCustomers()
         {
             var repository = new CustomersRepository(_context);
-            return Ok(repository.GetAll()
-                    .Select(r => new SelectItem(r.CustomerID, r.CustomerID + " - " + r.CompanyName))
-                    .ToList());
+            var customers = GetAllCustomersImpl(repository);
+            return Ok(customers);
         }
+
+        private SelectItem[] GetAllCustomersImpl(CustomersRepository repository)
+            => repository.GetAll()
+                .Select(r => new SelectItem(r.CustomerID, r.CustomerID + " - " + r.CompanyName))
+                .ToArray();
 
         [HttpGet("[action]")]
         public ActionResult GetAllEmployees()

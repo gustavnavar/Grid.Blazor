@@ -142,7 +142,7 @@ namespace GridBlazorClientSide.Client.ColumnCollections
 
             /* Adding "OrderDate" column: */
             c.Add(o => o.OrderDate, "OrderCustomDate").Titled(SharedResource.OrderCustomDate)
-            .SetWidth(120).RenderComponentAs<TooltipCell>();
+                .SetWidth(120).RenderComponentAs<TooltipCell>();
 
             /* Adding "CompanyName" column: */
             c.Add(o => o.Customer.CompanyName).Titled(SharedResource.CompanyName)
@@ -159,13 +159,13 @@ namespace GridBlazorClientSide.Client.ColumnCollections
 
             /* Adding "Freight" column: */
             c.Add(o => o.Freight)
-            .Titled(SharedResource.Freight)
-            .SetWidth(150)
-            .Format("{0:F}");
+                .Titled(SharedResource.Freight)
+                .SetWidth(150)
+                .Format("{0:F}");
 
             /* Adding "Vip customer" column: */
             c.Add(o => o.Customer.IsVip).Titled(SharedResource.IsVip).SetWidth(90).Css("hidden-xs") //hide on phones
-            .RenderValueAs(o => o.Customer.IsVip ? Strings.BoolTrueLabel : Strings.BoolFalseLabel);
+                .RenderValueAs(o => o.Customer.IsVip ? Strings.BoolTrueLabel : Strings.BoolFalseLabel);
         };
 
         public static Action<IGridColumnCollection<Order>> OrderColumnsRearrangeable = c =>
