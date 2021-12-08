@@ -282,4 +282,16 @@
   <data name="Goto" xml:space="preserve">
     <value>Joan</value>
   </data>
+  <data name="SearchFilterListInputText" xml:space="preserve">
+    <value>Bilatu esaldia</value>
+  </data>
+  <data name="All" xml:space="preserve">
+    <value>Denak</value>
+  </data>
+  <data name="None" xml:space="preserve">
+    <value>Bat ere ez</value>
+  </data>
+  <data name="Select" xml:space="preserve">
+    <value>Hautatu</value>
+  </data>
 </root>

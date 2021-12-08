@@ -282,4 +282,16 @@
   <data name="Goto" xml:space="preserve">
     <value>برو به</value>
   </data>
+  <data name="SearchFilterListInputText" xml:space="preserve">
+    <value>عبارت جستجو</value>
+  </data>
+  <data name="All" xml:space="preserve">
+    <value>همه</value>
+  </data>
+  <data name="None" xml:space="preserve">
+    <value>هیچ یک</value>
+  </data>
+  <data name="Select" xml:space="preserve">
+    <value>انتخاب کنید</value>
+  </data>
 </root>

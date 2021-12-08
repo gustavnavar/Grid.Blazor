@@ -80,7 +80,6 @@ else
                 .ToList();
         }
 
-
         Func<object[], bool, bool, bool, bool, Task<IGrid>> crudSubGrids = async (keys, create, read, update, delete) =>
         {
             var subGridQuery = new QueryDictionary<StringValues>();

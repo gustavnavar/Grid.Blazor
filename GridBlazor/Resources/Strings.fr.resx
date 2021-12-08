@@ -282,4 +282,16 @@
   <data name="Goto" xml:space="preserve">
     <value>Aller à</value>
   </data>
+  <data name="SearchFilterListInputText" xml:space="preserve">
+    <value>Expression de recherche</value>
+  </data>
+  <data name="All" xml:space="preserve">
+    <value>Tout</value>
+  </data>
+  <data name="None" xml:space="preserve">
+    <value>Rien</value>
+  </data>
+  <data name="Select" xml:space="preserve">
+    <value>Sélectionner</value>
+  </data>
 </root>

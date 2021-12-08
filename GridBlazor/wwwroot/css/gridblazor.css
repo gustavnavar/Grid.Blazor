@@ -190,23 +190,12 @@ button.grid-button-all-filters-clear { width:32px; margin-right: 5px; background
 div[dir="rtl"] button.grid-button-all-filters-clear { margin-left: 5px; margin-right: 0; }
 
 /* Grid List Filter */
-.grid-dropdown-list-filter-class > .grid-popup-widget > .grid-filter-body > .menu-list {
-    max-height: 250px;
-    overflow: auto;
-}
-
-.grid-dropdown-list-filter-class > .grid-popup-widget > .grid-filter-body > .grid-buttons {
-    margin-top: 8px;
-    margin-left: 8px;
-}
+.grid-dropdown-list-filter-class > .grid-popup-widget > .grid-filter-body > .menu-list { max-height: 250px; overflow: auto; }
+.grid-dropdown-list-filter-class > .grid-popup-widget > .grid-filter-body > .grid-buttons { margin-top: 8px; margin-left: 8px; }
+.grid-dropdown-list-filter-class > .grid-popup-widget > .grid-filter-body .list-filter-label { width: 320px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 
 /* Grid Excel export */
-.grid-excel {
-    margin-top: 10px;
-    margin-bottom: 10px;
-    margin-left: 15px;
-    margin-right: 5px;
-}
+.grid-excel { margin-top: 10px; margin-bottom: 10px; margin-left: 15px; margin-right: 5px; }
 .grid-excel:first-child { margin-left: 0;}
 div[dir="rtl"] .grid-excel:first-child { margin-right: 0;}
 button.grid-button-excel { width:32px; margin-right: 5px; background-repeat: no-repeat, no-repeat; background-position-x: 7px, 0px; background-position-y: 8px, 0px;  background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 8 8"><path d="M3 0v3h-2l3 3 3-3h-2v-3h-2zm-3 7v1h8v-1h-8z"/></svg>'), linear-gradient(#ddd, #eee); }

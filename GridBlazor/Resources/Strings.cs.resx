@@ -282,4 +282,16 @@
   <data name="String1" xml:space="preserve">
     <value>Jít do</value>
   </data>
+  <data name="SearchFilterListInputText" xml:space="preserve">
+    <value>Hledaná fráze</value>
+  </data>
+  <data name="All" xml:space="preserve">
+    <value>Všechno</value>
+  </data>
+  <data name="None" xml:space="preserve">
+    <value>Žádný</value>
+  </data>
+  <data name="Select" xml:space="preserve">
+    <value>Vybrat</value>
+  </data>
 </root>

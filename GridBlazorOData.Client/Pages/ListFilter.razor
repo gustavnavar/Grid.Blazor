@@ -1,0 +1,105 @@
+﻿@page "/listfilter"
+@using GridBlazor.Resources
+@using GridBlazorOData.Client.Resources
+@using GridBlazorOData.Shared.Models
+@using Microsoft.Extensions.Primitives
+@using System.Globalization
+@using System.Threading.Tasks
+@inject NavigationManager NavigationManager
+@inject HttpClient HttpClient
+
+<h1>Grid Sample</h1>
+
+<p>
+    This page contains a grid using list filters
+</p>
+
+<p>
+    This component demonstrates a GridBlazor client-side grid with an OData back-end. For more information, please see: <a href="https://github.com/gustavnavar/Grid.Blazor">https://github.com/gustavnavar/Grid.Blazor</a>
+</p>
+
+@if (_task1.IsCompleted && _task2.IsCompleted && _task3.IsCompleted)
+{
+    <div class="row">
+        <div class="col-md-12">
+            <GridComponent T="Order" Grid="@_grid"></GridComponent>
+        </div>
+    </div>
+}
+else
+{
+    <p><em>Loading...</em></p>
+}
+
+@code
+{
+    private CGrid<Order> _grid;
+    private Task<ODataDTO<Customer>> _task1;
+    private Task<ODataDTO<Shipper>> _task2;
+    private Task _task3;
+    private IEnumerable<SelectItem> _customers;
+    private IEnumerable<SelectItem> _contacts;
+    private IEnumerable<SelectItem> _shippers;
+
+    protected override async Task OnParametersSetAsync()
+    {
+        var locale = CultureInfo.CurrentCulture;
+
+        _task1 = HttpClient.GetFromJsonAsync<ODataDTO<Customer>>(NavigationManager.BaseUri + $"odata/Customers?$select=CustomerID,CompanyName,ContactName");
+        var customers = await _task1;
+        if (customers == null || customers.Value == null)
+        {
+            _customers = new List<SelectItem>();
+            _contacts = new List<SelectItem>();
+        }
+        else
+        {
+            _customers = customers.Value
+                .Select(r => new SelectItem(r.CompanyName, r.CompanyName))
+                .ToList();
+            _contacts = customers.Value
+                .Select(r => new SelectItem(r.ContactName, r.ContactName))
+                .ToList();
+        }
+        _task2 = HttpClient.GetFromJsonAsync<ODataDTO<Shipper>>(NavigationManager.BaseUri + $"odata/Shippers?$select=ShipperID,CompanyName");
+        var shippers = await _task2;
+        if (shippers == null || shippers.Value == null)
+        {
+            _shippers = new List<SelectItem>();
+        }
+        else
+        {
+            _shippers = shippers.Value
+                .Select(r => new SelectItem(r.ShipperID.ToString(), r.ShipperID.ToString() + " - " + r.CompanyName))
+                .ToList();
+        }
+        var query = new QueryDictionary<StringValues>();
+        Action<IGridColumnCollection<Order>> columns = c =>
+        {
+            c.Add(o => o.OrderID).Titled(SharedResource.Number).SetTooltip("Order ID is ... ").SetWidth(100);
+            c.Add(o => o.OrderDate, "OrderCustomDate").Titled(SharedResource.OrderCustomDate).SetWidth(120).RenderComponentAs<TooltipCell>();
+            c.Add(o => o.Customer.CompanyName).Titled(SharedResource.CompanyName).SetWidth(250).SetListFilter(_customers, o => {
+                o.ShowSelectAllButtons = true;
+                o.ShowSearchInput = true;
+            });
+            c.Add(o => o.Customer.ContactName).Titled(SharedResource.ContactName).SetListFilter(_contacts);
+            c.Add(o => o.ShipVia).Titled("Via").RenderValueAs(o => o.Shipper == null ? "" : o.Shipper.CompanyName).SetListFilter(_shippers, true, true);
+            c.Add(o => o.Customer.Country, true);
+            c.Add(o => o.Freight).Titled(SharedResource.Freight).SetWidth(150).Format("{0:F}");
+            c.Add(o => o.Customer.IsVip).Titled(SharedResource.IsVip).SetWidth(90).Css("hidden-xs").RenderValueAs(o => o.Customer.IsVip ? Strings.BoolTrueLabel : Strings.BoolFalseLabel);
+        };
+
+        string url = NavigationManager.BaseUri + "odata/Orders?$expand=Shipper";
+        var client = new GridODataClient<Order>(HttpClient, url, query, false, "ordersGrid", columns, 10, locale)
+            .Sortable()
+            .Filterable()
+            .SetStriped(true)
+            .WithMultipleFilters()
+            .WithGridItemsCount();
+
+        _grid = client.Grid;
+        // Set new items to grid
+        _task3 = client.UpdateGrid();
+        await _task3;
+    }
+}

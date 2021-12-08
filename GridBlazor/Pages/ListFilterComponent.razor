@@ -12,13 +12,14 @@
             <div class="grid-filter-body">
                 @if (_filterOptions.ShowSelectAllButtons)
                 {
-                    <div class="grid-buttons">
+                    <div class="grid-buttons ml-0 my-2">
                         <div class="grid-filter-buttons">
-                            <button type="button" class="btn btn-secondary" @onclick="SelectVisibleButtonClicked">
-                                @Strings.SelectVisibleFilterButtonText
+                            <label class="mr-3"><b>@Strings.Select:</b></label>
+                            <button type="button" class="btn btn-secondary mr-2" @onclick="SelectVisibleButtonClicked" @onclick:stopPropagation>
+                                @Strings.All
                             </button>
-                            <button type="button" class="btn btn-secondary" @onclick="UnselectVisibleButtonClicked">
-                                @Strings.UnselectVisibleFilterButtonText
+                            <button type="button" class="btn btn-secondary" @onclick="UnselectVisibleButtonClicked" @onclick:stopPropagation>
+                                @Strings.None
                             </button>
                         </div>
                     </div>
@@ -38,7 +39,7 @@
                     {
                         bool isChecked = _filters.Any(x => x.Type.Equals("1") && x.Value.Equals(data.Value));
                         <li>
-                            <label>
+                            <label class="list-filter-label">
                                 @if (isChecked)
                                 {
                                     <input type="checkbox" class="grid-filter-list" checked value="@isChecked" @onclick="e => MyClickHandler(e, isChecked, data.Value)"/>
@@ -55,7 +56,7 @@
                     {
                         bool isChecked = _filters.Any(x => x.Type.Equals("11"));
                         <li>
-                            <label>
+                            <label class="list-filter-label">
                                 @if (isChecked)
                                 {
                                     <input type="checkbox" class="grid-filter-list" checked value="@isChecked" @onclick="e => IsNullHandler(e, isChecked)"/>
@@ -72,7 +73,7 @@
                     {
                         bool isChecked = _filters.Any(x => x.Type.Equals("12"));
                         <li>
-                            <label>
+                            <label class="list-filter-label">
                                 @if (isChecked)
                                 {
                                     <input type="checkbox" class="grid-filter-list" checked value="@isChecked" @onclick="e => IsNotNullHandler(e, isChecked)"/>

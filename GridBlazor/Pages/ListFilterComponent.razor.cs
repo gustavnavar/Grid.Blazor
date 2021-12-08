@@ -1,10 +1,10 @@
-﻿using System;
-using GridShared;
+﻿using GridShared;
 using GridShared.Filtering;
 using GridShared.Utility;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Web;
 using Microsoft.JSInterop;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -12,7 +12,7 @@ using System.Timers;
 
 namespace GridBlazor.Pages
 {
-    public partial class ListFilterComponent<T>
+    public partial class ListFilterComponent<T> : IDisposable
     {
         protected Timer _timer;
         protected bool _clearVisible = false;
@@ -184,12 +184,14 @@ namespace GridBlazor.Pages
 
         protected void FilterVisibleItems(string text)
         {
+            var selectedValues = _filters.Where(x => x.Type.Equals("1"));
             _visibleList = string.IsNullOrEmpty(text)
                 ? _selectList
                 : _selectList
-                    .Where(item => item.Title?.Contains(text, _filterOptions.SearchComparisonMethod) == true)
+                    .Where(item => selectedValues.Any(r => r.Value == item.Value) 
+                        || item.Title?.Contains(text, _filterOptions.SearchComparisonMethod) == true)
                     .ToList();
-            StateHasChanged();
+            InvokeAsync(StateHasChanged);
         }
 
         protected async Task ClearButtonClicked()
@@ -203,6 +205,12 @@ namespace GridBlazor.Pages
             {
                 await GridHeaderComponent.FilterIconClicked();
             }
+        }
+
+        void IDisposable.Dispose()
+        {
+            _timer?.Dispose();
+            _timer = null;
         }
     }
 }

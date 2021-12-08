@@ -120,6 +120,9 @@
   <data name="Add" xml:space="preserve">
     <value>Lägg till</value>
   </data>
+  <data name="All" xml:space="preserve">
+    <value>Allt</value>
+  </data>
   <data name="And" xml:space="preserve">
     <value>Och</value>
   </data>
@@ -237,6 +240,9 @@
   <data name="Min" xml:space="preserve">
     <value>Min</value>
   </data>
+  <data name="None" xml:space="preserve">
+    <value>Ingen</value>
+  </data>
   <data name="NotEqual" xml:space="preserve">
     <value>Inte lika med</value>
   </data>
@@ -249,8 +255,14 @@
   <data name="Save" xml:space="preserve">
     <value>Spara</value>
   </data>
+  <data name="SearchFilterListInputText" xml:space="preserve">
+    <value>Sökfras</value>
+  </data>
   <data name="SearchFor" xml:space="preserve">
     <value>Sök efter ...</value>
+  </data>
+  <data name="Select" xml:space="preserve">
+    <value>Välj</value>
   </data>
   <data name="SelectionDeleteError" xml:space="preserve">
     <value>Du måste välja raden du vill ta bort</value>

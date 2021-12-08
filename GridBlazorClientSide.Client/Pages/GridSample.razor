@@ -49,7 +49,7 @@ else
 @code
 {
     private CGrid<Order> _grid;
-    private Task<SelectItem[]> _task1;
+    private Task<List<SelectItem>> _task1;
     private Task _task2;
     private OrderInfo _orderInfo;
     private OrderIDetaillnfo _orderDetailInfo;
@@ -67,9 +67,8 @@ else
         _rowClickActions.Add(OrderDetailInfo);
 
         var locale = CultureInfo.CurrentCulture;
-        _task1 = HttpClient.GetFromJsonAsync<SelectItem[]>(NavigationManager.BaseUri + $"api/SampleData/GetAllShippers");
-        var shippers = await _task1;
-        _shippers = shippers.ToList();
+        _task1 = HttpClient.GetFromJsonAsync<List<SelectItem>>(NavigationManager.BaseUri + $"api/SampleData/GetAllShippers");
+        _shippers = await _task1;
 
         Func<object[], bool, bool, bool, bool, Task<IGrid>> crudSubGrids = async (keys, create, read, update, delete) =>
         {

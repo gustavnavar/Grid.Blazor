@@ -282,4 +282,16 @@
   <data name="Goto" xml:space="preserve">
     <value>Йти до</value>
   </data>
+  <data name="SearchFilterListInputText" xml:space="preserve">
+    <value>Пошукова фраза</value>
+  </data>
+  <data name="All" xml:space="preserve">
+    <value>Всі</value>
+  </data>
+  <data name="None" xml:space="preserve">
+    <value>Жодного</value>
+  </data>
+  <data name="Select" xml:space="preserve">
+    <value>Виберіть</value>
+  </data>
 </root>

@@ -282,4 +282,16 @@
   <data name="Goto" xml:space="preserve">
     <value>Menj</value>
   </data>
+  <data name="SearchFilterListInputText" xml:space="preserve">
+    <value>Keresési kifejezés</value>
+  </data>
+  <data name="All" xml:space="preserve">
+    <value>Összes</value>
+  </data>
+  <data name="None" xml:space="preserve">
+    <value>Egyik sem</value>
+  </data>
+  <data name="Select" xml:space="preserve">
+    <value>Válassza ki</value>
+  </data>
 </root>

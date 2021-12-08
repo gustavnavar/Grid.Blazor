@@ -41,6 +41,28 @@ namespace GridBlazorServerSide.Services
             }
         }
 
+        public IEnumerable<SelectItem> GetAllCustomers2()
+        {
+            using (var context = new NorthwindDbContext(_options))
+            {
+                CustomersRepository repository = new CustomersRepository(context);
+                return repository.GetAll()
+                    .Select(r => new SelectItem(r.CompanyName, r.CompanyName))
+                    .ToList();
+            }
+        }
+
+        public IEnumerable<SelectItem> GetAllContacts()
+        {
+            using (var context = new NorthwindDbContext(_options))
+            {
+                CustomersRepository repository = new CustomersRepository(context);
+                return repository.GetAll()
+                    .Select(r => new SelectItem(r.ContactName, r.ContactName))
+                    .ToList();
+            }
+        }
+
         public ItemsDTO<Customer> GetCustomersGridRows(Action<IGridColumnCollection<Customer>> columns,
             QueryDictionary<StringValues> query)
         {
@@ -127,6 +149,8 @@ namespace GridBlazorServerSide.Services
     {
         IEnumerable<string> GetCustomersNames();
         IEnumerable<SelectItem> GetAllCustomers();
+        IEnumerable<SelectItem> GetAllCustomers2();
+        IEnumerable<SelectItem> GetAllContacts();
         ItemsDTO<Customer> GetCustomersGridRows(Action<IGridColumnCollection<Customer>> columns, QueryDictionary<StringValues> query);
     }
 }

@@ -285,4 +285,16 @@
   <data name="Goto" xml:space="preserve">
     <value>Git</value>
   </data>
+  <data name="SearchFilterListInputText" xml:space="preserve">
+    <value>Arama ifadesi</value>
+  </data>
+  <data name="All" xml:space="preserve">
+    <value>Tüm</value>
+  </data>
+  <data name="None" xml:space="preserve">
+    <value>Hiçbiri</value>
+  </data>
+  <data name="Select" xml:space="preserve">
+    <value>Seçme</value>
+  </data>
 </root>

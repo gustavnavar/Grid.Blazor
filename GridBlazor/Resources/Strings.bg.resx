@@ -214,7 +214,7 @@
     <value>Запис</value>
   </data>
   <data name="View" xml:space="preserve">
-    <value>Виж</value>
+    <value>Преглед</value>
   </data>
   <data name="SelectItem" xml:space="preserve">
     <value>--- изберете елемент ---</value>
@@ -281,5 +281,17 @@
   </data>
   <data name="Goto" xml:space="preserve">
     <value>Отидете на</value>
+  </data>
+  <data name="SearchFilterListInputText" xml:space="preserve">
+    <value>Фраза за търсене</value>
+  </data>
+  <data name="All" xml:space="preserve">
+    <value>Bсичко</value>
+  </data>
+  <data name="None" xml:space="preserve">
+    <value>Нито един</value>
+  </data>
+  <data name="Select" xml:space="preserve">
+    <value>Изберете</value>
   </data>
 </root>

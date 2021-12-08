@@ -48,6 +48,7 @@ Those languages that require right to left direction are also supported. You mus
 
 If you need to support other languages, please send me the translation of the following expressions and I will updete the component:
 * Add
+* All
 * And
 * Apply
 * Average
@@ -83,11 +84,14 @@ If you need to support other languages, please send me the translation of the fo
 * Less than or equals
 * Max
 * Min
+* None
 * Not equals
 * Or
 * Read item
 * Save
 * Search for ...
+* Search phrase
+* Select
 * --- Select an item ---
 * Show
 * Starts with
