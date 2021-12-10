@@ -8,7 +8,6 @@ using GridShared.Filtering;
 using GridShared.Sorting;
 using GridShared.Utility;
 using Microsoft.AspNetCore.Components;
-using Microsoft.AspNetCore.Components.Web;
 using Microsoft.Extensions.Primitives;
 using System;
 using System.Collections.Generic;
