@@ -1319,21 +1319,26 @@ namespace GridBlazor.Pages
                         await ((CGrid<T>)Grid).CrudDataService.Insert(_item);
                     if(((CGrid<T>)Grid).CrudFileService != null)
                         await ((CGrid<T>)Grid).CrudFileService.InsertFiles(_item, component.Files);
-                    await OnAfterInsert(component);
                     await HideSpinner();
                     CrudRender = null;
                     if (Grid.EditAfterInsert)
                     {
                         await Grid.UpdateGrid();
+                        // execute after grid update, but before update form render
+                        await OnAfterInsert(component);
                         await UpdateHandler(_item);
                     }
                     else
                     {
                         ((CGrid<T>)Grid).Mode = GridMode.Grid;
                         _fromCrud = true;
-                        await UpdateGrid();
+                        await UpdateGrid(true, false);
+                        // execute after grid update, but before grid component render
+                        await OnAfterInsert(component);
+                        _shouldRender = true;
+                        StateHasChanged();
                     }
-                }     
+                } 
             }
             catch (Exception e)
             {
@@ -1371,12 +1376,15 @@ namespace GridBlazor.Pages
                     if (((CGrid<T>)Grid).CrudFileService != null)
                         _item = await((CGrid<T>)Grid).CrudFileService.UpdateFiles(_item, component.Files);
                     await ((CGrid<T>)Grid).CrudDataService.Update(_item);
-                    await OnAfterUpdate(component);
                     await HideSpinner();
                     ((CGrid<T>)Grid).Mode = GridMode.Grid;
                     CrudRender = null;
                     _fromCrud = true;
-                    await UpdateGrid();
+                    await UpdateGrid(true, false);
+                    // execute after grid update, but before component render
+                    await OnAfterUpdate(component);
+                    _shouldRender = true;
+                    StateHasChanged();
                 }
             }
             catch (Exception e)
@@ -1416,12 +1424,15 @@ namespace GridBlazor.Pages
                     if (((CGrid<T>)Grid).CrudFileService != null)
                         await ((CGrid<T>)Grid).CrudFileService.DeleteFiles(keys);
                     await ((CGrid<T>)Grid).CrudDataService.Delete(keys);
-                    await OnAfterDelete(component);
                     await HideSpinner();
                     ((CGrid<T>)Grid).Mode = GridMode.Grid;
                     CrudRender = null;
                     _fromCrud = true;
-                    await UpdateGrid();
+                    await UpdateGrid(true, false);
+                    // execute after grid update, but before component render
+                    await OnAfterDelete(component);
+                    _shouldRender = true;
+                    StateHasChanged();
                 }
             }
             catch (Exception e)
@@ -1630,17 +1641,18 @@ namespace GridBlazor.Pages
             }
         }
 
-        public async Task UpdateGrid(bool ReloadData = true)
+        public async Task UpdateGrid(bool reloadData = true, bool shouldRender = true)
         {
             await OnBeforeRefreshGrid();
             
-            if (ReloadData) await Grid.UpdateGrid();
+            if (reloadData) await Grid.UpdateGrid();
             SelectedRow = -1;
             SelectedRows.Clear();
             InitCheckboxAndSubGridVars();
 
-            _shouldRender = true;
-            StateHasChanged();
+            _shouldRender = shouldRender;
+            if(_shouldRender)
+                StateHasChanged();
 
             await SetGridFocus();
 

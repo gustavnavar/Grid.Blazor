@@ -159,11 +159,11 @@ namespace GridBlazorOData.Server.Controllers
         }
 
         [EnableQuery]
-        [HttpGet("odata/Orders({orderID})/OrderDetails({keyOrderID},{keyProductID})")]
-        public async Task<IActionResult> GetOrderDetails([FromODataUri] int keyOrderID, [FromODataUri] int keyProductID)
+        [HttpGet("odata/Orders({keyOrderID})/OrderDetails(orderID={orderID},productID={productID})")]
+        public async Task<IActionResult> GetOrderDetails([FromODataUri] int orderID, [FromODataUri] int productID)
         {
             var repository = new OrderDetailsRepository(_context);
-            OrderDetail orderDetail = await repository.GetById(new { OrderID = keyOrderID, ProductID = keyProductID });
+            OrderDetail orderDetail = await repository.GetById(new { OrderID = orderID, ProductID = productID });
             return Ok(orderDetail);
         }
 
@@ -197,8 +197,8 @@ namespace GridBlazorOData.Server.Controllers
             }
         }
 
-        [HttpPatch("odata/Orders({orderID})/OrderDetails({keyOrderID},{keyProductID})")]
-        public async Task<IActionResult> PatchToOrderDetails([FromODataUri] int keyOrderID, [FromODataUri] int keyProductID,
+        [HttpPatch("odata/Orders({keyOrderID})/OrderDetails(orderID={orderID},productID={productID})")]
+        public async Task<IActionResult> PatchToOrderDetails([FromODataUri] int orderID, [FromODataUri] int productID,
             [FromBody] Delta<OrderDetail> orderDetail)
         {
             if (!ModelState.IsValid)
@@ -206,7 +206,7 @@ namespace GridBlazorOData.Server.Controllers
                 return BadRequest(ModelState);
             }
             var repository = new OrderDetailsRepository(_context);
-            OrderDetail entity = await repository.GetById(new { OrderID = keyOrderID, ProductID = keyProductID });
+            OrderDetail entity = await repository.GetById(new { OrderID = orderID, ProductID = productID });
             if (entity == null)
             {
                 return NotFound();
@@ -218,7 +218,7 @@ namespace GridBlazorOData.Server.Controllers
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!OrderDetailExists(keyOrderID, keyProductID))
+                if (!OrderDetailExists(orderID, productID))
                 {
                     return NotFound();
                 }
@@ -231,15 +231,15 @@ namespace GridBlazorOData.Server.Controllers
             return Updated(entity);
         }
 
-        [HttpPut("odata/Orders({orderID})/OrderDetails({keyOrderID},{keyProductID})")]
-        public async Task<IActionResult> PutToOrderDetails([FromODataUri] int keyOrderID, [FromODataUri] int keyProductID,
+        [HttpPut("odata/Orders({keyOrderID})/OrderDetails(orderID={orderID},productID={productID})")]
+        public async Task<IActionResult> PutToOrderDetails([FromODataUri] int orderID, [FromODataUri] int productID,
             [FromBody] OrderDetail orderDetail)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
-            if (keyOrderID != orderDetail.OrderID || keyProductID != orderDetail.ProductID)
+            if (orderID != orderDetail.OrderID || productID != orderDetail.ProductID)
             {
                 return BadRequest();
             }
@@ -252,7 +252,7 @@ namespace GridBlazorOData.Server.Controllers
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!OrderDetailExists(keyOrderID, keyProductID))
+                if (!OrderDetailExists(orderID, productID))
                 {
                     return NotFound();
                 }
@@ -264,11 +264,11 @@ namespace GridBlazorOData.Server.Controllers
             return Updated(orderDetail);
         }
 
-        [HttpDelete("odata/Orders({orderID})/OrderDetails({keyOrderID},{keyProductID})")]
-        public async Task<ActionResult> DeleteToOrderDetails([FromODataUri] int keyOrderID, [FromODataUri] int keyProductID)
+        [HttpDelete("odata/Orders({keyOrderID})/OrderDetails(orderID={orderID},productID={productID})")]
+        public async Task<ActionResult> DeleteToOrderDetails([FromODataUri] int orderID, [FromODataUri] int productID)
         {
             var repository = new OrderDetailsRepository(_context);
-            OrderDetail orderDetail = await repository.GetById(new { OrderID = keyOrderID, ProductID = keyProductID });
+            OrderDetail orderDetail = await repository.GetById(new { OrderID = orderID, ProductID = productID });
             if (orderDetail == null)
             {
                 return NotFound();
