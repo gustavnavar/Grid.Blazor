@@ -36,7 +36,6 @@ namespace GridBlazor.Pages
         internal bool[] IsSubGridVisible;
         internal bool[] InitSubGrid;
         protected IQueryDictionary<Type> _filterComponents;
-        protected T _item;
 
         // browser input type support
         internal bool IsDateTimeLocalSupported = false;
@@ -114,6 +113,8 @@ namespace GridBlazor.Pages
         public GridUpdateComponent<T> UpdateComponent { get; private set; }
 
         public GridDeleteComponent<T> DeleteComponent { get; private set; }
+
+        public T Item { get; protected set; }
 
         internal IGridColumn<T> FirstColumn { get; set; }
 
@@ -680,14 +681,14 @@ namespace GridBlazor.Pages
         public async Task CreateHandler()
         {
             await SetSelectFields();
-            _item = (T)Activator.CreateInstance(typeof(T));
+            Item = (T)Activator.CreateInstance(typeof(T));
             await CreateHndlr();
         }
 
         public async Task CreateHandler(T item)
         {
             await SetSelectFields();
-            _item = item;
+            Item = item;
             await CreateHndlr();
         }
 
@@ -700,7 +701,7 @@ namespace GridBlazor.Pages
                 {
                     foreach (var fixValue in Grid.FixedValues)
                     {
-                        _item.GetType().GetProperty(fixValue.Key).SetValue(_item, fixValue.Value);
+                        Item.GetType().GetProperty(fixValue.Key).SetValue(Item, fixValue.Value);
                     }
                 }
                 ((CGrid<T>)Grid).Mode = GridMode.Create;
@@ -720,7 +721,7 @@ namespace GridBlazor.Pages
         {
             if (BeforeCreateForm != null)
             {
-                return await BeforeCreateForm.Invoke(this, _item);
+                return await BeforeCreateForm.Invoke(this, Item);
             }
             return true;
         }
@@ -729,7 +730,7 @@ namespace GridBlazor.Pages
         {
             if (AfterCreateForm != null)
             {
-                await AfterCreateForm.Invoke(this, _item);
+                await AfterCreateForm.Invoke(this, Item);
             }
         }
 
@@ -743,7 +744,7 @@ namespace GridBlazor.Pages
         {
             try
             {
-                _item = await ((CGrid<T>)Grid).CrudDataService.Get(keys);
+                Item = await ((CGrid<T>)Grid).CrudDataService.Get(keys);
                 bool isValid = await OnBeforeReadForm();
                 if (isValid)
                 {
@@ -782,7 +783,7 @@ namespace GridBlazor.Pages
         {
             if (BeforeReadForm != null)
             {
-                return await BeforeReadForm.Invoke(this, _item);
+                return await BeforeReadForm.Invoke(this, Item);
             }
             return true;
         }
@@ -791,7 +792,7 @@ namespace GridBlazor.Pages
         {
             if (AfterReadForm != null)
             {
-                await AfterReadForm.Invoke(this, _item);
+                await AfterReadForm.Invoke(this, Item);
             }
         }
 
@@ -822,7 +823,7 @@ namespace GridBlazor.Pages
             await SetSelectFields();
             try
             {
-                _item = await ((CGrid<T>)Grid).CrudDataService.Get(keys);
+                Item = await ((CGrid<T>)Grid).CrudDataService.Get(keys);
                 bool isValid = await OnBeforeUpdateForm();
                 if (isValid)
                 {
@@ -861,7 +862,7 @@ namespace GridBlazor.Pages
         {
             if (BeforeUpdateForm != null)
             {
-                return await BeforeUpdateForm.Invoke(this, _item);
+                return await BeforeUpdateForm.Invoke(this, Item);
             }
             return true;
         }
@@ -870,7 +871,7 @@ namespace GridBlazor.Pages
         {
             if (AfterUpdateForm != null)
             {
-                await AfterUpdateForm.Invoke(this, _item);
+                await AfterUpdateForm.Invoke(this, Item);
             }
         }
 
@@ -883,7 +884,7 @@ namespace GridBlazor.Pages
         {
             try
             {
-                _item = await ((CGrid<T>)Grid).CrudDataService.Get(keys);
+                Item = await ((CGrid<T>)Grid).CrudDataService.Get(keys);
                 bool isValid = await OnBeforeDeleteForm();
                 if (isValid)
                 {
@@ -922,7 +923,7 @@ namespace GridBlazor.Pages
         {
             if (BeforeDeleteForm != null)
             {
-                return await BeforeDeleteForm.Invoke(this, _item);
+                return await BeforeDeleteForm.Invoke(this, Item);
             }
             return true;
         }
@@ -931,7 +932,7 @@ namespace GridBlazor.Pages
         {
             if (AfterDeleteForm != null)
             {
-                await AfterDeleteForm.Invoke(this, _item);
+                await AfterDeleteForm.Invoke(this, Item);
             }
         }
         
@@ -1086,7 +1087,7 @@ namespace GridBlazor.Pages
         {
             var componentType = Grid.CreateComponent;
             builder.OpenComponent(++_sequence, componentType);
-            builder.AddAttribute(++_sequence, "Item", _item);
+            builder.AddAttribute(++_sequence, "Item", Item);
             var gridProperty = componentType.GetProperty("Grid");
             if (gridProperty != null && gridProperty.PropertyType == typeof(CGrid<T>))
                 builder.AddAttribute(++_sequence, "Grid", (CGrid<T>)Grid);
@@ -1115,7 +1116,7 @@ namespace GridBlazor.Pages
         {
             var componentType = Grid.ReadComponent;
             builder.OpenComponent(++_sequence, componentType);
-            builder.AddAttribute(++_sequence, "Item", _item);
+            builder.AddAttribute(++_sequence, "Item", Item);
             var gridProperty = componentType.GetProperty("Grid");
             if (gridProperty != null && gridProperty.PropertyType == typeof(CGrid<T>))
                 builder.AddAttribute(++_sequence, "Grid", (CGrid<T>)Grid);
@@ -1144,7 +1145,7 @@ namespace GridBlazor.Pages
         {
             var componentType = Grid.UpdateComponent;
             builder.OpenComponent(++_sequence, componentType);
-            builder.AddAttribute(++_sequence, "Item", _item);
+            builder.AddAttribute(++_sequence, "Item", Item);
             var gridProperty = componentType.GetProperty("Grid");
             if (gridProperty != null && gridProperty.PropertyType == typeof(CGrid<T>))
                 builder.AddAttribute(++_sequence, "Grid", (CGrid<T>)Grid);
@@ -1173,7 +1174,7 @@ namespace GridBlazor.Pages
         {
             var componentType = Grid.DeleteComponent;
             builder.OpenComponent(++_sequence, componentType);
-            builder.AddAttribute(++_sequence, "Item", _item);
+            builder.AddAttribute(++_sequence, "Item", Item);
             var gridProperty = componentType.GetProperty("Grid");
             if (gridProperty != null && gridProperty.PropertyType == typeof(CGrid<T>))
                 builder.AddAttribute(++_sequence, "Grid", (CGrid<T>)Grid);
@@ -1257,7 +1258,7 @@ namespace GridBlazor.Pages
                     builder.AddAttribute(++_sequence, "ReturnMode", returnMode);
                 gridProperty = componentType.GetProperty("Item");
                 if (gridProperty != null)
-                    builder.AddAttribute(++_sequence, "Item", _item);
+                    builder.AddAttribute(++_sequence, "Item", Item);
                 builder.CloseComponent();
             };
 
@@ -1292,7 +1293,7 @@ namespace GridBlazor.Pages
         {
             if (BeforeBack != null)
             {
-                return await BeforeBack.Invoke(this, _item);
+                return await BeforeBack.Invoke(this, Item);
             }
             return true;
         }
@@ -1301,7 +1302,7 @@ namespace GridBlazor.Pages
         {
             if (AfterBack != null)
             {
-                await AfterBack.Invoke(this, _item);
+                await AfterBack.Invoke(this, Item);
             }
         }
 
@@ -1314,11 +1315,11 @@ namespace GridBlazor.Pages
                 {
                     await ShowSpinner();
                     if (Grid.ServerAPI == ServerAPI.OData)
-                        _item = await ((ICrudODataService<T>)((CGrid<T>)Grid).CrudDataService).Add(_item);
+                        Item = await ((ICrudODataService<T>)((CGrid<T>)Grid).CrudDataService).Add(Item);
                     else
-                        await ((CGrid<T>)Grid).CrudDataService.Insert(_item);
+                        await ((CGrid<T>)Grid).CrudDataService.Insert(Item);
                     if(((CGrid<T>)Grid).CrudFileService != null)
-                        await ((CGrid<T>)Grid).CrudFileService.InsertFiles(_item, component.Files);
+                        await ((CGrid<T>)Grid).CrudFileService.InsertFiles(Item, component.Files);
                     await HideSpinner();
                     CrudRender = null;
                     if (Grid.EditAfterInsert)
@@ -1326,7 +1327,7 @@ namespace GridBlazor.Pages
                         await Grid.UpdateGrid();
                         // execute after grid update, but before update form render
                         await OnAfterInsert(component);
-                        await UpdateHandler(_item);
+                        await UpdateHandler(Item);
                     }
                     else
                     {
@@ -1352,7 +1353,7 @@ namespace GridBlazor.Pages
         {
             if (BeforeInsert != null)
             {
-                return await BeforeInsert.Invoke(component, _item);
+                return await BeforeInsert.Invoke(component, Item);
             }
             return true;
         }
@@ -1361,7 +1362,7 @@ namespace GridBlazor.Pages
         {
             if (AfterInsert != null)
             {
-                await AfterInsert.Invoke(component, _item);
+                await AfterInsert.Invoke(component, Item);
             }
         }
 
@@ -1374,8 +1375,8 @@ namespace GridBlazor.Pages
                 {
                     await ShowSpinner();
                     if (((CGrid<T>)Grid).CrudFileService != null)
-                        _item = await((CGrid<T>)Grid).CrudFileService.UpdateFiles(_item, component.Files);
-                    await ((CGrid<T>)Grid).CrudDataService.Update(_item);
+                        Item = await((CGrid<T>)Grid).CrudFileService.UpdateFiles(Item, component.Files);
+                    await ((CGrid<T>)Grid).CrudDataService.Update(Item);
                     await HideSpinner();
                     ((CGrid<T>)Grid).Mode = GridMode.Grid;
                     CrudRender = null;
@@ -1399,7 +1400,7 @@ namespace GridBlazor.Pages
         {
             if (BeforeUpdate != null)
             {
-                return await BeforeUpdate.Invoke(component, _item);
+                return await BeforeUpdate.Invoke(component, Item);
             }
             return true;
         }
@@ -1408,7 +1409,7 @@ namespace GridBlazor.Pages
         {
             if (AfterUpdate != null)
             {
-                await AfterUpdate.Invoke(component, _item);
+                await AfterUpdate.Invoke(component, Item);
             }
         }
 
@@ -1420,7 +1421,7 @@ namespace GridBlazor.Pages
                 if (isValid)
                 {
                     await ShowSpinner();
-                    var keys = Grid.GetPrimaryKeyValues(_item);
+                    var keys = Grid.GetPrimaryKeyValues(Item);
                     if (((CGrid<T>)Grid).CrudFileService != null)
                         await ((CGrid<T>)Grid).CrudFileService.DeleteFiles(keys);
                     await ((CGrid<T>)Grid).CrudDataService.Delete(keys);
@@ -1447,7 +1448,7 @@ namespace GridBlazor.Pages
         {
             if (BeforeDelete != null)
             {
-                return await BeforeDelete.Invoke(component, _item);
+                return await BeforeDelete.Invoke(component, Item);
             }
             return true;
         }
@@ -1456,7 +1457,7 @@ namespace GridBlazor.Pages
         {
             if (AfterDelete != null)
             {
-                await AfterDelete.Invoke(component, _item);
+                await AfterDelete.Invoke(component, Item);
             }
         }
 
@@ -1525,17 +1526,17 @@ namespace GridBlazor.Pages
         public void ShowCrudButtons()
         {
             if (Grid.Mode == GridMode.Read && Grid.ReadComponent == null && ReadComponent != null
-                && (Grid.ReadEnabled || (((CGrid<T>)Grid).FuncReadEnabled != null && ((CGrid<T>)Grid).FuncReadEnabled(_item))))
+                && (Grid.ReadEnabled || (((CGrid<T>)Grid).FuncReadEnabled != null && ((CGrid<T>)Grid).FuncReadEnabled(Item))))
             {
                 ReadComponent.ShowCrudButtons();
             }
             else if (Grid.Mode == GridMode.Update && Grid.UpdateComponent == null && UpdateComponent != null
-                && (Grid.UpdateEnabled || (((CGrid<T>)Grid).FuncUpdateEnabled != null && ((CGrid<T>)Grid).FuncUpdateEnabled(_item))))
+                && (Grid.UpdateEnabled || (((CGrid<T>)Grid).FuncUpdateEnabled != null && ((CGrid<T>)Grid).FuncUpdateEnabled(Item))))
             {
                 UpdateComponent.ShowCrudButtons();
             }
             else if (Grid.Mode == GridMode.Delete && Grid.DeleteComponent == null && DeleteComponent != null
-                && (Grid.DeleteEnabled || (((CGrid<T>)Grid).FuncDeleteEnabled != null && ((CGrid<T>)Grid).FuncDeleteEnabled(_item))))
+                && (Grid.DeleteEnabled || (((CGrid<T>)Grid).FuncDeleteEnabled != null && ((CGrid<T>)Grid).FuncDeleteEnabled(Item))))
             {
                 DeleteComponent.ShowCrudButtons();
             }
@@ -1544,17 +1545,17 @@ namespace GridBlazor.Pages
         public void HideCrudButtons()
         {
             if (Grid.Mode == GridMode.Read && Grid.ReadComponent == null && ReadComponent != null
-                && (Grid.ReadEnabled || (((CGrid<T>)Grid).FuncReadEnabled != null && ((CGrid<T>)Grid).FuncReadEnabled(_item))))
+                && (Grid.ReadEnabled || (((CGrid<T>)Grid).FuncReadEnabled != null && ((CGrid<T>)Grid).FuncReadEnabled(Item))))
             {
                 ReadComponent.HideCrudButtons();
             }
             else if (Grid.Mode == GridMode.Update && Grid.UpdateComponent == null && UpdateComponent != null
-                && (Grid.UpdateEnabled || (((CGrid<T>)Grid).FuncUpdateEnabled != null && ((CGrid<T>)Grid).FuncUpdateEnabled(_item))))
+                && (Grid.UpdateEnabled || (((CGrid<T>)Grid).FuncUpdateEnabled != null && ((CGrid<T>)Grid).FuncUpdateEnabled(Item))))
             {
                 UpdateComponent.HideCrudButtons();
             }
             else if (Grid.Mode == GridMode.Delete && Grid.DeleteComponent == null && DeleteComponent != null
-                && (Grid.DeleteEnabled || (((CGrid<T>)Grid).FuncDeleteEnabled != null && ((CGrid<T>)Grid).FuncDeleteEnabled(_item))))
+                && (Grid.DeleteEnabled || (((CGrid<T>)Grid).FuncDeleteEnabled != null && ((CGrid<T>)Grid).FuncDeleteEnabled(Item))))
             {
                 DeleteComponent.HideCrudButtons();
             }

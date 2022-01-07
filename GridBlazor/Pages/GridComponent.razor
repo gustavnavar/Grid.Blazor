@@ -404,7 +404,7 @@
                 @if (Grid.CreateComponent == null)
                 {
                     <CascadingValue Value=@this Name="GridComponent">
-                        <GridCreateComponent @ref="CreateComponent" T="@T" Item="@_item"></GridCreateComponent>
+                        <GridCreateComponent @ref="CreateComponent" T="@T" Item="@Item"></GridCreateComponent>
                     </CascadingValue>
                 }
                 else
@@ -413,13 +413,13 @@
                 }
             </div>
         }
-        else if (Grid.Mode == GridMode.Read && (Grid.ReadEnabled || (((CGrid<T>)Grid).FuncReadEnabled != null && ((CGrid<T>)Grid).FuncReadEnabled(_item))))
+        else if (Grid.Mode == GridMode.Read && (Grid.ReadEnabled || (((CGrid<T>)Grid).FuncReadEnabled != null && ((CGrid<T>)Grid).FuncReadEnabled(Item))))
         {
             <div dir="@Grid.Direction.ToDirection()">
                 @if (Grid.ReadComponent == null)
                 {
                     <CascadingValue Value=@this Name="GridComponent">
-                        <GridReadComponent @ref="ReadComponent" T="@T" Item="@_item"></GridReadComponent>
+                        <GridReadComponent @ref="ReadComponent" T="@T" Item="@Item"></GridReadComponent>
                     </CascadingValue>
                 }
                 else
@@ -428,13 +428,13 @@
                 }
             </div>
         }
-        else if (Grid.Mode == GridMode.Update && (Grid.UpdateEnabled || (((CGrid<T>)Grid).FuncUpdateEnabled != null && ((CGrid<T>)Grid).FuncUpdateEnabled(_item))))
+        else if (Grid.Mode == GridMode.Update && (Grid.UpdateEnabled || (((CGrid<T>)Grid).FuncUpdateEnabled != null && ((CGrid<T>)Grid).FuncUpdateEnabled(Item))))
         {
             <div dir="@Grid.Direction.ToDirection()">
                 @if (Grid.UpdateComponent == null)
                 {
                     <CascadingValue Value=@this Name="GridComponent">
-                        <GridUpdateComponent @ref="UpdateComponent" T="@T" Item="@_item"></GridUpdateComponent>
+                        <GridUpdateComponent @ref="UpdateComponent" T="@T" Item="@Item"></GridUpdateComponent>
                     </CascadingValue>
                 }
                 else
@@ -443,13 +443,13 @@
                 }
             </div>
         }
-        else if (Grid.Mode == GridMode.Delete && (Grid.DeleteEnabled || (((CGrid<T>)Grid).FuncDeleteEnabled != null && ((CGrid<T>)Grid).FuncDeleteEnabled(_item))))
+        else if (Grid.Mode == GridMode.Delete && (Grid.DeleteEnabled || (((CGrid<T>)Grid).FuncDeleteEnabled != null && ((CGrid<T>)Grid).FuncDeleteEnabled(Item))))
         {
             <div dir="@Grid.Direction.ToDirection()">
                 @if (Grid.DeleteComponent == null)
                 {
                     <CascadingValue Value=@this Name="GridComponent">
-                        <GridDeleteComponent @ref="DeleteComponent" T="@T" Item="@_item"></GridDeleteComponent>
+                        <GridDeleteComponent @ref="DeleteComponent" T="@T" Item="@Item"></GridDeleteComponent>
                     </CascadingValue>
                 }
                 else
