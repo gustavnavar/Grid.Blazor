@@ -23,7 +23,6 @@ namespace GridBlazor.Pages
 {
     public partial class GridComponent<T>
     {
-        private int _sequence = 0;
         private bool _fromCrud = false;
         private bool _shouldRender = false;
         internal bool HasSubGrid = false;
@@ -1076,127 +1075,127 @@ namespace GridBlazor.Pages
 
         protected RenderFragment CreateCrudComponent() => builder =>
         {
-            builder.OpenComponent<CascadingValue<GridComponent<T>>>(++_sequence);
-            builder.AddAttribute(++_sequence, "Value", this);
-            builder.AddAttribute(++_sequence, "Name", "GridComponent");
-            builder.AddAttribute(++_sequence, "ChildContent", CreateCrudChildComponent());
+            builder.OpenComponent<CascadingValue<GridComponent<T>>>(0);
+            builder.AddAttribute(1, "Value", this);
+            builder.AddAttribute(2, "Name", "GridComponent");
+            builder.AddAttribute(3, "ChildContent", CreateCrudChildComponent());
             builder.CloseComponent();
         };
 
         private RenderFragment CreateCrudChildComponent() => builder =>
         {
             var componentType = Grid.CreateComponent;
-            builder.OpenComponent(++_sequence, componentType);
-            builder.AddAttribute(++_sequence, "Item", Item);
+            builder.OpenComponent(0, componentType);
+            builder.AddAttribute(1, "Item", Item);
             var gridProperty = componentType.GetProperty("Grid");
             if (gridProperty != null && gridProperty.PropertyType == typeof(CGrid<T>))
-                builder.AddAttribute(++_sequence, "Grid", (CGrid<T>)Grid);
+                builder.AddAttribute(2, "Grid", (CGrid<T>)Grid);
             gridProperty = componentType.GetProperty("Actions");
             if (gridProperty != null)
-                builder.AddAttribute(++_sequence, "Actions", Grid.CreateActions);
+                builder.AddAttribute(3, "Actions", Grid.CreateActions);
             gridProperty = componentType.GetProperty("Functions");
             if (gridProperty != null)
-                builder.AddAttribute(++_sequence, "Functions", Grid.CreateFunctions);
+                builder.AddAttribute(4, "Functions", Grid.CreateFunctions);
             gridProperty = componentType.GetProperty("Object");
             if (gridProperty != null)
-                builder.AddAttribute(++_sequence, "Object", Grid.CreateObject);
+                builder.AddAttribute(5, "Object", Grid.CreateObject);
             builder.CloseComponent();
         };
 
         protected RenderFragment ReadCrudComponent() => builder =>
         {
-            builder.OpenComponent<CascadingValue<GridComponent<T>>>(++_sequence);
-            builder.AddAttribute(++_sequence, "Value", this);
-            builder.AddAttribute(++_sequence, "Name", "GridComponent");
-            builder.AddAttribute(++_sequence, "ChildContent", ReadCrudChildComponent());
+            builder.OpenComponent<CascadingValue<GridComponent<T>>>(0);
+            builder.AddAttribute(1, "Value", this);
+            builder.AddAttribute(2, "Name", "GridComponent");
+            builder.AddAttribute(3, "ChildContent", ReadCrudChildComponent());
             builder.CloseComponent();
         };
 
         private RenderFragment ReadCrudChildComponent() => builder =>
         {
             var componentType = Grid.ReadComponent;
-            builder.OpenComponent(++_sequence, componentType);
-            builder.AddAttribute(++_sequence, "Item", Item);
+            builder.OpenComponent(0, componentType);
+            builder.AddAttribute(1, "Item", Item);
             var gridProperty = componentType.GetProperty("Grid");
             if (gridProperty != null && gridProperty.PropertyType == typeof(CGrid<T>))
-                builder.AddAttribute(++_sequence, "Grid", (CGrid<T>)Grid);
+                builder.AddAttribute(2, "Grid", (CGrid<T>)Grid);
             gridProperty = componentType.GetProperty("Actions");
             if (gridProperty != null)
-                builder.AddAttribute(++_sequence, "Actions", Grid.ReadActions);
+                builder.AddAttribute(3, "Actions", Grid.ReadActions);
             gridProperty = componentType.GetProperty("Functions");
             if (gridProperty != null)
-                builder.AddAttribute(++_sequence, "Functions", Grid.ReadFunctions);
+                builder.AddAttribute(4, "Functions", Grid.ReadFunctions);
             gridProperty = componentType.GetProperty("Object");
             if (gridProperty != null)
-                builder.AddAttribute(++_sequence, "Object", Grid.ReadObject);
+                builder.AddAttribute(5, "Object", Grid.ReadObject);
             builder.CloseComponent();
         };
 
         protected RenderFragment UpdateCrudComponent() => builder =>
         {
-            builder.OpenComponent<CascadingValue<GridComponent<T>>>(++_sequence);
-            builder.AddAttribute(++_sequence, "Value", this);
-            builder.AddAttribute(++_sequence, "Name", "GridComponent");
-            builder.AddAttribute(++_sequence, "ChildContent", UpdateCrudChildComponent());
+            builder.OpenComponent<CascadingValue<GridComponent<T>>>(0);
+            builder.AddAttribute(1, "Value", this);
+            builder.AddAttribute(2, "Name", "GridComponent");
+            builder.AddAttribute(3, "ChildContent", UpdateCrudChildComponent());
             builder.CloseComponent();
         };
 
         private RenderFragment UpdateCrudChildComponent() => builder =>
         {
             var componentType = Grid.UpdateComponent;
-            builder.OpenComponent(++_sequence, componentType);
-            builder.AddAttribute(++_sequence, "Item", Item);
+            builder.OpenComponent(0, componentType);
+            builder.AddAttribute(1, "Item", Item);
             var gridProperty = componentType.GetProperty("Grid");
             if (gridProperty != null && gridProperty.PropertyType == typeof(CGrid<T>))
-                builder.AddAttribute(++_sequence, "Grid", (CGrid<T>)Grid);
+                builder.AddAttribute(2, "Grid", (CGrid<T>)Grid);
             gridProperty = componentType.GetProperty("Actions");
             if (gridProperty != null)
-                builder.AddAttribute(++_sequence, "Actions", Grid.UpdateActions);
+                builder.AddAttribute(3, "Actions", Grid.UpdateActions);
             gridProperty = componentType.GetProperty("Functions");
             if (gridProperty != null)
-                builder.AddAttribute(++_sequence, "Functions", Grid.UpdateFunctions);
+                builder.AddAttribute(4, "Functions", Grid.UpdateFunctions);
             gridProperty = componentType.GetProperty("Object");
             if (gridProperty != null)
-                builder.AddAttribute(++_sequence, "Object", Grid.UpdateObject);
+                builder.AddAttribute(5, "Object", Grid.UpdateObject);
             builder.CloseComponent();
         };
 
         protected RenderFragment DeleteCrudComponent() => builder =>
         {
-            builder.OpenComponent<CascadingValue<GridComponent<T>>>(++_sequence);
-            builder.AddAttribute(++_sequence, "Value", this);
-            builder.AddAttribute(++_sequence, "Name", "GridComponent");
-            builder.AddAttribute(++_sequence, "ChildContent", DeleteCrudChildComponent());
+            builder.OpenComponent<CascadingValue<GridComponent<T>>>(0);
+            builder.AddAttribute(1, "Value", this);
+            builder.AddAttribute(2, "Name", "GridComponent");
+            builder.AddAttribute(3, "ChildContent", DeleteCrudChildComponent());
             builder.CloseComponent();
         };
 
         private RenderFragment DeleteCrudChildComponent() => builder =>
         {
             var componentType = Grid.DeleteComponent;
-            builder.OpenComponent(++_sequence, componentType);
-            builder.AddAttribute(++_sequence, "Item", Item);
+            builder.OpenComponent(0, componentType);
+            builder.AddAttribute(1, "Item", Item);
             var gridProperty = componentType.GetProperty("Grid");
             if (gridProperty != null && gridProperty.PropertyType == typeof(CGrid<T>))
-                builder.AddAttribute(++_sequence, "Grid", (CGrid<T>)Grid);
+                builder.AddAttribute(2, "Grid", (CGrid<T>)Grid);
             gridProperty = componentType.GetProperty("Actions");
             if (gridProperty != null)
-                builder.AddAttribute(++_sequence, "Actions", Grid.DeleteActions);
+                builder.AddAttribute(3, "Actions", Grid.DeleteActions);
             gridProperty = componentType.GetProperty("Functions");
             if (gridProperty != null)
-                builder.AddAttribute(++_sequence, "Functions", Grid.DeleteFunctions);
+                builder.AddAttribute(4, "Functions", Grid.DeleteFunctions);
             gridProperty = componentType.GetProperty("Object");
             if (gridProperty != null)
-                builder.AddAttribute(++_sequence, "Object", Grid.DeleteObject);
+                builder.AddAttribute(5, "Object", Grid.DeleteObject);
             builder.CloseComponent();
         };
 
         protected RenderFragment FormComponent(string label, Type componentType, IList<Action<object>> actions, 
             IList<Func<object, Task>> functions, object obj) => builder =>
         {
-            builder.OpenComponent<CascadingValue<GridComponent<T>>>(++_sequence);
-            builder.AddAttribute(++_sequence, "Value", this);
-            builder.AddAttribute(++_sequence, "Name", "GridComponent");
-            builder.AddAttribute(++_sequence, "ChildContent", FormChildComponent(label, componentType, actions,
+            builder.OpenComponent<CascadingValue<GridComponent<T>>>(0);
+            builder.AddAttribute(1, "Value", this);
+            builder.AddAttribute(2, "Name", "GridComponent");
+            builder.AddAttribute(3, "ChildContent", FormChildComponent(label, componentType, actions,
                 functions, obj));
             builder.CloseComponent();
         };
@@ -1204,32 +1203,32 @@ namespace GridBlazor.Pages
         private RenderFragment FormChildComponent(string label, Type componentType, IList<Action<object>> actions,
             IList<Func<object, Task>> functions, object obj) => builder =>
         {
-            builder.OpenComponent(++_sequence, componentType);
+            builder.OpenComponent(0, componentType);
             var gridProperty = componentType.GetProperty("Grid");
             if (gridProperty != null && gridProperty.PropertyType == typeof(CGrid<T>))
-                builder.AddAttribute(++_sequence, "Grid", (CGrid<T>)Grid);
+                builder.AddAttribute(1, "Grid", (CGrid<T>)Grid);
             gridProperty = componentType.GetProperty("Label");
             if (gridProperty != null)
-                builder.AddAttribute(++_sequence, "Label", label);
+                builder.AddAttribute(2, "Label", label);
             gridProperty = componentType.GetProperty("Actions");
             if (gridProperty != null)
-                builder.AddAttribute(++_sequence, "Actions", actions);
+                builder.AddAttribute(3, "Actions", actions);
             gridProperty = componentType.GetProperty("Functions");
             if (gridProperty != null)
-                builder.AddAttribute(++_sequence, "Functions", functions);
+                builder.AddAttribute(4, "Functions", functions);
             gridProperty = componentType.GetProperty("Object");
             if (gridProperty != null)
-                builder.AddAttribute(++_sequence, "Object", obj);
+                builder.AddAttribute(5, "Object", obj);
             builder.CloseComponent();
         };
 
         protected RenderFragment FormCrudComponent(string label, Type componentType, GridMode returnMode, 
             IList<Action<object>> actions, IList<Func<object, Task>> functions, object obj) => builder =>
             {
-                builder.OpenComponent<CascadingValue<GridComponent<T>>>(++_sequence);
-                builder.AddAttribute(++_sequence, "Value", this);
-                builder.AddAttribute(++_sequence, "Name", "GridComponent");
-                builder.AddAttribute(++_sequence, "ChildContent", FormCrudChildComponent(label, componentType, returnMode,
+                builder.OpenComponent<CascadingValue<GridComponent<T>>>(0);
+                builder.AddAttribute(1, "Value", this);
+                builder.AddAttribute(2, "Name", "GridComponent");
+                builder.AddAttribute(3, "ChildContent", FormCrudChildComponent(label, componentType, returnMode,
                     actions, functions, obj));
                 builder.CloseComponent();
             };
@@ -1237,28 +1236,28 @@ namespace GridBlazor.Pages
         private RenderFragment FormCrudChildComponent(string label, Type componentType, GridMode returnMode,
             IList<Action<object>> actions, IList<Func<object, Task>> functions, object obj) => builder =>
             {
-                builder.OpenComponent(++_sequence, componentType);
+                builder.OpenComponent(0, componentType);
                 var gridProperty = componentType.GetProperty("Grid");
                 if (gridProperty != null && gridProperty.PropertyType == typeof(CGrid<T>))
-                    builder.AddAttribute(++_sequence, "Grid", (CGrid<T>)Grid);
+                    builder.AddAttribute(1, "Grid", (CGrid<T>)Grid);
                 gridProperty = componentType.GetProperty("Label");
                 if (gridProperty != null)
-                    builder.AddAttribute(++_sequence, "Label", label);
+                    builder.AddAttribute(2, "Label", label);
                 gridProperty = componentType.GetProperty("Actions");
                 if (gridProperty != null)
-                    builder.AddAttribute(++_sequence, "Actions", actions);
+                    builder.AddAttribute(3, "Actions", actions);
                 gridProperty = componentType.GetProperty("Functions");
                 if (gridProperty != null)
-                    builder.AddAttribute(++_sequence, "Functions", functions);
+                    builder.AddAttribute(4, "Functions", functions);
                 gridProperty = componentType.GetProperty("Object");
                 if (gridProperty != null)
-                    builder.AddAttribute(++_sequence, "Object", obj);
+                    builder.AddAttribute(5, "Object", obj);
                 gridProperty = componentType.GetProperty("ReturnMode");
                 if (gridProperty != null)
-                    builder.AddAttribute(++_sequence, "ReturnMode", returnMode);
+                    builder.AddAttribute(6, "ReturnMode", returnMode);
                 gridProperty = componentType.GetProperty("Item");
                 if (gridProperty != null)
-                    builder.AddAttribute(++_sequence, "Item", Item);
+                    builder.AddAttribute(7, "Item", Item);
                 builder.CloseComponent();
             };
 

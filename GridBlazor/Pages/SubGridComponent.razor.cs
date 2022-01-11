@@ -9,7 +9,6 @@ namespace GridBlazor.Pages
 {
     public partial class SubGridComponent<T>
     {
-        private int _sequence = 0;
         private ICGrid _grid;
         private bool _init;
         protected bool _visible;
@@ -52,11 +51,11 @@ namespace GridBlazor.Pages
         private RenderFragment CreateSubGridComponent() => builder =>
         {
             Type gridComponentType = typeof(GridComponent<>).MakeGenericType(_grid.Type);
-            builder.OpenComponent(++_sequence, gridComponentType);
-            builder.AddAttribute(++_sequence, "Grid", _grid);
+            builder.OpenComponent(0, gridComponentType);
+            builder.AddAttribute(1, "Grid", _grid);
             if (OnRowClickedActions != null && OnRowClickedActions.Count() > 0)
             {
-                builder.AddAttribute(++_sequence, "OnRowClickedActions", OnRowClickedActions);
+                builder.AddAttribute(2, "OnRowClickedActions", OnRowClickedActions);
             }
             builder.CloseComponent();
         };

@@ -18,7 +18,6 @@ namespace GridBlazor.Pages
 {
     public partial class GridCreateComponent<T> : ICustomGridComponent<T>
     {
-        private int _sequence = 0;
         private bool _shouldRender = false;
         private QueryDictionary<RenderFragment> _renderFragments;
         private IEnumerable<string> _tabGroups;
@@ -61,8 +60,8 @@ namespace GridBlazor.Pages
                 {
                     VariableReference reference = new VariableReference();
                     Children.AddParameter(column.Name, reference);
-                    _renderFragments.AddParameter(column.Name, GridCellComponent<T>.CreateComponent(_sequence,
-                        GridComponent, column.CreateComponentType, column, Item, null, true, reference));
+                    _renderFragments.AddParameter(column.Name, GridCellComponent<T>.CreateComponent(GridComponent, 
+                        column.CreateComponentType, column, Item, null, true, reference));
                 }
             }
             _tabGroups = GridComponent.Grid.Columns

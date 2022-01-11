@@ -25,7 +25,6 @@ namespace GridBlazor.Pages
         private const string FilteredButtonCssClass = "filtered";
         private const string FilterButtonCss = "grid-filter-btn";
 
-        private int _sequence = 0;
         private bool _shouldRender = false;
         protected bool _isFilterVisible = false;
         protected bool _isTooltipVisible = false;
@@ -144,10 +143,10 @@ namespace GridBlazor.Pages
 
         private RenderFragment CreateFilterWidgetComponent() => builder =>
         {
-            builder.OpenComponent<CascadingValue<GridHeaderComponent<T>>>(++_sequence);
-            builder.AddAttribute(++_sequence, "Value", this);
-            builder.AddAttribute(++_sequence, "Name", "GridHeaderComponent");
-            builder.AddAttribute(++_sequence, "ChildContent", CreateFilterChildContent());
+            builder.OpenComponent<CascadingValue<GridHeaderComponent<T>>>(0);
+            builder.AddAttribute(1, "Value", this);
+            builder.AddAttribute(2, "Name", "GridHeaderComponent");
+            builder.AddAttribute(3, "ChildContent", CreateFilterChildContent());
             builder.CloseComponent();
         };
 
@@ -156,15 +155,15 @@ namespace GridBlazor.Pages
             try
             {
                 Type filterWidget = Filters[Column.FilterWidgetTypeName];
-                builder.OpenComponent(++_sequence, filterWidget);
+                builder.OpenComponent(0, filterWidget);
             }
             catch (Exception)
             {
-                builder.OpenComponent<TextFilterComponent<T>>(++_sequence);
+                builder.OpenComponent<TextFilterComponent<T>>(1);
             }
-            builder.AddAttribute(++_sequence, "Visible", _isFilterVisible);
-            builder.AddAttribute(++_sequence, "ColumnName", Column.Name);
-            builder.AddAttribute(++_sequence, "FilterSettings", _filterSettings);
+            builder.AddAttribute(2, "Visible", _isFilterVisible);
+            builder.AddAttribute(3, "ColumnName", Column.Name);
+            builder.AddAttribute(4, "FilterSettings", _filterSettings);
             builder.CloseComponent();
         };
 

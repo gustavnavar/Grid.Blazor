@@ -19,7 +19,6 @@ namespace GridBlazor.Pages
 {
     public partial class GridUpdateComponent<T> : ICustomGridComponent<T>
     {
-        private int _sequence = 0;
         private bool _shouldRender = false;
         private QueryDictionary<RenderFragment> _renderFragments;
         private IEnumerable<string> _tabGroups;
@@ -75,8 +74,8 @@ namespace GridBlazor.Pages
                 {
                     VariableReference reference = new VariableReference();
                     Children.AddParameter(column.Name, reference);
-                    _renderFragments.AddParameter(column.Name, GridCellComponent<T>.CreateComponent(_sequence,
-                            GridComponent, column.UpdateComponentType, column, Item, null, true, reference));
+                    _renderFragments.AddParameter(column.Name, GridCellComponent<T>.CreateComponent(GridComponent, 
+                        column.UpdateComponentType, column, Item, null, true, reference));
                 }
             }
             _tabGroups = GridComponent.Grid.Columns
@@ -116,9 +115,9 @@ namespace GridBlazor.Pages
         private RenderFragment CreateSubGridComponent(ICGrid grid, VariableReference reference) => builder =>
         {
             Type gridComponentType = typeof(GridComponent<>).MakeGenericType(grid.Type);
-            builder.OpenComponent(++_sequence, gridComponentType);
-            builder.AddAttribute(++_sequence, "Grid", grid);
-            builder.AddComponentReferenceCapture(++_sequence, r => reference.Variable = r);
+            builder.OpenComponent(0, gridComponentType);
+            builder.AddAttribute(1, "Grid", grid);
+            builder.AddComponentReferenceCapture(2, r => reference.Variable = r);
             builder.CloseComponent();
         };
 
