@@ -440,6 +440,16 @@ namespace GridShared.Columns
         IGridColumn<T> SubGrid(string tabGroup, Func<object[], bool, bool, bool, bool, Task<IGrid>> subGrids, params (string, string)[] keys);
 
         /// <summary>
+        ///    Allow grid to show a SubGrid
+        /// </summary>
+        IGridColumn<T> SubGrid(bool showCreateSubGrids, Func<object[], bool, bool, bool, bool, Task<IGrid>> subGrids, params (string, string)[] keys);
+
+        /// <summary>
+        ///    Allow grid to show a SubGrid
+        /// </summary>
+        IGridColumn<T> SubGrid(bool showCreateSubGrids, string tabGroup, Func<object[], bool, bool, bool, bool, Task<IGrid>> subGrids, params (string, string)[] keys);
+
+        /// <summary>
         ///    Allow grid header to show a tooltip
         /// </summary>
         IGridColumn<T> SetTooltip(string value);

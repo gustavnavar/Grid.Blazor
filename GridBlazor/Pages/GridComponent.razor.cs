@@ -147,6 +147,9 @@ namespace GridBlazor.Pages
         public object[] Keys { get; set; }
 
         [Parameter]
+        public bool UseMemoryCrudDataService { get; set; } = false;
+
+        [Parameter]
         public string GridMvcCssClass { get; set; } = "grid-mvc";
 
         [Parameter]
@@ -255,6 +258,12 @@ namespace GridBlazor.Pages
             var exceptQueryParameters = new List<string> { GridPager.DefaultPageSizeQueryParameter };
             ChangePageSizeUrl = queryBuilder.GetQueryStringExcept(exceptQueryParameters);
             PageSize = Grid.Pager.ChangePageSize && Grid.Pager.QueryPageSize > 0 ? Grid.Pager.QueryPageSize : Grid.Pager.PageSize;
+
+            if (UseMemoryCrudDataService && ((CGrid<T>)Grid).MemoryDataService != null)
+            {
+                ((CGrid<T>)Grid).CrudDataService = ((CGrid<T>)Grid).MemoryDataService;
+                ((CGrid<T>)Grid).DataService = ((CGrid<T>)Grid).MemoryDataService.GetGridRows;
+            }
 
             _shouldRender = true;
         }
@@ -1313,7 +1322,7 @@ namespace GridBlazor.Pages
                 if (isValid)
                 {
                     await ShowSpinner();
-                    if (Grid.ServerAPI == ServerAPI.OData)
+                    if (Grid.ServerAPI == ServerAPI.OData && !UseMemoryCrudDataService)
                         Item = await ((ICrudODataService<T>)((CGrid<T>)Grid).CrudDataService).Add(Item);
                     else
                         await ((CGrid<T>)Grid).CrudDataService.Insert(Item);

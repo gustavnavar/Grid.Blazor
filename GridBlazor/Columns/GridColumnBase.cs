@@ -125,6 +125,8 @@ namespace GridBlazor.Columns
 
         public Func<object[], bool, bool, bool, bool, Task<IGrid>> SubGrids { get; set; }
 
+        public bool ShowCreateSubGrids { get; set; } = false;
+
         public string TooltipValue { get; set; }
 
         public IGridColumn<T> Titled(string title)
@@ -779,14 +781,25 @@ namespace GridBlazor.Columns
 
         public IGridColumn<T> SubGrid(Func<object[], bool, bool, bool, bool, Task<IGrid>> subGrids, params (string,string)[] keys)
         {
-            return SubGrid(null, subGrids, keys);
+            return SubGrid(false, null, subGrids, keys);
         }
 
         public IGridColumn<T> SubGrid(string tabGroup, Func<object[], bool, bool, bool, bool, Task<IGrid>> subGrids, params (string, string)[] keys)
         {
+            return SubGrid(false, tabGroup, subGrids, keys);
+        }
+
+        public IGridColumn<T> SubGrid(bool showCreateSubGrids, Func<object[], bool, bool, bool, bool, Task<IGrid>> subGrids, params (string, string)[] keys)
+        {
+            return SubGrid(showCreateSubGrids, null, subGrids, keys);
+        }
+
+        public IGridColumn<T> SubGrid(bool showCreateSubGrids, string tabGroup, Func<object[], bool, bool, bool, bool, Task<IGrid>> subGrids, params (string, string)[] keys)
+        {
             Hidden = true;
             TabGroup = tabGroup;
             SubGrids = subGrids;
+            ShowCreateSubGrids = showCreateSubGrids;
             SubGridKeys = keys;
             return this;
         }

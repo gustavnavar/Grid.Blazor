@@ -52,22 +52,23 @@ namespace GridBlazor
         private IGridPager _pager;
         private HttpClient _httpClient;
 
-        private readonly Func<QueryDictionary<StringValues>, ItemsDTO<T>> _dataService;
-        private readonly Func<QueryDictionary<StringValues>, Task<ItemsDTO<T>>> _dataServiceAsync;
+        private Func<QueryDictionary<StringValues>, ItemsDTO<T>> _dataService;
+        private Func<QueryDictionary<StringValues>, Task<ItemsDTO<T>>> _dataServiceAsync;
         private ICrudDataService<T> _crudDataService;
+        private IMemoryDataService<T> _memoryDataService;
 
-        public CGrid(HttpClient httpClient, string url, IQueryDictionary<StringValues> query, bool renderOnlyRows,
+        public CGrid(HttpClient httpClient, string url, IQueryDictionary<StringValues> query, bool renderOnlyRows, 
             Action<IGridColumnCollection<T>> columns = null, CultureInfo cultureInfo = null,
             IColumnBuilder<T> columnBuilder = null)
-            : this(httpClient, url, null, null, query, renderOnlyRows, columns, cultureInfo, columnBuilder)
+            : this(httpClient, url, null, null, null, query, renderOnlyRows, columns, cultureInfo, columnBuilder)
         {
         }
 
         [Obsolete("This constructor is obsolete. Use one including an HttpClient parameter.", true)]
         public CGrid(string url, IQueryDictionary<StringValues> query, bool renderOnlyRows,
-            Action<IGridColumnCollection<T>> columns = null, CultureInfo cultureInfo = null, 
+            Action<IGridColumnCollection<T>> columns = null, CultureInfo cultureInfo = null,
             IColumnBuilder<T> columnBuilder = null)
-            : this(null, url, null, null, query, renderOnlyRows, columns, cultureInfo, columnBuilder)
+            : this(null, url, null, null, null, query, renderOnlyRows, columns, cultureInfo, columnBuilder)
         {
         }
 
@@ -75,7 +76,7 @@ namespace GridBlazor
             IQueryDictionary<StringValues> query, bool renderOnlyRows,
             Action<IGridColumnCollection<T>> columns = null, CultureInfo cultureInfo = null,
             IColumnBuilder<T> columnBuilder = null)
-            : this(null, null, dataService, null, query, renderOnlyRows, columns, cultureInfo, columnBuilder)
+            : this(null, null, dataService, null, null, query, renderOnlyRows, columns, cultureInfo, columnBuilder)
         {
         }
 
@@ -83,19 +84,56 @@ namespace GridBlazor
             IQueryDictionary<StringValues> query, bool renderOnlyRows,
             Action<IGridColumnCollection<T>> columns = null, CultureInfo cultureInfo = null,
             IColumnBuilder<T> columnBuilder = null)
-            : this (null, null, null, dataServiceAsync, query, renderOnlyRows, columns, cultureInfo, columnBuilder)
+            : this(null, null, null, dataServiceAsync, null, query, renderOnlyRows, columns, cultureInfo, columnBuilder)
+        {
+        }
+
+        private CGrid(HttpClient httpClient, string url,
+            Func<QueryDictionary<StringValues>, ItemsDTO<T>> dataService,
+            Func<QueryDictionary<StringValues>, Task<ItemsDTO<T>>> dataServiceAsync,
+            IQueryDictionary<StringValues> query, bool renderOnlyRows,
+            Action<IGridColumnCollection<T>> columns = null, CultureInfo cultureInfo = null,
+            IColumnBuilder<T> columnBuilder = null)
+            : this(httpClient, url, dataService, dataServiceAsync, null, query, renderOnlyRows, columns, cultureInfo, columnBuilder)
+        {
+        }
+            
+        public CGrid(HttpClient httpClient, string url, IMemoryDataService<T> memoryDataService, IQueryDictionary<StringValues> query, 
+            bool renderOnlyRows, Action<IGridColumnCollection<T>> columns = null, CultureInfo cultureInfo = null,
+            IColumnBuilder<T> columnBuilder = null)
+            : this(httpClient, url, null, null, memoryDataService, query, renderOnlyRows, columns, cultureInfo, columnBuilder)
+        {
+        }
+
+        public CGrid(Func<QueryDictionary<StringValues>, ItemsDTO<T>> dataService,
+            IMemoryDataService<T> memoryDataService,
+            IQueryDictionary<StringValues> query, bool renderOnlyRows,
+            Action<IGridColumnCollection<T>> columns = null, CultureInfo cultureInfo = null,
+            IColumnBuilder<T> columnBuilder = null)
+            : this(null, null, dataService, null, memoryDataService, query, renderOnlyRows, columns, cultureInfo, columnBuilder)
+        {
+        }
+
+        public CGrid(Func<QueryDictionary<StringValues>, Task<ItemsDTO<T>>> dataServiceAsync,
+            IMemoryDataService<T> memoryDataService,
+            IQueryDictionary<StringValues> query, bool renderOnlyRows,
+            Action<IGridColumnCollection<T>> columns = null, CultureInfo cultureInfo = null,
+            IColumnBuilder<T> columnBuilder = null)
+            : this (null, null, null, dataServiceAsync, memoryDataService, query, renderOnlyRows, columns, cultureInfo, columnBuilder)
         {
         }
 
         private CGrid(HttpClient httpClient, string url,
             Func<QueryDictionary<StringValues>, ItemsDTO<T>> dataService, 
             Func<QueryDictionary<StringValues>, Task<ItemsDTO<T>>> dataServiceAsync,
+            IMemoryDataService<T> memoryDataService,
             IQueryDictionary<StringValues> query, bool renderOnlyRows,
             Action<IGridColumnCollection<T>> columns = null, CultureInfo cultureInfo = null,
             IColumnBuilder<T> columnBuilder = null)
         {
             _dataServiceAsync = dataServiceAsync;
             _dataService = dataService;
+            _memoryDataService = memoryDataService;
             _selectedItems = new List<object>();
             Items = new List<T>(); //response.Items;
 
@@ -306,9 +344,15 @@ namespace GridBlazor
         /// <summary>
         ///     Provides DataService used by the grid
         /// </summary>
-        public Func<QueryDictionary<StringValues>, ItemsDTO<T>> DataService { get { return _dataService; } }
+        public Func<QueryDictionary<StringValues>, ItemsDTO<T>> DataService { 
+            get { return _dataService; }
+            internal set { _dataService = value; }
+        }
 
-        public Func<QueryDictionary<StringValues>, Task<ItemsDTO<T>>> DataServiceAsync { get { return _dataServiceAsync; } }
+        public Func<QueryDictionary<StringValues>, Task<ItemsDTO<T>>> DataServiceAsync { 
+            get { return _dataServiceAsync; }
+            internal set { _dataServiceAsync = value; }
+        }
 
         public ServerAPI ServerAPI { get; internal set; } = ServerAPI.ItemsDTO;
 
@@ -325,6 +369,15 @@ namespace GridBlazor
                 return _crudDataService; 
             }
             set { _crudDataService = value; }
+        }
+
+        /// <summary>
+        ///     Provides MemoryDataService used by the grid
+        /// </summary>
+        public IMemoryDataService<T> MemoryDataService
+        {
+            get { return _memoryDataService; }
+            internal set { _memoryDataService = value; }
         }
 
         /// <summary>
@@ -1081,7 +1134,7 @@ namespace GridBlazor
         {
             Error = "";
 
-            if (ServerAPI == ServerAPI.OData)
+            if (ServerAPI == ServerAPI.OData && (GridComponent == null || !GridComponent.UseMemoryCrudDataService))
                 await GetOData();
             else
                 await GetItemsDTO();

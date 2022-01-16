@@ -287,7 +287,8 @@
                     </div>
                 </div>
             }
-            else if (column.CreateComponentType != null && string.IsNullOrWhiteSpace(column.TabGroup))
+            else if (((((ICGridColumn)column).ShowCreateSubGrids && ((ICGridColumn)column).SubGrids != null) || column.CreateComponentType != null) 
+                && string.IsNullOrWhiteSpace(column.TabGroup))
             {
                 <div class="form-group row" style="@(((IGridColumn<T>)column).CrudHidden(Item).HasFlag(CrudHidden.CREATE) && !((IGridColumn<T>)column).ReadOnlyOnCreate(Item) ? "display:none;" : "")">
                     @if (!string.IsNullOrWhiteSpace(column.TooltipValue))

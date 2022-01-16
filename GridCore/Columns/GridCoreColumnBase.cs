@@ -759,10 +759,20 @@ namespace GridCore.Columns
 
         public IGridColumn<T> SubGrid(Func<object[], bool, bool, bool, bool, Task<IGrid>> subGrids, params (string, string)[] keys)
         {
-            return SubGrid(null, subGrids, keys);
+            return SubGrid(false, null, subGrids, keys);
         }
 
         public IGridColumn<T> SubGrid(string tabGrup, Func<object[], bool, bool, bool, bool, Task<IGrid>> subGrids, params (string, string)[] keys)
+        {
+            return SubGrid(false, tabGrup, subGrids, keys);
+        }
+
+        public IGridColumn<T> SubGrid(bool showCreateSubGrids, Func<object[], bool, bool, bool, bool, Task<IGrid>> subGrids, params (string, string)[] keys)
+        {
+            return SubGrid(showCreateSubGrids, null, subGrids, keys);
+        }
+
+        public IGridColumn<T> SubGrid(bool showCreateSubGrids, string tabGrup, Func<object[], bool, bool, bool, bool, Task<IGrid>> subGrids, params (string, string)[] keys)
         {
             return this;
         }

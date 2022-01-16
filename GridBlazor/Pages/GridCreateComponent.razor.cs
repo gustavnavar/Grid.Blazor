@@ -1,4 +1,5 @@
 ﻿using Agno.BlazorInputFile;
+using GridBlazor.Columns;
 using GridBlazor.Resources;
 using GridShared;
 using GridShared.Columns;
@@ -56,7 +57,17 @@ namespace GridBlazor.Pages
                 if (string.IsNullOrWhiteSpace(column.Name))
                     column.Name = Guid.NewGuid().ToString();
 
-                if (column.CreateComponentType != null)
+                if (((ICGridColumn)column).ShowCreateSubGrids && ((ICGridColumn)column).SubGrids != null)
+                {
+                    var values = ((ICGridColumn)column).GetSubGridKeyValues(Item);
+                    var grid = await ((ICGridColumn)column).SubGrids(values.Values.ToArray(), true, true, true, true) as ICGrid;
+                    grid.Direction = GridComponent.Grid.Direction;
+                    grid.FixedValues = values;
+                    VariableReference reference = new VariableReference();
+                    Children.AddParameter(column.Name, reference);
+                    _renderFragments.AddParameter(column.Name, CreateSubGridComponent(grid, reference));
+                }
+                else if (column.CreateComponentType != null)
                 {
                     VariableReference reference = new VariableReference();
                     Children.AddParameter(column.Name, reference);
@@ -79,6 +90,16 @@ namespace GridBlazor.Pages
 
             _shouldRender = true;
         }
+
+        private RenderFragment CreateSubGridComponent(ICGrid grid, VariableReference reference) => builder =>
+        {
+            Type gridComponentType = typeof(GridComponent<>).MakeGenericType(grid.Type);
+            builder.OpenComponent(0, gridComponentType);
+            builder.AddAttribute(1, "Grid", grid);
+            builder.AddAttribute(2, "UseMemoryCrudDataService", true);
+            builder.AddComponentReferenceCapture(3, r => reference.Variable = r);
+            builder.CloseComponent();
+        };
 
         protected override bool ShouldRender()
         {
