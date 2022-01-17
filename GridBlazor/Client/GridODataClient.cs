@@ -26,5 +26,19 @@ namespace GridBlazor
             if (oDataExpandList != null)
                 UseODataExpand(oDataExpandList);
         }
+
+        public GridODataClient(HttpClient httpClient, string url, IMemoryDataService<T> memoryDataService, 
+            IQueryDictionary<StringValues> query, bool renderOnlyRows, string gridName, 
+            Action<IGridColumnCollection<T>> columns = null, int? pageSize = null,
+            CultureInfo cultureInfo = null, IEnumerable<string> oDataExpandList = null,
+            IColumnBuilder<T> columnBuilder = null)
+            : base(httpClient, url, memoryDataService, query, renderOnlyRows, gridName, columns, cultureInfo, columnBuilder)
+        {
+            UseServerAPI(ServerAPI.OData);
+            if (pageSize.HasValue)
+                WithPaging(pageSize.Value);
+            if (oDataExpandList != null)
+                UseODataExpand(oDataExpandList);
+        }
     }
 }
