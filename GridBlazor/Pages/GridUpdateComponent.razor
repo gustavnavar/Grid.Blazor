@@ -56,7 +56,7 @@
                             else
                             {
                                 var selectedValue = column.GetFormatedValue(value);
-                                <select id="@column.FieldName" name="@column.FieldName" class="form-control" value="@selectedValue" @onchange="(e) => ChangeValue(e, column)">
+                                <select id="@column.FieldName" name="@column.FieldName" class="form-control @(ColumnErrors.ContainsKey(@column.FieldName) ? "input-validation-error" : "")" value="@selectedValue" @onchange="(e) => ChangeValue(e, column)">
                                     <option value="">@Strings.SelectItem</option>
                                     @foreach (var selectItem in ((IGridColumn<T>)column).SelectItems)
                                     {
@@ -70,6 +70,9 @@
                                         }
                                     }
                                 </select>
+                                 <span class="field-validation-error">
+                                    <span>@ColumnErrors.Get(column.FieldName)</span>
+                                </span>
                             }
                         }
                         else if (((IGridColumn<T>)column).IsSelectColumn.IsSelectKey)
@@ -82,7 +85,7 @@
                             else
                             {
                                 var selectedValue = column.GetFormatedValue(value);
-                                <select id="@column.FieldName" name="@column.FieldName" class="form-control" value="@selectedValue" @onchange="(e) => ChangeValue(e, column)">
+                                <select id="@column.FieldName" name="@column.FieldName" class="form-control @(ColumnErrors.ContainsKey(@column.FieldName) ? "input-validation-error" : "")" value="@selectedValue" @onchange="(e) => ChangeValue(e, column)">
                                     <option value="">@Strings.SelectItem</option>
                                     @{
                                         var selectItems = SelectItems.Get(column.Name);
@@ -102,6 +105,9 @@
                                         }
                                     }
                                 </select>
+                                 <span class="field-validation-error">
+                                    <span>@ColumnErrors.Get(column.FieldName)</span>
+                                </span>
                             }
                         }
                         else
@@ -273,6 +279,10 @@
                                             <input id="@column.FieldName" name="@column.FieldName" type="checkbox" class="form-check @(ColumnErrors.ContainsKey(@column.FieldName) ? "input-validation-error" : "")" value="false" @onchange="(e) => ChangeValue(e, column)" />
                                         }
                                     }
+                                }
+                                else if (((IGridColumn<T>)column).InputType == InputType.Number)
+                                {
+                                    <input type="@(InputType.Number.ToTypeAttr())" id="@column.FieldName" name="@column.FieldName" class="form-control @(ColumnErrors.ContainsKey(@column.FieldName) ? "input-validation-error" : "")" value="@column.GetFormatedValue(value)" @onchange="(e) => ChangeValue(e, column)" />
                                 }
                                 else
                                 {
