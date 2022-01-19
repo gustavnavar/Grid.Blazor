@@ -80,6 +80,7 @@ If you need to support other languages, please send me the translation of the fo
 * Drop columns here for column extended sorting
 * Files
 * Filter this column
+* Go to
 * Type
 * Value
 * Greater than
