@@ -1,0 +1,297 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="Add" xml:space="preserve">
+    <value>اضافة</value>
+  </data>
+  <data name="All" xml:space="preserve">
+    <value>الكل</value>
+  </data>
+  <data name="And" xml:space="preserve">
+    <value>و</value>
+  </data>
+  <data name="ApplyFilterButtonText" xml:space="preserve">
+    <value>تطبيق</value>
+  </data>
+  <data name="Average" xml:space="preserve">
+    <value>المتوسط</value>
+  </data>
+  <data name="Back" xml:space="preserve">
+    <value>رجوع</value>
+  </data>
+  <data name="BoolFalseLabel" xml:space="preserve">
+    <value>لا</value>
+  </data>
+  <data name="BoolTrueLabel" xml:space="preserve">
+    <value>نعم</value>
+  </data>
+  <data name="ClearAllFilters" xml:space="preserve">
+    <value>حذف كل التصفية</value>
+  </data>
+  <data name="ClearFilterLabel" xml:space="preserve">
+    <value>حذف التصفية</value>
+  </data>
+  <data name="Code" xml:space="preserve">
+    <value>كود</value>
+  </data>
+  <data name="Confirm Code" xml:space="preserve">
+    <value>تأكيد الكود</value>
+  </data>
+  <data name="ConfirmCodeError" xml:space="preserve">
+    <value>الكود وتأكيد الكود يجب أن يكونوا متطابقين لحفظ العنصر</value>
+  </data>
+  <data name="Contains" xml:space="preserve">
+    <value>تحتوي على</value>
+  </data>
+  <data name="CreateError" xml:space="preserve">
+    <value>حدث خطأ اثناء اضافة هذا العنصر</value>
+  </data>
+  <data name="CreateItem" xml:space="preserve">
+    <value>اضافة بيان</value>
+  </data>
+  <data name="DefaultGridEmptyText" xml:space="preserve">
+    <value>لا يوجد عناصر</value>
+  </data>
+  <data name="Delete" xml:space="preserve">
+    <value>حذف</value>
+  </data>
+  <data name="DeleteConfirmCodeError" xml:space="preserve">
+    <value>الكود وتأكيد الكود يجب أن يكونوا متطابقين لحذف العنصر</value>
+  </data>
+  <data name="DeleteError" xml:space="preserve">
+    <value>حدث خطأ اثناء حذف هذا العنصر</value>
+  </data>
+  <data name="DeleteItem" xml:space="preserve">
+    <value>حذف عنصر</value>
+  </data>
+  <data name="Edit" xml:space="preserve">
+    <value>تعديل</value>
+  </data>
+  <data name="EndsWith" xml:space="preserve">
+    <value>ينتهي ب</value>
+  </data>
+  <data name="Equal" xml:space="preserve">
+    <value>تساوي</value>
+  </data>
+  <data name="ExtSortingText" xml:space="preserve">
+    <value>اسحب العمود لتمديد الترتيب</value>
+  </data>
+  <data name="Files" xml:space="preserve">
+    <value>الملفات</value>
+  </data>
+  <data name="FilterButtonTooltipText" xml:space="preserve">
+    <value>تصفية بيانات العمود</value>
+  </data>
+  <data name="FilterTypeLabel" xml:space="preserve">
+    <value>النوع</value>
+  </data>
+  <data name="FilterValueLabel" xml:space="preserve">
+    <value>القيمة</value>
+  </data>
+  <data name="Goto" xml:space="preserve">
+    <value>أذهب إلى</value>
+  </data>
+  <data name="GreaterThan" xml:space="preserve">
+    <value>أكبر من</value>
+  </data>
+  <data name="GreaterThanOrEquals" xml:space="preserve">
+    <value>أكبر من أو يساوي</value>
+  </data>
+  <data name="GroupingText" xml:space="preserve">
+    <value>أسحب العمود هنا لعمل تجميع للبيانات</value>
+  </data>
+  <data name="IsNotNull" xml:space="preserve">
+    <value>غير فارغ</value>
+  </data>
+  <data name="IsNull" xml:space="preserve">
+    <value>فارغ</value>
+  </data>
+  <data name="Items" xml:space="preserve">
+    <value>العناصر</value>
+  </data>
+  <data name="Lang" xml:space="preserve">
+    <value>ar</value>
+  </data>
+  <data name="LessThan" xml:space="preserve">
+    <value>أقل من</value>
+  </data>
+  <data name="LessThanOrEquals" xml:space="preserve">
+    <value>أقل من أو يساوي</value>
+  </data>
+  <data name="Max" xml:space="preserve">
+    <value>أكبر قيمة</value>
+  </data>
+  <data name="Min" xml:space="preserve">
+    <value>أقل قيمة</value>
+  </data>
+  <data name="None" xml:space="preserve">
+    <value>بدون</value>
+  </data>
+  <data name="NotEqual" xml:space="preserve">
+    <value>لا تساوي</value>
+  </data>
+  <data name="Or" xml:space="preserve">
+    <value>أو</value>
+  </data>
+  <data name="ReadItem" xml:space="preserve">
+    <value>عرض العنصر</value>
+  </data>
+  <data name="Save" xml:space="preserve">
+    <value>حفظ</value>
+  </data>
+  <data name="SearchFilterListInputText" xml:space="preserve">
+    <value>جملة البحث</value>
+  </data>
+  <data name="SearchFor" xml:space="preserve">
+    <value>بحث عن ...</value>
+  </data>
+  <data name="Select" xml:space="preserve">
+    <value>أختر</value>
+  </data>
+  <data name="SelectionDeleteError" xml:space="preserve">
+    <value>يجب أختيار العنصر المراد حذفه</value>
+  </data>
+  <data name="SelectionReadError" xml:space="preserve">
+    <value>يجب أختيار العنصر المراد عرضه</value>
+  </data>
+  <data name="SelectionUpdateError" xml:space="preserve">
+    <value>يجب أختيار العنصر المراد تعديله</value>
+  </data>
+  <data name="SelectItem" xml:space="preserve">
+    <value>أختر عنصر </value>
+  </data>
+  <data name="Show" xml:space="preserve">
+    <value>عرض</value>
+  </data>
+  <data name="StartsWith" xml:space="preserve">
+    <value>يبدأ ب</value>
+  </data>
+  <data name="Sum" xml:space="preserve">
+    <value>المجموع</value>
+  </data>
+  <data name="UpdateError" xml:space="preserve">
+    <value>حدث خطأ اثناء تعديل هذا العنصر</value>
+  </data>
+  <data name="UpdateItem" xml:space="preserve">
+    <value>تعديل عنصر</value>
+  </data>
+  <data name="View" xml:space="preserve">
+    <value>عرض</value>
+  </data>
+</root>

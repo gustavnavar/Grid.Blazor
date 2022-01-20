@@ -126,6 +126,9 @@
     <EmbeddedResource Include="Resources\Strings.uk.resx" LogicalName="GridBlazor.Resources.Strings.uk.resources">
       <Generator></Generator>
     </EmbeddedResource>
+	<EmbeddedResource Include="Resources\Strings.ar.resx" LogicalName="GridBlazor.Resources.Strings.ar.resources">
+	  <Generator></Generator>
+	</EmbeddedResource>
   </ItemGroup>
 
   <ItemGroup>
