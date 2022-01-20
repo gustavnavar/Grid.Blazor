@@ -18,6 +18,7 @@ namespace GridBlazor.Pages
         protected bool _clearVisible = false;
         protected List<Filter> _filters;
         protected int _offset = 0;
+        protected bool _initPosition = false;
         protected IEnumerable<SelectItem> _selectList = new List<SelectItem>();
         protected IEnumerable<SelectItem> _visibleList = new List<SelectItem>();
         protected ListFilterOptions _filterOptions;
@@ -67,7 +68,7 @@ namespace GridBlazor.Pages
 
         protected override async Task OnAfterRenderAsync(bool firstRender)
         {
-            if (firstRender && listFilter.Id != null)
+            if (!_initPosition && listFilter.Id != null)
             {
                 await jSRuntime.InvokeVoidAsync("gridJsFunctions.focusElement", listFilter);
                 ScreenPosition sp = await jSRuntime.InvokeAsync<ScreenPosition>("gridJsFunctions.getPosition", listFilter);
@@ -85,6 +86,7 @@ namespace GridBlazor.Pages
                         StateHasChanged();
                     }
                 }
+                _initPosition = true;
             }
         }
 

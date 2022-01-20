@@ -16,6 +16,7 @@ namespace GridBlazor.Pages
         protected Filter[] _filters;
         protected string _condition;
         protected int _offset = 0;
+        protected bool _initPosition = false;
 
         protected ElementReference dateTimeFilter;
         protected ElementReference firstSelect;
@@ -67,7 +68,7 @@ namespace GridBlazor.Pages
 
         protected override async Task OnAfterRenderAsync(bool firstRender)
         {
-            if (firstRender && firstSelect.Id != null && dateTimeFilter.Id != null)
+            if (!_initPosition && firstSelect.Id != null && dateTimeFilter.Id != null)
             {
                 await jSRuntime.InvokeVoidAsync("gridJsFunctions.focusElement", firstSelect);
                 ScreenPosition sp = await jSRuntime.InvokeAsync<ScreenPosition>("gridJsFunctions.getPosition", dateTimeFilter);
@@ -85,6 +86,7 @@ namespace GridBlazor.Pages
                         StateHasChanged();
                     }
                 }
+                _initPosition = true;
             }
         }
 

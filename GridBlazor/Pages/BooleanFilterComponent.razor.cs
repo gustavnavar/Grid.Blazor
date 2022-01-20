@@ -14,6 +14,7 @@ namespace GridBlazor.Pages
         protected bool _clearVisible = false;
         protected string _filterValue = "";
         protected int _offset = 0;
+        protected bool _initPosition = false;
 
         protected ElementReference boolFilter;
 
@@ -40,7 +41,7 @@ namespace GridBlazor.Pages
 
         protected override async Task OnAfterRenderAsync(bool firstRender)
         {
-            if (firstRender && boolFilter.Id != null)
+            if (!_initPosition && boolFilter.Id != null)
             {
                 await jSRuntime.InvokeVoidAsync("gridJsFunctions.focusElement", boolFilter);
                 ScreenPosition sp = await jSRuntime.InvokeAsync<ScreenPosition>("gridJsFunctions.getPosition", boolFilter);
@@ -58,6 +59,7 @@ namespace GridBlazor.Pages
                         StateHasChanged();
                     }
                 }
+                _initPosition = true;
             }
         }
 
