@@ -10,7 +10,8 @@
         DateTimeLocal,
         Week,
         Month,
-        File
+        File,
+        Number
     }
 
     public static class InputTypeExtensions
@@ -33,6 +34,8 @@
                     return "month";
                 case InputType.File:
                     return "file";
+                case InputType.Number:
+                    return "number";
                 default:
                     return "";
             }
