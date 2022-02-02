@@ -80,6 +80,11 @@ namespace GridCore.Server
         IGridServer<T> Searchable(bool enable, bool onlyTextColumns, bool hiddenColumns);
 
         /// <summary>
+        ///     Enable or disable searching for all columns
+        /// </summary>
+        IGridServer<T> Searchable(bool enable, bool onlyTextColumns, bool hiddenColumns, bool splittedWords);
+
+        /// <summary>
         ///     Enable extended sorting
         /// </summary>
         IGridServer<T> ExtSortable();

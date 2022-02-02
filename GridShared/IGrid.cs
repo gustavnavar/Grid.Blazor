@@ -63,14 +63,20 @@ namespace GridShared
         bool ClearFiltersButtonEnabled { get; set; }
 
         /// <summary>
-        ///     Set or get value of searching for all columns or only text ones
+        ///     Set or get value of searching all columns or only text ones
         /// </summary>
         bool SearchingOnlyTextColumns { get; set; }
 
         /// <summary>
-        ///     Set or get value of searching for all columns including hidden ones
+        ///     Set or get value of searching all columns including hidden ones
         /// </summary>
         bool SearchingHiddenColumns { get; set; }
+
+        /// <summary>
+        ///     Set or get value of searching all columns for splitted words
+        /// </summary>
+        bool SearchingSplittedWords { get; set; }
+
 
         /// <summary>
         ///     Text in empty grid (no items for display)

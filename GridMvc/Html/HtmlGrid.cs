@@ -60,6 +60,12 @@ namespace GridMvc.Html
             set { _source.SearchingHiddenColumns = value; }
         }
 
+        public bool SearchingSplittedWords
+        {
+            get { return _source.SearchingSplittedWords; }
+            set { _source.SearchingSplittedWords = value; }
+        }
+
         public bool ExtSortingEnabled
         {
             get { return _source.ExtSortingEnabled; }

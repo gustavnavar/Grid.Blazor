@@ -124,6 +124,8 @@ namespace GridCore
 
         public bool SearchingHiddenColumns { get; set; }
 
+        public bool SearchingSplittedWords { get; set; }
+
         public bool ExtSortingEnabled { get; set; }
 
         public bool HiddenExtSortingHeader { get; set; } = false;

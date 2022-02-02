@@ -69,8 +69,25 @@ namespace GridBlazor.Filtering
                     if (!gridColumn.Filter.IsTextColumn()) continue;
 
                     List<ColumnFilterValue> options = new List<ColumnFilterValue>();
-                    var columnFilterValue = new ColumnFilterValue(column.Name, GridFilterType.Contains, _searchSettings.SearchValue);
-                    options.Add(columnFilterValue);
+                    if (_grid.SearchingSplittedWords)
+                    {
+                        var searchWords = _searchSettings.SearchValue.Split(' ');
+                        foreach (var searchWord in searchWords)
+                        {
+                            var columnFilterValue = new ColumnFilterValue(column.Name, GridFilterType.Contains, searchWord);
+                            options.Add(columnFilterValue);
+                        }
+                        if (searchWords.Length > 1)
+                        {
+                            var columnFilterCondition = new ColumnFilterValue(column.Name, GridFilterType.Condition, GridFilterCondition.Or.ToString());
+                            options.Add(columnFilterCondition);
+                        }
+                    }
+                    else
+                    {
+                        var columnFilterValue = new ColumnFilterValue(column.Name, GridFilterType.Contains, _searchSettings.SearchValue);
+                        options.Add(columnFilterValue);
+                    }
 
                     var filter = gridColumn.Filter.GetFilter(options);
                     if (!string.IsNullOrWhiteSpace(filter))

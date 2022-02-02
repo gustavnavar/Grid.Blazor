@@ -147,9 +147,15 @@ namespace GridCore.Server
 
         public IGridServer<T> Searchable(bool enable, bool onlyTextColumns, bool hiddenColumns)
         {
+            return Searchable(enable, onlyTextColumns, false, false);
+        }
+
+        public IGridServer<T> Searchable(bool enable, bool onlyTextColumns, bool hiddenColumns, bool splittedWords)
+        {
             _source.SearchingEnabled = enable;
             _source.SearchingOnlyTextColumns = onlyTextColumns;
             _source.SearchingHiddenColumns = hiddenColumns;
+            _source.SearchingSplittedWords = splittedWords;
             return this;
         }
 

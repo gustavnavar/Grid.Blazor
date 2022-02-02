@@ -39,28 +39,16 @@ namespace GridCore.Searching
                 ParameterExpression parameter = Expression.Parameter(typeof(T), "x");
                 Expression binaryExpression = null;
 
-                foreach (IGridColumn column in _grid.Columns)
+                if (_grid.SearchingSplittedWords)
                 {
-                    IGridColumn<T> gridColumn = column as IGridColumn<T>;
-                    if (gridColumn == null) continue;
-                    if (gridColumn.Search == null) continue;
-                    if (!_grid.SearchingHiddenColumns && gridColumn.Hidden) continue;
-
-                    if (binaryExpression == null)
+                    var searchWords = _settings.SearchValue.Split(' ');
+                    foreach (var searchWord in searchWords)
                     {
-                        binaryExpression = gridColumn.Search.GetExpression(_settings.SearchValue, 
-                            _grid.SearchingOnlyTextColumns, parameter, _grid.RemoveDiacritics);
-                    }                      
-                    else
-                    {
-                        Expression expression = gridColumn.Search.GetExpression(_settings.SearchValue, 
-                            _grid.SearchingOnlyTextColumns, parameter, _grid.RemoveDiacritics);
-                        if (expression != null)
-                        {
-                            binaryExpression = Expression.OrElse(binaryExpression, expression);
-                        }   
+                        binaryExpression = GetExpression(_grid, binaryExpression, parameter, searchWord);
                     }
                 }
+                else
+                    binaryExpression = GetExpression(_grid, binaryExpression, parameter, _settings.SearchValue);
 
                 // apply extension to items
                 if (binaryExpression != null)
@@ -69,6 +57,33 @@ namespace GridCore.Searching
                 }
             }
             return items;         
+        }
+
+        private Expression GetExpression(ISGrid grid, Expression binaryExpression, ParameterExpression parameter, string searchValue)
+        {
+            foreach (IGridColumn column in grid.Columns)
+            {
+                IGridColumn<T> gridColumn = column as IGridColumn<T>;
+                if (gridColumn == null) continue;
+                if (gridColumn.Search == null) continue;
+                if (!grid.SearchingHiddenColumns && gridColumn.Hidden) continue;
+
+                if (binaryExpression == null)
+                {
+                    binaryExpression = gridColumn.Search.GetExpression(searchValue,
+                        grid.SearchingOnlyTextColumns, parameter, grid.RemoveDiacritics);
+                }
+                else
+                {
+                    Expression expression = gridColumn.Search.GetExpression(searchValue,
+                        grid.SearchingOnlyTextColumns, parameter, grid.RemoveDiacritics);
+                    if (expression != null)
+                    {
+                        binaryExpression = Expression.OrElse(binaryExpression, expression);
+                    }
+                }
+            }
+            return binaryExpression;
         }
 
         #endregion
