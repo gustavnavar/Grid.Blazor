@@ -58,18 +58,18 @@ namespace GridBlazor.Filtering
 
             // workaround for lack of $search OData support
             var search = new List<string>();
-            if (_grid.SearchingEnabled && !string.IsNullOrWhiteSpace(_searchSettings.SearchValue))
+            if (_grid.SearchOptions.Enabled && !string.IsNullOrWhiteSpace(_searchSettings.SearchValue))
             {
                 foreach (IGridColumn column in _grid.Columns)
                 {
                     var gridColumn = column as IGridColumn<T>;
                     if (gridColumn == null) continue;
-                    if (!_grid.SearchingHiddenColumns && gridColumn.Hidden) continue;
+                    if (!_grid.SearchOptions.HiddenColumns && gridColumn.Hidden) continue;
                     if (gridColumn.Filter == null) continue;                   
                     if (!gridColumn.Filter.IsTextColumn()) continue;
 
                     List<ColumnFilterValue> options = new List<ColumnFilterValue>();
-                    if (_grid.SearchingSplittedWords)
+                    if (_grid.SearchOptions.SplittedWords)
                     {
                         var searchWords = _searchSettings.SearchValue.Split(' ');
                         foreach (var searchWord in searchWords)

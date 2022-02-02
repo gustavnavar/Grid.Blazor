@@ -34,12 +34,12 @@ namespace GridCore.Searching
 
         public IQueryable<T> Process(IQueryable<T> items)
         {
-            if (_grid.SearchingEnabled && !string.IsNullOrWhiteSpace(_settings.SearchValue))
+            if (_grid.SearchOptions.Enabled && !string.IsNullOrWhiteSpace(_settings.SearchValue))
             {
                 ParameterExpression parameter = Expression.Parameter(typeof(T), "x");
                 Expression binaryExpression = null;
 
-                if (_grid.SearchingSplittedWords)
+                if (_grid.SearchOptions.SplittedWords)
                 {
                     var searchWords = _settings.SearchValue.Split(' ');
                     foreach (var searchWord in searchWords)
@@ -66,17 +66,17 @@ namespace GridCore.Searching
                 IGridColumn<T> gridColumn = column as IGridColumn<T>;
                 if (gridColumn == null) continue;
                 if (gridColumn.Search == null) continue;
-                if (!grid.SearchingHiddenColumns && gridColumn.Hidden) continue;
+                if (!grid.SearchOptions.HiddenColumns && gridColumn.Hidden) continue;
 
                 if (binaryExpression == null)
                 {
                     binaryExpression = gridColumn.Search.GetExpression(searchValue,
-                        grid.SearchingOnlyTextColumns, parameter, grid.RemoveDiacritics);
+                        grid.SearchOptions.OnlyTextColumns, parameter, grid.RemoveDiacritics);
                 }
                 else
                 {
                     Expression expression = gridColumn.Search.GetExpression(searchValue,
-                        grid.SearchingOnlyTextColumns, parameter, grid.RemoveDiacritics);
+                        grid.SearchOptions.OnlyTextColumns, parameter, grid.RemoveDiacritics);
                     if (expression != null)
                     {
                         binaryExpression = Expression.OrElse(binaryExpression, expression);

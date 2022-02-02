@@ -27,8 +27,8 @@ namespace GridMvc.Tests.Searching
             store.Add("grid-search", "TEST");
             QueryCollection query = new QueryCollection(store);
             _grid = new TestGrid(_repo.GetAll(), query);
-            _grid.SearchingEnabled = true;
-            _grid.SearchingOnlyTextColumns = true;
+            _grid.SearchOptions.Enabled = true;
+            _grid.SearchOptions.OnlyTextColumns = true;
 
             Action<IGridColumnCollection<TestModel>> columns = c =>
             {
@@ -61,8 +61,8 @@ namespace GridMvc.Tests.Searching
             store.Add("grid-search", "3");
             QueryCollection query = new QueryCollection(store);
             _grid = new TestGrid(_repo.GetAll(), query);
-            _grid.SearchingEnabled = true;
-            _grid.SearchingOnlyTextColumns = false;
+            _grid.SearchOptions.Enabled = true;
+            _grid.SearchOptions.OnlyTextColumns = false;
 
             Action<IGridColumnCollection<TestModel>> columns = c =>
             {

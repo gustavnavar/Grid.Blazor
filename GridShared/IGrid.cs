@@ -38,9 +38,9 @@ namespace GridShared
         bool EnablePaging { get; set; }
 
         /// <summary>
-        ///     Set or get default value of searching
+        ///     Set or get options for searching
         /// </summary>
-        bool SearchingEnabled { get; set; }
+        SearchOptions SearchOptions { get; set; }
 
         /// <summary>
         ///     Set or get default value of extended sorting
@@ -61,22 +61,6 @@ namespace GridShared
         ///     Set or get visibility of ClearFiltersButton 
         /// </summary>
         bool ClearFiltersButtonEnabled { get; set; }
-
-        /// <summary>
-        ///     Set or get value of searching all columns or only text ones
-        /// </summary>
-        bool SearchingOnlyTextColumns { get; set; }
-
-        /// <summary>
-        ///     Set or get value of searching all columns including hidden ones
-        /// </summary>
-        bool SearchingHiddenColumns { get; set; }
-
-        /// <summary>
-        ///     Set or get value of searching all columns for splitted words
-        /// </summary>
-        bool SearchingSplittedWords { get; set; }
-
 
         /// <summary>
         ///     Text in empty grid (no items for display)

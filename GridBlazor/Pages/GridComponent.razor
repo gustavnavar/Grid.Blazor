@@ -170,7 +170,7 @@
                                     </div>
                                 }
                             </div>
-                            @if (Grid.SearchingEnabled)
+                            @if (Grid.SearchOptions.Enabled)
                             {
                                 <CascadingValue Value=@this Name="GridComponent">
                                     <GridSearchComponent @ref="SearchComponent" T="@T" Grid="@Grid"></GridSearchComponent>

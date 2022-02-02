@@ -29,7 +29,7 @@ namespace GridBlazor.Searching
         public string Process()
         {
             string result = "";
-            if (_grid.SearchingEnabled && !string.IsNullOrWhiteSpace(_settings.SearchValue))
+            if (_grid.SearchOptions.Enabled && !string.IsNullOrWhiteSpace(_settings.SearchValue))
             {
                 result = "$search='" + WebUtility.UrlEncode(_settings.SearchValue.Replace("'", "''")) + "'";
             }

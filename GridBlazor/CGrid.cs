@@ -196,13 +196,7 @@ namespace GridBlazor
         /// </summary>
         public int ItemsCount { get { return _pager.ItemsCount; } }
 
-        public bool SearchingEnabled { get; set; }
-
-        public bool SearchingOnlyTextColumns { get; set; }
-
-        public bool SearchingHiddenColumns { get; set; }
-
-        public bool SearchingSplittedWords { get; set; }
+        public SearchOptions SearchOptions { get; set; } = new SearchOptions() { Enabled = false };
 
         public bool ExtSortingEnabled { get; set; }
 

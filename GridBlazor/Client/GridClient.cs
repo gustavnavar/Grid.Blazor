@@ -188,15 +188,21 @@ namespace GridBlazor
 
         public IGridClient<T> Searchable(bool enable, bool onlyTextColumns, bool hiddenColumns)
         {
-            return Searchable(enable, onlyTextColumns, false, false);
+            return Searchable(o =>
+            {
+                o.Enabled = enable;
+                o.OnlyTextColumns = onlyTextColumns;
+                o.HiddenColumns = hiddenColumns;
+                o.SplittedWords = false;
+            });
         }
 
-        public IGridClient<T> Searchable(bool enable, bool onlyTextColumns, bool hiddenColumns, bool splittedWords)
+        public IGridClient<T> Searchable(Action<SearchOptions> searchOptions)
         {
-            _source.SearchingEnabled = enable;
-            _source.SearchingOnlyTextColumns = onlyTextColumns;
-            _source.SearchingHiddenColumns = hiddenColumns;
-            _source.SearchingSplittedWords = splittedWords;
+            var options = new SearchOptions();
+            searchOptions?.Invoke(options);
+
+            _source.SearchOptions = options;
             return this;
         }
 

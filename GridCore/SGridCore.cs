@@ -118,13 +118,7 @@ namespace GridCore
             get { return _columnsCollection; }
         }
 
-        public bool SearchingEnabled { get; set; }
-
-        public bool SearchingOnlyTextColumns { get; set; }
-
-        public bool SearchingHiddenColumns { get; set; }
-
-        public bool SearchingSplittedWords { get; set; }
+        public SearchOptions SearchOptions { get; set; } = new SearchOptions() { Enabled = false };
 
         public bool ExtSortingEnabled { get; set; }
 

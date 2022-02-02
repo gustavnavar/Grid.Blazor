@@ -71,7 +71,7 @@ else
                         </div>
                     }
                 </div>
-                @if (Model.SearchingEnabled)
+                @if (Model.SearchOptions.Enabled)
                 {
                     @await Html.PartialAsync("_GridSearch", Model)
                 }

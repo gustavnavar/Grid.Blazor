@@ -84,7 +84,7 @@ namespace GridBlazor
         /// <summary>
         ///     Enable or disable searching for all columns
         /// </summary>
-        IGridClient<T> Searchable(bool enable, bool onlyTextColumns, bool hiddenColumns, bool splittedWords);
+        IGridClient<T> Searchable(Action<SearchOptions> searchOptions);
 
         /// <summary>
         ///     Enable extended sorting

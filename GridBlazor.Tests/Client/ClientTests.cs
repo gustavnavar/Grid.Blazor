@@ -43,8 +43,8 @@ namespace GridBlazor.Tests.Client
             Assert.IsTrue(_client.Grid.ComponentOptions.AllowMultipleFilters);
 
             _client.Searchable();
-            Assert.IsTrue(_client.Grid.SearchingEnabled);
-            Assert.IsTrue(_client.Grid.SearchingOnlyTextColumns);
+            Assert.IsTrue(_client.Grid.SearchOptions.Enabled);
+            Assert.IsTrue(_client.Grid.SearchOptions.OnlyTextColumns);
 
             _client.Named("test");
             Assert.AreEqual(_client.Grid.ComponentOptions.GridName, "test");

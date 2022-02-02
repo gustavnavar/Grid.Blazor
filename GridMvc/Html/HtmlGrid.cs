@@ -44,26 +44,9 @@ namespace GridMvc.Html
             set { _source.EnablePaging = value; }
         }
 
-        bool IGrid.SearchingEnabled {
-            get { return _source.SearchingEnabled;  }
-            set { _source.SearchingEnabled = value; }
-        }
-
-        public bool SearchingOnlyTextColumns {
-            get { return _source.SearchingOnlyTextColumns; }
-            set { _source.SearchingOnlyTextColumns = value; }
-        }
-
-        public bool SearchingHiddenColumns
-        {
-            get { return _source.SearchingHiddenColumns; }
-            set { _source.SearchingHiddenColumns = value; }
-        }
-
-        public bool SearchingSplittedWords
-        {
-            get { return _source.SearchingSplittedWords; }
-            set { _source.SearchingSplittedWords = value; }
+        SearchOptions IGrid.SearchOptions {
+            get { return _source.SearchOptions;  }
+            set { _source.SearchOptions = value; }
         }
 
         public bool ExtSortingEnabled
