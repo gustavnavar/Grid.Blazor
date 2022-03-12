@@ -225,10 +225,13 @@ namespace GridBlazor.Pages
 
             try
             {
-                Error = "";
-                ColumnErrors = new QueryDictionary<string>();
-                _tabGroups = null;
-                await GridComponent.UpdateItem(this);
+                bool isValid = await GridComponent.UpdateItem(this);
+                if (isValid)
+                {
+                    Error = "";
+                    ColumnErrors = new QueryDictionary<string>();
+                    _tabGroups = null;
+                }
             }
             catch (GridException e)
             {

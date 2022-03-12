@@ -1314,7 +1314,7 @@ namespace GridBlazor.Pages
             }
         }
 
-        public async Task CreateItem(GridCreateComponent<T> component)
+        public async Task<bool> CreateItem(GridCreateComponent<T> component)
         {
             try
             {
@@ -1347,7 +1347,8 @@ namespace GridBlazor.Pages
                         _shouldRender = true;
                         StateHasChanged();
                     }
-                } 
+                }
+                return isValid;
             }
             catch (Exception e)
             {
@@ -1374,7 +1375,7 @@ namespace GridBlazor.Pages
             }
         }
 
-        public async Task UpdateItem(GridUpdateComponent<T> component)
+        public async Task<bool> UpdateItem(GridUpdateComponent<T> component)
         {
             try
             {
@@ -1383,7 +1384,7 @@ namespace GridBlazor.Pages
                 {
                     await ShowSpinner();
                     if (((CGrid<T>)Grid).CrudFileService != null)
-                        Item = await((CGrid<T>)Grid).CrudFileService.UpdateFiles(Item, component.Files);
+                        Item = await ((CGrid<T>)Grid).CrudFileService.UpdateFiles(Item, component.Files);
                     await ((CGrid<T>)Grid).CrudDataService.Update(Item);
                     await HideSpinner();
                     ((CGrid<T>)Grid).Mode = GridMode.Grid;
@@ -1395,6 +1396,7 @@ namespace GridBlazor.Pages
                     _shouldRender = true;
                     StateHasChanged();
                 }
+                return isValid;
             }
             catch (Exception e)
             {
@@ -1421,7 +1423,7 @@ namespace GridBlazor.Pages
             }
         }
 
-        public async Task DeleteItem(GridDeleteComponent<T> component)
+        public async Task<bool> DeleteItem(GridDeleteComponent<T> component)
         {
             try
             {
@@ -1443,6 +1445,7 @@ namespace GridBlazor.Pages
                     _shouldRender = true;
                     StateHasChanged();
                 }
+                return isValid;
             }
             catch (Exception e)
             {

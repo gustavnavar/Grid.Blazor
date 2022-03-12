@@ -205,10 +205,13 @@ namespace GridBlazor.Pages
 
             try
             {
-                Error = "";
-                ColumnErrors = new QueryDictionary<string>();
-                _tabGroups = null;
-                await GridComponent.CreateItem(this);
+                bool isValid = await GridComponent.CreateItem(this);
+                if (isValid)
+                {
+                    Error = "";
+                    ColumnErrors = new QueryDictionary<string>();
+                    _tabGroups = null;
+                }
             }
             catch (GridException e)
             {

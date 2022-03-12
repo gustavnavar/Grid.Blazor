@@ -130,8 +130,9 @@ namespace GridBlazor.Pages
 
             try
             {
-                _tabGroups = null;
-                await GridComponent.DeleteItem(this);
+                bool isValid = await GridComponent.DeleteItem(this);
+                if(isValid)
+                    _tabGroups = null;
             }
             catch (GridException e)
             {
