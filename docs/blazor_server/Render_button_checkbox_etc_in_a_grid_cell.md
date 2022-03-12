@@ -76,7 +76,7 @@ In this sample we name the component **ButtonCell.razor**:
         public GridComponent<Order> GridComponent { get; set; }
         
         [Parameter]
-        public Order Item { get; protected set; }
+        public Order Item { get; set; }
 
         [Parameter]
         public IList<Action<object>> Actions { get; protected set; }
@@ -87,7 +87,7 @@ In this sample we name the component **ButtonCell.razor**:
         [Parameter]
         public object Object { get; protected set; }
 
-        private void MyClickHandler(UIMouseEventArgs e)
+        private void MyClickHandler(MouseEventArgs e)
         {
             if (Actions == null)
             {
@@ -120,7 +120,7 @@ In this sample we name the component **ButtonCell.razor**:
 
     @code {
         [Parameter]
-        public Order Item { get; protected set; }
+        public Order Item { get; set; }
 
         private void CheckChanged()
         {
@@ -139,9 +139,9 @@ In this sample we name the component **ButtonCell.razor**:
 
     @code {
         [Parameter]
-        public Order Item { get; protected set; }
+        public Order Item { get; set; }
 
-        private void MyClickHandler(UIMouseEventArgs e)
+        private void MyClickHandler(MouseEventArgs e)
         {
             Console.WriteLine("Button clicked: /Home/Edit/" + Item.OrderID);
         }
