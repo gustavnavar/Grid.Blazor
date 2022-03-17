@@ -58,6 +58,7 @@ namespace GridShared.Columns
         string TrueLabel { get; }
         string FalseLabel { get; }
         InputType InputType { get; }
+        int TextAreaRows { get; }
         void SetGroupLabel(Func<object, Task<string>> function);
     }
 
@@ -423,6 +424,16 @@ namespace GridShared.Columns
         ///     Sets the column input type for CRUD components
         /// </summary>
         IGridColumn<T> SetInputType(InputType inputType);
+
+        /// <summary>
+        ///     Sets the column input type to type area for CRUD components
+        /// </summary>
+        IGridColumn<T> SetTextArea();
+
+        /// <summary>
+        ///     Sets the column input type type area for CRUD components
+        /// </summary>
+        IGridColumn<T> SetTextArea(int rows);
 
         /// <summary>
         ///     Sets the column input type for CRUD components

@@ -97,6 +97,8 @@ namespace GridBlazor.Columns
 
         public InputType InputType { get; protected set; }
 
+        public int TextAreaRows { get; set; } = 5;
+
         public bool MultipleInput { get; protected set; } = false;
 
         public bool ToggleSwitch { get; protected set; } = false;
@@ -623,6 +625,17 @@ namespace GridBlazor.Columns
             IsSelectColumn = (false, null, null, null, null);
             InputType = inputType;
             return this;
+        }
+
+        public IGridColumn<T> SetTextArea()
+        {
+            return SetInputType(InputType.TextArea);
+        }
+
+        public IGridColumn<T> SetTextArea(int rows)
+        {
+            TextAreaRows = rows;
+            return SetTextArea();
         }
 
         public IGridColumn<T> SetInputFileType(bool? multiple = null)

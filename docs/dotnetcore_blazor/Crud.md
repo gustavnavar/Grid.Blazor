@@ -158,12 +158,17 @@ You can also configure the "read only on create" and/or "read only on update" be
 
 If a column is a date that has to be shown as ```date```, ```time```, ```week```, ```month``` or ```datetime-local``` in the CRUD forms, the column definition should use the  **SetInputType** method in order to get the correct format.
 
-If a column is a string that has to be shown as ```<textarea>``` in the CRUD forms, the column definition should use the  **SetInputType** method in order to get the correct html element.
+If a column is a string that has to be shown as ```<textarea>``` in the CRUD forms, the column definition should use the  **SetTextArea** or the  **SetInputType** method in order to get the correct html element.
 
 The **SetInputType** method has 1 required parameter:
 Parameter | Description
 --------- | -----------
 inputType | ```InputType``` enum. Its value can be ```InputType.TextArea```, ```InputType.Date```, ```InputType.Time```, ```InputType.Month```, ```InputType.Week``` or ```InputType.DateTimeLocal```
+
+The **SetTextArea** method has 1 optional parameter:
+Parameter | Description
+--------- | -----------
+rows | integer to select the number or rows of the ```<textarea>``` element
 
 You can also add components on the CRUD forms using the ```RenderCrudComponentAs<TComponent>``` method. You must define these columns as **Hidden** to show them just on CRUD forms.
 

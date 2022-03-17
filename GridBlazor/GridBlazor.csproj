@@ -6,7 +6,7 @@
     <LangVersion>8.0</LangVersion>
     <GenerateEmbeddedFilesManifest>True</GenerateEmbeddedFilesManifest>
     <EnableDefaultEmbeddedResourceItems>False</EnableDefaultEmbeddedResourceItems>
-    <Version>3.2.1</Version>
+    <Version>3.2.2</Version>
     <Title>GridBlazor</Title>
     <Description>Grid components for Blazor</Description>
     <Summary>Grid components for Blazor</Summary>
@@ -48,7 +48,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Agno.BlazorInputFile" Version="0.3.0" />
+    <PackageReference Include="Agno.BlazorInputFile" Version="0.4.0" />
     <PackageReference Include="DocumentFormat.OpenXml" Version="2.11" />
   </ItemGroup>
   

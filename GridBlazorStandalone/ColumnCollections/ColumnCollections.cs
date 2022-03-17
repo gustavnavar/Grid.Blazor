@@ -919,7 +919,7 @@ namespace GridBlazorStandalone.ColumnCollections
             c.Add(o => o.HomePhone, true);
             c.Add(o => o.Extension, true);
             c.Add(o => o.ReportsTo, true);
-            c.Add(o => o.Notes, true).SetInputType(InputType.TextArea);
+            c.Add(o => o.Notes, true).SetTextArea(8);
             c.Add(o => o.PhotoPath, true);
             c.Add(true, "PhotoFile").Titled("Photo").SetInputFileType();
         };

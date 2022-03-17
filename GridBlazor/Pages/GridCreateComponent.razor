@@ -68,7 +68,7 @@
                                 </select>
                                 <span class="field-validation-error">
                                     <span>@ColumnErrors.Get(column.FieldName)</span>
-                                </span>              
+                                </span>
                             }
                         }
                         else if (((IGridColumn<T>)column).IsSelectColumn.IsSelectKey)
@@ -147,7 +147,7 @@
                                 }
                                 else if (type == typeof(string) && ((IGridColumn<T>)column).InputType == InputType.TextArea)
                                 {
-                                    <textarea id="@column.FieldName" name="@column.FieldName" class="form-control" rows="5" readonly="readonly" value="@column.GetFormatedValue(value)" />
+                                    <textarea id="@column.FieldName" name="@column.FieldName" class="form-control" rows="@column.TextAreaRows" readonly="readonly" value="@column.GetFormatedValue(value)" />
                                 }
                                 else
                                 {
@@ -162,7 +162,7 @@
                                 }
                                 else if (type == typeof(string) && ((IGridColumn<T>)column).InputType == InputType.TextArea)
                                 {
-                                    <textarea id="@column.FieldName" name="@column.FieldName" class="form-control @(ColumnErrors.ContainsKey(@column.FieldName) ? "input-validation-error" : "")" rows="5" value="@column.GetFormatedValue(value)" @onchange="(e) => ChangeValue(e, column)" />
+                                    <textarea id="@column.FieldName" name="@column.FieldName" class="form-control @(ColumnErrors.ContainsKey(@column.FieldName) ? "input-validation-error" : "")" rows="@column.TextAreaRows" value="@column.GetFormatedValue(value)" @onchange="(e) => ChangeValue(e, column)" />
                                 }
                                 else if (((IGridColumn<T>)column).InputType == InputType.File)
                                 {
