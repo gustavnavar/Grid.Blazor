@@ -131,7 +131,7 @@ The steps to build a grid razor page using **GridBlazor** are:
     * **T**: type of the model items
     * **Grid**: grid object that has to be created in the **OnParametersSetAsync** method of the razor page
 
-* You should use a **GridCoreServer** object in the server controller action. 
+* You should use a **GridCoreServer** object in the server controller action.
 
 * You can use multiple methods of the **GridCoreServer** object to configure a grid on the server. For example:
     ```c#
@@ -144,6 +144,10 @@ The steps to build a grid razor page using **GridBlazor** are:
 * The **GridClient** object on the client project and the **GridCoreServer** object on the server project must have compatible settings.
 
 * The server action returns a json including the model rows to be shown on the grid and other information requirired for paging, etc. The object type returned by the action must be **ItemsDTO<T>**.
+
+* You can use one of the following methods to get **ItemsDTO<T>** object:
+    * ```server.ItemsToDisplay``` returns the object using the standard ```ToList``` method of the ```IQueryable<T>``` object supplied by ```System.Linq``` package
+    * ```await server.GetItemsToDisplayAsync(Func<IQueryable<T>, Task<IList<T>>> toListAsync)``` returns the object using a custom```toListAsync``` method of the ```IQueryable<T>``` object. This method can be supplied by an ORM like EF Core. In this case we can call ```await server.GetItemsToDisplayAsync(async x => await x.ToListAsync())```
 
 For more documentation about column options, please see: [Custom columns](Custom_columns.md).
 
