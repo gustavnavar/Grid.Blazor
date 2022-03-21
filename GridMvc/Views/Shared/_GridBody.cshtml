@@ -14,7 +14,7 @@
                   || firstColumn.IsMaxEnabled || firstColumn.IsMinEnabled);
 }
 
-@if (Model.DisplayingItemsCount == 0)
+@if (await Model.GetDisplayingItemsCountAsync() == 0)
 {
     <tr class="grid-empty-text">
         @if (hasSubGrid)
@@ -34,12 +34,14 @@ else
 {
     @if (Model.GroupingEnabled)
     {
+        var items = await Model.GetItemsToDisplayAsync();
         @await Html.PartialAsync("_GridGroupRows", new Tuple<ISGrid, IList<Tuple<string, object>>, bool, bool, IEnumerable<object>, string>
-            (Model, new List<Tuple<string, object>>(), hasSubGrid, requiredTotalsColumn, Model.ItemsToDisplay, "0"))
+            (Model, new List<Tuple<string, object>>(), hasSubGrid, requiredTotalsColumn, items, "0"))
     }
     else
     {
-        foreach (object item in Model.ItemsToDisplay)
+        var items = await Model.GetItemsToDisplayAsync();
+        foreach (object item in items)
         {
             <tr class="grid-row @Model.GetRowCssClasses(item)">
                 @if (hasSubGrid)

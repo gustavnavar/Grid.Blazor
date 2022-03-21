@@ -48,7 +48,7 @@ else
 
         Action<IGridColumnCollection<Order>> columns = c => ColumnCollections.OrderColumnsWithCustomCrud(c,
             c => customerService.GetAllCustomers(), c => employeeService.GetAllEmployees(), shipperService.GetAllShippers);
-        var client = new GridClient<Order>(q => orderService.GetOrdersGridRows(columns, q),
+        var client = new GridClient<Order>(q => orderService.GetOrdersGridRowsAsync(columns, q),
             query, false, "ordersGrid", columns, locale)
             .Sortable()
             .Filterable()

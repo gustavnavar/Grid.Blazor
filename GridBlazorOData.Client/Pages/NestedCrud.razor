@@ -40,7 +40,7 @@ else
     private object[] _keys;
     private GridMode _mode;
     private Task _task;
-    private bool _areEventsLoaded = false;
+    private bool _afterRenderExecuted = false;
 
     [Parameter]
     public string OrderId { get; set; }
@@ -220,12 +220,12 @@ else
 
     protected override void OnAfterRender(bool firstRender)
     {
-        if (_gridComponent != null && !_areEventsLoaded)
+        if (_gridComponent != null && !_afterRenderExecuted)
         {
             _gridComponent.BeforeInsert += BeforeInsert;
             _gridComponent.BeforeUpdate += BeforeUpdate;
             _gridComponent.BeforeDelete += BeforeDelete;
-            _areEventsLoaded = true;
+            _afterRenderExecuted = true;
         }
     }
 

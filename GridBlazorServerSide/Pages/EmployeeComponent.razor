@@ -45,7 +45,7 @@ else
 
         var query = new QueryDictionary<StringValues>();
 
-        var client = new GridClient<Employee>(q => employeeService.GetEmployeesGridRows(ColumnCollections.EmployeeColumns, q),
+        var client = new GridClient<Employee>(q => employeeService.GetEmployeesGridRowsAsync(ColumnCollections.EmployeeColumns, q),
             query, false, "employeesGrid", ColumnCollections.EmployeeColumns, locale)
             .Sortable()
             .Filterable()

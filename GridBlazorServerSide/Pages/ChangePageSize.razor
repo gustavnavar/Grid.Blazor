@@ -42,7 +42,7 @@ else
         SharedResource.Culture = locale;
 
         var query = new QueryDictionary<StringValues>();
-        var client = new GridClient<Order>(q => orderService.GetOrdersGridRows(ColumnCollections.OrderColumns, q),
+        var client = new GridClient<Order>(q => orderService.GetOrdersGridRowsAsync(ColumnCollections.OrderColumns, q),
             query, false, "ordersGrid", ColumnCollections.OrderColumns, locale)
             .Sortable()
             .Filterable()

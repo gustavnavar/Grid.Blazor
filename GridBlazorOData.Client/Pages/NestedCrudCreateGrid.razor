@@ -41,7 +41,7 @@ else
     private GridComponent<Order> _gridComponent;
     private OrderDetailMemoryService _orderDetailMemoryService;
     private Task _task;
-    private bool _areEventsLoaded = false;
+    private bool _afterRenderExecuted = false;
 
     protected override async Task OnParametersSetAsync()
     {
@@ -189,10 +189,10 @@ else
 
     protected override void OnAfterRender(bool firstRender)
     {
-        if (_gridComponent != null && !_areEventsLoaded)
+        if (_gridComponent != null && !_afterRenderExecuted)
         {
             _gridComponent.AfterInsert += AfterInsert;
-            _areEventsLoaded = true;
+            _afterRenderExecuted = true;
         }
     }
 

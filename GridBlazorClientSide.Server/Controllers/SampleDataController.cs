@@ -24,7 +24,7 @@ namespace GridBlazorClientSide.Server.Controllers
         }
 
         [HttpGet("[action]")]
-        public ActionResult GetOrdersGrid()
+        public async Task<ActionResult> GetOrdersGrid()
         {
             var repository = new OrdersRepository(_context);
             IGridServer<Order> server = new GridCoreServer<Order>(repository.GetAll(), Request.Query,
@@ -36,7 +36,7 @@ namespace GridBlazorClientSide.Server.Controllers
                     .WithGridItemsCount()
                     .SetRemoveDiacritics<NorthwindDbContext>("RemoveDiacritics");
 
-            var items = server.ItemsToDisplay;
+            var items = await server.GetItemsToDisplayAsync(async x => await x.ToListAsync());
             return Ok(items);
         }
 
@@ -59,7 +59,7 @@ namespace GridBlazorClientSide.Server.Controllers
         }
 
         [HttpGet("[action]")]
-        public ActionResult GetOrdersGridWithTotals()
+        public async Task<ActionResult> GetOrdersGridWithTotals()
         {
             var repository = new OrdersRepository(_context);
             IGridServer<Order> server = new GridCoreServer<Order>(repository.GetAll(), Request.Query,
@@ -71,7 +71,7 @@ namespace GridBlazorClientSide.Server.Controllers
                     .WithGridItemsCount()
                     .SetRemoveDiacritics<NorthwindDbContext>("RemoveDiacritics");
 
-            var items = server.ItemsToDisplay;
+            var items = await server.GetItemsToDisplayAsync(async x => await x.ToListAsync());
             return Ok(items);
         }
 
@@ -93,7 +93,7 @@ namespace GridBlazorClientSide.Server.Controllers
         }
 
         [HttpGet("[action]")]
-        public ActionResult GetOrdersGridSearchable()
+        public async Task<ActionResult> GetOrdersGridSearchable()
         {
             var repository = new OrdersRepository(_context);
             IGridServer<Order> server = new GridCoreServer<Order>(repository.GetAll(), Request.Query,
@@ -106,12 +106,12 @@ namespace GridBlazorClientSide.Server.Controllers
                     .Searchable(true, false, false)
                     .SetRemoveDiacritics<NorthwindDbContext>("RemoveDiacritics");
 
-            var items = server.ItemsToDisplay;
+            var items = await server.GetItemsToDisplayAsync(async x => await x.ToListAsync());
             return Ok(items);
         }
 
         [HttpGet("[action]")]
-        public ActionResult GetOrdersGridExtSorting()
+        public async Task<ActionResult> GetOrdersGridExtSorting()
         {
             var repository = new OrdersRepository(_context);
             IGridServer<Order> server = new GridCoreServer<Order>(repository.GetAll(), Request.Query,
@@ -124,12 +124,12 @@ namespace GridBlazorClientSide.Server.Controllers
                     .Groupable(true)
                     .SetRemoveDiacritics<NorthwindDbContext>("RemoveDiacritics");
 
-            var items = server.ItemsToDisplay;
+            var items = await server.GetItemsToDisplayAsync(async x => await x.ToListAsync());
             return Ok(items);
         }
 
         [HttpGet("[action]")]
-        public ActionResult GetOrdersGridGroupable()
+        public async Task<ActionResult> GetOrdersGridGroupable()
         {
             var repository = new OrdersRepository(_context);
             IGridServer<Order> server = new GridCoreServer<Order>(repository.GetAll(), Request.Query,
@@ -142,7 +142,7 @@ namespace GridBlazorClientSide.Server.Controllers
                     .Groupable(true)
                     .SetRemoveDiacritics<NorthwindDbContext>("RemoveDiacritics");
 
-            var items = server.ItemsToDisplay;
+            var items = await server.GetItemsToDisplayAsync(async x => await x.ToListAsync());
             return Ok(items);
         }
 
@@ -173,7 +173,7 @@ namespace GridBlazorClientSide.Server.Controllers
         }
 
         [HttpGet("[action]")]
-        public ActionResult GetOrdersGridWithSubgrids()
+        public async Task<ActionResult> GetOrdersGridWithSubgrids()
         {
             var repository = new OrdersRepository(_context);
             IGridServer<Order> server = new GridCoreServer<Order>(repository.GetAll(), Request.Query,
@@ -184,13 +184,13 @@ namespace GridBlazorClientSide.Server.Controllers
                     .WithMultipleFilters()
                     .SetRemoveDiacritics<NorthwindDbContext>("RemoveDiacritics");
 
-            var items = server.ItemsToDisplay;
+            var items = await server.GetItemsToDisplayAsync(async x => await x.ToListAsync());
 
             return Ok(items);
         }
 
         [HttpGet("[action]")]
-        public ActionResult OrderColumnsListFilter()
+        public async Task<ActionResult> OrderColumnsListFilter()
         {
             var repository = new OrdersRepository(_context);
             IGridServer<Order> server = new GridCoreServer<Order>(repository.GetAll(), Request.Query,
@@ -202,12 +202,12 @@ namespace GridBlazorClientSide.Server.Controllers
                     .WithGridItemsCount()
                     .SetRemoveDiacritics<NorthwindDbContext>("RemoveDiacritics");
 
-            var items = server.ItemsToDisplay;
+            var items = await server.GetItemsToDisplayAsync(async x => await x.ToListAsync());
             return Ok(items);
         }
 
         [HttpGet("[action]")]
-        public ActionResult OrderColumnsWithEdit()
+        public async Task<ActionResult> OrderColumnsWithEdit()
         {
             var repository = new OrdersRepository(_context);
             IGridServer<Order> server = new GridCoreServer<Order>(repository.GetAll(), Request.Query,
@@ -219,12 +219,12 @@ namespace GridBlazorClientSide.Server.Controllers
                     .WithGridItemsCount()
                     .SetRemoveDiacritics<NorthwindDbContext>("RemoveDiacritics");
 
-            var items = server.ItemsToDisplay;
+            var items = await server.GetItemsToDisplayAsync(async x => await x.ToListAsync());
             return Ok(items);
         }
 
         [HttpGet("[action]")]
-        public ActionResult OrderColumnsWithCrud()
+        public async Task<ActionResult> OrderColumnsWithCrud()
         {
             var repository = new OrdersRepository(_context);
             IGridServer<Order> server = new GridCoreServer<Order>(repository.GetAll(), Request.Query,
@@ -236,12 +236,12 @@ namespace GridBlazorClientSide.Server.Controllers
                     .WithGridItemsCount()
                     .SetRemoveDiacritics<NorthwindDbContext>("RemoveDiacritics");
 
-            var items = server.ItemsToDisplay;
+            var items = await server.GetItemsToDisplayAsync(async x => await x.ToListAsync());
             return Ok(items);
         }
 
         [HttpGet("[action]")]
-        public ActionResult OrderColumnsWithSubgridCrud()
+        public async Task<ActionResult> OrderColumnsWithSubgridCrud()
         {
             var repository = new OrdersRepository(_context);
             IGridServer<Order> server = new GridCoreServer<Order>(repository.GetAll(), Request.Query,
@@ -253,7 +253,7 @@ namespace GridBlazorClientSide.Server.Controllers
                     .WithGridItemsCount()
                     .SetRemoveDiacritics<NorthwindDbContext>("RemoveDiacritics");
 
-            var items = server.ItemsToDisplay;
+            var items = await server.GetItemsToDisplayAsync(async x => await x.ToListAsync());
             return Ok(items);
         }
 
@@ -279,7 +279,7 @@ namespace GridBlazorClientSide.Server.Controllers
         }
 
         [HttpGet("[action]")]
-        public ActionResult GetOrdersGridAllFeatures()
+        public async Task<ActionResult> GetOrdersGridAllFeatures()
         {
             var repository = new OrdersRepository(_context);
             IGridServer<Order> server = new GridCoreServer<Order>(repository.GetAll(), Request.Query,
@@ -291,7 +291,7 @@ namespace GridBlazorClientSide.Server.Controllers
                     .Searchable(true, false)
                     .SetRemoveDiacritics<NorthwindDbContext>("RemoveDiacritics");
 
-            var items = server.ItemsToDisplay;
+            var items = await server.GetItemsToDisplayAsync(async x => await x.ToListAsync());
 
             return Ok(items);
         }
@@ -361,7 +361,7 @@ namespace GridBlazorClientSide.Server.Controllers
         }
 
         [HttpGet("[action]")]
-        public ActionResult GetOrderDetailsGrid(int OrderId)
+        public async Task<ActionResult> GetOrderDetailsGrid(int OrderId)
         {
             var orderDetails = (new OrderDetailsRepository(_context)).GetForOrder(OrderId);
 
@@ -373,12 +373,12 @@ namespace GridBlazorClientSide.Server.Controllers
                         .WithMultipleFilters()
                         .SetRemoveDiacritics<NorthwindDbContext>("RemoveDiacritics");
 
-            var items = server.ItemsToDisplay;
+            var items = await server.GetItemsToDisplayAsync(async x => await x.ToListAsync());
             return Ok(items);
         }
 
         [HttpGet("[action]")]
-        public ActionResult GetOrderDetailsGridWithCrud(int OrderId)
+        public async Task<ActionResult> GetOrderDetailsGridWithCrud(int OrderId)
         {
             var orderDetails = (new OrderDetailsRepository(_context)).GetForOrder(OrderId);
 
@@ -390,12 +390,12 @@ namespace GridBlazorClientSide.Server.Controllers
                         .WithMultipleFilters()
                         .SetRemoveDiacritics<NorthwindDbContext>("RemoveDiacritics");
 
-            var items = server.ItemsToDisplay;
+            var items = await server.GetItemsToDisplayAsync(async x => await x.ToListAsync());
             return Ok(items);
         }
 
         [HttpGet("[action]")]
-        public ActionResult GetOrderDetailsGridAllFeatures(int OrderId)
+        public async Task<ActionResult> GetOrderDetailsGridAllFeatures(int OrderId)
         {
             var orderDetails = (new OrderDetailsRepository(_context)).GetForOrder(OrderId);
 
@@ -407,12 +407,12 @@ namespace GridBlazorClientSide.Server.Controllers
                         .WithMultipleFilters()
                         .SetRemoveDiacritics<NorthwindDbContext>("RemoveDiacritics");
 
-            var items = server.ItemsToDisplay;
+            var items = await server.GetItemsToDisplayAsync(async x => await x.ToListAsync());
             return Ok(items);
         }
 
         [HttpGet("[action]")]
-        public ActionResult GetCustomersGrid()
+        public async Task<ActionResult> GetCustomersGrid()
         {
             var repository = new CustomersRepository(_context);
             IGridServer<Customer> server = new GridCoreServer<Customer>(repository.GetAll(), Request.Query,
@@ -424,7 +424,7 @@ namespace GridBlazorClientSide.Server.Controllers
                     .WithGridItemsCount()
                     .SetRemoveDiacritics<NorthwindDbContext>("RemoveDiacritics");
 
-            var items = server.ItemsToDisplay;
+            var items = await server.GetItemsToDisplayAsync(async x => await x.ToListAsync());
             return Ok(items);
         }
 
@@ -493,7 +493,7 @@ namespace GridBlazorClientSide.Server.Controllers
         }
 
         [HttpGet("[action]")]
-        public ActionResult GetEmployeesGrid()
+        public async Task<ActionResult> GetEmployeesGrid()
         {
             var repository = new EmployeeRepository(_context);
             IGridServer<Employee> server = new GridCoreServer<Employee>(repository.GetAll(), Request.Query,
@@ -505,7 +505,7 @@ namespace GridBlazorClientSide.Server.Controllers
                     .WithGridItemsCount()
                     .SetRemoveDiacritics<NorthwindDbContext>("RemoveDiacritics");
 
-            var items = server.ItemsToDisplay;
+            var items = await server.GetItemsToDisplayAsync(async x => await x.ToListAsync());
             return Ok(items);
         }
 

@@ -42,7 +42,7 @@ else
     private GridComponent<Order> _gridComponent;
     private OrderDetailMemoryService _orderDetailMemoryService;
     private Task _task;
-    private bool _areEventsLoaded = false;
+    private bool _afterRenderExecuted = false;
 
     protected override async Task OnParametersSetAsync()
     {
@@ -58,7 +58,7 @@ else
             var products = productService.GetAllProducts();
 
             _orderDetailMemoryService = new OrderDetailMemoryService(subGridColumns, products);
-            var subGridClient = new GridClient<OrderDetail>(q => orderDetailService.GetOrderDetailsGridRows(subGridColumns, keys, q),
+            var subGridClient = new GridClient<OrderDetail>(q => orderDetailService.GetOrderDetailsGridRowsAsync(subGridColumns, keys, q),
                 _orderDetailMemoryService, subGridQuery, false, "orderDetailsGrid" + keys[0].ToString(), subGridColumns, locale)
                     .Sortable()
                     .Filterable()
@@ -76,7 +76,7 @@ else
         Action<IGridColumnCollection<Order>> columns = c => ColumnCollections.OrderColumnsWithCreateGrid(c,
             c => customerService.GetAllCustomers(), c => employeeService.GetAllEmployees(), shipperService.GetAllShippers, subGrids);
 
-        var client = new GridClient<Order>(q => orderService.GetOrdersGridRows(columns, q),
+        var client = new GridClient<Order>(q => orderService.GetOrdersGridRowsAsync(columns, q),
             query, false, "ordersGrid", columns, locale)
             .Sortable()
             .Filterable()
@@ -94,10 +94,10 @@ else
 
     protected override void OnAfterRender(bool firstRender)
     {
-        if (_gridComponent != null && !_areEventsLoaded)
+        if (_gridComponent != null && !_afterRenderExecuted)
         {
             _gridComponent.AfterInsert += AfterInsert;
-            _areEventsLoaded = true;
+            _afterRenderExecuted = true;
         }
     }
 

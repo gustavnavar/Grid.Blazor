@@ -46,7 +46,7 @@ else
         Func<object[], Task<ICGrid>> subGrids = async keys =>
         {
             var subGridQuery = new QueryDictionary<StringValues>();
-            var subGridClient = new GridClient<OrderDetail>(q => orderDetailService.GetOrderDetailsGridRows(ColumnCollections.OrderDetailColumns, keys, q),
+            var subGridClient = new GridClient<OrderDetail>(q => orderDetailService.GetOrderDetailsGridRowsAsync(ColumnCollections.OrderDetailColumns, keys, q),
                 subGridQuery, false, "orderDetailsGrid" + keys[0].ToString(), ColumnCollections.OrderDetailColumns, locale)
                     .Sortable()
                     .Filterable()
@@ -59,7 +59,7 @@ else
         };
 
         var query = new QueryDictionary<StringValues>();
-        var client = new GridClient<Order>(q => orderService.GetOrdersGridRows(ColumnCollections.OrderColumnsWithSubgrids, q), query,
+        var client = new GridClient<Order>(q => orderService.GetOrdersGridRowsAsync(ColumnCollections.OrderColumnsWithSubgrids, q), query,
             false, "ordersGrid", ColumnCollections.OrderColumnsWithSubgrids, locale)
             .Sortable()
             .Filterable()

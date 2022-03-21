@@ -12,6 +12,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Localization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Linq;
 
@@ -133,7 +134,8 @@ namespace GridMvc.Demo.Pages
                 .ChangePageSize(true)
                 .WithGridItemsCount()
                 .SetTableLayout(TableLayout.Fixed, "1000px", "400px")
-                .SetRemoveDiacritics<NorthwindDbContext>("RemoveDiacritics");
+                .SetRemoveDiacritics<NorthwindDbContext>("RemoveDiacritics")
+                .SetToListAsyncFunc(async x => await x.ToListAsync());
 
             Grid = server.Grid;
 

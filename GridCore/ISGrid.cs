@@ -5,6 +5,8 @@ using GridShared.Utility;
 using Microsoft.Extensions.Primitives;
 using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace GridCore
 {
@@ -14,6 +16,9 @@ namespace GridCore
 
         void SetRowCssClassesContraint(Func<T, string> contraint);
         IEnumerable<T> GetItemsToDisplay();
+        Task<IEnumerable<T>> GetItemsToDisplayAsync(Func<IQueryable<T>, Task<IList<T>>> toListAsync);
+
+        void SetToListAsyncFunc(Func<IQueryable<T>, Task<IList<T>>> toListAsync);
     }
 
     public interface ISGrid : IGrid, IGridOptions
@@ -50,10 +55,16 @@ namespace GridCore
 
         void AutoGenerateColumns();
 
+        Task<IEnumerable<object>> GetItemsToDisplayAsync();
+
+        /// <summary>
+        ///     Displaying grid items count
+        /// </summary>
+        Task<int> GetDisplayingItemsCountAsync();
+
         /// <summary>
         ///     Get column values to display
         /// </summary>
-
         IList<object> GetValuesToDisplay(string columnName, IEnumerable<object> items);
     }
 }

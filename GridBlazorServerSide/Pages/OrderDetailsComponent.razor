@@ -48,7 +48,7 @@
 
         var query = new QueryDictionary<StringValues>();
 
-        var client = new GridClient<OrderDetail>(q => orderDetailService.GetOrderDetailsGridRows(ColumnCollections.OrderDetailColumns,
+        var client = new GridClient<OrderDetail>(q => orderDetailService.GetOrderDetailsGridRowsAsync(ColumnCollections.OrderDetailColumns,
             new object[] { _order.OrderID }, q), query, false, "orderDetailsGrid", ColumnCollections.OrderDetailColumns, locale)
             .Sortable()
             .Filterable()

@@ -8,7 +8,9 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Primitives;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Reflection;
+using System.Threading.Tasks;
 
 namespace GridCore.Server
 
@@ -310,6 +312,12 @@ namespace GridCore.Server
             return this;
         }
 
+        public IGridServer<T> SetToListAsyncFunc(Func<IQueryable<T>, Task<IList<T>>> toListAsync)
+        {
+            _source.SetToListAsyncFunc(toListAsync);
+            return this;
+        }
+
         /// <summary>
         ///     Items, displaying in the grid view
         /// </summary>
@@ -321,6 +329,14 @@ namespace GridCore.Server
                 return new ItemsDTO<T>(items, totals, new PagerDTO(_source.EnablePaging, _source.Pager.PageSize,
                     _source.Pager.CurrentPage, _source.ItemsCount));
             }
+        }
+
+        public async Task<ItemsDTO<T>> GetItemsToDisplayAsync(Func<IQueryable<T>, Task<IList<T>>> toListAsync)
+        {
+            var items = await _source.GetItemsToDisplayAsync(toListAsync);
+            var totals = _source.GetTotals();
+            return new ItemsDTO<T>(items, totals, new PagerDTO(_source.EnablePaging, _source.Pager.PageSize,
+                _source.Pager.CurrentPage, _source.ItemsCount));
         }
 
         /// <summary>

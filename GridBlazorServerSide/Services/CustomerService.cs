@@ -63,7 +63,7 @@ namespace GridBlazorServerSide.Services
             }
         }
 
-        public ItemsDTO<Customer> GetCustomersGridRows(Action<IGridColumnCollection<Customer>> columns,
+        public async Task<ItemsDTO<Customer>> GetCustomersGridRowsAsync(Action<IGridColumnCollection<Customer>> columns,
             QueryDictionary<StringValues> query)
         {
             using (var context = new NorthwindDbContext(_options))
@@ -78,7 +78,7 @@ namespace GridBlazorServerSide.Services
                         .SetRemoveDiacritics<NorthwindDbContext>("RemoveDiacritics");
 
                 // return items to displays
-                var items = server.ItemsToDisplay;
+                var items = await server.GetItemsToDisplayAsync(async x => await x.ToListAsync());
                 return items;
             }
         }
@@ -151,6 +151,7 @@ namespace GridBlazorServerSide.Services
         IEnumerable<SelectItem> GetAllCustomers();
         IEnumerable<SelectItem> GetAllCustomers2();
         IEnumerable<SelectItem> GetAllContacts();
-        ItemsDTO<Customer> GetCustomersGridRows(Action<IGridColumnCollection<Customer>> columns, QueryDictionary<StringValues> query);
+        Task<ItemsDTO<Customer>> GetCustomersGridRowsAsync(Action<IGridColumnCollection<Customer>> columns,
+            QueryDictionary<StringValues> query);
     }
 }

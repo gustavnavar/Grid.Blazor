@@ -48,7 +48,7 @@ else
 
         var query = new QueryDictionary<StringValues>();
 
-        var client = new GridClient<Customer>(q => customerService.GetCustomersGridRows(ColumnCollections.CustomerColumns, q),
+        var client = new GridClient<Customer>(q => customerService.GetCustomersGridRowsAsync(ColumnCollections.CustomerColumns, q),
             query, false, "customersGrid", ColumnCollections.CustomerColumns, locale)
             .Sortable()
             .Filterable()

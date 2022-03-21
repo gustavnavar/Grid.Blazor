@@ -1141,13 +1141,13 @@ namespace GridBlazor
             try
             {
                 ItemsDTO<T> response;
-                if (_dataService != null)
+                if (_dataServiceAsync != null)
                 {
-                    response = _dataService((QueryDictionary<StringValues>)_query);
+                    response = await _dataServiceAsync(_query);
                 }
-                else if (_dataServiceAsync != null)
+                else if (_dataService != null)
                 {
-                    response = await _dataServiceAsync((QueryDictionary<StringValues>)_query);
+                    response = _dataService(_query);
                 }
                 else
                 {

@@ -42,6 +42,7 @@ else
     private object[] _keys;
     private GridMode _mode;
     private Task _task;
+    private bool _afterRenderExecuted = false;
 
     [Parameter]
     public string OrderId { get; set; }
@@ -58,7 +59,7 @@ else
 
         Action<IGridColumnCollection<Order>> columns = c => ColumnCollections.OrderColumnsWithCrud(c,
             c => customerService.GetAllCustomers(), c => employeeService.GetAllEmployees(), shipperService.GetAllShippers);
-        var client = new GridClient<Order>(q => orderService.GetOrdersGridRows(columns, q),
+        var client = new GridClient<Order>(q => orderService.GetOrdersGridRowsAsync(columns, q),
             query, false, "ordersGrid", columns, locale)
             .Sortable()
             .Filterable()
@@ -110,11 +111,12 @@ else
 
     protected override void OnAfterRender(bool firstRender)
     {
-        if (firstRender)
+        if (!_afterRenderExecuted && _grid.GridComponent != null)
         {
             _gridComponent.BeforeInsert += BeforeInsert;
             _gridComponent.BeforeUpdate += BeforeUpdate;
             _gridComponent.BeforeDelete += BeforeDelete;
+            _afterRenderExecuted = true;
         }
     }
 

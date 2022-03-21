@@ -19,7 +19,7 @@ namespace GridMvc.Demo.Services
             _options = options;
         }
 
-        public ItemsDTO<Order> GetOrdersGridRows(Action<IGridColumnCollection<Order>> columns,
+        public async Task<ItemsDTO<Order>> GetOrdersGridRowsAsync(Action<IGridColumnCollection<Order>> columns,
             QueryDictionary<StringValues> query)
         {
             using (var context = new NorthwindDbContext(_options))
@@ -36,7 +36,7 @@ namespace GridMvc.Demo.Services
                         .SetRemoveDiacritics<NorthwindDbContext>("RemoveDiacritics");
 
                 // return items to displays
-                var items = server.ItemsToDisplay;
+                var items = await server.GetItemsToDisplayAsync(async x => await x.ToListAsync());
                 return items;
             }
         }
@@ -86,6 +86,6 @@ namespace GridMvc.Demo.Services
 
     public interface IOrderService : ICrudDataService<Order>
     {
-        ItemsDTO<Order> GetOrdersGridRows(Action<IGridColumnCollection<Order>> columns, QueryDictionary<StringValues> query);
+        Task<ItemsDTO<Order>> GetOrdersGridRowsAsync(Action<IGridColumnCollection<Order>> columns, QueryDictionary<StringValues> query);
     }
 }

@@ -62,7 +62,7 @@ else
             Action<IGridColumnCollection<OrderDetail>> subGridColumns = c => ColumnCollections.OrderDetailColumnsCrud(c,
                 productService.GetAllProducts);
 
-            var subGridClient = new GridClient<OrderDetail>(q => orderDetailService.GetOrderDetailsGridRows(subGridColumns, keys, q),
+            var subGridClient = new GridClient<OrderDetail>(q => orderDetailService.GetOrderDetailsGridRowsAsync(subGridColumns, keys, q),
                 subGridQuery, false, "orderDetailsGrid" + keys[0].ToString(), subGridColumns, locale)
                     .Sortable()
                     .Filterable()
@@ -83,7 +83,7 @@ else
         Action<IGridColumnCollection<Order>> columns = c => ColumnCollections.OrderColumnsWithNestedCrud(c,
             c => customerService.GetAllCustomers(), c => employeeService.GetAllEmployees(), shipperService.GetAllShippers, subGrids);
 
-        var client = new GridClient<Order>(q => orderService.GetOrdersGridRows(columns, q),
+        var client = new GridClient<Order>(q => orderService.GetOrdersGridRowsAsync(columns, q),
             query, false, "ordersGrid", columns, locale)
             .Sortable()
             .Filterable()

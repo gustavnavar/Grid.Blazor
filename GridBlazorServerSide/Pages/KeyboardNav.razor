@@ -63,7 +63,7 @@ else
                 // do nothing, GridState was not a valid state
             }
         }
-        var client = new GridClient<Order>(q => orderService.GetOrdersGridRows(ColumnCollections.OrderColumns, q),
+        var client = new GridClient<Order>(q => orderService.GetOrdersGridRowsAsync(ColumnCollections.OrderColumns, q),
             query, false, "ordersGrid", ColumnCollections.OrderColumns, locale)
             .Sortable()
             .Filterable()

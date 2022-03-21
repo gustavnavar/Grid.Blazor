@@ -60,6 +60,7 @@ else
     private OrderIDetaillnfo _orderDetailInfo;
     private IQueryDictionary<Type> _customFilters = new QueryDictionary<Type>();
     private List<Action<object>> _rowClickActions;
+    private bool _afterRenderExecuted = false;
 
     [Parameter]
     public string GridState { get; set; }
@@ -80,7 +81,7 @@ else
             Action<IGridColumnCollection<OrderDetail>> subGridColumns = c => ColumnCollections.OrderDetailColumnsCrud(c,
                 productService.GetAllProducts);
 
-            var subGridClient = new GridClient<OrderDetail>(q => orderDetailService.GetOrderDetailsGridRows(subGridColumns, keys, q),
+            var subGridClient = new GridClient<OrderDetail>(q => orderDetailService.GetOrderDetailsGridRowsAsync(subGridColumns, keys, q),
                 subGridQuery, false, "orderDetailsGrid" + keys[0].ToString(), subGridColumns, locale)
                     .Sortable()
                     .Filterable()
@@ -101,7 +102,7 @@ else
                 productService.GetAllProducts);
 
 
-            var subGridClient = new GridClient<OrderDetail>(q => orderDetailService.GetOrderDetailsGridRows(subGridColumns, keys, q),
+            var subGridClient = new GridClient<OrderDetail>(q => orderDetailService.GetOrderDetailsGridRowsAsync(subGridColumns, keys, q),
                 subGridQuery, false, "orderDetailsGrid" + keys[0].ToString(), subGridColumns, locale)
                     .SetRowCssClasses(item => item.Quantity > 10 ? "success" : string.Empty)
                     .Sortable()
@@ -133,7 +134,7 @@ else
                 // do nothing, GridState was not a valid state
             }
         }
-        var client = new GridClient<Order>(q => orderService.GetOrdersGridRows(orderColumns, q), query, false,
+        var client = new GridClient<Order>(q => orderService.GetOrdersGridRowsAsync(orderColumns, q), query, false,
             "ordersGrid", orderColumns, locale)
             .SetRowCssClasses(item => item.Customer.IsVip ? "success" : string.Empty)
             .Sortable()
@@ -161,7 +162,7 @@ else
 
     protected override void OnAfterRender(bool firstRender)
     {
-        if (firstRender)
+        if (!_afterRenderExecuted && _grid.GridComponent != null)
         {
             _gridComponent.PagerChanged += PagerChanged;
             _gridComponent.SortChanged += SortChanged;
@@ -170,6 +171,7 @@ else
             _gridComponent.SearchChanged += SearchChanged;
             _gridComponent.BeforeRefreshGrid += BeforeRefreshGrid;
             _gridComponent.AfterRefreshGrid += AfterRefreshGrid;
+            _afterRenderExecuted = true;
         }
     }
 

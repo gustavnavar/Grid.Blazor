@@ -84,7 +84,7 @@ else
                 // do nothing, GridState was not a valid state
             }
         }
-        var ordersClient = new GridClient<Order>(q => orderService.GetOrdersGridRows(orderColumns, q),
+        var ordersClient = new GridClient<Order>(q => orderService.GetOrdersGridRowsAsync(orderColumns, q),
             ordersQuery, false, "ordersGrid", orderColumns, locale)
             .Sortable()
             .Filterable()
@@ -109,7 +109,7 @@ else
                 // do nothing, GridState was not a valid state
             }
         }
-        var customersClient = new GridClient<Customer>(q => customerService.GetCustomersGridRows(ColumnCollections.CustomersColumns, q),
+        var customersClient = new GridClient<Customer>(q => customerService.GetCustomersGridRowsAsync(ColumnCollections.CustomersColumns, q),
             customersQuery, false, "customersGrid", ColumnCollections.CustomersColumns, locale)
             .Sortable()
             .Filterable()

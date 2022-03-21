@@ -19,6 +19,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using System.Text.Json;
+using System.Threading.Tasks;
 
 namespace GridCore
 {
@@ -172,6 +173,37 @@ namespace GridCore
         {
             get { return (IEnumerable<object>)GetItemsToDisplay(); }
         }
+        public virtual IEnumerable<T> GetItemsToDisplay()
+        {
+            PrepareItemsToDisplay();
+            return AfterItems;
+        }
+
+        /// <summary>
+        ///     Methods returns items that will need to be displayed
+        /// </summary>
+        public virtual void SetToListAsyncFunc(Func<IQueryable<T>, Task<IList<T>>> toListAsync)
+        {
+            ToListAsync = toListAsync;
+        }
+
+        /// <summary>
+        ///     Methods returns items that will need to be displayed
+        /// </summary>
+        public virtual async Task<IEnumerable<T>> GetItemsToDisplayAsync(Func<IQueryable<T>, Task<IList<T>>> toListAsync)
+        {
+            SetToListAsyncFunc(toListAsync);
+            return (IEnumerable<T>)await GetItemsToDisplayAsync();
+        }
+
+        /// <summary>
+        ///     Methods returns items that will need to be displayed
+        /// </summary>
+        public virtual async Task<IEnumerable<object>> GetItemsToDisplayAsync()
+        {
+            await PrepareItemsToDisplayAsync(ToListAsync);
+            return (IEnumerable<object>)AfterItems;
+        }
 
         /// <summary>
         ///     Provides query, using by the grid
@@ -192,6 +224,17 @@ namespace GridCore
                 _displayingItemsCount = GetItemsToDisplay().Count();
                 return _displayingItemsCount;
             }
+        }
+
+        /// <summary>
+        ///     Count of current displaying items
+        /// </summary>
+        public virtual async Task<int> GetDisplayingItemsCountAsync()
+        {
+            if (_displayingItemsCount >= 0)
+                return _displayingItemsCount;
+            _displayingItemsCount = (await GetItemsToDisplayAsync()).Count();
+            return _displayingItemsCount;
         }
 
         /// <summary>
@@ -339,15 +382,6 @@ namespace GridCore
             {
                 (Pager as GridPager).MaxDisplayedPages = opt.PagingMaxDisplayedPages;
             }
-        }
-
-        /// <summary>
-        ///     Methods returns items that will need to be displayed
-        /// </summary>
-        public virtual IEnumerable<T> GetItemsToDisplay()
-        {
-            PrepareItemsToDisplay();
-            return AfterItems;
         }
 
         /// <summary>

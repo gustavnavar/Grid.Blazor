@@ -45,7 +45,7 @@ else
 
         //query.Add("grid-filter", "Customer.Country__1__usa");
 
-        var client = new GridClient<Order>(q => orderService.GetOrdersGridRows(ColumnCollections.OrderColumnsWithButttonComponents, q),
+        var client = new GridClient<Order>(q => orderService.GetOrdersGridRowsAsync(ColumnCollections.OrderColumnsWithButttonComponents, q),
             query, false, "ordersGrid", ColumnCollections.OrderColumnsWithButttonComponents, locale)
             .Sortable()
             .Filterable()

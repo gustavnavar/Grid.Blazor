@@ -37,6 +37,7 @@ else
 {
     private CGrid<Order> _grid;
     private Task _task;
+    private bool _afterRenderExecuted = false;
 
     protected override async Task OnParametersSetAsync()
     {
@@ -44,7 +45,7 @@ else
         SharedResource.Culture = locale;
 
         var query = new QueryDictionary<StringValues>();
-        var client = new GridClient<Order>(q => orderService.GetOrdersGridRows(ColumnCollections.OrderColumnsExtSorting, q),
+        var client = new GridClient<Order>(q => orderService.GetOrdersGridRowsAsync(ColumnCollections.OrderColumnsExtSorting, q),
             query, false, "ordersGrid", ColumnCollections.OrderColumnsExtSorting, locale)
             .Sortable()
             .Filterable()
@@ -61,11 +62,12 @@ else
 
     protected override async Task OnAfterRenderAsync(bool firstRender)
     {
-        if (firstRender)
+        if (!_afterRenderExecuted && _grid.GridComponent != null)
         {
             var payloads = new List<ColumnOrderValue>();
             payloads.Add(new ColumnOrderValue("Customer.CompanyName", GridSortDirection.Ascending, 1));
             await _grid.GridComponent.InitExtSorting(payloads);
+            _afterRenderExecuted = true;
         }
     }
 }

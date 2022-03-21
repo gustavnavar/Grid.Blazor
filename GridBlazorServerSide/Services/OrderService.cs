@@ -20,7 +20,7 @@ namespace GridBlazorServerSide.Services
             _options = options;
         }
 
-        public ItemsDTO<Order> GetOrdersGridRows(Action<IGridColumnCollection<Order>> columns,
+        public async Task<ItemsDTO<Order>> GetOrdersGridRowsAsync(Action<IGridColumnCollection<Order>> columns,
             QueryDictionary<StringValues> query)
         {
             using (var context = new NorthwindDbContext(_options))
@@ -37,7 +37,7 @@ namespace GridBlazorServerSide.Services
                         .SetRemoveDiacritics<NorthwindDbContext>("RemoveDiacritics");
 
                 // return items to displays
-                var items = server.ItemsToDisplay;
+                var items = await server.GetItemsToDisplayAsync(async x => await x.ToListAsync());
 
                 // uncomment the following lines are to test null responses
                 //items = null;
@@ -300,7 +300,7 @@ namespace GridBlazorServerSide.Services
 
     public interface IOrderService : ICrudDataService<Order>
     {
-        ItemsDTO<Order> GetOrdersGridRows(Action<IGridColumnCollection<Order>> columns, QueryDictionary<StringValues> query);
+        Task<ItemsDTO<Order>> GetOrdersGridRowsAsync(Action<IGridColumnCollection<Order>> columns, QueryDictionary<StringValues> query);
         ItemsDTO<Order> GetOrdersGridRowsWithCount(Action<IGridColumnCollection<Order>> columns, QueryDictionary<StringValues> query);
         ItemsDTO<Order> GetOrdersGridRows(QueryDictionary<StringValues> query);
         ItemsDTO<Order> GetOrdersGridRowsInMemory(Action<IGridColumnCollection<Order>> columns, QueryDictionary<StringValues> query);

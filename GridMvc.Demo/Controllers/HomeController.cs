@@ -142,7 +142,8 @@ namespace GridMvc.Demo.Controllers
                 .SetStriped(true)
                 .ChangePageSize(true)
                 .WithGridItemsCount()
-                .SetRemoveDiacritics<NorthwindDbContext>("RemoveDiacritics");
+                .SetRemoveDiacritics<NorthwindDbContext>("RemoveDiacritics")
+                .SetToListAsyncFunc(async x => await x.ToListAsync());
 
             return View(server.Grid);
         }
@@ -601,7 +602,8 @@ namespace GridMvc.Demo.Controllers
                 .SetStriped(true)
                 .ChangePageSize(true)
                 .WithGridItemsCount()
-                .SetRemoveDiacritics<NorthwindDbContext>("RemoveDiacritics");
+                .SetRemoveDiacritics<NorthwindDbContext>("RemoveDiacritics")
+                .SetToListAsyncFunc(async x => await x.ToListAsync());
 
             return View(server.Grid);
         }

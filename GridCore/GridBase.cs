@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace GridCore
 {
@@ -15,9 +16,9 @@ namespace GridCore
         //processors process items after adds to main collection (sorting and paging)
         private readonly List<IGridItemsProcessor<T>> _processors = new List<IGridItemsProcessor<T>>();
         private IGridItemsProcessor<T> _totalsprocessor;
-        protected IEnumerable<T> AfterItems; //items after processors
         protected IQueryable<T> BeforeItems; //items before processors
-
+        protected IEnumerable<T> AfterItems; //items after processors
+        protected Func<IQueryable<T>, Task<IList<T>>> ToListAsync;
 
         private int _itemsCount = -1; // total items count on collection
         private bool _itemsPreProcessed; //is preprocessors launched?
@@ -98,6 +99,11 @@ namespace GridCore
 
         protected void PrepareItemsToDisplay()
         {
+            PrepareItemsToDisplayAsync().Wait();
+        }
+
+        protected async Task PrepareItemsToDisplayAsync(Func<IQueryable<T>, Task<IList<T>>> toListAsync = null)
+        {
             if (!_itemsProcessed)
             {
                 _itemsProcessed = true;
@@ -109,7 +115,10 @@ namespace GridCore
                     else
                         itemsToProcess = processor.Process(itemsToProcess);
                 }
-                AfterItems = itemsToProcess.ToList(); //select from db (in EF case)
+                if (toListAsync == null)
+                    AfterItems = itemsToProcess.ToList();
+                else
+                    AfterItems = await toListAsync(itemsToProcess);
             }
         }
 

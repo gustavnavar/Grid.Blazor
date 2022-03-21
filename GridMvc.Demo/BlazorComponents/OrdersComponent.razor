@@ -118,7 +118,7 @@ else
             c.Add(o => o.OrderDetails.Count).Titled("Details").SetCrudHidden(true);
         };
 
-        var client = new GridClient<Order>(q => orderService.GetOrdersGridRows(orderColumns, q),
+        var client = new GridClient<Order>(q => orderService.GetOrdersGridRowsAsync(orderColumns, q),
             query, false, "ordersGrid", orderColumns, locale)
             .SetRowCssClasses(item => item.Customer.IsVip ? "success" : string.Empty)
             .Sortable()

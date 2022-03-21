@@ -37,7 +37,7 @@ else
 {
     private CGrid<Order> _grid;
     private GridComponent<Order> _gridComponent;
-    private bool _areEventsLoaded = false;
+    private bool _afterRenderExecuted = false;
     private object[] _keys;
     private GridMode _mode;
     private Task _task;
@@ -129,12 +129,12 @@ else
 
     protected override void OnAfterRender(bool firstRender)
     {
-        if (!_areEventsLoaded && _gridComponent != null)
+        if (!_afterRenderExecuted && _gridComponent != null)
         {
             _gridComponent.BeforeInsert += BeforeInsert;
             _gridComponent.BeforeUpdate += BeforeUpdate;
             _gridComponent.BeforeDelete += BeforeDelete;
-            _areEventsLoaded = true;
+            _afterRenderExecuted = true;
         }
     }
 

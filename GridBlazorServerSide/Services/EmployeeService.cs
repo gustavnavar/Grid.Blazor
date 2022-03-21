@@ -21,7 +21,7 @@ namespace GridBlazorServerSide.Services
             _options = options;
         }
 
-        public ItemsDTO<Employee> GetEmployeesGridRows(Action<IGridColumnCollection<Employee>> columns,
+        public async Task<ItemsDTO<Employee>> GetEmployeesGridRowsAsync(Action<IGridColumnCollection<Employee>> columns,
             QueryDictionary<StringValues> query)
         {
             using (var context = new NorthwindDbContext(_options))
@@ -37,7 +37,7 @@ namespace GridBlazorServerSide.Services
                         .SetRemoveDiacritics<NorthwindDbContext>("RemoveDiacritics");
 
                 // return items to displays
-                var items = server.ItemsToDisplay;
+                var items = await server.GetItemsToDisplayAsync(async x => await x.ToListAsync());
                 return items;
             }
         }
@@ -120,7 +120,7 @@ namespace GridBlazorServerSide.Services
 
     public interface IEmployeeService : ICrudDataService<Employee>
     {
-        ItemsDTO<Employee> GetEmployeesGridRows(Action<IGridColumnCollection<Employee>> columns,
+        Task<ItemsDTO<Employee>> GetEmployeesGridRowsAsync(Action<IGridColumnCollection<Employee>> columns,
             QueryDictionary<StringValues> query);
         IEnumerable<SelectItem> GetAllEmployees();
     }

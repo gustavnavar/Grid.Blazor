@@ -37,6 +37,7 @@ else
 {
     private CGrid<Order> _grid;
     private Task _task;
+    private bool _afterRenderExecuted = false;
 
     protected override async Task OnParametersSetAsync()
     {
@@ -45,7 +46,7 @@ else
 
         var query = new QueryDictionary<StringValues>();
         Action<IGridColumnCollection<Order>> columns = c => ColumnCollections.OrderColumnsGroupable(c, SetCustomerNameLabel);
-        var client = new GridClient<Order>(q => orderService.GetOrdersGridRows(columns, q),
+        var client = new GridClient<Order>(q => orderService.GetOrdersGridRowsAsync(columns, q),
             query, false, "ordersGrid", columns, locale)
             .Sortable()
             .Filterable()
@@ -62,12 +63,13 @@ else
 
     protected override async Task OnAfterRenderAsync(bool firstRender)
     {
-        if (firstRender)
+        if (!_afterRenderExecuted && _grid.GridComponent != null)
         {
             var payloads = new List<ColumnOrderValue>();
             payloads.Add(new ColumnOrderValue("Customer.CompanyName", GridSortDirection.Ascending, 1));
             payloads.Add(new ColumnOrderValue("ShipVia", GridSortDirection.Ascending, 2));
             await _grid.GridComponent.InitGrouping(payloads);
+            _afterRenderExecuted = true;
         }
     }
 

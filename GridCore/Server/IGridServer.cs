@@ -1,7 +1,9 @@
 ﻿using GridShared;
 using GridShared.Utility;
 using System;
-using System.Reflection;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace GridCore.Server
 {
@@ -192,10 +194,14 @@ namespace GridCore.Server
         /// </summary>
         IGridServer<T> SetRemoveDiacritics<R>(string methodName);
 
+        IGridServer<T> SetToListAsyncFunc(Func<IQueryable<T>, Task<IList<T>>> toListAsync);
+
         /// <summary>
         ///     Items, displaying in the grid view
         /// </summary>
         ItemsDTO<T> ItemsToDisplay { get; }
+
+        Task<ItemsDTO<T>> GetItemsToDisplayAsync(Func<IQueryable<T>, Task<IList<T>>> toListAsync);
 
         /// <summary>
         ///     Grid object
