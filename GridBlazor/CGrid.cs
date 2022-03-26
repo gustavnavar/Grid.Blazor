@@ -649,6 +649,8 @@ namespace GridBlazor
             return values.ToArray();
         }
 
+        public bool DataAnnotationsValidation { get; set; } = true;
+
         private static readonly Task<bool> InsertColumnSucceded = Task.FromResult(true);
         private static readonly Task<bool> InsertColumnFailed = Task.FromResult(false);
         /// <inheritdoc/>

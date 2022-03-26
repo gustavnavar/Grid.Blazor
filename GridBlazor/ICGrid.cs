@@ -73,6 +73,8 @@ namespace GridBlazor
         /// </summary>
         string[] GetPrimaryKeys();
 
+        bool DataAnnotationsValidation { get; set; }
+
         IGridSettingsProvider Settings { get; }
 
         IEnumerable<object> SelectedItems { get; set; }
@@ -341,18 +343,19 @@ namespace GridBlazor
         int DeleteConfirmationWidth { get; set; }
 
         int DeleteConfirmationLabelWidth { get; set; }
+
         /// <summary>
         ///     Header CRUD buttons
         /// </summary>
         bool HeaderCrudButtons { get; set; }
 
         /// <summary>
-        ///     Header CRUD buttons
+        ///     Show errors on Grid when getting data
         /// </summary>
         bool ShowErrorsOnGrid { get; set; }
 
         /// <summary>
-        ///     Header CRUD buttons
+        ///     Throw exceptions when getting data
         /// </summary>
         bool ThrowExceptions { get; set; }
 

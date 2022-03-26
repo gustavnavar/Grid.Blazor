@@ -10,8 +10,11 @@
 <div class="@GridComponent.GridCrudHeaderCssClass">@(string.IsNullOrWhiteSpace(GridComponent.Grid.UpdateFormLabel) ? Strings.Edit : GridComponent.Grid.UpdateFormLabel)</div>
 
 <EditForm Model="@Item" OnValidSubmit="@UpdateItem" @ref="Form">
-    <DataAnnotationsValidator />
-    <ValidationSummary />
+    @if (GridComponent.Grid.DataAnnotationsValidation)
+    {
+        <DataAnnotationsValidator />
+        <ValidationSummary />
+    }
     <p id="error" class="@GridComponent.GridErrorCssClass">@Error</p>
     <div class="form-horizontal">
         @foreach (var column in GridComponent.Grid.Columns)

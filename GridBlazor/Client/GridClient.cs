@@ -351,6 +351,12 @@ namespace GridBlazor
             return this;
         }
 
+        public IGridClient<T> SetDataAnnotationsValidation(bool enabled = true)
+        {
+            _source.DataAnnotationsValidation = enabled;
+            return this;
+        }
+
         public IGridClient<T> SetCrudButtonLabels(string createLabel, string readLabel, string updateLabel, 
             string deleteLabel)
         {

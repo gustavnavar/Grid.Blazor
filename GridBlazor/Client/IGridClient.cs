@@ -201,6 +201,11 @@ namespace GridBlazor
             Func<T, bool> updateEnabled, Func<T, bool> deleteEnabled, ICrudFileService<T> crudFileService = null);
 
         /// <summary>
+        ///     Enable or disable annotations validation for CRUD views
+        /// </summary>
+        IGridClient<T> SetDataAnnotationsValidation(bool enabled = true);
+
+        /// <summary>
         ///     Configure CRUD button labels
         /// </summary>
         IGridClient<T> SetCrudButtonLabels(string createLabel, string readLabel, string updateLabel, string deleteLabel);
