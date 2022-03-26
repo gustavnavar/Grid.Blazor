@@ -215,6 +215,15 @@ Notice that all handlers must be async.
 In this sample ```OrderValidator``` is a class that validates the ```Order``` object to be modified. If it's a valid item the event returns ```true```.  If the item is not valid the event writes an error on the form and returns ```false```. 
 
 
+## Default CRUD data annotations validation
+
+GridBlazor validates by default all data annotations defined with attributes on the the model. This validation happens for Create and Update standard forms. If you use custom CRUD forms this will depend on your code.
+
+If you want to use custom validator classes on standard CRUD form, you can disable the default data annotation validation to avoid validators collisions. 
+It can be disabled using the ```SetDataAnnotationsValidation``` method of the ```GridClient``` object.
+An then you have to configure your custom validators using the  ```BeforeInsert```, ```BeforeUpdate``` and ```BeforeDelete``` events.
+
+
 ## Events for subgrids and nested CRUD subgrids
 
 If you want to define events for a subgrid and/or a nested CRUD subgrid you must handle in the ```OnAfterRender``` method of the subgrid component. 
