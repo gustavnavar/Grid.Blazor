@@ -25,6 +25,7 @@ namespace GridShared.Columns
         { get; }
         Func<T, Task<IEnumerable<SelectItem>>> SelectItemExpr { get; set; }
         Func<T, CrudHidden> CrudHidden { get; }
+        Func<T, GridMode, Task> AfterChangeValue { get; set; }
     }
 
     public interface IGridColumn : ISortableColumn, IFilterableColumn
@@ -349,6 +350,11 @@ namespace GridShared.Columns
         ///     Sets the column as hidden in all crud views
         /// </summary>
         IGridColumn<T> SetCrudHidden(bool all);
+
+        /// <summary>
+        ///     Sets a function to be executed after the column value is changed (CRUD)
+        /// </summary>
+        IGridColumn<T> SetAfterChangeValue(Func<T, GridMode, Task> afterChangeValue);
 
         /// <summary>
         ///     Sets the column as hidden for excel export, 

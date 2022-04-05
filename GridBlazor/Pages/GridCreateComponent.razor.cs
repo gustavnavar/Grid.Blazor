@@ -125,7 +125,7 @@ namespace GridBlazor.Pages
             pi.SetValue(obj, value, null);
         }
 
-        private void ChangeValue(ChangeEventArgs e, IGridColumn column, string typeAttr = null)
+        private async Task ChangeValue(ChangeEventArgs e, IGridColumn column, string typeAttr = null)
         {
             if (string.IsNullOrWhiteSpace(e.Value.ToString()))
             {
@@ -181,6 +181,9 @@ namespace GridBlazor.Pages
                     }
                 }
             }
+
+            if (((IGridColumn<T>)column).AfterChangeValue != null)
+                await((IGridColumn<T>)column).AfterChangeValue(Item, GridMode.Create);
         }
 
         private void OnFileChange(IGridColumn column, IFileListEntry[] files)

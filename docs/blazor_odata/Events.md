@@ -215,6 +215,36 @@ Notice that all handlers must be async.
 In this sample ```OrderValidator``` is a class that validates the ```Order``` object to be modified. If it's a valid item the event returns ```true```.  If the item is not valid the event writes an error on the form and returns ```false```. 
 
 
+## Grid column events
+
+Grid column provides an event to notify when a column is changed in the standard Create and Update forms. The supported event is:
+- ```Func<T, GridMode, Task> AfterChangeValue```: it's fired when the column value is changed 
+
+This column event is configured using the ```SetAfterChangeValue``` of the ```GridColumn``` object.
+
+You can see here an example of the grid column definition where the method ```afterChangeCustomerID``` is fired when a new value of the ```CusotmerID``` is selected:
+
+```c#
+c.Add(o => o.CustomerID)
+    .SetSelectField(true, o => o.Customer.CustomerID + " - " + o.Customer.CompanyName, o => path + $"api/SampleData/GetAllCustomers")
+    .SetAfterChangeValue(afterChangeCustomerID);
+```
+
+The fired method can do any change on the row. You can see here an example where the ```OrderDate``` field is modified only on the Create form:
+
+```c#
+Func<Order, GridMode, Task> afterChangeCustomerID = async (order, mode) =>
+{
+    if (mode == GridMode.Create)
+    {
+        order.OrderDate = DateTime.Now;
+        StateHasChanged();
+        await Task.CompletedTask;
+    }
+};
+```
+
+
 ## Default CRUD data annotations validation
 
 GridBlazor validates by default all data annotations defined with attributes on the the model. This validation happens for Create and Update standard forms. If you use custom CRUD forms this will depend on your code.

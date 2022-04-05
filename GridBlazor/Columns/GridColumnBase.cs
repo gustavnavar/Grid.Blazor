@@ -70,6 +70,8 @@ namespace GridBlazor.Columns
 
         public Func<T, CrudHidden> CrudHidden { get; protected set; } = x => GridShared.Columns.CrudHidden.NONE;
 
+        public Func<T, GridMode, Task> AfterChangeValue { get; set; }
+
         public Func<T, bool> ReadOnlyOnCreate { get; protected set; } = x => false;
 
         public Func<T, bool> ReadOnlyOnUpdate { get; protected set; } = x => false;
@@ -521,6 +523,12 @@ namespace GridBlazor.Columns
                 return crudHidden;
             };
 
+            return this;
+        }
+
+        public IGridColumn<T> SetAfterChangeValue(Func<T, GridMode, Task> afterChangeValue)
+        {
+            AfterChangeValue = afterChangeValue;
             return this;
         }
 
