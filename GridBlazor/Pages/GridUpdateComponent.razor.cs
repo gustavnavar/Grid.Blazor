@@ -206,12 +206,15 @@ namespace GridBlazor.Pages
                 await((IGridColumn<T>)column).AfterChangeValue(Item, GridMode.Update);
         }
 
-        private void OnFileChange(IGridColumn column, IFileListEntry[] files)
+        private async Task OnFileChange(IGridColumn column, IFileListEntry[] files)
         {
             if (!column.MultipleInput && files.Length > 1)
                 files = new IFileListEntry[] { files[0] };
             
             Files.AddParameter(column.FieldName, files);
+
+            if (((IGridColumn<T>)column).AfterChangeValue != null)
+                await((IGridColumn<T>)column).AfterChangeValue(Item, GridMode.Update);
 
             _shouldRender = true;
             StateHasChanged();
