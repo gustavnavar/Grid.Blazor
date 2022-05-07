@@ -114,7 +114,8 @@ else
                 .SetStriped(true)
                 .ODataCrud(true)
                 .WithMultipleFilters()
-                .WithGridItemsCount();
+                .WithGridItemsCount()
+                .SetInitCreateValues(InitCreateOrder);
 
         _grid = client.Grid;
 
@@ -210,5 +211,11 @@ else
             }
         }
         return await Task.FromResult(true);
+    }
+
+    private async Task InitCreateOrder(Order order)
+    {
+        order.Freight = 50;
+        await Task.CompletedTask;
     }
 }

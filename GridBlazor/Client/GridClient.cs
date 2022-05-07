@@ -351,6 +351,12 @@ namespace GridBlazor
             return this;
         }
 
+        public IGridClient<T> SetInitCreateValues(Func<T, Task> initCreateValues)
+        {
+            _source.InitCreateValues = initCreateValues;
+            return this;
+        }
+
         public IGridClient<T> SetDataAnnotationsValidation(bool enabled = true)
         {
             _source.DataAnnotationsValidation = enabled;

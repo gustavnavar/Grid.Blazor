@@ -677,6 +677,11 @@ namespace GridBlazor
         public QueryDictionary<object> FixedValues { get; set; } = null;
 
         /// <summary>
+        ///     Function to init values for columns in the Create form
+        /// </summary>
+        public Func<T, Task> InitCreateValues { get; set; } = null;
+
+        /// <summary>
         ///     Fixed column values for the OData url expand parameter
         /// </summary>
         public IEnumerable<string> ODataExpandList { get; set; }

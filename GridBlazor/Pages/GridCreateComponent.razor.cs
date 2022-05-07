@@ -243,7 +243,7 @@ namespace GridBlazor.Pages
             }
         }
 
-        protected async Task BackButtonClicked()
+        public async Task BackButtonClicked()
         {
             await GridComponent.Back();
         }

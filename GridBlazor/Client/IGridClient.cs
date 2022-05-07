@@ -201,6 +201,11 @@ namespace GridBlazor
             Func<T, bool> updateEnabled, Func<T, bool> deleteEnabled, ICrudFileService<T> crudFileService = null);
 
         /// <summary>
+        ///     Set function to init values for columns in the Create form
+        /// </summary>
+        IGridClient<T> SetInitCreateValues(Func<T, Task> initCreateValues);
+
+        /// <summary>
         ///     Enable or disable annotations validation for CRUD views
         /// </summary>
         IGridClient<T> SetDataAnnotationsValidation(bool enabled = true);

@@ -15,6 +15,10 @@ namespace GridBlazor
 {
     public interface ICGrid<T> : ICGrid, IGrid<T>
     {
+        /// <summary>
+        ///     Function to init values for columns in the Create form
+        /// </summary>
+        Func<T, Task> InitCreateValues { get; set; }
     }
 
     /// <summary>

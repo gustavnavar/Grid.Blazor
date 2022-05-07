@@ -705,6 +705,10 @@ namespace GridBlazor.Pages
             bool isValid = await OnBeforeCreateForm();
             if (isValid)
             {
+                if (((ICGrid<T>)Grid).InitCreateValues != null)
+                {
+                    await ((ICGrid<T>)Grid).InitCreateValues(Item);
+                }
                 if (Grid.FixedValues != null)
                 {
                     foreach (var fixValue in Grid.FixedValues)

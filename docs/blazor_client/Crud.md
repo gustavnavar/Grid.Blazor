@@ -655,4 +655,25 @@ And finaly you have to pass the paramenters initialized before to the ```GridCom
 <GridComponent T="Order" Grid="@_grid" Mode="_mode" Keys="_keys"></GridComponent>
 ``` 
 
+## Init values for Create form
+
+You can configure initial values for new records when using the Create form. 
+
+You have to use the ```SetInitCreateValues``` of the ```GridClient``` object:
+
+```c#
+    var client = new GridClient<Order>(HttpClient, url, query, false, "ordersGrid", ColumnCollections.OrderColumnsWithCustomCrud, locale)
+        .Crud(true, orderService)
+        .SetDeleteConfirmation(true);
+```
+
+And the write the funtion to init the values:
+```c#
+    private async Task InitCreateOrder(Order order)
+    {
+        order.Freight = 50;
+        await Task.CompletedTask;
+    }
+```
+
 [<- Front-end back-end API](API.md) | [Nested CRUD ->](Nested_crud.md)
