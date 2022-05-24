@@ -7,8 +7,7 @@
     @ondragenter="HandleDragEnter" 
     @ondragleave="HandleDragLeave" 
     @ondrop="HandleDrop" 
-    ondragover="event.preventDefault();"
->
+    ondragover="event.preventDefault();">
     <div class="grid-header-group">
         @if (GridComponent.Grid.RearrangeColumnEnabled
                 && !string.IsNullOrEmpty(_dropClass))

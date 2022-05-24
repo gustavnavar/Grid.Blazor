@@ -355,6 +355,7 @@ namespace GridBlazor.Pages
                     }
                     else
                     {
+                        _allChecked = null;
                         _showAllChecked = false;
                     }
                 }
