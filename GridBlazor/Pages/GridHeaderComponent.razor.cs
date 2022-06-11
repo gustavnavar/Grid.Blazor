@@ -355,7 +355,7 @@ namespace GridBlazor.Pages
                     }
                     else
                     {
-                        _allChecked = null;
+                        // _allChecked = null is not required. It would disable all values except for rows in ExceptCheckedRows dictionary 
                         _showAllChecked = false;
                     }
                 }

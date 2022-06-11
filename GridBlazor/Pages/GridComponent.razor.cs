@@ -252,7 +252,8 @@ namespace GridBlazor.Pages
             HeaderComponents = new QueryDictionary<GridHeaderComponent<T>>();
 
             InitCheckboxAndSubGridVars();
-            InitCheckedKeys();
+            // checked keys are already initialized 
+            //InitCheckedKeys();
 
             var queryBuilder = new CustomQueryStringBuilder(Grid.Settings.SearchSettings.Query);
             var exceptQueryParameters = new List<string> { GridPager.DefaultPageSizeQueryParameter };

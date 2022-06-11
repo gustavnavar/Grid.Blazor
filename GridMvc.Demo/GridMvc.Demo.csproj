@@ -9,7 +9,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Microsoft.Web.LibraryManager.Build" Version="2.1.113" />
+    <PackageReference Include="Microsoft.Web.LibraryManager.Build" Version="2.1.161" />
   </ItemGroup>
 
   <ItemGroup>
