@@ -59,7 +59,7 @@
                             else
                             {
                                 var selectedValue = column.GetFormatedValue(value);
-                                <select id="@column.FieldName" name="@column.FieldName" class="form-control @(ColumnErrors.ContainsKey(@column.FieldName) ? "input-validation-error" : "")" value="@selectedValue" @onchange="(e) => ChangeValue(e, column)">
+                                <select autocomplete="@column.CustomAutoComplete.Invoke()" id="@column.FieldName" name="@column.FieldName" class="form-control @(ColumnErrors.ContainsKey(@column.FieldName) ? "input-validation-error" : "")" value="@selectedValue" @onchange="(e) => ChangeValue(e, column)">
                                     <option value="">@Strings.SelectItem</option>
                                     @foreach (var selectItem in ((IGridColumn<T>)column).SelectItems)
                                     {
@@ -88,7 +88,7 @@
                             else
                             {
                                 var selectedValue = column.GetFormatedValue(value);
-                                <select id="@column.FieldName" name="@column.FieldName" class="form-control @(ColumnErrors.ContainsKey(@column.FieldName) ? "input-validation-error" : "")" value="@selectedValue" @onchange="(e) => ChangeValue(e, column)">
+                                <select autocomplete="@column.CustomAutoComplete.Invoke()" id="@column.FieldName" name="@column.FieldName" class="form-control @(ColumnErrors.ContainsKey(@column.FieldName) ? "input-validation-error" : "")" value="@selectedValue" @onchange="(e) => ChangeValue(e, column)">
                                     <option value="">@Strings.SelectItem</option>
                                     @{
                                         var selectItems = SelectItems.Get(column.Name);
@@ -165,7 +165,7 @@
                             {
                                 if (type == typeof(string) && ((IGridColumn<T>)column).InputType == InputType.TextArea)
                                 {
-                                    <textarea id="@column.FieldName" name="@column.FieldName" class="form-control @(ColumnErrors.ContainsKey(@column.FieldName) ? "input-validation-error" : "")" rows="@column.TextAreaRows" value="@column.GetFormatedValue(value)" @onchange="(e) => ChangeValue(e, column)" />
+                                    <textarea autocomplete="@column.CustomAutoComplete.Invoke()" id="@column.FieldName" name="@column.FieldName" class="form-control @(ColumnErrors.ContainsKey(@column.FieldName) ? "input-validation-error" : "")" rows="@column.TextAreaRows" value="@column.GetFormatedValue(value)" @onchange="(e) => ChangeValue(e, column)" />
                                 }
                                 else if (((IGridColumn<T>)column).InputType == InputType.File)
                                 {
@@ -188,7 +188,7 @@
                                         InputFiles.Add(column.FieldName, reference);
                                     }
                                     <div class="input-group">
-                                        <input type="text" id="@column.FieldName" name="@column.FieldName" class="form-control  @(ColumnErrors.ContainsKey(@column.FieldName) ? "input-validation-error" : "")" value="@column.GetFormatedValue(value)">
+                                        <input type="text" autocomplete="@column.CustomAutoComplete.Invoke()" id="@column.FieldName" name="@column.FieldName" class="form-control  @(ColumnErrors.ContainsKey(@column.FieldName) ? "input-validation-error" : "")" value="@column.GetFormatedValue(value)">
                                         <span class="input-group-btn">
                                             <button type="button" class="btn btn-default btn-primary grid-button-input-file" @onclick="() => ButtonFileClicked(column.FieldName)">@Strings.Files</button>
                                         </span>
@@ -209,44 +209,44 @@
                                     {
                                         if (GridComponent.IsWeekSupported)
                                         {
-                                            <input id="@column.FieldName" name="@column.FieldName" type="@typeAttr" placeholder="yyyy-Www" class="form-control @(ColumnErrors.ContainsKey(@column.FieldName) ? "input-validation-error" : "")" value="@(((ICGridColumn)column).GetFormatedDateTime(value, typeAttr))" @onchange="(e) => ChangeValue(e, column, typeAttr)" />
+                                            <input autocomplete="@column.CustomAutoComplete.Invoke()" id="@column.FieldName" name="@column.FieldName" type="@typeAttr" placeholder="yyyy-Www" class="form-control @(ColumnErrors.ContainsKey(@column.FieldName) ? "input-validation-error" : "")" value="@(((ICGridColumn)column).GetFormatedDateTime(value, typeAttr))" @onchange="(e) => ChangeValue(e, column, typeAttr)" />
                                         }
                                         else
                                         {
-                                            <input id="@column.FieldName" name="@column.FieldName" type="text" placeholder="yyyy-Www" class="form-control @(ColumnErrors.ContainsKey(@column.FieldName) ? "input-validation-error" : "")" value="@(((ICGridColumn)column).GetFormatedDateTime(value, typeAttr))" @onchange="(e) => ChangeValue(e, column, typeAttr)" />
+                                            <input autocomplete="@column.CustomAutoComplete.Invoke()" id="@column.FieldName" name="@column.FieldName" type="text" placeholder="yyyy-Www" class="form-control @(ColumnErrors.ContainsKey(@column.FieldName) ? "input-validation-error" : "")" value="@(((ICGridColumn)column).GetFormatedDateTime(value, typeAttr))" @onchange="(e) => ChangeValue(e, column, typeAttr)" />
                                         }
                                     }
                                     else if (typeAttr == "month")
                                     {
                                         if (GridComponent.IsMonthSupported)
                                         {
-                                            <input id="@column.FieldName" name="@column.FieldName" type="@typeAttr" placeholder="yyyy-mm" class="form-control @(ColumnErrors.ContainsKey(@column.FieldName) ? "input-validation-error" : "")" value="@(((ICGridColumn)column).GetFormatedDateTime(value, typeAttr))" @onchange="(e) => ChangeValue(e, column, typeAttr)" />
+                                            <input autocomplete="@column.CustomAutoComplete.Invoke()" id="@column.FieldName" name="@column.FieldName" type="@typeAttr" placeholder="yyyy-mm" class="form-control @(ColumnErrors.ContainsKey(@column.FieldName) ? "input-validation-error" : "")" value="@(((ICGridColumn)column).GetFormatedDateTime(value, typeAttr))" @onchange="(e) => ChangeValue(e, column, typeAttr)" />
                                         }
                                         else
                                         {
-                                            <input id="@column.FieldName" name="@column.FieldName" type="text" placeholder="yyyy-mm" class="form-control @(ColumnErrors.ContainsKey(@column.FieldName) ? "input-validation-error" : "")" value="@(((ICGridColumn)column).GetFormatedDateTime(value, typeAttr))" @onchange="(e) => ChangeValue(e, column, typeAttr)" />
+                                            <input autocomplete="@column.CustomAutoComplete.Invoke()" id="@column.FieldName" name="@column.FieldName" type="text" placeholder="yyyy-mm" class="form-control @(ColumnErrors.ContainsKey(@column.FieldName) ? "input-validation-error" : "")" value="@(((ICGridColumn)column).GetFormatedDateTime(value, typeAttr))" @onchange="(e) => ChangeValue(e, column, typeAttr)" />
                                         }
                                     }
                                     else if (typeAttr == "datetime-local")
                                     {
                                         if (GridComponent.IsDateTimeLocalSupported)
                                         {
-                                            <input id="@column.FieldName" name="@column.FieldName" type="@typeAttr" placeholder="yyyy-mm-dd hh:mm" class="form-control @(ColumnErrors.ContainsKey(@column.FieldName) ? "input-validation-error" : "")" value="@(((ICGridColumn)column).GetFormatedDateTime(value, typeAttr))" @onchange="(e) => ChangeValue(e, column, typeAttr)" />
+                                            <input autocomplete="@column.CustomAutoComplete.Invoke()" id="@column.FieldName" name="@column.FieldName" type="@typeAttr" placeholder="yyyy-mm-dd hh:mm" class="form-control @(ColumnErrors.ContainsKey(@column.FieldName) ? "input-validation-error" : "")" value="@(((ICGridColumn)column).GetFormatedDateTime(value, typeAttr))" @onchange="(e) => ChangeValue(e, column, typeAttr)" />
                                         }
                                         else
                                         {
-                                            <input id="@column.FieldName" name="@column.FieldName" type="text" placeholder="yyyy-mm-dd hh:mm" class="form-control @(ColumnErrors.ContainsKey(@column.FieldName) ? "input-validation-error" : "")" value="@(((ICGridColumn)column).GetFormatedDateTime(value, typeAttr))" @onchange="(e) => ChangeValue(e, column, typeAttr)" />
+                                            <input autocomplete="@column.CustomAutoComplete.Invoke()" id="@column.FieldName" name="@column.FieldName" type="text" placeholder="yyyy-mm-dd hh:mm" class="form-control @(ColumnErrors.ContainsKey(@column.FieldName) ? "input-validation-error" : "")" value="@(((ICGridColumn)column).GetFormatedDateTime(value, typeAttr))" @onchange="(e) => ChangeValue(e, column, typeAttr)" />
                                         }
                                     }
                                     else
                                     {
-                                        <input id="@column.FieldName" name="@column.FieldName" type="@typeAttr" class="form-control @(ColumnErrors.ContainsKey(@column.FieldName) ? "input-validation-error" : "")" value="@(((ICGridColumn)column).GetFormatedDateTime(value, typeAttr))" @onchange="(e) => ChangeValue(e, column, typeAttr)" />
+                                        <input autocomplete="@column.CustomAutoComplete.Invoke()" id="@column.FieldName" name="@column.FieldName" type="@typeAttr" class="form-control @(ColumnErrors.ContainsKey(@column.FieldName) ? "input-validation-error" : "")" value="@(((ICGridColumn)column).GetFormatedDateTime(value, typeAttr))" @onchange="(e) => ChangeValue(e, column, typeAttr)" />
                                     }
                                 }
                                 else if (type == typeof(System.TimeSpan))
                                 {
                                     string typeAttr = ((IGridColumn<T>)column).InputType == InputType.None ? "time" : ((IGridColumn<T>)column).InputType.ToTypeAttr();
-                                    <input id="@column.FieldName" name="@column.FieldName" type="@typeAttr" class="form-control @(ColumnErrors.ContainsKey(@column.FieldName) ? "input-validation-error" : "")" value="@(((ICGridColumn)column).GetFormatedDateTime(value, typeAttr))" @onchange="(e) => ChangeValue(e, column)" />
+                                    <input autocomplete="@column.CustomAutoComplete.Invoke()" id="@column.FieldName" name="@column.FieldName" type="@typeAttr" class="form-control @(ColumnErrors.ContainsKey(@column.FieldName) ? "input-validation-error" : "")" value="@(((ICGridColumn)column).GetFormatedDateTime(value, typeAttr))" @onchange="(e) => ChangeValue(e, column)" />
                                 }
                                 else if (type == typeof(bool))
                                 {
@@ -285,11 +285,11 @@
                                 }
                                 else if (((IGridColumn<T>)column).InputType == InputType.Number)
                                 {
-                                    <input type="@(InputType.Number.ToTypeAttr())" id="@column.FieldName" name="@column.FieldName" class="form-control @(ColumnErrors.ContainsKey(@column.FieldName) ? "input-validation-error" : "")" value="@column.GetFormatedValue(value)" @onchange="(e) => ChangeValue(e, column)" />
+                                    <input autocomplete="@column.CustomAutoComplete.Invoke()" type="@(InputType.Number.ToTypeAttr())" id="@column.FieldName" name="@column.FieldName" class="form-control @(ColumnErrors.ContainsKey(@column.FieldName) ? "input-validation-error" : "")" value="@column.GetFormatedValue(value)" @onchange="(e) => ChangeValue(e, column)" />
                                 }
                                 else
                                 {
-                                    <input id="@column.FieldName" name="@column.FieldName" class="form-control @(ColumnErrors.ContainsKey(@column.FieldName) ? "input-validation-error" : "")" value="@column.GetFormatedValue(value)" @onchange="(e) => ChangeValue(e, column)" />
+                                    <input autocomplete="@column.CustomAutoComplete.Invoke()" id="@column.FieldName" name="@column.FieldName" class="form-control @(ColumnErrors.ContainsKey(@column.FieldName) ? "input-validation-error" : "")" value="@column.GetFormatedValue(value)" @onchange="(e) => ChangeValue(e, column)" />
                                 }
                                 <span class="field-validation-error">
                                     <span>@ColumnErrors.Get(column.FieldName)</span>
