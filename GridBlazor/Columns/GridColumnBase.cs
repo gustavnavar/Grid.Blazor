@@ -135,7 +135,7 @@ namespace GridBlazor.Columns
 
         public AutocompleteTerm AutoCompleteTaxonomy { get; set; }
 
-        public Func<string> CustomAutoComplete { get; set; } = () => "";
+        public Func<string> CustomAutoComplete { get; set; } = () => null;
 
         public IGridColumn<T> Titled(string title)
         {
