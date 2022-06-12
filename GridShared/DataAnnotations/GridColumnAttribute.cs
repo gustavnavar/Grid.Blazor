@@ -1,4 +1,5 @@
-﻿using GridShared.Sorting;
+﻿using GridShared.Columns;
+using GridShared.Sorting;
 using System;
 
 namespace GridShared.DataAnnotations
@@ -10,6 +11,8 @@ namespace GridShared.DataAnnotations
     public class GridColumnAttribute : GridHiddenColumnAttribute
     {
         private GridSortDirection? _initialDirection;
+
+        private AutocompleteTerm? _autocompleteTaxonomy;
 
         public GridColumnAttribute()
         {
@@ -55,9 +58,21 @@ namespace GridShared.DataAnnotations
             set { _initialDirection = value; }
         }
 
+        public AutocompleteTerm AutocompleteTaxonomy
+        {
+            get { return _autocompleteTaxonomy.HasValue ? _autocompleteTaxonomy.Value : AutocompleteTerm.None; }
+            set { _autocompleteTaxonomy = value; }
+        }
+
         public GridSortDirection? GetInitialSortDirection()
         {
             return _initialDirection;
         }
+
+        public AutocompleteTerm? GetAutocompleteTaxonomy()
+        {
+            return _autocompleteTaxonomy;
+        }
+
     }
 }

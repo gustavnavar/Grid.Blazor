@@ -352,6 +352,23 @@ namespace GridShared.Columns
         IGridColumn<T> SetCrudHidden(bool all);
 
         /// <summary>
+        ///     Sets the taxonomy for the input AutoComplete attribute, if supported
+        /// </summary>
+        /// <param name="taxonomy">
+        /// Any value from <see cref="AutocompleteTerm"/> except <c>AutocompleteTerm.Custom</c>
+        /// </param>
+        /// <exception cref="System.ArgumentException">
+        /// Thrown when <paramref name="taxonomy"/> is set to <c>AutocompleteTerm.Custom</c>
+        /// </exception>
+        IGridColumn<T> SetAutoCompleteTaxonomy(AutocompleteTerm taxonomy);
+
+        /// <summary>
+        ///     Sets the custom taxonomy for the input AutoComplete attribute, if supported
+        /// </summary>
+        /// <param name="custom">Function that returns a string to be used to populate the autocomplete attribute</param>
+        IGridColumn<T> SetAutoCompleteTaxonomy(Func<String> custom);
+
+        /// <summary>
         ///     Sets a function to be executed after the column value is changed (CRUD)
         /// </summary>
         IGridColumn<T> SetAfterChangeValue(Func<T, GridMode, Task> afterChangeValue);
@@ -515,6 +532,10 @@ namespace GridShared.Columns
         bool EncodeEnabled { get; }
 
         bool SanitizeEnabled { get; }
+
+        Func<string> CustomAutoComplete { get; set; }
+
+        AutocompleteTerm AutoCompleteTaxonomy { get; set; }
 
         /// <summary>
         ///     Gets value of the gridColumn by instance

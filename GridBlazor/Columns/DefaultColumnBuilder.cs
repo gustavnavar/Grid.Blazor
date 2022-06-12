@@ -113,6 +113,12 @@ namespace GridBlazor.Columns
             if (initialDirection.HasValue)
                 column.SortInitialDirection(initialDirection.Value);
 
+            AutocompleteTerm? autocompleteTaxonomy = options.GetAutocompleteTaxonomy();
+            if (autocompleteTaxonomy.HasValue)
+            {
+                column.SetAutoCompleteTaxonomy(autocompleteTaxonomy.Value);
+            }
+
             if (!string.IsNullOrEmpty(options.FilterWidgetType))
                 column.SetFilterWidgetType(options.FilterWidgetType);
 
