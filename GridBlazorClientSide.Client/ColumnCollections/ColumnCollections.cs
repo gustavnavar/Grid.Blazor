@@ -363,7 +363,7 @@ namespace GridBlazorClientSide.Client.ColumnCollections
             .Titled(SharedResource.Freight)
             .SetWidth(150)
             .Format("{0:#,##0.00}")
-            .SetAutoCompleteTaxonomy(AutocompleteTerm.Defeat);
+            .SetAutoCompleteTaxonomy(AutoCompleteTerm.Defeat);
 
             /* Adding "Vip customer" column: */
             c.Add(o => o.Customer.IsVip).Titled(SharedResource.IsVip).SetWidth(90).Css("hidden-xs") //hide on phones

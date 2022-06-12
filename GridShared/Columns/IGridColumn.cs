@@ -355,12 +355,12 @@ namespace GridShared.Columns
         ///     Sets the taxonomy for the input AutoComplete attribute, if supported
         /// </summary>
         /// <param name="taxonomy">
-        /// Any value from <see cref="AutocompleteTerm"/> except <c>AutocompleteTerm.Custom</c>
+        /// Any value from <see cref="AutoCompleteTerm"/> except <c>AutoCompleteTerm.Custom</c>
         /// </param>
         /// <exception cref="System.ArgumentException">
-        /// Thrown when <paramref name="taxonomy"/> is set to <c>AutocompleteTerm.Custom</c>
+        /// Thrown when <paramref name="taxonomy"/> is set to <c>AutoCompleteTerm.Custom</c>
         /// </exception>
-        IGridColumn<T> SetAutoCompleteTaxonomy(AutocompleteTerm taxonomy);
+        IGridColumn<T> SetAutoCompleteTaxonomy(AutoCompleteTerm taxonomy);
 
         /// <summary>
         ///     Sets the custom taxonomy for the input AutoComplete attribute, if supported
@@ -535,7 +535,7 @@ namespace GridShared.Columns
 
         Func<string> CustomAutoComplete { get; set; }
 
-        AutocompleteTerm AutoCompleteTaxonomy { get; set; }
+        AutoCompleteTerm AutoCompleteTaxonomy { get; set; }
 
         /// <summary>
         ///     Gets value of the gridColumn by instance

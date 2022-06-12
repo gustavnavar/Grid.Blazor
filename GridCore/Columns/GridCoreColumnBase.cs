@@ -138,7 +138,7 @@ namespace GridCore.Columns
 
         public string TooltipValue { get; set; }
 
-        public AutocompleteTerm AutoCompleteTaxonomy { get; set; }
+        public AutoCompleteTerm AutoCompleteTaxonomy { get; set; }
         public Func<string> CustomAutoComplete { get; set; } = () => "";
 
         public IGridColumn<T> Titled(string title)
@@ -544,10 +544,10 @@ namespace GridCore.Columns
         }
 
         /// <inheritdoc/>
-        public IGridColumn<T> SetAutoCompleteTaxonomy(AutocompleteTerm taxonomy)
+        public IGridColumn<T> SetAutoCompleteTaxonomy(AutoCompleteTerm taxonomy)
         {
             AutoCompleteTaxonomy = taxonomy;
-            if (taxonomy == AutocompleteTerm.Custom)
+            if (taxonomy == AutoCompleteTerm.Custom)
             {
                 throw new ArgumentException("Must supply custom argument when using custom autocomplete");
             }
@@ -558,7 +558,7 @@ namespace GridCore.Columns
         /// <inheritdoc/>
         public IGridColumn<T> SetAutoCompleteTaxonomy(Func<string> custom)
         {
-            AutoCompleteTaxonomy = AutocompleteTerm.Custom;
+            AutoCompleteTaxonomy = AutoCompleteTerm.Custom;
             CustomAutoComplete = custom;
             return this;
         }

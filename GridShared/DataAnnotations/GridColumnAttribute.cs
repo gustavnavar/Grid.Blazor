@@ -12,7 +12,7 @@ namespace GridShared.DataAnnotations
     {
         private GridSortDirection? _initialDirection;
 
-        private AutocompleteTerm? _autocompleteTaxonomy;
+        private AutoCompleteTerm? _autoCompleteTaxonomy;
 
         public GridColumnAttribute()
         {
@@ -58,10 +58,10 @@ namespace GridShared.DataAnnotations
             set { _initialDirection = value; }
         }
 
-        public AutocompleteTerm AutocompleteTaxonomy
+        public AutoCompleteTerm AutocompleteTaxonomy
         {
-            get { return _autocompleteTaxonomy.HasValue ? _autocompleteTaxonomy.Value : AutocompleteTerm.None; }
-            set { _autocompleteTaxonomy = value; }
+            get { return _autoCompleteTaxonomy.HasValue ? _autoCompleteTaxonomy.Value : AutoCompleteTerm.None; }
+            set { _autoCompleteTaxonomy = value; }
         }
 
         public GridSortDirection? GetInitialSortDirection()
@@ -69,9 +69,9 @@ namespace GridShared.DataAnnotations
             return _initialDirection;
         }
 
-        public AutocompleteTerm? GetAutocompleteTaxonomy()
+        public AutoCompleteTerm? GetAutocompleteTaxonomy()
         {
-            return _autocompleteTaxonomy;
+            return _autoCompleteTaxonomy;
         }
 
     }
