@@ -113,6 +113,12 @@ namespace GridCore.Columns
             if (initialDirection.HasValue)
                 column.SortInitialDirection(initialDirection.Value);
 
+            AutoCompleteTerm? autoCompleteTaxonomy = options.GetAutocompleteTaxonomy();
+            if (autoCompleteTaxonomy.HasValue)
+            {
+                column.SetAutoCompleteTaxonomy(autoCompleteTaxonomy.Value);
+            }
+
             if (!string.IsNullOrEmpty(options.FilterWidgetType))
                 column.SetFilterWidgetType(options.FilterWidgetType);
 

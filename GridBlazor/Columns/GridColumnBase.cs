@@ -133,6 +133,10 @@ namespace GridBlazor.Columns
 
         public string TooltipValue { get; set; }
 
+        public AutoCompleteTerm AutoCompleteTaxonomy { get; set; }
+
+        public Func<string> CustomAutoComplete { get; set; } = () => null;
+
         public IGridColumn<T> Titled(string title)
         {
             Title = title;
@@ -523,6 +527,26 @@ namespace GridBlazor.Columns
                 return crudHidden;
             };
 
+            return this;
+        }
+
+        /// <inheritdoc/>
+        public IGridColumn<T> SetAutoCompleteTaxonomy(AutoCompleteTerm taxonomy)
+        {
+            AutoCompleteTaxonomy = taxonomy;
+            if (taxonomy == AutoCompleteTerm.Custom)
+            {
+                throw new ArgumentException("Must supply custom argument when using custom autocomplete");
+            }
+            CustomAutoComplete = this.ToAutocompleteFunc();
+            return this;
+        }
+
+        /// <inheritdoc/>
+        public IGridColumn<T> SetAutoCompleteTaxonomy(Func<string> custom)
+        {
+            AutoCompleteTaxonomy = AutoCompleteTerm.Custom;
+            CustomAutoComplete = custom;
             return this;
         }
 

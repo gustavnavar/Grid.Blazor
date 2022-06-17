@@ -7,6 +7,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
+using GridShared.Columns;
 using GridShared.DataAnnotations;
 using GridShared.Sorting;
 using System;
@@ -50,7 +51,7 @@ namespace GridBlazorClientSide.Shared.Models
         public DateTime? ShippedDate { get; set; }
         [GridColumn(Position = 6)]
         public int? ShipVia { get; set; }
-        [GridColumn(Position = 7, Title = "Freight", Width = "120px", SortEnabled = true, FilterEnabled = true)]
+        [GridColumn(Position = 7, Title = "Freight", Width = "120px", SortEnabled = true, FilterEnabled = true, AutocompleteTaxonomy = AutoCompleteTerm.Defeat)]
         public decimal? Freight { get; set; }
         [GridColumn(Position = 8)]
         public string ShipName { get; set; }

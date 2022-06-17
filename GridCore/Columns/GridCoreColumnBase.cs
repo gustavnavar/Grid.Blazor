@@ -138,6 +138,9 @@ namespace GridCore.Columns
 
         public string TooltipValue { get; set; }
 
+        public AutoCompleteTerm AutoCompleteTaxonomy { get; set; }
+        public Func<string> CustomAutoComplete { get; set; } = () => "";
+
         public IGridColumn<T> Titled(string title)
         {
             Title = title;
@@ -538,6 +541,26 @@ namespace GridCore.Columns
         public IGridColumn<T> SetCrudHidden(bool all)
         {
             return SetCrudHidden(all, all, all, all);
+        }
+
+        /// <inheritdoc/>
+        public IGridColumn<T> SetAutoCompleteTaxonomy(AutoCompleteTerm taxonomy)
+        {
+            AutoCompleteTaxonomy = taxonomy;
+            if (taxonomy == AutoCompleteTerm.Custom)
+            {
+                throw new ArgumentException("Must supply custom argument when using custom autocomplete");
+            }
+            CustomAutoComplete = this.ToAutocompleteFunc();
+            return this;
+        }
+
+        /// <inheritdoc/>
+        public IGridColumn<T> SetAutoCompleteTaxonomy(Func<string> custom)
+        {
+            AutoCompleteTaxonomy = AutoCompleteTerm.Custom;
+            CustomAutoComplete = custom;
+            return this;
         }
 
         public IGridColumn<T> SetAfterChangeValue(Func<T, GridMode, Task> afterChangeValue)
