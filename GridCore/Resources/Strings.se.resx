@@ -117,56 +117,23 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="DefaultGridEmptyText" xml:space="preserve">
-    <value>Det finns inga objekt att visa</value>
+  <data name="Add" xml:space="preserve">
+    <value>Lägg till</value>
   </data>
-  <data name="FilterButtonTooltipText" xml:space="preserve">
-    <value>Filtrera denna kolumn</value>
+  <data name="All" xml:space="preserve">
+    <value>Allt</value>
   </data>
-  <data name="Items" xml:space="preserve">
-    <value>Objekt</value>
+  <data name="And" xml:space="preserve">
+    <value>Och</value>
   </data>
-  <data name="Lang" xml:space="preserve">
-    <value>se</value>
-  </data>
-  <data name="SearchFor" xml:space="preserve">
-    <value>Sök efter ...</value>
-  </data>
-  <data name="Max" xml:space="preserve">
-    <value>Max</value>
-  </data>
-  <data name="Min" xml:space="preserve">
-    <value>Min</value>
-  </data>
-  <data name="Sum" xml:space="preserve">
-    <value>Summa</value>
+  <data name="ApplyFilterButtonText" xml:space="preserve">
+    <value>Tillämpa</value>
   </data>
   <data name="Average" xml:space="preserve">
     <value>Medel</value>
   </data>
-  <data name="ExtSortingText" xml:space="preserve">
-    <value>Släpp kolumner här för utökad sortering av kolumner</value>
-  </data>
-  <data name="GroupingText" xml:space="preserve">
-    <value>Släpp kolumner här för gruppering av kolumner</value>
-  </data>
-  <data name="Show" xml:space="preserve">
-    <value>Visa</value>
-  </data>
-  <data name="ClearAllFilters" xml:space="preserve">
-    <value>Rensa alla filter</value>
-  </data>
-  <data name="CreateItem" xml:space="preserve">
-    <value>Skapa objekt</value>
-  </data>
-  <data name="DeleteItem" xml:space="preserve">
-    <value>Ta bort objekt</value>
-  </data>
-  <data name="ReadItem" xml:space="preserve">
-    <value>Visa objekt</value>
-  </data>
-  <data name="UpdateItem" xml:space="preserve">
-    <value>Uppdatera objekt</value>
+  <data name="Back" xml:space="preserve">
+    <value>Tillbaka</value>
   </data>
   <data name="BoolFalseLabel" xml:space="preserve">
     <value>Nej</value>
@@ -174,7 +141,157 @@
   <data name="BoolTrueLabel" xml:space="preserve">
     <value>Ja</value>
   </data>
+  <data name="ClearAllFilters" xml:space="preserve">
+    <value>Rensa alla filter</value>
+  </data>
+  <data name="ClearFilterLabel" xml:space="preserve">
+    <value>Rensa filter</value>
+  </data>
+  <data name="Code" xml:space="preserve">
+    <value>Koden</value>
+  </data>
+  <data name="Confirm Code" xml:space="preserve">
+    <value>Bekräfta Kod</value>
+  </data>
+  <data name="ConfirmCodeError" xml:space="preserve">
+    <value>Kod och bekräftelsekod måste vara lika för att kunna spara det här objektet</value>
+  </data>
+  <data name="Contains" xml:space="preserve">
+    <value>Innehåller</value>
+  </data>
+  <data name="CreateError" xml:space="preserve">
+    <value>Det uppstod ett fel vid skapandet av ett nytt objekt</value>
+  </data>
+  <data name="CreateItem" xml:space="preserve">
+    <value>Skapa objekt</value>
+  </data>
+  <data name="DefaultGridEmptyText" xml:space="preserve">
+    <value>Det finns inga objekt att visa</value>
+  </data>
+  <data name="Delete" xml:space="preserve">
+    <value>Ta bort</value>
+  </data>
+  <data name="DeleteConfirmCodeError" xml:space="preserve">
+    <value>Kod och bekräftelsekod måste vara lika med att ta bort det här objektet</value>
+  </data>
+  <data name="DeleteError" xml:space="preserve">
+    <value>Det uppstod ett fel vid raderingen av detta objekt</value>
+  </data>
+  <data name="DeleteItem" xml:space="preserve">
+    <value>Ta bort objekt</value>
+  </data>
+  <data name="Edit" xml:space="preserve">
+    <value>Redigera</value>
+  </data>
+  <data name="EndsWith" xml:space="preserve">
+    <value>Slutar med</value>
+  </data>
+  <data name="Equal" xml:space="preserve">
+    <value>Är lika med</value>
+  </data>
+  <data name="ExtSortingText" xml:space="preserve">
+    <value>Släpp kolumner här för utökad sortering av kolumner</value>
+  </data>
+  <data name="Files" xml:space="preserve">
+    <value>Fler</value>
+  </data>
+  <data name="FilterButtonTooltipText" xml:space="preserve">
+    <value>Filtrera denna kolumn</value>
+  </data>
+  <data name="FilterTypeLabel" xml:space="preserve">
+    <value>Typ</value>
+  </data>
+  <data name="FilterValueLabel" xml:space="preserve">
+    <value>Värde</value>
+  </data>
   <data name="Goto" xml:space="preserve">
     <value>Gå till</value>
+  </data>
+  <data name="GreaterThan" xml:space="preserve">
+    <value>Större än</value>
+  </data>
+  <data name="GreaterThanOrEquals" xml:space="preserve">
+    <value>Större eller lika med</value>
+  </data>
+  <data name="GroupingText" xml:space="preserve">
+    <value>Släpp kolumner här för gruppering av kolumner</value>
+  </data>
+  <data name="IsNotNull" xml:space="preserve">
+    <value>Är inte tom</value>
+  </data>
+  <data name="IsNull" xml:space="preserve">
+    <value>Är tom</value>
+  </data>
+  <data name="Items" xml:space="preserve">
+    <value>Objekt</value>
+  </data>
+  <data name="Lang" xml:space="preserve">
+    <value>se</value>
+  </data>
+  <data name="LessThan" xml:space="preserve">
+    <value>Mindre än</value>
+  </data>
+  <data name="LessThanOrEquals" xml:space="preserve">
+    <value>Mindre eller lika med</value>
+  </data>
+  <data name="Max" xml:space="preserve">
+    <value>Max</value>
+  </data>
+  <data name="Min" xml:space="preserve">
+    <value>Min</value>
+  </data>
+  <data name="None" xml:space="preserve">
+    <value>Ingen</value>
+  </data>
+  <data name="NotEqual" xml:space="preserve">
+    <value>Inte lika med</value>
+  </data>
+  <data name="Or" xml:space="preserve">
+    <value>Eller</value>
+  </data>
+  <data name="ReadItem" xml:space="preserve">
+    <value>Visa objekt</value>
+  </data>
+  <data name="Save" xml:space="preserve">
+    <value>Spara</value>
+  </data>
+  <data name="SearchFilterListInputText" xml:space="preserve">
+    <value>Sökfras</value>
+  </data>
+  <data name="SearchFor" xml:space="preserve">
+    <value>Sök efter ...</value>
+  </data>
+  <data name="Select" xml:space="preserve">
+    <value>Välj</value>
+  </data>
+  <data name="SelectionDeleteError" xml:space="preserve">
+    <value>Du måste välja raden du vill ta bort</value>
+  </data>
+  <data name="SelectionReadError" xml:space="preserve">
+    <value>Du måste välja raden du vill visa</value>
+  </data>
+  <data name="SelectionUpdateError" xml:space="preserve">
+    <value>Du måste välja raden du vill redigera</value>
+  </data>
+  <data name="SelectItem" xml:space="preserve">
+    <value>--- Välj ett objekt ---</value>
+  </data>
+  <data name="Show" xml:space="preserve">
+    <value>Visa</value>
+  </data>
+  <data name="StartsWith" xml:space="preserve">
+    <value>Börjar med</value>
+  </data>
+  <data name="Sum" xml:space="preserve">
+    <value>Summa</value>
+  </data>
+  <data name="UpdateError" xml:space="preserve">
+    <value>Det uppstod ett fel vid uppdatering av detta objekt</value>
+  </data>
+  <data name="UpdateItem" xml:space="preserve">
+    <value>Uppdatera objekt</value>
+  </data>
+  <data name="View" xml:space="preserve">
+    <value>Visa</value>
   </data>
 </root>

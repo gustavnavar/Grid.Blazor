@@ -117,8 +117,17 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="Average" xml:space="preserve">
-    <value>میانگین</value>
+  <data name="DefaultGridEmptyText" xml:space="preserve">
+    <value>موردی برای نمایش وجود ندارد</value>
+  </data>
+  <data name="FilterButtonTooltipText" xml:space="preserve">
+    <value>فیلتر کردن این ستون</value>
+  </data>
+  <data name="Lang" xml:space="preserve">
+    <value>fa</value>
+  </data>
+  <data name="ApplyFilterButtonText" xml:space="preserve">
+    <value>اعمال</value>
   </data>
   <data name="BoolFalseLabel" xml:space="preserve">
     <value>نه</value>
@@ -126,35 +135,44 @@
   <data name="BoolTrueLabel" xml:space="preserve">
     <value>بله</value>
   </data>
-  <data name="ClearAllFilters" xml:space="preserve">
-    <value>پاک کردن همه فیلتر ها</value>
+  <data name="ClearFilterLabel" xml:space="preserve">
+    <value>پاک کردن فیلتر</value>
   </data>
-  <data name="CreateItem" xml:space="preserve">
-    <value>ساخت آیتم</value>
+  <data name="Contains" xml:space="preserve">
+    <value>شامل</value>
   </data>
-  <data name="DefaultGridEmptyText" xml:space="preserve">
-    <value>موردی برای نمایش وجود ندارد</value>
+  <data name="EndsWith" xml:space="preserve">
+    <value>پایان با ...</value>
   </data>
-  <data name="DeleteItem" xml:space="preserve">
-    <value>حذف آیتم</value>
+  <data name="Equal" xml:space="preserve">
+    <value>برابر</value>
   </data>
-  <data name="ExtSortingText" xml:space="preserve">
-    <value>برای مرتب کردن، ستون را اینجا بیاندازید</value>
+  <data name="FilterTypeLabel" xml:space="preserve">
+    <value>نوع</value>
   </data>
-  <data name="FilterButtonTooltipText" xml:space="preserve">
-    <value>فیلتر کردن این ستون</value>
+  <data name="FilterValueLabel" xml:space="preserve">
+    <value>مقدار</value>
   </data>
-  <data name="Goto" xml:space="preserve">
-    <value>برو به</value>
+  <data name="GreaterThan" xml:space="preserve">
+    <value>بزرگتر از</value>
   </data>
-  <data name="GroupingText" xml:space="preserve">
-    <value>برای دسته بندی، ستون را اینجا بیاندازید</value>
+  <data name="GreaterThanOrEquals" xml:space="preserve">
+    <value>بزرگتر مساوی</value>
+  </data>
+  <data name="LessThan" xml:space="preserve">
+    <value>کوچکتر از</value>
+  </data>
+  <data name="LessThanOrEquals" xml:space="preserve">
+    <value>کوچکتر مساوی</value>
+  </data>
+  <data name="StartsWith" xml:space="preserve">
+    <value>شروع با ...</value>
+  </data>
+  <data name="SearchFor" xml:space="preserve">
+    <value>جستجو...</value>
   </data>
   <data name="Items" xml:space="preserve">
     <value>آیتم ها</value>
-  </data>
-  <data name="Lang" xml:space="preserve">
-    <value>fa</value>
   </data>
   <data name="Max" xml:space="preserve">
     <value>بیشترین</value>
@@ -162,19 +180,118 @@
   <data name="Min" xml:space="preserve">
     <value>کمترین</value>
   </data>
-  <data name="ReadItem" xml:space="preserve">
-    <value>خواندن آیتم</value>
+  <data name="Sum" xml:space="preserve">
+    <value>جمع</value>
   </data>
-  <data name="SearchFor" xml:space="preserve">
-    <value>جستجو...</value>
+  <data name="Average" xml:space="preserve">
+    <value>میانگین</value>
+  </data>
+  <data name="And" xml:space="preserve">
+    <value>و</value>
+  </data>
+  <data name="Or" xml:space="preserve">
+    <value>یا</value>
+  </data>
+  <data name="ExtSortingText" xml:space="preserve">
+    <value>برای مرتب کردن، ستون را اینجا بیاندازید</value>
+  </data>
+  <data name="GroupingText" xml:space="preserve">
+    <value>برای دسته بندی، ستون را اینجا بیاندازید</value>
+  </data>
+  <data name="Add" xml:space="preserve">
+    <value>افزودن</value>
+  </data>
+  <data name="Back" xml:space="preserve">
+    <value>بازگشت</value>
+  </data>
+  <data name="Delete" xml:space="preserve">
+    <value>حذف</value>
+  </data>
+  <data name="Edit" xml:space="preserve">
+    <value>ویرایش</value>
+  </data>
+  <data name="Save" xml:space="preserve">
+    <value>ذخیره</value>
+  </data>
+  <data name="View" xml:space="preserve">
+    <value>مشاهده</value>
+  </data>
+  <data name="SelectItem" xml:space="preserve">
+    <value>انتخاب کنید ---</value>
   </data>
   <data name="Show" xml:space="preserve">
     <value>نمایش</value>
   </data>
-  <data name="Sum" xml:space="preserve">
-    <value>جمع</value>
+  <data name="ClearAllFilters" xml:space="preserve">
+    <value>پاک کردن همه فیلتر ها</value>
+  </data>
+  <data name="CreateItem" xml:space="preserve">
+    <value>ساخت آیتم</value>
+  </data>
+  <data name="DeleteItem" xml:space="preserve">
+    <value>حذف آیتم</value>
+  </data>
+  <data name="ReadItem" xml:space="preserve">
+    <value>خواندن آیتم</value>
   </data>
   <data name="UpdateItem" xml:space="preserve">
     <value>به روزرسانی آیتم</value>
+  </data>
+  <data name="NotEqual" xml:space="preserve">
+    <value>مخالف</value>
+  </data>
+  <data name="CreateError" xml:space="preserve">
+    <value>در ایجاد آیتم جدید خطایی رخ داد</value>
+  </data>
+  <data name="DeleteError" xml:space="preserve">
+    <value>در حذف آیتم خطایی رخ داد</value>
+  </data>
+  <data name="UpdateError" xml:space="preserve">
+    <value>در به روزرسانی آیتم خطایی رخ داد</value>
+  </data>
+  <data name="IsNotNull" xml:space="preserve">
+    <value>آیا خالی نیست؟</value>
+  </data>
+  <data name="IsNull" xml:space="preserve">
+    <value>آیا خالیست؟</value>
+  </data>
+  <data name="SelectionDeleteError" xml:space="preserve">
+    <value>ردیفی برای حذف انتخاب نشده است</value>
+  </data>
+  <data name="SelectionReadError" xml:space="preserve">
+    <value>ردیفی برای مشاهده انتخاب نشده است</value>
+  </data>
+  <data name="SelectionUpdateError" xml:space="preserve">
+    <value>ردیفی برای ویرایش انتخاب نشده است</value>
+  </data>
+  <data name="Files" xml:space="preserve">
+    <value>فایل ها</value>
+  </data>
+  <data name="Code" xml:space="preserve">
+    <value>کد</value>
+  </data>
+  <data name="Confirm Code" xml:space="preserve">
+    <value>تایید کد</value>
+  </data>
+  <data name="ConfirmCodeError" xml:space="preserve">
+    <value>کد و کد تایید باید برابر باشد برای ذخیره این مورد</value>
+  </data>
+  <data name="DeleteConfirmCodeError" xml:space="preserve">
+    <value>کد و کد تایید باید برابر با حذف این مورد باشد</value>
+  </data>
+  <data name="Goto" xml:space="preserve">
+    <value>برو به</value>
+  </data>
+  <data name="SearchFilterListInputText" xml:space="preserve">
+    <value>عبارت جستجو</value>
+  </data>
+  <data name="All" xml:space="preserve">
+    <value>همه</value>
+  </data>
+  <data name="None" xml:space="preserve">
+    <value>هیچ یک</value>
+  </data>
+  <data name="Select" xml:space="preserve">
+    <value>انتخاب کنید</value>
   </data>
 </root>

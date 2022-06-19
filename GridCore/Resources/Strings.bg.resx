@@ -117,11 +117,44 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="ApplyFilterButtonText" xml:space="preserve">
+    <value>Потвърди</value>
+  </data>
+  <data name="BoolFalseLabel" xml:space="preserve">
+    <value>Не</value>
+  </data>
+  <data name="BoolTrueLabel" xml:space="preserve">
+    <value>Да</value>
+  </data>
+  <data name="ClearFilterLabel" xml:space="preserve">
+    <value>Изчисти филтър</value>
+  </data>
+  <data name="Contains" xml:space="preserve">
+    <value>Съдържа</value>
+  </data>
   <data name="DefaultGridEmptyText" xml:space="preserve">
     <value>Няма данни</value>
   </data>
+  <data name="EndsWith" xml:space="preserve">
+    <value>Завършва с</value>
+  </data>
+  <data name="Equal" xml:space="preserve">
+    <value>Равни</value>
+  </data>
   <data name="FilterButtonTooltipText" xml:space="preserve">
     <value>Филтрирай колона</value>
+  </data>
+  <data name="FilterTypeLabel" xml:space="preserve">
+    <value>Тип</value>
+  </data>
+  <data name="FilterValueLabel" xml:space="preserve">
+    <value>Стойност</value>
+  </data>
+  <data name="GreaterThan" xml:space="preserve">
+    <value>По-голямо от</value>
+  </data>
+  <data name="GreaterThanOrEquals" xml:space="preserve">
+    <value>По-голямо или равно</value>
   </data>
   <data name="Items" xml:space="preserve">
     <value>Елементи</value>
@@ -129,8 +162,20 @@
   <data name="Lang" xml:space="preserve">
     <value>бг</value>
   </data>
+  <data name="LessThan" xml:space="preserve">
+    <value>По-малко</value>
+  </data>
+  <data name="LessThanOrEquals" xml:space="preserve">
+    <value>По-малко или равно</value>
+  </data>
   <data name="SearchFor" xml:space="preserve">
     <value>Търсене</value>
+  </data>
+  <data name="StartsWith" xml:space="preserve">
+    <value>Започни с</value>
+  </data>
+  <data name="Average" xml:space="preserve">
+    <value>Средно</value>
   </data>
   <data name="Max" xml:space="preserve">
     <value>Максимум</value>
@@ -141,14 +186,38 @@
   <data name="Sum" xml:space="preserve">
     <value>Виж</value>
   </data>
-  <data name="Average" xml:space="preserve">
-    <value>Средно</value>
+  <data name="And" xml:space="preserve">
+    <value>И</value>
+  </data>
+  <data name="Or" xml:space="preserve">
+    <value>Или</value>
   </data>
   <data name="ExtSortingText" xml:space="preserve">
     <value>Премахнете колони тук за разширено сортиране на колони</value>
   </data>
   <data name="GroupingText" xml:space="preserve">
     <value>Плъзнете колони тук, за да групирате колони</value>
+  </data>
+  <data name="Add" xml:space="preserve">
+    <value>Добави</value>
+  </data>
+  <data name="Back" xml:space="preserve">
+    <value>Назад</value>
+  </data>
+  <data name="Delete" xml:space="preserve">
+    <value>Изтриване</value>
+  </data>
+  <data name="Edit" xml:space="preserve">
+    <value>Редактирай</value>
+  </data>
+  <data name="Save" xml:space="preserve">
+    <value>Запис</value>
+  </data>
+  <data name="View" xml:space="preserve">
+    <value>Преглед</value>
+  </data>
+  <data name="SelectItem" xml:space="preserve">
+    <value>--- изберете елемент ---</value>
   </data>
   <data name="Show" xml:space="preserve">
     <value>Покажи</value>
@@ -160,7 +229,7 @@
     <value>Създай нов</value>
   </data>
   <data name="DeleteItem" xml:space="preserve">
-    <value>Изтриване</value>
+    <value>Изтриване </value>
   </data>
   <data name="ReadItem" xml:space="preserve">
     <value>Прочети елемент</value>
@@ -168,13 +237,61 @@
   <data name="UpdateItem" xml:space="preserve">
     <value>Актуализиране на елемента</value>
   </data>
-  <data name="BoolFalseLabel" xml:space="preserve">
-    <value>Не</value>
+  <data name="NotEqual" xml:space="preserve">
+    <value>Различно</value>
   </data>
-  <data name="BoolTrueLabel" xml:space="preserve">
-    <value>Да</value>
+  <data name="CreateError" xml:space="preserve">
+    <value>Има грешка при създаване на нов обект</value>
+  </data>
+  <data name="DeleteError" xml:space="preserve">
+    <value>При изтриването на този елемент възникна грешка</value>
+  </data>
+  <data name="UpdateError" xml:space="preserve">
+    <value>При актуализирането на този елемент възникна грешка</value>
+  </data>
+  <data name="IsNotNull" xml:space="preserve">
+    <value>Не е нула</value>
+  </data>
+  <data name="IsNull" xml:space="preserve">
+    <value>Нула е</value>
+  </data>
+  <data name="SelectionDeleteError" xml:space="preserve">
+    <value>Трябва да изберете реда, който искате да изтриете</value>
+  </data>
+  <data name="SelectionReadError" xml:space="preserve">
+    <value>Трябва да изберете реда, който искате да видите</value>
+  </data>
+  <data name="SelectionUpdateError" xml:space="preserve">
+    <value>Трябва да изберете реда, който искате да редактирате</value>
+  </data>
+  <data name="Files" xml:space="preserve">
+    <value>Филтър</value>
+  </data>
+  <data name="Code" xml:space="preserve">
+    <value>Код</value>
+  </data>
+  <data name="Confirm Code" xml:space="preserve">
+    <value>Код за потвърждание</value>
+  </data>
+  <data name="ConfirmCodeError" xml:space="preserve">
+    <value>Кода и кода за потвърждение трябва да са равни за да запишете успешно</value>
+  </data>
+  <data name="DeleteConfirmCodeError" xml:space="preserve">
+    <value>Кода и кода за потвърждение трябва да са равни за да изтриете успешно</value>
   </data>
   <data name="Goto" xml:space="preserve">
     <value>Отидете на</value>
+  </data>
+  <data name="SearchFilterListInputText" xml:space="preserve">
+    <value>Фраза за търсене</value>
+  </data>
+  <data name="All" xml:space="preserve">
+    <value>Bсичко</value>
+  </data>
+  <data name="None" xml:space="preserve">
+    <value>Нито един</value>
+  </data>
+  <data name="Select" xml:space="preserve">
+    <value>Изберете</value>
   </data>
 </root>

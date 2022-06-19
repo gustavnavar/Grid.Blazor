@@ -78,7 +78,8 @@ namespace GridMvc.Demo
                             new CultureInfo("pt-BR"),
                             new CultureInfo("bg-BG"),
                             new CultureInfo("uk-UA"),
-                            new CultureInfo("ar-EG")
+                            new CultureInfo("ar-EG"),
+                            new CultureInfo("da-DK")
                         };
 
                     options.DefaultRequestCulture = new RequestCulture(culture: "en-US", uiCulture: "en-US");

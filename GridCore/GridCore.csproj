@@ -78,9 +78,9 @@
     <EmbeddedResource Include="Resources\Strings.se.resx" LogicalName="GridCore.Resources.Strings.se.resources">
       <Generator></Generator>
     </EmbeddedResource>
-    <EmbeddedResource Include="Resources\Strings.sr.resx" LogicalName="GridCore.Resources.Strings.sr.resources">
-      <Generator></Generator>
-    </EmbeddedResource>
+	<EmbeddedResource Include="Resources\Strings.sr.resx" LogicalName="GridCore.Resources.Strings.sr.resources">
+	  <Generator></Generator>
+	</EmbeddedResource>
     <EmbeddedResource Include="Resources\Strings.hr.resx" LogicalName="GridCore.Resources.Strings.hr.resources">
       <Generator></Generator>
     </EmbeddedResource>
@@ -107,6 +107,9 @@
     </EmbeddedResource>
 	<EmbeddedResource Include="Resources\Strings.ar.resx" LogicalName="GridCore.Resources.Strings.ar.resources">
       <Generator></Generator>
+	</EmbeddedResource>
+	<EmbeddedResource Include="Resources\Strings.da-DK.resx" LogicalName="GridCore.Resources.Strings.da-DK.resources">
+		<Generator></Generator>
 	</EmbeddedResource>
   </ItemGroup>
   

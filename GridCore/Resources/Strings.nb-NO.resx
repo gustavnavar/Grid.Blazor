@@ -123,20 +123,62 @@
   <data name="FilterButtonTooltipText" xml:space="preserve">
     <value>Filtrer denne kolonnen</value>
   </data>
-  <data name="Items" xml:space="preserve">
-    <value>Elementer</value>
-  </data>
   <data name="Lang" xml:space="preserve">
     <value>nb</value>
   </data>
+  <data name="ApplyFilterButtonText" xml:space="preserve">
+    <value>Aktiver</value>
+  </data>
+  <data name="BoolFalseLabel" xml:space="preserve">
+    <value>Nei</value>
+  </data>
+  <data name="BoolTrueLabel" xml:space="preserve">
+    <value>Ja</value>
+  </data>
+  <data name="ClearFilterLabel" xml:space="preserve">
+    <value>Tøm filter</value>
+  </data>
+  <data name="Contains" xml:space="preserve">
+    <value>Inneholder</value>
+  </data>
+  <data name="EndsWith" xml:space="preserve">
+    <value>Slutter med</value>
+  </data>
+  <data name="Equal" xml:space="preserve">
+    <value>Er lik</value>
+  </data>
+  <data name="FilterTypeLabel" xml:space="preserve">
+    <value>Type</value>
+  </data>
+  <data name="FilterValueLabel" xml:space="preserve">
+    <value>Verdi</value>
+  </data>
+  <data name="GreaterThan" xml:space="preserve">
+    <value>Større enn</value>
+  </data>
+  <data name="GreaterThanOrEquals" xml:space="preserve">
+    <value>Større eller lik</value>
+  </data>
+  <data name="LessThan" xml:space="preserve">
+    <value>Mindre enn</value>
+  </data>
+  <data name="LessThanOrEquals" xml:space="preserve">
+    <value>Mindre eller lik</value>
+  </data>
+  <data name="StartsWith" xml:space="preserve">
+    <value>Starter med</value>
+  </data>
   <data name="SearchFor" xml:space="preserve">
     <value>Søk etter…</value>
+  </data>
+  <data name="Items" xml:space="preserve">
+    <value>Elementer</value>
   </data>
   <data name="Max" xml:space="preserve">
     <value>Maks</value>
   </data>
   <data name="Min" xml:space="preserve">
-    <value>Maks</value>
+    <value>Min</value>
   </data>
   <data name="Sum" xml:space="preserve">
     <value>Sum</value>
@@ -144,11 +186,38 @@
   <data name="Average" xml:space="preserve">
     <value>Gjennomsnitt</value>
   </data>
+  <data name="And" xml:space="preserve">
+    <value>Og</value>
+  </data>
+  <data name="Or" xml:space="preserve">
+    <value>Eller</value>
+  </data>
   <data name="ExtSortingText" xml:space="preserve">
     <value>Slipp kolonner her for utvidet sortering</value>
   </data>
   <data name="GroupingText" xml:space="preserve">
     <value>Slipp kolonner her for gruppering</value>
+  </data>
+  <data name="Add" xml:space="preserve">
+    <value>Legg til</value>
+  </data>
+  <data name="Back" xml:space="preserve">
+    <value>Tilbake</value>
+  </data>
+  <data name="Delete" xml:space="preserve">
+    <value>Slett</value>
+  </data>
+  <data name="Edit" xml:space="preserve">
+    <value>Endre</value>
+  </data>
+  <data name="Save" xml:space="preserve">
+    <value>Lagre</value>
+  </data>
+  <data name="View" xml:space="preserve">
+    <value>Vis</value>
+  </data>
+  <data name="SelectItem" xml:space="preserve">
+    <value>-- Velg et element --</value>
   </data>
   <data name="Show" xml:space="preserve">
     <value>Vis</value>
@@ -168,13 +237,61 @@
   <data name="UpdateItem" xml:space="preserve">
     <value>Oppdater element</value>
   </data>
-  <data name="BoolFalseLabel" xml:space="preserve">
-    <value>Nei</value>
+  <data name="NotEqual" xml:space="preserve">
+    <value>Ikke lik</value>
   </data>
-  <data name="BoolTrueLabel" xml:space="preserve">
-    <value>Ja</value>
+  <data name="CreateError" xml:space="preserve">
+    <value>Det oppstod en feil ved oppretting av den nye varen</value>
+  </data>
+  <data name="DeleteError" xml:space="preserve">
+    <value>Det oppsto en feil ved sletting av dette elementet</value>
+  </data>
+  <data name="UpdateError" xml:space="preserve">
+    <value>Det oppstod en feil ved oppdatering av dette elementet</value>
+  </data>
+  <data name="IsNotNull" xml:space="preserve">
+    <value>Er ikke null</value>
+  </data>
+  <data name="IsNull" xml:space="preserve">
+    <value>Er null</value>
+  </data>
+  <data name="SelectionDeleteError" xml:space="preserve">
+    <value>Du må velge raden du vil slette</value>
+  </data>
+  <data name="SelectionReadError" xml:space="preserve">
+    <value>Du må velge raden du vil vise</value>
+  </data>
+  <data name="SelectionUpdateError" xml:space="preserve">
+    <value>Du må velge raden du vil redigere</value>
+  </data>
+  <data name="Files" xml:space="preserve">
+    <value>Arkiver</value>
+  </data>
+  <data name="Code" xml:space="preserve">
+    <value>Koden</value>
+  </data>
+  <data name="Confirm Code" xml:space="preserve">
+    <value>Bekreft Kode</value>
+  </data>
+  <data name="ConfirmCodeError" xml:space="preserve">
+    <value>Kode og bekreftelseskode må være lik for å lagre dette elementet</value>
+  </data>
+  <data name="DeleteConfirmCodeError" xml:space="preserve">
+    <value>Kode og bekreftelseskode må være lik for å slette dette elementet</value>
   </data>
   <data name="Goto" xml:space="preserve">
     <value>Gå til</value>
+  </data>
+  <data name="SearchFilterListInputText" xml:space="preserve">
+    <value>Søkeord</value>
+  </data>
+  <data name="All" xml:space="preserve">
+    <value>Alle</value>
+  </data>
+  <data name="None" xml:space="preserve">
+    <value>Ingen</value>
+  </data>
+  <data name="Select" xml:space="preserve">
+    <value>Plukke ut</value>
   </data>
 </root>

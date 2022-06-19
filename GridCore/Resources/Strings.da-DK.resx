@@ -118,180 +118,180 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="DefaultGridEmptyText" xml:space="preserve">
-    <value>Il ya pas d'articles à afficher</value>
+    <value>Der er ingen elementer at vise</value>
   </data>
   <data name="FilterButtonTooltipText" xml:space="preserve">
-    <value>Filtrer cette colonne</value>
+    <value>Filtrér denne kolonne</value>
   </data>
   <data name="Lang" xml:space="preserve">
-    <value>fr</value>
+    <value>da</value>
   </data>
   <data name="ApplyFilterButtonText" xml:space="preserve">
-    <value>Appliquer</value>
+    <value>Anvend</value>
   </data>
   <data name="BoolFalseLabel" xml:space="preserve">
-    <value>Non</value>
+    <value>Nej</value>
   </data>
   <data name="BoolTrueLabel" xml:space="preserve">
-    <value>Oui</value>
+    <value>Ja</value>
   </data>
   <data name="ClearFilterLabel" xml:space="preserve">
-    <value>Effacer le filtre</value>
+    <value>Nulstil filter</value>
   </data>
   <data name="Contains" xml:space="preserve">
-    <value>Contient</value>
+    <value>Indeholder</value>
   </data>
   <data name="EndsWith" xml:space="preserve">
-    <value>Fini par</value>
+    <value>Slutter på</value>
   </data>
   <data name="Equal" xml:space="preserve">
-    <value>Egale</value>
+    <value>Lig</value>
   </data>
   <data name="FilterTypeLabel" xml:space="preserve">
     <value>Type</value>
   </data>
   <data name="FilterValueLabel" xml:space="preserve">
-    <value>Valeur</value>
+    <value>Værdi</value>
   </data>
   <data name="GreaterThan" xml:space="preserve">
-    <value>Supérieur à</value>
+    <value>Større end</value>
   </data>
   <data name="GreaterThanOrEquals" xml:space="preserve">
-    <value>Supérieur ou égale à</value>
+    <value>Større end eller lig</value>
   </data>
   <data name="LessThan" xml:space="preserve">
-    <value>Inférieur à</value>
+    <value>Mindre end</value>
   </data>
   <data name="LessThanOrEquals" xml:space="preserve">
-    <value>Inférieur ou égale à</value>
+    <value>Mindre end eller lig</value>
   </data>
   <data name="StartsWith" xml:space="preserve">
-    <value>Commence par</value>
+    <value>Begynder med</value>
   </data>
   <data name="SearchFor" xml:space="preserve">
-    <value>Chercher ...</value>
+    <value>Søg efter ...</value>
   </data>
   <data name="Items" xml:space="preserve">
-    <value>Articles</value>
+    <value>Elementer</value>
   </data>
   <data name="Max" xml:space="preserve">
-    <value>Max</value>
+    <value>Maks</value>
   </data>
   <data name="Min" xml:space="preserve">
     <value>Min</value>
   </data>
   <data name="Sum" xml:space="preserve">
-    <value>Somme</value>
+    <value>Sum</value>
   </data>
   <data name="Average" xml:space="preserve">
-    <value>Moyen</value>
+    <value>Gennemsnit</value>
   </data>
   <data name="And" xml:space="preserve">
-    <value>Et</value>
+    <value>Og</value>
   </data>
   <data name="Or" xml:space="preserve">
-    <value>Ou</value>
+    <value>Eller</value>
   </data>
   <data name="ExtSortingText" xml:space="preserve">
-    <value>Déposer les colonnes ici pour le tri étendu des colonnes</value>
+    <value>Træk kolonner hertil for udvidet sortering</value>
   </data>
   <data name="GroupingText" xml:space="preserve">
-    <value>Déposer les colonnes ici pour le regroupement des colonnes</value>
+    <value>Træk kolonner hertil for gruppering</value>
   </data>
   <data name="Add" xml:space="preserve">
-    <value>Ajouter</value>
+    <value>Tilføj</value>
   </data>
   <data name="Back" xml:space="preserve">
-    <value>Retour</value>
+    <value>Tilbage</value>
   </data>
   <data name="Delete" xml:space="preserve">
-    <value>Effacer</value>
+    <value>Slet</value>
   </data>
   <data name="Edit" xml:space="preserve">
-    <value>Éditer</value>
+    <value>Redigér</value>
   </data>
   <data name="Save" xml:space="preserve">
-    <value>Sauver</value>
+    <value>Gem</value>
   </data>
   <data name="View" xml:space="preserve">
-    <value>Vue</value>
+    <value>Vis</value>
   </data>
   <data name="SelectItem" xml:space="preserve">
-    <value>--- Sélectionnez un élément ---</value>
+    <value>--- Vælg et element ---</value>
   </data>
   <data name="Show" xml:space="preserve">
-    <value>Montrer</value>
+    <value>Vis</value>
   </data>
   <data name="ClearAllFilters" xml:space="preserve">
-    <value>Effacer tous les filtres</value>
+    <value>Nulstil alle filtre</value>
   </data>
   <data name="CreateItem" xml:space="preserve">
-    <value>Créer un élément</value>
+    <value>Opret element</value>
   </data>
   <data name="DeleteItem" xml:space="preserve">
-    <value>Effacer l'article</value>
+    <value>Slet element</value>
   </data>
   <data name="ReadItem" xml:space="preserve">
-    <value>Lire l'élément</value>
+    <value>Læs element</value>
   </data>
   <data name="UpdateItem" xml:space="preserve">
-    <value>Mettre à jour l'élément</value>
+    <value>Opdatér element</value>
   </data>
   <data name="NotEqual" xml:space="preserve">
-    <value>Inégal</value>
+    <value>Ulig</value>
   </data>
   <data name="CreateError" xml:space="preserve">
-    <value>Une erreur s'est produite lors de la création du nouvel élément</value>
+    <value>Der opstod en fejl ved oprettelsen af det nye element</value>
   </data>
   <data name="DeleteError" xml:space="preserve">
-    <value>Une erreur s'est produite lors de la suppression de cet élément</value>
+    <value>Der opstod en fejl ved sletningen af dette element</value>
   </data>
   <data name="UpdateError" xml:space="preserve">
-    <value>Une erreur s'est produite lors de la mise à jour de cet élément</value>
+    <value>Der opstod en fejl ved redigeringen af dette element</value>
   </data>
   <data name="IsNotNull" xml:space="preserve">
-    <value>Est non nulle</value>
+    <value>Er ikke null</value>
   </data>
   <data name="IsNull" xml:space="preserve">
-    <value>Est nul</value>
+    <value>Er null</value>
   </data>
   <data name="SelectionDeleteError" xml:space="preserve">
-    <value>Vous devez sélectionner la ligne que vous souhaitez supprimer</value>
+    <value>Du skal vælge rækken du ønsker at slette</value>
   </data>
   <data name="SelectionReadError" xml:space="preserve">
-    <value>Vous devez sélectionner la ligne que vous souhaitez afficher</value>
+    <value>Du skal vælge rækken du ønsker at vise</value>
   </data>
   <data name="SelectionUpdateError" xml:space="preserve">
-    <value>Vous devez sélectionner la ligne que vous souhaitez modifier</value>
+    <value>Du skal vælge rækken du ønsker at redigere</value>
   </data>
   <data name="Files" xml:space="preserve">
-    <value>Fichiers</value>
+    <value>Filer</value>
   </data>
   <data name="Code" xml:space="preserve">
-    <value>Code</value>
+    <value>Kode</value>
   </data>
   <data name="Confirm Code" xml:space="preserve">
-    <value>Confirmer Code</value>
+    <value>Bekræftelseskode</value>
   </data>
   <data name="ConfirmCodeError" xml:space="preserve">
-    <value>Le code et le code de confirmation doivent être égaux pour enregistrer cet élément</value>
+    <value>Kode og bekræftelseskode skal være ens for at gemme dette element</value>
   </data>
   <data name="DeleteConfirmCodeError" xml:space="preserve">
-    <value>Le code et le code de confirmation doivent être égaux pour supprimer cet élément</value>
+    <value>Kode og bekræftelseskode skal være ens for at slette dette element</value>
   </data>
   <data name="Goto" xml:space="preserve">
-    <value>Aller à</value>
+    <value>Gå til</value>
   </data>
   <data name="SearchFilterListInputText" xml:space="preserve">
-    <value>Expression de recherche</value>
+    <value>Søgeudtryk</value>
   </data>
   <data name="All" xml:space="preserve">
-    <value>Tout</value>
+    <value>Alle</value>
   </data>
   <data name="None" xml:space="preserve">
-    <value>Rien</value>
+    <value>Ingen</value>
   </data>
   <data name="Select" xml:space="preserve">
-    <value>Sélectionner</value>
+    <value>Vælg</value>
   </data>
 </root>

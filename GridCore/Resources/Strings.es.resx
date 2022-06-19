@@ -123,14 +123,56 @@
   <data name="FilterButtonTooltipText" xml:space="preserve">
     <value>Añadir filtrar en el campo</value>
   </data>
-  <data name="Items" xml:space="preserve">
-    <value>Artículos</value>
-  </data>
   <data name="Lang" xml:space="preserve">
     <value>es</value>
   </data>
+  <data name="ApplyFilterButtonText" xml:space="preserve">
+    <value>Aplicar</value>
+  </data>
+  <data name="BoolFalseLabel" xml:space="preserve">
+    <value>No</value>
+  </data>
+  <data name="BoolTrueLabel" xml:space="preserve">
+    <value>Sí</value>
+  </data>
+  <data name="ClearFilterLabel" xml:space="preserve">
+    <value>Borrar Filtro</value>
+  </data>
+  <data name="Contains" xml:space="preserve">
+    <value>Contiene</value>
+  </data>
+  <data name="EndsWith" xml:space="preserve">
+    <value>Termina con</value>
+  </data>
+  <data name="Equal" xml:space="preserve">
+    <value>Igual</value>
+  </data>
+  <data name="FilterTypeLabel" xml:space="preserve">
+    <value>Tipo</value>
+  </data>
+  <data name="FilterValueLabel" xml:space="preserve">
+    <value>Valor</value>
+  </data>
+  <data name="GreaterThan" xml:space="preserve">
+    <value>Mayor que</value>
+  </data>
+  <data name="GreaterThanOrEquals" xml:space="preserve">
+    <value>Mayor o igual que</value>
+  </data>
+  <data name="LessThan" xml:space="preserve">
+    <value>Menor que</value>
+  </data>
+  <data name="LessThanOrEquals" xml:space="preserve">
+    <value>Menor o igual que</value>
+  </data>
+  <data name="StartsWith" xml:space="preserve">
+    <value>Empieza con</value>
+  </data>
   <data name="SearchFor" xml:space="preserve">
     <value>Buscar ...</value>
+  </data>
+  <data name="Items" xml:space="preserve">
+    <value>Artículos</value>
   </data>
   <data name="Max" xml:space="preserve">
     <value>Máx</value>
@@ -144,11 +186,38 @@
   <data name="Average" xml:space="preserve">
     <value>Media</value>
   </data>
+  <data name="And" xml:space="preserve">
+    <value>Y</value>
+  </data>
+  <data name="Or" xml:space="preserve">
+    <value>O</value>
+  </data>
   <data name="ExtSortingText" xml:space="preserve">
     <value>Suelte las columnas aquí para la ordenación extendida de columnas</value>
   </data>
   <data name="GroupingText" xml:space="preserve">
     <value>Suelte las columnas aquí para agrupar columnas</value>
+  </data>
+  <data name="Add" xml:space="preserve">
+    <value>Añadir</value>
+  </data>
+  <data name="Back" xml:space="preserve">
+    <value>Volver</value>
+  </data>
+  <data name="Delete" xml:space="preserve">
+    <value>Borrar</value>
+  </data>
+  <data name="Edit" xml:space="preserve">
+    <value>Editar</value>
+  </data>
+  <data name="Save" xml:space="preserve">
+    <value>Guardar</value>
+  </data>
+  <data name="View" xml:space="preserve">
+    <value>Ver</value>
+  </data>
+  <data name="SelectItem" xml:space="preserve">
+    <value>--- Selecciona un elemento ---</value>
   </data>
   <data name="Show" xml:space="preserve">
     <value>Mostrar</value>
@@ -168,13 +237,61 @@
   <data name="UpdateItem" xml:space="preserve">
     <value>Actualizar artículo</value>
   </data>
-  <data name="BoolFalseLabel" xml:space="preserve">
-    <value>No</value>
+  <data name="NotEqual" xml:space="preserve">
+    <value>No es igual</value>
   </data>
-  <data name="BoolTrueLabel" xml:space="preserve">
-    <value>Sí</value>
+  <data name="CreateError" xml:space="preserve">
+    <value>Se produjo  un error al crear el nuevo artículo</value>
+  </data>
+  <data name="DeleteError" xml:space="preserve">
+    <value>Se produjo un error al borrar el artículo</value>
+  </data>
+  <data name="UpdateError" xml:space="preserve">
+    <value>Se produjo un error al actualizar el artículo</value>
+  </data>
+  <data name="IsNotNull" xml:space="preserve">
+    <value>Es no nulo</value>
+  </data>
+  <data name="IsNull" xml:space="preserve">
+    <value>Es nulo</value>
+  </data>
+  <data name="SelectionDeleteError" xml:space="preserve">
+    <value>Se debe seleccionar la fila que se quiere borrar</value>
+  </data>
+  <data name="SelectionReadError" xml:space="preserve">
+    <value>Se debe seleccionar la fila que se quiere visualizar</value>
+  </data>
+  <data name="SelectionUpdateError" xml:space="preserve">
+    <value>Se debe seleccionar la fila que se quiere editar</value>
+  </data>
+  <data name="Files" xml:space="preserve">
+    <value>Archivos</value>
+  </data>
+  <data name="Code" xml:space="preserve">
+    <value>Código</value>
+  </data>
+  <data name="Confirm Code" xml:space="preserve">
+    <value>Confirmar Código</value>
+  </data>
+  <data name="ConfirmCodeError" xml:space="preserve">
+    <value>El código y el código de confirmación deben ser iguales para guardar este artículo</value>
+  </data>
+  <data name="DeleteConfirmCodeError" xml:space="preserve">
+    <value>El código y el código de confirmación deben ser iguales para eliminar este elemento</value>
   </data>
   <data name="Goto" xml:space="preserve">
     <value>Ir a</value>
+  </data>
+  <data name="SearchFilterListInputText" xml:space="preserve">
+    <value>Frase de busqueda</value>
+  </data>
+  <data name="All" xml:space="preserve">
+    <value>Todos</value>
+  </data>
+  <data name="None" xml:space="preserve">
+    <value>Ninguno</value>
+  </data>
+  <data name="Select" xml:space="preserve">
+    <value>Seleccionar</value>
   </data>
 </root>

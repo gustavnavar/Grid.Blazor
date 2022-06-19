@@ -123,14 +123,56 @@
   <data name="FilterButtonTooltipText" xml:space="preserve">
     <value>Gehitu iragazkia eremuan</value>
   </data>
-  <data name="Items" xml:space="preserve">
-    <value>Elementuak</value>
-  </data>
   <data name="Lang" xml:space="preserve">
     <value>eu</value>
   </data>
+  <data name="ApplyFilterButtonText" xml:space="preserve">
+    <value>Aplikatu</value>
+  </data>
+  <data name="BoolFalseLabel" xml:space="preserve">
+    <value>Ez</value>
+  </data>
+  <data name="BoolTrueLabel" xml:space="preserve">
+    <value>Bai</value>
+  </data>
+  <data name="ClearFilterLabel" xml:space="preserve">
+    <value>Garbitu Iragazkia</value>
+  </data>
+  <data name="Contains" xml:space="preserve">
+    <value>Badu</value>
+  </data>
+  <data name="EndsWith" xml:space="preserve">
+    <value>Honekin amaitzen da</value>
+  </data>
+  <data name="Equal" xml:space="preserve">
+    <value>Berdin</value>
+  </data>
+  <data name="FilterTypeLabel" xml:space="preserve">
+    <value>Mota</value>
+  </data>
+  <data name="FilterValueLabel" xml:space="preserve">
+    <value>Balioa</value>
+  </data>
+  <data name="GreaterThan" xml:space="preserve">
+    <value>Baino handiagoa</value>
+  </data>
+  <data name="GreaterThanOrEquals" xml:space="preserve">
+    <value>Baino handiagoa edo berdina</value>
+  </data>
+  <data name="LessThan" xml:space="preserve">
+    <value>Baino txikiagoa</value>
+  </data>
+  <data name="LessThanOrEquals" xml:space="preserve">
+    <value>Berdinak baino gutxiago</value>
+  </data>
+  <data name="StartsWith" xml:space="preserve">
+    <value>Honekin hasten da</value>
+  </data>
   <data name="SearchFor" xml:space="preserve">
     <value>Bilatu ...</value>
+  </data>
+  <data name="Items" xml:space="preserve">
+    <value>Elementuak</value>
   </data>
   <data name="Max" xml:space="preserve">
     <value>Gehienez</value>
@@ -144,11 +186,38 @@
   <data name="Average" xml:space="preserve">
     <value>Batez bestekoa</value>
   </data>
+  <data name="And" xml:space="preserve">
+    <value>Eta</value>
+  </data>
+  <data name="Or" xml:space="preserve">
+    <value>Edo</value>
+  </data>
   <data name="ExtSortingText" xml:space="preserve">
     <value>Jaregin zutabeak hemen zutabe ordenatu hedatuetarako</value>
   </data>
   <data name="GroupingText" xml:space="preserve">
     <value>Jaregin zutabeak hemen zutabeak taldekatzeko</value>
+  </data>
+  <data name="Add" xml:space="preserve">
+    <value>Gehitu</value>
+  </data>
+  <data name="Back" xml:space="preserve">
+    <value>Itzuli</value>
+  </data>
+  <data name="Delete" xml:space="preserve">
+    <value>Ezabatu</value>
+  </data>
+  <data name="Edit" xml:space="preserve">
+    <value>Editatu</value>
+  </data>
+  <data name="Save" xml:space="preserve">
+    <value>Gorde</value>
+  </data>
+  <data name="View" xml:space="preserve">
+    <value>Ikusi</value>
+  </data>
+  <data name="SelectItem" xml:space="preserve">
+    <value>--- Aukeratu elementu bat ---</value>
   </data>
   <data name="Show" xml:space="preserve">
     <value>Erakutsi</value>
@@ -160,7 +229,7 @@
     <value>Sortu elementua</value>
   </data>
   <data name="DeleteItem" xml:space="preserve">
-    <value>Borrar artículo</value>
+    <value>Ezabatu elementua</value>
   </data>
   <data name="ReadItem" xml:space="preserve">
     <value>Irakurri elementua</value>
@@ -168,13 +237,61 @@
   <data name="UpdateItem" xml:space="preserve">
     <value>Eguneratu elementua</value>
   </data>
-  <data name="BoolFalseLabel" xml:space="preserve">
-    <value>Ez</value>
+  <data name="NotEqual" xml:space="preserve">
+    <value>Ez da berdina</value>
   </data>
-  <data name="BoolTrueLabel" xml:space="preserve">
-    <value>Bai</value>
+  <data name="CreateError" xml:space="preserve">
+    <value>Errorea gertatu da elementu berria sortzerakoan</value>
+  </data>
+  <data name="DeleteError" xml:space="preserve">
+    <value>Errorea gertatu da elementua ezabatzean</value>
+  </data>
+  <data name="UpdateError" xml:space="preserve">
+    <value>Errore bat gertatu da elementua eguneratzean</value>
+  </data>
+  <data name="IsNotNull" xml:space="preserve">
+    <value>Ez da nulua</value>
+  </data>
+  <data name="IsNull" xml:space="preserve">
+    <value>Nula da</value>
+  </data>
+  <data name="SelectionDeleteError" xml:space="preserve">
+    <value>Ezabatu nahi duzun errenkada hautatu behar duzu</value>
+  </data>
+  <data name="SelectionReadError" xml:space="preserve">
+    <value>Ikusi nahi duzun errenkada hautatu behar duzu</value>
+  </data>
+  <data name="SelectionUpdateError" xml:space="preserve">
+    <value>Editatu nahi duzun errenkada hautatu behar duzu</value>
+  </data>
+  <data name="Files" xml:space="preserve">
+    <value>Fitxategiak</value>
+  </data>
+  <data name="Code" xml:space="preserve">
+    <value>Kodea</value>
+  </data>
+  <data name="Confirm Code" xml:space="preserve">
+    <value>Berretsi Kodea</value>
+  </data>
+  <data name="ConfirmCodeError" xml:space="preserve">
+    <value>Elementuak gordetzeko kodea eta berrespen kodea berdinak izan behar dira</value>
+  </data>
+  <data name="DeleteConfirmCodeError" xml:space="preserve">
+    <value>Kodeak eta berrespen-kodeak berdinak izan behar dute elementu hau kentzeko</value>
   </data>
   <data name="Goto" xml:space="preserve">
     <value>Joan</value>
+  </data>
+  <data name="SearchFilterListInputText" xml:space="preserve">
+    <value>Bilatu esaldia</value>
+  </data>
+  <data name="All" xml:space="preserve">
+    <value>Denak</value>
+  </data>
+  <data name="None" xml:space="preserve">
+    <value>Bat ere ez</value>
+  </data>
+  <data name="Select" xml:space="preserve">
+    <value>Hautatu</value>
   </data>
 </root>

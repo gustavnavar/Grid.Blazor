@@ -5,7 +5,19 @@
     <_LastSelectedProfileId>C:\Users\GustauNavarro\source\repos\Grid.Blazor\GridCore\Properties\PublishProfiles\FolderProfile.pubxml</_LastSelectedProfileId>
   </PropertyGroup>
   <ItemGroup>
+    <EmbeddedResource Update="Resources\Strings.ar.resx">
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Resources\Strings.ca-ES.resx">
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
     <EmbeddedResource Update="Resources\Strings.resx">
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Resources\Strings.sr.resx">
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Resources\Strings.uk.resx">
       <SubType>Designer</SubType>
     </EmbeddedResource>
   </ItemGroup>

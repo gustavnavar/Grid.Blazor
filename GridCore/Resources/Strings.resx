@@ -117,8 +117,8 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="Average" xml:space="preserve">
-    <value>Average</value>
+  <data name="ApplyFilterButtonText" xml:space="preserve">
+    <value>Apply</value>
   </data>
   <data name="BoolFalseLabel" xml:space="preserve">
     <value>No</value>
@@ -126,29 +126,35 @@
   <data name="BoolTrueLabel" xml:space="preserve">
     <value>Yes</value>
   </data>
-  <data name="ClearAllFilters" xml:space="preserve">
-    <value>Clear all filters</value>
+  <data name="ClearFilterLabel" xml:space="preserve">
+    <value>Clear filter</value>
   </data>
-  <data name="CreateItem" xml:space="preserve">
-    <value>Create item</value>
+  <data name="Contains" xml:space="preserve">
+    <value>Contains</value>
   </data>
   <data name="DefaultGridEmptyText" xml:space="preserve">
     <value>There are no items to display</value>
   </data>
-  <data name="DeleteItem" xml:space="preserve">
-    <value>Delete item</value>
+  <data name="EndsWith" xml:space="preserve">
+    <value>Ends with</value>
   </data>
-  <data name="ExtSortingText" xml:space="preserve">
-    <value>Drop columns here for column extended sorting</value>
+  <data name="Equal" xml:space="preserve">
+    <value>Equals</value>
   </data>
   <data name="FilterButtonTooltipText" xml:space="preserve">
     <value>Filter this column</value>
   </data>
-  <data name="Goto" xml:space="preserve">
-    <value>Go to</value>
+  <data name="FilterTypeLabel" xml:space="preserve">
+    <value>Type</value>
   </data>
-  <data name="GroupingText" xml:space="preserve">
-    <value>Drop columns here for column grouping</value>
+  <data name="FilterValueLabel" xml:space="preserve">
+    <value>Value</value>
+  </data>
+  <data name="GreaterThan" xml:space="preserve">
+    <value>Greater than</value>
+  </data>
+  <data name="GreaterThanOrEquals" xml:space="preserve">
+    <value>Greater than or equals</value>
   </data>
   <data name="Items" xml:space="preserve">
     <value>Items</value>
@@ -156,25 +162,136 @@
   <data name="Lang" xml:space="preserve">
     <value>en</value>
   </data>
+  <data name="LessThan" xml:space="preserve">
+    <value>Less than</value>
+  </data>
+  <data name="LessThanOrEquals" xml:space="preserve">
+    <value>Less than or equals</value>
+  </data>
+  <data name="SearchFor" xml:space="preserve">
+    <value>Search for ...</value>
+  </data>
+  <data name="StartsWith" xml:space="preserve">
+    <value>Starts with</value>
+  </data>
+  <data name="Average" xml:space="preserve">
+    <value>Average</value>
+  </data>
   <data name="Max" xml:space="preserve">
     <value>Max</value>
   </data>
   <data name="Min" xml:space="preserve">
     <value>Min</value>
   </data>
-  <data name="ReadItem" xml:space="preserve">
-    <value>Read item</value>
+  <data name="Sum" xml:space="preserve">
+    <value>Sum</value>
   </data>
-  <data name="SearchFor" xml:space="preserve">
-    <value>Search for ...</value>
+  <data name="And" xml:space="preserve">
+    <value>And</value>
+  </data>
+  <data name="Or" xml:space="preserve">
+    <value>Or</value>
+  </data>
+  <data name="ExtSortingText" xml:space="preserve">
+    <value>Drop columns here for column extended sorting</value>
+  </data>
+  <data name="GroupingText" xml:space="preserve">
+    <value>Drop columns here for column grouping</value>
+  </data>
+  <data name="Add" xml:space="preserve">
+    <value>Add</value>
+  </data>
+  <data name="Back" xml:space="preserve">
+    <value>Back</value>
+  </data>
+  <data name="Delete" xml:space="preserve">
+    <value>Delete</value>
+  </data>
+  <data name="Edit" xml:space="preserve">
+    <value>Edit</value>
+  </data>
+  <data name="Save" xml:space="preserve">
+    <value>Save</value>
+  </data>
+  <data name="View" xml:space="preserve">
+    <value>View</value>
+  </data>
+  <data name="SelectItem" xml:space="preserve">
+    <value>--- Select an item ---</value>
   </data>
   <data name="Show" xml:space="preserve">
     <value>Show</value>
   </data>
-  <data name="Sum" xml:space="preserve">
-    <value>Sum</value>
+  <data name="ClearAllFilters" xml:space="preserve">
+    <value>Clear all filters</value>
+  </data>
+  <data name="CreateItem" xml:space="preserve">
+    <value>Create item</value>
+  </data>
+  <data name="DeleteItem" xml:space="preserve">
+    <value>Delete item</value>
+  </data>
+  <data name="ReadItem" xml:space="preserve">
+    <value>Read item</value>
   </data>
   <data name="UpdateItem" xml:space="preserve">
     <value>Update item</value>
+  </data>
+  <data name="NotEqual" xml:space="preserve">
+    <value>Not equals</value>
+  </data>
+  <data name="CreateError" xml:space="preserve">
+    <value>There was an error creating the new item</value>
+  </data>
+  <data name="DeleteError" xml:space="preserve">
+    <value>There was an error deleting this item</value>
+  </data>
+  <data name="UpdateError" xml:space="preserve">
+    <value>There was an error updating this item</value>
+  </data>
+  <data name="IsNotNull" xml:space="preserve">
+    <value>Is not null</value>
+  </data>
+  <data name="IsNull" xml:space="preserve">
+    <value>Is null</value>
+  </data>
+  <data name="SelectionDeleteError" xml:space="preserve">
+    <value>You must select the row you want to delete</value>
+  </data>
+  <data name="SelectionReadError" xml:space="preserve">
+    <value>You must select the row you want to view</value>
+  </data>
+  <data name="SelectionUpdateError" xml:space="preserve">
+    <value>You must select the row you want to edit</value>
+  </data>
+  <data name="Files" xml:space="preserve">
+    <value>Files</value>
+  </data>
+  <data name="Code" xml:space="preserve">
+    <value>Code</value>
+  </data>
+  <data name="Confirm Code" xml:space="preserve">
+    <value>Confirm Code</value>
+  </data>
+  <data name="ConfirmCodeError" xml:space="preserve">
+    <value>Code and confirmation code must be equal to save this item</value>
+  </data>
+  <data name="DeleteConfirmCodeError" xml:space="preserve">
+    <value>Code and confirmation code must be equal to delete this item</value>
+  </data>
+  <data name="Goto" xml:space="preserve">
+    <value>Go to</value>
+  </data>
+  <data name="All" xml:space="preserve">
+    <value>All</value>
+  </data>
+  <data name="None" xml:space="preserve">
+    <value>None</value>
+  </data>
+  <data name="SearchFilterListInputText" xml:space="preserve">
+    <value>Search phrase</value>
+  </data>
+  <data name="Select" xml:space="preserve">
+    <value>Select</value>
   </data>
 </root>

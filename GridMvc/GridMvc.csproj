@@ -71,6 +71,7 @@
     <EmbeddedResource Include="Resources\js\gridmvc-lang-bg.js" LogicalName="GridMvc.Resources.js.gridmvc-lang-bg.js" />
     <EmbeddedResource Include="Resources\js\gridmvc-lang-uk.js" LogicalName="GridMvc.Resources.js.gridmvc-lang-uk.js" />
 	<EmbeddedResource Include="Resources\js\gridmvc-lang-ar.js" LogicalName="GridMvc.Resources.js.gridmvc-lang-ar.js" />
+	<EmbeddedResource Include="Resources\js\gridmvc-lang-da.js" LogicalName="GridMvc.Resources.js.gridmvc-lang-da.js" />
     <EmbeddedResource Include="Resources\js\gridmvc-ajax.js" LogicalName="GridMvc.Resources.js.gridmvc-ajax.js" />
     <EmbeddedResource Include="Resources\js\gridmvc-ajax.min.js" LogicalName="GridMvc.Resources.js.gridmvc-ajax.min.js" />
   </ItemGroup>
