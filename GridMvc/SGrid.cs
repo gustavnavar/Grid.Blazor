@@ -32,6 +32,12 @@ namespace GridMvc
         {
         }
 
+        public SGrid(IEnumerable<T> items, QueryDictionary<string> query, bool renderOnlyRows,
+            string pagerViewName = GridPager.DefaultPagerViewName, IColumnBuilder<T> columnBuilder = null)
+            : this(items, query.ToStringValuesDictionary(), renderOnlyRows, pagerViewName, columnBuilder)
+        {
+        }
+
         public SGrid(IEnumerable<T> items, QueryDictionary<StringValues> query, bool renderOnlyRows,
             string pagerViewName = GridPager.DefaultPagerViewName, IColumnBuilder<T> columnBuilder = null)
             : this(items, query, columnBuilder)
@@ -50,6 +56,10 @@ namespace GridMvc
 
         public SGrid(IEnumerable<T> items, IQueryCollection query, IColumnBuilder<T> columnBuilder = null)
             : this(items, QueryDictionary<StringValues>.Convert(query), columnBuilder)
+        { }
+
+        public SGrid(IEnumerable<T> items, QueryDictionary<string> query, IColumnBuilder<T> columnBuilder = null)
+            : this(items, query.ToStringValuesDictionary(), columnBuilder)
         { }
 
         public SGrid(IEnumerable<T> items, QueryDictionary<StringValues> query, IColumnBuilder<T> columnBuilder = null)

@@ -1,0 +1,83 @@
+@using GridBlazorGrpc.Shared.Models
+@implements IFormCrudComponent<Order>
+@inject ICrudDataService<Employee> employeeService
+
+<div class="@GridComponent.GridCrudHeaderCssClass">Employee</div>
+
+@if (_employee == null)
+{
+    <p><em>Loading...</em></p>
+}
+else
+{
+    <div class="form-horizontal">
+        <div class="form-group row">
+            <label class="col-form-label col-md-2">EmployeeID</label>
+            <div class="col-md-5">
+                <input class="form-control" readonly="readonly" value="@_employee.EmployeeID" />
+            </div>
+        </div>
+
+        <div class="form-group row">
+            <label class="col-form-label col-md-2">First Name</label>
+            <div class="col-md-5">
+                <input class="form-control" readonly="readonly" value="@_employee.FirstName" />
+            </div>
+        </div>
+
+        <div class="form-group row">
+            <label class="col-form-label col-md-2">Last Name</label>
+            <div class="col-md-5">
+                <input class="form-control" readonly="readonly" value="@_employee.LastName" />
+            </div>
+        </div>
+
+        <div class="form-group row">
+            <label class="col-form-label col-md-2">Birth Date</label>
+            <div class="col-md-5">
+                <input class="form-control" readonly="readonly" value="@_employee.BirthDate" />
+            </div>
+        </div>
+
+        <div style="display:flex;">
+            <div>
+                <button type="button" class="btn btn-primary btn-md" @onclick="() => BackButtonClicked()">Back</button>
+            </div>
+        </div>
+    </div>
+}
+
+@code {
+    private Employee _employee;
+
+    [CascadingParameter(Name = "GridComponent")]
+    protected GridComponent<Order> GridComponent { get; set; }
+
+    [Parameter]
+    public Order Item { get; set; }
+
+    [Parameter]
+    public GridMode ReturnMode { get; set; }
+
+    protected override async Task OnParametersSetAsync()
+    {
+        if (Item.EmployeeID.HasValue)
+            _employee = await employeeService.Get(Item.EmployeeID.Value);
+        else
+            await BackButtonClicked();
+    }
+
+    protected async Task BackButtonClicked()
+    {
+        if (ReturnMode == GridMode.Create)
+            await GridComponent.CreateHandler(Item);
+        else if (ReturnMode == GridMode.Read)
+            await GridComponent.ReadHandler(Item);
+        else if (ReturnMode == GridMode.Update)
+            await GridComponent.UpdateHandler(Item);
+        else if (ReturnMode == GridMode.Delete)
+            await GridComponent.DeleteHandler(Item);
+        else
+            await GridComponent.Back();
+    }
+}

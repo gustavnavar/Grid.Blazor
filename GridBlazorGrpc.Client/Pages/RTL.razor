@@ -1,0 +1,144 @@
+﻿@page "/rtl"
+@page "/rtl/{GridState}"
+@using GridBlazorGrpc.Client.ColumnCollections
+@using GridBlazorGrpc.Shared.Models
+@using Microsoft.Extensions.Primitives
+@using System
+@using System.Globalization
+@using System.Threading.Tasks
+@inject IGridClientService gridClientService
+@inject ICrudDataService<Order> orderService
+@inject ICrudDataService<OrderDetail> orderDetailService
+
+<h1>Right to left grid</h1>
+
+<p>
+    This page contains a grid with right to left direction that has many features enabled: filtering, sorting, searching, subgrids, conditional styles on columns and rows, etc. It also allows order editing. Its grid state is passed to the edit page, so it can be returned to this page mantaining the grid state.
+</p>
+
+<p>
+    This component demonstrates a GridBlazor client-side grid using gRPC to communicate with the back-end. For more information, please see: <a href="https://github.com/gustavnavar/Grid.Blazor">https://github.com/gustavnavar/Grid.Blazor</a>
+</p>
+
+@if (_task1.IsCompleted && _task2.IsCompleted)
+{
+    <div class="row">
+        <div class="col-md-12">
+            <GridComponent T="Order" Grid="@_grid"
+                           CustomFilters="@_customFilters"></GridComponent>
+        </div>
+    </div>
+}
+else
+{
+    <p><em>Loading...</em></p>
+}
+
+@code
+{
+    private CGrid<Order> _grid;
+    private Task<IEnumerable<SelectItem>> _task1;
+    private Task _task2;
+    private IEnumerable<SelectItem> _shippers;
+    private IQueryDictionary<Type> _customFilters = new QueryDictionary<Type>();
+
+    [Parameter]
+    public string GridState { get; set; }
+
+    protected override async Task OnParametersSetAsync()
+    {
+        var locale = CultureInfo.CurrentCulture;
+        _task1 = gridClientService.GetAllShippers();
+        var shippers = await _task1;
+        _shippers = shippers;
+
+        Func<object[], bool, bool, bool, bool, Task<IGrid>> crudSubGrids = async (keys, create, read, update, delete) =>
+        {
+            int orderId;
+            int.TryParse(keys[0].ToString(), out orderId);
+            var subGridQuery = new QueryDictionary<string>();
+
+            Action<IGridColumnCollection<OrderDetail>> subGridColumns = c => ColumnCollections.OrderDetailColumnsCrud(c,
+                gridClientService.GetAllProducts);
+
+            var subGridClient = new GridClient<OrderDetail>(q => gridClientService.GetOrderDetailsGridWithCrud(q, orderId), subGridQuery, 
+                false, "orderDetailsGrid" + keys[0].ToString(), subGridColumns, locale)
+                    .Sortable()
+                    .Filterable()
+                    .SetStriped(true)
+                    .Crud(create, read, update, delete, orderDetailService)
+                    .WithMultipleFilters()
+                    .WithGridItemsCount();
+
+            await subGridClient.UpdateGrid();
+            return subGridClient.Grid;
+        };
+
+        Func<object[], Task<ICGrid>> subGrids = async keys =>
+        {
+            int orderId;
+            int.TryParse(keys[0].ToString(), out orderId);
+            var subGridQuery = new QueryDictionary<string>();
+
+            Action<IGridColumnCollection<OrderDetail>> subGridColumns = c => ColumnCollections.OrderDetailColumnsAllFeatures(c,
+                gridClientService.GetAllProducts);
+
+            var subGridClient = new GridClient<OrderDetail>(q => gridClientService.GetOrderDetailsGridAllFeatures(q, orderId), 
+                subGridQuery, false, "orderDetailsGrid" + keys[0].ToString(), subGridColumns, locale)
+                    .SetRowCssClasses(item => item.Quantity > 10 ? "success" : string.Empty)
+                    .Sortable()
+                    .Filterable()
+                    .SetStriped(true)
+                    .Selectable(true)
+                    .Crud(true, orderDetailService)
+                    .WithMultipleFilters()
+                    .WithGridItemsCount();
+
+            await subGridClient.UpdateGrid();
+            return subGridClient.Grid;
+        };
+
+        // build the column collection passing an action list with the action executed by the ButtonCell component
+        Action<IGridColumnCollection<Order>> orderColumns = c =>
+        ColumnCollections.OrderColumnsAllFeatures(c, o => gridClientService.GetAllCustomers(), 
+                o => gridClientService.GetAllEmployees(), 
+                o => gridClientService.GetAllShippers(), _shippers, crudSubGrids);
+
+        var query = new QueryDictionary<string>();
+        if (!string.IsNullOrWhiteSpace(GridState))
+        {
+            try
+            {
+                query = StringExtensions.GetQuery(GridState).ToStringDictionary();
+            }
+            catch (Exception)
+            {
+                // do nothing, GridState was not a valid state
+            }
+        }
+        var client = new GridClient<Order>(gridClientService.GetOrdersGridAllFeatures, query, false, "ordersGrid", orderColumns, locale)
+            .SetRowCssClasses(item => item.Customer.IsVip ? "success" : string.Empty)
+            .Sortable()
+            .Filterable()
+            .SetKeyboard(true)
+            .Groupable(true)
+            .ClearFiltersButton(true)
+            .SetStriped(true)
+            .WithMultipleFilters()
+            .Searchable(true, false)
+            .Selectable(true, true, true)
+            .WithGridItemsCount()
+            .ChangePageSize(true)
+            .SubGrid(subGrids, ("OrderID", "OrderID"))
+            .Crud(true, r => r.Customer.IsVip, r => !r.Customer.IsVip, r => r.Customer.IsVip, orderService)
+            .SetExcelExport(true)
+            .SetDirection(GridDirection.RTL);
+
+        _customFilters.Add(ColumnCollections.CompanyNameFilter, typeof(CustomersFilterComponent<Order>));
+
+        _grid = client.Grid;
+        // Set new items to grid
+        _task2 = client.UpdateGrid();
+        await _task2;
+    }
+}

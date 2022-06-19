@@ -1,15 +1,21 @@
 ﻿using System.Collections.Generic;
+using System.Runtime.Serialization;
 
 namespace GridShared.Totals
 {
     /// <summary>
     ///     Pager DTO
     /// </summary>
+    [DataContract]
     public class TotalsDTO
     {
+        [DataMember(Order = 1)]
         public IDictionary<string,string> Sum { get; set; }
+        [DataMember(Order = 2)]
         public IDictionary<string, string> Average { get; set; }
+        [DataMember(Order = 3)]
         public IDictionary<string, string> Max { get; set; }
+        [DataMember(Order = 4)]
         public IDictionary<string, string> Min { get; set; }
 
         public TotalsDTO()

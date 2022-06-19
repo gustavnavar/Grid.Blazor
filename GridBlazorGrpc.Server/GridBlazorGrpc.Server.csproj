@@ -1,0 +1,21 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
+
+	<PropertyGroup>
+		<TargetFramework>net6.0</TargetFramework>
+		<DisableImplicitComponentsAnalyzers>true</DisableImplicitComponentsAnalyzers>
+		<Version>3.2.3</Version>
+	</PropertyGroup>
+
+	<ItemGroup>
+		<PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.Server" Version="6.0.6" />
+		<PackageReference Include="Grpc.AspNetCore.Web" Version="2.46.0" />
+		<PackageReference Include="protobuf-net.Grpc.AspNetCore" Version="1.0.152" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<ProjectReference Include="..\GridBlazorGrpc.Client\GridBlazorGrpc.Client.csproj" />
+		<ProjectReference Include="..\GridCore\GridCore.csproj" />
+		<ProjectReference Include="..\GridSharedData\GridSharedData.csproj" />
+	</ItemGroup>
+
+</Project>

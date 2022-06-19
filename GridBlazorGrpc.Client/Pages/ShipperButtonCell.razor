@@ -1,0 +1,22 @@
+@using GridBlazorGrpc.Shared.Models
+@using GridShared.Columns
+@implements ICustomGridComponent<Order>
+
+@if (Item.Shipper != null)
+{
+ <button class='btn btn-sm btn-primary' @onclick="MyClickHandler">View Shipper</button>
+}
+
+@code {
+
+    [CascadingParameter(Name = "GridComponent")]
+    public GridComponent<Order> GridComponent { get; set; }
+
+    [Parameter]
+    public Order Item { get; set; }
+
+    private void MyClickHandler(MouseEventArgs e)
+    {
+        GridComponent.StartFormComponent<ShipperComponent>("Shipper Information", null, null, Item.Shipper);
+    }
+}

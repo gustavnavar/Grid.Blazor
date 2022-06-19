@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 16
-VisualStudioVersion = 16.0.28606.126
+# Visual Studio Version 17
+VisualStudioVersion = 17.2.32602.215
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GridMvc.Demo", "GridMvc.Demo\GridMvc.Demo.csproj", "{0EF5DFF5-1E59-44E6-A7D6-31A6F7B90C56}"
 EndProject
@@ -33,7 +33,13 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GridSharedData", "GridShare
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GridCore", "GridCore\GridCore.csproj", "{A8E53274-6546-4C01-B3D8-591A73D311BF}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GridBlazorStandalone", "GridBlazorStandalone\GridBlazorStandalone.csproj", "{A6BA4E7B-7CF0-4634-9A38-1F459D734D3F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GridBlazorStandalone", "GridBlazorStandalone\GridBlazorStandalone.csproj", "{A6BA4E7B-7CF0-4634-9A38-1F459D734D3F}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GridBlazorGrpc.Shared", "GridBlazorGrpc.Shared\GridBlazorGrpc.Shared.csproj", "{40717507-52FC-40B2-8166-E06254C25B24}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GridBlazorGrpc.Client", "GridBlazorGrpc.Client\GridBlazorGrpc.Client.csproj", "{5F531B04-066B-4DBC-AD0D-AAA8BD1595A8}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GridBlazorGrpc.Server", "GridBlazorGrpc.Server\GridBlazorGrpc.Server.csproj", "{FD560288-98BB-45C3-AD8E-5085E62AB6EA}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -105,12 +111,24 @@ Global
 		{A6BA4E7B-7CF0-4634-9A38-1F459D734D3F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A6BA4E7B-7CF0-4634-9A38-1F459D734D3F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A6BA4E7B-7CF0-4634-9A38-1F459D734D3F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{40717507-52FC-40B2-8166-E06254C25B24}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{40717507-52FC-40B2-8166-E06254C25B24}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{40717507-52FC-40B2-8166-E06254C25B24}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{40717507-52FC-40B2-8166-E06254C25B24}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5F531B04-066B-4DBC-AD0D-AAA8BD1595A8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5F531B04-066B-4DBC-AD0D-AAA8BD1595A8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5F531B04-066B-4DBC-AD0D-AAA8BD1595A8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5F531B04-066B-4DBC-AD0D-AAA8BD1595A8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FD560288-98BB-45C3-AD8E-5085E62AB6EA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FD560288-98BB-45C3-AD8E-5085E62AB6EA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FD560288-98BB-45C3-AD8E-5085E62AB6EA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FD560288-98BB-45C3-AD8E-5085E62AB6EA}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
-		SolutionGuid = {895FF79E-EBAE-48F1-BB99-DEE7E62B0DB6}
 		VisualSVNWorkingCopyRoot = .
+		SolutionGuid = {895FF79E-EBAE-48F1-BB99-DEE7E62B0DB6}
 	EndGlobalSection
 EndGlobal

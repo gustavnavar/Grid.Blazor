@@ -61,6 +61,16 @@ namespace GridBlazor
             //WithPaging(_source.Pager.PageSize);
         }
 
+        public GridClient(Func<QueryDictionary<string>, Task<ItemsDTO<T>>> grpcService,
+            QueryDictionary<string> query, bool renderOnlyRows, string gridName,
+            Action<IGridColumnCollection<T>> columns = null, CultureInfo cultureInfo = null,
+            IColumnBuilder<T> columnBuilder = null)
+        {
+            _source = new CGrid<T>(grpcService, query, renderOnlyRows, columns, cultureInfo, columnBuilder);
+            Named(gridName);
+            //WithPaging(_source.Pager.PageSize);
+        }
+
         public GridClient(HttpClient httpClient, string url, IMemoryDataService<T> memoryDataService, 
             IQueryDictionary<StringValues> query, bool renderOnlyRows,
             string gridName, Action<IGridColumnCollection<T>> columns = null, CultureInfo cultureInfo = null,
@@ -87,6 +97,16 @@ namespace GridBlazor
             IColumnBuilder<T> columnBuilder = null)
         {
             _source = new CGrid<T>(dataServiceAsync, memoryDataService, query, renderOnlyRows, columns, cultureInfo, columnBuilder);
+            Named(gridName);
+            //WithPaging(_source.Pager.PageSize);
+        }
+
+        public GridClient(Func<QueryDictionary<string>, Task<ItemsDTO<T>>> grpcService,
+            IMemoryDataService<T> memoryDataService, QueryDictionary<string> query, bool renderOnlyRows, string gridName,
+            Action<IGridColumnCollection<T>> columns = null, CultureInfo cultureInfo = null,
+            IColumnBuilder<T> columnBuilder = null)
+        {
+            _source = new CGrid<T>(grpcService, memoryDataService, query, renderOnlyRows, columns, cultureInfo, columnBuilder);
             Named(gridName);
             //WithPaging(_source.Pager.PageSize);
         }

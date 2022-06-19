@@ -53,6 +53,20 @@ namespace GridCore.Server
                 WithPaging(pageSize.Value);
         }
 
+        public GridCoreServer(IEnumerable<T> items, QueryDictionary<string> query, bool renderOnlyRows,
+            string gridName, Action<IGridColumnCollection<T>> columns = null, int? pageSize = null,
+            string language = "", string pagerViewName = GridPager.DefaultPagerViewName,
+            IColumnBuilder<T> columnBuilder = null)
+        {
+            _source = new SGridCore<T>(items, query, renderOnlyRows, pagerViewName, columnBuilder);
+            _source.RenderOptions.GridName = gridName;
+            columns?.Invoke(_source.Columns);
+            if (!string.IsNullOrWhiteSpace(language))
+                _source.Language = language;
+            if (pageSize.HasValue)
+                WithPaging(pageSize.Value);
+        }
+
         #region IGridHtmlOptions<T> Members
 
         public IGridServer<T> WithGridItemsCount()
