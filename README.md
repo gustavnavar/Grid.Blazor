@@ -10,7 +10,8 @@ It supports .NET Core 3.1 and 5.0 and 6.0, and Blazor WebAssembly 3.2.0 and 5.0 
 
 ## Demo 
 - Blazor server-side: http://gridblazor.azurewebsites.net
-- Blazor WASM with GridCore back-end: http://gridblazorwasm.azurewebsites.net
+- Blazor WASM with GridCore back-end (REST API): http://gridblazorwasm.azurewebsites.net
+- Blazor WASM with GridCore back-end (gRPC): http://gridblazorgrpc.azurewebsites.net
 - Blazor WASM with OData back-end: http://gridblazorodata.azurewebsites.net
 - Blazor WASM with data local in the client: http://gridblazorlocal.azurewebsites.net
 

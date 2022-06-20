@@ -9,10 +9,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Microsoft.Web.LibraryManager.Build" Version="2.1.161" />
-  </ItemGroup>
-
-  <ItemGroup>
     <ProjectReference Include="..\GridBlazor\GridBlazor.csproj" />
     <ProjectReference Include="..\GridMvc\GridMvc.csproj" />
     <ProjectReference Include="..\GridSharedData\GridSharedData.csproj" />
