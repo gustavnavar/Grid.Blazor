@@ -226,7 +226,7 @@ You can see here an example of the grid column definition where the method ```af
 
 ```c#
 c.Add(o => o.CustomerID)
-    .SetSelectField(true, o => o.Customer.CustomerID + " - " + o.Customer.CompanyName, o => path + $"api/SampleData/GetAllCustomers")
+    .SetSelectField(true, o => o.Customer.CustomerID + " - " + o.Customer.CompanyName, customers)
     .SetAfterChangeValue(afterChangeCustomerID);
 ```
 
@@ -273,15 +273,15 @@ The ```AddToOnAfterRender``` method of the ```GridClient``` object allows to def
 
         Func<object[], bool, bool, bool, bool, Task<IGrid>> subGrids = async (keys, create, read, update, delete) =>
         {
-            var subGridQuery = new QueryDictionary<StringValues>();
-            string subGridUrl = NavigationManager.BaseUri + "api/SampleData/GetOrderDetailsGridWithCrud?OrderId="
-                + keys[0].ToString();
+            int orderId;
+            int.TryParse(keys[0].ToString(), out orderId);
+            var subGridQuery = new QueryDictionary<string>();
 
             Action<IGridColumnCollection<OrderDetail>> subGridColumns = c => ColumnCollections.OrderDetailColumnsCrud(c,
-                NavigationManager.BaseUri);
+                gridClientService.GetAllProducts);
 
-            var subGridClient = new GridClient<OrderDetail>(HttpClient, subGridUrl, subGridQuery, false,
-                "orderDetailsGrid" + keys[0].ToString(), subGridColumns, locale)
+            var subGridClient = new GridClient<OrderDetail>(q => gridClientService.GetOrderDetailsGridWithCrud(q, orderId), subGridQuery, 
+                false, "orderDetailsGrid" + keys[0].ToString(), subGridColumns, locale)
                     .Sortable()
                     .Filterable()
                     .SetStriped(true)
@@ -294,11 +294,12 @@ The ```AddToOnAfterRender``` method of the ```GridClient``` object allows to def
             return subGridClient.Grid;
         };
 
-        var query = new QueryDictionary<StringValues>();
-        string url = NavigationManager.BaseUri + "api/SampleData/OrderColumnsWithSubgridCrud";
+        var query = new QueryDictionary<string>();
 
-        var client = new GridClient<Order>(HttpClient, url, query, false, "ordersGrid", c =>
-            ColumnCollections.OrderColumnsWithNestedCrud(c, NavigationManager.BaseUri, subGrids), locale)
+        var client = new GridClient<Order>(gridClientService.OrderColumnsWithSubgridCrud, query, false, "ordersGrid", c =>
+            ColumnCollections.OrderColumnsWithNestedCrud(c, o => gridClientService.GetAllCustomers(), 
+                o => gridClientService.GetAllEmployees(), 
+                o => gridClientService.GetAllShippers(), subGrids), locale)
             .Sortable()
             .Filterable()
             .SetStriped(true)

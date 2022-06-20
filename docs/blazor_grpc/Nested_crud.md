@@ -36,15 +36,15 @@ Then you have to define the subgrid that you want to show on the CRUD forms.
 ```c#
     Func<object[], bool, bool, bool, bool, Task<IGrid>> subGrids = async (keys, create, read, update, delete) =>
     {
-        var subGridQuery = new QueryDictionary<StringValues>();
-        string subGridUrl = NavigationManager.BaseUri + "api/SampleData/GetOrderDetailsGridWithCrud?OrderId="
-            + keys[0].ToString();
+        int orderId;
+        int.TryParse(keys[0].ToString(), out orderId);
+        var subGridQuery = new QueryDictionary<string>();
 
         Action<IGridColumnCollection<OrderDetail>> subGridColumns = c => ColumnCollections.OrderDetailColumnsCrud(c,
-            NavigationManager.BaseUri);
+            gridClientService.GetAllProducts);
 
-        var subGridClient = new GridClient<OrderDetail>(HttpClient, subGridUrl, subGridQuery, false,
-            "orderDetailsGrid" + keys[0].ToString(), subGridColumns, locale)
+        var subGridClient = new GridClient<OrderDetail>(q => gridClientService.GetOrderDetailsGridWithCrud(q, orderId), subGridQuery, 
+            false, "orderDetailsGrid" + keys[0].ToString(), subGridColumns, locale)
                 .Sortable()
                 .Filterable()
                 .SetStriped(true)
@@ -67,21 +67,22 @@ You can do it using the ```SetEditAfterInsert``` method of the ```GridClient``` 
 The configuration for this type of grid is as follows:
 
 ```c#
-    var client = new GridClient<Order>(HttpClient, url, query, false, "ordersGrid", orderColumns, locale)
+    var client = new GridClient<Order>(gridClientService.OrderColumnsWithSubgridCrud, query, false, "ordersGrid", orderColumns, locale)
         .Crud(true, orderService)
         .SetEditAfterInsert(true);
 ```
 
-The server webservice must return de key of the new record. This is a sample:
+The gRPC service must return de key of the new record. This is a sample on the back-end:
 ```c#
-    [HttpPost]
-    public async Task<ActionResult> Create([FromBody] Order order)
+    public class OrderServerService : IOrderService
     {
-        if (ModelState.IsValid)
+        ...
+
+        public async ValueTask<Response> Create(Order order)
         {
             if (order == null)
             {
-                return BadRequest();
+                return new Response(false);
             }
 
             var repository = new OrdersRepository(_context);
@@ -90,52 +91,34 @@ The server webservice must return de key of the new record. This is a sample:
                 await repository.Insert(order);
                 repository.Save();
 
-                return Ok(order.OrderID);
+                return new Response(true, order.OrderID);
             }
             catch (Exception e)
             {
-                return BadRequest(new
-                {
-                    message = e.Message.Replace('{', '(').Replace('}', ')')
-                });
+                return new Response(e);
             }
         }
-        return BadRequest(new
-        {
-            message = "ModelState is not valid"
-        });
     }
 ```
 
 And finally the client implementation of the ```ICrudDataService``` must get the returned key and update its value in the client:
 ```c#
-    public class OrderService : ICrudDataService<Order>
+    public async Task Insert(Order item)
     {
-        private readonly HttpClient _httpClient;
-        private readonly string _baseUri;
-
-        public OrderService(HttpClient httpClient, NavigationManager navigationManager)
+        var handler = new GrpcWebHandler(GrpcWebMode.GrpcWeb, new HttpClientHandler());
+        using (var channel = GrpcChannel.ForAddress(_baseUri, new GrpcChannelOptions() { HttpClient = new HttpClient(handler) }))
         {
-            _httpClient = httpClient;
-            _baseUri = navigationManager.BaseUri;
-        }
-
-        ...
-
-        public async Task Insert(Order item)
-        {
-            var response = await _httpClient.PostAsJsonAsync(_baseUri + $"api/Order", item);
-            if (response.IsSuccessStatusCode)
+            var service = channel.CreateGrpcService<IOrderService>();
+            var result = await service.Create(item);
+            if (result.Ok)
             {
-                item.OrderID = Convert.ToInt32(await response.Content.ReadAsStringAsync());
+                item.OrderID = result.Id;
             }
             else
             {
-                throw new GridException("ORDSRV-01", "Error creating the order");
+                throw new GridException("ORDSRV-01", "Error creating the order: " + result.Message);
             }
         }
-
-        ...
     }
 ```
 
@@ -164,7 +147,7 @@ First you must create a service for memory persistance of nested entities until 
             Items = new List<OrderDetail>();
         }
 
-        public ItemsDTO<OrderDetail> GetGridRows(QueryDictionary<StringValues> query)
+        public ItemsDTO<OrderDetail> GetGridRows(QueryDictionary<string> query)
         {
             var server = new GridCoreServer<OrderDetail>(Items, query, true, "Grid", _columns)
                     .Sortable()
@@ -235,23 +218,23 @@ This is a sample:
 ```c#
     Func<object[], bool, bool, bool, bool, Task<IGrid>> subGrids = async (keys, create, read, update, delete) =>
     {
-        var subGridQuery = new QueryDictionary<StringValues>();
-        string subGridUrl = NavigationManager.BaseUri + "api/SampleData/GetOrderDetailsGridWithCrud?OrderId="
-           + keys[0].ToString();
+        int orderId;
+        int.TryParse(keys[0].ToString(), out orderId);
+        var subGridQuery = new QueryDictionary<string>();
 
         Action<IGridColumnCollection<OrderDetail>> subGridColumns = c => ColumnCollections.OrderDetailColumnsCrud(c,
-            NavigationManager.BaseUri);
-        var products = await HttpClient.GetFromJsonAsync<List<SelectItem>>(NavigationManager.BaseUri + "api/SampleData/GetAllProducts");
+           gridClientService.GetAllProducts);
+        var products = await gridClientService.GetAllProducts();
 
         _orderDetailMemoryService = new OrderDetailMemoryService(subGridColumns, products);
-        var subGridClient = new GridClient<OrderDetail>(HttpClient, subGridUrl, _orderDetailMemoryService, subGridQuery, false,
-            "orderDetailsGrid" + keys[0].ToString(), subGridColumns, locale)
-               .Sortable()
-               .Filterable()
-               .SetStriped(true)
-               .Crud(create, read, update, delete, orderDetailService)
-               .WithMultipleFilters()
-               .WithGridItemsCount();
+        var subGridClient = new GridClient<OrderDetail>(q => gridClientService.GetOrderDetailsGridWithCrud(q, orderId), 
+            _orderDetailMemoryService, subGridQuery, false, "orderDetailsGrid" + keys[0].ToString(), subGridColumns, locale)
+                .Sortable()
+                .Filterable()
+                .SetStriped(true)
+                .Crud(create, read, update, delete, orderDetailService)
+                .WithMultipleFilters()
+                .WithGridItemsCount();
 
         await subGridClient.UpdateGrid();
         return subGridClient.Grid;
@@ -280,8 +263,11 @@ And finally you have to configure the following events for parent grid to automa
         {
             orderDetail.OrderID = item.OrderID;
             orderDetail.Product = null;
-            var response = await HttpClient.PostAsJsonAsync(NavigationManager.BaseUri + $"api/OrderDetail", orderDetail);
-            if (!response.IsSuccessStatusCode)
+            try
+            {
+                await orderDetailService.Insert(orderDetail);
+            }
+            catch(Exception e)
             {
                 return await Task.FromResult(false);
             }
@@ -327,15 +313,15 @@ This is an example implementing this feature:
 
         Func<object[], bool, bool, bool, bool, Task<IGrid>> subGrids = async (keys, create, read, update, delete) =>
         {
-            var subGridQuery = new QueryDictionary<StringValues>();
-            string subGridUrl = NavigationManager.BaseUri + "api/SampleData/GetOrderDetailsGridWithCrud?OrderId="
-                + keys[0].ToString();
+            int orderId;
+            int.TryParse(keys[0].ToString(), out orderId);
+            var subGridQuery = new QueryDictionary<string>();
 
             Action<IGridColumnCollection<OrderDetail>> subGridColumns = c => ColumnCollections.OrderDetailColumnsCrud(c,
-                NavigationManager.BaseUri);
+                gridClientService.GetAllProducts);
 
-            var subGridClient = new GridClient<OrderDetail>(HttpClient, subGridUrl, subGridQuery, false,
-                "orderDetailsGrid" + keys[0].ToString(), subGridColumns, locale)
+            var subGridClient = new GridClient<OrderDetail>(q => gridClientService.GetOrderDetailsGridWithCrud(q, orderId), subGridQuery, 
+                false, "orderDetailsGrid" + keys[0].ToString(), subGridColumns, locale)
                     .Sortable()
                     .Filterable()
                     .SetStriped(true)
@@ -348,11 +334,10 @@ This is an example implementing this feature:
             return subGridClient.Grid;
         };
 
-        var query = new QueryDictionary<StringValues>();
-        string url = NavigationManager.BaseUri + "api/SampleData/OrderColumnsWithSubgridCrud";
+        var query = new QueryDictionary<string>();
 
-        var client = new GridClient<Order>(HttpClient, url, query, false, "ordersGrid", c =>
-            ColumnCollections.OrderColumnsWithNestedCrud(c, NavigationManager.BaseUri, subGrids), locale)
+        var client = new GridClient<Order>(gridClientService.OrderColumnsWithSubgridCrud, query, false, "ordersGrid", c =>
+            ColumnCollections.OrderColumnsWithNestedCrud(c, subGrids), locale)
             .Sortable()
             .Filterable()
             .SetStriped(true)

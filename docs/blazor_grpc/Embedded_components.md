@@ -14,7 +14,7 @@ These components can be started clicking on a button on the top of the grid or i
 * If you want to use a button on the top of the grid to start the embedded component, you can use the **AddButtonComponent** method of the **GridClient** object to add a component:
     
     ```c#
-        var client = new GridClient<Order>(httpClient, url, query, false, "ordersGrid", Columns, locale)
+        var client = new GridClient<Order>(gridClientService.GetOrdersGridRows, query, false, "ordersGrid", Columns, locale)
             .AddButtonComponent<EmployeeComponent>("Employees", "Employee's Grid");
     ```
 
@@ -108,7 +108,7 @@ There are 3 options:
 
 * Use booleans to enable buttons:
     ```c#
-        var client = new GridClient<Order>(httpClient, url, query, false, "ordersGrid", Columns, locale)
+        var client = new GridClient<Order>(gridClientService.GetOrdersGridRows, query, false, "ordersGrid", Columns, locale)
             .Crud(true, orderService)
             .AddButtonCrudComponent<EmployeeFormComponent>("Employees", "Employee's Grid", true, true, true, true);
     ```
@@ -130,7 +130,7 @@ There are 3 options:
  
 * Use functions to enable buttons:
     ```c#
-        var client = new GridClient<Order>(httpClient, url, query, false, "ordersGrid", Columns, locale)
+        var client = new GridClient<Order>(gridClientService.GetOrdersGridRows, query, false, "ordersGrid", Columns, locale)
             .Crud(true, orderService)
             .AddButtonCrudComponent<EmployeeFormComponent>("Employees", "Employee's Grid", true, r => r.EmployeeID > 10, r => r.EmployeeID > 10, r => r.EmployeeID > 10);
     ```

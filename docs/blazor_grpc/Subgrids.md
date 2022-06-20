@@ -121,9 +121,9 @@ Finally we have to add a method in the gRPC service to get rows for subgrids. An
 
     **Notes**:
     * This method must have ONLY 1 serializable parameter to avoid gRPC errors:
-        * a dictionary to pass query parameters such as **grid-page**. It must be of type **QueryDictionary<string>**. gRPC forces to use a dictionary of strings. All other protocols use a dictionary of ```StringValues```, but gRPC does not serialize it by default.
-        * it can be any other serializable object that includes **QueryDictionary<string>** as an attribute
+        * a dictionary to pass query parameters such as **grid-page**. It must be of type ```QueryDictionary<string>```. gRPC forces to use a dictionary of strings. All other protocols use a dictionary of ```StringValues```, but gRPC does not serialize it by default.
+        * it can be any other serializable object that includes ```QueryDictionary<string>``` as an attribute
 
-Note that the grid name parameter we use must be unique for each subgrid. In this example we use the name **"orderDetailsGrid" + OrderId.ToString()**.
+Note that the grid name parameter we use must be unique for each subgrid. In this example we use the name ```"orderDetailsGrid" + OrderId.ToString()```.
 
 [<- Render button, checkbox, etc. in a grid cell](Render_button_checkbox_etc_in_a_grid_cell.md) | [Passing grid state as parameter ->](Passing_grid_state_as_parameter.md)

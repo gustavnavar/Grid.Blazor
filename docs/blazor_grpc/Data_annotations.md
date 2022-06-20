@@ -41,7 +41,7 @@ For example a model class with the following data annotations:
 describes that the grid table must contain 3 columns (**Name**, **Enabled** and **FooDate**) with custom options. It also enables paging for this grid table and page size as 20 rows.
 
 **Notes**:
-* The ```Order``` parameters for the ```DataMember``` attibute can have different values than ``Position``` parameters for the ```GridColumn``` attibute because they have diffente meanings.
+* The ```Order``` parameters for the ```DataMember``` attribute can have different values than ``Position``` parameters for the ```GridColumn``` attribute because they have diffente meanings.
 
 The steps to build a grid razor page using data annotations with **GridBlazor** are:
 
@@ -85,24 +85,22 @@ The steps to build a grid razor page using data annotations with **GridBlazor** 
 
     * You must use the **AutoGenerateColumns** method of the **GridClient** object to configure a grid.
 
-2. Create a controller action in the server project. An example of this type of controller action is: 
+2. Create a gRPC method in the server project. An example of this type of method is: 
 
 
     ```c#
-        [Route("api/[controller]")]
-        public class SampleDataController : Controller
+        public class GridServerService : IGridService
         {
             ...
 
-            [HttpGet("[action]")]
-            public ActionResult GetFooAutoGenerateColumns()
+            public async ValueTask<ItemsDTO<Foo>> GetOrdersGridordersAutoGenerateColumns(QueryDictionary<string> query)
             {
                 var repository = new FooRepository(_context);
-                var server = new GridCoreServer<Foo>(repository.GetAll(), Request.Query,
+                IGridServer<Foo> server = new GridCoreServer<Foo>(repository.GetAll(), query,
                     true, "fooGrid", null).AutoGenerateColumns();
 
-                // return items to displays
-                return Ok(server.ItemsToDisplay);
+                var items = await server.GetItemsToDisplayAsync(async x => await x.ToListAsync());
+                return items;
             }
         }
     ```

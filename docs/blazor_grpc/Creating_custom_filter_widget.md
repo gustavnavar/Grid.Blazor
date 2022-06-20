@@ -194,42 +194,42 @@ Follow thes steps to create a custom filter widget:
     ```
 
 2. Then you have to implement the new method in the **Server** project as follows:
- ```c#
-    public class GridServerService : IGridService
-    {
-        ...
-
-        public async ValueTask<IEnumerable<string>> GetCustomersNames()
+    ```c#
+        public class GridServerService : IGridService
         {
-            var repository = new CustomersRepository(_context);
-            return await repository.GetAll().Select(r => r.CompanyName).ToListAsync();
-        }
-    }
-```
-
-3. It's also recomended to add anew method in the gRPC service of the **Client** project calling the server's gRPC service:
-```c#
-    public class GridClientService : IGridClientService
-    {
-        ...
-        
-        public async Task<IEnumerable<string>> GetCustomersNames()
-        {
-            var handler = new GrpcWebHandler(GrpcWebMode.GrpcWeb, new HttpClientHandler());
-            using (var channel = GrpcChannel.ForAddress(_baseUri, new GrpcChannelOptions() { HttpClient = new HttpClient(handler) }))
+            ...
+    
+            public async ValueTask<IEnumerable<string>> GetCustomersNames()
             {
-                var service = channel.CreateGrpcService<IGridService>();
-                return await service.GetCustomersNames();
+                var repository = new CustomersRepository(_context);
+                return await repository.GetAll().Select(r => r.CompanyName).ToListAsync();
             }
         }
-    }
+    ```
 
-    public interface IGridClientService
-    {
-        ...
+3. It's also recomended to add anew method in the gRPC service of the **Client** project calling the server's gRPC service:
+    ```c#
+        public class GridClientService : IGridClientService
+        {
+            ...
+        
+            public async Task<IEnumerable<string>> GetCustomersNames()
+            {
+                var handler = new GrpcWebHandler(GrpcWebMode.GrpcWeb, new HttpClientHandler());
+                using (var channel = GrpcChannel.ForAddress(_baseUri, new GrpcChannelOptions() { HttpClient = new HttpClient(handler) }))
+                {
+                    var service = channel.CreateGrpcService<IGridService>();
+                    return await service.GetCustomersNames();
+                }
+            }
+        }
 
-        Task<IEnumerable<string>> GetCustomersNames();
-    }
-```
+        public interface IGridClientService
+        {
+            ...
+
+            Task<IEnumerable<string>> GetCustomersNames();
+        }
+    ```
 
 [<- Using a date time filter](Using_datetime_filter.md) | [Setup initial column filtering ->](Setup_initial_column_filtering.md)

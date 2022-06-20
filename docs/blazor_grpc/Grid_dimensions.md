@@ -17,7 +17,7 @@ You can configure the column width using the ```SetWidth``` method of the column
 But you can also configure the grid height and width using the ```SetTableLayout``` method of the ```GridClient``` object:
  
 ```c#
-    var client = new GridClient<Order>(HttpClient, url, query, false, "ordersGrid", Columns)
+    var client = new GridClient<Order>(gridClientService.GetOrdersGridRows, query, false, "ordersGrid", Columns)
         .SetTableLayout(TableLayout.Fixed, "1200px", "400px");
 ```
 

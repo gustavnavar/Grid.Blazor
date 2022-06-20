@@ -41,7 +41,7 @@ The steps to build a grid razor page using **GridBlazor** using gRPC to communic
     }
 ```
 
-2. Create an interfase in the **Shared** project for the gRPC service used by **Client** and **Server** projects. 
+2. Create an interface in the **Shared** project for the gRPC service used by **Client** and **Server** projects. 
 The interface must use the **ServiceContract** attribute:
 ```c#
     [ServiceContract]
@@ -215,9 +215,9 @@ The interface must use the **ServiceContract** attribute:
             public static Action<IGridColumnCollection<Order>> Columns = c =>
             {
                 c.Add(o => o.OrderID).Titled("Number");
-                c.Add(o => o.OrderDate).Titled("Date);
+                c.Add(o => o.OrderDate).Titled("Date");
                 c.Add(o => o.Customer.CompanyName).Titled("Company Name");
-                c.Add(o => o.Customer.ContactName).Titled("Contact Name")
+                c.Add(o => o.Customer.ContactName).Titled("Contact Name");
                 c.Add(o => o.Freight);
             };
 

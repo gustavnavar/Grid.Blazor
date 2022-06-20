@@ -17,17 +17,29 @@ These are the supported features:
 
 ## Auto-generated forms
 
-You can enable CRUD using the **Crud(bool enabled, ICrudDataService<T> crudDataService)** method of the **GridClient** object:
+In first place we will create an interface in the Shared project for the gRPC service used by Client and Server projects. We will need 4 methods for all CRUD operations. The interface must use the ServiceContract attribute:
+ ```c#
+    [ServiceContract]
+    public interface IOrderService
+    {
+        ValueTask<Response> Create(Order order);
+        ValueTask<Order> Get(Order order);
+        ValueTask<Response> Update(Order order);
+        ValueTask<Response> Delete(Order order);
+    }
+```
+
+Then you can enable CRUD using the **Crud(bool enabled, ICrudDataService<T> crudDataService)** method of the **GridClient** object:
 ```c#   
-    var client = new GridClient<Order>(HttpClient, url, query, false, "ordersGrid", c => 
-            ColumnCollections.OrderColumnsWithCrud(c, NavigationManager.BaseUri), locale)
+    var client = new GridClient<Order>(gridClientService.OrderColumnsWithCrud, query, false, "ordersGrid",
+            ColumnCollections.OrderColumnsWithCrud, locale)
         .Crud(true, orderService)
 ```
 
 You can also enable CRUD depending on a condition for each row using the **Crud(bool createEnabled, Func<T, bool> enabled, ICrudDataService<T> crudDataService)** method:
 ```c#   
-    var client = new GridClient<Order>(HttpClient, url, query, false, "ordersGrid", c => 
-            ColumnCollections.OrderColumnsWithCrud(c, NavigationManager.BaseUri), locale)
+    var client = new GridClient<Order>(gridClientService.OrderColumnsWithCrud, query, false, "ordersGrid",
+            ColumnCollections.OrderColumnsWithCrud, locale)
         .Crud(true, r => r.Customer.IsVip, orderService)
 ```
 The create form can only be enabled using a ```bool``` parameter. But the read, update and delete forms can be enabled using a function that returns a ```bool```.
@@ -43,16 +55,16 @@ This interface has 4 methods:
 - ```Task Delete(params object[] keys);```
 one for each CRUD operation.
 
+These 4 methods will call the gRPC service in the back-end using the ```IOrderService``` interface
+
 This is an example of those 4 methods:
 ```c#
-    public class OrderService : ICrudDataService<Order>
+    public class OrderClientService : ICrudDataService<Order>
     {
-        private readonly HttpClient _httpClient;
         private readonly string _baseUri;
 
-        public OrderService(HttpClient httpClient, NavigationManager navigationManager)
+        public OrderClientService(NavigationManager navigationManager)
         {
-            _httpClient = httpClient;
             _baseUri = navigationManager.BaseUri;
         }
 
@@ -60,142 +72,148 @@ This is an example of those 4 methods:
         {
             int orderId;
             int.TryParse(keys[0].ToString(), out orderId);
-            return await _httpClient.GetJsonAsync<Order>(_baseUri + $"api/Order/{orderId}");
+
+            var handler = new GrpcWebHandler(GrpcWebMode.GrpcWeb, new HttpClientHandler());
+            using (var channel = GrpcChannel.ForAddress(_baseUri, new GrpcChannelOptions() { HttpClient = new HttpClient(handler) }))
+            {
+                var service = channel.CreateGrpcService<IOrderService>();
+                return await service.Get(new Order { OrderID = orderId });
+            }
         }
 
         public async Task Insert(Order item)
         {
-            await _httpClient.PostJsonAsync(_baseUri + $"api/Order", item);
+            var handler = new GrpcWebHandler(GrpcWebMode.GrpcWeb, new HttpClientHandler());
+            using (var channel = GrpcChannel.ForAddress(_baseUri, new GrpcChannelOptions() { HttpClient = new HttpClient(handler) }))
+            {
+                var service = channel.CreateGrpcService<IOrderService>();
+                var result = await service.Create(item);
+                if (result.Ok)
+                {
+                    item.OrderID = result.Id;
+                }
+                else
+                {
+                    throw new GridException("ORDSRV-01", "Error creating the order: " + result.Message);
+                }
+            }
         }
 
         public async Task Update(Order item)
         {
-            await _httpClient.PutJsonAsync(_baseUri + $"api/Order/{item.OrderID}", item);
+            var handler = new GrpcWebHandler(GrpcWebMode.GrpcWeb, new HttpClientHandler());
+            using (var channel = GrpcChannel.ForAddress(_baseUri, new GrpcChannelOptions() { HttpClient = new HttpClient(handler) }))
+            {
+                var service = channel.CreateGrpcService<IOrderService>();
+                var result = await service.Update(item);
+                if (!result.Ok)
+                {
+                    throw new GridException("ORDSRV-02", "Error updating the order: " + result.Message);
+                }
+            }
         }
 
         public async Task Delete(params object[] keys)
         {
             int orderId;
             int.TryParse(keys[0].ToString(), out orderId);
-            await _httpClient.SendJsonAsync(HttpMethod.Delete, _baseUri + $"api/Order/{orderId}", null);
+
+            var handler = new GrpcWebHandler(GrpcWebMode.GrpcWeb, new HttpClientHandler());
+            using (var channel = GrpcChannel.ForAddress(_baseUri, new GrpcChannelOptions() { HttpClient = new HttpClient(handler) }))
+            {
+                var service = channel.CreateGrpcService<IOrderService>();
+                var result = await service.Delete(new Order { OrderID = orderId });
+                if (!result.Ok)
+                {
+                    throw new GridException("ORDSRV-03", "Error deleting the order: " + result.Message);
+                }
+            }
         }
     }
 ```
 
-You will need a controller supporting 4 web services to perform the CRUD operation on the back-end. This is an example of this type of controller:
+You will need a gRPC service to perform the CRUD operation on the back-end that must implement the IOrderService interface.
+
+This is an example of this type of service:
   
 ```c#
-    [Route("api/[controller]")]
-    [ApiController]
-    public class OrderController : Controller
+    public class OrderServerService : IOrderService
     {
         private readonly NorthwindDbContext _context;
 
-        public OrderController(NorthwindDbContext context)
+        public OrderServerService(NorthwindDbContext context)
         {
             _context = context;
         }
 
-        [HttpPost]
-        public async Task<ActionResult> Create([FromBody] Order order)
+        public async ValueTask<Response> Create(Order order)
         {
-            if (ModelState.IsValid)
-            {
-                if (order == null)
-                {
-                    return BadRequest();
-                }
-
-                var repository = new OrdersRepository(_context);
-                try
-                {
-                    await repository.Insert(order);
-                    repository.Save();
-
-                    return NoContent();
-                }
-                catch (Exception e)
-                {
-                    return BadRequest(new
-                    {
-                        message = e.Message.Replace('{', '(').Replace('}', ')')
-                    });
-                }
-            }
-            return BadRequest(new
-            {
-                message = "ModelState is not valid"
-            });
-        }
-
-        [HttpGet("{id}")]
-        public async Task<ActionResult> GetOrder(int id)
-        {
-            var repository = new OrdersRepository(_context);
-            Order order = await repository.GetById(id);
             if (order == null)
             {
-                return NotFound();
+                return new Response(false);
             }
-            return Ok(order);
+
+            var repository = new OrdersRepository(_context);
+            try
+            {
+                await repository.Insert(order);
+                repository.Save();
+
+                return new Response(true, order.OrderID);
+            }
+            catch (Exception e)
+            {
+                return new Response(e);
+            }
         }
 
-        [HttpPut("{id}")]
-        public async Task<ActionResult> UpdateOrder(int id, [FromBody] Order order)
-        {
-            if (ModelState.IsValid)
-            {
-                if (order == null || order.OrderID != id)
-                {
-                    return BadRequest();
-                }
-
-                var repository = new OrdersRepository(_context);
-                try
-                {
-                    await repository.Update(order);
-                    repository.Save();
-
-                    return NoContent();
-                }
-                catch (Exception e)
-                {
-                    return BadRequest(new
-                    {
-                        message = e.Message.Replace('{', '(').Replace('}', ')')
-                    });
-                }
-            }
-            return BadRequest(new
-            {
-                message = "ModelState is not valid"
-            });
-        }
-
-        [HttpDelete("{id}")]
-        public async Task<ActionResult> Delete(int id)
+        public async ValueTask<Order> Get(Order order)
         {
             var repository = new OrdersRepository(_context);
-            Order order = await repository.GetById(id);
+            return await repository.GetById(order.OrderID);
+        }
 
+        public async ValueTask<Response> Update(Order order)
+        {
             if (order == null)
             {
-                return NotFound();
+                return new Response(false);
+            }
+
+            var repository = new OrdersRepository(_context);
+            try
+            {
+                await repository.Update(order);
+                repository.Save();
+
+                return new Response(true);
+            }
+            catch (Exception e)
+            {
+                return new Response(e);
+            }
+        }
+
+        public async ValueTask<Response> Delete(Order order)
+        {
+            var repository = new OrdersRepository(_context);
+            Order attachedItem = await repository.GetById(order.OrderID);
+
+            if (attachedItem == null)
+            {
+                return new Response(false);
             }
 
             try
             {
-                repository.Delete(order);
+                repository.Delete(attachedItem);
                 repository.Save();
 
-                return NoContent();
+                return new Response(true);
             }
             catch (Exception e)
             {
-                return BadRequest(new
-                {
-                    message = e.Message.Replace('{', '(').Replace('}', ')')
-                });
+                return new Response(e);
             }
         }
     }
@@ -215,8 +233,7 @@ Parameter | Description
 --------- | -----------
 enabled | boolean to configure if the field is shown as a ```<select>``` html element
 expression | function to get the selected value for update and delete forms (it must return an string value)
-url (*) | absolute path for the web service to get the values and titles to be shown in the drop-down element of create and update forms (it must return a ```IEnumerable<SelectItem>```)
-(*) a function that returns an absolute path for the web service is also allowed
+selectItemExpr | function to get the values and titles to be shown in the drop-down of create and update forms (it can has no parameter or the item row as a parameter, and it must return a ```IEnumerable<SelectItem>```)
 
 The type of fields currently supported as foreign keys are:
 - string
@@ -236,17 +253,34 @@ The type of fields currently supported as foreign keys are:
 - bool
 - Guid
 
-This is an example of back-end web service to get values and titles for a drop-down:
+This is an example of front-end gRPC service to get values and titles for a drop-down:
 
 ```c#
-    [HttpGet("[action]")]
-    public ActionResult GetAllEmployees()
+    public async Task<IEnumerable<SelectItem>> GetAllShippers()
     {
-        var repository = new EmployeeRepository(_context);
-        return Ok(repository.GetAll()
-            .Select(r => new SelectItem(r.EmployeeID.ToString(), r.EmployeeID.ToString() + " - "
-                + r.FirstName + " " + r.LastName))
-            .ToList());
+        var handler = new GrpcWebHandler(GrpcWebMode.GrpcWeb, new HttpClientHandler());
+        using (var channel = GrpcChannel.ForAddress(_baseUri, new GrpcChannelOptions() { HttpClient = new HttpClient(handler) }))
+        {
+            var service = channel.CreateGrpcService<IGridService>();
+            return await service.GetAllShippers();
+        }
+    }
+```
+
+And this is an example of back-end gRPC service to send values and titles to the front-end service:
+
+```c#
+    public class GridServerService : IGridService
+    {
+        ...
+
+        public async ValueTask<IEnumerable<SelectItem>> GetAllShippers()
+        {
+            var repository = new ShipperRepository(_context);
+            return await repository.GetAll()
+                    .Select(r => new SelectItem(r.ShipperID.ToString(), r.ShipperID.ToString() + " - " + r.CompanyName))
+                    .ToListAsync();
+        }
     }
 ```
 
@@ -292,15 +326,17 @@ And finally all columns included in the grid but not in the CRUD forms should be
 This is an example of column definition:
 
 ```c#
-    public static Action<IGridColumnCollection<Order>, string> OrderColumnsWithCrud = (c, path) =>
+    public static Action<IGridColumnCollection<Order>, Func<Order, Task<IEnumerable<SelectItem>>>, 
+            Func<Order, Task<IEnumerable<SelectItem>>>, Func<Order, Task<IEnumerable<SelectItem>>>> 
+            OrderColumnsWithCrud = (c, customers, employees, shippers) =>
     {
         c.Add(o => o.OrderID).SetPrimaryKey(true);
-        c.Add(o => o.CustomerID, true).SetSelectField(true, o => o.Customer.CustomerID + " - " 
-            + o.Customer.CompanyName, o => path + $"api/SampleData/GetAllCustomers");
-        c.Add(o => o.EmployeeID, true).SetSelectField(true, o => o.Employee.EmployeeID.ToString() + " - " 
-            + o.Employee.FirstName + " " + o.Employee.LastName, o => path + $"api/SampleData/GetAllEmployees");
-        c.Add(o => o.ShipVia, true).SetSelectField(true, o => o.Shipper == null ? "" : o.Shipper.ShipperID.ToString() 
-            + " - " + o.Shipper.CompanyName, path + $"api/SampleData/GetAllShippers");
+        c.Add(o => o.CustomerID, true).SetSelectField(true, o => o.Customer.CustomerID + " - "
+            + o.Customer.CompanyName, customers);
+        c.Add(o => o.EmployeeID, true).SetSelectField(true, o => o.Employee.EmployeeID.ToString() + " - "
+            + o.Employee.FirstName + " " + o.Employee.LastName, employees);
+        c.Add(o => o.ShipVia, true).SetSelectField(true, o => o.Shipper == null ? "" : o.Shipper.ShipperID.ToString()
+            + " - " + o.Shipper.CompanyName, shippers);
         c.Add(o => o.OrderDate, "OrderCustomDate").Titled(SharedResource.OrderCustomDate).Format("{0:yyyy-MM-dd}").SetCrudWidth(3);
         c.Add(o => o.Customer.CompanyName).Titled(SharedResource.CompanyName).SetReadOnlyOnUpdate(true);
         c.Add(o => o.Customer.ContactName).Titled(SharedResource.ContactName).SetCrudHidden(true);
@@ -340,7 +376,7 @@ multiple | Its a boolean to configure if the input element can upload multiple f
 
 You must also configure CRUD using the **Crud(bool enabled, ICrudDataService<T> crudDataService, ICrudFileService<T> crudFileService)** method of the **GridClient** object:
 ```c#   
-    var client = new GridClient<Employee>(HttpClient, url, query, false, "employeesGrid", ColumnCollections.EmployeeColumns, locale)
+    var client = new GridClient<Employee>(gridClientService.OrderColumnsWithCrud, query, false, "employeesGrid", ColumnCollections.EmployeeColumns, locale)
         .Crud(true, employeeService, employeeFileService);      
 ```
 
@@ -399,7 +435,7 @@ labelWidth | int (optional) | number to configure the label element width. The d
 
 You can enable this feature as followw:
 ```c#
-    var client = new GridClient<Order>(HttpClient, url, query, false, "ordersGrid", ColumnCollections.OrderColumnsWithCustomCrud, locale)
+    var client = new GridClient<Order>(gridClientService.OrderColumnsWithCrud, query, false, "ordersGrid", ColumnCollections.OrderColumnsWithCustomCrud, locale)
         .Crud(true, orderService)
         .SetCreateConfirmation(true)
         .SetUpdateConfirmation(true)
@@ -412,7 +448,7 @@ You can enable this feature as followw:
 
 You will have to use the ```SetCrudButtonLabels``` method of the ```GridClient``` object for this:
 ```c#
-    var client = new GridClient<Order>(HttpClient, url, query, false, "ordersGrid", ColumnCollections.OrderColumnsWithCustomCrud, locale)
+    var client = new GridClient<Order>(gridClientService.OrderColumnsWithCrud, query, false, "ordersGrid", ColumnCollections.OrderColumnsWithCustomCrud, locale)
         .Crud(true, orderService)
         .SetCrudButtonLabels("Add", "View", "Edit", "Delete");
 ```
@@ -421,7 +457,7 @@ You will have to use the ```SetCrudButtonLabels``` method of the ```GridClient``
 
 You can change the default CRUD form titles using the ```SetCrudFormLabels``` method of the ```GridClient``` object for this:
 ```c#
-    var client = new GridClient<Order>(HttpClient, url, query, false, "ordersGrid", ColumnCollections.OrderColumnsWithCustomCrud, locale)
+    var client = new GridClient<Order>(gridClientService.OrderColumnsWithCrud, query, false, "ordersGrid", ColumnCollections.OrderColumnsWithCustomCrud, locale)
         .Crud(true, orderService)
         .SetCrudFormLabels("Add Order", "View Order", "Edit Order", "Delete Order");
 ```
@@ -433,7 +469,7 @@ You can have the all the CRUD buttons on the grid header instead of the grid row
 The configuration for this type of grid is as follows:
 
 ```c#
-    var client = new GridClient<Order>(HttpClient, url, query, false, "ordersGrid", ColumnCollections.OrderColumnsWithCustomCrud, locale)
+    var client = new GridClient<Order>(gridClientService.OrderColumnsWithCrud, query, false, "ordersGrid", ColumnCollections.OrderColumnsWithCustomCrud, locale)
         .Selectable(true)
         .Crud(true, orderService)
         .SetHeaderCrudButtons(true);
@@ -446,7 +482,7 @@ This is an example of grid with CRUD buttons on the header:
 You can also use text labels for the header buttons. In this the configuration is as follows:
 
 ```c#
-    var client = new GridClient<Order>(HttpClient, url, query, false, "ordersGrid", ColumnCollections.OrderColumnsWithCustomCrud, locale)
+    var client = new GridClient<Order>(gridClientService.OrderColumnsWithCrud, query, false, "ordersGrid", ColumnCollections.OrderColumnsWithCustomCrud, locale)
         .Selectable(true)
         .Crud(true, orderService)
         .SetHeaderCrudButtons(true);
@@ -458,7 +494,7 @@ You can also use text labels for the header buttons. In this the configuration i
 If you want to use custom forms you can enable them using the **SetCreateComponent**, **SetReadComponent**, **SetUpdateComponent** and **SetDeleteComponent**  methods of the **GridClient** object:
 
 ```c#
-    var client = new GridClient<Order>(HttpClient, url, query, false, "ordersGrid", ColumnCollections.OrderColumnsWithCustomCrud, locale)
+    var client = new GridClient<Order>(gridClientService.OrderColumnsWithCrud, query, false, "ordersGrid", ColumnCollections.OrderColumnsWithCustomCrud, locale)
         .Crud(true, orderService)
         .SetCreateComponent<OrderCreateComponent>()
         .SetReadComponent<OrderReadComponent>()
@@ -616,10 +652,9 @@ This is an example of these parameters initialization:
     {
         var locale = CultureInfo.CurrentCulture;
 
-        var query = new QueryDictionary<StringValues>();
-        string url = NavigationManager.BaseUri + "api/SampleData/OrderColumnsWithCrud";
-
-        var client = new GridClient<Order>(HttpClient, url, query, false, "ordersGrid", c =>
+        var query = new QueryDictionary<string>();
+        
+        var client = new GridClient<Order>(gridClientService.OrderColumnsWithCrud, query, false, "ordersGrid", c =>
             ColumnCollections.OrderColumnsWithCrud(c, NavigationManager.BaseUri), locale)
             .Sortable()
             .Filterable()
@@ -680,7 +715,7 @@ You can configure initial values for new records when using the Create form.
 You have to use the ```SetInitCreateValues``` of the ```GridClient``` object:
 
 ```c#
-    var client = new GridClient<Order>(HttpClient, url, query, false, "ordersGrid", ColumnCollections.OrderColumnsWithCustomCrud, locale)
+    var client = new GridClient<Order>(gridClientService.OrderColumnsWithCrud, query, false, "ordersGrid", ColumnCollections.OrderColumnsWithCustomCrud, locale)
         .Crud(true, orderService)
         .SetDeleteConfirmation(true);
 ```

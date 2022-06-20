@@ -7,7 +7,7 @@
 Grids can be exported to an Excel file. You have to use the ```SetExcelExport``` method of the ```GridClient``` object:
  
 ```c#
-    var client = new GridClient<Order>(HttpClient, url, query, false, "ordersGrid", Columns)
+    var client = new GridClient<Order>(gridClientService.GetOrdersGridRows, query, false, "ordersGrid", Columns)
         .SetExcelExport(true, false, "Orders"));
 ```
 
