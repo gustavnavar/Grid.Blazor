@@ -2,6 +2,7 @@
 @using GridMvc.Demo.Models
 @using GridMvc.Demo.Resources
 @using GridMvc.Demo.Services
+@using GridShared.Columns
 @using GridShared.Sorting
 @using Microsoft.Extensions.Primitives
 @using System.Globalization
@@ -83,7 +84,8 @@ else
             /* Adding "Freight" column: */
             c.Add(o => o.Freight)
                .Titled(SharedResource.Freight)
-               .Format("{0:F}")
+               .Format("{0:#,##0.00}")
+               .SetAutoCompleteTaxonomy(AutoCompleteTerm.Defeat)
                .Sum(true).Average(true).Max(true).Min(true);
 
             /* Adding "Vip customer" column: */
@@ -112,7 +114,7 @@ else
             c.Add(o => o.ShipRegion, true);
 
             /* Adding hidden "ShipCountry" column: */
-            c.Add(o => o.ShipCountry, true);
+            c.Add(o => o.ShipCountry, true).SetAutoCompleteTaxonomy(AutoCompleteTerm.Country);
 
             /* Adding "OrderDetails" column: */
             c.Add(o => o.OrderDetails.Count).Titled("Details").SetCrudHidden(true);

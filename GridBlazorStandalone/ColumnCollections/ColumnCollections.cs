@@ -363,7 +363,8 @@ namespace GridBlazorStandalone.ColumnCollections
                 c.Add(o => o.Freight)
                 .Titled(SharedResource.Freight)
                 .SetWidth(150)
-                .Format("{0:#,##0.00}");
+                .Format("{0:#,##0.00}")
+                .SetAutoCompleteTaxonomy(AutoCompleteTerm.Defeat);
 
                 /* Adding "Vip customer" column: */
                 c.Add(o => o.Customer.IsVip).Titled(SharedResource.IsVip).SetWidth(90).Css("hidden-xs") //hide on phones
@@ -391,7 +392,7 @@ namespace GridBlazorStandalone.ColumnCollections
                 c.Add(o => o.ShipRegion, true);
 
                 /* Adding hidden "ShipCountry" column: */
-                c.Add(o => o.ShipCountry, true);
+                c.Add(o => o.ShipCountry, true).SetAutoCompleteTaxonomy(AutoCompleteTerm.Country);
 
                 /* Adding not mapped column, that renders a component */
                 c.Add(true).Titled("Images").RenderCrudComponentAs<Carousel, Carousel, Carousel, NullComponent>();

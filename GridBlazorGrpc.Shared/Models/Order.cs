@@ -77,7 +77,7 @@ namespace GridBlazorGrpc.Shared.Models
         [GridColumn(Position = 12)]
         [DataMember(Order = 13)]
         public string ShipPostalCode { get; set; }
-        [GridColumn(Position = 13)]
+        [GridColumn(Position = 13, AutocompleteTaxonomy = AutoCompleteTerm.Country)]
         [DataMember(Order = 14)]
         public string ShipCountry { get; set; }
         [ForeignKey("CustomerID")]

@@ -7,6 +7,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
+using GridShared.Columns;
 using GridShared.DataAnnotations;
 using GridShared.Sorting;
 using Microsoft.AspNetCore.Mvc;
@@ -48,7 +49,7 @@ namespace GridMvc.Demo.Models
         public DateTime? ShippedDate { get; set; }
         [GridColumn(Position = 6)]
         public int? ShipVia { get; set; }
-        [GridColumn(Position = 7, Title = "Freight", Width = "120px", SortEnabled = true, FilterEnabled = true)]
+        [GridColumn(Position = 7, Title = "Freight", Width = "120px", SortEnabled = true, FilterEnabled = true, AutocompleteTaxonomy = AutoCompleteTerm.Defeat)]
         public decimal? Freight { get; set; }
         [GridColumn(Position = 8)]
         public string ShipName { get; set; }
@@ -60,7 +61,7 @@ namespace GridMvc.Demo.Models
         public string ShipRegion { get; set; }
         [GridColumn(Position = 12)]
         public string ShipPostalCode { get; set; }
-        [GridColumn(Position = 13)]
+        [GridColumn(Position = 13, AutocompleteTaxonomy = AutoCompleteTerm.Country)]
         public string ShipCountry { get; set; }
         [NotMappedColumn]
         [GridColumn(Position = 14)]

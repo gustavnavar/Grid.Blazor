@@ -33,6 +33,8 @@ English is the default laguage. But you can use other languages. You have to cre
 * Brazilian Portuguese
 * Bulgarian
 * Ukrainian
+* Arabic
+* Danish
 
 ## Right to left direction
 Those languages that require right to left direction are also supported. You must configure the grid to user RTL direction using the ```SetDirection``` method of the ```GridClient``` object:

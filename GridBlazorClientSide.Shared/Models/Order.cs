@@ -63,7 +63,7 @@ namespace GridBlazorClientSide.Shared.Models
         public string ShipRegion { get; set; }
         [GridColumn(Position = 12)]
         public string ShipPostalCode { get; set; }
-        [GridColumn(Position = 13)]
+        [GridColumn(Position = 13, AutocompleteTaxonomy = AutoCompleteTerm.Country)]
         public string ShipCountry { get; set; }
         [ForeignKey("CustomerID")]
         [GridColumn(Position = 14)]

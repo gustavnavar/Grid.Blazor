@@ -71,12 +71,14 @@ Sometimes you need to add a column that renders a component. In this case you mu
 ```
 
 The parameter of the **RenderComponentAs** method must be the **Type** of the Blazor component used for this column.
-You must also create a Blazor component that includes only a parameter called **Item** of the same type of the grid row element.
+You must also create a Blazor component that implements the **ICustomGridComponent** interface.
 The component can include any html elements as well as event handling features.
 
 This is an example of this type of component:
 
 ```razor
+    @implements ICustomGridComponent<Order>
+    
     <button class='btn btn-sm btn-primary' @onclick="@MyClickHandler">Save</button>
 
     @code {

@@ -299,6 +299,24 @@ And finally you have to load this ```javascript``` on the html page:
 
 You can see how it works clicking on the "Employees" button of this sample https://gridblazor.azurewebsites.net/embedded
 
+## Input Autocomplete attribute 
+
+You can add an AutoComplete attribute to the non-disabled/non-readonly input fields in the Create and Update components, allowing for refinement over the suggested autocomplete values when using the fields.
+
+It supports all defined auto complete terms defined in the standard. 
+
+Additionally, it supports defeating auto complete (preventing any suggestions) and custom terms. FieldName is a predefined custom term for ease of use.
+
+To enable it, the column definition should use the  **SetAutoCompleteTaxonomy** method in order to set one of the auto complete terms defined in the standard:
+```c#   
+    c.Add(o => o.Freight).Titled(SharedResource.Freight).SetAutoCompleteTaxonomy(AutoCompleteTerm.Defeat);   
+```
+
+Otherwise, if you want to use a custom term, you can use a function as parameter of the  **SetAutoCompleteTaxonomy** method:
+```c#   
+    c.Add(o => o.Freight).Titled(SharedResource.Freight).SetAutoCompleteTaxonomy(() => "custom-term");   
+```
+
 ## Code confirmation to perform CRUD
 
 CRUD forms can include a code confirmation feature to make the create, update and delete more secure. 

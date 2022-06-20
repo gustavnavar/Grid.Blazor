@@ -391,7 +391,7 @@ namespace GridBlazorClientSide.Client.ColumnCollections
             c.Add(o => o.ShipRegion, true);
 
             /* Adding hidden "ShipCountry" column: */
-            c.Add(o => o.ShipCountry, true);
+            c.Add(o => o.ShipCountry, true).SetAutoCompleteTaxonomy(AutoCompleteTerm.Country);
 
             /* Adding not mapped column, that renders a component */
             c.Add(true).Titled("Images").RenderCrudComponentAs<Carousel, Carousel, Carousel, NullComponent>();
