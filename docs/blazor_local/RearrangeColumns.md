@@ -1,6 +1,6 @@
 ## Blazor WASM with local data
 
-# Grouping
+# Column Rearrangememt
 
 [Index](Documentation.md)
 
@@ -20,4 +20,4 @@ This is an example of a table of items using rearrange:
 ![](../images/RearrangeColumns.gif)
 
 
-[<- Sorting](Grouping.md) | [Selecting row ->](Selecting_row.md)
+[<- Grouping](Grouping.md) | [Selecting row ->](Selecting_row.md)

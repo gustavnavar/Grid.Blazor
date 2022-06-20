@@ -11,10 +11,10 @@
     <Description>Grid components for Blazor</Description>
     <Summary>Grid components for Blazor</Summary>
     <Authors>Gustau Navarro</Authors>
-    <PackageTags>grid blazor</PackageTags>
+    <PackageTags>grid blazor table crud rest grpc</PackageTags>
     <PackageProjectUrl>https://github.com/gustavnavar/Grid.Blazor</PackageProjectUrl>
     <PackageLicenseExpression>LGPL-2.1-only</PackageLicenseExpression>
-    <PackageReleaseNotes>Supports .NET Core 3.1</PackageReleaseNotes>
+    <PackageReleaseNotes>Supports .NET Standard 2.1, .NET 5.0, .NET 6.0</PackageReleaseNotes>
   </PropertyGroup>
 
   <ItemGroup>

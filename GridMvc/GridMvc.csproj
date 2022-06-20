@@ -13,9 +13,10 @@
     <Description>ASP.NET MVC Grid component</Description>
     <Summary>ASP.NET MVC Grid component</Summary>
     <Authors>Gustau Navarro</Authors>
-    <PackageTags>grid mvc</PackageTags>
+    <PackageTags>grid table mvc</PackageTags>
     <PackageProjectUrl>https://github.com/gustavnavar/Grid.Blazor</PackageProjectUrl>
     <PackageLicenseExpression>LGPL-2.1-only</PackageLicenseExpression>
+	<PackageReleaseNotes>Supports .NET Core 3.1, .NET 5.0, .NET 6.0</PackageReleaseNotes>
   </PropertyGroup>
 
   <ItemGroup Condition="'$(TargetFramework)' == 'net6.0'">

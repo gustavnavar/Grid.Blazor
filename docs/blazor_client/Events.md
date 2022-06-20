@@ -1,4 +1,4 @@
-## Blazor WASM with GridCore back-end
+## Blazor WASM with GridCore back-end (REST API)
 
 # Events, exceptions and CRUD validation
 

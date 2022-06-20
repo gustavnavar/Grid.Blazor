@@ -8,9 +8,10 @@
     <Description>Support library for GridBlazor and GridMvcCore component libraries</Description>
     <Summary>Support library for GridBlazor and GridMvcCore component libraries</Summary>
     <Authors>Gustau Navarro</Authors>
-    <PackageTags>grid blazor mvc</PackageTags>
+    <PackageTags>grid blazor mvc table crud rest grpc</PackageTags>
     <PackageProjectUrl>https://github.com/gustavnavar/Grid.Blazor</PackageProjectUrl>
     <PackageLicenseExpression>LGPL-2.1-only</PackageLicenseExpression>
+	<PackageReleaseNotes>Supports .NET Standard 2.1, .NET 5.0, .NET 6.0</PackageReleaseNotes>
   </PropertyGroup>
 
   <ItemGroup Condition="'$(TargetFramework)' == 'net6.0'">

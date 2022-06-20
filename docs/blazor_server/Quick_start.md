@@ -66,7 +66,7 @@ The steps to build a grid razor page using **GridBlazor** are:
         {
             ...
 
-            services.AddSingleton<OrderService>();
+            services.AddScoped<OrderService>();
             
             ...
         }
