@@ -52,7 +52,7 @@
                 }
                 else
                 {
-                    if (column.IsSumEnabled)
+                    if (column.IsSumEnabled && column.SumValue != null)
                     {
                         <td class="grid-cell" style="@cssStyles"><b>@column.SumValue.GetString(column.ValuePattern)</b></td>
                     }
@@ -109,7 +109,7 @@
                 }
                 else
                 {
-                    if (column.IsAverageEnabled)
+                    if (column.IsAverageEnabled && column.AverageValue != null)
                     {
                         <td class="grid-cell" style="@cssStyles"><b>@column.AverageValue.GetString(column.ValuePattern)</b></td>
                     }
@@ -165,7 +165,7 @@
                 }
                 else
                 {
-                    if (column.IsMaxEnabled)
+                    if (column.IsMaxEnabled && column.MaxValue != null)
                     {
                         <td class="grid-cell" style="@cssStyles"><b>@column.MaxValue.GetString(column.ValuePattern)</b></td>
                     }
@@ -221,7 +221,7 @@
                 }
                 else
                 {
-                    if (column.IsMinEnabled)
+                    if (column.IsMinEnabled && column.MinValue != null)
                     {
                         <td class="grid-cell" style="@cssStyles"><b>@column.MinValue.GetString(column.ValuePattern)</b></td>
                     }
@@ -279,7 +279,7 @@
                     }
                     else
                     {
-                        if (column.IsCalculationEnabled && column.CalculationValues.ContainsKey(calculationName))
+                        if (column.IsCalculationEnabled && column.CalculationValues != null && column.CalculationValues.ContainsKey(calculationName))
                         {
                             <td class="grid-cell" style="@cssStyles"><b>@column.CalculationValues.Get(calculationName)?.GetString(column.ValuePattern)</b></td>
                         }

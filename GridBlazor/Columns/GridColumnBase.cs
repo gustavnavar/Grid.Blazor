@@ -831,6 +831,8 @@ namespace GridBlazor.Columns
 
         public abstract IColumnSearch<T> Search { get; }
 
+        public abstract IColumnTotals<T> Totals { get; }
+
         public abstract IColumnGroup<T> Group { get; }
 
         public abstract IColumnExpand<T> Expand { get; }
@@ -894,7 +896,5 @@ namespace GridBlazor.Columns
         public abstract bool HasConstraint { get; }
 
         #endregion
-
-        public IColumnTotals<T> Totals { get; }
     }
 }

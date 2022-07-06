@@ -5,7 +5,7 @@ using System.Runtime.Serialization;
 namespace GridShared.Totals
 {
     /// <summary>
-    ///     Pager DTO
+    ///     Totals DTO
     /// </summary>
     [DataContract]
     public class TotalsDTO

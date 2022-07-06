@@ -70,5 +70,23 @@ namespace GridShared.Totals
         }
 
         #endregion
+
+        #region OData
+        public string GetFullName()
+        {
+            var names = GetNames();
+
+            string result = "";
+            for (int i = 0; i < names.Count; i++)
+            {
+                result += names[i];
+                if (i != names.Count - 1)
+                    result += "/";
+            }
+
+            return result;
+        }
+
+        #endregion
     }
 }

@@ -348,23 +348,7 @@ namespace GridCore.Totals
                     var value = calculation.Value((IGridColumnCollection<T>)_grid.Columns);
                     Type type = value.GetType();
 
-                    if (type == typeof(Single))
-                    {
-                        gridColumn.CalculationValues.AddParameter(calculation.Key, new Total((decimal?)value));
-                    }
-                    else if (type == typeof(Int32))
-                    {
-                        gridColumn.CalculationValues.AddParameter(calculation.Key, new Total((decimal?)value));
-                    }
-                    else if (type == typeof(Int64))
-                    {
-                        gridColumn.CalculationValues.AddParameter(calculation.Key, new Total((decimal?)value));
-                    }
-                    else if (type == typeof(Double))
-                    {
-                        gridColumn.CalculationValues.AddParameter(calculation.Key, new Total((decimal?)value));
-                    }
-                    else if (type == typeof(Decimal))
+                    if (type == typeof(Single) || type == typeof(Int32) || type == typeof(Int64) || type == typeof(Double) || type == typeof(Decimal))
                     {
                         gridColumn.CalculationValues.AddParameter(calculation.Key, new Total((decimal?)value));
                     }

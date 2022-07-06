@@ -34,6 +34,11 @@ namespace GridBlazor.Columns
         private readonly IColumnSearch<T> _search;
 
         /// <summary>
+        ///     Totals collection for this columns
+        /// </summary>
+        protected readonly IColumnTotals<T> _totals;
+
+        /// <summary>
         ///     Groupers collection for this columns
         /// </summary>
         private readonly IColumnGroup<T> _group;
@@ -89,6 +94,7 @@ namespace GridBlazor.Columns
                 _orderers.Insert(0, new OrderByGridOrderer<T, TDataType>(expression, comparer));
                 _filter = new DefaultColumnFilter<T, TDataType>(expression);
                 _search = new DefaultColumnSearch<T, TDataType>(expression);
+                _totals = new DefaultColumnTotals<T, TDataType>(expression);
                 _group = new DefaultColumnGroup<T, TDataType>(expression);
                 _expand = new DefaultColumnExpand<T, TDataType>(expression);
                 //Generate unique column name:
@@ -122,6 +128,11 @@ namespace GridBlazor.Columns
         public override IColumnSearch<T> Search
         {
             get { return _search; }
+        }
+
+        public override IColumnTotals<T> Totals
+        {
+            get { return _totals; }
         }
 
         public override IColumnGroup<T> Group

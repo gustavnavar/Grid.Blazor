@@ -10,5 +10,9 @@ namespace GridShared.Totals
         bool IsNullable();
         Type GetPropertyType(bool isNullable);
         Expression GetExpression(IList<string> names, ParameterExpression parameter);
+
+        #region OData
+        string GetFullName();
+        #endregion
     }
 }
