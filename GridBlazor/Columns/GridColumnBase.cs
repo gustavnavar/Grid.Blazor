@@ -117,13 +117,19 @@ namespace GridBlazor.Columns
 
         public bool IsMinEnabled { get; set; } = false;
 
-        public string SumString { get; set; }
+        public bool IsCalculationEnabled { get; set; } = false;
 
-        public string AverageString { get; set; }
+        public QueryDictionary<Func<IGridColumnCollection<T>, object>> Calculations { get; set; }
 
-        public string MaxString { get; set; }
+        public QueryDictionary<Total> CalculationValues { get; set; }
 
-        public string MinString { get; set; }
+        public Total SumValue { get; set; }
+
+        public Total AverageValue { get; set; }
+
+        public Total MaxValue { get; set; }
+
+        public Total MinValue { get; set; }
 
         public (string,string)[] SubGridKeys { get; set; }
 
@@ -485,6 +491,13 @@ namespace GridBlazor.Columns
         public IGridColumn<T> Min(bool enabled)
         {
             IsMinEnabled = enabled;
+            return this;
+        }
+
+        public IGridColumn<T> Calculate(string name, Func<IGridColumnCollection<T>, object> calculation)
+        {
+            IsCalculationEnabled = true;
+            Calculations.AddParameter(name, calculation);
             return this;
         }
 

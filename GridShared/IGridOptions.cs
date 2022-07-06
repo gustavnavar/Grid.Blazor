@@ -5,10 +5,6 @@
     /// </summary>
     public interface IGridOptions
     {
-        /// <summary>
-        ///    Grid items count
-        /// </summary>
-        int ItemsCount { get; }
 
         /// <summary>
         ///     Sum enabled for some columns
@@ -29,5 +25,10 @@
         ///     Min enabled for some columns
         /// </summary>
         bool IsMinEnabled { get; }
+
+        /// <summary>
+        ///     Calculation enabled for some columns
+        /// </summary>
+        bool IsCalculationEnabled { get; }
     }
 }

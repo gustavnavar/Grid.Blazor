@@ -41,7 +41,7 @@ else
         Action<IGridColumnCollection<Order>> orderColumns = c =>
         {
             /* Adding "OrderID" column: */
-            c.Add(o => o.OrderID).SetPrimaryKey(true).Titled(SharedResource.Number).SetWidth(100);
+            c.Add(o => o.OrderID).SetPrimaryKey(true).Titled(SharedResource.Number).SetWidth(100).Sum(true);
 
             /* Adding "CustomerID" column: */
             c.Add(o => o.CustomerID, true)
@@ -86,7 +86,10 @@ else
                .Titled(SharedResource.Freight)
                .Format("{0:#,##0.00}")
                .SetAutoCompleteTaxonomy(AutoCompleteTerm.Defeat)
-               .Sum(true).Average(true).Max(true).Min(true);
+               .Sum(true).Average(true).Max(true).Min(true)
+               .Calculate("Average 2", x => x.Get("Freight").SumValue.Number / x.Grid.ItemsCount)
+               .Calculate("Average 3", x => x.Get("Freight").SumValue.Number / x.Get("OrderID").SumValue.Number);
+
 
             /* Adding "Vip customer" column: */
             c.Add(o => o.Customer.IsVip).Titled(SharedResource.IsVip).SetWidth(70).Css("hidden-xs") //hide on phones

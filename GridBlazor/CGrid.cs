@@ -603,6 +603,11 @@ namespace GridBlazor
         public bool IsMinEnabled { get { return Columns.Any(r => ((ITotalsColumn)r).IsMinEnabled); } }
 
         /// <summary>
+        ///     Calculation enabled for some columns
+        /// </summary>
+        public bool IsCalculationEnabled { get { return Columns.Any(r => ((ITotalsColumn)r).IsCalculationEnabled); } }
+
+        /// <summary>
         ///     Manage pager properties
         /// </summary>
         public IGridPager Pager
@@ -1211,7 +1216,7 @@ namespace GridBlazor
                             {
                                 var column = (ITotalsColumn)Columns.SingleOrDefault(r => r.Name != null && r.Name.Equals(keyValue.Key));
                                 if (column != null && column.IsSumEnabled)
-                                    column.SumString = keyValue.Value;
+                                    column.SumValue = keyValue.Value;
                             }
 
                         if (response.Totals.Average != null)
@@ -1219,7 +1224,7 @@ namespace GridBlazor
                             {
                                 var column = (ITotalsColumn)Columns.SingleOrDefault(r => r.Name != null && r.Name.Equals(keyValue.Key));
                                 if (column != null && column.IsAverageEnabled)
-                                    column.AverageString = keyValue.Value;
+                                    column.AverageValue = keyValue.Value;
                             }
 
                         if (response.Totals.Max != null)
@@ -1227,7 +1232,7 @@ namespace GridBlazor
                             {
                                 var column = (ITotalsColumn)Columns.SingleOrDefault(r => r.Name != null && r.Name.Equals(keyValue.Key));
                                 if (column != null && column.IsMaxEnabled)
-                                    column.MaxString = keyValue.Value;
+                                    column.MaxValue = keyValue.Value;
                             }
 
                         if (response.Totals.Min != null)
@@ -1235,7 +1240,15 @@ namespace GridBlazor
                             {
                                 var column = (ITotalsColumn)Columns.SingleOrDefault(r => r.Name != null && r.Name.Equals(keyValue.Key));
                                 if (column != null && column.IsMinEnabled)
-                                    column.MinString = keyValue.Value;
+                                    column.MinValue = keyValue.Value;
+                            }
+
+                        if (response.Totals.Calculations != null)
+                            foreach (var keyValue in response.Totals.Calculations)
+                            {
+                                var column = (ITotalsColumn)Columns.SingleOrDefault(r => r.Name != null && r.Name.Equals(keyValue.Key));
+                                if (column != null && column.IsCalculationEnabled)
+                                    column.CalculationValues = keyValue.Value;
                             }
                     }          
                 }

@@ -142,6 +142,8 @@ namespace GridShared
         /// </summary>
         IEnumerable<object> GetItemsToDisplay(IList<Tuple<string, object>> values, IEnumerable<object> items);
 
+        int ItemsCount { get; }
+
         //void OnPreRender(); //TODO backward Compatibility
     }
 }

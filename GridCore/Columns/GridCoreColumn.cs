@@ -95,6 +95,9 @@ namespace GridCore.Columns
                 Name = FieldName;
                 Title = Name; //Using the same name by default
             }
+
+            Calculations = new QueryDictionary<Func<IGridColumnCollection<T>, object>>();
+            CalculationValues = new QueryDictionary<Total>();
         }
 
         public override IEnumerable<IColumnOrderer<T>> Orderers

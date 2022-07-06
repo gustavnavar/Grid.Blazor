@@ -180,6 +180,11 @@ namespace GridBlazor.Columns
             return this.FirstOrDefault(c => !string.IsNullOrEmpty(c.Name) && String.Equals(c.Name, name, StringComparison.CurrentCultureIgnoreCase)) as IGridColumn<T>;
         }
 
+        public IGridColumn<T> Get(string name)
+        {
+            return GetByName(name) as IGridColumn<T>;
+        }
+
         public IGridColumn GetByName(string name)
         {
             if (string.IsNullOrEmpty(name))

@@ -27,11 +27,10 @@ namespace GridMvc.Html
             get { return (_source as IGrid).ItemsToDisplay; }
         }
 
-        //int IGrid.ItemsCount
-        //{
-        //    get { return _source.ItemsCount; }
-        //    set { _source.ItemsCount = value; }
-        //}
+        public int ItemsCount
+        {
+            get { return _source.ItemsCount; }
+        }
 
         public int DisplayingItemsCount
         {

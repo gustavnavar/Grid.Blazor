@@ -79,7 +79,8 @@ namespace GridMvc.Demo.Controllers
 
                 c.Add(o => o.OrderID)
                     .Titled(SharedResource.Number)
-                    .SetWidth(100);
+                    .SetWidth(100)
+                    .Sum(true);
 
                 /* Adding "OrderDate" column: */
                 c.Add(o => o.OrderDate, "OrderCustomDate")
@@ -119,7 +120,9 @@ namespace GridMvc.Demo.Controllers
                     .Titled(SharedResource.Freight)
                     .SetWidth(100)
                     .Format("{0:F}")
-                    .Sum(true).Average(true).Max(true).Min(true);
+                    .Sum(true).Average(true).Max(true).Min(true)
+                    .Calculate("Average 2", x => x.Get("Freight").SumValue.Number / x.Grid.ItemsCount)
+                    .Calculate("Average 3", x => x.Get("Freight").SumValue.Number / x.Get("OrderID").SumValue.Number);
 
                 /* Adding "Vip customer" column: */
                 c.Add(o => o.Customer.IsVip)

@@ -29,7 +29,7 @@
             }
             @if (firstColumn != null
               && (firstColumn.IsSumEnabled || firstColumn.IsAverageEnabled
-              || firstColumn.IsMaxEnabled || firstColumn.IsMinEnabled))
+              || firstColumn.IsMaxEnabled || firstColumn.IsMinEnabled || firstColumn.IsCalculationEnabled))
             {
                 <td class="grid-cell" style="width:90px;"><b>@Strings.Sum</b></td>
             }
@@ -46,7 +46,7 @@
                 if (!string.IsNullOrWhiteSpace(((IGridColumn)column).Width))
                     cssStyles = string.Concat(cssStyles, " width:", ((IGridColumn)column).Width, ";").Trim();
                 if (i == 0 && !column.IsSumEnabled && !column.IsAverageEnabled
-                   && !column.IsMaxEnabled && !column.IsMinEnabled)
+                   && !column.IsMaxEnabled && !column.IsMinEnabled && !column.IsCalculationEnabled)
                 {
                     <td class="grid-cell" style="@cssStyles"><b>@Strings.Sum</b></td>
                 }
@@ -54,7 +54,7 @@
                 {
                     if (column.IsSumEnabled)
                     {
-                        <td class="grid-cell" style="@cssStyles"><b>@column.SumString</b></td>
+                        <td class="grid-cell" style="@cssStyles"><b>@column.SumValue.GetString(column.ValuePattern)</b></td>
                     }
                     else
                     {
@@ -86,7 +86,7 @@
             }
             @if (firstColumn != null
               && (firstColumn.IsSumEnabled || firstColumn.IsAverageEnabled
-              || firstColumn.IsMaxEnabled || firstColumn.IsMinEnabled))
+              || firstColumn.IsMaxEnabled || firstColumn.IsMinEnabled || firstColumn.IsCalculationEnabled))
             {
                 <td class="grid-cell" style="width:90px;"><b>@Strings.Average</b></td>
             }
@@ -103,7 +103,7 @@
                 if (!string.IsNullOrWhiteSpace(((IGridColumn)column).Width))
                     cssStyles = string.Concat(cssStyles, " width:", ((IGridColumn)column).Width, ";").Trim();
                 if (i == 0 && !column.IsSumEnabled && !column.IsAverageEnabled
-                   && !column.IsMaxEnabled && !column.IsMinEnabled)
+                   && !column.IsMaxEnabled && !column.IsMinEnabled && !column.IsCalculationEnabled)
                 {
                     <td class="grid-cell" style="@cssStyles"><b>@Strings.Average</b></td>
                 }
@@ -111,7 +111,7 @@
                 {
                     if (column.IsAverageEnabled)
                     {
-                        <td class="grid-cell" style="@cssStyles"><b>@column.AverageString</b></td>
+                        <td class="grid-cell" style="@cssStyles"><b>@column.AverageValue.GetString(column.ValuePattern)</b></td>
                     }
                     else
                     {
@@ -142,7 +142,7 @@
             }
             @if (firstColumn != null
               && (firstColumn.IsSumEnabled || firstColumn.IsAverageEnabled
-              || firstColumn.IsMaxEnabled || firstColumn.IsMinEnabled))
+              || firstColumn.IsMaxEnabled || firstColumn.IsMinEnabled || firstColumn.IsCalculationEnabled))
             {
                 <td class="grid-cell" style="width:90px;"><b>@Strings.Max</b></td>
             }
@@ -159,7 +159,7 @@
                 if (!string.IsNullOrWhiteSpace(((IGridColumn)column).Width))
                     cssStyles = string.Concat(cssStyles, " width:", ((IGridColumn)column).Width, ";").Trim();
                 if (i == 0 && !column.IsSumEnabled && !column.IsAverageEnabled
-                   && !column.IsMaxEnabled && !column.IsMinEnabled)
+                   && !column.IsMaxEnabled && !column.IsMinEnabled && !column.IsCalculationEnabled)
                 {
                     <td class="grid-cell" style="@cssStyles"><b>@Strings.Max</b></td>
                 }
@@ -167,7 +167,7 @@
                 {
                     if (column.IsMaxEnabled)
                     {
-                        <td class="grid-cell" style="@cssStyles"><b>@column.MaxString</b></td>
+                        <td class="grid-cell" style="@cssStyles"><b>@column.MaxValue.GetString(column.ValuePattern)</b></td>
                     }
                     else
                     {
@@ -198,7 +198,7 @@
             }
             @if (firstColumn != null
               && (firstColumn.IsSumEnabled || firstColumn.IsAverageEnabled
-              || firstColumn.IsMaxEnabled || firstColumn.IsMinEnabled))
+              || firstColumn.IsMaxEnabled || firstColumn.IsMinEnabled || firstColumn.IsCalculationEnabled))
             {
                 <td class="grid-cell" style="width:90px;"><b>@Strings.Min</b></td>
             }
@@ -215,7 +215,7 @@
                 if (!string.IsNullOrWhiteSpace(((IGridColumn)column).Width))
                     cssStyles = string.Concat(cssStyles, " width:", ((IGridColumn)column).Width, ";").Trim();
                 if (i == 0 && !column.IsSumEnabled && !column.IsAverageEnabled
-                   && !column.IsMaxEnabled && !column.IsMinEnabled)
+                   && !column.IsMaxEnabled && !column.IsMinEnabled && !column.IsCalculationEnabled)
                 {
                     <td class="grid-cell" style="@cssStyles"><b>@Strings.Min</b></td>
                 }
@@ -223,7 +223,7 @@
                 {
                     if (column.IsMinEnabled)
                     {
-                        <td class="grid-cell" style="@cssStyles"><b>@column.MinString</b></td>
+                        <td class="grid-cell" style="@cssStyles"><b>@column.MinValue.GetString(column.ValuePattern)</b></td>
                     }
                     else
                     {
@@ -232,5 +232,64 @@
                 }
             }
         </tr>
+    }
+    if (Grid.IsCalculationEnabled)
+    {
+        foreach (var calculationName in Grid.Columns.SelectMany(r => ((ITotalsColumn)r).CalculationValues.Keys).Distinct())
+        {
+            <tr class="grid-totals-row">
+                @if (Grid.SubGridKeys != null && Grid.SubGridKeys.Length > 0)
+                {
+                    <td class="grid-cell" data-name="" style="width:36.5px;"></td>
+                }
+                @if ((Grid.ReadEnabled || ((CGrid<T>)Grid).FuncReadEnabled != null) && !GridComponent.HeaderCrudButtons)
+                {
+                    <td class="grid-cell" data-name="" style="width:35px;"></td>
+                }
+                @if ((Grid.UpdateEnabled || ((CGrid<T>)Grid).FuncUpdateEnabled != null) && !GridComponent.HeaderCrudButtons)
+                {
+                    <td class="grid-cell" data-name="" style="width:35px;"></td>
+                }
+                @if ((Grid.DeleteEnabled || ((CGrid<T>)Grid).FuncDeleteEnabled != null) && !GridComponent.HeaderCrudButtons)
+                {
+                    <td class="grid-cell" data-name="" style="width:35px;"></td>
+                }
+                @if (firstColumn != null
+                  && (firstColumn.IsSumEnabled || firstColumn.IsAverageEnabled
+                  || firstColumn.IsMaxEnabled || firstColumn.IsMinEnabled || firstColumn.IsCalculationEnabled))
+                {
+                    <td class="grid-cell" style="width:90px;"><b>@calculationName</b></td>
+                }
+                @for (int i = 0; i < Grid.Columns.Count(); i++)
+                {
+                    var column = (ITotalsColumn)Grid.Columns.ElementAt(i);
+                    string cssStyles;
+                    if (((IGridColumn)column).Hidden)
+                        cssStyles = ((GridStyledColumn)column).GetCssStylesString() + " " + TdStyle;
+                    else
+                        cssStyles = ((GridStyledColumn)column).GetCssStylesString();
+                    if (Grid.Direction == GridDirection.RTL)
+                        cssStyles = string.Concat(cssStyles, " text-align:right;direction:rtl;").Trim();
+                    if (!string.IsNullOrWhiteSpace(((IGridColumn)column).Width))
+                        cssStyles = string.Concat(cssStyles, " width:", ((IGridColumn)column).Width, ";").Trim();
+                    if (i == 0 && !column.IsSumEnabled && !column.IsAverageEnabled
+                       && !column.IsMaxEnabled && !column.IsMinEnabled && !column.IsCalculationEnabled)
+                    {
+                        <td class="grid-cell" style="@cssStyles"><b>@calculationName</b></td>
+                    }
+                    else
+                    {
+                        if (column.IsCalculationEnabled && column.CalculationValues.ContainsKey(calculationName))
+                        {
+                            <td class="grid-cell" style="@cssStyles"><b>@column.CalculationValues.Get(calculationName)?.GetString(column.ValuePattern)</b></td>
+                        }
+                        else
+                        {
+                            <td class="grid-cell" style="@cssStyles"></td>
+                        }
+                    }
+                }
+            </tr>   
+        }
     }
 }

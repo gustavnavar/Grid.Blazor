@@ -4,6 +4,7 @@ using GridShared.OData;
 using GridShared.Searching;
 using GridShared.Sorting;
 using GridShared.Totals;
+using GridShared.Utility;
 using System;
 using System.Collections.Generic;
 using System.Linq.Expressions;
@@ -325,6 +326,11 @@ namespace GridShared.Columns
         ///     Calculate max of column values
         /// </summary>
         IGridColumn<T> Max(bool enabled);
+
+        /// <summary>
+        ///     Calculation of column values
+        /// </summary>
+        IGridColumn<T> Calculate(string name, Func<IGridColumnCollection<T>, object> calculation);
 
         /// <summary>
         ///     Calculate min of column values
@@ -704,25 +710,33 @@ namespace GridShared.Columns
         ///     Collection of current column totals
         /// </summary>
         IColumnTotals<T> Totals { get; }
+
+        QueryDictionary<Func<IGridColumnCollection<T>, object>> Calculations { get; }
     }
 
     public interface ITotalsColumn
     {
         bool IsSumEnabled { get; set; }
 
-        string SumString { get; set; }
+        Total SumValue { get; set; }
 
         bool IsAverageEnabled { get; set; }
 
-        string AverageString { get; set; }
+        Total AverageValue { get; set; }
 
         bool IsMaxEnabled { get; set; }
 
-        string MaxString { get; set; }
+        Total MaxValue { get; set; }
 
         bool IsMinEnabled { get; set; }
 
-        string MinString { get; set; }
+        Total MinValue { get; set; }
+
+        bool IsCalculationEnabled { get; set; }
+
+        QueryDictionary<Total> CalculationValues { get; set; }
+
+        string ValuePattern { get; }
     }
 
     public interface IExpandColumn<T>

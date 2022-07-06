@@ -5,6 +5,7 @@ using GridShared.Grouping;
 using GridShared.OData;
 using GridShared.Searching;
 using GridShared.Sorting;
+using GridShared.Totals;
 using GridShared.Utility;
 using System;
 using System.Collections.Generic;
@@ -95,6 +96,9 @@ namespace GridBlazor.Columns
                 Name = FieldName;
                 Title = Name; //Using the same name by default
             }
+
+            Calculations = new QueryDictionary<Func<IGridColumnCollection<T>, object>>();
+            CalculationValues = new QueryDictionary<Total>();
         }
 
         public override IEnumerable<IColumnOrderer<T>> Orderers

@@ -76,7 +76,7 @@ namespace GridBlazorServerSide.ColumnCollections
         public static Action<IGridColumnCollection<Order>> OrderColumnsWithTotals = c =>
         {
             /* Adding "OrderID" column: */
-            c.Add(o => o.OrderID).Titled(SharedResource.Number).SetWidth(100);
+            c.Add(o => o.OrderID).Titled(SharedResource.Number).SetWidth(100).Sum(true);
 
             /* Adding "OrderDate" column: */
             c.Add(o => o.OrderDate, "OrderCustomDate").Titled(SharedResource.OrderCustomDate)
@@ -94,9 +94,11 @@ namespace GridBlazorServerSide.ColumnCollections
             /* Adding "Freight" column: */
             c.Add(o => o.Freight)
             .Titled(SharedResource.Freight)
-            .Format("{0:F}")
+            .Format("{0:#,##0.000}")
             .SetWidth(150)
-            .Sum(true).Average(true).Max(true).Min(true);
+            .Sum(true).Average(true).Max(true).Min(true)
+            .Calculate("Average 2", x => x.Get("Freight").SumValue.Number / x.Grid.ItemsCount)
+            .Calculate("Average 3", x => x.Get("Freight").SumValue.Number / x.Get("OrderID").SumValue.Number);
 
             /* Adding "Vip customer" column: */
             c.Add(o => o.Customer.IsVip).Titled(SharedResource.IsVip).SetWidth(90).Css("hidden-xs") //hide on phones

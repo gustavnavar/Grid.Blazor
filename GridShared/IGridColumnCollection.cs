@@ -170,6 +170,11 @@ namespace GridShared
         IGridColumn<T> Get<TKey>(Expression<Func<T, TKey>> constraint);
 
         /// <summary>
+        ///     Get column by internal name
+        /// </summary>
+        IGridColumn<T> Get(string name);
+
+        /// <summary>
         ///     Parent grid
         /// </summary>
         IGrid Grid { get; }

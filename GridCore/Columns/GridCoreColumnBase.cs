@@ -6,6 +6,7 @@ using GridShared.Grouping;
 using GridShared.Searching;
 using GridShared.Sorting;
 using GridShared.Totals;
+using GridShared.Utility;
 using Microsoft.AspNetCore.Components;
 using System;
 using System.Collections.Generic;
@@ -17,7 +18,7 @@ using System.Threading.Tasks;
 
 namespace GridCore.Columns
 {
-    public abstract class GridCoreColumnBase<T> : GridStyledColumn, IGridColumn<T>, ISGridColumn, IConstrainedGridColumn
+    public abstract class GridCoreColumnBase<T> : GridStyledColumn, IGridColumn<T>, IConstrainedGridColumn
     {
         public Type ComponentType { get; protected set; }
         public IList<Action<object>> Actions { get; protected set; }
@@ -120,21 +121,19 @@ namespace GridCore.Columns
 
         public bool IsMinEnabled { get; set; } = false;
 
-        public decimal? SumValue { get; set; }
+        public bool IsCalculationEnabled { get; set; } = false;
 
-        public decimal? AverageValue { get; set; }
+        public QueryDictionary<Func<IGridColumnCollection<T>, object>> Calculations { get; set; }
 
-        public object MaxValue { get; set; }
+        public QueryDictionary<Total> CalculationValues { get; set; }
 
-        public object MinValue { get; set; }
+        public Total SumValue { get; set; }
 
-        public string SumString { get; set; }
+        public Total AverageValue { get; set; }
 
-        public string AverageString { get; set; }
+        public Total MaxValue { get; set; }
 
-        public string MaxString { get; set; }
-
-        public string MinString { get; set; }
+        public Total MinValue { get; set; }
 
         public string TooltipValue { get; set; }
 
@@ -487,6 +486,13 @@ namespace GridCore.Columns
         public IGridColumn<T> Min(bool enabled)
         {
             IsMinEnabled = enabled;
+            return this;
+        }
+
+        public IGridColumn<T> Calculate(string name, Func<IGridColumnCollection<T>, object> calculation)
+        {
+            IsCalculationEnabled = true;
+            Calculations.AddParameter(name, calculation);
             return this;
         }
 

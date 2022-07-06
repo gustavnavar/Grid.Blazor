@@ -357,6 +357,11 @@ namespace GridCore
         public bool IsMinEnabled { get { return Columns.Any(r => ((ITotalsColumn)r).IsMinEnabled); } }
 
         /// <summary>
+        ///     Calculation enabled for some columns
+        /// </summary>
+        public bool IsCalculationEnabled { get { return Columns.Any(r => ((ITotalsColumn)r).IsCalculationEnabled); } }
+
+        /// <summary>
         ///     Grid direction
         /// </summary>
         public GridDirection Direction { get; set; } = GridDirection.LTR;
@@ -461,28 +466,35 @@ namespace GridCore
                 foreach (ITotalsColumn column in Columns)
                 {
                     if (column.IsSumEnabled)
-                        totals.Sum.Add(((IGridColumn)column).Name, column.SumString);
+                        totals.Sum.Add(((IGridColumn)column).Name, column.SumValue);
                 }
 
             if (IsAverageEnabled)
                 foreach (ITotalsColumn column in Columns)
                 {
                     if (column.IsAverageEnabled)
-                        totals.Average.Add(((IGridColumn)column).Name, column.AverageString);
+                        totals.Average.Add(((IGridColumn)column).Name, column.AverageValue);
                 }
 
             if (IsMaxEnabled)
                 foreach (ITotalsColumn column in Columns)
                 {
                     if (column.IsMaxEnabled)
-                        totals.Max.Add(((IGridColumn)column).Name, column.MaxString);
+                        totals.Max.Add(((IGridColumn)column).Name, column.MaxValue);
                 }
 
             if (IsMinEnabled)
                 foreach (ITotalsColumn column in Columns)
                 {
                     if (column.IsMinEnabled)
-                        totals.Min.Add(((IGridColumn)column).Name, column.MinString);
+                        totals.Min.Add(((IGridColumn)column).Name, column.MinValue);
+                }
+
+            if (IsCalculationEnabled)
+                foreach (ITotalsColumn column in Columns)
+                {
+                    if (column.IsCalculationEnabled)
+                        totals.Calculations.Add(((IGridColumn)column).Name, column.CalculationValues);
                 }
 
             return totals;
