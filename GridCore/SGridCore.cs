@@ -175,6 +175,16 @@ namespace GridCore
             }
         }
 
+        public IGridItemsProcessor<T> PagerProcessor { get { return _pagerProcessor; } }
+
+        public IGridItemsProcessor<T> SearchProcessor { get { return _currentSearchItemsProcessor; } }
+        
+        public IGridItemsProcessor<T> FilterProcessor { get { return _currentFilterItemsProcessor; } }
+        
+        public IGridItemsProcessor<T> SortProcessor { get { return _currentSortItemsProcessor; } }
+        
+        public IGridItemsProcessor<T> TotalsProcessor { get { return _currentTotalsItemsProcessor; } }
+
         public MethodInfo RemoveDiacritics { get; set; } = null;
 
         /// <summary>

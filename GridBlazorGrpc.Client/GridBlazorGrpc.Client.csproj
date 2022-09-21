@@ -8,9 +8,9 @@
 
 	<ItemGroup>
 		<PackageReference Include="BlazorStrap" Version="1.5.1" />
-		<PackageReference Include="FluentValidation" Version="11.0.3" />
-		<PackageReference Include="Grpc.Net.Client" Version="2.46.0" />
-		<PackageReference Include="Grpc.Net.Client.Web" Version="2.46.0" />
+		<PackageReference Include="FluentValidation" Version="11.1.0" />
+		<PackageReference Include="Grpc.Net.Client" Version="2.47.0" />
+		<PackageReference Include="Grpc.Net.Client.Web" Version="2.47.0" />
 		<PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly" Version="6.0.6" />
 		<PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.DevServer" Version="6.0.6" PrivateAssets="all" />
 		<PackageReference Include="Microsoft.Extensions.Localization" Version="6.0.6" />

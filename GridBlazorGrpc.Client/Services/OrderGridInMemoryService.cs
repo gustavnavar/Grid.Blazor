@@ -19,8 +19,6 @@ namespace GridBlazorGrpc.Client.Services
     {
         private readonly string _baseUri;
 
-        private IEnumerable<Order> _orders;
-
         public OrderGridInMemoryService(NavigationManager navigationManager)
         {
             _baseUri = navigationManager.BaseUri;

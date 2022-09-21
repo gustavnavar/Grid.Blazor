@@ -1,4 +1,8 @@
-﻿using GridCore.Pagination;
+﻿using GridCore.Filtering;
+using GridCore.Pagination;
+using GridCore.Searching;
+using GridCore.Sorting;
+using GridCore.Totals;
 using GridShared;
 using GridShared.Totals;
 using GridShared.Utility;
@@ -13,6 +17,12 @@ namespace GridCore
     public interface ISGrid<T> : ISGrid, IGrid<T>
     {
         new IGridColumnCollection<T> Columns { get; }
+
+        IGridItemsProcessor<T> PagerProcessor { get; }
+        IGridItemsProcessor<T> SearchProcessor { get; }
+        IGridItemsProcessor<T> FilterProcessor { get; }
+        IGridItemsProcessor<T> SortProcessor { get; }
+        IGridItemsProcessor<T> TotalsProcessor { get; }
 
         void SetRowCssClassesContraint(Func<T, string> contraint);
         IEnumerable<T> GetItemsToDisplay();
