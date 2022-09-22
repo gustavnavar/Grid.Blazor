@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 
 namespace GridCore
 {
@@ -9,6 +10,8 @@ namespace GridCore
     public interface IGridItemsProcessor<T>
     {
         IQueryable<T> Process(IQueryable<T> items);
+
+        void SetProcess(Func<IQueryable<T>, IQueryable<T>> process);
     }
 
 }

@@ -13,6 +13,7 @@ namespace GridCore.Sorting
     {
         private readonly ISGrid _grid;
         private IGridSortSettings _settings;
+        private Func<IQueryable<T>, IQueryable<T>> _process;
 
         public SortGridItemsProcessor(ISGrid grid, IGridSortSettings settings)
         {
@@ -33,6 +34,9 @@ namespace GridCore.Sorting
 
         public IQueryable<T> Process(IQueryable<T> items)
         {
+            if (_process != null)
+                return _process(items);
+
             if (_settings.SortValues?.Count() > 0)
             {
                 var sortedColumns = _settings.SortValues.OrderBy(r => r.Id).ToList();
@@ -87,6 +91,11 @@ namespace GridCore.Sorting
                 }
             }
             return items;
+        }
+
+        public void SetProcess(Func<IQueryable<T>, IQueryable<T>> process)
+        {
+            _process = process;
         }
 
         #endregion

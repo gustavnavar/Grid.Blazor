@@ -14,6 +14,7 @@ namespace GridCore.Totals
     internal class TotalsGridItemsProcessor<T> : IGridItemsProcessor<T>
     {
         private readonly ISGrid _grid;
+        private Func<IQueryable<T>, IQueryable<T>> _process;
 
         public TotalsGridItemsProcessor(ISGrid grid)
         {
@@ -24,6 +25,9 @@ namespace GridCore.Totals
 
         public IQueryable<T> Process(IQueryable<T> items)
         {
+            if (_process != null)
+                return _process(items);
+
             ParameterExpression parameter = Expression.Parameter(typeof(T), "x");
 
             foreach (IGridColumn<T> gridColumn in _grid.Columns)
@@ -364,6 +368,11 @@ namespace GridCore.Totals
             }
             
             return items;         
+        }
+
+        public void SetProcess(Func<IQueryable<T>, IQueryable<T>> process)
+        {
+            _process = process;
         }
 
         #endregion

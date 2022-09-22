@@ -14,6 +14,7 @@ namespace GridCore.Searching
     {
         private readonly ISGrid _grid;
         private IGridSearchSettings _settings;
+        private Func<IQueryable<T>, IQueryable<T>> _process;
 
         public SearchGridItemsProcessor(ISGrid grid, IGridSearchSettings settings)
         {
@@ -34,6 +35,9 @@ namespace GridCore.Searching
 
         public IQueryable<T> Process(IQueryable<T> items)
         {
+            if(_process != null)
+                return _process(items);
+
             if (_grid.SearchOptions.Enabled && !string.IsNullOrWhiteSpace(_settings.SearchValue))
             {
                 ParameterExpression parameter = Expression.Parameter(typeof(T), "x");
@@ -84,6 +88,11 @@ namespace GridCore.Searching
                 }
             }
             return binaryExpression;
+        }
+
+        public void SetProcess(Func<IQueryable<T>, IQueryable<T>> process)
+        {
+            _process = process;
         }
 
         #endregion
