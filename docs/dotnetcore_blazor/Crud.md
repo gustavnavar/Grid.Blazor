@@ -258,6 +258,7 @@ This interface has 3 methods:
 - ```Task DeleteFiles(params object[] keys);```
 
 No javascript is required for .Net 6.0 or later.
+
 ---
 
 These methods will be responsible to perform all file operations either on a server file repository, or a database or a cloud service as Azure Blob Storage or Amazon S3.
