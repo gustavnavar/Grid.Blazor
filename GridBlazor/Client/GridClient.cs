@@ -393,6 +393,20 @@ namespace GridBlazor
             return this;
         }
 
+        public IGridClient<T> SetCrudButtonTooltips(string createTooltip, string readTooltip, string updateTooltip,
+            string deleteTooltip)
+        {
+            if(createTooltip != null)
+                _source.CreateTooltip = createTooltip;
+            if (readTooltip != null)
+                _source.ReadTooltip = readTooltip;
+            if (updateTooltip != null)
+                _source.UpdateTooltip = updateTooltip;
+            if (deleteTooltip != null)
+                _source.DeleteTooltip = deleteTooltip;
+            return this;
+        }
+
         public IGridClient<T> SetCrudFormLabels(string createLabel, string readLabel, string updateLabel, string deleteLabel)
         {
             _source.CreateFormLabel = createLabel;

@@ -302,6 +302,26 @@ namespace GridBlazor
         string DeleteLabel { get; set; }
 
         /// <summary>
+        ///     Create button tooltip
+        /// </summary>
+        string CreateTooltip { get; set; }
+
+        /// <summary>
+        ///     Read button tooltip
+        /// </summary>
+        string ReadTooltip { get; set; }
+
+        /// <summary>
+        ///     Update button tooltip
+        /// </summary>
+        string UpdateTooltip { get; set; }
+
+        /// <summary>
+        ///     Delete button tooltip
+        /// </summary>
+        string DeleteTooltip { get; set; }
+
+        /// <summary>
         ///     Create form label
         /// </summary>
         public string CreateFormLabel { get; set; }

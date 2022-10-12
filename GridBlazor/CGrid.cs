@@ -830,6 +830,26 @@ namespace GridBlazor
         public string DeleteLabel { get; set; }
 
         /// <summary>
+        ///     Create button tooltip
+        /// </summary>
+        public string CreateTooltip { get; set; } = Strings.CreateItem;
+
+        /// <summary>
+        ///     Read button tooltip
+        /// </summary>
+        public string ReadTooltip { get; set; } = Strings.ReadItem;
+
+        /// <summary>
+        ///     Update button tooltip
+        /// </summary>
+        public string UpdateTooltip { get; set; } = Strings.UpdateItem;
+
+        /// <summary>
+        ///     Delete button tooltip
+        /// </summary>
+        public string DeleteTooltip { get; set; } = Strings.DeleteItem;
+
+        /// <summary>
         ///     Create form label
         /// </summary>
         public string CreateFormLabel { get; set; }

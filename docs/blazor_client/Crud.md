@@ -469,6 +469,18 @@ You can also use text labels for the header buttons. In this the configuration i
         .SetCrudButtonLabels("Add", "View", "Edit", "Delete");
 ```
 
+## CRUD button tooltips
+
+You can change the default CRUD button tooltips using the ```SetCrudButtonTooltips``` method of the ```GridClient``` object for this:
+```c#
+    var client = new GridClient<Order>(HttpClient, url, query, false, "ordersGrid", ColumnCollections.OrderColumnsWithCustomCrud, locale)
+        .Crud(true, orderService)
+        .SetCrudButtonTooltips("Add Order", "View Order", "Edit Order", "Delete Order");
+```
+
+If any of the passed values is null, then the tooltip text will be the default one. 
+If any of the passed values is empty (""), then there will not be a tooltipfor it. 
+
 ## Custom forms (Optional)
 
 If you want to use custom forms you can enable them using the **SetCreateComponent**, **SetReadComponent**, **SetUpdateComponent** and **SetDeleteComponent**  methods of the **GridClient** object:

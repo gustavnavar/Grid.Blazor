@@ -216,6 +216,11 @@ namespace GridBlazor
         IGridClient<T> SetCrudButtonLabels(string createLabel, string readLabel, string updateLabel, string deleteLabel);
 
         /// <summary>
+        ///     Configure CRUD button tootips
+        /// </summary>
+        IGridClient<T> SetCrudButtonTooltips(string createTooltip, string readTooltip, string updateTooltip, string deleteTooltip);
+
+        /// <summary>
         ///     Configure CRUD button labels
         /// </summary>
         IGridClient<T> SetCrudFormLabels(string createLabel, string readLabel, string updateLabel, string deleteLabel);
