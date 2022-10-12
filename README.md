@@ -54,6 +54,8 @@ This is an example of a table of items using this component:
 
 ## Notes
 
+- GridBlazor 3.4.1 supports the build-in InputFile component for columns of type "file" for .Net 6.0 and later projects. The old Agno.BlazorInputFile component is ussed for .Net Core 3.1 and .Net 5.x projects. See https://github.com/gustavnavar/Grid.Blazor/blob/master/docs/blazor_client/Crud.md#file-type-columns
+
 - GridBlazor 3.0.0 supports .Net 6.0
 
 - GridMvcCore has been split in 2 parts from version 5.0.0 on:
