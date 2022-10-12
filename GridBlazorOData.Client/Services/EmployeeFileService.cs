@@ -1,8 +1,8 @@
-using Agno.BlazorInputFile;
 using GridBlazor;
 using GridBlazorOData.Shared.Models;
 using GridShared.Utility;
 using Microsoft.AspNetCore.Components;
+using Microsoft.AspNetCore.Components.Forms;
 using System;
 using System.IO;
 using System.Linq;
@@ -14,6 +14,7 @@ namespace GridBlazorOData.Client.Services
 {
     public class EmployeeFileService : ICrudFileService<Employee>
     {
+        private readonly int _maxAllowedSize = 5000000;
         private readonly HttpClient _httpClient;
         private readonly string _baseUri;
 
@@ -23,12 +24,12 @@ namespace GridBlazorOData.Client.Services
             _baseUri = navigationManager.BaseUri;
         }
 
-        public async Task InsertFiles(Employee item, IQueryDictionary<IFileListEntry[]> files)
+        public async Task InsertFiles(Employee item, IQueryDictionary<IBrowserFile[]> files)
         {
             await UpdateFiles(item, files);
         }
 
-        public async Task<Employee> UpdateFiles(Employee item, IQueryDictionary<IFileListEntry[]> files)
+        public async Task<Employee> UpdateFiles(Employee item, IQueryDictionary<IBrowserFile[]> files)
         {
             if (files.Count > 0)
             {
@@ -36,22 +37,26 @@ namespace GridBlazorOData.Client.Services
                 if (file.Value.Length > 0)
                 {
                     // add OLE header to file data byte array
-                    var ms = new MemoryStream();
-                    await file.Value[0].Data.CopyToAsync(ms);
-                    byte[] ba = new byte[ms.Length + 78];
-                    for (int i = 0; i < 78; i++)
+                    using (var ms = new MemoryStream())
+                    using (var stream = file.Value[0].OpenReadStream(_maxAllowedSize))
                     {
-                        ba[i] = 0;
+                        await stream.CopyToAsync(ms);
+                        byte[] ba = new byte[ms.Length + 78];
+                        for (int i = 0; i < 78; i++)
+                        {
+                            ba[i] = 0;
+                        }
+                        Array.Copy(ms.ToArray(), 0, ba, 78, ms.Length);
+                        
+                        // convert byte array to url scaped base64
+                        string base64Str = Convert.ToBase64String(ba);
+                        base64Str = base64Str.Replace('+', '.');
+                        base64Str = base64Str.Replace('/', '_');
+                        base64Str = base64Str.Replace('=', '-');
+
+                        item.Base64String = base64Str;
                     }
-                    Array.Copy(ms.ToArray(), 0, ba, 78, ms.Length);
-
-                    // convert byte array to url scaped base64
-                    string base64Str = Convert.ToBase64String(ba);
-                    base64Str = base64Str.Replace('+', '.');
-                    base64Str = base64Str.Replace('/', '_');
-                    base64Str = base64Str.Replace('=', '-');
-
-                    item.Base64String = base64Str;
+                    
                     var response = await _httpClient.PostAsJsonAsync(_baseUri + $"api/SampleData/SetEmployeePhoto", item);
                     if (!response.IsSuccessStatusCode)
                     {

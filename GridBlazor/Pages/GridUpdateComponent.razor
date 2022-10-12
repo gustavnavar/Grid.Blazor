@@ -1,5 +1,4 @@
-﻿@using Agno.BlazorInputFile
-@using GridBlazor.Columns
+﻿@using GridBlazor.Columns
 @using GridBlazor.Resources
 @using GridShared
 @using GridShared.Columns
@@ -177,29 +176,12 @@
                                     {
                                         value = "";
                                     }
-                                    VariableReference reference;
-                                    if (InputFiles.ContainsKey(column.FieldName))
-                                    {
-                                        reference = InputFiles[column.FieldName];
-                                    }
-                                    else
-                                    {
-                                        reference = new VariableReference();
-                                        InputFiles.Add(column.FieldName, reference);
-                                    }
                                     <div class="input-group">
                                         <input type="text" autocomplete="@column.CustomAutoComplete.Invoke()" id="@column.FieldName" name="@column.FieldName" class="form-control  @(ColumnErrors.ContainsKey(@column.FieldName) ? "input-validation-error" : "")" value="@column.GetFormatedValue(value)">
                                         <span class="input-group-btn">
                                             <button type="button" class="btn btn-default btn-primary grid-button-input-file" @onclick="() => ButtonFileClicked(column.FieldName)">@Strings.Files</button>
                                         </span>
-                                        @if (column.MultipleInput)
-                                        {
-                                            <AgnoInputFile name="@(column.FieldName + "-file")" multiple style="display:none;" @ref="reference.Variable" OnFileChange="(files) => OnFileChange(column, files)" />
-                                        }
-                                        else
-                                        {
-                                            <AgnoInputFile name="@(column.FieldName + "-file")" style="display:none;" @ref="reference.Variable" OnFileChange="(files) => OnFileChange(column, files)" />
-                                        }
+                                        @_renderFragments.Get(column.Name)
                                     </div>
                                 }
                                 else if (type == typeof(DateTime) || type == typeof(System.DateTimeOffset))

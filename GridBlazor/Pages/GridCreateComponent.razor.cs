@@ -1,10 +1,13 @@
-﻿using Agno.BlazorInputFile;
+﻿#if NETSTANDARD2_1 || NET5_0
+using Agno.BlazorInputFile;
+#endif
 using GridBlazor.Columns;
 using GridBlazor.Resources;
 using GridShared;
 using GridShared.Columns;
 using GridShared.Utility;
 using Microsoft.AspNetCore.Components;
+using Microsoft.AspNetCore.Components.CompilerServices;
 using Microsoft.AspNetCore.Components.Forms;
 using Microsoft.JSInterop;
 using System;
@@ -30,7 +33,12 @@ namespace GridBlazor.Pages
         public QueryDictionary<VariableReference> Children { get; private set; } = new QueryDictionary<VariableReference>();
 
         public QueryDictionary<VariableReference> InputFiles { get; private set; } = new QueryDictionary<VariableReference>();
+
+#if NETSTANDARD2_1 || NET5_0
         public QueryDictionary<IFileListEntry[]> Files { get; private set; } = new QueryDictionary<IFileListEntry[]>();
+#else
+        public QueryDictionary<IBrowserFile[]> Files { get; private set; } = new QueryDictionary<IBrowserFile[]>();
+#endif
 
         public QueryDictionary<IEnumerable<SelectItem>> SelectItems { get; private set; } = new QueryDictionary<IEnumerable<SelectItem>>();
 
@@ -71,8 +79,23 @@ namespace GridBlazor.Pages
                 {
                     VariableReference reference = new VariableReference();
                     Children.AddParameter(column.Name, reference);
-                    _renderFragments.AddParameter(column.Name, GridCellComponent<T>.CreateComponent(GridComponent, 
+                    _renderFragments.AddParameter(column.Name, GridCellComponent<T>.CreateComponent(GridComponent,
                         column.CreateComponentType, column, Item, null, true, reference));
+                }
+                else if (!((IGridColumn<T>)column).IsSelectField.IsSelectKey && !((IGridColumn<T>)column).IsSelectColumn.IsSelectKey
+                    && !((IGridColumn<T>)column).ReadOnlyOnCreate(Item) && ((IGridColumn<T>)column).InputType == InputType.File)
+                {
+                    VariableReference reference;
+                    if (InputFiles.ContainsKey(column.FieldName))
+                    {
+                        reference = InputFiles[column.FieldName];
+                    }
+                    else
+                    {
+                        reference = new VariableReference();
+                        InputFiles.Add(column.FieldName, reference);
+                    }
+                    _renderFragments.AddParameter(column.Name, CreateInputFileComponent((IGridColumn<T>)column, reference));
                 }
             }
             _tabGroups = GridComponent.Grid.Columns
@@ -98,6 +121,29 @@ namespace GridBlazor.Pages
             builder.AddAttribute(1, "Grid", grid);
             builder.AddAttribute(2, "UseMemoryCrudDataService", true);
             builder.AddComponentReferenceCapture(3, r => reference.Variable = r);
+            builder.CloseComponent();
+        };
+
+        private RenderFragment CreateInputFileComponent(IGridColumn<T> column, VariableReference reference) => builder =>
+        {
+            Type gridComponentType;
+#if NETSTANDARD2_1 || NET5_0
+            gridComponentType = typeof(AgnoInputFile);
+#else
+            gridComponentType = typeof(InputFile);
+#endif
+
+            builder.OpenComponent(0, gridComponentType);
+            builder.AddAttribute(1, "name", column.FieldName + "-file");
+            builder.AddAttribute(2, "style", "display:none;");
+            if (column.MultipleInput)
+                builder.AddAttribute(3, "multiple", "");
+#if NETSTANDARD2_1 || NET5_0
+            builder.AddAttribute(4, "OnFileChange", RuntimeHelpers.TypeCheck(EventCallback.Factory.Create<IFileListEntry[]>(this, (files) => OnFileChange(column, files))));
+#else
+            builder.AddAttribute(4, "OnChange", RuntimeHelpers.TypeCheck(EventCallback.Factory.Create<InputFileChangeEventArgs>(this, (e) => OnChange(column, e))));
+#endif
+            builder.AddComponentReferenceCapture(5, r => reference.Variable = r);
             builder.CloseComponent();
         };
 
@@ -186,6 +232,7 @@ namespace GridBlazor.Pages
                 await((IGridColumn<T>)column).AfterChangeValue(Item, GridMode.Create);
         }
 
+#if NETSTANDARD2_1 || NET5_0
         private async Task OnFileChange(IGridColumn column, IFileListEntry[] files)
         {
             if (!column.MultipleInput && files.Length > 1)
@@ -199,6 +246,24 @@ namespace GridBlazor.Pages
             _shouldRender = true;
             StateHasChanged();
         }
+#else
+        private async Task OnChange(IGridColumn column, InputFileChangeEventArgs e)
+        {
+            IBrowserFile[] files;
+            if (!column.MultipleInput && e.FileCount >= 1)
+                files = new IBrowserFile[] { e.File };
+            else
+                files = e.GetMultipleFiles(e.FileCount).ToArray();
+
+            Files.AddParameter(column.FieldName, files);
+
+            if (((IGridColumn<T>)column).AfterChangeValue != null)
+                await((IGridColumn<T>)column).AfterChangeValue(Item, GridMode.Create);
+
+            _shouldRender = true;
+            StateHasChanged();
+        }
+#endif
 
         protected async Task CreateItem()
         {
@@ -236,11 +301,19 @@ namespace GridBlazor.Pages
         {
             var inputFile = InputFiles.Get(fieldName);
             var type = inputFile.Variable.GetType();
+#if NETSTANDARD2_1 || NET5_0
             if (type == typeof(AgnoInputFile)
                 && ((AgnoInputFile)inputFile.Variable).InputFileElement.Id != null)
             {
                 await jSRuntime.InvokeVoidAsync("gridJsFunctions.click", (ElementReference)((AgnoInputFile)inputFile.Variable).InputFileElement);
             }
+#else
+            if (type == typeof(InputFile)
+                && ((InputFile)inputFile.Variable).Element.HasValue)
+            {
+                await jSRuntime.InvokeVoidAsync("gridJsFunctions.click", ((InputFile)inputFile.Variable).Element.Value);
+            }
+#endif
         }
 
         public async Task BackButtonClicked()

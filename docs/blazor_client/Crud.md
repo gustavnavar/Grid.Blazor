@@ -344,17 +344,32 @@ You must also configure CRUD using the **Crud(bool enabled, ICrudDataService<T> 
         .Crud(true, employeeService, employeeFileService);      
 ```
 
-The parameter **crudFileService** of the **Crud** method must be a class that implements the **ICrudFileService<T>** interface. This interface has 3 methods:
+The parameter **crudFileService** of the **Crud** method must be a class that implements the **ICrudFileService<T>** interface.
+
+---
+**For .NET Core 3.1 and 5.0:**
+This interface has 3 methods:
 - ```Task InsertFiles(T item, IQueryDictionary<IFileListEntry[]> files);```
 - ```Task<T> UpdateFiles(T item, IQueryDictionary<IFileListEntry[]> files);```
 - ```Task DeleteFiles(params object[] keys);```
-
-These methods will be responsible to perform all file operations either on a server file repository, or a database or a cloud service as Azure Blob Storage or Amazon S3.
 
 And finally you have to load this ```javascript``` on the html page:
 ```
     <script src="_content/Agno.BlazorInputFile/inputfile.js"></script>
 ```
+---
+
+---
+**For .NET 6.0 and later:**
+This interface has 3 methods:
+- ```Task InsertFiles(T item, IQueryDictionary<IBrowserFile[]> files);```
+- ```Task<T> UpdateFiles(T item, IQueryDictionary<IBrowserFile[]> files);```
+- ```Task DeleteFiles(params object[] keys);```
+
+No javascript is required for .Net 6.0 or later.
+---
+
+These methods will be responsible to perform all file operations either on a server file repository, or a database or a cloud service as Azure Blob Storage or Amazon S3.
 
 **Notes:**
 - ```InsertFiles``` method will be executed after inserting the new record on the database. So it's executed after the ```Insert``` method of your ```ICrudDataService<T>``` implementation. This will ensure the record includes the primary keys in case of auto-generated ones. If the ```InsertFiles``` method does any modification to the record that requires to be applied to the database, it will no be automatically updated. So you will have to call the ```Update``` method of your ```ICrudDataService<T>``` implementation from the ```InsertFiles``` method.

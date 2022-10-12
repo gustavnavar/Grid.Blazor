@@ -477,10 +477,10 @@ namespace GridBlazor
         public IGridClient<T> SetCreateComponent<TComponent>(IList<Action<object>> actions, 
             IList<Func<object, Task>> functions, object obj)
         {
-            Type readComponent = typeof(TComponent);
-            if (readComponent != null && readComponent.IsSubclassOf(typeof(GridCreateComponent<T>)))
+            Type createComponent = typeof(TComponent);
+            if (createComponent != null && createComponent.IsSubclassOf(typeof(GridCreateComponent<T>)))
             {
-                _source.CreateComponent = readComponent;
+                _source.CreateComponent = createComponent;
                 _source.CreateActions = actions;
                 _source.CreateFunctions = functions;
                 _source.CreateObject = obj;
