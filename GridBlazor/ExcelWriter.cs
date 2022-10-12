@@ -19,16 +19,32 @@ namespace GridBlazor
         public int RowIndex { get; set; }
         public int ColSpan { get; set; }
         public int RowSpan { get; set; }
+        public CellValues Type { get; set; }
 
         public ExcelCell()
         {
         }
 
-        public ExcelCell(string content)
+        public ExcelCell(string value, Type type = null)
         {
-            Content = content;
+            Content = value;
             ColSpan = 1;
             RowSpan = 1;
+
+            if(type == null)
+                Type = CellValues.InlineString;
+            else if (type == typeof(Int32) || type == typeof(double) || type == typeof(decimal) || type == typeof(byte)
+                || type == typeof(Single) || type == typeof(float) || type == typeof(Int64) || type == typeof(Int16)
+                || type == typeof(UInt64) || type == typeof(UInt32) || type == typeof(UInt16))
+                Type = CellValues.Number;
+            else if (type == typeof(DateTime) || type == typeof(DateTimeOffset) || type == typeof(decimal) || type == typeof(byte)
+                || type == typeof(Single) || type == typeof(float) || type == typeof(Int64) || type == typeof(Int16)
+                || type == typeof(UInt64) || type == typeof(UInt32) || type == typeof(UInt16))
+                Type = CellValues.Date;
+            else if(type == typeof(bool))
+                Type = CellValues.Boolean;
+            else
+                Type = CellValues.InlineString;
         }
     }
 
@@ -78,12 +94,11 @@ namespace GridBlazor
             return colLetter;
         }
 
-        private Cell CreateCell(string header, UInt32 index, string text)
+        private Cell CreateCell(string header, UInt32 index, string text, CellValues type)
         {
             Cell cell;
-            double number;
 
-            if (double.TryParse(text, out number))
+            if (type == CellValues.Number && double.TryParse(text, out double number))
             {
                 cell = new Cell
                 {
@@ -144,7 +159,8 @@ namespace GridBlazor
                     {
                         var cell = column.GetCell(item) as GridCell;
                         cell.Encode = false;
-                        row.Add(new ExcelCell(cell.ToString()));
+                        var type = ((IGridColumn<T>)column).GetTypeAndValue(item).Type;
+                        row.Add(new ExcelCell(cell.ToString(), type));
                     }    
                 }
                 excelData.Cells.Add(row);
@@ -201,7 +217,7 @@ namespace GridBlazor
                 foreach (var cellData in rowData)
                 {
                     var cell = CreateCell(ColumnLetter(cellIdex++), rowIdex,
-                        cellData.Content ?? string.Empty);
+                        cellData.Content ?? string.Empty, cellData.Type);
                     row.AppendChild(cell);
                 }
             }
@@ -222,7 +238,7 @@ namespace GridBlazor
                 foreach (var excelCell in rowData)
                 {
                     var cell = CreateCell(ColumnLetter(excelCell.ColumnIndex),
-                        (uint)(excelCell.RowIndex + 1), excelCell.Content ?? string.Empty);
+                        (uint)(excelCell.RowIndex + 1), excelCell.Content ?? string.Empty, excelCell.Type);
                     row.AppendChild(cell);
                     if (excelCell.ColSpan > 1 || excelCell.RowSpan > 1)
                     {
