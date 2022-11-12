@@ -23,6 +23,7 @@ namespace GridShared.Utility
                 }
             // required for Blazor WA
             jsonOptions.Converters.Add(new ODataDateTimeConverter());
+            jsonOptions.Converters.Add(new ODataTimeSpanConverter());
 
             converters = jsonOptions.Converters.Where(r => r.CanConvert(typeof(Enum)));
             if (converters != null)
