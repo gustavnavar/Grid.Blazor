@@ -62,11 +62,11 @@ namespace GridShared.Totals
                 if (!string.IsNullOrEmpty(valuePattern))
                     return string.Format(valuePattern, value);
                 else
-                    return value.ToString();
+                    return value?.ToString();
             }
             catch (Exception)
             {
-                return value.ToString();
+                return value?.ToString();
             }
         }
     }

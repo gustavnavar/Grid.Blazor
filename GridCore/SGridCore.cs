@@ -12,7 +12,6 @@ using GridShared.DataAnnotations;
 using GridShared.Grouping;
 using GridShared.Totals;
 using GridShared.Utility;
-using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Primitives;
 using System;
 using System.Collections.Generic;
@@ -45,12 +44,6 @@ namespace GridCore
         public SGridCore()
         { }
 
-        public SGridCore(IEnumerable<T> items, IQueryCollection query, bool renderOnlyRows,
-            string pagerViewName = GridPager.DefaultPagerViewName, IColumnBuilder<T> columnBuilder = null)
-            : this(items, QueryDictionary<StringValues>.Convert(query), renderOnlyRows, pagerViewName, columnBuilder)
-        {
-        }
-
         public SGridCore(IEnumerable<T> items, QueryDictionary<string> query, bool renderOnlyRows,
             string pagerViewName = GridPager.DefaultPagerViewName, IColumnBuilder<T> columnBuilder = null)
             : this(items, query.ToStringValuesDictionary(), renderOnlyRows, pagerViewName, columnBuilder)
@@ -72,10 +65,6 @@ namespace GridCore
             ((GridPager)_pager).TemplateName = pagerViewName;
             RenderOptions.RenderRowsOnly = renderOnlyRows;
         }
-
-        public SGridCore(IEnumerable<T> items, IQueryCollection query, IColumnBuilder<T> columnBuilder = null)
-            : this(items, QueryDictionary<StringValues>.Convert(query), columnBuilder)
-        { }
 
         public SGridCore(IEnumerable<T> items, QueryDictionary<string> query, IColumnBuilder<T> columnBuilder = null)
             : this(items, query.ToStringValuesDictionary(), columnBuilder)

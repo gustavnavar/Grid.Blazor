@@ -28,7 +28,7 @@ namespace GridMvc
 
         public SGrid(IEnumerable<T> items, IQueryCollection query, bool renderOnlyRows,
             string pagerViewName = GridPager.DefaultPagerViewName, IColumnBuilder<T> columnBuilder = null)
-            : this(items, QueryDictionary<StringValues>.Convert(query), renderOnlyRows, pagerViewName, columnBuilder)
+            : this(items, GridExtensions.Convert(query), renderOnlyRows, pagerViewName, columnBuilder)
         {
         }
 
@@ -55,7 +55,7 @@ namespace GridMvc
         }
 
         public SGrid(IEnumerable<T> items, IQueryCollection query, IColumnBuilder<T> columnBuilder = null)
-            : this(items, QueryDictionary<StringValues>.Convert(query), columnBuilder)
+            : this(items, GridExtensions.Convert(query), columnBuilder)
         { }
 
         public SGrid(IEnumerable<T> items, QueryDictionary<string> query, IColumnBuilder<T> columnBuilder = null)

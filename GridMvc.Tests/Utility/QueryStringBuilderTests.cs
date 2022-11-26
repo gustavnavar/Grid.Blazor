@@ -26,7 +26,7 @@ namespace GridMvc.Tests.Utility
             var request = context.Request;
             request.QueryString = qb.ToQueryString();
 
-            _builder = new CustomQueryStringBuilder(request.Query);
+            _builder = new CustomQueryStringBuilder(GridExtensions.Convert(request.Query));
 
             var str1 = _builder.GetQueryStringExcept(new[] { "key1" });
             Assert.AreEqual(str1, "?key2=value2");
@@ -49,7 +49,7 @@ namespace GridMvc.Tests.Utility
             var request = context.Request;
             request.QueryString = qb.ToQueryString();
 
-            _builder = new CustomQueryStringBuilder(request.Query);
+            _builder = new CustomQueryStringBuilder(GridExtensions.Convert(request.Query));
 
             var str1 = _builder.GetQueryStringWithParameter("key4", "value4");
             Assert.AreEqual(str1, "?key1=value1&key2=value2&key3=value3&key4=value4");

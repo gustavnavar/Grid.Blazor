@@ -1,13 +1,13 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk.Web">
 
   <PropertyGroup>
-    <TargetFramework>net6.0</TargetFramework>
+    <TargetFramework>net7.0</TargetFramework>
     <Version>3.4.1</Version>
   </PropertyGroup>
 
   <ItemGroup>
     <PackageReference Include="BlazorStrap" Version="1.5.1" />
-    <PackageReference Include="FluentValidation" Version="11.1.0" />
+    <PackageReference Include="FluentValidation" Version="11.4.0" />
   </ItemGroup>
 
   <ItemGroup>

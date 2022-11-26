@@ -3,7 +3,6 @@ using GridCore.Searching;
 using GridCore.Sorting;
 using GridShared.Filtering;
 using GridShared.Utility;
-using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Primitives;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
@@ -25,7 +24,7 @@ namespace GridMvc.Tests.Filtering
         [TestInitialize]
         public void Init()
         {
-            _query = QueryDictionary<StringValues>.Convert((new DefaultHttpContext()).Request.Query);
+            _query = new QueryDictionary<StringValues>();
             _repo = new TestRepository();
             _grid = new TestGrid(_repo.GetAll());
         }

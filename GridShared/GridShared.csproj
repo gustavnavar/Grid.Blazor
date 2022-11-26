@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFrameworks>netstandard2.1;net5.0;net6.0</TargetFrameworks>
+    <TargetFrameworks>netstandard2.1;net5.0;net6.0;net7.0</TargetFrameworks>
     <LangVersion>8.0</LangVersion>
     <Version>5.4.0</Version>
     <Title>GridShared</Title>
@@ -11,23 +11,25 @@
     <PackageTags>grid blazor mvc table crud rest grpc</PackageTags>
     <PackageProjectUrl>https://github.com/gustavnavar/Grid.Blazor</PackageProjectUrl>
     <PackageLicenseExpression>LGPL-2.1-only</PackageLicenseExpression>
-	<PackageReleaseNotes>Supports .NET Standard 2.1, .NET 5.0, .NET 6.0</PackageReleaseNotes>
+	<PackageReleaseNotes>Supports .NET Standard 2.1, .NET 5.0, .NET 6.0, .NET 7.0</PackageReleaseNotes>
   </PropertyGroup>
 
+  <ItemGroup Condition="'$(TargetFramework)' == 'net7.0'">
+    <PackageReference Include="Microsoft.Extensions.Primitives" Version="7.0" />
+    <PackageReference Include="System.Text.Json" Version="7.0" />
+  </ItemGroup>
+	
   <ItemGroup Condition="'$(TargetFramework)' == 'net6.0'">
-    <PackageReference Include="Microsoft.AspNetCore.Http.Features" Version="5.0" />
     <PackageReference Include="Microsoft.Extensions.Primitives" Version="6.0" />
     <PackageReference Include="System.Text.Json" Version="6.0" />
   </ItemGroup>
   
   <ItemGroup Condition="'$(TargetFramework)' == 'net5.0'">
-    <PackageReference Include="Microsoft.AspNetCore.Http.Features" Version="5.0" />
     <PackageReference Include="Microsoft.Extensions.Primitives" Version="5.0" />
     <PackageReference Include="System.Text.Json" Version="5.0" />
   </ItemGroup>
 
   <ItemGroup Condition="'$(TargetFramework)' == 'netstandard2.1'">
-    <PackageReference Include="Microsoft.AspNetCore.Http.Features" Version="3.1" />
     <PackageReference Include="Microsoft.Extensions.Primitives" Version="3.1" />
     <PackageReference Include="System.Text.Json" Version="4.7" />
   </ItemGroup>

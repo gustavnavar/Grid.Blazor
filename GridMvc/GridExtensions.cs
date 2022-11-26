@@ -10,6 +10,10 @@ using System.IO;
 using System.Text.Encodings.Web;
 using Microsoft.AspNetCore.Http;
 using GridCore;
+using Microsoft.Extensions.Primitives;
+using GridShared.Utility;
+using GridShared.Sorting;
+using System.Linq;
 
 namespace GridMvc
 {
@@ -81,6 +85,54 @@ namespace GridMvc
                 }
             };
             return column.RenderValueAs(valueContraint);
+        }
+
+        public static QueryDictionary<StringValues> Convert(IQueryCollection collection)
+        {
+            QueryDictionary<StringValues> dictionary = new QueryDictionary<StringValues>();
+            foreach (var element in collection)
+            {
+                if (dictionary.ContainsKey(element.Key))
+                    dictionary[element.Key] = StringValues.Concat(dictionary[element.Key], element.Value);
+                else
+                    dictionary.Add(element.Key, element.Value);
+            }
+
+            // creare a consecutive sortValues  
+            var sortings = dictionary.Get(ColumnOrderValue.DefaultSortingQueryParameter);
+            if (sortings.Count > 0)
+            {
+                // get sortValues from Query
+                var sortValues = new DefaultOrderColumnCollection();
+                foreach (string sorting in sortings)
+                {
+                    ColumnOrderValue column = QueryDictionary<StringValues>.CreateColumnData(sorting);
+                    if (column != ColumnOrderValue.Null)
+                        sortValues.Add(column);
+                }
+
+                // creare a consecutive sortValues  
+                var sortList = sortValues.OrderBy(r => r.Id).ToList();
+                int i = 0;
+                sortValues = new DefaultOrderColumnCollection();
+                foreach (var sortItem in sortList)
+                {
+                    i++;
+                    var column = new ColumnOrderValue
+                    {
+                        ColumnName = sortItem.ColumnName,
+                        Direction = sortItem.Direction,
+                        Id = i
+                    };
+                    sortValues.Add(column);
+                }
+
+                // update query with new sortValues
+                dictionary.Remove(ColumnOrderValue.DefaultSortingQueryParameter);
+                dictionary.Add(ColumnOrderValue.DefaultSortingQueryParameter, QueryDictionary<StringValues>.CreateStringValues(sortValues));
+            }
+
+            return dictionary;
         }
     }
 }

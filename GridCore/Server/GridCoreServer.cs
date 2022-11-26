@@ -4,7 +4,6 @@ using GridShared;
 using GridShared.Columns;
 using GridShared.Pagination;
 using GridShared.Utility;
-using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Primitives;
 using System;
 using System.Collections.Generic;
@@ -26,20 +25,6 @@ namespace GridCore.Server
         { }
 
         public GridCoreServer(IEnumerable<T> items, QueryDictionary<StringValues> query, bool renderOnlyRows,
-            string gridName, Action<IGridColumnCollection<T>> columns = null, int? pageSize = null,
-            string language = "", string pagerViewName = GridPager.DefaultPagerViewName,
-            IColumnBuilder<T> columnBuilder = null)
-        {
-            _source = new SGridCore<T>(items, query, renderOnlyRows, pagerViewName, columnBuilder);
-            _source.RenderOptions.GridName = gridName;
-            columns?.Invoke(_source.Columns);
-            if (!string.IsNullOrWhiteSpace(language))
-                _source.Language = language;
-            if (pageSize.HasValue)
-                WithPaging(pageSize.Value);
-        }
-
-        public GridCoreServer(IEnumerable<T> items, IQueryCollection query, bool renderOnlyRows,
             string gridName, Action<IGridColumnCollection<T>> columns = null, int? pageSize = null,
             string language = "", string pagerViewName = GridPager.DefaultPagerViewName,
             IColumnBuilder<T> columnBuilder = null)

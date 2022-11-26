@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk.Razor">
 
   <PropertyGroup>
-    <TargetFrameworks>netcoreapp3.1;net5.0;net6.0</TargetFrameworks>
+    <TargetFrameworks>netcoreapp3.1;net5.0;net6.0;net7.0</TargetFrameworks>
     <AddRazorSupportForMvc>true</AddRazorSupportForMvc>
     <LangVersion>8.0</LangVersion>
     <GenerateEmbeddedFilesManifest>True</GenerateEmbeddedFilesManifest>
@@ -16,9 +16,13 @@
     <PackageTags>grid table mvc</PackageTags>
     <PackageProjectUrl>https://github.com/gustavnavar/Grid.Blazor</PackageProjectUrl>
     <PackageLicenseExpression>LGPL-2.1-only</PackageLicenseExpression>
-	<PackageReleaseNotes>Supports .NET Core 3.1, .NET 5.0, .NET 6.0</PackageReleaseNotes>
+	<PackageReleaseNotes>Supports .NET Core 3.1, .NET 5.0, .NET 6.0, .NET 7.0</PackageReleaseNotes>
   </PropertyGroup>
 
+  <ItemGroup Condition="'$(TargetFramework)' == 'net7.0'">
+	<PackageReference Include="Microsoft.Extensions.FileProviders.Embedded" Version="7.0" />
+  </ItemGroup>
+	
   <ItemGroup Condition="'$(TargetFramework)' == 'net6.0'">
     <PackageReference Include="Microsoft.Extensions.FileProviders.Embedded" Version="6.0" />
   </ItemGroup>

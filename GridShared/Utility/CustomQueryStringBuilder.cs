@@ -1,5 +1,4 @@
-﻿using Microsoft.AspNetCore.Http;
-using Microsoft.Extensions.Primitives;
+﻿using Microsoft.Extensions.Primitives;
 using System;
 using System.Collections.Generic;
 using System.Collections.Specialized;
@@ -15,16 +14,6 @@ namespace GridShared.Utility
     /// </summary>
     public class CustomQueryStringBuilder : NameValueCollection
     {
-        public static NameValueCollection Convert(IQueryCollection collection)
-        {
-            NameValueCollection nameValueCollection = new NameValueCollection();
-            foreach (var element in collection)
-            {
-                nameValueCollection.Set(element.Key, element.Value);
-            }
-            return nameValueCollection;
-        }    
-
         public static NameValueCollection Convert(IQueryDictionary<StringValues> collection)
         {
             NameValueCollection nameValueCollection = new NameValueCollection();
@@ -36,11 +25,6 @@ namespace GridShared.Utility
         }
 
         public CustomQueryStringBuilder(IQueryDictionary<StringValues> collection)
-            : base(Convert(collection))
-        {
-        }
-
-        public CustomQueryStringBuilder(IQueryCollection collection)
             : base(Convert(collection))
         {
         }
