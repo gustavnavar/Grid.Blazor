@@ -82,6 +82,9 @@ namespace GridBlazorOData.Shared.Models
         [NotMappedColumn]
         [ForeignKey("ShipVia")]
         public virtual Shipper Shipper { get; set; }
+
+        [GridColumn(Position = 18)]
+        public TimeSpan? Age { get; set; }
     }
 
 }

@@ -1,5 +1,6 @@
 ﻿using GridBlazorOData.Shared.Models;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace GridBlazorOData.Server.Models
 {
@@ -13,6 +14,9 @@ namespace GridBlazorOData.Server.Models
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            modelBuilder.Entity<Order>()
+                .Property(s => s.Age)
+                .HasConversion(new TimeSpanToTicksConverter());
             modelBuilder.Entity<OrderDetail>()
                 .HasKey(c => new { c.OrderID, c.ProductID });
 
