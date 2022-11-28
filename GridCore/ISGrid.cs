@@ -1,9 +1,6 @@
-﻿using GridCore.Filtering;
-using GridCore.Pagination;
-using GridCore.Searching;
-using GridCore.Sorting;
-using GridCore.Totals;
+﻿using GridCore.Pagination;
 using GridShared;
+using GridShared.Sorting;
 using GridShared.Totals;
 using GridShared.Utility;
 using Microsoft.Extensions.Primitives;
@@ -60,6 +57,8 @@ namespace GridCore
         TotalsDTO GetTotals();
 
         bool DefaultSortEnabled { get; set; }
+
+        GridSortMode GridSortMode { get; set; }
 
         bool DefaultFilteringEnabled { get; set; }
 

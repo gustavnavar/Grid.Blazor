@@ -1,4 +1,5 @@
-﻿using System;
+﻿using GridShared.Sorting;
+using System;
 using System.Collections.Generic;
 using System.Linq.Expressions;
 using System.Reflection;
@@ -12,6 +13,7 @@ namespace GridShared.Columns
     public interface IColumnBuilder<T>
     {
         bool DefaultSortEnabled { get; set; }
+        GridSortMode DefaultGridSortMode { get; set; }
         bool DefaultFilteringEnabled { get; set; }
 
         /// <summary>

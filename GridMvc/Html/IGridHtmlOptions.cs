@@ -1,6 +1,7 @@
 ﻿using GridCore;
 using GridCore.Pagination;
 using GridShared;
+using GridShared.Sorting;
 using Microsoft.AspNetCore.Html;
 using System;
 using System.Threading.Tasks;
@@ -49,7 +50,7 @@ namespace GridMvc.Html
         /// <summary>
         ///     Enable or disable sorting for all columns
         /// </summary>
-        IGridHtmlOptions<T> Sortable(bool enable);
+        IGridHtmlOptions<T> Sortable(bool enable, GridSortMode gridSortMode = GridSortMode.ThreeState);
 
         /// <summary>
         ///     Enable filtering for all columns

@@ -576,7 +576,7 @@ namespace GridShared.Columns
         ///     Enable sort of the gridColumn
         /// </summary>
         /// <param name="sort">Yes/No</param>
-        IGridColumn<T> Sortable(bool sort);
+        IGridColumn<T> Sortable(bool sort, GridSortMode gridSortMode = GridSortMode.ThreeState);
 
         /// <summary>
         ///     Setup the initial sorting direction of current column
@@ -607,10 +607,17 @@ namespace GridShared.Columns
 
     public interface ISortableColumn : IColumn
     {
+        bool ColumnSortDefined { get; }
+
         /// <summary>
         ///     Enable sort for this column
         /// </summary>
         bool SortEnabled { get; }
+
+        /// <summary>
+        ///     Define sort mode for this column
+        /// </summary>
+        GridSortMode SortMode { get; }
 
         /// <summary>
         ///     Is current column sorted

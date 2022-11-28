@@ -1,8 +1,10 @@
-﻿using GridBlazor.Pages;
+﻿using GridBlazor.Columns;
+using GridBlazor.Pages;
 using GridBlazor.Pagination;
 using GridBlazor.Resources;
 using GridShared;
 using GridShared.Columns;
+using GridShared.Sorting;
 using GridShared.Utility;
 using Microsoft.AspNetCore.Components;
 using Microsoft.Extensions.Primitives;
@@ -158,17 +160,18 @@ namespace GridBlazor
 
         public IGridClient<T> Sortable()
         {
-            return Sortable(true);
+            return Sortable(true, GridSortMode.ThreeState);
         }
 
-        public IGridClient<T> Sortable(bool enable)
+        public IGridClient<T> Sortable(bool enable, GridSortMode gridSortMode = GridSortMode.ThreeState)
         {
             _source.DefaultSortEnabled = enable;
+            _source.GridSortMode = gridSortMode;
             foreach (IGridColumn column in _source.Columns)
             {
                 var typedColumn = column as IGridColumn<T>;
                 if (typedColumn == null) continue;
-                typedColumn.Sortable(enable);
+                ((GridColumnBase<T>)typedColumn).InternalSortable(enable, gridSortMode);
             }
             return this;
         }

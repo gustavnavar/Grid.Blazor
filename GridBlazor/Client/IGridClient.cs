@@ -1,5 +1,6 @@
 ﻿using GridBlazor.Pages;
 using GridShared;
+using GridShared.Sorting;
 using Microsoft.AspNetCore.Components;
 using System;
 using System.Collections.Generic;
@@ -49,7 +50,7 @@ namespace GridBlazor
         /// <summary>
         ///     Enable or disable sorting for all columns
         /// </summary>
-        IGridClient<T> Sortable(bool enable);
+        IGridClient<T> Sortable(bool enable, GridSortMode gridSortMode = GridSortMode.ThreeState);
 
         /// <summary>
         ///     Enable filtering for all columns

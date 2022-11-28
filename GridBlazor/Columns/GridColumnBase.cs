@@ -50,7 +50,11 @@ namespace GridBlazor.Columns
 
         public int CrudLabelWidth { get; set; } = 2;
 
+        public bool ColumnSortDefined { get; protected set; } = false;
+
         public bool SortEnabled { get; protected set; }
+
+        public GridSortMode SortMode { get; protected set; } = GridSortMode.ThreeState;
 
         public string Title { get; set; }
 
@@ -725,7 +729,8 @@ namespace GridBlazor.Columns
         public abstract IGridColumn<T> ThenSortByDescending<TKey>(Expression<Func<T, TKey>> expression, IComparer<TKey> comparer);
 
         public abstract IEnumerable<IColumnOrderer<T>> Orderers { get; }
-        public abstract IGridColumn<T> Sortable(bool sort);
+        public abstract IGridColumn<T> Sortable(bool sort,GridSortMode gridSortMode = GridSortMode.ThreeState);
+        internal abstract IGridColumn<T> InternalSortable(bool sort, GridSortMode gridSortMode = GridSortMode.ThreeState);
 
         public abstract IGridCell GetCell(object instance);
 

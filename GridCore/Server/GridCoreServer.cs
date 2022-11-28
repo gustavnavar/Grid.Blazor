@@ -1,8 +1,10 @@
-﻿using GridCore.Pagination;
+﻿using GridCore.Columns;
+using GridCore.Pagination;
 using GridCore.Resources;
 using GridShared;
 using GridShared.Columns;
 using GridShared.Pagination;
+using GridShared.Sorting;
 using GridShared.Utility;
 using Microsoft.Extensions.Primitives;
 using System;
@@ -99,17 +101,18 @@ namespace GridCore.Server
 
         public IGridServer<T> Sortable()
         {
-            return Sortable(true);
+            return Sortable(true, GridSortMode.ThreeState);
         }
 
-        public IGridServer<T> Sortable(bool enable)
+        public IGridServer<T> Sortable(bool enable, GridSortMode gridSortMode = GridSortMode.ThreeState)
         {
             _source.DefaultSortEnabled = enable;
+            _source.GridSortMode = gridSortMode;
             foreach (IGridColumn column in _source.Columns)
             {
                 var typedColumn = column as IGridColumn<T>;
                 if (typedColumn == null) continue;
-                typedColumn.Sortable(enable);
+                ((GridCoreColumnBase<T>)typedColumn).InternalSortable(enable, gridSortMode);
             }
             return this;
         }

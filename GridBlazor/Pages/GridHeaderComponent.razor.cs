@@ -199,7 +199,7 @@ namespace GridBlazor.Pages
                 }
                 else
                 {
-                    if (Column.InitialDirection.HasValue)
+                    if (Column.InitialDirection.HasValue || Column.SortMode == GridSortMode.TwoState)
                     {
                         await GridComponent.GetSortUrl(SortingSettings.ColumnQueryParameterName, Column.Name, SortingSettings.DirectionQueryParameterName,
                         ((int)GridSortDirection.Ascending).ToString(CultureInfo.InvariantCulture));

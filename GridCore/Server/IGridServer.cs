@@ -1,4 +1,5 @@
 ﻿using GridShared;
+using GridShared.Sorting;
 using GridShared.Utility;
 using System;
 using System.Collections.Generic;
@@ -49,7 +50,7 @@ namespace GridCore.Server
         /// <summary>
         ///     Enable or disable sorting for all columns
         /// </summary>
-        IGridServer<T> Sortable(bool enable);
+        IGridServer<T> Sortable(bool enable, GridSortMode gridSortMode = GridSortMode.ThreeState);
 
         /// <summary>
         ///     Enable filtering for all columns

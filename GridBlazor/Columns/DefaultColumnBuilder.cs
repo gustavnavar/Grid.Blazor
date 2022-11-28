@@ -75,6 +75,7 @@ namespace GridBlazor.Columns
         }
 
         public bool DefaultSortEnabled { get; set; }
+        public GridSortMode DefaultGridSortMode { get; set; } = GridSortMode.ThreeState;
         public bool DefaultFilteringEnabled { get; set; }
 
         #endregion
@@ -96,7 +97,7 @@ namespace GridBlazor.Columns
             if (column != null)
             {
                 column.Hidden = hidden;
-                column.Sortable(DefaultSortEnabled);
+                ((GridColumnBase<T>)column).InternalSortable(DefaultSortEnabled, DefaultGridSortMode);
                 column.Filterable(DefaultFilteringEnabled);
             }
             return column;
@@ -104,10 +105,10 @@ namespace GridBlazor.Columns
 
         private void ApplyColumnAnnotationSettings(IGridColumn<T> column, GridColumnAttribute options)
         {
-            column.Encoded(options.EncodeEnabled)
+            ((GridColumnBase<T>)column.Encoded(options.EncodeEnabled)
                   .Sanitized(options.SanitizeEnabled)
-                  .Filterable(options.FilterEnabled)
-                  .Sortable(options.SortEnabled);
+                  .Filterable(options.FilterEnabled))
+                  .InternalSortable(options.SortEnabled);
             column.SetPrimaryKey(options.Key);
             GridSortDirection? initialDirection = options.GetInitialSortDirection();
             if (initialDirection.HasValue)

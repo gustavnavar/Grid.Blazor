@@ -144,7 +144,7 @@
             }
             else
             {
-                if (Model.InitialDirection.HasValue)
+                if (Model.InitialDirection.HasValue || Model.SortMode == GridSortMode.TwoState)
                 {
                     if (string.IsNullOrEmpty(url))
                     {

@@ -214,15 +214,32 @@ namespace GridCore.Columns
             return this;
         }
 
-        public override IGridColumn<T> Sortable(bool sort)
+        public override IGridColumn<T> Sortable(bool sort, GridSortMode gridSortMode = GridSortMode.ThreeState)
         {
             if (sort && _constraint == null)
             {
                 return this; //cannot enable sorting for column without expression
             }
+            ColumnSortDefined = true;
             SortEnabled = sort;
+            SortMode = gridSortMode;
             return this;
         }
+
+        internal override IGridColumn<T> InternalSortable(bool sort, GridSortMode gridSortMode = GridSortMode.ThreeState)
+        {
+            if (sort && _constraint == null)
+            {
+                return this; //cannot enable sorting for column without expression
+            }
+            if (!ColumnSortDefined)
+            {
+                SortEnabled = sort;
+                SortMode = gridSortMode;
+            }
+            return this;
+        }
+
 
         public override IGridCell GetCell(object instance)
         {

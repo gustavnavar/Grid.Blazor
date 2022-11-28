@@ -10,6 +10,7 @@ using GridShared;
 using GridShared.Columns;
 using GridShared.DataAnnotations;
 using GridShared.Grouping;
+using GridShared.Sorting;
 using GridShared.Totals;
 using GridShared.Utility;
 using Microsoft.Extensions.Primitives;
@@ -136,6 +137,12 @@ namespace GridCore
         {
             get { return _columnBuilder.DefaultSortEnabled; }
             set { _columnBuilder.DefaultSortEnabled = value; }
+        }
+
+        public GridSortMode GridSortMode
+        {
+            get { return _columnBuilder.DefaultGridSortMode; }
+            set { _columnBuilder.DefaultGridSortMode = value; }
         }
 
         /// <summary>

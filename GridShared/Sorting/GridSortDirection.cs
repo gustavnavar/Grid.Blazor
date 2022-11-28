@@ -5,4 +5,10 @@
         Ascending,
         Descending
     }
+
+    public enum GridSortMode
+    {
+        ThreeState,
+        TwoState
+    }
 }
