@@ -1,4 +1,4 @@
-## Blazor WASM with GridCore back-end (REST API)
+## Blazor WASM with GridMvcCore back-end (REST API)
 
 # Searching
 
@@ -8,7 +8,7 @@ You can enable the searching option for your grid. Searching allows to search fo
 
 ![](../images/Searching.png)
 
-You can enable searching for all columns of a grid using the **Searchable** method for both **GridClient** and **GridCoreServer** objects:
+You can enable searching for all columns of a grid using the **Searchable** method for both **GridClient** and **GridServer** objects:
 
 * Client project
     ```c#
@@ -18,7 +18,7 @@ You can enable searching for all columns of a grid using the **Searchable** meth
 
 * Server project
     ```c#
-        var server = new GridCoreServer<Order>(repository.GetAll(), Request.Query, true, "ordersGrid", columns, 10)
+        var server = new GridServer<Order>(repository.GetAll(), Request.Query, true, "ordersGrid", columns, 10)
             .Searchable(true, false, true);
     ```
 
@@ -55,7 +55,7 @@ Anyway, it is possible to override the default behavior, so GridBlazor will retu
 
 The solution to be implemented will depend on the back-end used to return the grid data. I will describe the following 2 cases:
 
-- for grids using Entity Framework Core it will be necessary to create a stored function on the database, a static method that will call it and configure the ```GridCoreServer``` object:
+- for grids using Entity Framework Core it will be necessary to create a stored function on the database, a static method that will call it and configure the ```GridServer``` object:
     1. For SQL Server you should open the ```SQL Server Studio Management``` tool and execute the following SQL query on your database to create the ```RemoveDiacritics``` function: 
         ```SQL
             CREATE FUNCTION [dbo].[RemoveDiacritics] (
@@ -84,14 +84,14 @@ The solution to be implemented will depend on the back-end used to return the gr
                 }
             }
         ```
-    3. and finally you must call the ```SetRemoveDiacritics``` method of the ```GridCoreServer``` class:
+    3. and finally you must call the ```SetRemoveDiacritics``` method of the ```GridServer``` class:
         ```c#
-            var server = new GridCoreServer<Order>(repository.GetAll(), Request.Query, true, "ordersGrid", ColumnCollections.OrderColumns)
+            var server = new GridServer<Order>(repository.GetAll(), Request.Query, true, "ordersGrid", ColumnCollections.OrderColumns)
                 .Searchable(true)
                 .SetRemoveDiacritics<NorthwindDbContext>("RemoveDiacritics");
         ```
 
-- for data stored in memory you must create the static function that will remove diacritics and configure the ```GridCoreServer``` object:
+- for data stored in memory you must create the static function that will remove diacritics and configure the ```GridServer``` object:
     1. you must create the following static function with an string parameter and returning an string (other functions removing diacritics are also supported):
         ```c#
             public class StringUtils
@@ -117,9 +117,9 @@ The solution to be implemented will depend on the back-end used to return the gr
                 }
             }
         ```
-    2. and finally you must call the ```SetRemoveDiacritics``` method of the ```GridCoreServer``` class:
+    2. and finally you must call the ```SetRemoveDiacritics``` method of the ```GridServer``` class:
         ```c#
-            var server = new GridCoreServer<Order>(repository.GetAll(), Request.Query, true, "ordersGrid", ColumnCollections.OrderColumns)
+            var server = new GridServer<Order>(repository.GetAll(), Request.Query, true, "ordersGrid", ColumnCollections.OrderColumns)
                 .Searchable(true)
                 .SetRemoveDiacritics<StringUtils>("RemoveDiacritics");
         ```

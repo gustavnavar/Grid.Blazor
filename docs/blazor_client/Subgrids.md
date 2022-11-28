@@ -1,4 +1,4 @@
-## Blazor WASM with GridCore back-end (REST API)
+## Blazor WASM with GridMvcCore back-end (REST API)
 
 # Subgrids
 
@@ -96,7 +96,7 @@ Finally we have to add an action to the back-end controller to get rows for subg
         {
             var orderDetails = (new OrderDetailsRepository(_context)).GetForOrder(OrderId);
 
-            var server = new GridCoreServer<OrderDetail>(orderDetails, Request.Query,
+            var server = new GridServer<OrderDetail>(orderDetails, Request.Query,
                     false, "orderDetailsGrid" + OrderId.ToString(), GridSample.OrderDetailColumns)
                         .WithPaging(10)
                         .Sortable()

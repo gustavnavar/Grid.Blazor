@@ -1,12 +1,12 @@
-## Blazor WASM with GridCore back-end (REST API)
+## Blazor WASM with GridMvcCore back-end (REST API)
 
 # Front-end back-end API
 
 [Index](Documentation.md)
 
-Normal usage of  **GridBlazor** and **GridCore** packages doesn't require any knowledge of this interface. This documentation is included only for those who want to implement their own back endpoint instead of using **GridCore**. 
+Normal usage of  **GridBlazor** and **GridMvcCore** packages doesn't require any knowledge of this interface. This documentation is included only for those who want to implement their own back endpoint instead of using **GridMvcCore**. 
 
-The interface between **GridBlazor** and **GridCore** packages on Blazor client-site solutions uses a query string for the request from the front-end and a json file for the response from the back-end.
+The interface between **GridBlazor** and **GridMvcCore** packages on Blazor client-site solutions uses a query string for the request from the front-end and a json file for the response from the back-end.
 
 ## Request
 
@@ -95,7 +95,7 @@ In this example the front-end is requesting:
 
 ## Response
 
-The **GridCore** package sends back a **json** reponse string with the following format:
+The **GridMvcCore** package sends back a **json** reponse string with the following format:
 
 ```json
     {

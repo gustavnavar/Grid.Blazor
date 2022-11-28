@@ -1,10 +1,10 @@
-## Blazor WASM with GridCore back-end (REST API)
+## Blazor WASM with GridMvcCore back-end (REST API)
 
 # Grouping
 
 [Index](Documentation.md)
 
-You can enable grouping for all columns of a grid using the **Groupable** method for both **GridClient** and **GridCoreServer** objects:
+You can enable grouping for all columns of a grid using the **Groupable** method for both **GridClient** and **GridServer** objects:
 * Client project
     ```c#
         var client = new GridClient<Order>(httpClient, url, query, false, "ordersGrid", Columns, locale)
@@ -13,7 +13,7 @@ You can enable grouping for all columns of a grid using the **Groupable** method
 
 * Server project
     ```c#
-        var server = new GridCoreServer<Order>(repository.GetAll(), Request.Query, true, "ordersGrid", columns, 10)
+        var server = new GridServer<Order>(repository.GetAll(), Request.Query, true, "ordersGrid", columns, 10)
             .Groupable();
     ```
 

@@ -3,14 +3,14 @@
 GridBlazor is a Blazor component that shows data in a grid. It requires a back-end component that performs paging, sorting, filtering and others. 
 
 This back-end component can be one of the following:
-- GridCore (v.5.0.0 or later), supporting ASP.Net Core 3.1 and ASP.Net 5.0 and ASP.Net 6.0. GridMvcCore, that it is a fork from https://gridmvc.codeplex.com/, was working for earlier versions. But GridMvcCore is only required for ASP.NET MVC projects now.
+- GridCore (v.5.0.0 or later), supporting ASP.Net Core 3.1, ASP.Net 5.0, ASP.Net 6.0 and ASP.Net 7.0. GridMvcCore, that it is a fork from https://gridmvc.codeplex.com/, was working for earlier versions. But GridMvcCore is only required for Blazor WASM (REST) and ASP.NET MVC projects now.
 - an OData back-end. All samples are based on Microsoft.AspNetCore.OData library, but it can be any other OData provider.
 
-It supports .NET Core 3.1 and 5.0 and 6.0, and Blazor WebAssembly 3.2.0 and 5.0 and 6.0
+It supports .NET Core 3.1 and 5.0, 6.0 and 7.0, and Blazor WebAssembly 3.2.0, 5.0, 6.0 and 7.0
 
 ## Demo 
 - Blazor server-side: http://gridblazor.azurewebsites.net
-- Blazor WASM with GridCore back-end (REST API): http://gridblazorwasm.azurewebsites.net
+- Blazor WASM with GridMvcCore back-end (REST API): http://gridblazorwasm.azurewebsites.net
 - Blazor WASM with GridCore back-end (gRPC): http://gridblazorgrpc.azurewebsites.net
 - Blazor WASM with OData back-end: http://gridblazorodata.azurewebsites.net
 - Blazor WASM with data local in the client: http://gridblazorlocal.azurewebsites.net
@@ -19,7 +19,7 @@ It supports .NET Core 3.1 and 5.0 and 6.0, and Blazor WebAssembly 3.2.0 and 5.0 
 There are native C# Grid components for Blazor client-side and server-side, and for ASP.NET Core MVC.
 
 You can find the specific documentation for each environment clicking the following links:
-* [Documentation for Blazor WASM with GridCore back-end (REST API)](./docs/blazor_client/Documentation.md)
+* [Documentation for Blazor WASM with GridMvcCore back-end (REST API)](./docs/blazor_client/Documentation.md)
 * [Documentation for Blazor WASM with GridCore back-end (gRPC)](./docs/blazor_grpc/Documentation.md)
 * [Documentation for Blazor WASM with OData back-end](./docs/blazor_odata/Documentation.md)
 * [Documentation for Blazor WASM with local data](./docs/blazor_local/Documentation.md)
@@ -32,7 +32,18 @@ This is an example of a table of items using this component:
 ![Image of GridBlazor](./docs/images/GridBlazor.png)
 
 
-## Migration to GridBlazor 3.0.0 and GridCore 5.0.0
+## Migration to GridBlazor 3.5.0 and GridCore 5.5.0 from GridBlazor 3.0.0 and GridCore 5.0.0 for Blazor WASM projects with REST back-end
+
+1. You have to remove the package ```GridCore``` and install the package ```GridMvcCore```, and upgrade the ```GridBlazor``` package
+
+2. You must replace all ```GridCore``` instances by ```GridServer``` ones
+
+3. The ```Grid``` property of the ```GridServer``` object has an ```SGrid<T>``` type, instead of ```ISGrid<T>``` it was before. You should change any reference to this property to reflect this change.
+
+4. Some classes have been moved from the ```GridCore``` package to the ```GridMvc``` one. Change all required ```using ...``` as needed.
+
+
+## Migration to GridBlazor 3.0.0 and GridCore 5.0.0 for all Blazor projects except Blazor WASM (REST) ones
 
 1. You have to remove the package ```GridMvcCore``` and install the package ```GridCore```, and upgrade the ```GridBlazor``` package
 
@@ -43,7 +54,7 @@ This is an example of a table of items using this component:
 4. Some classes have been moved from the ```GridMvc``` package to the ```GridCore``` one. Change all required ```using ...``` as needed.
 
 
-## Migration to GridBlazor 3.0.0 and GridMvc 5.0.0
+## Migration to GridBlazor 3.0.0 and GridMvc 5.0.0 for Blazor WASM (REST) projects
 
 1. You have to upgrade the ```GridMvcCore``` and ```GridBlazor``` packages
 

@@ -23,6 +23,22 @@ In this case you can select sorting pressing the column name on just one column 
 Sorting at grid level has precendence over sorting defined at column level.
 
 
+## Sorting header behavior
+
+The default behavior when a header label is clicked is to switch between sorting startes as follows: Ascending -> Descending -> No Sorting -> Acending
+
+This behavior can be changed to  Ascending -> Descending -> Acending, using an optional parameter of the ```Sortable``` method:
+    ```c#
+        var client = new GridClient<Order>(q => orderService.GetOrdersGridRows(columns, q), query, false, "ordersGrid", Columns, locale)
+            .Sortable(true, GridSortMode.TwoState);
+    ```
+
+It can also be configured at column level:
+    ```c#
+        c.Add(o => o.OrderDate).Sortable(true, GridSortMode.TwoState);
+    ```
+
+
 ## Extended Sorting
 You can also configure extended sorting using the **ExtSortable** method for both **GridClient** and **GridServer** objects:
 * razor page

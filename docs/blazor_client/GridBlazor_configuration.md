@@ -1,10 +1,10 @@
-## Blazor WASM with GridCore back-end (REST API)
+## Blazor WASM with GridMvcCore back-end (REST API)
 
 # GridBlazor configuration
 
 [Index](Documentation.md) 
 
-You can configure the settings of the grid with the parameters and methods of the **GridComponent**, **GridClient** and **GridCoreServer** objects. Remember that the **GridClient** object on the client project and the **GridCoreServer** object on the server project must have compatible settings.
+You can configure the settings of the grid with the parameters and methods of the **GridComponent**, **GridClient** and **GridServer** objects. Remember that the **GridClient** object on the client project and the **GridServer** object on the server project must have compatible settings.
  
 ## GridComponent parameters
 
@@ -61,7 +61,7 @@ SetDirection | Allows the grid to be show in right to left direction | GridClien
 HandleServerErrors | Allows errors from the server to be handled by grid client | GridClient<Order>(...).HandleServerErrors(true, false);
 SetTableLayout | Configure fixed dimensions for the grid | GridClient<Order>(...).SetTableLayout(TableLayout.Fixed, "1200px", "400px");
 
-## GridCoreServer parameters
+## GridServer parameters
 
 Parameter | Description | Example
 --------- | ----------- | -------
@@ -72,16 +72,16 @@ gridName | string containing the grid client name  | ordersGrid
 columns | lambda expression to define the columns included in the grid (**Optional**) | **Columns** lamba expression defined in the razor page of the example
 pageSize | integer to define the number of rows returned by the web service (**Optional**) | 10
 
-## GridCoreServer methods
+## GridServer methods
 
 Method name | Description | Example
 ----------- | ----------- | -------
-AutoGenerateColumns | Generates columns for all properties of the model using data annotations | GridCoreServer<Order>(...).AutoGenerateColumns();
-Sortable | Enable or disable sorting for all columns of the grid | GridCoreServer<Order>(...).Sortable(true);
-Searchable | Enable or disable searching on the grid | GridCoreServer<Order>(...).Searchable(true, true);
-Filterable | Enable or disable filtering for all columns of the grid | GridCoreServer<Order>(...).Filterable(true);
-WithMultipleFilters | Allow grid to use multiple filters | GridCoreServer<Order>(...).WithMultipleFilters();
-WithGridItemsCount | Allows the grid to show items count | GridCoreServer<Order>(...).WithGridItemsCount();
+AutoGenerateColumns | Generates columns for all properties of the model using data annotations | GridServer<Order>(...).AutoGenerateColumns();
+Sortable | Enable or disable sorting for all columns of the grid | GridServer<Order>(...).Sortable(true);
+Searchable | Enable or disable searching on the grid | GridServer<Order>(...).Searchable(true, true);
+Filterable | Enable or disable filtering for all columns of the grid | GridServer<Order>(...).Filterable(true);
+WithMultipleFilters | Allow grid to use multiple filters | GridServer<Order>(...).WithMultipleFilters();
+WithGridItemsCount | Allows the grid to show items count | GridServer<Order>(...).WithGridItemsCount();
 
 
 [<- Quick start](Quick_start.md) | [Keyboard navigation ->](Keyboard_navigation.md)

@@ -1,20 +1,20 @@
-## Blazor WASM with GridCore back-end (REST API)
+## Blazor WASM with GridMvcCore back-end (REST API)
 
 # Paging
 
 [Index](Documentation.md)
 
-You must configure the page size in the contructor of the **GridCoreServer** object in the server project to enable paging:
+You must configure the page size in the contructor of the **GridServer** object in the server project to enable paging:
 
 ```c#
-    var server = new GridCoreServer<Order>(repository.GetAll(), Request.Query,
+    var server = new GridServer<Order>(repository.GetAll(), Request.Query,
                 true, "ordersGrid", columns, 10);
 ```
 
-**PageSize** is an optional parameter of the **GridCoreServer** constructor. If you don't want to enable paging you must call the contructor with no parameter:
+**PageSize** is an optional parameter of the **GridServer** constructor. If you don't want to enable paging you must call the contructor with no parameter:
 
 ```c#
-    var server = new GridCoreServer<Order>(repository.GetAll(), Request.Query,
+    var server = new GridServer<Order>(repository.GetAll(), Request.Query,
                 true, "ordersGrid", columns);
 ```
 

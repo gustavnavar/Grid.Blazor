@@ -1,4 +1,4 @@
-## Blazor WASM with GridCore back-end (REST API)
+## Blazor WASM with GridMvcCore back-end (REST API)
 
 # Installation
 
@@ -10,7 +10,7 @@ The **GridBlazor** component installation is straightforward. Just follow these 
 
 2. Install the [**GridBlazor**](http://nuget.org/packages/GridBlazor/) nuget package on the client project.
 
-3. Install the [**GridCore**](http://nuget.org/packages/GridCore/) nuget package on the server project.
+3. Install the [**GridMvcCore**](http://nuget.org/packages/GridMvcCore/) nuget package on the server project.
 
 4. Add the following lines to the **wwwroot/index.html** file:
     ```html

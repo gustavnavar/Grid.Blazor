@@ -1,4 +1,4 @@
-## Blazor WASM with GridCore back-end (REST API)
+## Blazor WASM with GridMvcCore back-end (REST API)
 
 # Nested CRUD
 
@@ -166,7 +166,7 @@ First you must create a service for memory persistance of nested entities until 
 
         public ItemsDTO<OrderDetail> GetGridRows(QueryDictionary<StringValues> query)
         {
-            var server = new GridCoreServer<OrderDetail>(Items, query, true, "Grid", _columns)
+            var server = new GridServer<OrderDetail>(Items, query, true, "Grid", _columns)
                     .Sortable()
                     .WithPaging(10)
                     .Filterable()
