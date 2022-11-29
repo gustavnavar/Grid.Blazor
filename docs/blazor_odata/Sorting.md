@@ -22,15 +22,15 @@ Sorting at grid level has precendence over sorting defined at column level.
 The default behavior when a header label is clicked is to switch between sorting startes as follows: Ascending -> Descending -> No Sorting -> Acending
 
 This behavior can be changed to  Ascending -> Descending -> Acending, using an optional parameter of the ```Sortable``` method:
-    ```c#
-        var client = new GridODataClient<Order>(httpClient, url, query, false, "ordersGrid", Columns, 10, locale)
-            .Sortable(true, GridSortMode.TwoState);
-    ```
+```c#
+    var client = new GridODataClient<Order>(httpClient, url, query, false, "ordersGrid", Columns, 10, locale)
+        .Sortable(true, GridSortMode.TwoState);
+```
 
 It can also be configured at column level:
-    ```c#
-        c.Add(o => o.OrderDate).Sortable(true, GridSortMode.TwoState);
-    ```
+```c#
+    c.Add(o => o.OrderDate).Sortable(true, GridSortMode.TwoState);
+```
 
 ## Extended Sorting
 You can also configure extended sorting using the **ExtSortable** method for the **GridODataClient**  object:

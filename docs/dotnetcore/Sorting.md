@@ -24,19 +24,19 @@ Sorting at grid level has precendence over sorting defined at column level.
 The default behavior when a header label is clicked is to switch between sorting startes as follows: Ascending -> Descending -> No Sorting -> Acending
 
 This behavior can be changed to  Ascending -> Descending -> Acending, using an optional parameter of the ```Sortable``` method:
-    ```razor
-        @await Html.Grid(Model).Columns(columns =>
-        {
-            columns.Add(foo => foo.Title);
-            columns.Add(foo => foo.Description);
-        }).Sortable(true, GridSortMode.TwoState).RenderAsync()
-    ```
+```razor
+    @await Html.Grid(Model).Columns(columns =>
+    {
+        columns.Add(foo => foo.Title);
+        columns.Add(foo => foo.Description);
+    }).Sortable(true, GridSortMode.TwoState).RenderAsync()
+```
 
 
 It can also be configured at column level:
-    ```c#
-        c.Add(o => o.OrderDate).Sortable(true, GridSortMode.TwoState);
-    ```
+```c#
+    c.Add(o => o.OrderDate).Sortable(true, GridSortMode.TwoState);
+```
 
 
 ## Extended Sorting
