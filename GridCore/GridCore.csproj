@@ -16,6 +16,7 @@
     <PackageProjectUrl>https://github.com/gustavnavar/Grid.Blazor</PackageProjectUrl>
     <PackageLicenseExpression>LGPL-2.1-only</PackageLicenseExpression>
 	<PackageReleaseNotes>Supports .NET Standard 2.1, .NET 5.0, .NET 6.0, .NET 7.0</PackageReleaseNotes>
+	<GeneratePackageOnBuild>True</GeneratePackageOnBuild>
   </PropertyGroup>
 
   <ItemGroup Condition="'$(TargetFramework)' == 'net7.0'">
