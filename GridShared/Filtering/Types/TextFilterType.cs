@@ -52,7 +52,8 @@ namespace GridShared.Filtering.Types
             {
                 case GridFilterType.Equals:
                 case GridFilterType.IsNull:
-                    binaryExpression = GetCaseInsensitiveСomparation(string.Empty, leftExpr, valueExpr, removeDiacritics);
+                    binaryExpression = GetNullOrEmptyComparation(leftExpr);
+                    //binaryExpression = GetCaseInsensitiveСomparation(string.Empty, leftExpr, valueExpr, removeDiacritics);
                     break;
                 case GridFilterType.NotEquals:
                 case GridFilterType.IsNotNull:
@@ -71,6 +72,13 @@ namespace GridShared.Filtering.Types
                     throw new ArgumentOutOfRangeException();
             }
             return binaryExpression;
+        }
+
+        private Expression GetNullOrEmptyComparation(Expression leftExpr)
+        {
+            Type targetType = TargetType;
+            MethodCallExpression upperValueExpr = Expression.Call(typeof(string), "IsNullOrEmpty", null, leftExpr);
+            return upperValueExpr;
         }
 
         private Expression GetCaseInsensitiveСomparation(string methodName, Expression leftExpr, Expression rightExpr,
@@ -102,6 +110,7 @@ namespace GridShared.Filtering.Types
                     return Expression.Call(upperFirstExpr, mi, upperValueExpr);
                 }
             }
+            var exp = Expression.Equal(upperFirstExpr, upperValueExpr);
             return Expression.Equal(upperFirstExpr, upperValueExpr);
         }
 
