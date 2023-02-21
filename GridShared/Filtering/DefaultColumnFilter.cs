@@ -53,6 +53,7 @@ namespace GridShared.Filtering
         private Expression<Func<T, bool>> GetFilterExpression(IEnumerable<ColumnFilterValue> values,
             GridFilterCondition condition, MethodInfo removeDiacritics)
         {
+            var count = values.Count();
             Expression binaryExpression = null;
             foreach (var value in values)
             {
@@ -106,9 +107,16 @@ namespace GridShared.Filtering
                 //get target type:
                 Type nestedTargetType = nestedIsNullable ? Nullable.GetUnderlyingType(nestedPi.PropertyType) : nestedPi.PropertyType;
 
-                // Check for null on nested properties and not value type (string and objects are reference type)
-                // It's ok for ORM, but throw exception in linq to objects
-                if (nestedIsNullable || !nestedTargetType.IsValueType)
+                // detects if an "is null" filter is applied on a string
+                if (value.FilterType == GridFilterType.IsNull && targetType == typeof(string))
+                {
+                    /* 
+                     * creates a "columname == null" expression 
+                     * to also return data with a null value for the filtered column
+                     */
+                    binaryExpression = Expression.Equal(expression, Expression.Constant(null));
+                }
+                else if (nestedIsNullable || !nestedTargetType.IsValueType)
                 {
                     binaryExpression = binaryExpression == null ?
                         Expression.NotEqual(expression, Expression.Constant(null)) :
@@ -121,7 +129,13 @@ namespace GridShared.Filtering
             {
                 value.FilterValue = "";
                 if (targetType == typeof(string))
-                    return GetExpression(binaryExpression, value, targetType, removeDiacritics);
+                    /*
+                     * In case of a "is null" filter on a text column : 
+                     * Returns a filter that looks for items whose filtered column value is an empty string OR a null string
+                     * GetExpression(null, value, targetType, removeDiacritics) : returns a "<filteredcolumnname> == N''" expression
+                     * binaryExpression : already generated "<filteredcolumnname> == Null" expression
+                     */
+                    return Expression.OrElse(GetExpression(null, value, targetType, removeDiacritics), binaryExpression);
                 else if (IsNullable)
                     return binaryExpression == null ?
                         Expression.Equal(_expression.Body, Expression.Constant(null)) :
@@ -170,9 +184,8 @@ namespace GridShared.Filtering
                 filterExpression = Expression.AndAlso(hasValueExpr, filterExpression);
             }
 
-
             binaryExpression = binaryExpression == null ? filterExpression :
-                Expression.AndAlso(binaryExpression, filterExpression);
+            Expression.AndAlso(binaryExpression, filterExpression);
 
             //return filter expression
             return binaryExpression;
