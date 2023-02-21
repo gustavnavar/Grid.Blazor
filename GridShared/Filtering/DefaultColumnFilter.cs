@@ -108,15 +108,15 @@ namespace GridShared.Filtering
                 Type nestedTargetType = nestedIsNullable ? Nullable.GetUnderlyingType(nestedPi.PropertyType) : nestedPi.PropertyType;
 
                 // detects if an "is null" filter is applied on a string
-                if (value.FilterType == GridFilterType.IsNull && targetType == typeof(string))
-                {
-                    /* 
-                     * creates a "columname == null" expression 
-                     * to also return data with a null value for the filtered column
-                     */
-                    binaryExpression = Expression.Equal(expression, Expression.Constant(null));
-                }
-                else if (nestedIsNullable || !nestedTargetType.IsValueType)
+                //if (value.FilterType == GridFilterType.IsNull && targetType == typeof(string))
+                //{
+                //    /* 
+                //     * creates a "columname == null" expression 
+                //     * to also return data with a null value for the filtered column
+                //     */
+                //    binaryExpression = Expression.Equal(expression, Expression.Constant(null));
+                //}
+                 if (nestedIsNullable || !nestedTargetType.IsValueType)
                 {
                     binaryExpression = binaryExpression == null ?
                         Expression.NotEqual(expression, Expression.Constant(null)) :
@@ -135,7 +135,8 @@ namespace GridShared.Filtering
                      * GetExpression(null, value, targetType, removeDiacritics) : returns a "<filteredcolumnname> == N''" expression
                      * binaryExpression : already generated "<filteredcolumnname> == Null" expression
                      */
-                    return Expression.OrElse(GetExpression(null, value, targetType, removeDiacritics), binaryExpression);
+                    //return Expression.OrElse(GetExpression(null, value, targetType, removeDiacritics), binaryExpression);
+                    return GetExpression(null, value, targetType, removeDiacritics);
                 else if (IsNullable)
                     return binaryExpression == null ?
                         Expression.Equal(_expression.Body, Expression.Constant(null)) :
