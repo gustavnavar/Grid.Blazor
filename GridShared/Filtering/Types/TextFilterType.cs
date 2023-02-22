@@ -51,9 +51,10 @@ namespace GridShared.Filtering.Types
             switch (filterType)
             {
                 case GridFilterType.Equals:
+                    binaryExpression = GetCaseInsensitiveСomparation(string.Empty, leftExpr, valueExpr, removeDiacritics);
+                    break;
                 case GridFilterType.IsNull:
                     binaryExpression = GetNullOrEmptyComparation(leftExpr);
-                    //binaryExpression = GetCaseInsensitiveСomparation(string.Empty, leftExpr, valueExpr, removeDiacritics);
                     break;
                 case GridFilterType.NotEquals:
                 case GridFilterType.IsNotNull:
@@ -76,9 +77,8 @@ namespace GridShared.Filtering.Types
 
         private Expression GetNullOrEmptyComparation(Expression leftExpr)
         {
-            Type targetType = TargetType;
-            MethodCallExpression upperValueExpr = Expression.Call(typeof(string), "IsNullOrEmpty", null, leftExpr);
-            return upperValueExpr;
+            MethodCallExpression isNullOrEmptyStringExpr = Expression.Call(typeof(string), "IsNullOrEmpty", null, leftExpr);
+            return isNullOrEmptyStringExpr;
         }
 
         private Expression GetCaseInsensitiveСomparation(string methodName, Expression leftExpr, Expression rightExpr,
