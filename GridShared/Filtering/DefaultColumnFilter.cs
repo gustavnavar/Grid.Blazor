@@ -53,7 +53,6 @@ namespace GridShared.Filtering
         private Expression<Func<T, bool>> GetFilterExpression(IEnumerable<ColumnFilterValue> values,
             GridFilterCondition condition, MethodInfo removeDiacritics)
         {
-            var count = values.Count();
             Expression binaryExpression = null;
             foreach (var value in values)
             {
