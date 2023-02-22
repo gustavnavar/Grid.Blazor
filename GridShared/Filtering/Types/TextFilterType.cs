@@ -115,7 +115,6 @@ namespace GridShared.Filtering.Types
                     return Expression.Call(upperFirstExpr, mi, upperValueExpr);
                 }
             }
-            var exp = Expression.Equal(upperFirstExpr, upperValueExpr);
             return Expression.Equal(upperFirstExpr, upperValueExpr);
         }
 

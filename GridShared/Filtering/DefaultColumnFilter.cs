@@ -107,7 +107,7 @@ namespace GridShared.Filtering
                 //get target type:
                 Type nestedTargetType = nestedIsNullable ? Nullable.GetUnderlyingType(nestedPi.PropertyType) : nestedPi.PropertyType;
 
-                 if (nestedIsNullable || !nestedTargetType.IsValueType)
+                if (nestedIsNullable || !nestedTargetType.IsValueType)
                 {
                     binaryExpression = binaryExpression == null ?
                         Expression.NotEqual(expression, Expression.Constant(null)) :
@@ -172,7 +172,7 @@ namespace GridShared.Filtering
             }
 
             binaryExpression = binaryExpression == null ? filterExpression :
-            Expression.AndAlso(binaryExpression, filterExpression);
+                Expression.AndAlso(binaryExpression, filterExpression);
 
             //return filter expression
             return binaryExpression;
