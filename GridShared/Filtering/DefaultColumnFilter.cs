@@ -107,15 +107,6 @@ namespace GridShared.Filtering
                 //get target type:
                 Type nestedTargetType = nestedIsNullable ? Nullable.GetUnderlyingType(nestedPi.PropertyType) : nestedPi.PropertyType;
 
-                // detects if an "is null" filter is applied on a string
-                //if (value.FilterType == GridFilterType.IsNull && targetType == typeof(string))
-                //{
-                //    /* 
-                //     * creates a "columname == null" expression 
-                //     * to also return data with a null value for the filtered column
-                //     */
-                //    binaryExpression = Expression.Equal(expression, Expression.Constant(null));
-                //}
                  if (nestedIsNullable || !nestedTargetType.IsValueType)
                 {
                     binaryExpression = binaryExpression == null ?
@@ -129,13 +120,8 @@ namespace GridShared.Filtering
             {
                 value.FilterValue = "";
                 if (targetType == typeof(string))
-                    /*
-                     * In case of a "is null" filter on a text column : 
-                     * Returns a filter that looks for items whose filtered column value is an empty string OR a null string
-                     * GetExpression(null, value, targetType, removeDiacritics) : returns a "<filteredcolumnname> == N''" expression
-                     * binaryExpression : already generated "<filteredcolumnname> == Null" expression
-                     */
-                    //return Expression.OrElse(GetExpression(null, value, targetType, removeDiacritics), binaryExpression);
+                    /* returns expression for IsNull, checking if the strings of a column
+                     * are null or empty */
                     return GetExpression(null, value, targetType, removeDiacritics);
                 else if (IsNullable)
                     return binaryExpression == null ?
