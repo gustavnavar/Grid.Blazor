@@ -271,6 +271,32 @@ namespace GridBlazor.Tests
                             new TestModelChild { ChildTitle = "B19 - 3", ChildCreated = new DateTime(2002, 4, 10) }
                         }
                 };
+            yield return
+                new TestModel
+                {
+                    Id = 1,
+                    Title = "",
+                    Created = new DateTime(2002, 3, 2),
+                    Child = new TestModelChild { ChildTitle = "empty-title", ChildCreated = new DateTime(2002, 3, 5) },
+                    List = new TestModelChild[] {
+                            new TestModelChild { ChildTitle = "empty-title - 1", ChildCreated = new DateTime(2002, 2, 10) },
+                            new TestModelChild { ChildTitle = "empty-title - 2", ChildCreated = new DateTime(2002, 3, 10) },
+                            new TestModelChild { ChildTitle = "empty-title - 3", ChildCreated = new DateTime(2002, 4, 10) }
+                        }
+                };
+            yield return
+                new TestModel
+                {
+                    Id = 1,
+                    Title = null,
+                    Created = new DateTime(2002, 3, 2),
+                    Child = new TestModelChild { ChildTitle = "null-title", ChildCreated = new DateTime(2002, 3, 5) },
+                    List = new TestModelChild[] {
+                            new TestModelChild { ChildTitle = "null-title - 1", ChildCreated = new DateTime(2002, 2, 10) },
+                            new TestModelChild { ChildTitle = "null-title - 2", ChildCreated = new DateTime(2002, 3, 10) },
+                            new TestModelChild { ChildTitle = "null-title - 3", ChildCreated = new DateTime(2002, 4, 10) }
+                        }
+                };
         }
     }
 }
