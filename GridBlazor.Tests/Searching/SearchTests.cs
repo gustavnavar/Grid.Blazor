@@ -69,7 +69,7 @@ namespace GridBlazor.Tests.Searching
             var searched = _gridClient.Grid.Items;
 
             var original = _repo.GetAll().AsQueryable().Where(t => t.Id.ToString().ToUpper().Contains("3")
-                || t.Title.ToUpper().Contains("3")
+                || (!string.IsNullOrEmpty(t.Title) && t.Title.ToUpper().Contains("3"))
                 || t.Created.ToString().ToUpper().Contains("3")
                 || t.Int16Field.ToString().ToUpper().Contains("3")
                 || t.UInt16Field.ToString().ToUpper().Contains("3")
@@ -81,7 +81,7 @@ namespace GridBlazor.Tests.Searching
                 if (searched.ElementAt(i).Id != original.ElementAt(i).Id)
                     Assert.Fail("Searching not works");
             }
-            Assert.AreEqual(_gridClient.Grid.ItemsCount, 8);
+            Assert.AreEqual(_gridClient.Grid.ItemsCount, 10);
         }
     }
 }

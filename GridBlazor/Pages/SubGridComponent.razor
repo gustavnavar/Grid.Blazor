@@ -1,7 +1,16 @@
-﻿@typeparam  T
+﻿@using Resources
+@typeparam  T
 
 @if (_visible)
 {
-    <td></td>
-    <td colspan="@Cols">@_subGridRender</td>
+    @if (_grid.ItemsCount > 0)
+    {
+        <td></td>
+        <td colspan="@Cols">@_subGridRender</td>
+    }
+    else
+    {
+        <td></td>
+        <td colspan="@Cols">@Strings.DefaultGridEmptyText</td>
+    }
 }
