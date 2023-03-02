@@ -51,8 +51,10 @@ namespace GridShared.Filtering.Types
             switch (filterType)
             {
                 case GridFilterType.Equals:
-                case GridFilterType.IsNull:
                     binaryExpression = GetCaseInsensitiveСomparation(string.Empty, leftExpr, valueExpr, removeDiacritics);
+                    break;
+                case GridFilterType.IsNull:
+                    binaryExpression = GetNullOrEmptyCheck(leftExpr);
                     break;
                 case GridFilterType.NotEquals:
                 case GridFilterType.IsNotNull:
@@ -71,6 +73,17 @@ namespace GridShared.Filtering.Types
                     throw new ArgumentOutOfRangeException();
             }
             return binaryExpression;
+        }
+
+        private Expression GetNullOrEmptyCheck(Expression paramExpr)
+        {
+            /* 
+            * Returns an expression calling string.IsNullOrEmpty on the column we want to filter
+            * EF will automatically generate sql from this expression to check 
+            * if the value for the filtered column is null or empty
+            */
+            MethodCallExpression isNullOrEmptyStringExpr = Expression.Call(typeof(string), "IsNullOrEmpty", null, paramExpr);
+            return isNullOrEmptyStringExpr;
         }
 
         private Expression GetCaseInsensitiveСomparation(string methodName, Expression leftExpr, Expression rightExpr,

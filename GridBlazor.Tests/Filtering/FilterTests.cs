@@ -362,6 +362,22 @@ namespace GridBlazor.Tests.Filtering
         }
 
         [TestMethod]
+        public void TestFilteringStringIsNotNull()
+        {
+            var firstItem = _repo.GetAll().First();
+            var settings = MockFilterSetting("Title", firstItem.Title, GridFilterType.IsNotNull);
+            TestFiltering(settings, x => x.Title, x => !string.IsNullOrEmpty(x.Title));
+        }
+
+        [TestMethod]
+        public void TestFilteringStringIsNull()
+        {
+            var firstItem = _repo.GetAll().First();
+            var settings = MockFilterSetting("Title", firstItem.Title, GridFilterType.IsNull);
+            TestFiltering(settings, x => x.Title, x => string.IsNullOrEmpty(x.Title));
+        }
+
+        [TestMethod]
         public void TestFilteringIntEquals()
         {
             var firstItem = _repo.GetAll().First();

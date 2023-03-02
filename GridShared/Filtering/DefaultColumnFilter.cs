@@ -121,7 +121,9 @@ namespace GridShared.Filtering
             {
                 value.FilterValue = "";
                 if (targetType == typeof(string))
-                    return GetExpression(binaryExpression, value, targetType, removeDiacritics);
+                    /* returns expression for IsNull, checking if the strings of a column
+                     * are null or empty */
+                    return GetExpression(null, value, targetType, removeDiacritics);
                 else if (IsNullable)
                     return binaryExpression == null ?
                         Expression.Equal(_expression.Body, Expression.Constant(null)) :
@@ -169,7 +171,6 @@ namespace GridShared.Filtering
                                                                     _pi.PropertyType.GetProperty("HasValue"));
                 filterExpression = Expression.AndAlso(hasValueExpr, filterExpression);
             }
-
 
             binaryExpression = binaryExpression == null ? filterExpression :
                 Expression.AndAlso(binaryExpression, filterExpression);
