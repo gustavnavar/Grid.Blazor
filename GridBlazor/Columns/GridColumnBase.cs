@@ -37,6 +37,7 @@ namespace GridBlazor.Columns
         public bool EnableCard { get; private set; } = true;
 
         public Func<T, string> ValueConstraint { get; private set; }
+        public Func<T, string> ExcelConstraint { get; private set; }
         public string ValuePattern { get; private set; }
 
         #region IGridColumn<T> Members
@@ -221,6 +222,12 @@ namespace GridBlazor.Columns
         public IGridColumn<T> RenderValueAs(Func<T, string> constraint)
         {
             ValueConstraint = constraint;
+            return this;
+        }
+
+        public IGridColumn<T> RenderExcelAs(Func<T, string> constraint)
+        {
+            ExcelConstraint = constraint;
             return this;
         }
 
@@ -732,6 +739,7 @@ namespace GridBlazor.Columns
         public abstract IGridColumn<T> Sortable(bool sort,GridSortMode gridSortMode = GridSortMode.ThreeState);
         internal abstract IGridColumn<T> InternalSortable(bool sort, GridSortMode gridSortMode = GridSortMode.ThreeState);
 
+        public abstract IGridCell GetExcelCell(object instance);
         public abstract IGridCell GetCell(object instance);
 
         public string GetFormatedValue(object value)

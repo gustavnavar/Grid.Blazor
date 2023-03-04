@@ -246,6 +246,11 @@ namespace GridCore.Columns
             return GetValue((T)instance);
         }
 
+        public override IGridCell GetExcelCell(object instance)
+        {
+            return GetValue((T)instance);
+        }
+
         public override IGridCell GetValue(T instance)
         {
             string textValue;

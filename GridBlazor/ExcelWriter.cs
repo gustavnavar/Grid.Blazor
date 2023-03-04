@@ -157,7 +157,7 @@ namespace GridBlazor
                 {
                     if (!(column.ExcelHidden ?? column.Hidden))
                     {
-                        var cell = column.GetCell(item) as GridCell;
+                        var cell = column.GetExcelCell(item) as GridCell;
                         cell.Encode = false;
                         var type = ((IGridColumn<T>)column).GetTypeAndValue(item).Type;
                         row.Add(new ExcelCell(cell.ToString(), type));

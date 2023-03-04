@@ -219,6 +219,11 @@ namespace GridCore.Columns
             return this;
         }
 
+        public IGridColumn<T> RenderExcelAs(Func<T, string> constraint)
+        {
+            return this;
+        }
+
         public IGridColumn<T> RenderComponentAs(Type componentType)
         {
             return RenderComponentAs(componentType, null, null);
@@ -729,6 +734,7 @@ namespace GridCore.Columns
 
 
         public abstract IGridCell GetCell(object instance);
+        public abstract IGridCell GetExcelCell(object instance);
 
         public string GetFormatedValue(object value)
         {

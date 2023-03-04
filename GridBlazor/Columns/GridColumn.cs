@@ -264,6 +264,17 @@ namespace GridBlazor.Columns
             return this;
         }
 
+        public override IGridCell GetExcelCell(object instance)
+        {
+            if (ExcelConstraint != null)
+            {
+                var textValue = ExcelConstraint((T)instance);
+                return new GridCell(textValue) { Encode = EncodeEnabled };
+            }
+            else
+                return GetValue((T)instance);
+        }
+
         public override IGridCell GetCell(object instance)
         {
             return GetValue((T)instance);

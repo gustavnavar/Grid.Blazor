@@ -144,6 +144,11 @@ namespace GridShared.Columns
         IGridColumn<T> RenderValueAs(Func<T, string> constraint);
 
         /// <summary>
+        ///     Setup the custom rendere for property
+        /// </summary>
+        IGridColumn<T> RenderExcelAs(Func<T, string> constraint);
+
+        /// <summary>
         ///     Setup the custom render for component
         /// </summary>
         IGridColumn<T> RenderComponentAs(Type componentType);
@@ -548,6 +553,8 @@ namespace GridShared.Columns
         /// </summary>
         /// <param name="instance">Instance of the item</param>
         IGridCell GetCell(object instance);
+
+        IGridCell GetExcelCell(object instance);
 
         /// <summary>
         ///     Gets gridColumn formated value
