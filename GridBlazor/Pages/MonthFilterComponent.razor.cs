@@ -16,6 +16,7 @@ namespace GridBlazor.Pages
         protected Filter[] _filters;
         protected string _condition;
         protected int _offset = 0;
+        protected bool _init = false;
         protected bool _initPosition = false;
 
         protected ElementReference dateTimeFilter;
@@ -50,6 +51,7 @@ namespace GridBlazor.Pages
             if (filterSettings.Count() == 0)
                 filterSettings.Add(new Filter(GridFilterType.Equals.ToString("d"), ""));
             _filters = filterSettings.ToArray();
+            _init = true;
         }
 
         protected override async Task OnAfterRenderAsync(bool firstRender)

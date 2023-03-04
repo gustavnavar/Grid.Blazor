@@ -2,7 +2,7 @@
 
 @typeparam T
 
-@if (Visible)
+@if (_init && Visible)
 {
 <div class="dropdown dropdown-menu grid-dropdown opened" style="display:block;position:relative;@("margin-left:" + _offset.ToString() + "px;")" @ref="textFilter" @onkeyup="FilterKeyup" @onclick:stopPropagation @onkeyup:stopPropagation>
     <div class="grid-dropdown-arrow" style="@("margin-left:" + (-_offset).ToString() + "px;")"></div>

@@ -14,6 +14,7 @@ namespace GridBlazor.Pages
         protected bool _clearVisible = false;
         protected string _filterValue = "";
         protected int _offset = 0;
+        protected bool _init = false;
         protected bool _initPosition = false;
 
         protected ElementReference boolFilter;
@@ -37,6 +38,7 @@ namespace GridBlazor.Pages
         {
             _filterValue = FilterSettings.FirstOrDefault().FilterValue;
             _clearVisible = !string.IsNullOrWhiteSpace(_filterValue);
+            _init = true;
         }
 
         protected override async Task OnAfterRenderAsync(bool firstRender)

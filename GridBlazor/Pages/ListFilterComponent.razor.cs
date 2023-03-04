@@ -18,6 +18,7 @@ namespace GridBlazor.Pages
         protected bool _clearVisible = false;
         protected List<Filter> _filters;
         protected int _offset = 0;
+        protected bool _init = false;
         protected bool _initPosition = false;
         protected IEnumerable<SelectItem> _selectList = new List<SelectItem>();
         protected IEnumerable<SelectItem> _visibleList = new List<SelectItem>();
@@ -64,6 +65,8 @@ namespace GridBlazor.Pages
                 _visibleList = _selectList;
                 _timer.Interval = _filterOptions.SearchInputDebounceMilliseconds;
             }
+
+            _init = true;
         }
 
         protected override async Task OnAfterRenderAsync(bool firstRender)
