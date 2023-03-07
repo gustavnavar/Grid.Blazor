@@ -190,6 +190,7 @@ namespace GridBlazor
                 if (typedColumn == null) continue;
                 typedColumn.Filterable(enable);
             }
+            _source.ComponentOptions.AllowMultipleFilters = enable;
             return this;
         }
 
@@ -1227,7 +1228,12 @@ namespace GridBlazor
 
         public IGridClient<T> WithMultipleFilters()
         {
-            _source.ComponentOptions.AllowMultipleFilters = true;
+            return WithMultipleFilters(true);
+        }
+
+        public IGridClient<T> WithMultipleFilters(bool enable)
+        {
+            _source.ComponentOptions.AllowMultipleFilters = enable;
             return this;
         }
 

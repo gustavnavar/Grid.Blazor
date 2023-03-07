@@ -161,6 +161,11 @@ namespace GridMvc.Html
         IGridHtmlOptions<T> WithMultipleFilters();
 
         /// <summary>
+        ///     Allow grid to use multiple filters
+        /// </summary>
+        IGridHtmlOptions<T> WithMultipleFilters(bool enable);
+
+        /// <summary>
         ///    Allow grid to show Grid items count
         /// </summary>
         IGridHtmlOptions<T> WithGridItemsCount(string gridItemsName);

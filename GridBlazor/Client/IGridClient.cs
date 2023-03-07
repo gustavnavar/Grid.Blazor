@@ -785,6 +785,11 @@ namespace GridBlazor
         IGridClient<T> WithMultipleFilters();
 
         /// <summary>
+        ///     Allow grid to use multiple filters
+        /// </summary>
+        IGridClient<T> WithMultipleFilters(bool enable);
+
+        /// <summary>
         ///    Allow grid to show Grid items count
         /// </summary>
         IGridClient<T> WithGridItemsCount(string gridItemsName);

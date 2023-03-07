@@ -127,6 +127,7 @@ namespace GridMvc.Html
                 if (typedColumn == null) continue;
                 typedColumn.Filterable(enable);
             }
+            _source.RenderOptions.AllowMultipleFilters = enable;
             return this;
         }
 
@@ -251,10 +252,14 @@ namespace GridMvc.Html
 
         public IGridHtmlOptions<T> WithMultipleFilters()
         {
-            _source.RenderOptions.AllowMultipleFilters = true;
-            return this;
+            return WithMultipleFilters(true);
         }
 
+        public IGridHtmlOptions<T> WithMultipleFilters(bool enable)
+        {
+            _source.RenderOptions.AllowMultipleFilters = enable;
+            return this;
+        }
         /// <summary>
         ///     Set to true if we want to show grid itmes count
         ///     - Author - Jeeva J

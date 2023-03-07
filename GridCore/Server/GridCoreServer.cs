@@ -131,6 +131,7 @@ namespace GridCore.Server
                 if (typedColumn == null) continue;
                 typedColumn.Filterable(enable);
             }
+            _source.RenderOptions.AllowMultipleFilters = enable;
             return this;
         }
 
@@ -255,7 +256,12 @@ namespace GridCore.Server
 
         public IGridServer<T> WithMultipleFilters()
         {
-            _source.RenderOptions.AllowMultipleFilters = true;
+            return WithMultipleFilters(true);
+        }
+
+        public IGridServer<T> WithMultipleFilters(bool enable)
+        {
+            _source.RenderOptions.AllowMultipleFilters = enable;
             return this;
         }
 
