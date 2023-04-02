@@ -181,6 +181,8 @@ namespace GridBlazor
             _columnsCollection = new GridColumnCollection<T>(this, _columnBuilder, _settings.SortSettings);
             ComponentOptions = new GridOptions();
 
+            Pager = new GridPager(query);
+
             ApplyGridSettings();
             SetInitSorting();
 
@@ -190,8 +192,6 @@ namespace GridBlazor
                 _settings.SearchSettings);
             _currentSearchODataProcessor = new SearchGridODataProcessor<T>(this, _settings.SearchSettings);
             _currentExpandODataProcessor = new ExpandGridODataProcessor<T>(this);
-
-            Pager = new GridPager(query);
 
             ComponentOptions.RenderRowsOnly = renderOnlyRows;
             columns?.Invoke(Columns);
