@@ -1,5 +1,6 @@
-﻿using GridShared.Utility;
-using Microsoft.Extensions.Primitives;
+﻿using GridShared;
+using GridShared.Pagination;
+using GridShared.Utility;
 using System;
 using System.Globalization;
 
@@ -17,8 +18,10 @@ namespace GridCore.Pagination
         public const string DefaultPageSizeQueryParameter = "grid-pagesize";
         public const string DefaultPagerViewName = "_GridPager";
         public const string DefaultAjaxPagerViewName = "_AjaxGridPager";
+        public const string DefaultStartIndexQueryParameter = "grid-start-index";
+        public const string DefaultVirtualizedCountQueryParameter = "grid-virt-count";
 
-        private readonly IQueryDictionary<StringValues> _query;
+        private readonly IGrid _grid;
         private readonly CustomQueryStringBuilder _queryBuilder;
         private int _currentPage;
 
@@ -29,31 +32,49 @@ namespace GridCore.Pagination
 
         #region ctor's
 
-        public GridPager(IQueryDictionary<StringValues> query)
+        public GridPager(IGrid grid)
         {
-            if (query == null)
+            _grid = grid;
+
+            if (grid.Query == null)
                 throw new Exception("No http context here!");
 
-            _query = query;
             _currentPage = -1;
-            _queryBuilder = new CustomQueryStringBuilder(query);
+            _queryBuilder = new CustomQueryStringBuilder(_grid.Query);
+        
+            if (_grid.PagingType == PagingType.Virtualization)
+            {
+                bool successfullyParsed = int.TryParse(DefaultStartIndexQueryParameter, out int startIndex);
+                if (successfullyParsed)
+                    StartIndex = startIndex;
 
-            ParameterName = DefaultPageQueryParameter;
-            TemplateName = DefaultPagerViewName;
-            MaxDisplayedPages = MaxDisplayedPages;
+                successfullyParsed = int.TryParse(DefaultVirtualizedCountQueryParameter, out int virtualizedCount);
+                if (successfullyParsed)
+                    VirtualizedCount = virtualizedCount;
+            }
+            else
+            {
+                ParameterName = DefaultPageQueryParameter;
+                TemplateName = DefaultPagerViewName;
+                MaxDisplayedPages = MaxDisplayedPages;
 
-            string pageSizeParameter = query.Get(DefaultPageSizeQueryParameter);
-            int pageSize = 0;
-            if (pageSizeParameter != null)
-                int.TryParse(pageSizeParameter, out pageSize);
-            QueryPageSize = pageSize;
+                string pageSizeParameter = _grid.Query.Get(DefaultPageSizeQueryParameter);
+                int pageSize = 0;
+                if (pageSizeParameter != null)
+                    int.TryParse(pageSizeParameter, out pageSize);
+                QueryPageSize = pageSize;
 
-            PageSize = DefaultPageSize;
+                PageSize = DefaultPageSize;
+            }
         }
 
         #endregion
 
         #region IGridPager members
+
+        public IGrid Grid { 
+            get { return _grid; } 
+        }
 
         public int PageSize
         {
@@ -81,8 +102,8 @@ namespace GridCore.Pagination
         {
             get
             {
-                if (_currentPage >= 0) return _currentPage;
-                string currentPageString = _query.Get(ParameterName).ToString() ?? "1";
+                if (_currentPage >= 0 || _grid.PagingType == PagingType.Virtualization) return _currentPage;
+                string currentPageString = _grid.Query.Get(ParameterName).ToString() ?? "1";
                 if (!int.TryParse(currentPageString, out _currentPage))
                     _currentPage = 1;
                 if (_currentPage > PageCount)
@@ -97,6 +118,17 @@ namespace GridCore.Pagination
                 RecalculatePages();
             }
         }
+
+        /// <summary>
+        ///     Start index
+        /// </summary>
+        public int StartIndex { get; set; } = -1;
+
+        /// <summary>
+        ///     Virtualized items count
+        /// </summary>
+        public int VirtualizedCount { get; set; } = -1;
+
 
         #endregion
 
@@ -140,6 +172,9 @@ namespace GridCore.Pagination
 
         protected virtual void RecalculatePages()
         {
+            if (_grid.PagingType == PagingType.Virtualization)
+                return;
+
             if (ItemsCount == 0)
             {
                 PageCount = 0;
@@ -147,7 +182,7 @@ namespace GridCore.Pagination
             }
             if (_queryPageSize != 0)
                 _pageSize = _queryPageSize;
-            PageCount = (int) (Math.Ceiling(ItemsCount/(double) PageSize));
+            PageCount = (int) (Math.Ceiling(ItemsCount / (double) PageSize));
 
             if (CurrentPage > PageCount)
                 CurrentPage = PageCount;

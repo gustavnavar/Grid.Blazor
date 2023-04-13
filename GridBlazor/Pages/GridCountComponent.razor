@@ -1,0 +1,8 @@
+﻿@using GridShared.Pagination
+@using GridBlazor.Resources
+@typeparam T
+
+<div class="@GridComponent.GridItemsCountCssClass">
+    <div class="grid-itemscount-label">@GridComponent.Grid.ComponentOptions.GridCountDisplayName:</div>
+    <div class="grid-itemscount-caption"><b>@_itemsCount</b></div>
+</div>

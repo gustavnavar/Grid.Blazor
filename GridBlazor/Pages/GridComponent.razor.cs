@@ -11,6 +11,10 @@ using GridShared.Sorting;
 using GridShared.Utility;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Web;
+#if ! NETSTANDARD2_1
+using Microsoft.AspNetCore.Components.CompilerServices;
+using Microsoft.AspNetCore.Components.Web.Virtualization;
+#endif
 using Microsoft.JSInterop;
 using System;
 using System.Collections.Generic;
@@ -113,6 +117,8 @@ namespace GridBlazor.Pages
 
         public GridDeleteComponent<T> DeleteComponent { get; private set; }
 
+        public GridCountComponent<T> CountComponent { get; private set; }
+
         public T Item { get; protected set; }
 
         internal IGridColumn<T> FirstColumn { get; set; }
@@ -125,6 +131,8 @@ namespace GridBlazor.Pages
             get { return Grid.Error; } 
             set { Grid.Error = value; } 
         }
+
+        internal RenderFragment VirtualRenderFragment;
 
         [Parameter]
         public ICGrid Grid { get; set; }
@@ -258,13 +266,19 @@ namespace GridBlazor.Pages
             var queryBuilder = new CustomQueryStringBuilder(Grid.Settings.SearchSettings.Query);
             var exceptQueryParameters = new List<string> { GridPager.DefaultPageSizeQueryParameter };
             ChangePageSizeUrl = queryBuilder.GetQueryStringExcept(exceptQueryParameters);
-            PageSize = Grid.Pager.ChangePageSize && Grid.Pager.QueryPageSize > 0 ? Grid.Pager.QueryPageSize : Grid.Pager.PageSize;
+            if(Grid.PagingType == PagingType.Pagination)
+                PageSize = Grid.Pager.ChangePageSize && Grid.Pager.QueryPageSize > 0 ? Grid.Pager.QueryPageSize : Grid.Pager.PageSize;
 
             if (UseMemoryCrudDataService && ((CGrid<T>)Grid).MemoryDataService != null)
             {
                 ((CGrid<T>)Grid).CrudDataService = ((CGrid<T>)Grid).MemoryDataService;
                 ((CGrid<T>)Grid).DataService = ((CGrid<T>)Grid).MemoryDataService.GetGridRows;
+                ((CGrid<T>)Grid).DataServiceAsync = null;
+                ((CGrid<T>)Grid).GrpcService = null;
             }
+
+            if(Grid.PagingType == PagingType.Virtualization)
+                VirtualRenderFragment = CreateVirtualComponent(Grid);
 
             _shouldRender = true;
         }
@@ -346,6 +360,41 @@ namespace GridBlazor.Pages
             if(((CGrid<T>)Grid).OnAfterRender != null)
                 await ((CGrid<T>)Grid).OnAfterRender.Invoke(this, firstRender);
         }
+
+
+        private RenderFragment CreateVirtualComponent(ICGrid grid) => builder =>
+        {
+#if NETSTANDARD2_1
+            builder.OpenElement(0, "p");
+            builder.AddContent(1, Strings.DefaultGridEmptyText);
+            builder.CloseElement();
+#else
+            builder.OpenComponent<Virtualize<T>>(0);
+            builder.AddAttribute(1, "ItemsProvider", (ItemsProviderDelegate<T>)((CGrid<T>)Grid).LoadItems);
+            builder.AddAttribute(2, "ItemContent", (RenderFragment<T>)(item => builder1 => {
+                builder1.OpenComponent<CascadingValue<GridComponent<T>>>(3);
+                builder1.AddAttribute(4, "Value", this);
+                builder1.AddAttribute(5, "Name", "GridComponent");
+                builder1.AddAttribute(6, "ChildContent", (RenderFragment)(builder2 => {
+                    builder2.OpenComponent<GridVirtualRowComponent<T>>(7);
+                    builder2.AddAttribute(8, "Grid", RuntimeHelpers.TypeCheck<ICGrid>(Grid));
+                    builder2.AddAttribute(9, "HasSubGrid", RuntimeHelpers.TypeCheck<Boolean>(HasSubGrid));
+                    builder2.AddAttribute(10, "RequiredTotalsColumn", RuntimeHelpers.TypeCheck<Boolean>(RequiredTotalsColumn));
+                    builder2.AddAttribute(11, "Item", RuntimeHelpers.TypeCheck<Object>(item));
+                    builder2.CloseComponent();
+                }));
+                builder1.CloseComponent();
+            }
+            ));
+            builder.AddAttribute(12, "Placeholder", (RenderFragment<PlaceholderContext>)(item => builder1 => {
+                builder1.OpenElement(13, "p");
+                builder1.AddContent(14, Strings.DefaultGridEmptyText);
+                builder1.CloseElement();
+            }
+            ));
+            builder.CloseComponent();
+#endif
+        };
 
         private async Task GoToCrudView()
         {
@@ -501,8 +550,7 @@ namespace GridBlazor.Pages
         protected virtual async Task OnPagerChanged()
         {
             PagerEventArgs args = new PagerEventArgs();
-            PagerDTO pagerDTO = new PagerDTO(Grid.EnablePaging, Grid.Pager.PageSize, Grid.Pager.CurrentPage, 
-                Grid.Pager.ItemsCount);
+            PagerDTO pagerDTO = new PagerDTO(Grid.PagingType, Grid.Pager.PageSize, Grid.Pager.CurrentPage, Grid.Pager.ItemsCount, Grid.Pager.StartIndex, Grid.Pager.VirtualizedCount);
             args.Pager = pagerDTO;
 
             if (PagerChanged != null)

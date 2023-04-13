@@ -1,4 +1,6 @@
-﻿using GridShared.Utility;
+﻿using GridShared;
+using GridShared.Pagination;
+using GridShared.Utility;
 using Microsoft.Extensions.Primitives;
 using System;
 using System.Globalization;
@@ -15,7 +17,10 @@ namespace GridBlazor.Pagination
 
         public const string DefaultPageQueryParameter = "grid-page";
         public const string DefaultPageSizeQueryParameter = "grid-pagesize";
+        public const string DefaultStartIndexQueryParameter = "grid-start-index";
+        public const string DefaultVirtualizedCountQueryParameter = "grid-virt-count";
 
+        private readonly IGrid _grid;
         private IQueryDictionary<StringValues> _query;
         private CustomQueryStringBuilder _queryBuilder;
         private int _currentPage;
@@ -27,25 +32,39 @@ namespace GridBlazor.Pagination
 
         #region ctor's
 
-        public GridPager(IQueryDictionary<StringValues> query)
+        public GridPager(IGrid grid, int? virtualizedCount = null)
         {
+            _grid = grid;
             _query = new QueryDictionary<StringValues>();
             _currentPage = -1;
             _queryBuilder = new CustomQueryStringBuilder(_query);
 
-            ParameterName = DefaultPageQueryParameter;
-            MaxDisplayedPages = MaxDisplayedPages;
-            PageSize = DefaultPageSize;
+            if (_grid.PagingType == PagingType.Virtualization)
+            {
+                StartIndex = 0;
+                if(virtualizedCount.HasValue)
+                    VirtualizedCount = virtualizedCount.Value;
 
-            _query = query;
-            _queryBuilder = new CustomQueryStringBuilder(_query);
+                _query = grid.Query;
+                _queryBuilder = new CustomQueryStringBuilder(_query);
+            }
+            else
+            {
+                ParameterName = DefaultPageQueryParameter;
+                MaxDisplayedPages = MaxDisplayedPages;
+                PageSize = DefaultPageSize;
 
-            string pageSizeParameter = query.Get(DefaultPageSizeQueryParameter);
-            int pageSize = 0;
-            if (pageSizeParameter != null)
-                int.TryParse(pageSizeParameter, out pageSize);
-            QueryPageSize = pageSize;
+                _query = grid.Query;
+                _queryBuilder = new CustomQueryStringBuilder(_query);
+
+                string pageSizeParameter = _query.Get(DefaultPageSizeQueryParameter);
+                int pageSize = 0;
+                if (pageSizeParameter != null)
+                    int.TryParse(pageSizeParameter, out pageSize);
+                QueryPageSize = pageSize;
+            }
         }
+
         #endregion
 
         public IQueryDictionary<StringValues> Query
@@ -59,6 +78,11 @@ namespace GridBlazor.Pagination
         }
 
         #region IGridPager members
+
+        public IGrid Grid
+        {
+            get { return _grid; }
+        }
 
         public int PageSize
         {
@@ -103,6 +127,16 @@ namespace GridBlazor.Pagination
             }
         }
 
+        /// <summary>
+        ///     Start index
+        /// </summary>
+        public int StartIndex { get; set; } = -1;
+
+        /// <summary>
+        ///     Virtualized items count
+        /// </summary>
+        public int VirtualizedCount { get; set; } = -1;
+
         #endregion
 
         /// <summary>
@@ -138,7 +172,7 @@ namespace GridBlazor.Pagination
         /// </summary>
         public int PageCount { get; protected set; }
 
-        protected virtual void RecalculatePages()
+        internal virtual void RecalculatePages()
         {
             if (ItemsCount == 0)
             {

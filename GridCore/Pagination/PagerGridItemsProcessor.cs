@@ -1,5 +1,5 @@
-﻿using System;
-using System.Diagnostics;
+﻿using GridShared.Pagination;
+using System;
 using System.Linq;
 
 namespace GridCore.Pagination
@@ -10,17 +10,18 @@ namespace GridCore.Pagination
     /// <typeparam name="T"></typeparam>
     public class PagerGridItemsProcessor<T> : IGridItemsProcessor<T>
     {
-        private readonly IGridPager _pager;
+        private readonly ISGrid _grid;
+
         private Func<IQueryable<T>, IQueryable<T>> _process;
 
-        public PagerGridItemsProcessor(IGridPager pager)
+        public PagerGridItemsProcessor(ISGrid grid)
         {
-            _pager = pager;
+            _grid = grid;
         }
 
         public IQueryable<T> Process(IQueryable<T> items, int count)
         {
-            _pager.Initialize(count);
+            _grid.Pager.Initialize(count);
             return Process(items);
         }
 
@@ -31,10 +32,19 @@ namespace GridCore.Pagination
             if (_process != null)
                 return _process(items);
 
-            if (_pager.CurrentPage <= 0) return items; //incorrect page
+            if (_grid.PagingType == PagingType.Virtualization)
+            {
+                if (_grid.Pager == null || _grid.Pager.StartIndex < 0 || _grid.Pager.VirtualizedCount < 0) return items; //incorrect page
 
-            int skip = (_pager.CurrentPage - 1)*_pager.PageSize;
-            return items.Skip(skip).Take(_pager.PageSize);
+                return items.Skip(_grid.Pager.StartIndex).Take(_grid.Pager.VirtualizedCount);
+            }
+            else
+            {
+                if (_grid.Pager == null || _grid.Pager.CurrentPage <= 0) return items; //incorrect page
+
+                int skip = (_grid.Pager.CurrentPage - 1) * _grid.Pager.PageSize;
+                return items.Skip(skip).Take(_grid.Pager.PageSize);
+            }
         }
 
         public void SetProcess(Func<IQueryable<T>, IQueryable<T>> process)

@@ -1,7 +1,14 @@
-﻿namespace GridBlazor.Pagination
+﻿using GridShared;
+
+namespace GridBlazor.Pagination
 {
     public interface IGridPager
     {
+        /// <summary>
+        ///     Pager's Grid
+        /// </summary>
+        IGrid Grid { get; }
+
         /// <summary>
         ///     Max grid items, displaying on the page
         /// </summary>
@@ -28,6 +35,16 @@
         /////     Total pages count
         ///// </summary>
         int PageCount { get; }
+
+        /// <summary>
+        ///     Start index
+        /// </summary>
+        int StartIndex { get; }
+
+        /// <summary>
+        ///     Virtualized items count
+        /// </summary>
+        int VirtualizedCount { get; }
 
         ///// <summary>
         /////     Starting displaying page

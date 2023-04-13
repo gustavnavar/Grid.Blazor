@@ -3,7 +3,7 @@
 
 @if (_visible)
 {
-    @if (_grid.ItemsCount > 0)
+    @if (_grid != null && _grid.ItemsCount > 0)
     {
         <td></td>
         <td colspan="@Cols">@_subGridRender</td>

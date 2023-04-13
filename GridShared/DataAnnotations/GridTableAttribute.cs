@@ -1,4 +1,5 @@
-﻿using System;
+﻿using GridShared.Pagination;
+using System;
 
 namespace GridShared.DataAnnotations
 {
@@ -10,11 +11,17 @@ namespace GridShared.DataAnnotations
     {
         public GridTableAttribute()
         {
-            PagingEnabled = false;
+            PagingType = PagingType.None;
             PageSize = 0;
             PagingMaxDisplayedPages = 0;
         }
 
+        /// <summary>
+        ///     Enable or disable paging of the grid
+        /// </summary>
+        public PagingType PagingType { get; set; }
+
+        [Obsolete("This property is obsolete. Use PagingType property", true)]
         /// <summary>
         ///     Enable or disable paging of the grid
         /// </summary>

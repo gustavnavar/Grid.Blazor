@@ -1,0 +1,17 @@
+﻿@using GridBlazor.Resources
+@using GridShared.Columns
+
+@typeparam T
+
+<tr class="grid-row @Grid.GetRowCssClasses(Item)">
+    @if (RequiredTotalsColumn)
+    {
+        <td class="@GridComponent.GridCellCssClass" data-name="" style="width:90px;"></td>
+    }
+    @foreach (IGridColumn column in Grid.Columns)
+    {
+        <CascadingValue Value=@this Name="GridComponent">
+            <GridCellComponent T="@T" Column="@column" Item="@Item" TdClass="@GridComponent.GridCellCssClass"></GridCellComponent>
+        </CascadingValue>
+    }
+</tr>

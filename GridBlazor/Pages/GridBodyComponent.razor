@@ -1,6 +1,7 @@
-﻿@typeparam T
+﻿@using GridShared.Pagination
+@typeparam T
 
-@if (GridComponent.Grid.DisplayingItemsCount == 0)
+@if (GridComponent.Grid.DisplayingItemsCount == 0 && GridComponent.Grid.PagingType != PagingType.Virtualization)
 {
     <tr class="@GridComponent.GridEmptyTextCssClass">
         @if (GridComponent.HasSubGrid)
@@ -37,11 +38,18 @@ else
     }
     else
     {
-        foreach (object item in GridComponent.Grid.ItemsToDisplay)
+        if (GridComponent.Grid.PagingType == PagingType.Virtualization)
         {
-            int capturedI = i;
-            <GridRowComponent T="@T" Grid="@GridComponent.Grid" HasSubGrid="@GridComponent.HasSubGrid" RequiredTotalsColumn="@GridComponent.RequiredTotalsColumn" Item="@item" GridPosition="@capturedI"></GridRowComponent>
-            i++;
+            @GridComponent.VirtualRenderFragment
+        }
+        else
+        {
+            foreach (object item in GridComponent.Grid.ItemsToDisplay)
+            {
+                int capturedI = i;
+                <GridRowComponent T="@T" Grid="@GridComponent.Grid" HasSubGrid="@GridComponent.HasSubGrid" RequiredTotalsColumn="@GridComponent.RequiredTotalsColumn" Item="@item" GridPosition="@capturedI"></GridRowComponent>
+                i++;
+            }
         }
     }
 }

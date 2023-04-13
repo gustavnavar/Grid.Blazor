@@ -1,7 +1,14 @@
-﻿namespace GridCore.Pagination
+﻿using GridShared;
+
+namespace GridCore.Pagination
 {
     public interface IGridPager
     {
+        /// <summary>
+        ///     Pager's Grid
+        /// </summary>
+        IGrid Grid { get; }
+
         /// <summary>
         ///     Partial view name to render the pager
         /// </summary>
@@ -34,6 +41,16 @@
 
 
         int ItemsCount { get; set; }
+
+        /// <summary>
+        ///     Start index
+        /// </summary>
+        int StartIndex { get; }
+
+        /// <summary>
+        ///     Virtualized items count
+        /// </summary>
+        int VirtualizedCount { get; }
 
         ///// <summary>
         /////     Total pages count

@@ -10,6 +10,7 @@ using GridMvc.Columns;
 using GridMvc.DataAnnotations;
 using GridShared;
 using GridShared.Columns;
+using GridShared.Pagination;
 using GridShared.Utility;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Primitives;
@@ -42,18 +43,15 @@ namespace GridMvc
             string pagerViewName = GridPager.DefaultPagerViewName, IColumnBuilder<T> columnBuilder = null)
             : this(items, query, columnBuilder)
         {
-            var urlParameters = CustomQueryStringBuilder.Convert(query);
-            string pageParameter = urlParameters[((GridPager)Pager).ParameterName];
-            int page = 0;
-            if (pageParameter != null)
-                int.TryParse(pageParameter, out page);
-            if (page == 0)
-                page++;
-            ((GridPager)_pager).CurrentPage = page;
-            ((GridPager)_pager).TemplateName = pagerViewName;
+            if (PagingType != PagingType.Virtualization)
+            {
+                ((GridPager)_pager).TemplateName = pagerViewName;
+            }
+
             RenderOptions.RenderRowsOnly = renderOnlyRows;
         }
 
+        
         public SGrid(IEnumerable<T> items, IQueryCollection query, IColumnBuilder<T> columnBuilder = null)
             : this(items, GridExtensions.Convert(query), columnBuilder)
         { }
@@ -99,6 +97,33 @@ namespace GridMvc
             RenderOptions = new GridRenderOptions();
 
             ApplyGridSettings();
+
+            var urlParameters = CustomQueryStringBuilder.Convert(query);
+
+            int page = 0;
+            int startIndex = 0;
+            int virtualizedCount = 0;
+
+            string startIndexParameter = urlParameters[GridPager.DefaultStartIndexQueryParameter];
+            string virtualizedCountParameter = urlParameters[GridPager.DefaultVirtualizedCountQueryParameter];
+            if (!string.IsNullOrEmpty(startIndexParameter) && !string.IsNullOrWhiteSpace(virtualizedCountParameter))
+            {
+                PagingType = PagingType.Virtualization;
+                int.TryParse(startIndexParameter, out startIndex);
+                int.TryParse(virtualizedCountParameter, out virtualizedCount);
+                ((GridPager)Pager).StartIndex = startIndex;
+                ((GridPager)Pager).VirtualizedCount = virtualizedCount;
+            }
+            else
+            {
+                PagingType = PagingType.Pagination;
+                string pageParameter = urlParameters[((GridPager)Pager).ParameterName];
+                if (pageParameter != null)
+                    int.TryParse(pageParameter, out page);
+                if (page == 0)
+                    page++;
+                ((GridPager)Pager).CurrentPage = page;
+            }
         }
     }
 }

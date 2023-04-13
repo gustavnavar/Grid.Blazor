@@ -85,7 +85,7 @@ namespace GridCore.Server
 
         public IGridServer<T> WithPaging(int pageSize, int maxDisplayedItems, string queryStringParameterName)
         {
-            _source.EnablePaging = true;
+            _source.PagingType = PagingType.Pagination;
             _source.Pager.PageSize = pageSize;
 
             var pager = _source.Pager as GridPager; //This setting can be applied only to default grid pager
@@ -334,8 +334,9 @@ namespace GridCore.Server
             get {
                 var items = _source.GetItemsToDisplay();
                 var totals = _source.GetTotals();
-                return new ItemsDTO<T>(items, totals, new PagerDTO(_source.EnablePaging, _source.Pager.PageSize,
-                    _source.Pager.CurrentPage, _source.ItemsCount));
+                return new ItemsDTO<T>(items, totals,
+                    new PagerDTO(_source.PagingType, _source.Pager.PageSize, _source.Pager.CurrentPage, _source.ItemsCount, 
+                        _source.Pager.StartIndex, _source.Pager.VirtualizedCount));
             }
         }
 
@@ -343,8 +344,9 @@ namespace GridCore.Server
         {
             var items = await _source.GetItemsToDisplayAsync(toListAsync);
             var totals = _source.GetTotals();
-            return new ItemsDTO<T>(items, totals, new PagerDTO(_source.EnablePaging, _source.Pager.PageSize,
-                _source.Pager.CurrentPage, _source.ItemsCount));
+            return new ItemsDTO<T>(items, totals, 
+                new PagerDTO(_source.PagingType, _source.Pager.PageSize, _source.Pager.CurrentPage, _source.ItemsCount, 
+                    _source.Pager.StartIndex, _source.Pager.VirtualizedCount));
         }
 
         /// <summary>
