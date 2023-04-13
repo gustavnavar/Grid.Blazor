@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Linq;
 using System.Reflection;
+using GridShared.Pagination;
 
 namespace GridMvc.Tests.DataAnnotations
 {
@@ -24,7 +25,7 @@ namespace GridMvc.Tests.DataAnnotations
         [TestMethod]
         public void TestPaging()
         {
-            Assert.AreEqual(_grid.EnablePaging, true);
+            Assert.AreEqual(_grid.PagingType, PagingType.Pagination);
             Assert.AreEqual(_grid.Pager.PageSize, 20);
         }
 

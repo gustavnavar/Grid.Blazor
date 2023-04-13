@@ -1,7 +1,7 @@
-﻿using System.ComponentModel.DataAnnotations;
-using GridShared.DataAnnotations;
-using GridMvc.DataAnnotations;
+﻿using GridShared.DataAnnotations;
+using GridShared.Pagination;
 using Microsoft.AspNetCore.Mvc;
+using System.ComponentModel.DataAnnotations;
 
 namespace GridMvc.Tests.DataAnnotations.Models
 {
@@ -21,7 +21,7 @@ namespace GridMvc.Tests.DataAnnotations.Models
         public string Title { get; set; }
     }
 
-    [GridTable(PagingEnabled = true, PageSize = 20)]
+    [GridTable(PagingType = PagingType.Pagination, PageSize = 20)]
     internal class TestGridAnnotationMetadata
     {
         [Display(Name = "Some title")]

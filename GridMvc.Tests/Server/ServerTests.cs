@@ -6,6 +6,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
 using System;
 using System.Linq;
+using GridShared.Pagination;
 
 namespace GridMvc.Tests.Server
 {
@@ -38,8 +39,13 @@ namespace GridMvc.Tests.Server
         [TestMethod]
         public void TestMainMethods()
         {
+            _server.Grid.PagingType = PagingType.Virtualization;
+            Assert.AreEqual(_server.Grid.PagingType, PagingType.Virtualization);
+            Assert.AreEqual(_server.Grid.Pager.StartIndex, -1);
+            Assert.AreEqual(_server.Grid.Pager.VirtualizedCount, -1);
+
             _server.WithPaging(5);
-            Assert.IsTrue(_server.Grid.EnablePaging);
+            Assert.AreEqual(_server.Grid.PagingType, PagingType.Pagination);
             Assert.AreEqual(_server.Grid.Pager.PageSize, 5);
 
             _server.WithMultipleFilters();
