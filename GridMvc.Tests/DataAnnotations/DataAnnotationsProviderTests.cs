@@ -2,6 +2,7 @@
 using GridMvc.DataAnnotations;
 using GridMvc.Tests.DataAnnotations.Models;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using GridShared.Pagination;
 
 namespace GridMvc.Tests.DataAnnotations
 {
@@ -26,7 +27,7 @@ namespace GridMvc.Tests.DataAnnotations
             var gridSettings = _provider.GetAnnotationForTable<TestGridAnnotationModel>();
             Assert.IsNotNull(gridSettings);
             Assert.AreEqual(gridSettings.PageSize, 20);
-            Assert.AreEqual(gridSettings.PagingEnabled, true);
+            Assert.AreEqual(gridSettings.PagingType, PagingType.Pagination);
         }
     }
 }

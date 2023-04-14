@@ -2,8 +2,6 @@
 using GridShared;
 using GridShared.Sorting;
 using GridShared.Totals;
-using GridShared.Utility;
-using Microsoft.Extensions.Primitives;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -30,11 +28,6 @@ namespace GridCore
 
     public interface ISGrid : IGrid, IGridOptions
     {
-        /// <summary>
-        ///     Query for the grid
-        /// </summary>
-        QueryDictionary<StringValues> Query { get; }
-
         /// <summary>
         ///     Pager for the grid
         /// </summary>

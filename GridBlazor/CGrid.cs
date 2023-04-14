@@ -12,14 +12,19 @@ using GridShared.Columns;
 using GridShared.DataAnnotations;
 using GridShared.Filtering;
 using GridShared.Grouping;
+using GridShared.Pagination;
 using GridShared.Sorting;
 using GridShared.Totals;
 using GridShared.Utility;
 using Microsoft.AspNetCore.Components;
+#if ! NETSTANDARD2_1
+using Microsoft.AspNetCore.Components.Web.Virtualization;
+#endif
 using Microsoft.Extensions.Primitives;
 using Microsoft.JSInterop;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Globalization;
 using System.Linq;
 using System.Net.Http;
@@ -50,7 +55,7 @@ namespace GridBlazor
         private IEnumerable<T> _items;
         private IEnumerable<object> _selectedItems;
         private int _displayingItemsCount = -1; // count of displaying items (if using pagination)
-        private bool _enablePaging;
+        private PagingType _pagingType;
         private IGridPager _pager;
         private HttpClient _httpClient;
 
@@ -60,10 +65,10 @@ namespace GridBlazor
         private ICrudDataService<T> _crudDataService;
         private IMemoryDataService<T> _memoryDataService;
 
-        public CGrid(HttpClient httpClient, string url, IQueryDictionary<StringValues> query, bool renderOnlyRows, 
-            Action<IGridColumnCollection<T>> columns = null, CultureInfo cultureInfo = null,
-            IColumnBuilder<T> columnBuilder = null)
-            : this(httpClient, url, null, null, null, null, query, renderOnlyRows, columns, cultureInfo, columnBuilder)
+        public CGrid(HttpClient httpClient, string url, IQueryDictionary<StringValues> query, bool renderOnlyRows,
+                   Action<IGridColumnCollection<T>> columns = null, CultureInfo cultureInfo = null,
+                   IColumnBuilder<T> columnBuilder = null)
+                   : this(httpClient, url, null, null, null, null, query, renderOnlyRows, columns, cultureInfo, columnBuilder)
         {
         }
 
@@ -109,7 +114,7 @@ namespace GridBlazor
         {
         }
 
-        public CGrid(HttpClient httpClient, string url, IMemoryDataService<T> memoryDataService, IQueryDictionary<StringValues> query, 
+        public CGrid(HttpClient httpClient, string url, IMemoryDataService<T> memoryDataService, IQueryDictionary<StringValues> query,
             bool renderOnlyRows, Action<IGridColumnCollection<T>> columns = null, CultureInfo cultureInfo = null,
             IColumnBuilder<T> columnBuilder = null)
             : this(httpClient, url, null, null, null, memoryDataService, query, renderOnlyRows, columns, cultureInfo, columnBuilder)
@@ -130,7 +135,7 @@ namespace GridBlazor
             IQueryDictionary<StringValues> query, bool renderOnlyRows,
             Action<IGridColumnCollection<T>> columns = null, CultureInfo cultureInfo = null,
             IColumnBuilder<T> columnBuilder = null)
-            : this (null, null, null, dataServiceAsync, null, memoryDataService, query, renderOnlyRows, columns, cultureInfo, columnBuilder)
+            : this(null, null, null, dataServiceAsync, null, memoryDataService, query, renderOnlyRows, columns, cultureInfo, columnBuilder)
         {
         }
 
@@ -144,7 +149,7 @@ namespace GridBlazor
         }
 
         private CGrid(HttpClient httpClient, string url,
-            Func<QueryDictionary<StringValues>, ItemsDTO<T>> dataService, 
+            Func<QueryDictionary<StringValues>, ItemsDTO<T>> dataService,
             Func<QueryDictionary<StringValues>, Task<ItemsDTO<T>>> dataServiceAsync,
             Func<QueryDictionary<string>, Task<ItemsDTO<T>>> grpcService,
             IMemoryDataService<T> memoryDataService,
@@ -202,10 +207,10 @@ namespace GridBlazor
             UpdateEnabled = false;
             DeleteEnabled = false;
 
-            ButtonComponents = new QueryDictionary<(string Label, Nullable<MarkupString> Content, Type ComponentType, 
+            ButtonComponents = new QueryDictionary<(string Label, Nullable<MarkupString> Content, Type ComponentType,
                 IList<Action<object>> Actions, IList<Func<object, Task>> Functions, object Object)>();
 
-            ButtonCrudComponents = new QueryDictionary<(string Label, Nullable<MarkupString> Content, Type ComponentType, 
+            ButtonCrudComponents = new QueryDictionary<(string Label, Nullable<MarkupString> Content, Type ComponentType,
                 GridMode GridMode, Func<T, bool> ReadMode, Func<T, bool> UpdateMode, Func<T, bool> DeleteMode,
                 Func<T, Task<bool>> ReadModeAsync, Func<T, Task<bool>> UpdateModeAsync, Func<T, Task<bool>> DeleteModeAsync,
                 IList<Action<object>> Actions, IList<Func<object, Task>> Functions, object Object)>();
@@ -445,13 +450,23 @@ namespace GridBlazor
         /// <summary>
         ///     Enable or disable paging for the grid
         /// </summary>
+        [Obsolete("This property is obsolete. Use PagingType property", true)]
         public bool EnablePaging
         {
-            get { return _enablePaging; }
+            get { return _pagingType == PagingType.Pagination; }
+            set { }
+        }
+
+        /// <summary>
+        ///     Enable paging type for the grid
+        /// </summary>
+        public PagingType PagingType
+        {
+            get { return _pagingType; }
             set
             {
-                if (_enablePaging == value) return;
-                _enablePaging = value;
+                if (_pagingType == value) return;
+                _pagingType = value;
             }
         }
 
@@ -742,13 +757,17 @@ namespace GridBlazor
         {
             GridTableAttribute opt = _annotations.GetAnnotationForTable<T>();
             if (opt == null) return;
-            EnablePaging = opt.PagingEnabled;
-            if (opt.PageSize > 0)
-                Pager.PageSize = opt.PageSize;
+            PagingType = opt.PagingType;
 
-            if (opt.PagingMaxDisplayedPages > 0 && Pager is GridPager)
+            if (PagingType == PagingType.Pagination)
             {
-                (Pager as GridPager).MaxDisplayedPages = opt.PagingMaxDisplayedPages;
+                if (opt.PageSize > 0)
+                    Pager.PageSize = opt.PageSize;
+
+                if (opt.PagingMaxDisplayedPages > 0 && Pager is GridPager)
+                {
+                    (Pager as GridPager).MaxDisplayedPages = opt.PagingMaxDisplayedPages;
+                }
             }
         }
 
@@ -1246,10 +1265,13 @@ namespace GridBlazor
                 if (response != null && response.Items != null && response.Pager != null)
                 {
                     Items = response.Items;
-                    EnablePaging = response.Pager.EnablePaging;
-                    ((GridPager)_pager).CurrentPage = response.Pager.CurrentPage;
-                    AddQueryParameter(((GridPager)Pager).ParameterName, response.Pager.CurrentPage.ToString());
-                    ((GridPager)_pager).PageSize = response.Pager.PageSize;
+                    if (PagingType != PagingType.Virtualization)
+                    {
+                        PagingType = response.Pager.PagingType;
+                        ((GridPager)_pager).CurrentPage = response.Pager.CurrentPage;
+                        AddQueryParameter(((GridPager)Pager).ParameterName, response.Pager.CurrentPage.ToString());
+                        ((GridPager)_pager).PageSize = response.Pager.PageSize;
+                    }
                     ((GridPager)_pager).ItemsCount = response.Pager.ItemsCount;
 
                     if (response.Totals != null)
@@ -1398,7 +1420,7 @@ namespace GridBlazor
                     Console.WriteLine("Response is null");
                     return;
                 }
-                ((GridPager)_pager).ItemsCount = response.ItemsCount;
+                 ((GridPager)_pager).ItemsCount = response.ItemsCount;
 
                 // Processor parameters (paging and sorting)
                 string processorParameters = GetODataProcessorParameters();
@@ -1527,5 +1549,28 @@ namespace GridBlazor
                     throw;
             }
         }
+
+#if !NETSTANDARD2_1
+        public async ValueTask<ItemsProviderResult<T>> LoadItems(ItemsProviderRequest request)
+        {
+            Error = "";
+
+            if (ServerAPI == ServerAPI.OData && (GridComponent == null || !GridComponent.UseMemoryCrudDataService))
+                await GetOData();
+            else
+            {
+                AddQueryParameter(GridPager.DefaultStartIndexQueryParameter, request.StartIndex.ToString());
+                AddQueryParameter(GridPager.DefaultVirtualizedCountQueryParameter, request.Count.ToString());
+                await GetItemsDTO();
+            }
+
+            if(GridComponent != null && GridComponent.CountComponent != null) 
+            {
+                GridComponent.CountComponent.Refresh();
+            }
+
+            return new ItemsProviderResult<T>(Items, ((GridPager)_pager).ItemsCount);
+        }
+#endif
     }
 }

@@ -1,6 +1,9 @@
 ﻿using GridShared;
 using GridShared.Grouping;
+using GridShared.Pagination;
+using GridShared.Utility;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.Extensions.Primitives;
 using System;
 using System.Collections.Generic;
 using System.Reflection;
@@ -27,6 +30,12 @@ namespace GridMvc.Html
             get { return (_source as IGrid).ItemsToDisplay; }
         }
 
+        public QueryDictionary<StringValues> Query
+        {
+            get { return _source.Query; }
+            set { _source.Query = value; }
+        }
+
         public int ItemsCount
         {
             get { return _source.ItemsCount; }
@@ -37,10 +46,20 @@ namespace GridMvc.Html
             get { return _source.DisplayingItemsCount; }
         }
 
+        [Obsolete("This property is obsolete. Use PagingType property", true)]
         public bool EnablePaging
         {
-            get { return _source.EnablePaging; }
-            set { _source.EnablePaging = value; }
+            get
+            {
+                return _source.PagingType == PagingType.Pagination;
+            }
+            set { }
+        }
+
+        public PagingType PagingType
+        {
+            get { return _source.PagingType; }
+            set { _source.PagingType = value; }
         }
 
         SearchOptions IGrid.SearchOptions {

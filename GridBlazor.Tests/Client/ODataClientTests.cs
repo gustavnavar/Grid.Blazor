@@ -1,4 +1,5 @@
 ﻿using GridShared;
+using GridShared.Pagination;
 using GridShared.Utility;
 using Microsoft.Extensions.Primitives;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
@@ -34,12 +35,12 @@ namespace GridBlazor.Tests.Client
         [TestMethod]
         public void TestMainMethods()
         {
-            Assert.IsTrue(_client.Grid.EnablePaging);
+            Assert.AreEqual(_client.Grid.PagingType, PagingType.Pagination);
             Assert.AreEqual(_client.Grid.ServerAPI, ServerAPI.OData);
             Assert.AreEqual(_client.Grid.Pager.PageSize, 10);
 
             _client.WithPaging(5);
-            Assert.IsTrue(_client.Grid.EnablePaging);
+            Assert.AreEqual(_client.Grid.PagingType, PagingType.Pagination);
             Assert.AreEqual(_client.Grid.Pager.PageSize, 5);
 
             _client.WithMultipleFilters();

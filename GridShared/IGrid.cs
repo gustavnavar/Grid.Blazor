@@ -1,4 +1,7 @@
 ﻿using GridShared.Grouping;
+using GridShared.Pagination;
+using GridShared.Utility;
+using Microsoft.Extensions.Primitives;
 using System;
 using System.Collections.Generic;
 using System.Reflection;
@@ -16,6 +19,11 @@ namespace GridShared
     /// </summary>
     public interface IGrid
     {
+        /// <summary>
+        ///     Query for the grid
+        /// </summary>
+        QueryDictionary<StringValues> Query { get; set; }
+
         /// <summary>
         ///     Grid columns
         /// </summary>
@@ -35,7 +43,13 @@ namespace GridShared
         /// <summary>
         ///     Enable paging view
         /// </summary>
+        [Obsolete("This property is obsolete. Use PagingType property", true)]
         bool EnablePaging { get; set; }
+
+        /// <summary>
+        ///     Enable paging type
+        /// </summary>
+        PagingType PagingType { get; set; }
 
         /// <summary>
         ///     Set or get options for searching

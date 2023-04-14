@@ -4,6 +4,7 @@ using GridBlazor.Pagination;
 using GridBlazor.Resources;
 using GridShared;
 using GridShared.Columns;
+using GridShared.Pagination;
 using GridShared.Sorting;
 using GridShared.Utility;
 using Microsoft.AspNetCore.Components;
@@ -25,8 +26,8 @@ namespace GridBlazor
         protected readonly CGrid<T> _source;
 
         public GridClient(HttpClient httpClient, string url, IQueryDictionary<StringValues> query, bool renderOnlyRows,
-            string gridName, Action<IGridColumnCollection<T>> columns = null, CultureInfo cultureInfo = null,
-            IColumnBuilder<T> columnBuilder = null)
+                    string gridName, Action<IGridColumnCollection<T>> columns = null, CultureInfo cultureInfo = null,
+                    IColumnBuilder<T> columnBuilder = null)
         {
             _source = new CGrid<T>(httpClient, url, query, renderOnlyRows, columns, cultureInfo, columnBuilder);
             Named(gridName);
@@ -34,17 +35,17 @@ namespace GridBlazor
         }
 
         [Obsolete("This constructor is obsolete. Use one including an HttpClient parameter.", true)]
-        public GridClient(string url, IQueryDictionary<StringValues> query, bool renderOnlyRows, 
+        public GridClient(string url, IQueryDictionary<StringValues> query, bool renderOnlyRows,
             string gridName, Action<IGridColumnCollection<T>> columns = null, CultureInfo cultureInfo = null,
             IColumnBuilder<T> columnBuilder = null)
         {
-            _source =  new CGrid<T>(url, query, renderOnlyRows, columns, cultureInfo, columnBuilder);
+            _source = new CGrid<T>(url, query, renderOnlyRows, columns, cultureInfo, columnBuilder);
             Named(gridName);
             //WithPaging(_source.Pager.PageSize);
         }
 
-        public GridClient(Func<QueryDictionary<StringValues>, ItemsDTO<T>> dataService, 
-            QueryDictionary<StringValues> query, bool renderOnlyRows, string gridName, 
+        public GridClient(Func<QueryDictionary<StringValues>, ItemsDTO<T>> dataService,
+            QueryDictionary<StringValues> query, bool renderOnlyRows, string gridName,
             Action<IGridColumnCollection<T>> columns = null, CultureInfo cultureInfo = null,
             IColumnBuilder<T> columnBuilder = null)
         {
@@ -73,7 +74,7 @@ namespace GridBlazor
             //WithPaging(_source.Pager.PageSize);
         }
 
-        public GridClient(HttpClient httpClient, string url, IMemoryDataService<T> memoryDataService, 
+        public GridClient(HttpClient httpClient, string url, IMemoryDataService<T> memoryDataService,
             IQueryDictionary<StringValues> query, bool renderOnlyRows,
             string gridName, Action<IGridColumnCollection<T>> columns = null, CultureInfo cultureInfo = null,
             IColumnBuilder<T> columnBuilder = null)
@@ -93,7 +94,7 @@ namespace GridBlazor
             //WithPaging(_source.Pager.PageSize);
         }
 
-        public GridClient(Func<QueryDictionary<StringValues>, Task<ItemsDTO<T>>> dataServiceAsync, 
+        public GridClient(Func<QueryDictionary<StringValues>, Task<ItemsDTO<T>>> dataServiceAsync,
             IMemoryDataService<T> memoryDataService, QueryDictionary<StringValues> query, bool renderOnlyRows, string gridName,
             Action<IGridColumnCollection<T>> columns = null, CultureInfo cultureInfo = null,
             IColumnBuilder<T> columnBuilder = null)
@@ -144,7 +145,7 @@ namespace GridBlazor
 
         public IGridClient<T> WithPaging(int pageSize, int maxDisplayedItems, string queryStringParameterName)
         {
-            _source.EnablePaging = true;
+            _source.PagingType = PagingType.Pagination;
             _source.Pager.PageSize = pageSize;
 
             var pager = _source.Pager as GridPager; //This setting can be applied only to default grid pager
@@ -156,6 +157,12 @@ namespace GridBlazor
                 pager.ParameterName = queryStringParameterName;
             _source.Pager = pager;
             return this;
+        }
+
+        public IGridClient<T> Virtualize(string width, string heigh)
+        {
+            _source.PagingType = PagingType.Virtualization;
+            return SetTableLayout(TableLayout.Fixed, width, heigh);
         }
 
         public IGridClient<T> Sortable()

@@ -6,6 +6,7 @@
 @using GridShared.Columns
 @using GridShared.Filtering
 @using GridShared.Utility
+@using GridShared.Pagination
 @using Microsoft.AspNetCore.Mvc.ModelBinding
 @model ISGrid
 
@@ -39,7 +40,7 @@
     string _goToUrl = queryBuilder.GetQueryStringExcept(exceptQueryParameters);
     var pagerViewData = new ViewDataDictionary(new EmptyModelMetadataProvider(), new ModelStateDictionary());
     pagerViewData.Add("changePageSizeUrl", _changePageSizeUrl);
-    pagerViewData.Add("enablePaging", Model.EnablePaging);
+    pagerViewData.Add("pagingType", Model.PagingType);
     pagerViewData.Add("goToUrl", _goToUrl);
     exceptQueryParameters = new List<string> { QueryStringFilterSettings.DefaultTypeQueryParameter, QueryStringFilterSettings.DefaultClearInitFilterQueryParameter };
     string _removeAllFilters = queryBuilder.GetQueryStringExcept(exceptQueryParameters);
@@ -208,7 +209,7 @@ else
                 </script>
             }
             <div class="grid-footer">
-                @if (Model.EnablePaging && Model.Pager != null)
+                @if (Model.PagingType == PagingType.Pagination && Model.Pager != null)
                 {
                     @await Html.PartialAsync(Model.Pager.TemplateName, Model.Pager, pagerViewData)
                 }

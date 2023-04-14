@@ -10,6 +10,7 @@ using GridShared;
 using GridShared.Columns;
 using GridShared.DataAnnotations;
 using GridShared.Grouping;
+using GridShared.Pagination;
 using GridShared.Sorting;
 using GridShared.Totals;
 using GridShared.Utility;
@@ -36,7 +37,7 @@ namespace GridCore
         internal SortGridItemsProcessor<T> _currentSortItemsProcessor;
         internal TotalsGridItemsProcessor<T> _currentTotalsItemsProcessor;
         protected int _displayingItemsCount = -1; // count of displaying items (if using pagination)
-        protected bool _enablePaging;
+        protected PagingType _pagingType;
         protected IGridPager _pager;
 
         protected IGridItemsProcessor<T> _pagerProcessor;
@@ -55,15 +56,11 @@ namespace GridCore
             string pagerViewName = GridPager.DefaultPagerViewName, IColumnBuilder<T> columnBuilder = null)
             : this(items, query, columnBuilder)
         {
-            var urlParameters = CustomQueryStringBuilder.Convert(query);
-            string pageParameter = urlParameters[((GridPager)Pager).ParameterName];
-            int page = 0;
-            if (pageParameter != null)
-                int.TryParse(pageParameter, out page);
-            if (page == 0)
-                page++;
-            ((GridPager)_pager).CurrentPage = page;
-            ((GridPager)_pager).TemplateName = pagerViewName;
+            if (PagingType != PagingType.Virtualization)
+            {
+                ((GridPager)_pager).TemplateName = pagerViewName;
+            }
+
             RenderOptions.RenderRowsOnly = renderOnlyRows;
         }
 
@@ -110,6 +107,33 @@ namespace GridCore
             RenderOptions = new GridRenderOptions();
 
             ApplyGridSettings();
+
+            var urlParameters = CustomQueryStringBuilder.Convert(query);
+
+            int page = 0;
+            int startIndex = 0;
+            int virtualizedCount = 0;
+
+            string startIndexParameter = urlParameters[GridPager.DefaultStartIndexQueryParameter];
+            string virtualizedCountParameter = urlParameters[GridPager.DefaultVirtualizedCountQueryParameter];
+            if (!string.IsNullOrEmpty(startIndexParameter) && !string.IsNullOrWhiteSpace(virtualizedCountParameter))
+            {
+                PagingType = PagingType.Virtualization;
+                int.TryParse(startIndexParameter, out startIndex);
+                int.TryParse(virtualizedCountParameter, out virtualizedCount);
+                ((GridPager)Pager).StartIndex = startIndex;
+                ((GridPager)Pager).VirtualizedCount = virtualizedCount;
+            }
+            else
+            {
+                PagingType = PagingType.None;
+                string pageParameter = urlParameters[((GridPager)Pager).ParameterName];
+                if (pageParameter != null)
+                    int.TryParse(pageParameter, out page);
+                if (page == 0)
+                    page++;
+                ((GridPager)Pager).CurrentPage = page;
+            }
         }
 
         /// <summary>
@@ -225,7 +249,7 @@ namespace GridCore
         /// <summary>
         ///     Provides query, using by the grid
         /// </summary>
-        public QueryDictionary<StringValues> Query { get; internal protected set; }
+        public QueryDictionary<StringValues> Query { get; set; }
 
         #region IGrid Members
 
@@ -257,17 +281,29 @@ namespace GridCore
         /// <summary>
         ///     Enable or disable paging for the grid
         /// </summary>
+        [Obsolete("This property is obsolete. Use PagingType property", true)]
         public bool EnablePaging
         {
-            get { return _enablePaging; }
+            get { 
+                return _pagingType == PagingType.Pagination; 
+            }
+            set { }
+        }
+
+        /// <summary>
+        ///     Enable or disable paging type for the grid
+        /// </summary>
+        public PagingType PagingType
+        {
+            get { return _pagingType; }
             set
             {
-                if (_enablePaging == value) return;
-                _enablePaging = value;
-                if (_enablePaging)
+                if (_pagingType == value) return;
+                _pagingType = value;
+                if (_pagingType != PagingType.None)
                 {
                     if (_pagerProcessor == null)
-                        _pagerProcessor = new PagerGridItemsProcessor<T>(Pager);
+                        _pagerProcessor = new PagerGridItemsProcessor<T>(this);
                     AddItemsProcessor(_pagerProcessor);
                 }
                 else
@@ -314,7 +350,7 @@ namespace GridCore
         /// </summary>
         public IGridPager Pager
         {
-            get { return _pager ?? (_pager = new GridPager(Query)); }
+            get { return _pager ?? (_pager = new GridPager(this)); }
             set { _pager = value; }
         }
 
@@ -396,13 +432,17 @@ namespace GridCore
         {
             GridTableAttribute opt = _annotations.GetAnnotationForTable<T>();
             if (opt == null) return;
-            EnablePaging = opt.PagingEnabled;
-            if (opt.PageSize > 0)
-                Pager.PageSize = opt.PageSize;
+            PagingType = opt.PagingType;
 
-            if (opt.PagingMaxDisplayedPages > 0 && Pager is GridPager)
+            if (PagingType == PagingType.Pagination)
             {
-                (Pager as GridPager).MaxDisplayedPages = opt.PagingMaxDisplayedPages;
+                if (opt.PageSize > 0)
+                    Pager.PageSize = opt.PageSize;
+
+                if (opt.PagingMaxDisplayedPages > 0 && Pager is GridPager)
+                {
+                    (Pager as GridPager).MaxDisplayedPages = opt.PagingMaxDisplayedPages;
+                }
             }
         }
 

@@ -43,6 +43,11 @@ namespace GridBlazor
         IGridClient<T> WithPaging(int pageSize, int maxDisplayedItems, string queryStringParameterName);
 
         /// <summary>
+        ///    Enable virtualization
+        /// </summary>
+        IGridClient<T> Virtualize(string width, string heigh);
+
+        /// <summary>
         ///     Enable sorting for all columns
         /// </summary>
         IGridClient<T> Sortable();

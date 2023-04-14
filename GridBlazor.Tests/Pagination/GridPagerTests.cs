@@ -1,7 +1,8 @@
-﻿using GridShared.Utility;
-using GridBlazor.Pagination;
-using Microsoft.Extensions.Primitives;
+﻿using GridBlazor.Pagination;
+using GridShared;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using System;
+using System.Threading;
 
 namespace GridBlazor.Tests.Pagination
 {
@@ -13,7 +14,13 @@ namespace GridBlazor.Tests.Pagination
         [TestInitialize]
         public void Init()
         {
-            _pager = new GridPager(new QueryDictionary<StringValues>());
+            Action<IGridColumnCollection<TestModel>> columns = c =>
+            {
+                c.Add(x => x.Title);
+            };
+            var repo = new TestRepository();
+            var grid = new TestGrid((q) => repo.GetAllService(columns, q, false, true), true, columns, Thread.CurrentThread.CurrentCulture);
+            _pager = new GridPager(grid);
         }
 
         [TestMethod]

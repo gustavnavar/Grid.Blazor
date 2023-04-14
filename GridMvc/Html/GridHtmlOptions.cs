@@ -4,6 +4,7 @@ using GridCore.Pagination;
 using GridCore.Resources;
 using GridShared;
 using GridShared.Columns;
+using GridShared.Pagination;
 using GridShared.Sorting;
 using Microsoft.AspNetCore.Html;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -81,7 +82,7 @@ namespace GridMvc.Html
 
         public IGridHtmlOptions<T> WithPaging(int pageSize, int maxDisplayedItems, string queryStringParameterName)
         {
-            _source.EnablePaging = true;
+            _source.PagingType = PagingType.Pagination;
             _source.Pager.PageSize = pageSize;
 
             var pager = _source.Pager as GridPager; //This setting can be applied only to default grid pager

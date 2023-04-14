@@ -1,4 +1,5 @@
 ﻿using GridMvc.Html;
+using GridShared.Pagination;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.AspNetCore.Mvc.ViewEngines;
@@ -28,7 +29,7 @@ namespace GridMvc.Tests.Html
         public void TestMainMethods()
         {
             _opt.WithPaging(5);
-            Assert.IsTrue(_grid.EnablePaging);
+            Assert.AreEqual(_grid.PagingType, PagingType.Pagination);
             Assert.AreEqual(_grid.Pager.PageSize, 5);
 
             _opt.WithMultipleFilters();
