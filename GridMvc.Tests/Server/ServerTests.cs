@@ -41,8 +41,8 @@ namespace GridMvc.Tests.Server
         {
             _server.Grid.PagingType = PagingType.Virtualization;
             Assert.AreEqual(_server.Grid.PagingType, PagingType.Virtualization);
-            Assert.AreEqual(_server.Grid.Pager.StartIndex, -1);
-            Assert.AreEqual(_server.Grid.Pager.VirtualizedCount, -1);
+            Assert.AreEqual(_server.Grid.Pager.StartIndex, 0);
+            Assert.AreEqual(_server.Grid.Pager.VirtualizedCount, 0);
 
             _server.WithPaging(5);
             Assert.AreEqual(_server.Grid.PagingType, PagingType.Pagination);

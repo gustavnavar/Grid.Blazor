@@ -34,13 +34,13 @@ namespace GridCore.Pagination
 
             if (_grid.PagingType == PagingType.Virtualization)
             {
-                if (_grid.Pager == null || _grid.Pager.StartIndex < 0 || _grid.Pager.VirtualizedCount < 0) return items; //incorrect page
+                if (_grid.Pager == null || _grid.Pager.StartIndex < 0 || _grid.Pager.VirtualizedCount <= 0) return items.Take(0); //incorrect page
 
                 return items.Skip(_grid.Pager.StartIndex).Take(_grid.Pager.VirtualizedCount);
             }
             else
             {
-                if (_grid.Pager == null || _grid.Pager.CurrentPage <= 0) return items; //incorrect page
+                if (_grid.Pager == null || _grid.Pager.CurrentPage <= 0) return items.Take(0); //incorrect page
 
                 int skip = (_grid.Pager.CurrentPage - 1) * _grid.Pager.PageSize;
                 return items.Skip(skip).Take(_grid.Pager.PageSize);

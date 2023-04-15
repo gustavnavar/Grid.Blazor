@@ -122,12 +122,12 @@ namespace GridCore.Pagination
         /// <summary>
         ///     Start index
         /// </summary>
-        public int StartIndex { get; set; } = -1;
+        public int StartIndex { get; set; } = 0;
 
         /// <summary>
         ///     Virtualized items count
         /// </summary>
-        public int VirtualizedCount { get; set; } = -1;
+        public int VirtualizedCount { get; set; } = 0;
 
 
         #endregion

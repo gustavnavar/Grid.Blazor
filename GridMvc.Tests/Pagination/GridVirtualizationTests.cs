@@ -21,7 +21,7 @@ namespace GridMvc.Tests.Pagination
         public void PagerInitTest()
         {
             Assert.AreEqual(_pager.StartIndex, 0);
-            Assert.AreEqual(_pager.VirtualizedCount, -1);
+            Assert.AreEqual(_pager.VirtualizedCount, 0);
         }
 
         [TestMethod]
@@ -30,7 +30,7 @@ namespace GridMvc.Tests.Pagination
             _pager.StartIndex = 3;
 
             Assert.AreEqual(_pager.StartIndex, 3);
-            Assert.AreEqual(_pager.VirtualizedCount, -1);
+            Assert.AreEqual(_pager.VirtualizedCount, 0);
         }
 
         [TestMethod]
@@ -38,7 +38,7 @@ namespace GridMvc.Tests.Pagination
         {
             _pager.VirtualizedCount = 13;
 
-            Assert.AreEqual(_pager.StartIndex, -1);
+            Assert.AreEqual(_pager.StartIndex, 0);
             Assert.AreEqual(_pager.VirtualizedCount, 13);
         }
     }

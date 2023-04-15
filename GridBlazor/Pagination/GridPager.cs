@@ -32,7 +32,7 @@ namespace GridBlazor.Pagination
 
         #region ctor's
 
-        public GridPager(IGrid grid, int? virtualizedCount = null)
+        public GridPager(IGrid grid)
         {
             _grid = grid;
             _query = new QueryDictionary<StringValues>();
@@ -41,12 +41,31 @@ namespace GridBlazor.Pagination
 
             if (_grid.PagingType == PagingType.Virtualization)
             {
-                StartIndex = 0;
-                if(virtualizedCount.HasValue)
-                    VirtualizedCount = virtualizedCount.Value;
-
                 _query = grid.Query;
                 _queryBuilder = new CustomQueryStringBuilder(_query);
+
+                int startIndex;
+                int virtualizedCount;
+
+                if (_query.ContainsKey(DefaultStartIndexQueryParameter))
+                {
+                    if(int.TryParse(_query.Get(DefaultStartIndexQueryParameter), out startIndex))
+                        StartIndex = startIndex;
+                    else
+                        StartIndex = 0;
+                }
+                else
+                    StartIndex = 0;
+
+                if (_query.ContainsKey(DefaultVirtualizedCountQueryParameter))
+                {
+                    if(int.TryParse(_query.Get(DefaultVirtualizedCountQueryParameter), out virtualizedCount))
+                        VirtualizedCount = virtualizedCount;
+                    else
+                        VirtualizedCount = 0;
+                }
+                else
+                    VirtualizedCount = 0;
             }
             else
             {
@@ -130,12 +149,12 @@ namespace GridBlazor.Pagination
         /// <summary>
         ///     Start index
         /// </summary>
-        public int StartIndex { get; set; } = -1;
+        public int StartIndex { get; set; } = 0;
 
         /// <summary>
         ///     Virtualized items count
         /// </summary>
-        public int VirtualizedCount { get; set; } = -1;
+        public int VirtualizedCount { get; set; } = 0;
 
         #endregion
 

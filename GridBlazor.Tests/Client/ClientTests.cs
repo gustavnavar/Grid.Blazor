@@ -37,8 +37,8 @@ namespace GridBlazor.Tests.Client
         {
             _client.Virtualize("1200px","600px");
             Assert.AreEqual(_client.Grid.PagingType, PagingType.Virtualization);
-            Assert.AreEqual(_client.Grid.Pager.StartIndex, -1);
-            Assert.AreEqual(_client.Grid.Pager.VirtualizedCount, -1);
+            Assert.AreEqual(_client.Grid.Pager.StartIndex, 0);
+            Assert.AreEqual(_client.Grid.Pager.VirtualizedCount, 0);
             Assert.AreEqual(_client.Grid.ServerAPI, ServerAPI.ItemsDTO);
             Assert.AreEqual(_client.Grid.Width, "1200px");
             Assert.AreEqual(_client.Grid.Height, "600px");

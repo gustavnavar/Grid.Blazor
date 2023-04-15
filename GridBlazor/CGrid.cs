@@ -186,7 +186,7 @@ namespace GridBlazor
             _columnsCollection = new GridColumnCollection<T>(this, _columnBuilder, _settings.SortSettings);
             ComponentOptions = new GridOptions();
 
-            Pager = new GridPager(query);
+            Pager = new GridPager(this);
 
             ApplyGridSettings();
             SetInitSorting();
@@ -1555,14 +1555,18 @@ namespace GridBlazor
         {
             Error = "";
 
+            if(request.StartIndex < 0 || request.Count <= 0)
+                return new ItemsProviderResult<T>(Items, ((GridPager)_pager).ItemsCount);
+
+            AddQueryParameter(GridPager.DefaultStartIndexQueryParameter, request.StartIndex.ToString());
+            AddQueryParameter(GridPager.DefaultVirtualizedCountQueryParameter, request.Count.ToString());
+
+            _pager = new GridPager(this);
+
             if (ServerAPI == ServerAPI.OData && (GridComponent == null || !GridComponent.UseMemoryCrudDataService))
                 await GetOData();
             else
-            {
-                AddQueryParameter(GridPager.DefaultStartIndexQueryParameter, request.StartIndex.ToString());
-                AddQueryParameter(GridPager.DefaultVirtualizedCountQueryParameter, request.Count.ToString());
                 await GetItemsDTO();
-            }
 
             if(GridComponent != null && GridComponent.CountComponent != null) 
             {
