@@ -43,12 +43,6 @@ else
     private Task _task;
     private bool _afterRenderExecuted = false;
 
-    [Parameter]
-    public string OrderId { get; set; }
-
-    [Parameter]
-    public string Mode { get; set; }
-
     protected override async Task OnParametersSetAsync()
     {
         var locale = CultureInfo.CurrentCulture;

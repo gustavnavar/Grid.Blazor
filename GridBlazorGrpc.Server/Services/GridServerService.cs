@@ -262,6 +262,21 @@ namespace GridBlazorGrpc.Server.Services
             return items;
         }
 
+        public async ValueTask<ItemsDTO<Order>> GetVirtualizedOrdersGrid(QueryDictionary<string> query)
+        {
+            var repository = new OrdersRepository(_context);
+            IGridServer<Order> server = new GridCoreServer<Order>(repository.GetAll(), query,
+                true, "ordersGrid", ColumnCollections.OrderColumns)
+                    .Sortable()
+                    .Filterable()
+                    .WithMultipleFilters()
+                    .WithGridItemsCount()
+                    .SetRemoveDiacritics<NorthwindDbContext>("RemoveDiacritics");
+
+            var items = await server.GetItemsToDisplayAsync(async x => await x.ToListAsync());
+            return items;
+        }
+
         public async ValueTask<ItemsDTO<Order>> GetOrdersGridAllFeatures(QueryDictionary<string> query)
         {
             var repository = new OrdersRepository(_context);

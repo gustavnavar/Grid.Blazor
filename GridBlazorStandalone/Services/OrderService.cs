@@ -110,6 +110,19 @@ namespace GridBlazorStandalone.Services
             return items;
         }
 
+        public ItemsDTO<Order> GetVirtualizedOrdersGridRows(Action<IGridColumnCollection<Order>> columns, QueryDictionary<StringValues> query)
+        {
+            var server = new GridCoreServer<Order>(Orders, query, true, "ordersGrid", columns)
+                        .Sortable()
+                        .Filterable()
+                        .WithMultipleFilters()
+                        .SetRemoveDiacritics<StringUtils>("RemoveDiacritics");
+
+            var items = server.ItemsToDisplay;
+            return items;
+        }
+
+
         public async Task Add1ToFreight(int OrderId)
         {
             var order = await Get(OrderId);
@@ -1102,6 +1115,7 @@ namespace GridBlazorStandalone.Services
         ItemsDTO<Order> GetOrdersGridRows(QueryDictionary<StringValues> query);
         ItemsDTO<Order> GetOrdersGridRowsWithCount(Action<IGridColumnCollection<Order>> columns, QueryDictionary<StringValues> query);
         ItemsDTO<Order> GetOrdersWithErrorGridRows(Action<IGridColumnCollection<Order>> columns, QueryDictionary<StringValues> query);
+        ItemsDTO<Order> GetVirtualizedOrdersGridRows(Action<IGridColumnCollection<Order>> columns, QueryDictionary<StringValues> query);
         Task Add1ToFreight(int OrderId);
         Task Subtract1ToFreight(int OrderId);
         Task<decimal?> GetMaxFreight(string clientName, QueryDictionary<StringValues> query);

@@ -140,6 +140,24 @@ namespace GridBlazorServerSide.Services
             }
         }
 
+        public async Task<ItemsDTO<Order>> GetVirtualizedOrdersAsync(Action<IGridColumnCollection<Order>> columns,
+            QueryDictionary<StringValues> query)
+        {
+            using (var context = new NorthwindDbContext(_options))
+            {
+                var repository = new OrdersRepository(context);
+
+                var server = new GridCoreServer<Order>(repository.GetAll(), query, true, "ordersGrid", columns)
+                        .Sortable()
+                        .Filterable()
+                        .WithMultipleFilters()
+                        .SetRemoveDiacritics<NorthwindDbContext>("RemoveDiacritics");
+
+                // return items to displays
+                var items = await server.GetItemsToDisplayAsync(async x => await x.ToListAsync());
+                return items;
+            }
+        }
 
         public async Task<Order> GetOrder(int OrderId)
         {
@@ -305,6 +323,7 @@ namespace GridBlazorServerSide.Services
         ItemsDTO<Order> GetOrdersGridRows(QueryDictionary<StringValues> query);
         ItemsDTO<Order> GetOrdersGridRowsInMemory(Action<IGridColumnCollection<Order>> columns, QueryDictionary<StringValues> query);
         ItemsDTO<Order> GetOrdersWithErrorGridRows(Action<IGridColumnCollection<Order>> columns, QueryDictionary<StringValues> query);
+        Task<ItemsDTO<Order>> GetVirtualizedOrdersAsync(Action<IGridColumnCollection<Order>> columns, QueryDictionary<StringValues> query);
         Task<Order> GetOrder(int OrderId);
         Task UpdateAndSave(Order order);
         Task Add1ToFreight(int OrderId);

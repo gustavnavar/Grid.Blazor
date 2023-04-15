@@ -26,8 +26,13 @@
     <app>@(await Html.RenderComponentAsync<App>(RenderMode.ServerPrerendered))</app>
 
     <script src="_framework/blazor.server.js"></script>
+    <script src="lib/jquery/jquery.min.js"></script>
+    <script src="js/bootstrap.bundle.min.js"></script>
     <script src="_content/GridBlazor/js/gridblazor.js"></script>
-    <script src="_content/BlazorStrap/blazorStrap.js"></script>
-    <script src="_content/BlazorStrap/popper.min.js"></script>
+    <script type="text/javascript">
+        $(function () {
+            $('[data-toggle="tooltip"]').tooltip()
+        })
+    </script>
 </body>
 </html>

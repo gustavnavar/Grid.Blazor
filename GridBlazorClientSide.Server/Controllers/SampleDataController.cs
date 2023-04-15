@@ -148,6 +148,22 @@ namespace GridBlazorClientSide.Server.Controllers
         }
 
         [HttpGet("[action]")]
+        public async Task<ActionResult> GetVirtualizedOrdersGrid()
+        {
+            var repository = new OrdersRepository(_context);
+            IGridServer<Order> server = new GridServer<Order>(repository.GetAll(), Request.Query,
+                true, "ordersGrid", ColumnCollections.OrderColumns)
+                    .Sortable()
+                    .Filterable()
+                    .WithMultipleFilters()
+                    .WithGridItemsCount()
+                    .SetRemoveDiacritics<NorthwindDbContext>("RemoveDiacritics");
+
+            var items = await server.GetItemsToDisplayAsync(async x => await x.ToListAsync());
+            return Ok(items);
+        }
+
+        [HttpGet("[action]")]
         public ActionResult GetMaxFreight(string clientName)
         {
             var repository = new OrdersRepository(_context);

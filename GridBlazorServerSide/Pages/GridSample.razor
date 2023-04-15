@@ -203,8 +203,8 @@ else
 
     private async Task PagerChanged(object sender, PagerEventArgs e)
     {
-        Console.WriteLine("The pager has changed: EnablePaging: {0}, CurrentPage: {1}, ItemsCount: {2}, PageSize: {3}.",
-            e.Pager.EnablePaging, e.Pager.CurrentPage, e.Pager.ItemsCount, e.Pager.PageSize);
+        Console.WriteLine("The pager has changed: CurrentPage: {0}, PageSize: {1}.",
+            e.Pager.CurrentPage, e.Pager.PageSize);
         await Task.CompletedTask;
     }
 

@@ -241,6 +241,16 @@ namespace GridBlazorGrpc.Client.Services
             }
         }
 
+        public async Task<ItemsDTO<Order>> GetVirtualizedOrdersGridRows(QueryDictionary<string> query)
+        {
+            var handler = new GrpcWebHandler(GrpcWebMode.GrpcWeb, new HttpClientHandler());
+            using (var channel = GrpcChannel.ForAddress(_baseUri, new GrpcChannelOptions() { HttpClient = new HttpClient(handler) }))
+            {
+                var service = channel.CreateGrpcService<IGridService>();
+                return await service.GetVirtualizedOrdersGrid(query);
+            }
+        }
+
         public async Task<ItemsDTO<Order>> OrderColumnsListFilter(QueryDictionary<string> query)
         {
             var handler = new GrpcWebHandler(GrpcWebMode.GrpcWeb, new HttpClientHandler());
@@ -339,6 +349,7 @@ namespace GridBlazorGrpc.Client.Services
         Task<ItemsDTO<Order>> OrderColumnsWithCrud(QueryDictionary<string> query);
         Task<ItemsDTO<Order>> OrderColumnsWithSubgridCrud(QueryDictionary<string> query);
         Task<ItemsDTO<Order>> GetOrderColumnsWithErrors(QueryDictionary<string> query);
+        Task<ItemsDTO<Order>> GetVirtualizedOrdersGridRows(QueryDictionary<string> query);
         Task<ItemsDTO<Order>> GetOrdersGridAllFeatures(QueryDictionary<string> query);
         Task<IEnumerable<string>> GetCustomersNames();
         Task<IEnumerable<SelectItem>> GetAllCustomers();

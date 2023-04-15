@@ -47,7 +47,6 @@ else
     protected override async Task OnParametersSetAsync()
     {
         var locale = CultureInfo.CurrentCulture;
-        SharedResource.Culture = locale;
 
         Func<object[], bool, bool, bool, bool, Task<IGrid>> subGrids = async (keys, create, read, update, delete) =>
         {
@@ -76,8 +75,7 @@ else
         Action<IGridColumnCollection<Order>> columns = c => ColumnCollections.OrderColumnsWithCreateGrid(c,
             c => customerService.GetAllCustomers(), c => employeeService.GetAllEmployees(), shipperService.GetAllShippers, subGrids);
 
-        var client = new GridClient<Order>(q => orderService.GetOrdersGridRowsAsync(columns, q),
-            query, false, "ordersGrid", columns, locale)
+        var client = new GridClient<Order>(q => orderService.GetOrdersGridRowsAsync(columns, q), query, false, "ordersGrid", columns, locale)
             .Sortable()
             .Filterable()
             .SetStriped(true)

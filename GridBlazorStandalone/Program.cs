@@ -1,5 +1,4 @@
-﻿using BlazorStrap;
-using GridBlazor;
+﻿using GridBlazor;
 using GridBlazorStandalone.Services;
 using GridBlazorStandalone.Models;
 using GridShared;
@@ -31,8 +30,6 @@ namespace GridBlazorStandalone
             builder.Services.AddScoped<ITruckService, TruckService>();
 
             builder.Services.AddLocalization();
-
-            builder.Services.AddBootstrapCss();
 
             var host = builder.Build();
             var jsInterop = host.Services.GetRequiredService<IJSRuntime>();

@@ -1,5 +1,4 @@
-﻿using BlazorStrap;
-using GridBlazor;
+﻿using GridBlazor;
 using GridBlazorClientSide.Client.Services;
 using GridBlazorClientSide.Shared.Models;
 using GridShared;
@@ -28,8 +27,6 @@ namespace GridBlazorClientSide.Client
             builder.Services.AddScoped<ICrudDataService<Employee>, EmployeeService>();
             builder.Services.AddScoped<ICrudFileService<Employee>, EmployeeFileService>();
             builder.Services.AddLocalization();
-
-            builder.Services.AddBootstrapCss();
 
             var host = builder.Build();
             var jsInterop = host.Services.GetRequiredService<IJSRuntime>();

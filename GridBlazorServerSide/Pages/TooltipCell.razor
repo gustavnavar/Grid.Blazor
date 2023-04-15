@@ -1,25 +1,21 @@
-﻿@using BlazorStrap
-@using GridBlazorServerSide.Models
+﻿@using GridBlazorServerSide.Models
 @using GridShared.Columns
 @implements ICustomGridComponent<Order>
 
-<div id="@Item.OrderID.ToString()">@Item.OrderDate?.ToString("yyyy'-'MM'-'dd")</div>
-
 @if (!Item.OrderDate.HasValue)
 {
-    <BSTooltip Target="@Item.OrderID.ToString()" Placement="Placement.Bottom">Tooltip on Bottom</BSTooltip>
+    <div data-toggle="tooltip" data-placement="bottom" title="Tooltip on Bottom">@Item.OrderDate?.ToString("yyyy'-'MM'-'dd")</div>
 }
 else
 {
     if (Item.OrderDate.Value.Day >= 16)
     {
-        <BSTooltip Target="@Item.OrderID.ToString()" Placement="Placement.Left">Tooltip on Left</BSTooltip>
+        <div data-toggle="tooltip" data-placement="left" title="Tooltip on Left">@Item.OrderDate?.ToString("yyyy'-'MM'-'dd")</div>
     }
     else
     {
-        <BSTooltip Target="@Item.OrderID.ToString()" Placement="Placement.Right">Tooltip on Right</BSTooltip>
+        <div data-toggle="tooltip" data-placement="right" title="Tooltip on Right">@Item.OrderDate?.ToString("yyyy'-'MM'-'dd")</div>
     }
-
 }
 
 @code {
