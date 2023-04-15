@@ -1563,12 +1563,9 @@ namespace GridBlazor
 
             _pager = new GridPager(this);
 
-            if (ServerAPI == ServerAPI.OData && (GridComponent == null || !GridComponent.UseMemoryCrudDataService))
-                await GetOData();
-            else
-                await GetItemsDTO();
+            await UpdateGrid();
 
-            if(GridComponent != null && GridComponent.CountComponent != null) 
+            if (GridComponent != null && GridComponent.CountComponent != null) 
             {
                 GridComponent.CountComponent.Refresh();
             }

@@ -132,7 +132,8 @@ namespace GridBlazor.Pages
             set { Grid.Error = value; } 
         }
 
-        internal RenderFragment VirtualRenderFragment;
+        internal RenderFragment VirtualizedRenderFragment;
+        internal VariableReference VirtualizedComponent;
 
         [Parameter]
         public ICGrid Grid { get; set; }
@@ -277,8 +278,11 @@ namespace GridBlazor.Pages
                 ((CGrid<T>)Grid).GrpcService = null;
             }
 
-            if(Grid.PagingType == PagingType.Virtualization)
-                VirtualRenderFragment = CreateVirtualComponent(Grid);
+            if (Grid.PagingType == PagingType.Virtualization)
+            {
+                VirtualizedComponent = new VariableReference();
+                VirtualizedRenderFragment = CreateVirtualComponent(Grid, VirtualizedComponent);
+            }
 
             _shouldRender = true;
         }
@@ -362,7 +366,7 @@ namespace GridBlazor.Pages
         }
 
 
-        private RenderFragment CreateVirtualComponent(ICGrid grid) => builder =>
+        private RenderFragment CreateVirtualComponent(ICGrid grid, VariableReference reference) => builder =>
         {
 #if NETSTANDARD2_1
             builder.OpenElement(0, "p");
@@ -392,6 +396,7 @@ namespace GridBlazor.Pages
                 builder1.CloseElement();
             }
             ));
+            builder.AddComponentReferenceCapture(15, r => reference.Variable = r);
             builder.CloseComponent();
 #endif
         };
@@ -1714,6 +1719,13 @@ namespace GridBlazor.Pages
             SelectedRow = -1;
             SelectedRows.Clear();
             InitCheckboxAndSubGridVars();
+
+#if !NETSTANDARD2_1
+            if (Grid.PagingType == PagingType.Virtualization)
+            {
+                await ((Virtualize<T>)VirtualizedComponent.Variable).RefreshDataAsync();
+            }
+#endif
 
             _shouldRender = shouldRender;
             if(_shouldRender)
