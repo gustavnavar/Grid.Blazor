@@ -25,7 +25,7 @@ namespace GridBlazor.Resources {
     public class Strings {
         
         private static global::System.Resources.ResourceManager resourceMan;
-        
+           
         [global::System.Diagnostics.CodeAnalysis.SuppressMessageAttribute("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
         internal Strings() {
         }
@@ -338,6 +338,15 @@ namespace GridBlazor.Resources {
         public static string GroupingText {
             get {
                 return ResourceManager.GetString("GroupingText", System.Globalization.CultureInfo.CurrentCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Height.
+        /// </summary>
+        public static string Height {
+            get {
+                return ResourceManager.GetString("Height", System.Globalization.CultureInfo.CurrentCulture);
             }
         }
         

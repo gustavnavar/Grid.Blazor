@@ -37,6 +37,7 @@ namespace GridBlazor.Pages
         private string gridTableTotals = Guid.NewGuid().ToString("N");
         internal string ChangePageSizeUrl;
         internal int PageSize;
+        internal int VirtualizedHeight;
         internal bool[] IsSubGridVisible;
         internal bool[] InitSubGrid;
         protected IQueryDictionary<Type> _filterComponents;
@@ -268,8 +269,13 @@ namespace GridBlazor.Pages
             var queryBuilder = new CustomQueryStringBuilder(Grid.Settings.SearchSettings.Query);
             var exceptQueryParameters = new List<string> { GridPager.DefaultPageSizeQueryParameter };
             ChangePageSizeUrl = queryBuilder.GetQueryStringExcept(exceptQueryParameters);
-            if(Grid.PagingType == PagingType.Pagination)
+            if (Grid.PagingType == PagingType.Pagination)
                 PageSize = Grid.Pager.ChangePageSize && Grid.Pager.QueryPageSize > 0 ? Grid.Pager.QueryPageSize : Grid.Pager.PageSize;
+            else if (Grid.PagingType == PagingType.Virtualization && Grid.ChangeVirtualizedHeight)
+            {
+                string height = Grid.Height.Remove(Grid.Height.IndexOf('p'));
+                int.TryParse(height, out VirtualizedHeight);
+            }
 
             if (UseMemoryCrudDataService && ((CGrid<T>)Grid).MemoryDataService != null)
             {
@@ -1565,6 +1571,31 @@ namespace GridBlazor.Pages
                 Grid.AddQueryParameter(GridPager.DefaultPageSizeQueryParameter, pageSize.ToString());
                 await UpdateGrid();
                 await OnPagerChanged();
+            }
+        }
+
+        public async Task InputVirtualizedHeightKeyup(KeyboardEventArgs e)
+        {
+            if (e.Key == "Enter")
+            {
+                await InputVirtualizedHeightBlur();
+            }
+        }
+
+        public async Task InputVirtualizedHeightBlur()
+        {
+            Grid.Height = VirtualizedHeight + "px";
+            await UpdateGrid();
+            
+        }
+
+        public async Task ChangeVirtualizedHeight(int height)
+        {
+            if (height > 0)
+            {
+                VirtualizedHeight = height;
+                Grid.Height = height + "px";
+                await UpdateGrid();
             }
         }
 

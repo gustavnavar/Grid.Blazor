@@ -216,6 +216,9 @@
   <data name="GroupingText" xml:space="preserve">
     <value>Släpp kolumner här för gruppering av kolumner</value>
   </data>
+  <data name="Height" xml:space="preserve">
+    <value>Höjd</value>
+  </data>
   <data name="IsNotNull" xml:space="preserve">
     <value>Är inte tom</value>
   </data>

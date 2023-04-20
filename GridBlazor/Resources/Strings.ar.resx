@@ -216,6 +216,9 @@
   <data name="GroupingText" xml:space="preserve">
     <value>أسحب العمود هنا لعمل تجميع للبيانات</value>
   </data>
+  <data name="Height" xml:space="preserve">
+    <value>ارتفاع</value>
+  </data>
   <data name="IsNotNull" xml:space="preserve">
     <value>غير فارغ</value>
   </data>

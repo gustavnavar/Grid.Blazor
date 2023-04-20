@@ -439,6 +439,16 @@
                                     <GridPagerComponent T="@T" GridPager="@((GridPager)Grid.Pager)"></GridPagerComponent>
                                 </CascadingValue>
                             }
+                            @if (Grid.PagingType == PagingType.Virtualization && Grid.ChangeVirtualizedHeight)
+                            {
+                                <div class="grid-change-page-size form-group">
+                                    <label class="control-label"><b>@Strings.Height</b></label>
+                                    <div>
+                                        <input class="form-control grid-change-page-size-input" @bind="VirtualizedHeight" @onkeyup="InputVirtualizedHeightKeyup" @onblur="InputVirtualizedHeightBlur" @onclick:stopPropagation />
+                                    </div>
+                                    <label class="control-label"><b>px</b></label>
+                                </div>
+                            }
                             @if (Grid.ComponentOptions.ShowGridItemsCount)
                             {
                                 <CascadingValue Value=@this Name="GridComponent">

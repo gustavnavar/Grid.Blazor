@@ -297,4 +297,7 @@
   <data name="Select" xml:space="preserve">
     <value>Seçme</value>
   </data>
+  <data name="Height" xml:space="preserve">
+    <value>Yükseklik</value>
+  </data>
 </root>

@@ -502,6 +502,8 @@ namespace GridBlazor
         /// </summary>
         public string Height { get; set; } = "auto";
 
+        public bool ChangeVirtualizedHeight { get; set; } = false;
+
         /// <summary>
         ///     Get and set export to an Excel file
         /// </summary>

@@ -318,4 +318,7 @@ Prazno</value>
   <data name="Select" xml:space="preserve">
     <value>Izaberite</value>
   </data>
+  <data name="Height" xml:space="preserve">
+    <value>Visina</value>
+  </data>
 </root>

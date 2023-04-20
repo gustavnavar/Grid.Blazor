@@ -159,10 +159,26 @@ namespace GridBlazor
             return this;
         }
 
-        public IGridClient<T> Virtualize(string width, string heigh)
+        public IGridClient<T> Virtualize()
+        {
+            return Virtualize(450);
+        }
+
+        public IGridClient<T> Virtualize(int heigh)
+        {
+            return Virtualize(null, heigh);
+        }
+
+        public IGridClient<T> Virtualize(string width, int heigh)
         {
             _source.PagingType = PagingType.Virtualization;
-            return SetTableLayout(TableLayout.Fixed, width, heigh);
+            return SetTableLayout(TableLayout.Fixed, width, heigh + "px");
+        }
+
+        public IGridClient<T> ChangeVirtualizedHeight(bool enable)
+        {
+            _source.ChangeVirtualizedHeight = enable;
+            return this;
         }
 
         public IGridClient<T> Sortable()

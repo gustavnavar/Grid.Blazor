@@ -294,4 +294,7 @@
   <data name="Select" xml:space="preserve">
     <value>Выбирать</value>
   </data>
+  <data name="Height" xml:space="preserve">
+    <value>Высота</value>
+  </data>
 </root>

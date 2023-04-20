@@ -294,4 +294,7 @@
   <data name="Select" xml:space="preserve">
     <value>Válassza ki</value>
   </data>
+  <data name="Height" xml:space="preserve">
+    <value>Magasság</value>
+  </data>
 </root>
