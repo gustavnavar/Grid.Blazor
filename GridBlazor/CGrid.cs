@@ -1211,14 +1211,33 @@ namespace GridBlazor
                 byte[] content;
                 if (ExcelExportAllRows)
                 {
-                    var oldPageSize = Pager.PageSize;
-                    Pager.PageSize = ItemsCount;
-                    AddQueryParameter(GridPager.DefaultPageSizeQueryParameter, ItemsCount.ToString());
-                    await UpdateGrid();
-                    content = excelWriter.GenerateExcel(Columns, Items);
-                    Pager.PageSize = oldPageSize;
-                    AddQueryParameter(GridPager.DefaultPageSizeQueryParameter, oldPageSize.ToString());
-                    await UpdateGrid();
+                    if (PagingType == PagingType.Virtualization)
+                    {
+                        var oldStartIndex = Pager.StartIndex;
+                        var oldVirtualizedCount = Pager.VirtualizedCount;
+                        ((GridPager)Pager).StartIndex = 0;
+                        AddQueryParameter(GridPager.DefaultStartIndexQueryParameter, "0");
+                        ((GridPager)Pager).VirtualizedCount = ItemsCount;
+                        AddQueryParameter(GridPager.DefaultVirtualizedCountQueryParameter, ItemsCount.ToString());
+                        await UpdateGrid();
+                        content = excelWriter.GenerateExcel(Columns, Items);
+                        ((GridPager)Pager).StartIndex = oldStartIndex;
+                        AddQueryParameter(GridPager.DefaultStartIndexQueryParameter, oldStartIndex.ToString());
+                        ((GridPager)Pager).VirtualizedCount = oldVirtualizedCount;
+                        AddQueryParameter(GridPager.DefaultVirtualizedCountQueryParameter, oldVirtualizedCount.ToString());
+                        await UpdateGrid();
+                    }
+                    else
+                    {
+                        var oldPageSize = Pager.PageSize;
+                        Pager.PageSize = ItemsCount;
+                        AddQueryParameter(GridPager.DefaultPageSizeQueryParameter, ItemsCount.ToString());
+                        await UpdateGrid();
+                        content = excelWriter.GenerateExcel(Columns, Items);
+                        Pager.PageSize = oldPageSize;
+                        AddQueryParameter(GridPager.DefaultPageSizeQueryParameter, oldPageSize.ToString());
+                        await UpdateGrid();
+                    }
                 }
                 else
                     content = excelWriter.GenerateExcel(Columns, Items);
