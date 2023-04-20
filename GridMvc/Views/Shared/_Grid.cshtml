@@ -46,6 +46,7 @@
     string _removeAllFilters = queryBuilder.GetQueryStringExcept(exceptQueryParameters);
     string gridTableHead = Guid.NewGuid().ToString("N");
     string gridTableBody = Guid.NewGuid().ToString("N");
+    string gridTableTotals = Guid.NewGuid().ToString("N");
 }
 
 @if (Model.RenderOptions.RenderRowsOnly)
@@ -104,6 +105,10 @@ else
                         </thead>
                         <tbody>
                             @await Html.PartialAsync("_GridBody", Model)
+                            @if (hasTotals)
+                            {
+                                @await Html.PartialAsync("_GridTotals", Model)
+                            }
                         </tbody>
                     </table>
                 </div>
@@ -202,9 +207,36 @@ else
                         </tbody>
                     </table>
                 </div>
+                @if (hasTotals)
+                {
+                    <div id="@gridTableTotals" class="grid-table-body" style="@(Model.Width == null ? "" : "width:" + Model.Width + ";")">
+                        <table class="table grid-table" style="table-layout:fixed;">
+                            <colgroup>
+                                @if (hasSubGrid)
+                                {
+                                    <col style="width:2em;" />
+                                }
+                                @if (requiredTotalsColumn)
+                                {
+                                    <col style="width:5em;" />
+                                }
+                                @foreach (IGridColumn column in Model.Columns)
+                                {
+                                    @await Html.PartialAsync("_GridCol", column)
+                                }
+                            </colgroup>
+                            <tbody>
+                                    @await Html.PartialAsync("_GridTotals", Model)
+                            </tbody>
+                        </table>
+                    </div>
+                }
                 <script>
                     document.getElementById("@gridTableBody").onscroll = function () {
                         document.getElementById("@gridTableHead").scrollLeft = this.scrollLeft;
+                        var elem = document.getElementById("@gridTableTotals");
+                        if(elem)
+                            elem.scrollLeft = this.scrollLeft;
                     };
                 </script>
             }

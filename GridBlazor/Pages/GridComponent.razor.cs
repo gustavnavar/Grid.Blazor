@@ -34,6 +34,7 @@ namespace GridBlazor.Pages
         internal bool RequiredTotalsColumn = false;
         private string gridTableHead = Guid.NewGuid().ToString("N");
         private string gridTableBody = Guid.NewGuid().ToString("N");
+        private string gridTableTotals = Guid.NewGuid().ToString("N");
         internal string ChangePageSizeUrl;
         internal int PageSize;
         internal bool[] IsSubGridVisible;
@@ -327,7 +328,7 @@ namespace GridBlazor.Pages
                 IsWeekSupported = await jSRuntime.InvokeAsync<bool>("gridJsFunctions.isWeekSupported");
                 IsMonthSupported = await jSRuntime.InvokeAsync<bool>("gridJsFunctions.isMonthSupported");
                 if (Grid.TableLayout != TableLayout.Auto)
-                    await jSRuntime.InvokeVoidAsync("gridJsFunctions.scrollFixedSizeTable", gridTableHead, gridTableBody);
+                    await jSRuntime.InvokeVoidAsync("gridJsFunctions.scrollFixedSizeTable", gridTableHead, gridTableBody, gridTableTotals);
             }
             
             if ((firstRender || _fromCrud) && Gridmvc.Id != null && Grid.Keyboard)

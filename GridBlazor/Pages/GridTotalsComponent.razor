@@ -1,12 +1,16 @@
 ﻿@using GridBlazor.Resources
 @using GridShared
 @using GridShared.Columns
+@using GridShared.Pagination
 
 @typeparam T
 
 @if (Grid != null && !Grid.ComponentOptions.RenderRowsOnly)
 {
-    <tr class="grid-row"><td class="grid-cell" style="height:25px;border:none;background-color:white"></td></tr>
+    if (Grid.PagingType != PagingType.Virtualization)
+    {
+        <tr class="grid-row"><td class="grid-cell" style="height:25px;border:none;background-color:white"></td></tr>
+    }
     var firstColumn = (ITotalsColumn)Grid.Columns.FirstOrDefault();
     if (Grid.IsSumEnabled)
     {

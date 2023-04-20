@@ -73,12 +73,13 @@
                         }
                     }
                 }
+                // totals must not be rendered when RenderRowsOnly is true
+                /**
                 if (HasTotals)
                 {
-                    <CascadingValue Value=@this Name="GridComponent">
-                        <GridTotalsComponent T="@T" Grid="@Grid"></GridTotalsComponent>
-                    </CascadingValue>
+                    
                 }
+                */
             }
             else
             {
@@ -230,6 +231,12 @@
                                             <CascadingValue Value=@this Name="GridComponent">
                                                 <GridBodyComponent T="@T"></GridBodyComponent>
                                             </CascadingValue>
+                                            @if (HasTotals)
+                                            {
+                                                <CascadingValue Value=@this Name="GridComponent">
+                                                    <GridTotalsComponent T="@T" Grid="@Grid"></GridTotalsComponent>
+                                                </CascadingValue>
+                                            }
                                         </tbody>
                                     </table>
                                 </div>
@@ -385,6 +392,44 @@
                                         </tbody>
                                     </table>
                                 </div>
+                                @if (HasTotals)
+                                {
+                                    <div id="@gridTableTotals" class="grid-table-head" style="@(Grid.Width == null ? "" : "width:" + Grid.Width + ";")">
+                                        <table class="@TableCssClass" style="table-layout:fixed;">
+                                            <colgroup>
+                                                @if (HasSubGrid)
+                                                {
+                                                    <col style="width:2em;" />
+                                                }
+                                                @if (RequiredTotalsColumn)
+                                                {
+                                                    <col style="width:5em;" />
+                                                }
+                                                @if ((Grid.ReadEnabled || ((CGrid<T>)Grid).FuncReadEnabled != null) && !HeaderCrudButtons)
+                                                {
+                                                    <col style="width:35px;" />
+                                                }
+                                                @if ((Grid.UpdateEnabled || ((CGrid<T>)Grid).FuncUpdateEnabled != null) && !HeaderCrudButtons)
+                                                {
+                                                    <col style="width:35px;" />
+                                                }
+                                                @if ((Grid.DeleteEnabled || ((CGrid<T>)Grid).FuncDeleteEnabled != null) && !HeaderCrudButtons)
+                                                {
+                                                    <col style="width:35px;" />
+                                                }
+                                                @foreach (IGridColumn column in Grid.Columns)
+                                                {
+                                                    <GridColComponent Column="column"></GridColComponent>
+                                                }
+                                            </colgroup>
+                                            <tbody>
+                                                <CascadingValue Value=@this Name="GridComponent">
+                                                    <GridTotalsComponent T="@T" Grid="@Grid"></GridTotalsComponent>
+                                                </CascadingValue>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                }
                             }
                         </div>
                         <div class="@GridFooterCssClass">

@@ -76,9 +76,12 @@
         if (element)
             element.style.display = "none";
     },
-    scrollFixedSizeTable: function (gridTableHead, gridTableBody) {
+    scrollFixedSizeTable: function (gridTableHead, gridTableBody, gridTableTotals) {
         document.getElementById(gridTableBody).onscroll = function () {
             document.getElementById(gridTableHead).scrollLeft = this.scrollLeft;
+            var elem = document.getElementById(gridTableTotals);
+            if (elem)
+                elem.scrollLeft = this.scrollLeft;
         };
     }
 }
