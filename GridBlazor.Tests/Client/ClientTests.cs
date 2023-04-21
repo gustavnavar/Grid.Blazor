@@ -35,7 +35,7 @@ namespace GridBlazor.Tests.Client
         [TestMethod]
         public void TestMainMethods()
         {
-            _client.Virtualize("1200px","600px");
+            _client.Virtualize("1200px",600);
             Assert.AreEqual(_client.Grid.PagingType, PagingType.Virtualization);
             Assert.AreEqual(_client.Grid.Pager.StartIndex, 0);
             Assert.AreEqual(_client.Grid.Pager.VirtualizedCount, 0);
