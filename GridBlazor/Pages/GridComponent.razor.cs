@@ -121,6 +121,8 @@ namespace GridBlazor.Pages
 
         public GridCountComponent<T> CountComponent { get; private set; }
 
+        public GridTotalsComponent<T> TotalsComponent { get; private set; }
+
         public T Item { get; protected set; }
 
         internal IGridColumn<T> FirstColumn { get; set; }

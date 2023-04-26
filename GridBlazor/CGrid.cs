@@ -1249,6 +1249,10 @@ namespace GridBlazor
 
         public async Task UpdateGrid()
         {
+            if (PagingType == PagingType.Virtualization && (!_query.ContainsKey(GridPager.DefaultStartIndexQueryParameter)
+                || !_query.ContainsKey(GridPager.DefaultVirtualizedCountQueryParameter)))
+                return;
+
             Error = "";
 
             if (ServerAPI == ServerAPI.OData && (GridComponent == null || !GridComponent.UseMemoryCrudDataService))
@@ -1589,6 +1593,11 @@ namespace GridBlazor
             if (GridComponent != null && GridComponent.CountComponent != null) 
             {
                 GridComponent.CountComponent.Refresh();
+            }
+
+            if (GridComponent != null && GridComponent.TotalsComponent != null)
+            {
+                GridComponent.TotalsComponent.Refresh();
             }
 
             return new ItemsProviderResult<T>(Items, ((GridPager)_pager).ItemsCount);

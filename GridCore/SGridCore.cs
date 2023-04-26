@@ -37,7 +37,7 @@ namespace GridCore
         internal SortGridItemsProcessor<T> _currentSortItemsProcessor;
         internal TotalsGridItemsProcessor<T> _currentTotalsItemsProcessor;
         protected int _displayingItemsCount = -1; // count of displaying items (if using pagination)
-        protected PagingType _pagingType;
+        protected PagingType _pagingType = PagingType.None;
         protected IGridPager _pager;
 
         protected IGridItemsProcessor<T> _pagerProcessor;
@@ -126,7 +126,6 @@ namespace GridCore
             }
             else
             {
-                PagingType = PagingType.None;
                 string pageParameter = urlParameters[((GridPager)Pager).ParameterName];
                 if (pageParameter != null)
                     int.TryParse(pageParameter, out page);

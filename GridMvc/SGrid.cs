@@ -116,7 +116,6 @@ namespace GridMvc
             }
             else
             {
-                PagingType = PagingType.Pagination;
                 string pageParameter = urlParameters[((GridPager)Pager).ParameterName];
                 if (pageParameter != null)
                     int.TryParse(pageParameter, out page);

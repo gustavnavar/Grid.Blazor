@@ -234,7 +234,7 @@
                                             @if (HasTotals)
                                             {
                                                 <CascadingValue Value=@this Name="GridComponent">
-                                                    <GridTotalsComponent T="@T" Grid="@Grid"></GridTotalsComponent>
+                                                    <GridTotalsComponent @ref="TotalsComponent" T="@T" Grid="@Grid"></GridTotalsComponent>
                                                 </CascadingValue>
                                             }
                                         </tbody>
@@ -424,7 +424,7 @@
                                             </colgroup>
                                             <tbody>
                                                 <CascadingValue Value=@this Name="GridComponent">
-                                                    <GridTotalsComponent T="@T" Grid="@Grid"></GridTotalsComponent>
+                                                    <GridTotalsComponent @ref="TotalsComponent" T="@T" Grid="@Grid"></GridTotalsComponent>
                                                 </CascadingValue>
                                             </tbody>
                                         </table>
