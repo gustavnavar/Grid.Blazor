@@ -43,14 +43,19 @@ else
 
         var query = new QueryDictionary<StringValues>();
 
-        var client = new GridClient<Order>(q => orderService.GetVirtualizedOrdersAsync(ColumnCollections.OrderColumns, q),
-             query, false, "ordersGrid", ColumnCollections.OrderColumns, locale)
+        var client = new GridClient<Order>(q => orderService.GetVirtualizedOrdersAsync(ColumnCollections.OrderColumnsWithTotals, q),
+             query, false, "ordersGrid", ColumnCollections.OrderColumnsWithTotals, locale)
             .Sortable()
+            .ExtSortable(true)
             .Filterable()
             .SetStriped(true)
             .WithMultipleFilters()
             .WithGridItemsCount()
-            .Virtualize("1200px", "400px");
+            //.Searchable(true, false, false)
+            .SetExcelExport(true, true, "Orders")
+            .RearrangeableColumns(true)
+            .Virtualize(250)
+            .ChangeVirtualizedHeight(true);
 
         _grid = client.Grid;
         _init = true;

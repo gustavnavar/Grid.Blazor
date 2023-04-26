@@ -152,11 +152,13 @@ namespace GridBlazorClientSide.Server.Controllers
         {
             var repository = new OrdersRepository(_context);
             IGridServer<Order> server = new GridServer<Order>(repository.GetAll(), Request.Query,
-                true, "ordersGrid", ColumnCollections.OrderColumns)
+                true, "ordersGrid", ColumnCollections.OrderColumnsWithTotals)
                     .Sortable()
+                    .ExtSortable(true)
                     .Filterable()
                     .WithMultipleFilters()
                     .WithGridItemsCount()
+                    //.Searchable(true, false, false)
                     .SetRemoveDiacritics<NorthwindDbContext>("RemoveDiacritics");
 
             var items = await server.GetItemsToDisplayAsync(async x => await x.ToListAsync());

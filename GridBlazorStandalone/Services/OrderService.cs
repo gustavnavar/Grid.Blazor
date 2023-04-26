@@ -114,8 +114,10 @@ namespace GridBlazorStandalone.Services
         {
             var server = new GridCoreServer<Order>(Orders, query, true, "ordersGrid", columns)
                         .Sortable()
+                        .ExtSortable(true)
                         .Filterable()
                         .WithMultipleFilters()
+                        //.Searchable(true, false, false)
                         .SetRemoveDiacritics<StringUtils>("RemoveDiacritics");
 
             var items = server.ItemsToDisplay;

@@ -98,8 +98,8 @@ namespace GridBlazorClientSide.Client.ColumnCollections
             .Format("{0:#,##0.000}")
             .SetWidth(150)
             .Sum(true).Average(true).Max(true).Min(true)
-            .Calculate("Average 2", x => x.Get("Freight").SumValue.Number / x.Grid.ItemsCount)
-            .Calculate("Average 3", x => x.Get("Freight").SumValue.Number / x.Get("OrderID").SumValue.Number);
+            .Calculate("Average 2", x => x.Grid.ItemsCount == 0 ? "" : x.Get("Freight").SumValue.Number / x.Grid.ItemsCount)
+            .Calculate("Average 3", x => x.Get("OrderID").SumValue.Number == 0 ? "" : x.Get("Freight").SumValue.Number / x.Get("OrderID").SumValue.Number);
 
             /* Adding "Vip customer" column: */
             c.Add(o => o.Customer.IsVip).Titled(SharedResource.IsVip).SetWidth(90).Css("hidden-xs") //hide on phones

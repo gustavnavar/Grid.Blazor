@@ -42,14 +42,19 @@ else
         var query = new QueryDictionary<StringValues>();
         //query.Add("grid-filter", "Customer.Country__1__usa");
 
-        var client = new GridClient<Order>(q => orderService.GetVirtualizedOrdersGridRows(ColumnCollections.OrderColumns, q),
-            query, false, "ordersGrid", ColumnCollections.OrderColumns, locale)
+        var client = new GridClient<Order>(q => orderService.GetVirtualizedOrdersGridRows(ColumnCollections.OrderColumnsWithTotals, q),
+            query, false, "ordersGrid", ColumnCollections.OrderColumnsWithTotals, locale)
             .Sortable()
+            .ExtSortable(true)
             .Filterable()
             .SetStriped(true)
             .WithMultipleFilters()
             .WithGridItemsCount()
-            .Virtualize("1200px", "400px");
+            //.Searchable(true, false, false)
+            .SetExcelExport(true, true, "Orders")
+            .RearrangeableColumns(true)
+            .Virtualize(250)
+            .ChangeVirtualizedHeight(true);
 
         _grid = client.Grid;
         // Set new items to grid

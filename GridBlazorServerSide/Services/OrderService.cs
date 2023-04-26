@@ -149,8 +149,10 @@ namespace GridBlazorServerSide.Services
 
                 var server = new GridCoreServer<Order>(repository.GetAll(), query, true, "ordersGrid", columns)
                         .Sortable()
+                        .ExtSortable(true)
                         .Filterable()
                         .WithMultipleFilters()
+                        //.Searchable(true, false, false)
                         .SetRemoveDiacritics<NorthwindDbContext>("RemoveDiacritics");
 
                 // return items to displays
