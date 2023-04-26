@@ -35,4 +35,4 @@ If you don't do it, the default column width (12em) will be applied.
 
 Scrollbars will be added automatically by the grid component in case it will be necessary.
 
-[<- Export to Excel](Excel_export.md)
+[<- Export to Excel](Excel_export.md) | [Virtualization ->](Virtualization.md)

@@ -4,9 +4,9 @@
 
 [Index](Documentation.md)
 
-Normal usage of  **GridBlazor** and **GridMvcCore** packages doesn't require any knowledge of this interface. This documentation is included only for those who want to implement their own back endpoint instead of using **GridMvcCore**. 
+Normal usage of  **GridBlazor** and **GridMvc** packages doesn't require any knowledge of this interface. This documentation is included only for those who want to implement their own back endpoint instead of using **GridMvc**. 
 
-The interface between **GridBlazor** and **GridMvcCore** packages on Blazor client-site solutions uses a query string for the request from the front-end and a json file for the response from the back-end.
+The interface between **GridBlazor** and **GridMvc** packages on Blazor client-site solutions uses a query string for the request from the front-end and a json file for the response from the back-end.
 
 ## Request
 
@@ -22,8 +22,12 @@ grid-filter | multiple strings used for filtering  | grid-filter=OrderCustomDate
 grid-clearinitfilter | the name of columns that have an initial filter but it is not used anymore | grid-clearinitfilter=Customer.CompanyName
 grid-search | word to be searched on all columns | grid-search=aro
 grid-pagesize | integer to dynamically change the initial grid page size | grid-pagesize=20
+grid-start-index | integer to define the first requested record when grid virtualization is enabled (from v 4.0.0 on) | grid-start-index=0
+grid-virt-count | integer to define the number of records requested when grid virtualization is enabled (from v 4.0.0 on) | grid-virt-count=17
 
-The parameters **grid-page**, **grid-column**, **grid-dir**, **grid-search** and **grid-pagesize** should appear once in a query string. Their use is straightforward.
+The parameters **grid-page**, **grid-column**, **grid-dir**, **grid-search**, **grid-pagesize**, **grid-start-index** and **grid-virt-count** should appear once in a query string. Their use is straightforward.
+
+Parameters for pagination (grid-page and grid-pagesize) must not be used alltogether with parameters for virtualization (grid-start-index and grid-virt-count).
 
 But the parameters **grid-sorting**, **grid-filter** and **grid-clearinitfilter** may appear multiple times in a query string. Let's see more detail about them.
 
@@ -95,26 +99,50 @@ In this example the front-end is requesting:
 
 ## Response
 
-The **GridMvcCore** package sends back a **json** reponse string with the following format:
+The **GridMvc** package sends back a **json** reponse string with the following format:
 
-```json
-    {
-        "items":[ array of registers ],
-        "totals":
+* GridMvc 0.0.0 - 5.5.x
+    ```
         {
-            "sum":{ values of column's addition },
-            "average":{ values of column's average },
-            "max":{ values of column's max },
-            "min":{ values of column's min }
-        },
-        "pager":
-        {
-            "enablePaging": true|false,
-            "pageSize": number,
-            "currentPage": number,
-            "itemsCount": number
+            "items":[ array of registers ],
+            "totals":
+            {
+                "sum":{ values of column's addition },
+                "average":{ values of column's average },
+                "max":{ values of column's max },
+                "min":{ values of column's min }
+            },
+            "pager":
+            {
+                "enablePaging": true|false,
+                "pageSize": number,
+                "currentPage": number,
+                "itemsCount": number
+            }
         }
-    }
-```
+    ```
+
+* GridMvc 6.0.0 -  
+    ```
+        {
+            "items":[ array of registers ],
+            "totals":
+            {
+                "sum":{ values of column's addition },
+                "average":{ values of column's average },
+                "max":{ values of column's max },
+                "min":{ values of column's min }
+            },
+            "pager":
+            {
+                "pagingType": 0|1|2,
+                "pageSize": number,
+                "currentPage": number,
+                "itemsCount": number,
+                "startIndex": number,
+                "virtualizedCount": number
+            }
+        }
+    ```
 
 [<- Passing grid state as parameter](Passing_grid_state_as_parameter.md) | [CRUD ->](Crud.md)
