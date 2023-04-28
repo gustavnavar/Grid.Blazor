@@ -20,6 +20,7 @@ namespace GridCore.Pagination
         public const string DefaultAjaxPagerViewName = "_AjaxGridPager";
         public const string DefaultStartIndexQueryParameter = "grid-start-index";
         public const string DefaultVirtualizedCountQueryParameter = "grid-virt-count";
+        public const string DefaultNoTotalsParameter = "grid-no-totals";
 
         private readonly IGrid _grid;
         private readonly CustomQueryStringBuilder _queryBuilder;
@@ -129,6 +130,10 @@ namespace GridCore.Pagination
         /// </summary>
         public int VirtualizedCount { get; set; } = 0;
 
+        /// <summary>
+        ///     Virtualized without totals
+        /// </summary>
+        public bool NoTotals { get; set; } = false;
 
         #endregion
 

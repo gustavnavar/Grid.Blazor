@@ -52,6 +52,11 @@ namespace GridCore.Pagination
         /// </summary>
         int VirtualizedCount { get; }
 
+        /// <summary>
+        ///     Virtualized without totals
+        /// </summary>
+        bool NoTotals { get; }
+
         ///// <summary>
         /////     Total pages count
         ///// </summary>

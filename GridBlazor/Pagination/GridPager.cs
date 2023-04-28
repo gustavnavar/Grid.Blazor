@@ -19,6 +19,7 @@ namespace GridBlazor.Pagination
         public const string DefaultPageSizeQueryParameter = "grid-pagesize";
         public const string DefaultStartIndexQueryParameter = "grid-start-index";
         public const string DefaultVirtualizedCountQueryParameter = "grid-virt-count";
+        public const string DefaultNoTotalsParameter = "grid-no-totals";
 
         private readonly IGrid _grid;
         private IQueryDictionary<StringValues> _query;

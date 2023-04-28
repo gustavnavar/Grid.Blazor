@@ -414,6 +414,9 @@ namespace GridBlazor
         [Obsolete("This method is obsolete. Use the new async GetGroupValues() method.", false)]
         IList<object> GetValuesToDisplay(string columnName, IEnumerable<object> items);
 
+        /// <summary>
+        ///     Enable the change of the virtualized grid height
+        /// </summary>
         bool ChangeVirtualizedHeight { get; set; }
     }
 }

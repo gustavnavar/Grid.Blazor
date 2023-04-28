@@ -103,9 +103,11 @@ namespace GridMvc
             int page = 0;
             int startIndex = 0;
             int virtualizedCount = 0;
+            bool noTotals = false;
 
             string startIndexParameter = urlParameters[GridPager.DefaultStartIndexQueryParameter];
             string virtualizedCountParameter = urlParameters[GridPager.DefaultVirtualizedCountQueryParameter];
+            string noTotalsParameter = urlParameters[GridPager.DefaultNoTotalsParameter];
             if (!string.IsNullOrEmpty(startIndexParameter) && !string.IsNullOrWhiteSpace(virtualizedCountParameter))
             {
                 PagingType = PagingType.Virtualization;
@@ -113,6 +115,8 @@ namespace GridMvc
                 int.TryParse(virtualizedCountParameter, out virtualizedCount);
                 ((GridPager)Pager).StartIndex = startIndex;
                 ((GridPager)Pager).VirtualizedCount = virtualizedCount;
+                if (bool.TryParse(noTotalsParameter, out noTotals))
+                    ((GridPager)Pager).NoTotals = noTotals;
             }
             else
             {

@@ -5,6 +5,7 @@ using GridShared;
 using GridShared.Columns;
 using GridShared.Pagination;
 using GridShared.Sorting;
+using GridShared.Totals;
 using GridShared.Utility;
 using Microsoft.Extensions.Primitives;
 using System;
@@ -333,7 +334,13 @@ namespace GridCore.Server
         {
             get {
                 var items = _source.GetItemsToDisplay();
-                var totals = _source.GetTotals();
+                
+                TotalsDTO totals;
+                if (_source.PagingType == PagingType.Virtualization && _source.Pager.NoTotals)
+                    totals = null;
+                else
+                    totals = _source.GetTotals();
+
                 return new ItemsDTO<T>(items, totals,
                     new PagerDTO(_source.PagingType, _source.Pager.PageSize, _source.Pager.CurrentPage, _source.ItemsCount, 
                         _source.Pager.StartIndex, _source.Pager.VirtualizedCount));
@@ -343,7 +350,13 @@ namespace GridCore.Server
         public async Task<ItemsDTO<T>> GetItemsToDisplayAsync(Func<IQueryable<T>, Task<IList<T>>> toListAsync)
         {
             var items = await _source.GetItemsToDisplayAsync(toListAsync);
-            var totals = _source.GetTotals();
+            
+            TotalsDTO totals;
+            if (_source.PagingType == PagingType.Virtualization && _source.Pager.NoTotals)
+                totals = null;
+            else
+                totals = _source.GetTotals();
+
             return new ItemsDTO<T>(items, totals, 
                 new PagerDTO(_source.PagingType, _source.Pager.PageSize, _source.Pager.CurrentPage, _source.ItemsCount, 
                     _source.Pager.StartIndex, _source.Pager.VirtualizedCount));

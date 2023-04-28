@@ -54,10 +54,11 @@ namespace GridBlazor
         private readonly ExpandGridODataProcessor<T> _currentExpandODataProcessor;
         private IEnumerable<T> _items;
         private IEnumerable<object> _selectedItems;
-        private int _displayingItemsCount = -1; // count of displaying items (if using pagination)
+        private int _displayingItemsCount = -1; // count of displaying items (if using pagination
+        private bool _noTotals = false; // controls calls to the back-end for virtualized grids to include totals or not
         private PagingType _pagingType;
         private IGridPager _pager;
-        private HttpClient _httpClient;
+        private HttpClient _httpClient; 
 
         private Func<QueryDictionary<StringValues>, ItemsDTO<T>> _dataService;
         private Func<QueryDictionary<StringValues>, Task<ItemsDTO<T>>> _dataServiceAsync;
@@ -1249,11 +1250,19 @@ namespace GridBlazor
 
         public async Task UpdateGrid()
         {
-            if (PagingType == PagingType.Virtualization && (!_query.ContainsKey(GridPager.DefaultStartIndexQueryParameter)
-                || !_query.ContainsKey(GridPager.DefaultVirtualizedCountQueryParameter)))
-                return;
-
             Error = "";
+
+            if (PagingType == PagingType.Virtualization)
+            {
+                // Set NoTotals to false because the function call comes from a change on the grid component
+                _noTotals = false;
+                AddQueryParameter(GridPager.DefaultNoTotalsParameter, _noTotals.ToString());
+
+                // The call to the back-end in not performed if query does not contain the required parameters
+                if (!_query.ContainsKey(GridPager.DefaultStartIndexQueryParameter) 
+                    || !_query.ContainsKey(GridPager.DefaultVirtualizedCountQueryParameter))
+                    return;
+            }
 
             if (ServerAPI == ServerAPI.OData && (GridComponent == null || !GridComponent.UseMemoryCrudDataService))
                 await GetOData();
@@ -1580,7 +1589,12 @@ namespace GridBlazor
         {
             Error = "";
 
-            if(request.StartIndex < 0 || request.Count <= 0)
+            AddQueryParameter(GridPager.DefaultNoTotalsParameter, _noTotals.ToString());
+            // Set NoTotals to true for next calls
+            // Only a change on the grid component will reset the value to false (e.g. a filter call)
+            _noTotals = true;
+
+            if (request.StartIndex < 0 || request.Count <= 0)
                 return new ItemsProviderResult<T>(Items, ((GridPager)_pager).ItemsCount);
 
             AddQueryParameter(GridPager.DefaultStartIndexQueryParameter, request.StartIndex.ToString());
@@ -1588,7 +1602,12 @@ namespace GridBlazor
 
             _pager = new GridPager(this);
 
-            await UpdateGrid();
+            Error = "";
+
+            if (ServerAPI == ServerAPI.OData && (GridComponent == null || !GridComponent.UseMemoryCrudDataService))
+                await GetOData();
+            else
+                await GetItemsDTO();
 
             if (GridComponent != null && GridComponent.CountComponent != null) 
             {

@@ -1,5 +1,6 @@
 ﻿using GridShared;
 using GridShared.Columns;
+using GridShared.Pagination;
 using GridShared.Totals;
 using System;
 using System.Linq;
@@ -27,6 +28,9 @@ namespace GridCore.Totals
         {
             if (_process != null)
                 return _process(items);
+
+            if (_grid.PagingType == PagingType.Virtualization && _grid.Pager.NoTotals)
+                return items;
 
             ParameterExpression parameter = Expression.Parameter(typeof(T), "x");
 
