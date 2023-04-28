@@ -24,6 +24,7 @@ grid-search | word to be searched on all columns | grid-search=aro
 grid-pagesize | integer to dynamically change the initial grid page size | grid-pagesize=20
 grid-start-index | integer to define the first requested record when grid virtualization is enabled (from v 4.0.0 on) | grid-start-index=0
 grid-virt-count | integer to define the number of records requested when grid virtualization is enabled (from v 4.0.0 on) | grid-virt-count=17
+grid-no-totals | boolean to control if back-end calls must return data about grid totals when virtualization is used
 
 The parameters **grid-page**, **grid-column**, **grid-dir**, **grid-search**, **grid-pagesize**, **grid-start-index** and **grid-virt-count** should appear once in a query string. Their use is straightforward.
 
