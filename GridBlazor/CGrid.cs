@@ -1258,16 +1258,16 @@ namespace GridBlazor
                 _noTotals = false;
                 AddQueryParameter(GridPager.DefaultNoTotalsParameter, _noTotals.ToString());
 
-                // The call to the back-end in not performed if query does not contain the required parameters
-                if (!_query.ContainsKey(GridPager.DefaultStartIndexQueryParameter) 
-                    || !_query.ContainsKey(GridPager.DefaultVirtualizedCountQueryParameter))
-                    return;
+                // The call to the back-end in not performed here for virtualizated grids
+                // LoadItems method is in charge to make this call
             }
-
-            if (ServerAPI == ServerAPI.OData && (GridComponent == null || !GridComponent.UseMemoryCrudDataService))
-                await GetOData();
             else
-                await GetItemsDTO();
+            {
+                if (ServerAPI == ServerAPI.OData && (GridComponent == null || !GridComponent.UseMemoryCrudDataService))
+                    await GetOData();
+                else
+                    await GetItemsDTO();
+            }
         }
 
         private async Task GetItemsDTO()
