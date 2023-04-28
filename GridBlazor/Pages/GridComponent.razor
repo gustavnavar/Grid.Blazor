@@ -436,7 +436,7 @@
                             @if (Grid.PagingType == PagingType.Pagination && Grid.Pager != null)
                             {
                                 <CascadingValue Value=@this Name="GridComponent">
-                                    <GridPagerComponent T="@T" GridPager="@((GridPager)Grid.Pager)"></GridPagerComponent>
+                                    <GridPagerComponent T="@T"></GridPagerComponent>
                                 </CascadingValue>
                             }
                             @if (Grid.PagingType == PagingType.Virtualization && Grid.ChangeVirtualizedHeight)
@@ -452,7 +452,7 @@
                             @if (Grid.ComponentOptions.ShowGridItemsCount)
                             {
                                 <CascadingValue Value=@this Name="GridComponent">
-                                    <GridCountComponent @ref="CountComponent" T="@T" GridPager="@((GridPager)Grid.Pager)"></GridCountComponent>
+                                    <GridCountComponent @ref="CountComponent" T="@T"></GridCountComponent>
                                 </CascadingValue>
                             }
                         </div>

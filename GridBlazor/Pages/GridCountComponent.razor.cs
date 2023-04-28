@@ -11,12 +11,9 @@ namespace GridBlazor.Pages
         [CascadingParameter (Name = "GridComponent")]
         private GridComponent<T> GridComponent { get; set; }
 
-        [Parameter]
-        public GridPager GridPager { get; set; }
-
         protected override void OnParametersSet()
         {
-            _itemsCount = GridPager.ItemsCount;
+            _itemsCount = GridComponent.Grid.Pager.ItemsCount;
             _shouldRender = true;
         }
 
@@ -33,7 +30,7 @@ namespace GridBlazor.Pages
 
         public void Refresh()
         {
-            _itemsCount = GridPager.ItemsCount;
+            _itemsCount = GridComponent.Grid.Pager.ItemsCount;
             _shouldRender = true;
             StateHasChanged();
         }

@@ -49,12 +49,12 @@ namespace GridBlazor.Pagination
         ///// <summary>
         /////     Starting displaying page
         ///// </summary>
-        //int StartDisplayedPage { get; }
+        int StartDisplayedPage { get; }
 
         ///// <summary>
         /////     Last displaying page
         ///// </summary>
-        //int EndDisplayedPage { get; }
+        int EndDisplayedPage { get; }
 
         //int MaxDisplayedPages { get; set; }
 
