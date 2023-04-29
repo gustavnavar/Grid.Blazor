@@ -1389,15 +1389,16 @@ namespace GridBlazor
         public string GetODataPreProcessorParameters()
         {
             // Preprocessor (filter and expand)
-            string preProcessorParameters = "$count=true";
+            string preProcessorParameters = GetODataExpandParameters();
 
-            string expandParameters = GetODataExpandParameters();
-            if (!string.IsNullOrWhiteSpace(expandParameters))
-                preProcessorParameters += "&" + expandParameters;
-
-            string filterParameters = GetODataFilterParameters();
-            if (!string.IsNullOrWhiteSpace(filterParameters))
-                preProcessorParameters += "&" + filterParameters;
+            if (string.IsNullOrWhiteSpace(preProcessorParameters))
+                preProcessorParameters = GetODataFilterParameters();
+            else
+            {
+                string filterParameters = GetODataFilterParameters();
+                if (!string.IsNullOrWhiteSpace(filterParameters))
+                    preProcessorParameters += "&" + filterParameters;
+            }
 
             // $search is not supported by OData WebApi
             /**
@@ -1443,7 +1444,12 @@ namespace GridBlazor
                 string preProcessorParameters = GetODataPreProcessorParameters();
 
                 //  get count of preprocessed items
-                string allParameters = preProcessorParameters + "&$top=0";
+                string allParameters;
+                if (string.IsNullOrWhiteSpace(preProcessorParameters))
+                    allParameters = "$count=true&$top=0";
+                else
+                    allParameters = preProcessorParameters + "&$count=true&$top=0";
+
                 if (Url.Contains("?"))
                     allParameters = "&" + allParameters;
                 else
@@ -1454,15 +1460,15 @@ namespace GridBlazor
                     Console.WriteLine("Response is null");
                     return;
                 }
-                 ((GridPager)_pager).ItemsCount = response.ItemsCount;
+                int itemsCount = response.ItemsCount;
+                ((GridPager)_pager).ItemsCount = itemsCount;
 
                 // Processor parameters (paging and sorting)
                 string processorParameters = GetODataProcessorParameters();
 
                 // All parameters
-                allParameters = preProcessorParameters;
-                if (!string.IsNullOrWhiteSpace(processorParameters))
-                    allParameters = preProcessorParameters + "&" + processorParameters;
+                allParameters = preProcessorParameters + "&" + processorParameters;
+                allParameters = allParameters.TrimStart('&').TrimEnd('&');
 
                 if (Url.Contains("?"))
                     allParameters = "&" + allParameters;
@@ -1478,7 +1484,7 @@ namespace GridBlazor
                 }
 
                 Items = response.Value;
-                ((GridPager)_pager).ItemsCount = response.ItemsCount;
+                ((GridPager)_pager).ItemsCount = itemsCount;
 
                 foreach (IGridColumn<T> column in Columns)
                 {
