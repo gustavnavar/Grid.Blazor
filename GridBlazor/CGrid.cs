@@ -1446,9 +1446,9 @@ namespace GridBlazor
                 //  get count of preprocessed items
                 string allParameters;
                 if (string.IsNullOrWhiteSpace(preProcessorParameters))
-                    allParameters = "$count=true&$top=0";
+                    allParameters = "$count=true&$top=0&$skip=0";
                 else
-                    allParameters = preProcessorParameters + "&$count=true&$top=0";
+                    allParameters = preProcessorParameters + "&$count=true&$top=0&$skip=0";
 
                 if (Url.Contains("?"))
                     allParameters = "&" + allParameters;
@@ -1486,94 +1486,105 @@ namespace GridBlazor
                 Items = response.Value;
                 ((GridPager)_pager).ItemsCount = itemsCount;
 
-                foreach (IGridColumn<T> column in Columns)
+                // total back-end queries must not be requested if _query contains a NoTotals parameter with a true value
+                bool noTotals = false;
+                if (_query.ContainsKey(GridPager.DefaultNoTotalsParameter))
                 {
-                    if (column.IsSumEnabled || column.IsAverageEnabled || column.IsMaxEnabled || column.IsMinEnabled)
-                    {
-                        bool isNullable = column.Totals.IsNullable();
-                        Type type = column.Totals.GetPropertyType(isNullable);
-
-                        string filterParameters = GetODataFilterParameters();
-                        if (string.IsNullOrWhiteSpace(filterParameters))
-                            allParameters = "?$apply=";
-                        else
-                        {
-                            filterParameters = filterParameters.Remove(0, 8);
-                            allParameters = $"?$apply=filter({filterParameters})/";
-                        }
-
-                        var aggregates = new List<string>();
-                        if (column.IsSumEnabled && 
-                            (type == typeof(Single) || type == typeof(Int32) || type == typeof(Int64) || type == typeof(Double) || type == typeof(Decimal)))
-                        {
-                            aggregates.Add(column.Totals.GetFullName() + " with sum as Sum");
-                        }
-                        if (column.IsAverageEnabled && 
-                            (type == typeof(Single) || type == typeof(Int32) || type == typeof(Int64) || type == typeof(Double) || type == typeof(Decimal)))
-                        {
-                            aggregates.Add(column.Totals.GetFullName() + " with average as Average");
-                        }
-                        if (column.IsMaxEnabled)
-                        {
-                            aggregates.Add(column.Totals.GetFullName() + " with max as Max");
-                        }
-                        if (column.IsMinEnabled)
-                        {
-                            aggregates.Add(column.Totals.GetFullName() + " with min as Min");
-                        }
-                        allParameters += $"aggregate({string.Join(",", aggregates)})";
-
-
-                        if (type == typeof(Single) || type == typeof(Int32) || type == typeof(Int64) || type == typeof(Double) || type == typeof(Decimal))
-                        {
-                            var totalResponse = await HttpClient.GetFromJsonAsync<List<NumberTotals>>(Url + allParameters, jsonOptions);
-                            if (totalResponse == null || totalResponse.Count > 0)
-                            {
-                                column.SumValue = new Total(totalResponse.First().Sum);
-                                column.AverageValue = new Total(totalResponse.First().Average);
-                                column.MaxValue = new Total(totalResponse.First().Max);
-                                column.MinValue = new Total(totalResponse.First().Min);
-                            }
-                        }
-                        else if (type == typeof(DateTime))
-                        {
-                            var totalResponse = await HttpClient.GetFromJsonAsync<List<DateTimeTotals>>(Url + allParameters, jsonOptions);
-                            if (totalResponse == null || totalResponse.Count > 0)
-                            {
-                                column.MaxValue = new Total(totalResponse.First().Max);
-                                column.MinValue = new Total(totalResponse.First().Min);
-                            }
-                        }
-                        else if (type == typeof(string))
-                        {
-                            var totalResponse = await HttpClient.GetFromJsonAsync<List<StringTotals>>(Url + allParameters, jsonOptions);
-                            if (totalResponse == null || totalResponse.Count > 0)
-                            {
-                                column.MaxValue = new Total(totalResponse.First().Max);
-                                column.MinValue = new Total(totalResponse.First().Min);
-                            }
-                        }                     
-                    }
+                    string noTotalsStr = _query[GridPager.DefaultNoTotalsParameter].FirstOrDefault();
+                    bool.TryParse(noTotalsStr, out noTotals);
                 }
-
-                foreach (IGridColumn<T> gridColumn in Columns.Where(r => ((IGridColumn<T>)r).Calculations.Any()))
+                
+                if (noTotals == false)
                 {
-                    foreach (var calculation in gridColumn.Calculations)
+                    foreach (IGridColumn<T> column in Columns)
                     {
-                        var value = calculation.Value(Columns);
-                        Type type = value.GetType();
+                        if (column.IsSumEnabled || column.IsAverageEnabled || column.IsMaxEnabled || column.IsMinEnabled)
+                        {
+                            bool isNullable = column.Totals.IsNullable();
+                            Type type = column.Totals.GetPropertyType(isNullable);
 
-                        if (type == typeof(Single) || type == typeof(Int32) || type == typeof(Int64) || type == typeof(Double) || type == typeof(Decimal))
-                        {
-                            gridColumn.CalculationValues.AddParameter(calculation.Key, new Total((decimal?)value));
+                            string filterParameters = GetODataFilterParameters();
+                            if (string.IsNullOrWhiteSpace(filterParameters))
+                                allParameters = "?$apply=";
+                            else
+                            {
+                                filterParameters = filterParameters.Remove(0, 8);
+                                allParameters = $"?$apply=filter({filterParameters})/";
+                            }
+
+                            var aggregates = new List<string>();
+                            if (column.IsSumEnabled &&
+                                (type == typeof(Single) || type == typeof(Int32) || type == typeof(Int64) || type == typeof(Double) || type == typeof(Decimal)))
+                            {
+                                aggregates.Add(column.Totals.GetFullName() + " with sum as Sum");
+                            }
+                            if (column.IsAverageEnabled &&
+                                (type == typeof(Single) || type == typeof(Int32) || type == typeof(Int64) || type == typeof(Double) || type == typeof(Decimal)))
+                            {
+                                aggregates.Add(column.Totals.GetFullName() + " with average as Average");
+                            }
+                            if (column.IsMaxEnabled)
+                            {
+                                aggregates.Add(column.Totals.GetFullName() + " with max as Max");
+                            }
+                            if (column.IsMinEnabled)
+                            {
+                                aggregates.Add(column.Totals.GetFullName() + " with min as Min");
+                            }
+                            allParameters += $"aggregate({string.Join(",", aggregates)})";
+
+
+                            if (type == typeof(Single) || type == typeof(Int32) || type == typeof(Int64) || type == typeof(Double) || type == typeof(Decimal))
+                            {
+                                var totalResponse = await HttpClient.GetFromJsonAsync<List<NumberTotals>>(Url + allParameters, jsonOptions);
+                                if (totalResponse == null || totalResponse.Count > 0)
+                                {
+                                    column.SumValue = new Total(totalResponse.First().Sum);
+                                    column.AverageValue = new Total(totalResponse.First().Average);
+                                    column.MaxValue = new Total(totalResponse.First().Max);
+                                    column.MinValue = new Total(totalResponse.First().Min);
+                                }
+                            }
+                            else if (type == typeof(DateTime))
+                            {
+                                var totalResponse = await HttpClient.GetFromJsonAsync<List<DateTimeTotals>>(Url + allParameters, jsonOptions);
+                                if (totalResponse == null || totalResponse.Count > 0)
+                                {
+                                    column.MaxValue = new Total(totalResponse.First().Max);
+                                    column.MinValue = new Total(totalResponse.First().Min);
+                                }
+                            }
+                            else if (type == typeof(string))
+                            {
+                                var totalResponse = await HttpClient.GetFromJsonAsync<List<StringTotals>>(Url + allParameters, jsonOptions);
+                                if (totalResponse == null || totalResponse.Count > 0)
+                                {
+                                    column.MaxValue = new Total(totalResponse.First().Max);
+                                    column.MinValue = new Total(totalResponse.First().Min);
+                                }
+                            }
                         }
-                        else if (type == typeof(DateTime))
+                    }
+
+                    foreach (IGridColumn<T> gridColumn in Columns.Where(r => ((IGridColumn<T>)r).Calculations.Any()))
+                    {
+                        foreach (var calculation in gridColumn.Calculations)
                         {
-                            gridColumn.CalculationValues.AddParameter(calculation.Key, new Total((DateTime)value));
-                        }
-                        else if (type == typeof(string))
-                        {
-                            gridColumn.CalculationValues.AddParameter(calculation.Key, new Total((string)value));
+                            var value = calculation.Value(Columns);
+                            Type type = value.GetType();
+
+                            if (type == typeof(Single) || type == typeof(Int32) || type == typeof(Int64) || type == typeof(Double) || type == typeof(Decimal))
+                            {
+                                gridColumn.CalculationValues.AddParameter(calculation.Key, new Total((decimal?)value));
+                            }
+                            else if (type == typeof(DateTime))
+                            {
+                                gridColumn.CalculationValues.AddParameter(calculation.Key, new Total((DateTime)value));
+                            }
+                            else if (type == typeof(string))
+                            {
+                                gridColumn.CalculationValues.AddParameter(calculation.Key, new Total((string)value));
+                            }
                         }
                     }
                 }
