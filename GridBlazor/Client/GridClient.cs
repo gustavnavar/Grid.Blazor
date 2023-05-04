@@ -159,6 +159,12 @@ namespace GridBlazor
             return this;
         }
 
+        public IGridClient<T> GoToVisibility(bool enable)
+        {
+            _source.Pager.GoToVisibility = enable;
+            return this;
+        }
+
         public IGridClient<T> Virtualize()
         {
             return Virtualize(450);

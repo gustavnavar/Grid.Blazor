@@ -60,12 +60,15 @@
         </ul>
     </nav>
 
-    <div class="grid-goto-page form-group" data-goto-page-url="@_goToUrl">
-        <label class="control-label"><b>@Strings.Goto</b></label>
-        <div>
-            <input class="form-control grid-goto-page-input" value="@Model.CurrentPage" />
+    @if (Model.GoToVisibility)
+    {
+        <div class="grid-goto-page form-group" data-goto-page-url="@_goToUrl">
+            <label class="control-label"><b>@Strings.Goto</b></label>
+            <div>
+                <input class="form-control grid-goto-page-input" value="@Model.CurrentPage" />
+            </div>
         </div>
-    </div>
+    }
 
     @if (_pagingType == PagingType.Pagination && Model.ChangePageSize)
     {

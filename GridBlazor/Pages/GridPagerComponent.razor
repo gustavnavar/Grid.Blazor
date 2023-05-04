@@ -62,12 +62,15 @@
             </ul>
         </nav>
 
-        <div class="grid-goto-page form-group">
-            <label class="control-label"><b>@Strings.Goto</b></label>
+        @if (GridComponent.Grid.Pager.GoToVisibility)
+        {
+            <div class="grid-goto-page form-group">
+                <label class="control-label"><b>@Strings.Goto</b></label>
             <div>
                 <input class="form-control grid-goto-page-input" @bind="_currentPage" @onkeyup="GoToKeyup" @onblur="GoToBlur" @onclick:stopPropagation />
             </div>
         </div>
+        }
     }
 
     @if (GridComponent.Grid.PagingType == PagingType.Pagination && GridComponent.Grid.Pager.ChangePageSize)

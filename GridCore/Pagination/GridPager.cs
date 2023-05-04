@@ -89,6 +89,9 @@ namespace GridCore.Pagination
         
         public bool ChangePageSize { get; set; }
 
+        public bool GoToVisibility { get; set; } = true;
+
+
         public int QueryPageSize
         {
             get { return _queryPageSize; }

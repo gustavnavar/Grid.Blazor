@@ -43,6 +43,12 @@ namespace GridCore.Server
         IGridServer<T> WithPaging(int pageSize, int maxDisplayedItems, string queryStringParameterName);
 
         /// <summary>
+        ///     Enable go to pager visibility
+        /// </summary>
+        /// <param name="enable">Enable go to pager visibility</param>
+        IGridServer<T> GoToVisibility(bool enable);
+
+        /// <summary>
         ///     Enable sorting for all columns
         /// </summary>
         IGridServer<T> Sortable();

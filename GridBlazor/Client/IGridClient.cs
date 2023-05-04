@@ -43,6 +43,12 @@ namespace GridBlazor
         IGridClient<T> WithPaging(int pageSize, int maxDisplayedItems, string queryStringParameterName);
 
         /// <summary>
+        ///     Enable go to pager visibility
+        /// </summary>
+        /// <param name="enable">Enable go to pager visibility</param>
+        IGridClient<T> GoToVisibility(bool enable);
+
+        /// <summary>
         ///    Enable virtualization
         /// </summary>
         IGridClient<T> Virtualize();

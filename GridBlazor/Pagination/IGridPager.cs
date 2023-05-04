@@ -20,6 +20,11 @@ namespace GridBlazor.Pagination
         bool ChangePageSize { get; set; }
 
         /// <summary>
+        ///     Enable Go To field on view
+        /// </summary>
+        bool GoToVisibility { get; set; }
+
+        /// <summary>
         ///     Max grid items, displaying on the page configured on the view
         /// </summary>
         int QueryPageSize { get; set; }

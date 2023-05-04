@@ -96,6 +96,12 @@ namespace GridMvc.Html
             return this;
         }
 
+        public IGridHtmlOptions<T> GoToVisibility(bool enable)
+        {
+            _source.Pager.GoToVisibility = enable;
+            return this;
+        }
+
         public IGridHtmlOptions<T> Sortable()
         {
             return Sortable(true, GridSortMode.ThreeState);

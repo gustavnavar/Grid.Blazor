@@ -29,6 +29,8 @@ namespace GridCore.Pagination
         /// </summary>
         bool ChangePageSize { get; set; }
 
+        bool GoToVisibility { get; set; }
+
         /// <summary>
         ///     Max grid items, displaying on the page configured on the view
         /// </summary>

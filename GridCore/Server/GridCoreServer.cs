@@ -100,6 +100,12 @@ namespace GridCore.Server
             return this;
         }
 
+        public IGridServer<T> GoToVisibility(bool enable)
+        {
+            _source.Pager.GoToVisibility = enable;
+            return this;
+        }
+
         public IGridServer<T> Sortable()
         {
             return Sortable(true, GridSortMode.ThreeState);

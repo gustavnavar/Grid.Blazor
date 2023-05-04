@@ -43,6 +43,12 @@ namespace GridMvc.Html
         IGridHtmlOptions<T> WithPaging(int pageSize, int maxDisplayedItems, string queryStringParameterName);
 
         /// <summary>
+        ///     Enable go to pager visibility
+        /// </summary>
+        /// <param name="enable">Enable go to pager visibility</param>
+        IGridHtmlOptions<T> GoToVisibility(bool enable);
+
+        /// <summary>
         ///     Enable sorting for all columns
         /// </summary>
         IGridHtmlOptions<T> Sortable();
