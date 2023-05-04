@@ -48,6 +48,10 @@ namespace GridBlazor.Tests.Client
             Assert.AreEqual(_client.Grid.Pager.PageSize, 5);
             Assert.AreEqual(_client.Grid.ServerAPI, ServerAPI.ItemsDTO);
 
+            Assert.IsTrue(_client.Grid.Pager.GoToVisibility);
+            _client.GoToVisibility(false);
+            Assert.IsFalse(_client.Grid.Pager.GoToVisibility);
+
             _client.WithMultipleFilters();
             Assert.IsTrue(_client.Grid.ComponentOptions.AllowMultipleFilters);
 
@@ -63,6 +67,11 @@ namespace GridBlazor.Tests.Client
 
             _client.ChangePageSize(true);
             Assert.IsTrue(_client.Grid.Pager.ChangePageSize);
+
+            _client.SetModalForms(true, "auto", "auto");
+            Assert.IsTrue(_client.Grid.ModalForms);
+            Assert.AreEqual(_client.Grid.ModalWidth, "auto");
+            Assert.AreEqual(_client.Grid.ModalHeight, "auto");
 
             _client.ClearFiltersButton(true);
             Assert.IsTrue(_client.Grid.ClearFiltersButtonEnabled);

@@ -48,6 +48,10 @@ namespace GridMvc.Tests.Server
             Assert.AreEqual(_server.Grid.PagingType, PagingType.Pagination);
             Assert.AreEqual(_server.Grid.Pager.PageSize, 5);
 
+            Assert.IsTrue(_server.Grid.Pager.GoToVisibility);
+            _server.GoToVisibility(false);
+            Assert.IsFalse(_server.Grid.Pager.GoToVisibility);
+
             _server.WithMultipleFilters();
             Assert.IsTrue(_server.Grid.RenderOptions.AllowMultipleFilters);
 
