@@ -60,7 +60,7 @@ namespace GridBlazor.Pages
             {
                 await jSRuntime.InvokeVoidAsync("gridJsFunctions.focusElement", firstSelect);
                 ScreenPosition sp = await jSRuntime.InvokeAsync<ScreenPosition>("gridJsFunctions.getPosition", numberFilter);
-                ScreenPosition gridTableSP = await jSRuntime.InvokeAsync<ScreenPosition>("gridJsFunctions.getPosition", GridHeaderComponent.GridComponent.GridTable);
+                ScreenPosition gridTableSP = GridHeaderComponent.GridComponent.gridTableSP;
                 if (sp != null && gridTableSP != null)
                 {
                     if (gridTableSP.X + gridTableSP.Width < sp.X + sp.Width)

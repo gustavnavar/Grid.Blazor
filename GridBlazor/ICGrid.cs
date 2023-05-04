@@ -418,5 +418,20 @@ namespace GridBlazor
         ///     Enable the change of the virtualized grid height
         /// </summary>
         bool ChangeVirtualizedHeight { get; set; }
+
+        /// <summary>
+        ///     Enable modal CRUD forms 
+        /// </summary>
+        bool ModalForms { get; set; }
+
+        /// <summary>
+        ///     Get value for modal CRUD form width
+        /// </summary>
+        string ModalWidth { get; set; }
+
+        /// <summary>
+        ///     Get value for modal CRUD form height
+        /// </summary>
+        string ModalHeight { get; set; }
     }
 }

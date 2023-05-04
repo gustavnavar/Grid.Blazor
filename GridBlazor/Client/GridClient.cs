@@ -181,6 +181,14 @@ namespace GridBlazor
             return this;
         }
 
+        public IGridClient<T> SetModalForms(bool enable, string width = null, string height = null)
+        {
+            _source.ModalForms = enable;
+            _source.ModalWidth = width;
+            _source.ModalHeight = height;
+            return this;
+        }
+
         public IGridClient<T> Sortable()
         {
             return Sortable(true, GridSortMode.ThreeState);

@@ -13,7 +13,7 @@
 {
     <div @ref="Spinner" class="grid-spinner" style="display:none;"></div>
     <div @ref="Content">
-        @if (Grid.Mode == GridMode.Grid)
+        @if (Grid.Mode == GridMode.Grid || Grid.PagingType == PagingType.Virtualization || Grid.ModalForms)
         {
             if (Grid.ComponentOptions.RenderRowsOnly)
             {
@@ -458,6 +458,84 @@
                         </div>
                     </div>
                 </div>
+
+                @if (Grid.Mode != GridMode.Grid)
+                {
+                    <div class="modal fade show ml-3" tabindex="-1" role="dialog" style="display:block;position:absolute;">
+                        <div class="modal-dialog" role="document" style="position:absolute;">
+                            <div class="modal-content grid-crud" style="overflow-y:scroll;@(!string.IsNullOrWhiteSpace(Grid.ModalWidth) ? "width:" + Grid.ModalWidth + ";" : (gridComponentSP == null ? "" : "width:" + gridComponentSP.Width + "px;")) @(!string.IsNullOrWhiteSpace(Grid.ModalHeight) ? "height:" + Grid.ModalHeight + ";" : (gridComponentSP == null ? "" : "height:" + (int)(gridComponentSP.Height * 0.96) + "px;"))">
+                                <div class="modal-body">
+                                    @if (Grid.Mode == GridMode.Create && Grid.CreateEnabled)
+                                    {
+                                        <div dir="@Grid.Direction.ToDirection()">
+                                            @if (Grid.CreateComponent == null)
+                                            {
+                                                <CascadingValue Value=@this Name="GridComponent">
+                                                    <GridCreateComponent @ref="CreateComponent" T="@T" Item="@Item"></GridCreateComponent>
+                                                </CascadingValue>
+                                            }
+                                            else
+                                            {
+                                                @CrudRender
+                                            }
+                                        </div>
+                                    }
+                                    else if (Grid.Mode == GridMode.Read && (Grid.ReadEnabled || (((CGrid<T>)Grid).FuncReadEnabled != null && ((CGrid<T>)Grid).FuncReadEnabled(Item))))
+                                    {
+                                        <div dir="@Grid.Direction.ToDirection()">
+                                            @if (Grid.ReadComponent == null)
+                                            {
+                                                <CascadingValue Value=@this Name="GridComponent">
+                                                    <GridReadComponent @ref="ReadComponent" T="@T" Item="@Item"></GridReadComponent>
+                                                </CascadingValue>
+                                            }
+                                            else
+                                            {
+                                                @CrudRender
+                                            }
+                                        </div>
+                                    }
+                                    else if (Grid.Mode == GridMode.Update && (Grid.UpdateEnabled || (((CGrid<T>)Grid).FuncUpdateEnabled != null && ((CGrid<T>)Grid).FuncUpdateEnabled(Item))))
+                                    {
+                                        <div dir="@Grid.Direction.ToDirection()">
+                                            @if (Grid.UpdateComponent == null)
+                                            {
+                                                <CascadingValue Value=@this Name="GridComponent">
+                                                    <GridUpdateComponent @ref="UpdateComponent" T="@T" Item="@Item"></GridUpdateComponent>
+                                                </CascadingValue>
+                                            }
+                                            else
+                                            {
+                                                @CrudRender
+                                            }
+                                        </div>
+                                    }
+                                    else if (Grid.Mode == GridMode.Delete && (Grid.DeleteEnabled || (((CGrid<T>)Grid).FuncDeleteEnabled != null && ((CGrid<T>)Grid).FuncDeleteEnabled(Item))))
+                                    {
+                                        <div dir="@Grid.Direction.ToDirection()">
+                                            @if (Grid.DeleteComponent == null)
+                                            {
+                                                <CascadingValue Value=@this Name="GridComponent">
+                                                    <GridDeleteComponent @ref="DeleteComponent" T="@T" Item="@Item"></GridDeleteComponent>
+                                                </CascadingValue>
+                                            }
+                                            else
+                                            {
+                                                @CrudRender
+                                            }
+                                        </div>
+                                    }
+                                    else if (Grid.Mode == GridMode.Form)
+                                    {
+                                        <div dir="@Grid.Direction.ToDirection()">
+                                            @CrudRender
+                                        </div>
+                                    }
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                }
             }
         }
         else if (Grid.Mode == GridMode.Create && Grid.CreateEnabled)

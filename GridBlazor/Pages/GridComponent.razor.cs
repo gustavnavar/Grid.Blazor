@@ -54,6 +54,9 @@ namespace GridBlazor.Pages
         internal ElementReference GridTable;
         internal ElementReference GridTableWrap;
 
+        internal ScreenPosition gridComponentSP;
+        internal ScreenPosition gridTableSP;
+
         internal ElementReference Spinner;
         internal ElementReference Content;
 
@@ -330,6 +333,9 @@ namespace GridBlazor.Pages
 
         protected override async Task OnAfterRenderAsync(bool firstRender)
         {
+            gridComponentSP = await jSRuntime.InvokeAsync<ScreenPosition>("gridJsFunctions.getPosition", Gridmvc);
+            gridTableSP = await jSRuntime.InvokeAsync<ScreenPosition>("gridJsFunctions.getPosition", GridTable);
+            
             if (firstRender)
             {
                 IsDateTimeLocalSupported = await jSRuntime.InvokeAsync<bool>("gridJsFunctions.isDateTimeLocalSupported");

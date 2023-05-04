@@ -50,18 +50,24 @@ namespace GridBlazor
         /// <summary>
         ///    Enable virtualization
         /// </summary>
-        IGridClient<T> Virtualize(int heigh);
+        IGridClient<T> Virtualize(int height);
 
         /// <summary>
         ///    Enable virtualization
         /// </summary>
-        IGridClient<T> Virtualize(string width, int heigh);
+        IGridClient<T> Virtualize(string width, int height);
 
         /// <summary>
         ///     Enable change virtualized height for grid
         /// </summary>
-        /// <param name="enable">Enable dynamic setup the  virtualized heighte of the grid</param>
+        /// <param name="enable">Enable dynamic setup the  virtualized height of the grid</param>
         IGridClient<T> ChangeVirtualizedHeight(bool enable);
+
+        /// <summary>
+        ///     Enable modal CRUD forms
+        /// </summary>
+        /// <param name="enable">Enable modal forms for the grid</param>
+        IGridClient<T> SetModalForms(bool enable, string width = null, string height = null);
 
         /// <summary>
         ///     Enable sorting for all columns

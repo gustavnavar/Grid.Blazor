@@ -505,6 +505,12 @@ namespace GridBlazor
 
         public bool ChangeVirtualizedHeight { get; set; } = false;
 
+        public bool ModalForms { get; set; } = false;
+
+        public string ModalWidth { get; set; }
+
+        public string ModalHeight { get; set; }
+
         /// <summary>
         ///     Get and set export to an Excel file
         /// </summary>
