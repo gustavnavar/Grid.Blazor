@@ -461,7 +461,7 @@
 
                 @if (Grid.Mode != GridMode.Grid)
                 {
-                    <div class="modal fade show ml-3" tabindex="-1" role="dialog" style="display:block;position:absolute;">
+                    <div class="modal fade show" tabindex="-1" role="dialog" style="display:block;position:absolute;margin-left:1.3rem;">
                         <div class="modal-dialog" role="document" style="position:absolute;">
                             <div class="modal-content grid-crud" style="overflow-y:scroll;@(!string.IsNullOrWhiteSpace(Grid.ModalWidth) ? "width:" + Grid.ModalWidth + ";" : (gridComponentSP == null ? "" : "width:" + gridComponentSP.Width + "px;")) @(!string.IsNullOrWhiteSpace(Grid.ModalHeight) ? "height:" + Grid.ModalHeight + ";" : (gridComponentSP == null ? "" : "height:" + (int)(gridComponentSP.Height * 0.96) + "px;"))">
                                 <div class="modal-body">

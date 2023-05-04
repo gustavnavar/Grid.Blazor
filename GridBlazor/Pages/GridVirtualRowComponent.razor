@@ -4,6 +4,57 @@
 @typeparam T
 
 <tr class="grid-row @Grid.GetRowCssClasses(Item)">
+    @if ((Grid.ReadEnabled || ((CGrid<T>)Grid).FuncReadEnabled != null) && !GridComponent.HeaderCrudButtons)
+    {
+        <td class="@GridComponent.GridButtonCellCssClass" data-name="" style="width:35px;">
+            @if (Grid.ReadEnabled || (((CGrid<T>)Grid).FuncReadEnabled != null && ((CGrid<T>)Grid).FuncReadEnabled((T)Item)))
+            {
+                @if (string.IsNullOrWhiteSpace(Grid.ReadLabel))
+                {
+                    <button class='grid-button grid-button-view btn btn-sm btn-primary' title="@Grid.ReadTooltip" @onclick="@(e => GridComponent.ReadHandler(Item))" type="button" @onclick:stopPropagation></button>
+                }
+                else
+                {
+                    <button class='grid-button-label-view btn btn-sm btn-primary' title="@Grid.ReadTooltip" @onclick="@(e => GridComponent.ReadHandler(Item))" type="button" @onclick:stopPropagation>@Grid.ReadLabel</button>
+                }
+            }
+        </td>
+    }
+    @if ((Grid.UpdateEnabled || ((CGrid<T>)Grid).FuncUpdateEnabled != null) && !GridComponent.HeaderCrudButtons)
+    {
+        <td class="@GridComponent.GridButtonCellCssClass" data-name="" style="width:35px;">
+            @if (Grid.UpdateEnabled || (((CGrid<T>)Grid).FuncUpdateEnabled != null && ((CGrid<T>)Grid).FuncUpdateEnabled((T)Item)))
+            {
+                @if (string.IsNullOrWhiteSpace(Grid.UpdateLabel))
+                {
+                    <button class='grid-button grid-button-edit btn btn-sm btn-primary' title="@Grid.UpdateTooltip" @onclick="@(e => GridComponent.UpdateHandler(Item))" type="button" @onclick:stopPropagation></button>
+                }
+                else
+                {
+                    <button class='grid-button-label-edit btn btn-sm btn-primary' title="@Grid.UpdateTooltip" @onclick="@(e => GridComponent.UpdateHandler(Item))" type="button" @onclick:stopPropagation>@Grid.UpdateLabel</button>
+                }
+            }
+        </td>
+    }
+    @if ((Grid.DeleteEnabled || ((CGrid<T>)Grid).FuncDeleteEnabled != null) && !GridComponent.HeaderCrudButtons)
+    {
+        <td class="@GridComponent.GridButtonCellCssClass" data-name="" style="width:35px;">
+            @if (Grid.DeleteEnabled || (((CGrid<T>)Grid).FuncDeleteEnabled != null && ((CGrid<T>)Grid).FuncDeleteEnabled((T)Item)))
+            {
+                @if (Grid.DeleteEnabled || (((CGrid<T>)Grid).FuncDeleteEnabled != null && ((CGrid<T>)Grid).FuncDeleteEnabled((T)Item)))
+                {
+                    @if (string.IsNullOrWhiteSpace(Grid.DeleteLabel))
+                    {
+                        <button class='grid-button grid-button-delete btn btn-sm btn-primary' title="@Grid.DeleteTooltip" @onclick="@(e => GridComponent.DeleteHandler(Item))" type="button" @onclick:stopPropagation></button>
+                    }
+                    else
+                    {
+                        <button class='grid-button-label-delete btn btn-sm btn-primary' title="@Grid.DeleteTooltip" @onclick="@(e => GridComponent.DeleteHandler(Item))" type="button" @onclick:stopPropagation>@Grid.DeleteLabel</button>
+                    }
+                }
+            }
+        </td>
+    }
     @if (RequiredTotalsColumn)
     {
         <td class="@GridComponent.GridCellCssClass" data-name="" style="width:90px;"></td>
