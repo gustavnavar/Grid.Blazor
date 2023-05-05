@@ -6,6 +6,7 @@
 @using System.Threading.Tasks
 @inject NavigationManager NavigationManager
 @inject HttpClient HttpClient
+@inject ICrudDataService<Order> orderService
 
 <h1>Grid Sample</h1>
 
@@ -17,7 +18,7 @@
     This component demonstrates a GridBlazor client-side grid. For more information, please see: <a href="https://github.com/gustavnavar/Grid.Blazor">https://github.com/gustavnavar/Grid.Blazor</a>
 </p>
 
-@if (_task.IsCompleted)
+@if (_task1.IsCompleted && _task2.IsCompleted)
 {
     <div class="row">
         <div class="col-md-12">
@@ -33,21 +34,30 @@ else
 @code
 {
     private CGrid<Order> _grid;
-    private Task _task;
+    private IEnumerable<SelectItem> _shippers;
+    private Task<List<SelectItem>> _task1;
+    private Task _task2;
 
     protected override async Task OnParametersSetAsync()
     {
         var locale = CultureInfo.CurrentCulture;
 
+        _task1 = HttpClient.GetFromJsonAsync<List<SelectItem>>(NavigationManager.BaseUri + $"api/SampleData/GetAllShippers");
+        _shippers = await _task1;
+
         var query = new QueryDictionary<StringValues>();
         //query.Add("grid-filter", "Customer.Country__1__usa");
 
+        Action<IGridColumnCollection<Order>> orderColumns = c =>
+        ColumnCollections.VirtualizedOrderColumns(c, NavigationManager.BaseUri, _shippers);
+
         string url = NavigationManager.BaseUri + "api/SampleData/GetVirtualizedOrdersGrid";
-        var client = new GridClient<Order>(HttpClient, url, query, false, "ordersGrid", ColumnCollections.OrderColumnsWithTotals, locale)
+        var client = new GridClient<Order>(HttpClient, url, query, false, "ordersGrid", orderColumns, locale)
             .Sortable()
             .ExtSortable(true)
             .Filterable()
             .SetStriped(true)
+            .Crud(true, orderService)
             .WithMultipleFilters()
             .WithGridItemsCount()
             //.Searchable(true, false, false)
@@ -58,7 +68,7 @@ else
 
         _grid = client.Grid;
         // Set new items to grid
-        _task = client.UpdateGrid();
-        await _task;
+        _task2 = client.UpdateGrid();
+        await _task2;
     }
 }

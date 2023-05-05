@@ -266,7 +266,7 @@ namespace GridBlazorGrpc.Server.Services
         {
             var repository = new OrdersRepository(_context);
             IGridServer<Order> server = new GridCoreServer<Order>(repository.GetAll(), query,
-                true, "ordersGrid", ColumnCollections.OrderColumnsWithTotals)
+                true, "ordersGrid", c => ColumnCollections.VirtualizedOrderColumns(c, null, null, null, null))
                     .Sortable()
                     .ExtSortable(true)
                     .Filterable()

@@ -796,6 +796,82 @@ namespace GridBlazorStandalone.ColumnCollections
                 c.Add(o => o.OrderDetails).Titled("Order Details").SubGrid("tabGroup1", subgrids, ("OrderID", "OrderID"));
             };
 
+        public static Action<IGridColumnCollection<Order>, Func<Order, IEnumerable<SelectItem>>,
+            Func<Order, IEnumerable<SelectItem>>, Func<IEnumerable<SelectItem>>>
+            VirtualizedOrderColumns = (c, f, g, h) =>
+            {
+                /* Adding "OrderID" column: */
+                c.Add(o => o.OrderID).SetPrimaryKey(true, false).Titled(SharedResource.Number).SetTooltip("Order ID is ... ").SetWidth(100);
+
+                /* Adding "CustomerID" column: */
+                c.Add(o => o.CustomerID, true).SetSelectField(true, o => o.Customer.CustomerID + " - " + o.Customer.CompanyName, f);
+
+                /* Adding "EmployeeID" column: */
+                c.Add(o => o.EmployeeID, true).SetSelectField(true, o => o.Employee.EmployeeID.ToString() + " - " + o.Employee.FirstName + " " + o.Employee.LastName, g);
+
+                /* Adding "ShipVia" column: */
+                c.Add(o => o.ShipVia).Titled("Via")
+                .SetWidth(250).RenderValueAs(o => o.Shipper == null ? "" : o.Shipper.CompanyName)
+                .SetSelectField(true, o => o.Shipper == null ? "" : o.Shipper.ShipperID.ToString() + " - " + o.Shipper.CompanyName, h)
+                .SetListFilter(h.Invoke(), true, true);
+
+                /* Adding "OrderDate" column: */
+                c.Add(o => o.OrderDate, "OrderCustomDate").Titled(SharedResource.OrderCustomDate)
+                //.SortInitialDirection(GridSortDirection.Descending)
+                .SetCellCssClassesContraint(o => o.OrderDate.HasValue && o.OrderDate.Value >= DateTime.Parse("1997-01-01") ? "red" : "")
+                .Format("{0:yyyy-MM-dd}").SetWidth(120)
+                .Max(true).Min(true);
+
+                /* Adding "CompanyName" column: */
+                c.Add(o => o.Customer.CompanyName).Titled(SharedResource.CompanyName)
+                .SetWidth(250)
+                .SetCrudHidden(true).SetReadOnlyOnUpdate(true)
+                //.ThenSortByDescending(o => o.OrderID)
+                //.SetInitialFilter(GridFilterType.StartsWith, "a")
+                .SetFilterWidgetType(CompanyNameFilter)
+                .Max(true).Min(true);
+
+                /* Adding "ContactName" column: */
+                c.Add(o => o.Customer.ContactName).Titled(SharedResource.ContactName)
+                .SetCrudHidden(true)
+                .Max(true).Min(true);
+
+                /* Adding "Freight" column: */
+                c.Add(o => o.Freight)
+                .Titled(SharedResource.Freight)
+                .Format("{0:F}")
+                .SetWidth(150)
+                .Sum(true).Average(true).Max(true).Min(true);
+
+                /* Adding "Vip customer" column: */
+                c.Add(o => o.Customer.IsVip).Titled(SharedResource.IsVip).SetWidth(90).Css("hidden-xs") //hide on phones
+                .RenderValueAs(o => o.Customer.IsVip ? Strings.BoolTrueLabel : Strings.BoolFalseLabel).SetCrudHidden(true);
+
+                /* Adding hidden "RequiredDate" column: */
+                c.Add(o => o.RequiredDate, true).Format("{0:yyyy-MM-dd}");
+
+                /* Adding hidden "ShippedDate" column: */
+                c.Add(o => o.ShippedDate, true).Format("{0:yyyy-MM-dd}");
+
+                /* Adding hidden "ShipName" column: */
+                c.Add(o => o.ShipName, true);
+
+                /* Adding hidden "ShipAddress" column: */
+                c.Add(o => o.ShipAddress, true);
+
+                /* Adding hidden "ShipCity" column: */
+                c.Add(o => o.ShipCity, true);
+
+                /* Adding hidden "ShipPostalCode" column: */
+                c.Add(o => o.ShipPostalCode, true);
+
+                /* Adding hidden "ShipRegion" column: */
+                c.Add(o => o.ShipRegion, true);
+
+                /* Adding hidden "ShipCountry" column: */
+                c.Add(o => o.ShipCountry, true);
+            };
+
         public static Action<IGridColumnCollection<Order>, IList<Action<object>>> OrderColumnsMultipleGrids = (c, actions) =>
         {
             /* Adding not mapped column, that renders body, using inline Razor html helper */

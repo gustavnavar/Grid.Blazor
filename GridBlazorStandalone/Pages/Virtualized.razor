@@ -6,6 +6,9 @@
 @using System.Globalization
 @using System.Threading.Tasks
 @inject IOrderService orderService
+@inject ICustomerService customerService
+@inject IEmployeeService employeeService
+@inject IShipperService shipperService
 
 <h1>Grid Sample</h1>
 
@@ -42,12 +45,16 @@ else
         var query = new QueryDictionary<StringValues>();
         //query.Add("grid-filter", "Customer.Country__1__usa");
 
-        var client = new GridClient<Order>(q => orderService.GetVirtualizedOrdersGridRows(ColumnCollections.OrderColumnsWithTotals, q),
-            query, false, "ordersGrid", ColumnCollections.OrderColumnsWithTotals, locale)
+         Action<IGridColumnCollection<Order>> orderColumns = c => ColumnCollections.VirtualizedOrderColumns(c,
+            c => customerService.GetAllCustomers(), c => employeeService.GetAllEmployees(), shipperService.GetAllShippers);
+
+        var client = new GridClient<Order>(q => orderService.GetVirtualizedOrdersGridRows(orderColumns, q),
+            query, false, "ordersGrid", orderColumns, locale)
             .Sortable()
             .ExtSortable(true)
             .Filterable()
             .SetStriped(true)
+            .Crud(true, orderService)
             .WithMultipleFilters()
             .WithGridItemsCount()
             //.Searchable(true, false, false)

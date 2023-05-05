@@ -1,0 +1,124 @@
+﻿@page "/modalcrud"
+@using GridBlazorStandalone.ColumnCollections
+@using GridBlazorStandalone.Models
+@using GridBlazorStandalone.Services
+@using Microsoft.Extensions.Primitives
+@using System.Globalization
+@using System.Threading.Tasks
+@inject NavigationManager NavigationManager
+@inject HttpClient HttpClient
+@inject IOrderService orderService
+@inject ICustomerService customerService
+@inject IEmployeeService employeeService
+@inject IShipperService shipperService
+
+<h1>Grid Sample</h1>
+
+<p>
+    This page contains a CRUD grid with modal forms
+</p>
+
+<p>
+    This component demonstrates an standalone GridBlazor client-side grid. For more information, please see: <a href="https://github.com/gustavnavar/Grid.Blazor">https://github.com/gustavnavar/Grid.Blazor</a>
+</p>
+
+@if (_task.IsCompleted)
+{
+    <div class="row">
+        <div class="col-md-12">
+            <GridComponent T="Order" @ref="_gridComponent" Grid="@_grid"></GridComponent>
+        </div>
+    </div>
+}
+else
+{
+    <p><em>Loading...</em></p>
+}
+
+@code
+{
+    private CGrid<Order> _grid;
+    private GridComponent<Order> _gridComponent;
+    private bool _afterRenderExecuted = false;
+    private Task _task;
+
+    protected override async Task OnParametersSetAsync()
+    {
+        var locale = CultureInfo.CurrentCulture;
+
+        var query = new QueryDictionary<StringValues>();
+        Action<IGridColumnCollection<Order>> columns = c => ColumnCollections.OrderColumnsWithCrud(c,
+           c => customerService.GetAllCustomers(), c => employeeService.GetAllEmployees(), shipperService.GetAllShippers);
+        var client = new GridClient<Order>(q => orderService.GetOrdersGridRows(columns, q), query, false, "ordersGrid", columns, locale)
+            .Sortable()
+            .Filterable()
+            .SetStriped(true)
+            .Crud(true, orderService)
+            .WithMultipleFilters()
+            .WithGridItemsCount();
+
+        _grid = client.Grid;
+
+        // Set new items to grid
+        _task = client.UpdateGrid();
+        await _task;
+    }
+
+    protected override void OnAfterRender(bool firstRender)
+    {
+        if (!_afterRenderExecuted && _gridComponent != null)
+        {
+            _gridComponent.BeforeInsert += BeforeInsert;
+            _gridComponent.BeforeUpdate += BeforeUpdate;
+            _gridComponent.BeforeDelete += BeforeDelete;
+            _afterRenderExecuted = true;
+        }
+    }
+
+    private async Task<bool> BeforeInsert(GridCreateComponent<Order> component, Order item)
+    {
+        var orderValidator = new OrderValidator();
+        var valid = await orderValidator.ValidateAsync(item);
+
+        if (!valid.IsValid)
+        {
+            component.Error = "Insert operation returned one or more errors";
+            foreach (var error in valid.Errors)
+            {
+                component.ColumnErrors.AddParameter(error.PropertyName, error.ErrorMessage);
+            }
+        }
+
+        return valid.IsValid;
+    }
+
+    private async Task<bool> BeforeUpdate(GridUpdateComponent<Order> component, Order item)
+    {
+        var orderValidator = new OrderValidator();
+        var valid = await orderValidator.ValidateAsync(item);
+
+        if (!valid.IsValid)
+        {
+            component.Error = "Update operation returned one or more errors";
+            foreach (var error in valid.Errors)
+            {
+                component.ColumnErrors.AddParameter(error.PropertyName, error.ErrorMessage);
+            }
+        }
+
+        return valid.IsValid;
+    }
+
+    private async Task<bool> BeforeDelete(GridDeleteComponent<Order> component, Order item)
+    {
+        var orderValidator = new OrderValidator();
+        var valid = await orderValidator.ValidateAsync(item);
+
+        if (!valid.IsValid)
+        {
+            component.Error = valid.ToString();
+        }
+
+        return valid.IsValid;
+    }
+}

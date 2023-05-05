@@ -5,6 +5,7 @@
 @using System.Globalization
 @using System.Threading.Tasks
 @inject IGridClientService gridClientService
+@inject ICrudDataService<Order> orderService
 
 <h1>Grid Sample</h1>
 
@@ -16,7 +17,7 @@
     This component demonstrates a GridBlazor client-side grid using gRPC to communicate with the back-end. For more information, please see: <a href="https://github.com/gustavnavar/Grid.Blazor">https://github.com/gustavnavar/Grid.Blazor</a>
 </p>
 
-@if (_task.IsCompleted)
+@if (_task1.IsCompleted && _task2.IsCompleted)
 {
     <div class="row">
         <div class="col-md-12">
@@ -32,20 +33,30 @@ else
 @code
 {
     private CGrid<Order> _grid;
-    private Task _task;
+    private Task<IEnumerable<SelectItem>> _task1;
+    private Task _task2;
+    private IEnumerable<SelectItem> _shippers;
 
     protected override async Task OnParametersSetAsync()
     {
         var locale = CultureInfo.CurrentCulture;
+        _task1 = gridClientService.GetAllShippers();
+        _shippers = await _task1;
 
         var query = new QueryDictionary<string>();
         //query.Add("grid-filter", "Customer.Country__1__usa");
 
-        var client = new GridClient<Order>(gridClientService.GetVirtualizedOrdersGridRows, query, false, "ordersGrid", ColumnCollections.OrderColumnsWithTotals, locale)
+       Action<IGridColumnCollection<Order>> orderColumns = c =>
+       ColumnCollections.VirtualizedOrderColumns(c, o => gridClientService.GetAllCustomers(),
+               o => gridClientService.GetAllEmployees(),
+               o => gridClientService.GetAllShippers(), _shippers);
+
+        var client = new GridClient<Order>(gridClientService.GetVirtualizedOrdersGridRows, query, false, "ordersGrid", orderColumns, locale)
             .Sortable()
             .ExtSortable(true)
             .Filterable()
             .SetStriped(true)
+            .Crud(true, orderService)
             .WithMultipleFilters()
             .WithGridItemsCount()
             //.Searchable(true, false, false)
@@ -56,7 +67,7 @@ else
 
         _grid = client.Grid;
         // Set new items to grid
-        _task = client.UpdateGrid();
-        await _task;
+        _task2 = client.UpdateGrid();
+        await _task2;
     }
 }
