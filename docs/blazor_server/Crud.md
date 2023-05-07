@@ -609,12 +609,12 @@ And finaly you have to pass the paramenters initialized before to the ```GridCom
 
 You can configure initial values for new records when using the Create form. 
 
-You have to use the ```SetInitCreateValues``` of the ```GridClient``` object:
+You have to use the ```SetInitCreateValues``` method of the ```GridClient``` object:
 
 ```c#
     var client = new GridClient<Order>(q => orderService.GetOrdersGridRows(columns, q), query, false, "ordersGrid", columns, locale)
         .Crud(true, orderService)
-        .SetDeleteConfirmation(true);
+        .SetInitCreateValues(InitCreateOrder);
 ```
 
 And the write the funtion to init the values:
@@ -625,5 +625,19 @@ And the write the funtion to init the values:
         await Task.CompletedTask;
     }
 ```
+
+## Modal forms
+
+CRUD forms are shown a normal windows by default. In this case CRUD replace the grid window. 
+
+But it's also possible to use modal windows for CRUD forms. You have to use the ```SetModalForms``` method of the ```GridClient``` object:
+
+```c#
+    var client = new GridClient<Order>(q => orderService.GetOrdersGridRows(columns, q), query, false, "ordersGrid", columns, locale)
+        .Crud(true, orderService)
+        .SetModalForms(true);
+```
+
+When CRUD is used on virtualized grids, it is not necessary to use the ```SetModalForms``` method because modal is used automaticaly.
 
 [<- Passing grid state as parameter](Passing_grid_state_as_parameter.md) | [Nested CRUD ->](Nested_crud.md)

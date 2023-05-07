@@ -92,6 +92,7 @@ width | string to define the grid width (optional). The default value is "auto"
     - Items count
     - Excel export
     - Column re-arrangment
+    - CRUD (CRUD forms are shown as modal windows automatically)
     
 * Grid virtualization is not compatible with:
     - Subgrids
@@ -99,6 +100,5 @@ width | string to define the grid width (optional). The default value is "auto"
     - Checkbox columns
     - Searching
     - Grouping
-    - CRUD
 
 [<- Grid dimensions](Grid_dimensions.md)

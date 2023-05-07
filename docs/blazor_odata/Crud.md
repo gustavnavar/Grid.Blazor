@@ -352,7 +352,7 @@ labelWidth | int (optional) | number to configure the label element width. The d
 You can enable this feature as followw:
 ```c#
     var client = new GridODataClient<Order>(HttpClient, url, query, false, "ordersGrid", columns, 10, locale)
-        .Crud(true, orderService)
+        .ODataCrud(true)
         .SetCreateConfirmation(true)
         .SetUpdateConfirmation(true)
         .SetDeleteConfirmation(true);
@@ -383,7 +383,7 @@ You can change the default CRUD form titles using the ```SetCrudFormLabels``` me
 You can change the default CRUD form button labels using the ```SetCrudFormButtonLabels``` method of the ```GridClient``` object for this:
 ```c#
     var client = new GridODataClient<Order>(HttpClient, url, query, false, "ordersGrid", ColumnCollections.OrderColumnsWithCustomCrud, locale)
-        .Crud(true, orderService)
+        .ODataCrud(true)
         .SetCrudFormButtonLabels("Add Order", "Edit Order", "Delete Order");
 ```
 
@@ -419,7 +419,7 @@ You can also use text labels for the header buttons. In this the configuration i
 You can change the default CRUD button tooltips using the ```SetCrudButtonTooltips``` method of the ```GridClient``` object for this:
 ```c#
     var client = new GridODataClient<Order>(HttpClient, url, query, false, "ordersGrid", columns, 10, locale)
-        .Crud(true, orderService)
+        .ODataCrud(true)
         .SetCrudButtonTooltips("Add Order", "View Order", "Edit Order", "Delete Order");
 ```
 
@@ -651,12 +651,12 @@ And finaly you have to pass the paramenters initialized before to the ```GridCom
 
 You can configure initial values for new records when using the Create form. 
 
-You have to use the ```SetInitCreateValues``` of the ```GridODataClient``` object:
+You have to use the ```SetInitCreateValues``` method of the ```GridODataClient``` object:
 
 ```c#
     var client = new GridODataClient<Order>(HttpClient, url, query, false, "ordersGrid", columns, 10, locale)
-        .Crud(true, orderService)
-        .SetDeleteConfirmation(true);
+        .ODataCrud(true)
+        .SetInitCreateValues(InitCreateOrder);
 ```
 
 And the write the funtion to init the values:
@@ -667,5 +667,19 @@ And the write the funtion to init the values:
         await Task.CompletedTask;
     }
 ```
+
+## Modal forms
+
+CRUD forms are shown a normal windows by default. In this case CRUD replace the grid window. 
+
+But it's also possible to use modal windows for CRUD forms. You have to use the ```SetModalForms``` method of the ```GridClient``` object:
+
+```c#
+    var client = new GridODataClient<Order>(HttpClient, url, query, false, "ordersGrid", columns, 10, locale)
+        .ODataCrud(true)
+        .SetModalForms(true);
+```
+
+When CRUD is used on virtualized grids, it is not necessary to use the ```SetModalForms``` method because modal is used automaticaly.
 
 [<- Front-end back-end API](API.md) | [Nested CRUD ->](Nested_crud.md)

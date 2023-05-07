@@ -32,4 +32,13 @@ Then you have to use the **ChangePageSize** method of the **GridClient** object 
 
 A user can change the page size writing the new size and pressing the "Tab" or "Enter" keys.
 
+## Hide the "Go To Page" section
+
+This field used to go to an specific page writing its number is shown by default. You can hide it using the **GoToVisibility** method of the **GridClient**:
+
+```c#
+    var client = new GridODataClient<Order>(HttpClient, url, query, false, "ordersGrid", columns, 10, locale)
+        .GoToVisibility(false)
+```
+
 [<- Keyboard navigation](Keyboard_navigation.md) | [Custom columns ->](Custom_columns.md)
