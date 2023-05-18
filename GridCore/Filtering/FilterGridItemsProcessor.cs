@@ -34,6 +34,9 @@ namespace GridCore.Filtering
 
         public IQueryable<T> Process(IQueryable<T> items)
         {
+            if (items == null || items.Count() == 0)
+                return items;
+
             if (_process != null)
                 return _process(items);
 
