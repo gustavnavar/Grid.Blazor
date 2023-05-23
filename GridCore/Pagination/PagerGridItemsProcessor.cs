@@ -29,11 +29,11 @@ namespace GridCore.Pagination
 
         public IQueryable<T> Process(IQueryable<T> items)
         {
-            if (items == null || items.Count() == 0)
-                return items;
-
             if (_process != null)
                 return _process(items);
+
+            if (items == null || items.Count() == 0)
+                return items;
 
             if (_grid.PagingType == PagingType.Virtualization)
             {
