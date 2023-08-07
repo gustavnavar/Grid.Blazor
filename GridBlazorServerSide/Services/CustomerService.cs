@@ -1,5 +1,6 @@
 using GridBlazorServerSide.Data;
 using GridBlazorServerSide.Models;
+using GridCore;
 using GridCore.Server;
 using GridShared;
 using GridShared.Utility;
@@ -21,12 +22,19 @@ namespace GridBlazorServerSide.Services
             _options = options;
         }
 
-        public IEnumerable<string> GetCustomersNames()
+        public IEnumerable<string> GetCustomersNames(Action<IGridColumnCollection<Order>> columns, 
+            QueryDictionary<string> query)
         {
             using (var context = new NorthwindDbContext(_options))
             {
-                var repository = new CustomersRepository(context);
-                return repository.GetAll().Select(r => r.CompanyName).ToList();
+                // get all customer ids in the grid with the current filters
+                var orderRepository = new OrdersRepository(context);
+                var server = new GridCoreServer<Order>(orderRepository.GetAll(), query, true, "ordersGrid", columns);
+                var customerIds = ((GridBase<Order>)server.Grid).GridItems.Select(r => r.CustomerID).Distinct().ToList();
+
+                var customerRepository = new CustomersRepository(context);
+                return customerRepository.GetAll().Where(r => customerIds.Contains(r.CustomerID)).Select(r => r.CompanyName)
+                    .OrderBy(r =>r).ToList();
             }
         }
 
@@ -147,7 +155,7 @@ namespace GridBlazorServerSide.Services
 
     public interface ICustomerService : ICrudDataService<Customer>
     {
-        IEnumerable<string> GetCustomersNames();
+        IEnumerable<string> GetCustomersNames(Action<IGridColumnCollection<Order>> columns, QueryDictionary<string> query);
         IEnumerable<SelectItem> GetAllCustomers();
         IEnumerable<SelectItem> GetAllCustomers2();
         IEnumerable<SelectItem> GetAllContacts();

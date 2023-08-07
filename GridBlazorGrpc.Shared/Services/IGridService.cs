@@ -27,7 +27,7 @@ namespace GridBlazorGrpc.Shared.Services
         ValueTask<ItemsDTO<Order>> GetOrderColumnsWithErrors(QueryDictionary<string> query);
         ValueTask<ItemsDTO<Order>> GetVirtualizedOrdersGrid(QueryDictionary<string> query);
         ValueTask<ItemsDTO<Order>> GetOrdersGridAllFeatures(QueryDictionary<string> query);
-        ValueTask<IEnumerable<string>> GetCustomersNames();
+        ValueTask<IEnumerable<string>> GetCustomersNames(QueryDictionary<string> query);
         ValueTask<IEnumerable<SelectItem>> GetAllCustomers();
         ValueTask<IEnumerable<SelectItem>> GetAllCustomers2();
         ValueTask<IEnumerable<SelectItem>> GetAllContacts();

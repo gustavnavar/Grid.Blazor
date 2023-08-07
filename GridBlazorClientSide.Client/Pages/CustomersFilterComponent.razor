@@ -1,4 +1,5 @@
 ﻿@using GridBlazor.Resources
+@using GridBlazorClientSide.Shared.Models;
 @using GridShared.Filtering
 @using System.Collections.Generic
 @inject NavigationManager NavigationManager
@@ -53,6 +54,9 @@
 
     [CascadingParameter(Name = "GridHeaderComponent")]
     private GridHeaderComponent<T> GridHeaderComponent { get; set; }
+    
+    [CascadingParameter(Name = "GridComponent")]
+    private GridComponent<T> GridComponent { get; set; }
 
     [Parameter]
     public bool visible { get; set; }
@@ -63,14 +67,11 @@
     [Parameter]
     public IEnumerable<ColumnFilterValue> FilterSettings { get; set; }
 
-    protected override async Task OnInitializedAsync()
+    protected override async Task OnParametersSetAsync()
     {
-        string url = NavigationManager.BaseUri + "api/SampleData/GetCustomersNames";
+        string url = NavigationManager.BaseUri + "api/SampleData/GetCustomersNames"
+            + ((CGrid<Order>)GridComponent.Grid).GetLink();
         _customersNames = await HttpClient.GetFromJsonAsync<List<string>>(url);
-    }
-
-    protected override void OnParametersSet()
-    {
         _filterValue = FilterSettings.FirstOrDefault().FilterValue;
         _clearVisible = !string.IsNullOrWhiteSpace(_filterValue);
     }

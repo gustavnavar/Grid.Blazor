@@ -2,6 +2,7 @@
 using GridBlazorClientSide.Client.Pages;
 using GridBlazorClientSide.Server.Models;
 using GridBlazorClientSide.Shared.Models;
+using GridCore;
 using GridCore.Server;
 using GridMvc.Server;
 using GridShared;
@@ -318,8 +319,17 @@ namespace GridBlazorClientSide.Server.Controllers
         [HttpGet("[action]")]
         public ActionResult GetCustomersNames()
         {
-            var repository = new CustomersRepository(_context);
-            return Ok(repository.GetAll().Select(r => r.CompanyName));
+            // get all customer ids in the grid with the current filters
+            var orderRepository = new OrdersRepository(_context);
+            var server = new GridServer<Order>(orderRepository.GetAll(), Request.Query, true, "ordersGrid", 
+                ColumnCollections.OrderColumns);
+            var customerIds = ((GridBase<Order>)server.Grid).GridItems.Select(r => r.CustomerID).Distinct().ToList();
+
+            var customerRepository = new CustomersRepository(_context);
+            var customers = customerRepository.GetAll().Where(r => customerIds.Contains(r.CustomerID)).Select(r => r.CompanyName)
+                .OrderBy(r => r).ToList();
+
+            return Ok(customers);
         }
 
         [HttpGet("[action]")]

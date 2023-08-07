@@ -1,12 +1,13 @@
 @using GridBlazor.Resources
 @using GridShared.Filtering
+@using GridBlazorServerSide.ColumnCollections
 @using GridBlazorServerSide.Services
 @inject ICustomerService customerService
 @inject IJSRuntime jSRuntime
 
 @typeparam T
 
-@if (visible)
+@if (Visible)
 {
     <div class="dropdown dropdown-menu grid-dropdown opened" style="display:block;position:relative;" @onkeyup="FilterKeyup" @onclick:stopPropagation @onkeyup:stopPropagation>
         <div class="grid-dropdown-arrow"></div>
@@ -15,7 +16,7 @@
                 <div class="form-group">
                     <p><i>This is custom filter widget demo</i></p>
                     <select @ref="firstSelect" class="grid-filter-type customerslist form-control" style="width:250px;" @bind="_filterValue">
-                        @foreach (var customerName in customerService.GetCustomersNames())
+                        @foreach (var customerName in _customers)
                         {
                             <option value="@customerName">@customerName</option>
                         }
@@ -46,14 +47,18 @@
 @code {
     private bool _clearVisible = false;
     protected string _filterValue;
+    private IEnumerable<string> _customers;
 
     protected ElementReference firstSelect;
 
     [CascadingParameter(Name = "GridHeaderComponent")]
     private GridHeaderComponent<T> GridHeaderComponent { get; set; }
 
+    [CascadingParameter(Name = "GridComponent")]
+    private GridComponent<T> GridComponent { get; set; }
+
     [Parameter]
-    public bool visible { get; set; }
+    public bool Visible { get; set; }
 
     [Parameter]
     public string ColumnName { get; set; }
@@ -63,6 +68,7 @@
 
     protected override void OnParametersSet()
     {
+        _customers = customerService.GetCustomersNames(ColumnCollections.OrderColumns, GridComponent.Grid.Query.ToStringDictionary());
         _filterValue = FilterSettings.FirstOrDefault().FilterValue;
         _clearVisible = !string.IsNullOrWhiteSpace(_filterValue);
     }

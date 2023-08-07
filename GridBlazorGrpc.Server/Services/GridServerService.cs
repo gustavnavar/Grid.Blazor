@@ -2,6 +2,7 @@
 using GridBlazorGrpc.Server.Models;
 using GridBlazorGrpc.Shared.Models;
 using GridBlazorGrpc.Shared.Services;
+using GridCore;
 using GridCore.Server;
 using GridShared;
 using GridShared.Utility;
@@ -296,10 +297,17 @@ namespace GridBlazorGrpc.Server.Services
             return items;
         }
 
-        public async ValueTask<IEnumerable<string>> GetCustomersNames()
+        public async ValueTask<IEnumerable<string>> GetCustomersNames(QueryDictionary<string> query)
         {
-            var repository = new CustomersRepository(_context);
-            return await repository.GetAll().Select(r => r.CompanyName).ToListAsync();
+            // get all customer ids in the grid with the current filters
+            var orderRepository = new OrdersRepository(_context);
+            var server = new GridCoreServer<Order>(orderRepository.GetAll(), query, true, "ordersGrid", 
+                ColumnCollections.OrderColumns);
+            var customerIds = ((GridBase<Order>)server.Grid).GridItems.Select(r => r.CustomerID).Distinct().ToList();
+
+            var customerRepository = new CustomersRepository(_context);
+            return await customerRepository.GetAll().Where(r => customerIds.Contains(r.CustomerID)).Select(r => r.CompanyName)
+                .OrderBy(r => r).ToListAsync();
         }
 
         public async ValueTask<IEnumerable<SelectItem>> GetAllCustomers()

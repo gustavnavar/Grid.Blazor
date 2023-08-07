@@ -53,6 +53,9 @@
     [CascadingParameter(Name = "GridHeaderComponent")]
     private GridHeaderComponent<T> GridHeaderComponent { get; set; }
 
+    [CascadingParameter(Name = "GridComponent")]
+    private GridComponent<T> GridComponent { get; set; }
+
     [Parameter]
     public bool visible { get; set; }
 
@@ -62,13 +65,9 @@
     [Parameter]
     public IEnumerable<ColumnFilterValue> FilterSettings { get; set; }
 
-    protected override async Task OnInitializedAsync()
+    protected override async Task OnParametersSetAsync()
     {
-        _customersNames = (await gridClientService.GetCustomersNames()).ToList();
-    }
-
-    protected override void OnParametersSet()
-    {
+        _customersNames = (await gridClientService.GetCustomersNames(GridComponent.Grid.Query.ToStringDictionary())).ToList();
         _filterValue = FilterSettings.FirstOrDefault().FilterValue;
         _clearVisible = !string.IsNullOrWhiteSpace(_filterValue);
     }
