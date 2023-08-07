@@ -26,6 +26,11 @@ GridButtonCellCssClass | ```string``` (optional) | Html classes used by the butt
 GridSubGridCssClass | ```string``` (optional) | Html classes used by the subgrid elements (it overrides default parameter) | ```<GridComponent T="Order" Grid="@_grid" GridSubGridCssClass="grid-subgrid-alt" />```
 GridEmptyTextCssClass | ```string``` (optional) | Html classes used by the empty cell elements (it overrides default parameter) | ```<GridComponent T="Order" Grid="@_grid" GridEmptyTextCssClass="grid-empty-text-alt" />```
 GridErrorCssClass | ```string``` (optional) | Html classes used by the error message element (it overrides default parameter) | ```<GridComponent T="Order" Grid="@_grid" GridErrorCssClass="grid-error-alt" />```
+GridSumCssClass | ```string``` (optional) | Html classes used by the sum row elements (it overrides default parameter) | ```<GridComponent T="Order" Grid="@_grid" GridSumCssClass="grid-sum-cell" />```
+GridAverageCssClass | ```string``` (optional) | Html classes used by the average row elements (it overrides default parameter) | ```<GridComponent T="Order" Grid="@_grid" GridAverageCssClass="grid-sum-cell" />```
+GridMaxCssClass | ```string``` (optional) | Html classes used by the max row elements (it overrides default parameter) | ```<GridComponent T="Order" Grid="@_grid" GridMaxCssClass="grid-sum-cell" />```
+GridMinCssClass | ```string``` (optional) | Html classes used by the min row elements (it overrides default parameter) | ```<GridComponent T="Order" Grid="@_grid" GridMinCssClass="grid-sum-cell" />```
+GridCalculationCssClass| ```string``` (optional) | Html classes used by the calcultation row elements (it overrides default parameter) | ```<GridComponent T="Order" Grid="@_grid" GridCalculationCssClass="grid-sum-cell" />```
 
 ## GridClient parameters
 
