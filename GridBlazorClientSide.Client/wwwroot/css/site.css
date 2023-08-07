@@ -152,3 +152,7 @@ table.table tr.success {
 .red {
     color: red;
 }
+
+.custom-sum {
+    color: cornflowerblue;
+}

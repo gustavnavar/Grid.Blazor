@@ -17,25 +17,25 @@
         <tr class="grid-totals-row">
             @if (Grid.SubGridKeys != null && Grid.SubGridKeys.Length > 0)
             {
-                <td class="grid-cell" data-name="" style="width:36.5px;"></td>
+                <td class="@GridComponent.GridSumCssClass" data-name="" style="width:36.5px;"></td>
             }
             @if ((Grid.ReadEnabled || ((CGrid<T>)Grid).FuncReadEnabled != null) && !GridComponent.HeaderCrudButtons)
             {
-                <td class="grid-cell" data-name="" style="width:35px;"></td>
+                <td class="@GridComponent.GridSumCssClass" data-name="" style="width:35px;"></td>
             }
             @if ((Grid.UpdateEnabled || ((CGrid<T>)Grid).FuncUpdateEnabled != null) && !GridComponent.HeaderCrudButtons)
             {
-                <td class="grid-cell" data-name="" style="width:35px;"></td>
+                <td class="@GridComponent.GridSumCssClass" data-name="" style="width:35px;"></td>
             }
             @if ((Grid.DeleteEnabled || ((CGrid<T>)Grid).FuncDeleteEnabled != null) && !GridComponent.HeaderCrudButtons)
             {
-                <td class="grid-cell" data-name="" style="width:35px;"></td>
+                <td class="@GridComponent.GridSumCssClass" data-name="" style="width:35px;"></td>
             }
             @if (firstColumn != null
               && (firstColumn.IsSumEnabled || firstColumn.IsAverageEnabled
               || firstColumn.IsMaxEnabled || firstColumn.IsMinEnabled || firstColumn.IsCalculationEnabled))
             {
-                <td class="grid-cell" style="width:90px;"><b>@Strings.Sum</b></td>
+                <td class="@GridComponent.GridSumCssClass" style="width:90px;"><b>@Strings.Sum</b></td>
             }
             @for (int i = 0; i < Grid.Columns.Count(); i++)
             {
@@ -52,17 +52,17 @@
                 if (i == 0 && !column.IsSumEnabled && !column.IsAverageEnabled
                    && !column.IsMaxEnabled && !column.IsMinEnabled && !column.IsCalculationEnabled)
                 {
-                    <td class="grid-cell" style="@cssStyles"><b>@Strings.Sum</b></td>
+                    <td class="@GridComponent.GridSumCssClass" style="@cssStyles"><b>@Strings.Sum</b></td>
                 }
                 else
                 {
                     if (column.IsSumEnabled && column.SumValue != null)
                     {
-                        <td class="grid-cell" style="@cssStyles"><b>@column.SumValue.GetString(column.ValuePattern)</b></td>
+                        <td class="@GridComponent.GridSumCssClass" style="@cssStyles"><b>@column.SumValue.GetString(column.ValuePattern)</b></td>
                     }
                     else
                     {
-                        <td class="grid-cell" style="@cssStyles"></td>
+                        <td class="@GridComponent.GridSumCssClass" style="@cssStyles"></td>
                     }
                 }
 
@@ -74,25 +74,25 @@
         <tr class="grid-totals-row">
             @if (Grid.SubGridKeys != null && Grid.SubGridKeys.Length > 0)
             {
-                <td class="grid-cell" data-name="" style="width:36.5px;"></td>
+                <td class="@GridComponent.GridAverageCssClass" data-name="" style="width:36.5px;"></td>
             }
             @if ((Grid.ReadEnabled || ((CGrid<T>)Grid).FuncReadEnabled != null) && !GridComponent.HeaderCrudButtons)
             {
-                <td class="grid-cell" data-name="" style="width:35px;"></td>
+                <td class="@GridComponent.GridAverageCssClass" data-name="" style="width:35px;"></td>
             }
             @if ((Grid.UpdateEnabled || ((CGrid<T>)Grid).FuncUpdateEnabled != null) && !GridComponent.HeaderCrudButtons)
             {
-                <td class="grid-cell" data-name="" style="width:35px;"></td>
+                <td class="@GridComponent.GridAverageCssClass" data-name="" style="width:35px;"></td>
             }
             @if ((Grid.DeleteEnabled || ((CGrid<T>)Grid).FuncDeleteEnabled != null) && !GridComponent.HeaderCrudButtons)
             {
-                <td class="grid-cell" data-name="" style="width:35px;"></td>
+                <td class="@GridComponent.GridAverageCssClass" data-name="" style="width:35px;"></td>
             }
             @if (firstColumn != null
               && (firstColumn.IsSumEnabled || firstColumn.IsAverageEnabled
               || firstColumn.IsMaxEnabled || firstColumn.IsMinEnabled || firstColumn.IsCalculationEnabled))
             {
-                <td class="grid-cell" style="width:90px;"><b>@Strings.Average</b></td>
+                <td class="@GridComponent.GridAverageCssClass" style="width:90px;"><b>@Strings.Average</b></td>
             }
             @for (int i = 0; i < Grid.Columns.Count(); i++)
             {
@@ -109,17 +109,17 @@
                 if (i == 0 && !column.IsSumEnabled && !column.IsAverageEnabled
                    && !column.IsMaxEnabled && !column.IsMinEnabled && !column.IsCalculationEnabled)
                 {
-                    <td class="grid-cell" style="@cssStyles"><b>@Strings.Average</b></td>
+                    <td class="@GridComponent.GridAverageCssClass" style="@cssStyles"><b>@Strings.Average</b></td>
                 }
                 else
                 {
                     if (column.IsAverageEnabled && column.AverageValue != null)
                     {
-                        <td class="grid-cell" style="@cssStyles"><b>@column.AverageValue.GetString(column.ValuePattern)</b></td>
+                        <td class="@GridComponent.GridAverageCssClass" style="@cssStyles"><b>@column.AverageValue.GetString(column.ValuePattern)</b></td>
                     }
                     else
                     {
-                        <td class="grid-cell" style="@cssStyles"></td>
+                        <td class="@GridComponent.GridAverageCssClass" style="@cssStyles"></td>
                     }
                 }
             }
@@ -130,25 +130,25 @@
         <tr class="grid-totals-row">
             @if (Grid.SubGridKeys != null && Grid.SubGridKeys.Length > 0)
             {
-                <td class="grid-cell" data-name="" style="width:36.5px;"></td>
+                <td class="@GridComponent.GridMaxCssClass" data-name="" style="width:36.5px;"></td>
             }
             @if ((Grid.ReadEnabled || ((CGrid<T>)Grid).FuncReadEnabled != null) && !GridComponent.HeaderCrudButtons)
             {
-                <td class="grid-cell" data-name="" style="width:35px;"></td>
+                <td class="@GridComponent.GridMaxCssClass" data-name="" style="width:35px;"></td>
             }
             @if ((Grid.UpdateEnabled || ((CGrid<T>)Grid).FuncUpdateEnabled != null) && !GridComponent.HeaderCrudButtons)
             {
-                <td class="grid-cell" data-name="" style="width:35px;"></td>
+                <td class="@GridComponent.GridMaxCssClass" data-name="" style="width:35px;"></td>
             }
             @if ((Grid.DeleteEnabled || ((CGrid<T>)Grid).FuncDeleteEnabled != null) && !GridComponent.HeaderCrudButtons)
             {
-                <td class="grid-cell" data-name="" style="width:35px;"></td>
+                <td class="@GridComponent.GridMaxCssClass" data-name="" style="width:35px;"></td>
             }
             @if (firstColumn != null
               && (firstColumn.IsSumEnabled || firstColumn.IsAverageEnabled
               || firstColumn.IsMaxEnabled || firstColumn.IsMinEnabled || firstColumn.IsCalculationEnabled))
             {
-                <td class="grid-cell" style="width:90px;"><b>@Strings.Max</b></td>
+                <td class="@GridComponent.GridMaxCssClass" style="width:90px;"><b>@Strings.Max</b></td>
             }
             @for (int i = 0; i < Grid.Columns.Count(); i++)
             {
@@ -165,17 +165,17 @@
                 if (i == 0 && !column.IsSumEnabled && !column.IsAverageEnabled
                    && !column.IsMaxEnabled && !column.IsMinEnabled && !column.IsCalculationEnabled)
                 {
-                    <td class="grid-cell" style="@cssStyles"><b>@Strings.Max</b></td>
+                    <td class="@GridComponent.GridMaxCssClass" style="@cssStyles"><b>@Strings.Max</b></td>
                 }
                 else
                 {
                     if (column.IsMaxEnabled && column.MaxValue != null)
                     {
-                        <td class="grid-cell" style="@cssStyles"><b>@column.MaxValue.GetString(column.ValuePattern)</b></td>
+                        <td class="@GridComponent.GridMaxCssClass" style="@cssStyles"><b>@column.MaxValue.GetString(column.ValuePattern)</b></td>
                     }
                     else
                     {
-                        <td class="grid-cell" style="@cssStyles"></td>
+                        <td class="@GridComponent.GridMaxCssClass" style="@cssStyles"></td>
                     }
                 }
             }
@@ -186,25 +186,25 @@
         <tr class="grid-totals-row">
             @if (Grid.SubGridKeys != null && Grid.SubGridKeys.Length > 0)
             {
-                <td class="grid-cell" data-name="" style="width:36.5px;"></td>
+                <td class="@GridComponent.GridMinCssClass" data-name="" style="width:36.5px;"></td>
             }
             @if ((Grid.ReadEnabled || ((CGrid<T>)Grid).FuncReadEnabled != null) && !GridComponent.HeaderCrudButtons)
             {
-                <td class="grid-cell" data-name="" style="width:35px;"></td>
+                <td class="@GridComponent.GridMinCssClass" data-name="" style="width:35px;"></td>
             }
             @if ((Grid.UpdateEnabled || ((CGrid<T>)Grid).FuncUpdateEnabled != null) && !GridComponent.HeaderCrudButtons)
             {
-                <td class="grid-cell" data-name="" style="width:35px;"></td>
+                <td class="@GridComponent.GridMinCssClass" data-name="" style="width:35px;"></td>
             }
             @if ((Grid.DeleteEnabled || ((CGrid<T>)Grid).FuncDeleteEnabled != null) && !GridComponent.HeaderCrudButtons)
             {
-                <td class="grid-cell" data-name="" style="width:35px;"></td>
+                <td class="@GridComponent.GridMinCssClass" data-name="" style="width:35px;"></td>
             }
             @if (firstColumn != null
               && (firstColumn.IsSumEnabled || firstColumn.IsAverageEnabled
               || firstColumn.IsMaxEnabled || firstColumn.IsMinEnabled || firstColumn.IsCalculationEnabled))
             {
-                <td class="grid-cell" style="width:90px;"><b>@Strings.Min</b></td>
+                <td class="@GridComponent.GridMinCssClass" style="width:90px;"><b>@Strings.Min</b></td>
             }
             @for (int i = 0; i < Grid.Columns.Count(); i++)
             {
@@ -221,17 +221,17 @@
                 if (i == 0 && !column.IsSumEnabled && !column.IsAverageEnabled
                    && !column.IsMaxEnabled && !column.IsMinEnabled && !column.IsCalculationEnabled)
                 {
-                    <td class="grid-cell" style="@cssStyles"><b>@Strings.Min</b></td>
+                    <td class="@GridComponent.GridMinCssClass" style="@cssStyles"><b>@Strings.Min</b></td>
                 }
                 else
                 {
                     if (column.IsMinEnabled && column.MinValue != null)
                     {
-                        <td class="grid-cell" style="@cssStyles"><b>@column.MinValue.GetString(column.ValuePattern)</b></td>
+                        <td class="@GridComponent.GridMinCssClass" style="@cssStyles"><b>@column.MinValue.GetString(column.ValuePattern)</b></td>
                     }
                     else
                     {
-                        <td class="grid-cell" style="@cssStyles"></td>
+                        <td class="@GridComponent.GridMinCssClass" style="@cssStyles"></td>
                     }
                 }
             }
@@ -244,25 +244,25 @@
             <tr class="grid-totals-row">
                 @if (Grid.SubGridKeys != null && Grid.SubGridKeys.Length > 0)
                 {
-                    <td class="grid-cell" data-name="" style="width:36.5px;"></td>
+                    <td class="@GridComponent.GridCalculationCssClass" data-name="" style="width:36.5px;"></td>
                 }
                 @if ((Grid.ReadEnabled || ((CGrid<T>)Grid).FuncReadEnabled != null) && !GridComponent.HeaderCrudButtons)
                 {
-                    <td class="grid-cell" data-name="" style="width:35px;"></td>
+                    <td class="@GridComponent.GridCalculationCssClass" data-name="" style="width:35px;"></td>
                 }
                 @if ((Grid.UpdateEnabled || ((CGrid<T>)Grid).FuncUpdateEnabled != null) && !GridComponent.HeaderCrudButtons)
                 {
-                    <td class="grid-cell" data-name="" style="width:35px;"></td>
+                    <td class="@GridComponent.GridCalculationCssClass" data-name="" style="width:35px;"></td>
                 }
                 @if ((Grid.DeleteEnabled || ((CGrid<T>)Grid).FuncDeleteEnabled != null) && !GridComponent.HeaderCrudButtons)
                 {
-                    <td class="grid-cell" data-name="" style="width:35px;"></td>
+                    <td class="@GridComponent.GridCalculationCssClass" data-name="" style="width:35px;"></td>
                 }
                 @if (firstColumn != null
                   && (firstColumn.IsSumEnabled || firstColumn.IsAverageEnabled
                   || firstColumn.IsMaxEnabled || firstColumn.IsMinEnabled || firstColumn.IsCalculationEnabled))
                 {
-                    <td class="grid-cell" style="width:90px;"><b>@calculationName</b></td>
+                    <td class="@GridComponent.GridCalculationCssClass" style="width:90px;"><b>@calculationName</b></td>
                 }
                 @for (int i = 0; i < Grid.Columns.Count(); i++)
                 {
@@ -279,17 +279,17 @@
                     if (i == 0 && !column.IsSumEnabled && !column.IsAverageEnabled
                        && !column.IsMaxEnabled && !column.IsMinEnabled && !column.IsCalculationEnabled)
                     {
-                        <td class="grid-cell" style="@cssStyles"><b>@calculationName</b></td>
+                        <td class="@GridComponent.GridCalculationCssClass" style="@cssStyles"><b>@calculationName</b></td>
                     }
                     else
                     {
                         if (column.IsCalculationEnabled && column.CalculationValues != null && column.CalculationValues.ContainsKey(calculationName))
                         {
-                            <td class="grid-cell" style="@cssStyles"><b>@column.CalculationValues.Get(calculationName)?.GetString(column.ValuePattern)</b></td>
+                            <td class="@GridComponent.GridCalculationCssClass" style="@cssStyles"><b>@column.CalculationValues.Get(calculationName)?.GetString(column.ValuePattern)</b></td>
                         }
                         else
                         {
-                            <td class="grid-cell" style="@cssStyles"></td>
+                            <td class="@GridComponent.GridCalculationCssClass" style="@cssStyles"></td>
                         }
                     }
                 }

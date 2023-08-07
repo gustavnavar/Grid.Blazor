@@ -204,6 +204,22 @@ namespace GridBlazor.Pages
         [Parameter]
         public string GridEmptyTextCssClass { get; set; } = "grid-empty-text";
 
+        [Parameter]
+        public string GridSumCssClass { get; set; } = "grid-cell";
+
+        [Parameter]
+        public string GridAverageCssClass { get; set; } = "grid-cell";
+
+        [Parameter]
+        public string GridMaxCssClass { get; set; } = "grid-cell";
+
+        [Parameter]
+        public string GridMinCssClass { get; set; } = "grid-cell";
+
+        [Parameter]
+        public string GridCalculationCssClass { get; set; } = "grid-cell";
+
+
         protected override void OnParametersSet()
         {
             ((CGrid<T>)Grid).GridComponent = this;
