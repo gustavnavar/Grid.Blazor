@@ -235,13 +235,26 @@ namespace GridBlazor.Pages
 #if NETSTANDARD2_1 || NET5_0
         private async Task OnFileChange(IGridColumn column, IFileListEntry[] files)
         {
-            if (!column.MultipleInput && files.Length > 1)
-                files = new IFileListEntry[] { files[0] };
+            try
+            {
+                if (!column.MultipleInput && files.Length > 1)
+                    files = new IFileListEntry[] { files[0] };
 
-            Files.AddParameter(column.FieldName, files);
+                Files.AddParameter(column.FieldName, files);
 
-            if (((IGridColumn<T>)column).AfterChangeValue != null)
-                await((IGridColumn<T>)column).AfterChangeValue(Item, GridMode.Create);
+                if (((IGridColumn<T>)column).AfterChangeValue != null)
+                    await((IGridColumn<T>)column).AfterChangeValue(Item, GridMode.Create);
+            }
+            catch (GridException ex)
+            {
+                Console.WriteLine(ex.Message);
+                Error = string.IsNullOrWhiteSpace(ex.Code) ? ex.Message : ex.Code + " - " + ex.Message;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+                Error = Strings.CreateError;
+            }
 
             _shouldRender = true;
             StateHasChanged();
@@ -249,16 +262,29 @@ namespace GridBlazor.Pages
 #else
         private async Task OnChange(IGridColumn column, InputFileChangeEventArgs e)
         {
-            IBrowserFile[] files;
-            if (!column.MultipleInput && e.FileCount >= 1)
-                files = new IBrowserFile[] { e.File };
-            else
-                files = e.GetMultipleFiles(e.FileCount).ToArray();
+            try
+            {
+                IBrowserFile[] files;
+                if (!column.MultipleInput && e.FileCount >= 1)
+                    files = new IBrowserFile[] { e.File };
+                else
+                    files = e.GetMultipleFiles(e.FileCount).ToArray();
 
-            Files.AddParameter(column.FieldName, files);
+                Files.AddParameter(column.FieldName, files);
 
-            if (((IGridColumn<T>)column).AfterChangeValue != null)
-                await((IGridColumn<T>)column).AfterChangeValue(Item, GridMode.Create);
+                if (((IGridColumn<T>)column).AfterChangeValue != null)
+                    await ((IGridColumn<T>)column).AfterChangeValue(Item, GridMode.Create);
+            }
+            catch (GridException ex)
+            {
+                Console.WriteLine(ex.Message);
+                Error = string.IsNullOrWhiteSpace(ex.Code) ? ex.Message : ex.Code + " - " + ex.Message;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+                Error = Strings.CreateError;
+            }
 
             _shouldRender = true;
             StateHasChanged();
@@ -286,6 +312,7 @@ namespace GridBlazor.Pages
             }
             catch (GridException e)
             {
+                Console.WriteLine(e.Message);
                 _shouldRender = true;
                 Error = string.IsNullOrWhiteSpace(e.Code) ? e.Message : e.Code + " - " + e.Message;
             }
