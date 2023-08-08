@@ -303,7 +303,8 @@ namespace GridBlazorGrpc.Server.Services
             var orderRepository = new OrdersRepository(_context);
             var server = new GridCoreServer<Order>(orderRepository.GetAll(), query, true, "ordersGrid", 
                 ColumnCollections.OrderColumns);
-            var customerIds = ((GridBase<Order>)server.Grid).GridItems.Select(r => r.CustomerID).Distinct().ToList();
+            var customerIds = ((GridBase<Order>)server.Grid).GridItems.Where(r => !string.IsNullOrWhiteSpace(r.CustomerID))
+                .Select(r => r.CustomerID).Distinct().ToList();
 
             var customerRepository = new CustomersRepository(_context);
             return await customerRepository.GetAll().Where(r => customerIds.Contains(r.CustomerID)).Select(r => r.CompanyName)

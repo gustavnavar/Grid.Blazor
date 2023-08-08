@@ -30,7 +30,8 @@ namespace GridBlazorServerSide.Services
                 // get all customer ids in the grid with the current filters
                 var orderRepository = new OrdersRepository(context);
                 var server = new GridCoreServer<Order>(orderRepository.GetAll(), query, true, "ordersGrid", columns);
-                var customerIds = ((GridBase<Order>)server.Grid).GridItems.Select(r => r.CustomerID).Distinct().ToList();
+                var customerIds = ((GridBase<Order>)server.Grid).GridItems.Where(r => !string.IsNullOrWhiteSpace(r.CustomerID))
+                    .Select(r => r.CustomerID).Distinct().ToList();
 
                 var customerRepository = new CustomersRepository(context);
                 return customerRepository.GetAll().Where(r => customerIds.Contains(r.CustomerID)).Select(r => r.CompanyName)
