@@ -201,6 +201,9 @@ namespace GridShared.Filtering
             {
                 if (value == ColumnFilterValue.Null)
                     continue;
+                else if (value.FilterType != GridFilterType.IsNull && value.FilterType != GridFilterType.IsNotNull
+                    && string.IsNullOrWhiteSpace(value.FilterValue))
+                    continue;
 
                 string filterString = GetFilterString(value);
                 if (!string.IsNullOrWhiteSpace(filterString))
