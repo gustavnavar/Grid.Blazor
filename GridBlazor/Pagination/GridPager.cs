@@ -214,6 +214,11 @@ namespace GridBlazor.Pagination
                                    : _currentPage + MaxDisplayedPages/2;
         }
 
+        /// <summary>
+        ///     Label to show which page the user currently is on
+        /// </summary>
+        public string CurrentPageLabel { get; set; } = "(current)";
+
         #region View
 
         public int StartDisplayedPage { get; protected set; }

@@ -43,6 +43,13 @@ namespace GridBlazor
         IGridClient<T> WithPaging(int pageSize, int maxDisplayedItems, string queryStringParameterName);
 
         /// <summary>
+        ///     Sets the label that indicates the current page to the user
+        /// </summary>
+        /// <param name="label">Text for the label</param>
+        /// <returns></returns>
+        IGridClient<T> SetLabelForCurrentPage(string label);
+
+        /// <summary>
         ///     Enable go to pager visibility
         /// </summary>
         /// <param name="enable">Enable go to pager visibility</param>

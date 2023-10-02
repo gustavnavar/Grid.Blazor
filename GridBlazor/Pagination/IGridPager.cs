@@ -71,5 +71,10 @@ namespace GridBlazor.Pagination
         ///// <param name="pageIndex">Номер страницы</param>
         ///// <returns>Адрес страницы</returns>
         //string GetLinkForPage(int pageIndex);
+
+        /// <summary>
+        ///     Label to show which page the user currently is on
+        /// </summary>
+        string CurrentPageLabel { get; set; }
     }
 }

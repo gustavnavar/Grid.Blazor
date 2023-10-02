@@ -30,7 +30,7 @@
                     if (i == GridComponent.Grid.Pager.CurrentPage)
                     {
                         <li class="page-item active">
-                            <button type="button" class="page-link">@i <span class="sr-only">(current)</span></button>
+                            <button type="button" class="page-link">@i <span class="sr-only">@GridComponent.Grid.Pager.CurrentPageLabel</span></button>
                         </li>
                     }
                     else

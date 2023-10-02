@@ -159,6 +159,12 @@ namespace GridBlazor
             return this;
         }
 
+        public IGridClient<T> SetLabelForCurrentPage(string label)
+        {
+            _source.Pager.CurrentPageLabel = label;
+            return this;
+        }
+
         public IGridClient<T> GoToVisibility(bool enable)
         {
             _source.Pager.GoToVisibility = enable;
