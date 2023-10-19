@@ -20,7 +20,9 @@ GridMvc.lang.nb = {
         And: "Og",
         Or: "Eller",
         IsNull: "Er null",
-        IsNotNull: "Er ikke null"
+        IsNotNull: "Er ikke null",
+        Duplicated: "Duplisert",
+        NotDuplicated: "Ikke duplisert"
     },
     code: 'nb',
     boolTrueLabel: "Ja",

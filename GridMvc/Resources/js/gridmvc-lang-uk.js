@@ -20,7 +20,9 @@ GridMvc.lang.uk = {
         And: "І",
         Or: "Або",
         IsNull: "Нульовий",
-        IsNotNull: "Не є нульовим"
+        IsNotNull: "Не є нульовим",
+        Duplicated: "Дублюється",
+        NotDuplicated: "Не дублюється"
     },
     code: 'uk',
     boolTrueLabel: "Так",

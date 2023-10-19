@@ -20,7 +20,9 @@ GridMvc.lang.cs = {
         And: "A",
         Or: "Nebo",
         IsNull: "Je null",
-        IsNotNull: "Není null"
+        IsNotNull: "Není null",
+        Duplicated: "Duplicitní",
+        NotDuplicated: "Není duplicitní"
     },
     code: 'cs',
     boolTrueLabel: "Ano",

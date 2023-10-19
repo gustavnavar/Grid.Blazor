@@ -294,4 +294,10 @@
   <data name="Select" xml:space="preserve">
     <value>انتخاب کنید</value>
   </data>
+  <data name="Duplicated" xml:space="preserve">
+    <value>کپی شده</value>
+  </data>
+  <data name="NotDuplicated" xml:space="preserve">
+    <value>تکراری نیست</value>
+  </data>
 </root>

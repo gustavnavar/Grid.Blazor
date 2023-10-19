@@ -300,4 +300,10 @@
   <data name="Height" xml:space="preserve">
     <value>Yükseklik</value>
   </data>
+  <data name="Duplicated" xml:space="preserve">
+    <value>Çoğaltıldı</value>
+  </data>
+  <data name="NotDuplicated" xml:space="preserve">
+    <value>Kopyalanmadı</value>
+  </data>
 </root>

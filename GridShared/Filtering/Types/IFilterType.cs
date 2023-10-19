@@ -25,6 +25,10 @@ namespace GridShared.Filtering.Types
         /// <returns></returns>
         object GetTypedValue(string value);
 
+        [Obsolete("This method is obsolete. Use the GetFilterExpression<T> method including an expresion parameter.", true)]
+        Expression GetFilterExpression(Expression leftExpr, string value, GridFilterType filterType,
+            MethodInfo removeDiacritics = null);
+
         Expression GetFilterExpression<T>(Expression leftExpr, string value, GridFilterType filterType,
             Expression source, MethodInfo removeDiacritics = null);
 

@@ -180,6 +180,9 @@
   <data name="DeleteItem" xml:space="preserve">
     <value>Обриши ставку</value>
   </data>
+  <data name="Duplicated" xml:space="preserve">
+    <value>Дуплицирано</value>
+  </data>
   <data name="Edit" xml:space="preserve">
     <value>Измени</value>
   </data>
@@ -242,6 +245,9 @@
   </data>
   <data name="None" xml:space="preserve">
     <value>Нико</value>
+  </data>
+  <data name="NotDuplicated" xml:space="preserve">
+    <value>Није дуплирано</value>
   </data>
   <data name="NotEqual" xml:space="preserve">
     <value>Није Једнако</value>

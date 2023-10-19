@@ -20,7 +20,9 @@ GridMvc.lang.fa = {
         And: "و",
         Or: "یا",
         IsNull: "آیا خالیست؟",
-        IsNotNull: "آیا خالی نیست؟"
+        IsNotNull: "آیا خالی نیست؟",
+        Duplicated: "کپی شده",
+        NotDuplicated: "تکراری نیست"
     },
     code: 'fa',
     boolTrueLabel: "بله",

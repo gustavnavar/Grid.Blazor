@@ -20,7 +20,9 @@ GridMvc.lang.hr = {
         And: "i",
         Or: "ili",
         IsNull: "Nedefiniran",
-        IsNotNull: "Nije Nedefiniran"
+        IsNotNull: "Nije Nedefiniran",
+        Duplicated: "Duplicirano",
+        NotDuplicated: "Nije umnoženo"
     },
     code: 'hr',
     boolTrueLabel: "Da",

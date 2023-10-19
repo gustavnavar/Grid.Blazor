@@ -810,7 +810,9 @@ GridMvc.lang.en = {
         And: "And",
         Or: "Or",
         IsNull: "Is null",
-        IsNotNull: "Is not null"
+        IsNotNull: "Is not null",
+        Duplicated: "Duplicated",
+        NotDuplicated: "Not duplicated"
     },
     code: 'en',
     boolTrueLabel: "Yes",
@@ -927,6 +929,8 @@ TextFilterWidget = (function ($) {
                                     <option value="4" ' + (this.filterData[columnName].values[i].filterType.toString() === "4" ? "selected=\"selected\"" : "") + '>' + this.lang.filterSelectTypes.EndsWith + '</option>\
                                     <option value="11" ' + (this.filterData[columnName].values[i].filterType.toString() === "11" ? "selected=\"selected\"" : "") + '>' + this.lang.filterSelectTypes.IsNull + '</option>\
                                     <option value="12" ' + (this.filterData[columnName].values[i].filterType.toString() === "12" ? "selected=\"selected\"" : "") + '>' + this.lang.filterSelectTypes.IsNotNull + '</option>\
+                                    <option value="13" ' + (this.filterData[columnName].values[i].filterType.toString() === "13" ? "selected=\"selected\"" : "") + '>' + this.lang.filterSelectTypes.Duplicated + '</option>\
+                                    <option value="14" ' + (this.filterData[columnName].values[i].filterType.toString() === "14" ? "selected=\"selected\"" : "") + '>' + this.lang.filterSelectTypes.NotDuplicated + '</option>\
                                 </select>\
                             </div>\
                         </div>\
@@ -1130,7 +1134,9 @@ NumberFilterWidget = (function ($) {
                 html +=             '<option value="11" ' + (this.filterData[columnName].values[i].filterType.toString() === "11" ? "selected=\"selected\"" : "") + ' > ' + this.lang.filterSelectTypes.IsNull + '</option >\
                                     <option value="12" ' + (this.filterData[columnName].values[i].filterType.toString() === "12" ? "selected=\"selected\"" : "") + ' > ' + this.lang.filterSelectTypes.IsNotNull + '</option >';
             }
-            html +=             '</select>\
+            html +=                 '<option value="13" ' + (this.filterData[columnName].values[i].filterType.toString() === "13" ? "selected=\"selected\"" : "") + '>' + this.lang.filterSelectTypes.Duplicated + '</option>\
+                                    <option value="14" ' + (this.filterData[columnName].values[i].filterType.toString() === "14" ? "selected=\"selected\"" : "") + '>' + this.lang.filterSelectTypes.NotDuplicated + '</option>\
+                                </select>\
                             </div >\
                         </div>\
                         <div class="col-md-6 my-2">';
@@ -1350,10 +1356,12 @@ DateTimeFilterWidget = (function ($) {
                                     <option value="7" ' + (this.filterData[columnName].values[i].filterType.toString() === "7" ? "selected=\"selected\"" : "") + '>' + this.lang.filterSelectTypes.GreaterThanOrEquals + '</option>\
                                     <option value="8" ' + (this.filterData[columnName].values[i].filterType.toString() === "8" ? "selected=\"selected\"" : "") + '>' + this.lang.filterSelectTypes.LessThanOrEquals + '</option>';
             if (isNullable.toLowerCase() === "true") {
-                html += '<option value="11" ' + (this.filterData[columnName].values[i].filterType.toString() === "11" ? "selected=\"selected\"" : "") + ' > ' + this.lang.filterSelectTypes.IsNull + '</option >\
+                html +=             '<option value="11" ' + (this.filterData[columnName].values[i].filterType.toString() === "11" ? "selected=\"selected\"" : "") + ' > ' + this.lang.filterSelectTypes.IsNull + '</option >\
                                     <option value="12" ' + (this.filterData[columnName].values[i].filterType.toString() === "12" ? "selected=\"selected\"" : "") + ' > ' + this.lang.filterSelectTypes.IsNotNull + '</option >';
             }
-            html +=             '</select>\
+            html +=                 '<option value="13" ' + (this.filterData[columnName].values[i].filterType.toString() === "13" ? "selected=\"selected\"" : "") + '>' + this.lang.filterSelectTypes.Duplicated + '</option>\
+                                    <option value="14" ' + (this.filterData[columnName].values[i].filterType.toString() === "14" ? "selected=\"selected\"" : "") + '>' + this.lang.filterSelectTypes.NotDuplicated + '</option>\
+                                </select>\
                             </div>\
                         </div>\
                         <div class="col-md-6 my-2">';

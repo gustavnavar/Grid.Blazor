@@ -297,4 +297,10 @@
   <data name="Height" xml:space="preserve">
     <value>ارتفاع</value>
   </data>
+  <data name="Duplicated" xml:space="preserve">
+    <value>کپی شده</value>
+  </data>
+  <data name="NotDuplicated" xml:space="preserve">
+    <value>تکراری نیست</value>
+  </data>
 </root>

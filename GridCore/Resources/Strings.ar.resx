@@ -180,6 +180,9 @@
   <data name="DeleteItem" xml:space="preserve">
     <value>حذف عنصر</value>
   </data>
+  <data name="Duplicated" xml:space="preserve">
+    <value>مكررة</value>
+  </data>
   <data name="Edit" xml:space="preserve">
     <value>تعديل</value>
   </data>
@@ -242,6 +245,9 @@
   </data>
   <data name="None" xml:space="preserve">
     <value>بدون</value>
+  </data>
+  <data name="NotDuplicated" xml:space="preserve">
+    <value>غير مكررة</value>
   </data>
   <data name="NotEqual" xml:space="preserve">
     <value>لا تساوي</value>

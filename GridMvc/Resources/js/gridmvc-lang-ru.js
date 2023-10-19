@@ -20,7 +20,9 @@ GridMvc.lang.ru = {
         And: "И",
         Or: "Или",
         IsNull: "Нулевой",
-        IsNotNull: "Не является нулевым"
+        IsNotNull: "Не является нулевым",
+        Duplicated: "Дублированный",
+        NotDuplicated: "Не дублируется"
     },
     code: 'ru',
     boolTrueLabel: "Да",

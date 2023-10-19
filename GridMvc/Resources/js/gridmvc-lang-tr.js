@@ -20,7 +20,9 @@ GridMvc.lang.tr = {
         And: "Ve",
         Or: "Veya",
         IsNull: "Boş",
-        IsNotNull: "Boş değil"
+        IsNotNull: "Boş değil",
+        Duplicated: "Çoğaltıldı",
+        NotDuplicated: "Kopyalanmadı"
     },
     code: 'tr',
     boolTrueLabel: "Evet",

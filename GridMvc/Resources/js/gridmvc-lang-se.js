@@ -20,7 +20,9 @@ GridMvc.lang.se = {
         And: "Och",
         Or: "Eller",
         IsNull: "Är tom",
-        IsNotNull: "Är inte tom"
+        IsNotNull: "Är inte tom",
+        Duplicated: "Duplicerat",
+        NotDuplicated: "Inte duplicerad"
     },
     code: 'se',
     boolTrueLabel: "Ja",

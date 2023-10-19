@@ -294,4 +294,10 @@
   <data name="Select" xml:space="preserve">
     <value>Виберіть</value>
   </data>
+  <data name="Duplicated" xml:space="preserve">
+    <value>Дублюється</value>
+  </data>
+  <data name="NotDuplicated" xml:space="preserve">
+    <value>Не дублюється</value>
+  </data>
 </root>

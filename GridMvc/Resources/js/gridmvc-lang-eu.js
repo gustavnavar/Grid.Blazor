@@ -20,7 +20,9 @@ GridMvc.lang.eu = {
         And: "Eta",
         Or: "Edo",
         IsNull: "Nula da",
-        IsNotNull: "Ez da nulua"
+        IsNotNull: "Ez da nulua",
+        Duplicated: "Bikoiztuta",
+        NotDuplicated: "Ez da bikoiztuta"
     },
     code: 'eu',
     boolTrueLabel: "Bai",

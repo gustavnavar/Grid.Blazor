@@ -20,7 +20,9 @@ GridMvc.lang.nl = {
         And: "En",
         Or: "Of",
         IsNull: "Is niets",
-        IsNotNull: "Is niet nul"
+        IsNotNull: "Is niet nul",
+        Duplicated: "Gedupliceerd",
+        NotDuplicated: "Niet gedupliceerd"
     },
     code: 'nl',
     boolTrueLabel: "Ja",

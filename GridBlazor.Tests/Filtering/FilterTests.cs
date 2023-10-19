@@ -35,14 +35,15 @@ namespace GridBlazor.Tests.Filtering
             filterOptions.Add(filterOption);
             var filter = new DefaultColumnFilter<TestModel, DateTime>(m => m.Created);
 
-            var filtered = filter.ApplyFilter(_repo.GetAll().AsQueryable(), filterOptions);
+            var items = _repo.GetAll().AsQueryable();
+            var filtered = filter.ApplyFilter(items, filterOptions, items.Expression);
 
             var original = _repo.GetAll().AsQueryable().Where(t => t.Created < new DateTime(2005, 5, 10));
 
             for (int i = 0; i < filtered.Count(); i++)
             {
                 if (filtered.ElementAt(i).Id != original.ElementAt(i).Id)
-                    Assert.Fail("Filtering not works");
+                    Assert.Fail("Filtering doesn't work");
             }
 
             //var processed processor.Process()
@@ -61,14 +62,15 @@ namespace GridBlazor.Tests.Filtering
             filterOptions.Add(filterOption);
             var filter = new DefaultColumnFilter<TestModel, DateTime>(m => m.Created);
 
-            var filtered = filter.ApplyFilter(_repo.GetAll().AsQueryable(), filterOptions);
+            var items = _repo.GetAll().AsQueryable();
+            var filtered = filter.ApplyFilter(items, filterOptions, items.Expression);
 
             var original = _repo.GetAll().AsQueryable().Where(t => t.Created <= new DateTime(2002, 5, 1));
 
             for (int i = 0; i < filtered.Count(); i++)
             {
                 if (filtered.ElementAt(i).Id != original.ElementAt(i).Id)
-                    Assert.Fail("Filtering not works");
+                    Assert.Fail("Filtering doesn't work");
             }
         }
 
@@ -85,14 +87,15 @@ namespace GridBlazor.Tests.Filtering
             filterOptions.Add(filterOption);
             var filter = new DefaultColumnFilter<TestModel, DateTime>(m => m.Created);
 
-            var filtered = filter.ApplyFilter(_repo.GetAll().AsQueryable(), filterOptions);
+            var items = _repo.GetAll().AsQueryable();
+            var filtered = filter.ApplyFilter(items, filterOptions, items.Expression);
 
             var original = _repo.GetAll().AsQueryable().Where(t => t.Created >= new DateTime(2002, 5, 1));
 
             for (int i = 0; i < filtered.Count(); i++)
             {
                 if (filtered.ElementAt(i).Id != original.ElementAt(i).Id)
-                    Assert.Fail("Filtering not works");
+                    Assert.Fail("Filtering doesn't work");
             }
         }
 
@@ -109,14 +112,15 @@ namespace GridBlazor.Tests.Filtering
             filterOptions.Add(filterOption);
             var filter = new DefaultColumnFilter<TestModel, string>(m => m.Title);
 
-            var filtered = filter.ApplyFilter(_repo.GetAll().AsQueryable(), filterOptions);
+            var items = _repo.GetAll().AsQueryable();
+            var filtered = filter.ApplyFilter(items, filterOptions, items.Expression);
 
             var original = _repo.GetAll().AsQueryable().Where(t => t.Title.Contains("test"));
 
             for (int i = 0; i < filtered.Count(); i++)
             {
                 if (filtered.ElementAt(i).Id != original.ElementAt(i).Id)
-                    Assert.Fail("Filtering not works");
+                    Assert.Fail("Filtering doesn't work");
             }
         }
 
@@ -133,14 +137,15 @@ namespace GridBlazor.Tests.Filtering
             filterOptions.Add(filterOption);
             var filter = new DefaultColumnFilter<TestModel, Int16>(m => m.Int16Field);
 
-            var filtered = filter.ApplyFilter(_repo.GetAll().AsQueryable(), filterOptions);
+            var items = _repo.GetAll().AsQueryable();
+            var filtered = filter.ApplyFilter(items, filterOptions, items.Expression);
 
             var original = _repo.GetAll().AsQueryable().Where(t => t.Int16Field == 16);
 
             for (int i = 0; i < filtered.Count(); i++)
             {
                 if (filtered.ElementAt(i).Id != original.ElementAt(i).Id)
-                    Assert.Fail("Filtering not works");
+                    Assert.Fail("Filtering doesn't work");
             }
         }
 
@@ -157,14 +162,15 @@ namespace GridBlazor.Tests.Filtering
             filterOptions.Add(filterOption);
             var filter = new DefaultColumnFilter<TestModel, UInt16>(m => m.UInt16Field);
 
-            var filtered = filter.ApplyFilter(_repo.GetAll().AsQueryable(), filterOptions);
+            var items = _repo.GetAll().AsQueryable();
+            var filtered = filter.ApplyFilter(items, filterOptions, items.Expression);
 
             var original = _repo.GetAll().AsQueryable().Where(t => t.UInt16Field == 16);
 
             for (int i = 0; i < filtered.Count(); i++)
             {
                 if (filtered.ElementAt(i).Id != original.ElementAt(i).Id)
-                    Assert.Fail("Filtering not works");
+                    Assert.Fail("Filtering doesn't work");
             }
         }
 
@@ -181,14 +187,15 @@ namespace GridBlazor.Tests.Filtering
             filterOptions.Add(filterOption);
             var filter = new DefaultColumnFilter<TestModel, UInt32>(m => m.UInt32Field);
 
-            var filtered = filter.ApplyFilter(_repo.GetAll().AsQueryable(), filterOptions);
+            var items = _repo.GetAll().AsQueryable();
+            var filtered = filter.ApplyFilter(items, filterOptions, items.Expression);
 
             var original = _repo.GetAll().AsQueryable().Where(t => t.UInt32Field == 65549);
 
             for (int i = 0; i < filtered.Count(); i++)
             {
                 if (filtered.ElementAt(i).Id != original.ElementAt(i).Id)
-                    Assert.Fail("Filtering not works");
+                    Assert.Fail("Filtering doesn't work");
             }
         }
 
@@ -205,14 +212,15 @@ namespace GridBlazor.Tests.Filtering
             filterOptions.Add(filterOption);
             var filter = new DefaultColumnFilter<TestModel, UInt64>(m => m.UInt64Field);
 
-            var filtered = filter.ApplyFilter(_repo.GetAll().AsQueryable(), filterOptions);
+            var items = _repo.GetAll().AsQueryable();
+            var filtered = filter.ApplyFilter(items, filterOptions, items.Expression);
 
             var original = _repo.GetAll().AsQueryable().Where(t => t.UInt64Field == 4294967888);
 
             for (int i = 0; i < filtered.Count(); i++)
             {
                 if (filtered.ElementAt(i).Id != original.ElementAt(i).Id)
-                    Assert.Fail("Filtering not works");
+                    Assert.Fail("Filtering doesn't work");
             }
         }
 
@@ -229,14 +237,15 @@ namespace GridBlazor.Tests.Filtering
             filterOptions.Add(filterOption);
             var filter = new DefaultColumnFilter<TestModel, Guid>(m => m.GuidField);
 
-            var filtered = filter.ApplyFilter(_repo.GetAll().AsQueryable(), filterOptions);
+            var items = _repo.GetAll().AsQueryable();
+            var filtered = filter.ApplyFilter(items, filterOptions, items.Expression);
 
             var original = _repo.GetAll().AsQueryable().Where(t => t.GuidField == new Guid("6e4fe7c4-a5cb-4e29-8041-a80ce17ea727"));
 
             for (int i = 0; i < filtered.Count(); i++)
             {
                 if (filtered.ElementAt(i).Id != original.ElementAt(i).Id)
-                    Assert.Fail("Filtering not works");
+                    Assert.Fail("Filtering doesn't work");
             }
         }
 
@@ -253,14 +262,15 @@ namespace GridBlazor.Tests.Filtering
             filterOptions.Add(filterOption);
             var filter = new DefaultColumnFilter<TestModel, TestEnum>(m => m.EnumField);
 
-            var filtered = filter.ApplyFilter(_repo.GetAll().AsQueryable(), filterOptions);
+            var items = _repo.GetAll().AsQueryable();
+            var filtered = filter.ApplyFilter(items, filterOptions, items.Expression);
 
             var original = _repo.GetAll().AsQueryable().Where(t => t.EnumField == TestEnum.Foo);
 
             for (int i = 0; i < filtered.Count(); i++)
             {
                 if (filtered.ElementAt(i).Id != original.ElementAt(i).Id)
-                    Assert.Fail("Filtering not works");
+                    Assert.Fail("Filtering doesn't work");
             }
         }
 
@@ -277,14 +287,15 @@ namespace GridBlazor.Tests.Filtering
             filterOptions.Add(filterOption);
             var filter = new DefaultColumnFilter<TestModel, Guid>(m => m.GuidField);
 
-            var filtered = filter.ApplyFilter(_repo.GetAll().AsQueryable(), filterOptions);
+            var items = _repo.GetAll().AsQueryable();
+            var filtered = filter.ApplyFilter(items, filterOptions, items.Expression);
 
             var original = _repo.GetAll().AsQueryable().Where(t => t.GuidField.ToString().ToUpper().Contains("0ce17ea".ToUpper()));
 
             for (int i = 0; i < filtered.Count(); i++)
             {
                 if (filtered.ElementAt(i).Id != original.ElementAt(i).Id)
-                    Assert.Fail("Filtering not works");
+                    Assert.Fail("Filtering doesn't work");
             }
         }
 
@@ -301,14 +312,15 @@ namespace GridBlazor.Tests.Filtering
             filterOptions.Add(filterOption);
             var filter = new DefaultColumnFilter<TestModel, Guid>(m => m.GuidField);
 
-            var filtered = filter.ApplyFilter(_repo.GetAll().AsQueryable(), filterOptions);
+            var items = _repo.GetAll().AsQueryable();
+            var filtered = filter.ApplyFilter(items, filterOptions, items.Expression);
 
             var original = _repo.GetAll().AsQueryable().Where(t => t.GuidField.ToString().ToUpper().StartsWith("6e4fe7c4".ToUpper()));
 
             for (int i = 0; i < filtered.Count(); i++)
             {
                 if (filtered.ElementAt(i).Id != original.ElementAt(i).Id)
-                    Assert.Fail("Filtering not works");
+                    Assert.Fail("Filtering doesn't work");
             }
         }
 

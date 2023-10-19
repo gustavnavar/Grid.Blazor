@@ -20,7 +20,9 @@ GridMvc.lang.gl = {
         And: "E",
         Or: "O",
         IsNull: "É nulo",
-        IsNotNull: "Non é nulo"
+        IsNotNull: "Non é nulo",
+        Duplicated: "Duplicado",
+        NotDuplicated: "Non duplicado"
     },
     code: 'gl',
     boolTrueLabel: "Si",

@@ -20,7 +20,9 @@ GridMvc.lang.ca = {
         And: "I",
         Or: "O",
         IsNull: "És nul",
-        IsNotNull: "És no nul"
+        IsNotNull: "És no nul",
+        Duplicated: "Duplicat",
+        NotDuplicated: "No duplicat"
     },
     code: 'ca',
     boolTrueLabel: "Sí",

@@ -297,4 +297,10 @@
   <data name="Select" xml:space="preserve">
     <value>Seçme</value>
   </data>
+  <data name="Duplicated" xml:space="preserve">
+    <value>Çoğaltıldı</value>
+  </data>
+  <data name="NotDuplicated" xml:space="preserve">
+    <value>Kopyalanmadı</value>
+  </data>
 </root>

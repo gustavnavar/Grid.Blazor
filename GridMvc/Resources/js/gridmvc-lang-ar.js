@@ -20,7 +20,9 @@ GridMvc.lang.ar = {
         And: "و",
         Or: "أو",
         IsNull: "فارغ",
-        IsNotNull: "غير فارغ"
+        IsNotNull: "غير فارغ",
+        Duplicated: "مكررة",
+        NotDuplicated: "غير مكررة"
     },
     code: 'ar',
     boolTrueLabel: "نعم",

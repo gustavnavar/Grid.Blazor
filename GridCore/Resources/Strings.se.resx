@@ -180,6 +180,9 @@
   <data name="DeleteItem" xml:space="preserve">
     <value>Ta bort objekt</value>
   </data>
+  <data name="Duplicated" xml:space="preserve">
+    <value>Duplicerat</value>
+  </data>
   <data name="Edit" xml:space="preserve">
     <value>Redigera</value>
   </data>
@@ -242,6 +245,9 @@
   </data>
   <data name="None" xml:space="preserve">
     <value>Ingen</value>
+  </data>
+  <data name="NotDuplicated" xml:space="preserve">
+    <value>Inte duplicerad</value>
   </data>
   <data name="NotEqual" xml:space="preserve">
     <value>Inte lika med</value>

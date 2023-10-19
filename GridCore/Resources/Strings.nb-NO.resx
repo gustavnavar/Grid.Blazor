@@ -294,4 +294,10 @@
   <data name="Select" xml:space="preserve">
     <value>Plukke ut</value>
   </data>
+  <data name="Duplicated" xml:space="preserve">
+    <value>Duplisert</value>
+  </data>
+  <data name="NotDuplicated" xml:space="preserve">
+    <value>Ikke duplisert</value>
+  </data>
 </root>

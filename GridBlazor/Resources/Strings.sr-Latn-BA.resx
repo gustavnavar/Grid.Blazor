@@ -297,4 +297,10 @@
   <data name="Height" xml:space="preserve">
     <value>Visina</value>
   </data>
+  <data name="Duplicated" xml:space="preserve">
+    <value>Duplicirano</value>
+  </data>
+  <data name="NotDuplicated" xml:space="preserve">
+    <value>Nije duplirano</value>
+  </data>
 </root>

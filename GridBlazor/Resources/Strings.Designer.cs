@@ -25,7 +25,7 @@ namespace GridBlazor.Resources {
     public class Strings {
         
         private static global::System.Resources.ResourceManager resourceMan;
-           
+        
         [global::System.Diagnostics.CodeAnalysis.SuppressMessageAttribute("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
         internal Strings() {
         }
@@ -234,6 +234,15 @@ namespace GridBlazor.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Duplicated.
+        /// </summary>
+        public static string Duplicated {
+            get {
+                return ResourceManager.GetString("Duplicated", System.Globalization.CultureInfo.CurrentCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Edit.
         /// </summary>
         public static string Edit {
@@ -428,6 +437,15 @@ namespace GridBlazor.Resources {
         public static string None {
             get {
                 return ResourceManager.GetString("None", System.Globalization.CultureInfo.CurrentCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Not duplicated.
+        /// </summary>
+        public static string NotDuplicated {
+            get {
+                return ResourceManager.GetString("NotDuplicated", System.Globalization.CultureInfo.CurrentCulture);
             }
         }
         

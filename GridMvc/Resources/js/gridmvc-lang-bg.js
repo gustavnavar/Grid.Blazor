@@ -20,7 +20,9 @@ GridMvc.lang.bg = {
         And: "И",
         Or: "Или",
         IsNull: "Нула е",
-        IsNotNull: "Не е нула"
+        IsNotNull: "Не е нула",
+        Duplicated: "Дублиран",
+        NotDuplicated: "Не се дублира"
     },
     code: 'бг',
     boolTrueLabel: "Да",

@@ -28,6 +28,12 @@ namespace GridShared.Filtering
 
         #region IColumnFilter<T> Members
 
+        [Obsolete("This method is obsolete. Use the ApplyFilter method including an expresion parameter.", true)]
+        public IQueryable<T> ApplyFilter(IQueryable<T> items, IEnumerable<ColumnFilterValue> values, MethodInfo removeDiacritics = null)
+        {
+            throw new NotImplementedException();
+        }
+
         public IQueryable<T> ApplyFilter(IQueryable<T> items, IEnumerable<ColumnFilterValue> values,
             Expression source, MethodInfo removeDiacritics = null)
         {
@@ -269,6 +275,7 @@ namespace GridShared.Filtering
 
             return filterType.GetType() == typeof(TextFilterType);
         }
+
         #endregion
     }
 }

@@ -250,6 +250,15 @@ namespace GridCore.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Duplicated.
+        /// </summary>
+        public static string Duplicated {
+            get {
+                return ResourceManager.GetString("Duplicated", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Edit.
         /// </summary>
         public static string Edit {
@@ -435,6 +444,15 @@ namespace GridCore.Resources {
         public static string None {
             get {
                 return ResourceManager.GetString("None", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Not duplicated.
+        /// </summary>
+        public static string NotDuplicated {
+            get {
+                return ResourceManager.GetString("NotDuplicated", resourceCulture);
             }
         }
         

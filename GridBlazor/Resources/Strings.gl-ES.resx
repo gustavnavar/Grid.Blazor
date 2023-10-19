@@ -297,4 +297,10 @@
   <data name="Height" xml:space="preserve">
     <value>Altura</value>
   </data>
+  <data name="Duplicated" xml:space="preserve">
+    <value>Duplicado</value>
+  </data>
+  <data name="NotDuplicated" xml:space="preserve">
+    <value>Non duplicado</value>
+  </data>
 </root>

@@ -411,7 +411,7 @@ namespace GridBlazor
         /// <summary>
         ///     Get column values to display
         /// </summary>
-        [Obsolete("This method is obsolete. Use the new async GetGroupValues() method.", false)]
+        [Obsolete("This method is obsolete. Use the new async GetGroupValues() method.", true)]
         IList<object> GetValuesToDisplay(string columnName, IEnumerable<object> items);
 
         /// <summary>

@@ -20,7 +20,9 @@ GridMvc.lang.sr = {
         And: "и",
         Or: "или",
         IsNull: "Празно",
-        IsNotNull: "Није Празно"
+        IsNotNull: "Није Празно",
+        Duplicated: "Дуплицирано",
+        NotDuplicated: "NotdНије дуплираноuplicated"
     },
     code: 'sr',
     boolTrueLabel: "Да",
