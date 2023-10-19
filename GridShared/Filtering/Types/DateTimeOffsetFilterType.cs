@@ -15,8 +15,8 @@ namespace GridShared.Filtering.Types
             get { return typeof(DateTimeOffset); }
         }
 
-        public override Expression GetFilterExpression(Expression leftExpr, string value, GridFilterType filterType,
-            MethodInfo removeDiacritics)
+        public override Expression GetFilterExpression<T>(Expression leftExpr, string value, GridFilterType filterType,
+            Expression source, MethodInfo removeDiacritics)
         {
             //var dateExpr = Expression.Property(leftExpr, leftExpr.Type, "Date");
 
@@ -34,7 +34,7 @@ namespace GridShared.Filtering.Types
             //    return Expression.And(left, right);
             //}
 
-            return base.GetFilterExpression(leftExpr, value, filterType,removeDiacritics);
+            return GetFilterExpression<T, DateTimeOffset>(leftExpr, value, filterType, source, removeDiacritics);
         }
 
         /// <summary>
@@ -52,6 +52,8 @@ namespace GridShared.Filtering.Types
                 case GridFilterType.GreaterThanOrEquals:
                 case GridFilterType.LessThan:
                 case GridFilterType.LessThanOrEquals:
+                case GridFilterType.IsDuplicated:
+                case GridFilterType.IsNotDuplicated:
                     return type;
                 default:
                     return GridFilterType.Equals;

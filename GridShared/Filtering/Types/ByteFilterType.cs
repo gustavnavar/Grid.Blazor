@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Linq.Expressions;
+using System.Reflection;
 
 namespace GridShared.Filtering.Types
 {
@@ -26,6 +28,8 @@ namespace GridShared.Filtering.Types
                 case GridFilterType.GreaterThanOrEquals:
                 case GridFilterType.LessThan:
                 case GridFilterType.LessThanOrEquals:
+                case GridFilterType.IsDuplicated:
+                case GridFilterType.IsNotDuplicated:
                     return type;
                 default:
                     return GridFilterType.Equals;
@@ -38,6 +42,11 @@ namespace GridShared.Filtering.Types
             if (!byte.TryParse(value, out bt))
                 return null;
             return bt;
+        }
+
+        public override Expression GetFilterExpression<T>(Expression leftExpr, string value, GridFilterType filterType, Expression source, MethodInfo removeDiacritics)
+        {
+            return GetFilterExpression<T, byte>(leftExpr, value, filterType, source, removeDiacritics); ;
         }
     }
 }

@@ -13,6 +13,8 @@
         Condition = 9,
         NotEquals = 10,
         IsNull = 11,
-        IsNotNull = 12
-    }
+        IsNotNull = 12,
+        IsDuplicated = 13,
+        IsNotDuplicated = 14
+     }
 }

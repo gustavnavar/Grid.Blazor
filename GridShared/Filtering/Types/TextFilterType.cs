@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Linq.Expressions;
 using System.Reflection;
 
@@ -25,6 +26,8 @@ namespace GridShared.Filtering.Types
                 case GridFilterType.EndsWidth:
                 case GridFilterType.IsNull:
                 case GridFilterType.IsNotNull:
+                case GridFilterType.IsDuplicated:
+                case GridFilterType.IsNotDuplicated:
                     return type;
                 default:
                     return GridFilterType.Equals;
@@ -36,8 +39,8 @@ namespace GridShared.Filtering.Types
             return value;
         }
 
-        public override Expression GetFilterExpression(Expression leftExpr, string value, GridFilterType filterType,
-            MethodInfo removeDiacritics)
+        public override Expression GetFilterExpression<T>(Expression leftExpr, string value, GridFilterType filterType,
+            Expression source, MethodInfo removeDiacritics)
         {
             //Custom implementation of string filter type. Case insensitive compartion.
 
@@ -68,6 +71,21 @@ namespace GridShared.Filtering.Types
                     break;
                 case GridFilterType.EndsWidth:
                     binaryExpression = GetCaseInsensitiveСomparation("EndsWith", leftExpr, valueExpr, removeDiacritics);
+                    break;
+                case GridFilterType.IsDuplicated:
+                    Expression groupBy = GetGroupBy<T, string>(source, leftExpr);
+                    MethodInfo methodInfo = typeof(Queryable).GetMethods()
+                        .Single(r => r.Name == "Contains" && r.GetParameters().Length == 2)
+                        .MakeGenericMethod(new Type[] { typeof(string) });
+                    binaryExpression = Expression.Call(methodInfo, groupBy, leftExpr);
+                    break;
+                case GridFilterType.IsNotDuplicated:
+                    groupBy = GetGroupBy<T, string>(source, leftExpr);
+                    methodInfo = typeof(Queryable).GetMethods()
+                        .Single(r => r.Name == "Contains" && r.GetParameters().Length == 2)
+                        .MakeGenericMethod(new Type[] { typeof(string) });
+                    var expresion = Expression.Call(methodInfo, groupBy, leftExpr);
+                    binaryExpression = Expression.Not(expresion);
                     break;
                 default:
                     throw new ArgumentOutOfRangeException();

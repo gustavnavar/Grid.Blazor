@@ -40,6 +40,7 @@ namespace GridCore.Filtering
             if (items == null || items.Count() == 0)
                 return items;
 
+            var source = items.Expression;
             foreach (IGridColumn column in _grid.Columns)
             {
                 var gridColumn = column as IGridColumn<T>;
@@ -53,7 +54,7 @@ namespace GridCore.Filtering
                                                                  }
                                                              : _settings.FilteredColumns.GetByColumn(column);
 
-                items = ((IColumnFilter<T>)gridColumn.Filter).ApplyFilter(items, options, _grid.RemoveDiacritics);
+                items = ((IColumnFilter<T>)gridColumn.Filter).ApplyFilter(items, options, source, _grid.RemoveDiacritics);
             }
             return items;
         }

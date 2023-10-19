@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Linq.Expressions;
+using System.Reflection;
 
 namespace GridShared.Filtering.Types
 {
@@ -29,6 +31,11 @@ namespace GridShared.Filtering.Types
             if (!bool.TryParse(value, out b))
                 return null;
             return b;
+        }
+
+        public override Expression GetFilterExpression<T>(Expression leftExpr, string value, GridFilterType filterType, Expression source, MethodInfo removeDiacritics)
+        {
+            return GetFilterExpression<T, bool>(leftExpr, value, filterType, source, removeDiacritics); ;
         }
     }
 }
