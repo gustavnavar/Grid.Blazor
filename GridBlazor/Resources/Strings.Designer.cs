@@ -189,6 +189,15 @@ namespace GridBlazor.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to current.
+        /// </summary>
+        public static string current {
+            get {
+                return ResourceManager.GetString("current", System.Globalization.CultureInfo.CurrentCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to There are no items to display.
         /// </summary>
         public static string DefaultGridEmptyText {
@@ -464,6 +473,15 @@ namespace GridBlazor.Resources {
         public static string Or {
             get {
                 return ResourceManager.GetString("Or", System.Globalization.CultureInfo.CurrentCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Items.
+        /// </summary>
+        public static string PageSizeItems {
+            get {
+                return ResourceManager.GetString("PageSizeItems", System.Globalization.CultureInfo.CurrentCulture);
             }
         }
         

@@ -62,10 +62,12 @@ If you need to support other languages, please send me the translation of the fo
 * Confirm Code
 * Contains
 * Create item
+* current (actual)
 * Delete
 * Delete item
 * Drop columns here for column extended sorting
 * Drop columns here for column grouping
+* Duplicated
 * Edit
 * Ends with
 * Equals
@@ -83,6 +85,7 @@ If you need to support other languages, please send me the translation of the fo
 * Min
 * No
 * None
+* Not duplicated
 * Not equals
 * Or
 * Read item

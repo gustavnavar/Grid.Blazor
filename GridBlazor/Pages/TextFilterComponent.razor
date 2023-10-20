@@ -48,8 +48,11 @@
                                         <option value="4">@Strings.EndsWith</option>
                                         <option value="11">@Strings.IsNull</option>
                                         <option value="12">@Strings.IsNotNull</option>
-                                        <option value="13">@Strings.Duplicated</option>
-                                        <option value="14">@Strings.NotDuplicated</option>
+                                        @if (GridHeaderComponent.GridComponent.Grid.ServerAPI == ServerAPI.ItemsDTO || GridHeaderComponent.GridComponent.UseMemoryCrudDataService)
+                                        {
+                                            <option value="13">@Strings.Duplicated</option>
+                                            <option value="14">@Strings.NotDuplicated</option>
+                                        }
                                     </select>
                                 </div>
                             }
@@ -64,8 +67,11 @@
                                         <option value="4">@Strings.EndsWith</option>
                                         <option value="11">@Strings.IsNull</option>
                                         <option value="12">@Strings.IsNotNull</option>
-                                        <option value="13">@Strings.Duplicated</option>
-                                        <option value="14">@Strings.NotDuplicated</option>
+                                        @if (GridHeaderComponent.GridComponent.Grid.ServerAPI == ServerAPI.ItemsDTO || GridHeaderComponent.GridComponent.UseMemoryCrudDataService)
+                                        {
+                                            <option value="13">@Strings.Duplicated</option>
+                                            <option value="14">@Strings.NotDuplicated</option>
+                                        }
                                     </select>
                                 </div>
                             }

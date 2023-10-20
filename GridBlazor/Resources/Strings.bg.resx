@@ -303,4 +303,10 @@
   <data name="NotDuplicated" xml:space="preserve">
     <value>Не се дублира</value>
   </data>
+  <data name="current" xml:space="preserve">
+    <value>текуща</value>
+  </data>
+  <data name="PageSizeItems" xml:space="preserve">
+    <value>Елемента</value>
+  </data>
 </root>

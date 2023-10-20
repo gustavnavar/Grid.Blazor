@@ -306,4 +306,10 @@
   <data name="NotDuplicated" xml:space="preserve">
     <value>Kopyalanmadı</value>
   </data>
+  <data name="current" xml:space="preserve">
+    <value>akım</value>
+  </data>
+  <data name="PageSizeItems" xml:space="preserve">
+    <value>Öğeler</value>
+  </data>
 </root>

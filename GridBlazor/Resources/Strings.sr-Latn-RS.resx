@@ -327,4 +327,10 @@ Prazno</value>
   <data name="NotDuplicated" xml:space="preserve">
     <value>Nije duplirano</value>
   </data>
+  <data name="current" xml:space="preserve">
+    <value>trenutni</value>
+  </data>
+  <data name="PageSizeItems" xml:space="preserve">
+    <value>Stavke</value>
+  </data>
 </root>

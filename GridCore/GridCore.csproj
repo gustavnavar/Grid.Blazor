@@ -7,7 +7,7 @@
     <EnableDefaultEmbeddedResourceItems>False</EnableDefaultEmbeddedResourceItems>
     <Product>GridCore</Product>
     <PackageId>GridCore</PackageId>
-    <Version>6.0.6</Version>
+    <Version>6.1.0</Version>
     <Title>GridCore</Title>
     <Description>Grid core component</Description>
     <Summary>Grid core component</Summary>

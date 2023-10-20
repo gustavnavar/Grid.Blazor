@@ -58,13 +58,13 @@ Those languages that require right to left direction are also supported. You mus
 ## Additional languages
 
 If you need to support other languages, please send me the translation of the following expressions and I will updete the component:
+* --- Select an item ---
 * Add
+* All
 * And
 * Apply
 * Average
 * Back
-* No
-* Yes
 * Clear all filters
 * Clear filter
 * Code
@@ -73,41 +73,51 @@ If you need to support other languages, please send me the translation of the fo
 * Confirm Code
 * Contains
 * Create item
-* There are no items to display
+* current (actual)
 * Delete
 * Delete item
+* Drop columns here for column extended sorting
+* Drop columns here for column grouping
+* Duplicated
 * Edit
 * Ends with
 * Equals
-* Drop columns here for column extended sorting
 * Files
 * Filter this column
 * Go to
-* Type
-* Value
 * Greater than
 * Greater than or equals
-* Drop columns here for column grouping
-* Is null
 * Is not null
+* Is null
 * Items
 * Less than
 * Less than or equals
 * Max
 * Min
+* No
+* None
+* Not duplicated
 * Not equals
 * Or
 * Read item
 * Save
 * Search for ...
-* --- Select an item ---
+* Search phrase
+* Select
 * Show
 * Starts with
 * Sum
-* Update item
-* View
+* There are no items to display
 * There was an error creating the new item
 * There was an error deleting this item
 * There was an error updating this item
+* Type
+* Update item
+* Value
+* View
+* Yes
+* You must select the row you want to delete
+* You must select the row you want to edit
+* You must select the row you want to view
 
 [<- Setup initial column filtering](Setup_initial_column_filtering.md) | [Client side object model ->](Client_side_object_model.md)

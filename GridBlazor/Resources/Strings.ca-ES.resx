@@ -303,4 +303,10 @@
   <data name="NotDuplicated" xml:space="preserve">
     <value>No duplicat</value>
   </data>
+  <data name="current" xml:space="preserve">
+    <value>actual</value>
+  </data>
+  <data name="PageSizeItems" xml:space="preserve">
+    <value>Elements</value>
+  </data>
 </root>

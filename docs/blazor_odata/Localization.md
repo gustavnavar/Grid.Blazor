@@ -64,10 +64,12 @@ If you need to support other languages, please send me the translation of the fo
 * Confirm Code
 * Contains
 * Create item
+* current (actual)
 * Delete
 * Delete item
 * Drop columns here for column extended sorting
 * Drop columns here for column grouping
+* Duplicated
 * Edit
 * Ends with
 * Equals
@@ -85,6 +87,7 @@ If you need to support other languages, please send me the translation of the fo
 * Min
 * No
 * None
+* Not duplicated
 * Not equals
 * Or
 * Read item
@@ -106,6 +109,6 @@ If you need to support other languages, please send me the translation of the fo
 * Yes
 * You must select the row you want to delete
 * You must select the row you want to edit
-* You must select the row you want to view	
+* You must select the row you want to view
 
 [<- Setup initial column filtering](Setup_initial_column_filtering.md) | [Data annotations ->](Data_annotations.md)

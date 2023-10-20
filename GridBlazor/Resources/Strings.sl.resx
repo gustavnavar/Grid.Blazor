@@ -294,4 +294,10 @@
   <data name="NotDuplicated" xml:space="preserve">
     <value>Ni podvojeno</value>
   </data>
+  <data name="current" xml:space="preserve">
+    <value>trenutno</value>
+  </data>
+  <data name="PageSizeItems" xml:space="preserve">
+    <value>Elementi</value>
+  </data>
 </root>
