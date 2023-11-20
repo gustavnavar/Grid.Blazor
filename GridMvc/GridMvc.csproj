@@ -8,7 +8,7 @@
     <EnableDefaultEmbeddedResourceItems>False</EnableDefaultEmbeddedResourceItems>
     <Product>GridMvc</Product>
     <PackageId>GridMvcCore</PackageId>
-    <Version>6.1.0</Version>
+    <Version>6.1.1</Version>
     <Title>GridMvc</Title>
     <Description>ASP.NET MVC Grid component</Description>
     <Summary>ASP.NET MVC Grid component</Summary>
@@ -78,6 +78,8 @@
     <EmbeddedResource Include="Resources\js\gridmvc-lang-uk.js" LogicalName="GridMvc.Resources.js.gridmvc-lang-uk.js" />
 	<EmbeddedResource Include="Resources\js\gridmvc-lang-ar.js" LogicalName="GridMvc.Resources.js.gridmvc-lang-ar.js" />
 	<EmbeddedResource Include="Resources\js\gridmvc-lang-da.js" LogicalName="GridMvc.Resources.js.gridmvc-lang-da.js" />
+	<EmbeddedResource Include="Resources\js\gridmvc-lang-ja.js" LogicalName="GridMvc.Resources.js.gridmvc-lang-ja.js" />
+	<EmbeddedResource Include="Resources\js\gridmvc-lang-zh.js" LogicalName="GridMvc.Resources.js.gridmvc-lang-zh.js" />
     <EmbeddedResource Include="Resources\js\gridmvc-ajax.js" LogicalName="GridMvc.Resources.js.gridmvc-ajax.js" />
     <EmbeddedResource Include="Resources\js\gridmvc-ajax.min.js" LogicalName="GridMvc.Resources.js.gridmvc-ajax.min.js" />
   </ItemGroup>

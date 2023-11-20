@@ -7,7 +7,7 @@
     <EnableDefaultEmbeddedResourceItems>False</EnableDefaultEmbeddedResourceItems>
     <Product>GridCore</Product>
     <PackageId>GridCore</PackageId>
-    <Version>6.1.0</Version>
+    <Version>6.1.1</Version>
     <Title>GridCore</Title>
     <Description>Grid core component</Description>
     <Summary>Grid core component</Summary>
@@ -117,6 +117,12 @@
 	</EmbeddedResource>
 	<EmbeddedResource Include="Resources\Strings.da-DK.resx" LogicalName="GridCore.Resources.Strings.da-DK.resources">
 		<Generator></Generator>
+	</EmbeddedResource>
+	<EmbeddedResource Include="Resources\Strings.ja.resx" LogicalName="GridBlazor.Resources.Strings.ja.resources">
+	  <Generator></Generator>
+	</EmbeddedResource>
+	<EmbeddedResource Include="Resources\Strings.zh.resx" LogicalName="GridBlazor.Resources.Strings.zh.resources">
+	  <Generator></Generator>
 	</EmbeddedResource>
   </ItemGroup>
   

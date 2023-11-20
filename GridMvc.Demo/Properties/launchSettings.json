@@ -3,8 +3,8 @@
     "windowsAuthentication": false,
     "anonymousAuthentication": true,
     "iisExpress": {
-      "applicationUrl": "http://localhost:49861/",
-      "sslPort": 44369
+      "applicationUrl": "http://localhost:44320/",
+      "sslPort": 44320
     }
   },
   "profiles": {
@@ -12,7 +12,7 @@
       "commandName": "IISExpress",
       "launchBrowser": true,
       "environmentVariables": {
-        "ASPNETCORE_HTTPS_PORT": "44369",
+        "ASPNETCORE_HTTPS_PORT": "44320",
         "ASPNETCORE_ENVIRONMENT": "Development"
       }
     },
@@ -22,7 +22,7 @@
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
       },
-      "applicationUrl": "http://localhost:49862"
+      "applicationUrl": "http://localhost:44321"
     }
   }
 }
