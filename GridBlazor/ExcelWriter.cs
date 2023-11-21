@@ -170,8 +170,8 @@ namespace GridBlazor
 
         public byte[] GenerateExcel(ExcelData data)
         {
-            var stream = new MemoryStream();
-            var document = SpreadsheetDocument.Create(stream, SpreadsheetDocumentType.Workbook);
+            using var stream = new MemoryStream();
+            using var document = SpreadsheetDocument.Create(stream, SpreadsheetDocumentType.Workbook);
 
             var workbookpart = document.AddWorkbookPart();
             workbookpart.Workbook = new Workbook();
@@ -197,8 +197,6 @@ namespace GridBlazor
                 AppendDataToSheet(sheetData, data);
 
             workbookpart.Workbook.Save();
-            document.Close();
-
             return stream.ToArray();
         }
 

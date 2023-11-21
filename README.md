@@ -6,7 +6,7 @@ This back-end component can be one of the following:
 - GridCore (v.5.0.0 or later), supporting ASP.Net Core 3.1, ASP.Net 5.0, ASP.Net 6.0 and ASP.Net 7.0. GridMvcCore, that it is a fork from https://gridmvc.codeplex.com/, was working for earlier versions. But GridMvcCore is only required for Blazor WASM (REST) and ASP.NET MVC projects now.
 - an OData back-end. All samples are based on Microsoft.AspNetCore.OData library, but it can be any other OData provider.
 
-It supports .NET Core 3.1 and 5.0, 6.0 and 7.0, and Blazor WebAssembly 3.2.0, 5.0, 6.0 and 7.0
+It supports .NET Core 3.1 and 5.0, 6.0, 7.0 and 8.0, and Blazor WebAssembly 3.2.0, 5.0, 6.0, 7.0 and 8.0
 
 ## Demo 
 - Blazor server-side: http://gridblazor.azurewebsites.net

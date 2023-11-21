@@ -1,14 +1,14 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk.Web">
 
 	<PropertyGroup>
-		<TargetFramework>net7.0</TargetFramework>
+		<TargetFramework>net8.0</TargetFramework>
 		<DisableImplicitComponentsAnalyzers>true</DisableImplicitComponentsAnalyzers>
-		<Version>4.0.4</Version>
+		<Version>5.0.0</Version>
 	</PropertyGroup>
 
 	<ItemGroup>
-		<PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.Server" Version="7.0.3" />
-		<PackageReference Include="Grpc.AspNetCore.Web" Version="2.51.0" />
+		<PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.Server" Version="8.0.0" />
+		<PackageReference Include="Grpc.AspNetCore.Web" Version="2.59.0" />
 		<PackageReference Include="protobuf-net.Grpc.AspNetCore" Version="1.1.1" />
 	</ItemGroup>
 
