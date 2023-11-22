@@ -4,7 +4,6 @@ using GridMvc.Demo.Services;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Localization;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -79,8 +78,10 @@ namespace GridMvc.Demo
                             new CultureInfo("bg-BG"),
                             new CultureInfo("uk-UA"),
                             new CultureInfo("ar-EG"),
-                            new CultureInfo("da-DK")
-                        };
+                            new CultureInfo("da-DK"),
+                            new CultureInfo("ja-JP"),
+                            new CultureInfo("zh-Hans-CN")
+                    };
 
                     options.DefaultRequestCulture = new RequestCulture(culture: "en-US", uiCulture: "en-US");
                     options.SupportedCultures = supportedCultures;

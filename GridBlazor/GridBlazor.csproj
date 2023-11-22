@@ -1,12 +1,12 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk.Razor">
 
   <PropertyGroup>
-    <TargetFrameworks>netstandard2.1;net5.0;net6.0;net7.0</TargetFrameworks>
+    <TargetFrameworks>netstandard2.1;net5.0;net6.0;net7.0;net8.0</TargetFrameworks>
     <RazorLangVersion>3.0</RazorLangVersion>
     <LangVersion>11.0</LangVersion>
     <GenerateEmbeddedFilesManifest>True</GenerateEmbeddedFilesManifest>
     <EnableDefaultEmbeddedResourceItems>False</EnableDefaultEmbeddedResourceItems>
-    <Version>4.1.0</Version>
+    <Version>5.0.0</Version>
     <Title>GridBlazor</Title>
     <Description>Grid components for Blazor</Description>
     <Summary>Grid components for Blazor</Summary>
@@ -14,7 +14,7 @@
     <PackageTags>grid blazor table crud rest grpc</PackageTags>
     <PackageProjectUrl>https://github.com/gustavnavar/Grid.Blazor</PackageProjectUrl>
     <PackageLicenseExpression>LGPL-2.1-only</PackageLicenseExpression>
-    <PackageReleaseNotes>Supports .NET Standard 2.1, .NET 5.0, .NET 6.0, .NET 7.0</PackageReleaseNotes>
+    <PackageReleaseNotes>Supports .NET Standard 2.1, .NET 5.0, .NET 6.0, .NET 7.0, .NET 8.0</PackageReleaseNotes>
     <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
   </PropertyGroup>
 
@@ -24,6 +24,14 @@
     </AssemblyAttribute>
   </ItemGroup>
 
+  <ItemGroup Condition="'$(TargetFramework)' == 'net8.0'">
+	<PackageReference Include="Microsoft.AspNetCore.Components" Version="8.0" />
+	<PackageReference Include="Microsoft.AspNetCore.Components.Web" Version="8.0" />
+	<PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="8.0" />
+	<PackageReference Include="Microsoft.Extensions.Primitives" Version="8.0" />
+	<PackageReference Include="System.Net.Http.Json" Version="8.0" />
+  </ItemGroup>
+	
   <ItemGroup Condition="'$(TargetFramework)' == 'net7.0'">
 	<PackageReference Include="Microsoft.AspNetCore.Components" Version="7.0" />
 	<PackageReference Include="Microsoft.AspNetCore.Components.Web" Version="7.0" />
@@ -39,27 +47,27 @@
     <PackageReference Include="Microsoft.Extensions.Primitives" Version="6.0" />
     <PackageReference Include="System.Net.Http.Json" Version="6.0" />
   </ItemGroup>
-  
+
   <ItemGroup Condition="'$(TargetFramework)' == 'net5.0'">
 	<PackageReference Include="Agno.BlazorInputFile" Version="0.4.0" />
-    <PackageReference Include="Microsoft.AspNetCore.Components" Version="5.0" />
-    <PackageReference Include="Microsoft.AspNetCore.Components.Web" Version="5.0" />
-    <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="5.0" />
-    <PackageReference Include="Microsoft.Extensions.Primitives" Version="5.0" />
-    <PackageReference Include="System.Net.Http.Json" Version="5.0" />
+	<PackageReference Include="Microsoft.AspNetCore.Components" Version="5.0" />
+	<PackageReference Include="Microsoft.AspNetCore.Components.Web" Version="5.0" />
+	<PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="5.0" />
+	<PackageReference Include="Microsoft.Extensions.Primitives" Version="5.0" />
+	<PackageReference Include="System.Net.Http.Json" Version="5.0" />
   </ItemGroup>
 
   <ItemGroup Condition="'$(TargetFramework)' == 'netstandard2.1'">
 	<PackageReference Include="Agno.BlazorInputFile" Version="0.4.0" />
-    <PackageReference Include="Microsoft.AspNetCore.Components" Version="3.1" />
-    <PackageReference Include="Microsoft.AspNetCore.Components.Web" Version="3.1" />
-    <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="3.1" />
-    <PackageReference Include="Microsoft.Extensions.Primitives" Version="3.1" />
-    <PackageReference Include="System.Net.Http.Json" Version="3.2" />
+	<PackageReference Include="Microsoft.AspNetCore.Components" Version="3.1" />
+	<PackageReference Include="Microsoft.AspNetCore.Components.Web" Version="3.1" />
+	<PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="3.1" />
+	<PackageReference Include="Microsoft.Extensions.Primitives" Version="3.1" />
+	<PackageReference Include="System.Net.Http.Json" Version="3.2" />
   </ItemGroup>
-
+	
   <ItemGroup>
-    <PackageReference Include="DocumentFormat.OpenXml" Version="2.11" />
+    <PackageReference Include="DocumentFormat.OpenXml" Version="3.0.0" />
   </ItemGroup>
   
   <ItemGroup>
@@ -141,6 +149,15 @@
 	</EmbeddedResource>
 	<EmbeddedResource Include="Resources\Strings.da-DK.resx" LogicalName="GridBlazor.Resources.Strings.da-DK.resources">
       <Generator></Generator>
+	</EmbeddedResource>
+	<EmbeddedResource Include="Resources\Strings.ja.resx" LogicalName="GridBlazor.Resources.Strings.ja.resources">
+      <Generator></Generator>
+	</EmbeddedResource>
+	<EmbeddedResource Include="Resources\Strings.zh-Hans.resx" LogicalName="GridBlazor.Resources.Strings.zh-Hans.resources">
+	  <Generator></Generator>
+	</EmbeddedResource>
+	<EmbeddedResource Include="Resources\Strings.zh-Hant.resx" LogicalName="GridBlazor.Resources.Strings.zh-Hant.resources">
+	  <Generator></Generator>
 	</EmbeddedResource>
   </ItemGroup>
 

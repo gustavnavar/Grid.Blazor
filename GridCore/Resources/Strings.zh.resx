@@ -117,61 +117,187 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="Add" xml:space="preserve">
+    <value>增加</value>
+  </data>
+  <data name="All" xml:space="preserve">
+    <value>全部</value>
+  </data>
+  <data name="And" xml:space="preserve">
+    <value>与</value>
+  </data>
+  <data name="ApplyFilterButtonText" xml:space="preserve">
+    <value>应用</value>
+  </data>
   <data name="Average" xml:space="preserve">
-    <value>Average</value>
+    <value>平均</value>
+  </data>
+  <data name="Back" xml:space="preserve">
+    <value>返回</value>
   </data>
   <data name="BoolFalseLabel" xml:space="preserve">
-    <value>No</value>
+    <value>否</value>
   </data>
   <data name="BoolTrueLabel" xml:space="preserve">
-    <value>Yes</value>
+    <value>是</value>
   </data>
   <data name="ClearAllFilters" xml:space="preserve">
-    <value>Clear all filters</value>
+    <value>清除所有过滤器</value>
+  </data>
+  <data name="ClearFilterLabel" xml:space="preserve">
+    <value>清除过滤器</value>
+  </data>
+  <data name="Code" xml:space="preserve">
+    <value>代码</value>
+  </data>
+  <data name="Confirm Code" xml:space="preserve">
+    <value>确认码</value>
+  </data>
+  <data name="ConfirmCodeError" xml:space="preserve">
+    <value>确认码必须和代码完全相同才可以保存这个项目</value>
+  </data>
+  <data name="Contains" xml:space="preserve">
+    <value>包含</value>
+  </data>
+  <data name="CreateError" xml:space="preserve">
+    <value>创建新项目时出错</value>
   </data>
   <data name="CreateItem" xml:space="preserve">
-    <value>Create item</value>
+    <value>创建项目</value>
   </data>
   <data name="DefaultGridEmptyText" xml:space="preserve">
-    <value>There are no items to display</value>
+    <value>没有可显示的项目</value>
+  </data>
+  <data name="Delete" xml:space="preserve">
+    <value>删除</value>
+  </data>
+  <data name="DeleteConfirmCodeError" xml:space="preserve">
+    <value>确认码必须和代码完全相同才可以删除这个项目</value>
+  </data>
+  <data name="DeleteError" xml:space="preserve">
+    <value>删除项目时出错</value>
   </data>
   <data name="DeleteItem" xml:space="preserve">
-    <value>Delete item</value>
+    <value>删除项目</value>
+  </data>
+  <data name="Duplicated" xml:space="preserve">
+    <value>重复</value>
+  </data>
+  <data name="Edit" xml:space="preserve">
+    <value>编辑</value>
+  </data>
+  <data name="EndsWith" xml:space="preserve">
+    <value>以...结尾</value>
+  </data>
+  <data name="Equal" xml:space="preserve">
+    <value>等于</value>
   </data>
   <data name="ExtSortingText" xml:space="preserve">
-    <value>Drop columns here for column extended sorting</value>
+    <value>将列拖放到此处进行列扩展排序</value>
+  </data>
+  <data name="Files" xml:space="preserve">
+    <value>文件</value>
   </data>
   <data name="FilterButtonTooltipText" xml:space="preserve">
-    <value>Filter this column</value>
+    <value>过虑此列</value>
+  </data>
+  <data name="FilterTypeLabel" xml:space="preserve">
+    <value>类型</value>
+  </data>
+  <data name="FilterValueLabel" xml:space="preserve">
+    <value>值</value>
+  </data>
+  <data name="Goto" xml:space="preserve">
+    <value>跳转</value>
+  </data>
+  <data name="GreaterThan" xml:space="preserve">
+    <value>大于</value>
+  </data>
+  <data name="GreaterThanOrEquals" xml:space="preserve">
+    <value>大于等于</value>
   </data>
   <data name="GroupingText" xml:space="preserve">
-    <value>Drop columns here for column grouping</value>
+    <value>将列拖放到此处进行列分组</value>
+  </data>
+  <data name="IsNotNull" xml:space="preserve">
+    <value>不为空</value>
+  </data>
+  <data name="IsNull" xml:space="preserve">
+    <value>为空</value>
   </data>
   <data name="Items" xml:space="preserve">
-    <value>Items</value>
+    <value>项目</value>
   </data>
   <data name="Lang" xml:space="preserve">
-    <value>en</value>
+    <value>zh-Hans</value>
+  </data>
+  <data name="LessThan" xml:space="preserve">
+    <value>小于</value>
+  </data>
+  <data name="LessThanOrEquals" xml:space="preserve">
+    <value>小于等于</value>
   </data>
   <data name="Max" xml:space="preserve">
-    <value>Max</value>
+    <value>最大</value>
   </data>
   <data name="Min" xml:space="preserve">
-    <value>Min</value>
+    <value>最小</value>
+  </data>
+  <data name="None" xml:space="preserve">
+    <value>无</value>
+  </data>
+  <data name="NotDuplicated" xml:space="preserve">
+    <value>不重复</value>
+  </data>
+  <data name="NotEqual" xml:space="preserve">
+    <value>不等于</value>
+  </data>
+  <data name="Or" xml:space="preserve">
+    <value>或</value>
   </data>
   <data name="ReadItem" xml:space="preserve">
-    <value>Read item</value>
+    <value>读取项目</value>
+  </data>
+  <data name="Save" xml:space="preserve">
+    <value>保存</value>
+  </data>
+  <data name="SearchFilterListInputText" xml:space="preserve">
+    <value>搜索短语</value>
   </data>
   <data name="SearchFor" xml:space="preserve">
-    <value>Search for ...</value>
+    <value>搜索 ...</value>
+  </data>
+  <data name="Select" xml:space="preserve">
+    <value>选择</value>
+  </data>
+  <data name="SelectionDeleteError" xml:space="preserve">
+    <value>您必须选择要删除的行</value>
+  </data>
+  <data name="SelectionReadError" xml:space="preserve">
+    <value>您必须选择要查看的行</value>
+  </data>
+  <data name="SelectionUpdateError" xml:space="preserve">
+    <value>您必须选择要编辑的行</value>
+  </data>
+  <data name="SelectItem" xml:space="preserve">
+    <value>--- 选择一个选项 ---</value>
   </data>
   <data name="Show" xml:space="preserve">
-    <value>Show</value>
+    <value>显示</value>
+  </data>
+  <data name="StartsWith" xml:space="preserve">
+    <value>以…开头</value>
   </data>
   <data name="Sum" xml:space="preserve">
-    <value>Sum</value>
+    <value>合计</value>
+  </data>
+  <data name="UpdateError" xml:space="preserve">
+    <value>更新项目时出错</value>
   </data>
   <data name="UpdateItem" xml:space="preserve">
-    <value>Update item</value>
+    <value>更新项目</value>
+  </data>
+  <data name="View" xml:space="preserve">
+    <value>查看</value>
   </data>
 </root>

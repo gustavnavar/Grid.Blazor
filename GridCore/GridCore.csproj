@@ -1,13 +1,13 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk.Razor">
 
   <PropertyGroup>
-    <TargetFrameworks>netstandard2.1;net5.0;net6.0;net7.0</TargetFrameworks>
+    <TargetFrameworks>netstandard2.1;net5.0;net6.0;net7.0;net8.0</TargetFrameworks>
     <LangVersion>11.0</LangVersion>
     <GenerateEmbeddedFilesManifest>True</GenerateEmbeddedFilesManifest>
     <EnableDefaultEmbeddedResourceItems>False</EnableDefaultEmbeddedResourceItems>
     <Product>GridCore</Product>
     <PackageId>GridCore</PackageId>
-    <Version>6.1.0</Version>
+    <Version>7.0.0</Version>
     <Title>GridCore</Title>
     <Description>Grid core component</Description>
     <Summary>Grid core component</Summary>
@@ -15,34 +15,39 @@
     <PackageTags>grid blazor table crud rest grpc</PackageTags>
     <PackageProjectUrl>https://github.com/gustavnavar/Grid.Blazor</PackageProjectUrl>
     <PackageLicenseExpression>LGPL-2.1-only</PackageLicenseExpression>
-	<PackageReleaseNotes>Supports .NET Standard 2.1, .NET 5.0, .NET 6.0, .NET 7.0</PackageReleaseNotes>
+	<PackageReleaseNotes>Supports .NET Standard 2.1, .NET 5.0, .NET 6.0, .NET 7.0, .NET8.0</PackageReleaseNotes>
 	<GeneratePackageOnBuild>True</GeneratePackageOnBuild>
   </PropertyGroup>
 
-  <ItemGroup Condition="'$(TargetFramework)' == 'net7.0'">
-	<PackageReference Include="Microsoft.AspNetCore.Components" Version="7.0" />
- 	<PackageReference Include="Microsoft.Extensions.FileProviders.Embedded" Version="7.0" />
+  <ItemGroup Condition="'$(TargetFramework)' == 'net8.0'">
+	<PackageReference Include="Microsoft.AspNetCore.Components" Version="8.0" />
+	<PackageReference Include="Microsoft.Extensions.FileProviders.Embedded" Version="8.0" />
   </ItemGroup>
 	
+  <ItemGroup Condition="'$(TargetFramework)' == 'net7.0'">
+	<PackageReference Include="Microsoft.AspNetCore.Components" Version="7.0" />
+	<PackageReference Include="Microsoft.Extensions.FileProviders.Embedded" Version="7.0" />
+  </ItemGroup>
+
   <ItemGroup Condition="'$(TargetFramework)' == 'net6.0'">
-    <PackageReference Include="Microsoft.AspNetCore.Components" Version="6.0" />
-    <PackageReference Include="Microsoft.Extensions.FileProviders.Embedded" Version="6.0" />
+	<PackageReference Include="Microsoft.AspNetCore.Components" Version="6.0" />
+	<PackageReference Include="Microsoft.Extensions.FileProviders.Embedded" Version="6.0" />
   </ItemGroup>
-  
+
   <ItemGroup Condition="'$(TargetFramework)' == 'net5.0'">
-    <PackageReference Include="Microsoft.AspNetCore.Components" Version="5.0" />
-    <PackageReference Include="Microsoft.Extensions.FileProviders.Embedded" Version="5.0" />
+	<PackageReference Include="Microsoft.AspNetCore.Components" Version="5.0" />
+	<PackageReference Include="Microsoft.Extensions.FileProviders.Embedded" Version="5.0" />
   </ItemGroup>
-  
+
   <ItemGroup Condition="'$(TargetFramework)' == 'netstandard2.1'">
-    <PackageReference Include="Microsoft.AspNetCore.Components" Version="3.1" />
-    <PackageReference Include="Microsoft.Extensions.FileProviders.Embedded" Version="3.1" />
+	<PackageReference Include="Microsoft.AspNetCore.Components" Version="3.1" />
+	<PackageReference Include="Microsoft.Extensions.FileProviders.Embedded" Version="3.1" />
   </ItemGroup>
-  
+	
   <ItemGroup>
     <PackageReference Include="System.ComponentModel.Annotations" Version="5.0.0" />
   </ItemGroup>
-  
+	
   <ItemGroup>
     <ProjectReference Include="..\GridShared\GridShared.csproj" />
   </ItemGroup>
@@ -117,6 +122,12 @@
 	</EmbeddedResource>
 	<EmbeddedResource Include="Resources\Strings.da-DK.resx" LogicalName="GridCore.Resources.Strings.da-DK.resources">
 		<Generator></Generator>
+	</EmbeddedResource>
+	<EmbeddedResource Include="Resources\Strings.ja.resx" LogicalName="GridCore.Resources.Strings.ja.resources">
+	  <Generator></Generator>
+	</EmbeddedResource>
+	<EmbeddedResource Include="Resources\Strings.zh.resx" LogicalName="GridCore.Resources.Strings.zh.resources">
+	  <Generator></Generator>
 	</EmbeddedResource>
   </ItemGroup>
   

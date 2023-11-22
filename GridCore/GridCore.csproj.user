@@ -44,6 +44,9 @@
     <EmbeddedResource Update="Resources\Strings.it.resx">
       <SubType>Designer</SubType>
     </EmbeddedResource>
+    <EmbeddedResource Update="Resources\Strings.ja.resx">
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
     <EmbeddedResource Update="Resources\Strings.nb-NO.resx">
       <SubType>Designer</SubType>
     </EmbeddedResource>
@@ -72,6 +75,9 @@
       <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Update="Resources\Strings.uk.resx">
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Resources\Strings.zh.resx">
       <SubType>Designer</SubType>
     </EmbeddedResource>
   </ItemGroup>
