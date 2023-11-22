@@ -187,22 +187,22 @@
     <value>平均</value>
   </data>
   <data name="And" xml:space="preserve">
-    <value>および</value>
+    <value>かつ</value>
   </data>
   <data name="Or" xml:space="preserve">
     <value>または</value>
   </data>
   <data name="ExtSortingText" xml:space="preserve">
-    <value>列の拡張ソートには、ここに列をドロップ</value>
+    <value>列のソートを拡張するには、ここに列をドロップ</value>
   </data>
   <data name="GroupingText" xml:space="preserve">
-    <value>列のグルーピングには、ここに列をドロップ</value>
+    <value>列をグルーピングするには、ここに列をドロップ</value>
   </data>
   <data name="Add" xml:space="preserve">
     <value>追加</value>
   </data>
   <data name="Back" xml:space="preserve">
-    <value>返回</value>
+    <value>戻る</value>
   </data>
   <data name="Delete" xml:space="preserve">
     <value>削除</value>
@@ -214,13 +214,13 @@
     <value>保存</value>
   </data>
   <data name="View" xml:space="preserve">
-    <value>見る</value>
+    <value>詳細</value>
   </data>
   <data name="SelectItem" xml:space="preserve">
     <value>--- レコードを選択 ---</value>
   </data>
   <data name="Show" xml:space="preserve">
-    <value>表示</value>
+    <value />
   </data>
   <data name="ClearAllFilters" xml:space="preserve">
     <value>すべてのフィルタをクリア</value>
@@ -250,19 +250,19 @@
     <value>このレコードの更新中にエラーが発生しました</value>
   </data>
   <data name="IsNotNull" xml:space="preserve">
-    <value>空でない</value>
+    <value>Nullではない</value>
   </data>
   <data name="IsNull" xml:space="preserve">
-    <value>空</value>
+    <value>Null</value>
   </data>
   <data name="SelectionDeleteError" xml:space="preserve">
-    <value>削除する行を選択する必要があります</value>
+    <value>削除するレコードを選択してください</value>
   </data>
   <data name="SelectionReadError" xml:space="preserve">
-    <value>表示する行を選択する必要があります</value>
+    <value>表示するレコードを選択してください</value>
   </data>
   <data name="SelectionUpdateError" xml:space="preserve">
-    <value>編集する行を選択する必要があります</value>
+    <value>編集するレコードを選択してください</value>
   </data>
   <data name="Files" xml:space="preserve">
     <value>ファイル</value>
@@ -274,16 +274,16 @@
     <value>確認コード</value>
   </data>
   <data name="ConfirmCodeError" xml:space="preserve">
-    <value>このレコードを保存するには、コードと確認コードが等しい必要があります</value>
+    <value>このレコードを保存するには、コードと確認コードが同じになる必要があります</value>
   </data>
   <data name="DeleteConfirmCodeError" xml:space="preserve">
-    <value>このレコードを削除するには、コードと確認コードが等しい必要があります</value>
+    <value>このレコードを削除するには、コードと確認コードが同じになる必要があります</value>
   </data>
   <data name="Goto" xml:space="preserve">
-    <value>移動</value>
+    <value>ジャンプ</value>
   </data>
   <data name="SearchFilterListInputText" xml:space="preserve">
-    <value>検索フレーズ</value>
+    <value>検索</value>
   </data>
   <data name="All" xml:space="preserve">
     <value>全て</value>
@@ -304,9 +304,9 @@
     <value>重複なし</value>
   </data>
   <data name="current" xml:space="preserve">
-    <value>現在の</value>
+    <value>現在のページ</value>
   </data>
   <data name="PageSizeItems" xml:space="preserve">
-    <value>レコード</value>
+    <value>レコードを表示</value>
   </data>
 </root>
