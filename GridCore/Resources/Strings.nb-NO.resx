@@ -294,10 +294,19 @@
   <data name="Select" xml:space="preserve">
     <value>Plukke ut</value>
   </data>
+  <data name="Height" xml:space="preserve">
+    <value>Høyde</value>
+  </data>
   <data name="Duplicated" xml:space="preserve">
     <value>Duplisert</value>
   </data>
   <data name="NotDuplicated" xml:space="preserve">
     <value>Ikke duplisert</value>
+  </data>
+  <data name="current" xml:space="preserve">
+    <value>nåværende</value>
+  </data>
+  <data name="PageSizeItems" xml:space="preserve">
+    <value>Elementer</value>
   </data>
 </root>

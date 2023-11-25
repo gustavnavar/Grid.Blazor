@@ -294,10 +294,19 @@
   <data name="Select" xml:space="preserve">
     <value>Hautatu</value>
   </data>
+  <data name="Height" xml:space="preserve">
+    <value>Altuera</value>
+  </data>
   <data name="Duplicated" xml:space="preserve">
     <value>Bikoiztuta</value>
   </data>
   <data name="NotDuplicated" xml:space="preserve">
     <value>Ez da bikoiztuta</value>
+  </data>
+  <data name="current" xml:space="preserve">
+    <value>korronte</value>
+  </data>
+  <data name="PageSizeItems" xml:space="preserve">
+    <value>Elementuak</value>
   </data>
 </root>

@@ -294,10 +294,19 @@
   <data name="Select" xml:space="preserve">
     <value>Válassza ki</value>
   </data>
+  <data name="Height" xml:space="preserve">
+    <value>Magasság</value>
+  </data>
   <data name="Duplicated" xml:space="preserve">
     <value>Duplicirano</value>
   </data>
   <data name="NotDuplicated" xml:space="preserve">
     <value>Nije umnoženo</value>
+  </data>
+  <data name="current" xml:space="preserve">
+    <value>trenutno</value>
+  </data>
+  <data name="PageSizeItems" xml:space="preserve">
+    <value>Stavke</value>
   </data>
 </root>

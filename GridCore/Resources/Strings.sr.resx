@@ -165,6 +165,9 @@
   <data name="CreateItem" xml:space="preserve">
     <value>Креирај ставку</value>
   </data>
+  <data name="current" xml:space="preserve">
+    <value>тренутни</value>
+  </data>
   <data name="DefaultGridEmptyText" xml:space="preserve">
     <value>Нема ставки за приказ</value>
   </data>
@@ -219,6 +222,9 @@
   <data name="GroupingText" xml:space="preserve">
     <value>Превуците овде колоне за груписање</value>
   </data>
+  <data name="Height" xml:space="preserve">
+    <value>Висина</value>
+  </data>
   <data name="IsNotNull" xml:space="preserve">
     <value>Није Празно</value>
   </data>
@@ -254,6 +260,9 @@
   </data>
   <data name="Or" xml:space="preserve">
     <value>или</value>
+  </data>
+  <data name="PageSizeItems" xml:space="preserve">
+    <value>Ставке</value>
   </data>
   <data name="ReadItem" xml:space="preserve">
     <value>Прочитај ставку</value>

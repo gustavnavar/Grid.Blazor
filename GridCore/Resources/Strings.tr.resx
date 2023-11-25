@@ -297,10 +297,19 @@
   <data name="Select" xml:space="preserve">
     <value>Seçme</value>
   </data>
+  <data name="Height" xml:space="preserve">
+    <value>Yükseklik</value>
+  </data>
   <data name="Duplicated" xml:space="preserve">
     <value>Çoğaltıldı</value>
   </data>
   <data name="NotDuplicated" xml:space="preserve">
     <value>Kopyalanmadı</value>
+  </data>
+  <data name="current" xml:space="preserve">
+    <value>akım</value>
+  </data>
+  <data name="PageSizeItems" xml:space="preserve">
+    <value>Öğeler</value>
   </data>
 </root>

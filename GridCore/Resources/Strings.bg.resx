@@ -294,10 +294,19 @@
   <data name="Select" xml:space="preserve">
     <value>Изберете</value>
   </data>
+  <data name="Height" xml:space="preserve">
+    <value>Височина</value>
+  </data>
   <data name="Duplicated" xml:space="preserve">
     <value>Дублиран</value>
   </data>
   <data name="NotDuplicated" xml:space="preserve">
     <value>Не се дублира</value>
+  </data>
+  <data name="current" xml:space="preserve">
+    <value>текуща</value>
+  </data>
+  <data name="PageSizeItems" xml:space="preserve">
+    <value>Елемента</value>
   </data>
 </root>
