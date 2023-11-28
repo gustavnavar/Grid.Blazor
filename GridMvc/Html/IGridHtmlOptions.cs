@@ -124,6 +124,12 @@ namespace GridMvc.Html
         IGridHtmlOptions<T> ExtSortable(bool enable, bool hidden);
 
         /// <summary>
+        ///     Enable or disable visibility of SyncButton
+        /// </summary>
+        IGridHtmlOptions<T> SyncButton(bool enable);
+
+
+        /// <summary>
         ///     Enable or disable visibility of ClearFiltersButton
         /// </summary>
         IGridHtmlOptions<T> ClearFiltersButton(bool enable);

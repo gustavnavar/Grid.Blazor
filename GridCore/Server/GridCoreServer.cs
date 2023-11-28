@@ -215,6 +215,12 @@ namespace GridCore.Server
             return this;
         }
 
+        public IGridServer<T> SyncButton(bool enable)
+        {
+            _source.SyncButtonEnabled = enable;
+            return this;
+        }
+
         public IGridServer<T> ClearFiltersButton(bool enable)
         {
             _source.ClearFiltersButtonEnabled = enable;

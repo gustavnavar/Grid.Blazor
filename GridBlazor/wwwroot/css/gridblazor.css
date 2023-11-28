@@ -182,6 +182,13 @@ button.grid-button-input-file { border-radius: 0 4px 4px 0; background-image: li
 div[dir="rtl"] button.grid-button-input-file { border-radius: 4px 0 0 4px; }
 .grid-crud-header { font-size: 2rem; margin: 1rem 0 1rem 0; }
 
+/* Grid Sync */
+.grid-sync { margin-top: 10px; margin-bottom: 10px; margin-left: 15px; margin-right: 5px; }
+.grid-sync:first-child { margin-left: 0;}
+div[dir="rtl"] .grid-sync:first-child { margin-right: 0;}
+button.grid-button-sync { width:32px; margin-right: 5px; background-repeat: no-repeat, no-repeat; background-position-x: 4px, 0px; background-position-y: 4px, 0px; background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 16 16"><path d="M11.534 7h3.932a.25.25 0 0 1 .192.41l-1.966 2.36a.25.25 0 0 1-.384 0l-1.966-2.36a.25.25 0 0 1 .192-.41zm-11 2h3.932a.25.25 0 0 0 .192-.41L2.692 6.23a.25.25 0 0 0-.384 0L.342 8.59A.25.25 0 0 0 .534 9z"/><path d="M8 3c-1.552 0-2.94.707-3.857 1.818a.5.5 0 1 1-.771-.636A6.002 6.002 0 0 1 13.917 7H12.9A5.002 5.002 0 0 0 8 3M3.1 9a5.002 5.002 0 0 0 8.757 2.182.5.5 0 1 1 .771.636A6.002 6.002 0 0 1 2.083 9z"/></svg>'), linear-gradient(#ddd, #eee); }
+div[dir="rtl"] button.grid-button-sync { margin-left: 5px; margin-right: 0; }
+
 /* Grid Clear Filters */
 .grid-all-filters-clear { margin-top: 10px; margin-bottom: 10px; margin-left: 15px; margin-right: 5px; }
 .grid-all-filters-clear:first-child { margin-left: 0;}

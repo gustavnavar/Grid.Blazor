@@ -72,6 +72,11 @@ namespace GridShared
         bool GroupingEnabled { get; set; }
 
         /// <summary>
+        ///     Enable Sync button 
+        /// </summary>
+        bool SyncButtonEnabled { get; set; }
+
+        /// <summary>
         ///     Set or get visibility of ClearFiltersButton 
         /// </summary>
         bool ClearFiltersButtonEnabled { get; set; }

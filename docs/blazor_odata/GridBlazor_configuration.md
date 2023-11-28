@@ -55,6 +55,7 @@ Sortable | Enable or disable sorting for all columns of the grid | GridODataClie
 Searchable | Enable or disable searching on the grid | GridODataClient<Order>(...).Searchable(true, true);
 Filterable | Enable or disable filtering for all columns of the grid | GridODataClient<Order>(...).Filterable(true);
 WithMultipleFilters | Allow grid to use multiple filters | GridODataClient<Order>(...).WithMultipleFilters();
+SyncButton | Enable or disable the Sync button to refresh the grid | GridODataClient<Order>(...).SyncButton(true);
 ClearFiltersButton | Enable or disable the ClearFilters button | GridODataClient<Order>(...).ClearFiltersButton(true);
 Selectable | Enable or disable the client grid items selectable feature | GridODataClient<Order>(...).Selectable(true, true);
 SetStriped | Enable or disable the grid as a striped one | GridODataClient<Order>(...).SetStriped(true);

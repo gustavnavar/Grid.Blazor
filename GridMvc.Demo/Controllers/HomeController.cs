@@ -146,7 +146,8 @@ namespace GridMvc.Demo.Controllers
                 .ChangePageSize(true)
                 .WithGridItemsCount()
                 .SetRemoveDiacritics<NorthwindDbContext>("RemoveDiacritics")
-                .SetToListAsyncFunc(async x => await x.ToListAsync());
+                .SetToListAsyncFunc(async x => await x.ToListAsync())
+                .SyncButton(true);
 
             return View(server.Grid);
         }

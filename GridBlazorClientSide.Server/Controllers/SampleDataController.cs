@@ -323,12 +323,10 @@ namespace GridBlazorClientSide.Server.Controllers
             var orderRepository = new OrdersRepository(_context);
             var server = new GridServer<Order>(orderRepository.GetAll(), Request.Query, true, "ordersGrid", 
                 ColumnCollections.OrderColumns);
-            var customerIds = ((GridBase<Order>)server.Grid).GridItems.Where(r => !string.IsNullOrWhiteSpace(r.CustomerID))
-                .Select(r => r.CustomerID).Distinct().ToList();
-
-            var customerRepository = new CustomersRepository(_context);
-            var customers = customerRepository.GetAll().Where(r => customerIds.Contains(r.CustomerID)).Select(r => r.CompanyName)
-                .OrderBy(r => r).ToList();
+            var customers = ((GridBase<Order>)server.Grid).GridItems.Where(r => !string.IsNullOrWhiteSpace(r.CustomerID))
+                    .Select(r => r.Customer).Distinct()
+                    .Select(r => r.CompanyName)
+                    .ToList();
 
             return Ok(customers);
         }

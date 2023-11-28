@@ -60,6 +60,7 @@ GridMvc = (function ($) {
         this.initGroup();
         this.initChangePageSize();
         this.initGotoPage();
+        this.initSync();
         this.initRemoveAllFilters();
     };
     //
@@ -755,6 +756,34 @@ GridMvc = (function ($) {
     };
 
     /***
+    * ============= SYNC BUTTON =============
+    * Methods that provides functionality for refresh a grid
+    */
+    /***
+    * Method search all buttons and register 'onclick' event handlers:
+    */
+    gridMvc.prototype.initSync = function () {
+        var self = this;
+        this.jqContainer.find(".grid-button-sync").each(function () {
+            $(this).click(function () {
+                self.sync();
+            });
+        });
+    };
+
+    //
+    // Applies selected pageSize value by redirecting to another url:
+    //
+    gridMvc.prototype.sync = function () {
+        var url = "";
+        var gridSync = this.jqContainer.find(".grid-button-sync").first();
+        if (gridSync) {
+            url = gridSync.attr("data-sync-url") || "";
+        }
+        window.location.search = url;
+    };
+
+    /***
     * ============= REMOVE ALL FILTERS =============
     * Methods that provides functionality for removing all filters
     */
@@ -775,9 +804,9 @@ GridMvc = (function ($) {
     //
     gridMvc.prototype.removeAllFilters = function () {
         var url = "";
-        var gridChangePageSize = this.jqContainer.find(".grid-button-all-filters-clear").first();
-        if (gridChangePageSize) {
-            url = gridChangePageSize.attr("data-all-filters-clear-url") || "";
+        var gridAllFiltersClear = this.jqContainer.find(".grid-button-all-filters-clear").first();
+        if (gridAllFiltersClear) {
+            url = gridAllFiltersClear.attr("data-all-filters-clear-url") || "";
         }
         window.location.search = url;
     };

@@ -73,6 +73,9 @@ namespace GridBlazor.Tests.Client
             Assert.AreEqual(_client.Grid.ModalWidth, "auto");
             Assert.AreEqual(_client.Grid.ModalHeight, "auto");
 
+            _client.SyncButton(true);
+            Assert.IsTrue(_client.Grid.SyncButtonEnabled);
+
             _client.ClearFiltersButton(true);
             Assert.IsTrue(_client.Grid.ClearFiltersButtonEnabled);
 
