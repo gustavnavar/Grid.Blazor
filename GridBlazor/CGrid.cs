@@ -232,6 +232,8 @@ namespace GridBlazor
 
         public bool GroupingEnabled { get; set; }
 
+        public bool SyncButtonEnabled { get; set; } = false;
+
         public bool ClearFiltersButtonEnabled { get; set; } = false;
         
         public bool RearrangeColumnEnabled { get; set; }

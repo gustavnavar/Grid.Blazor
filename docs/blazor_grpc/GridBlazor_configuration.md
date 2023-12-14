@@ -52,6 +52,7 @@ Sortable | Enable or disable sorting for all columns of the grid | GridClient<Or
 Searchable | Enable or disable searching on the grid | GridClient<Order>(...).Searchable(true, true);
 Filterable | Enable or disable filtering for all columns of the grid | GridClient<Order>(...).Filterable(true);
 WithMultipleFilters | Allow grid to use multiple filters | GridClient<Order>(...).WithMultipleFilters();
+SyncButton | Enable or disable the Sync button to refresh the grid | GridClient<Order>(...).SyncButton(true);
 ClearFiltersButton | Enable or disable the ClearFilters button | GridClient<Order>(...).ClearFiltersButton(true);
 Selectable | Enable or disable the client grid items selectable feature | GridClient<Order>(...).Selectable(true, true);
 SetStriped | Enable or disable the grid as a striped one | GridClient<Order>(...).SetStriped(true);

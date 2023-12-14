@@ -285,10 +285,19 @@
   <data name="Select" xml:space="preserve">
     <value>Izberite</value>
   </data>
+  <data name="Height" xml:space="preserve">
+    <value>Višina</value>
+  </data>
   <data name="Duplicated" xml:space="preserve">
     <value>Podvojeno</value>
   </data>
   <data name="NotDuplicated" xml:space="preserve">
     <value>Ni podvojeno</value>
+  </data>
+  <data name="current" xml:space="preserve">
+    <value>trenutno</value>
+  </data>
+  <data name="PageSizeItems" xml:space="preserve">
+    <value>Elementi</value>
   </data>
 </root>

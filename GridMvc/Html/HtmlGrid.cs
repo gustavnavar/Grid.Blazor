@@ -85,6 +85,12 @@ namespace GridMvc.Html
             set { _source.GroupingEnabled = value; }
         }
 
+        public bool SyncButtonEnabled
+        {
+            get { return _source.SyncButtonEnabled; }
+            set { _source.SyncButtonEnabled = value; }
+        }
+
         public bool ClearFiltersButtonEnabled
         {
             get { return _source.ClearFiltersButtonEnabled; }

@@ -294,10 +294,19 @@
   <data name="Select" xml:space="preserve">
     <value>Sélectionner</value>
   </data>
+  <data name="Height" xml:space="preserve">
+    <value>Hauteur</value>
+  </data>
   <data name="Duplicated" xml:space="preserve">
     <value>Dupliqué</value>
   </data>
   <data name="NotDuplicated" xml:space="preserve">
     <value>Non dupliqué</value>
+  </data>
+  <data name="current" xml:space="preserve">
+    <value>actuelle</value>
+  </data>
+  <data name="PageSizeItems" xml:space="preserve">
+    <value>Articles</value>
   </data>
 </root>

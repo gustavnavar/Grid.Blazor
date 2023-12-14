@@ -68,6 +68,9 @@ namespace GridMvc.Tests.Server
             _server.ChangePageSize(true);
             Assert.IsTrue(_server.Grid.Pager.ChangePageSize);
 
+            _server.SyncButton(true);
+            Assert.IsTrue(_server.Grid.SyncButtonEnabled);
+
             _server.ClearFiltersButton(true);
             Assert.IsTrue(_server.Grid.ClearFiltersButtonEnabled);
 

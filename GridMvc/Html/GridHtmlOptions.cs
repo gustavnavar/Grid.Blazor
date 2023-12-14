@@ -211,6 +211,12 @@ namespace GridMvc.Html
             return this;
         }
 
+        public IGridHtmlOptions<T> SyncButton(bool enable)
+        {
+            _source.SyncButtonEnabled = enable;
+            return this;
+
+        }
         public IGridHtmlOptions<T> ClearFiltersButton(bool enable)
         {
             _source.ClearFiltersButtonEnabled = enable;

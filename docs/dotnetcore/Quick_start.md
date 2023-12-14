@@ -132,7 +132,8 @@ Sortable | Enable or disable sorting for all columns of the grid | GridServer<Or
 Searchable | Enable or disable searching on the grid | GridServer<Order>(...).Searchable(true, true);
 Filterable | Enable or disable filtering for all columns of the grid | GridServer<Order>(...).Filterable(true);
 WithMultipleFilters | Allow grid to use multiple filters | GridServer<Order>(...).WithMultipleFilters();
-ClearFiltersButton | Enable or disable the ClearFilters button | GridClient<Order>(...).ClearFiltersButton(true);
+SyncButton | Enable or disable the Sync button to refresh the grid | GridServer<Order>(...).SyncButton(true);
+ClearFiltersButton | Enable or disable the ClearFilters button | GridServer<Order>(...).ClearFiltersButton(true);
 Selectable | Enable or disable the client grid items selectable feature | GridServer<Order>(...).Selectable(true);
 WithPaging | Enable paging for grid | GridServer<Order>(...).WithPaging(10);
 SetLanguage | Setup the language of the grid | GridServer<Order>(...).SetLanguage('fr');

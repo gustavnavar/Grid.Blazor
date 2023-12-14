@@ -161,6 +161,11 @@ namespace GridBlazor
         IGridClient<T> RearrangeableColumns(bool enable);
 
         /// <summary>
+        ///     Enable or disable visibility of SyncButton
+        /// </summary>
+        IGridClient<T> SyncButton(bool enable);
+
+        /// <summary>
         ///     Enable or disable visibility of ClearFiltersButton
         /// </summary>
         IGridClient<T> ClearFiltersButton(bool enable);

@@ -43,6 +43,7 @@
     pagerViewData.Add("pagingType", Model.PagingType);
     pagerViewData.Add("goToUrl", _goToUrl);
     exceptQueryParameters = new List<string> { QueryStringFilterSettings.DefaultTypeQueryParameter, QueryStringFilterSettings.DefaultClearInitFilterQueryParameter };
+    string _updateGrid = queryBuilder.ToString();
     string _removeAllFilters = queryBuilder.GetQueryStringExcept(exceptQueryParameters);
     string gridTableHead = Guid.NewGuid().ToString("N");
     string gridTableBody = Guid.NewGuid().ToString("N");
@@ -66,6 +67,12 @@ else
         <div class="grid-wrap">
             <div class="row">
                 <div class="col-md-6 grid-header-buttons">
+                    @if (Model.SyncButtonEnabled)
+                    {
+                        <div class="grid-sync">
+                            <button class="grid-button grid-button-sync btn btn-default btn-primary" title="Sync" data-sync-url="@_updateGrid" type="button"></button>
+                        </div>
+                    }
                     @if (Model.ClearFiltersButtonEnabled)
                     {
                         <div class="grid-all-filters-clear">

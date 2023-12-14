@@ -95,6 +95,10 @@
             self.currentPage = page;
             self.loadPage();
         },
+        sync: function () {
+            var self = this;
+            self.loadPage();
+        },
         removeAllFilters: function () {
             var self = this;
             self.gridColumnFilters = null;
@@ -482,6 +486,13 @@
                                 $(this).val(this.defaultValue);
                             }
                         }
+                    });
+                });
+
+                self.jqContainer.find(".grid-button-sync").each(function () {
+                    $(this).click(function (e) {
+                        e.preventDefault();
+                        self.sync();
                     });
                 });
 

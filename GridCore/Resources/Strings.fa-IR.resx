@@ -294,10 +294,19 @@
   <data name="Select" xml:space="preserve">
     <value>انتخاب کنید</value>
   </data>
+  <data name="Height" xml:space="preserve">
+    <value>ارتفاع</value>
+  </data>
   <data name="Duplicated" xml:space="preserve">
     <value>کپی شده</value>
   </data>
   <data name="NotDuplicated" xml:space="preserve">
     <value>تکراری نیست</value>
+  </data>
+  <data name="current" xml:space="preserve">
+    <value>جاری</value>
+  </data>
+  <data name="PageSizeItems" xml:space="preserve">
+    <value>آیتم ها</value>
   </data>
 </root>

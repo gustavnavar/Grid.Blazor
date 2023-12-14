@@ -316,6 +316,12 @@ namespace GridBlazor
             return this;
         }
 
+        public IGridClient<T> SyncButton(bool enable)
+        {
+            _source.SyncButtonEnabled = enable;
+            return this;
+        }
+
         public IGridClient<T> ClearFiltersButton(bool enable)
         {
             _source.ClearFiltersButtonEnabled = enable;

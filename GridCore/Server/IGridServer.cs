@@ -124,6 +124,11 @@ namespace GridCore.Server
         IGridServer<T> Groupable(bool enable, bool hidden);
 
         /// <summary>
+        ///     Enable or disable visibility of SyncButton
+        /// </summary>
+        IGridServer<T> SyncButton(bool enable);
+
+        /// <summary>
         ///     Enable or disable visibility of ClearFiltersButton
         /// </summary>
         IGridServer<T> ClearFiltersButton(bool enable);

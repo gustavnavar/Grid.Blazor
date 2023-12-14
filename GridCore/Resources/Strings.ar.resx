@@ -165,6 +165,9 @@
   <data name="CreateItem" xml:space="preserve">
     <value>اضافة بيان</value>
   </data>
+  <data name="current" xml:space="preserve">
+    <value>حاضِر</value>
+  </data>
   <data name="DefaultGridEmptyText" xml:space="preserve">
     <value>لا يوجد عناصر</value>
   </data>
@@ -219,6 +222,9 @@
   <data name="GroupingText" xml:space="preserve">
     <value>أسحب العمود هنا لعمل تجميع للبيانات</value>
   </data>
+  <data name="Height" xml:space="preserve">
+    <value>ارتفاع</value>
+  </data>
   <data name="IsNotNull" xml:space="preserve">
     <value>غير فارغ</value>
   </data>
@@ -254,6 +260,9 @@
   </data>
   <data name="Or" xml:space="preserve">
     <value>أو</value>
+  </data>
+  <data name="PageSizeItems" xml:space="preserve">
+    <value>العناصر</value>
   </data>
   <data name="ReadItem" xml:space="preserve">
     <value>عرض العنصر</value>

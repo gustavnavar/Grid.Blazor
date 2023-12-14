@@ -165,6 +165,9 @@
   <data name="CreateItem" xml:space="preserve">
     <value>Skapa objekt</value>
   </data>
+  <data name="current" xml:space="preserve">
+    <value>nuvarande</value>
+  </data>
   <data name="DefaultGridEmptyText" xml:space="preserve">
     <value>Det finns inga objekt att visa</value>
   </data>
@@ -219,6 +222,9 @@
   <data name="GroupingText" xml:space="preserve">
     <value>Släpp kolumner här för gruppering av kolumner</value>
   </data>
+  <data name="Height" xml:space="preserve">
+    <value>Höjd</value>
+  </data>
   <data name="IsNotNull" xml:space="preserve">
     <value>Är inte tom</value>
   </data>
@@ -254,6 +260,9 @@
   </data>
   <data name="Or" xml:space="preserve">
     <value>Eller</value>
+  </data>
+  <data name="PageSizeItems" xml:space="preserve">
+    <value>Objekt</value>
   </data>
   <data name="ReadItem" xml:space="preserve">
     <value>Visa objekt</value>

@@ -205,6 +205,15 @@ namespace GridCore.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to current.
+        /// </summary>
+        public static string current {
+            get {
+                return ResourceManager.GetString("current", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to There are no items to display.
         /// </summary>
         public static string DefaultGridEmptyText {
@@ -367,6 +376,15 @@ namespace GridCore.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Height.
+        /// </summary>
+        public static string Height {
+            get {
+                return ResourceManager.GetString("Height", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Is not null.
         /// </summary>
         public static string IsNotNull {
@@ -471,6 +489,15 @@ namespace GridCore.Resources {
         public static string Or {
             get {
                 return ResourceManager.GetString("Or", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Items.
+        /// </summary>
+        public static string PageSizeItems {
+            get {
+                return ResourceManager.GetString("PageSizeItems", resourceCulture);
             }
         }
         

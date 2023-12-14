@@ -98,6 +98,12 @@
                         <p id="error" class="@GridErrorCssClass">@Error</p>
                         <div class="row">
                             <div class="col-md-6 grid-header-buttons">
+                                @if (Grid.SyncButtonEnabled)
+                                {
+                                    <div class="grid-sync">
+                                        <button class="grid-button grid-button-sync btn btn-default btn-primary" type="button" title="Sync" @onclick="e => UpdateGrid(true, true)" @onclick:stopPropagation></button>
+                                    </div>
+                                }
                                 @if (Grid.ClearFiltersButtonEnabled)
                                 {
                                     <div class="grid-all-filters-clear">
