@@ -170,33 +170,36 @@ namespace GridBlazor
 
         public byte[] GenerateExcel(ExcelData data)
         {
-            using var stream = new MemoryStream();
-            using var document = SpreadsheetDocument.Create(stream, SpreadsheetDocumentType.Workbook);
+            var stream = new MemoryStream();
 
-            var workbookpart = document.AddWorkbookPart();
-            workbookpart.Workbook = new Workbook();
-            var worksheetPart = workbookpart.AddNewPart<WorksheetPart>();
-            var sheetData = new SheetData();
-
-            worksheetPart.Worksheet = new Worksheet(sheetData);
-
-            var sheets = document.WorkbookPart.Workbook.
-                AppendChild<Sheets>(new Sheets());
-
-            var sheet = new Sheet()
+            using (var document = SpreadsheetDocument.Create(stream, SpreadsheetDocumentType.Workbook))
             {
-                Id = document.WorkbookPart.GetIdOfPart(worksheetPart),
-                SheetId = 1,
-                Name = data.SheetName ?? "Sheet 1"
-            };
-            sheets.AppendChild(sheet);
+                var workbookpart = document.AddWorkbookPart();
+                workbookpart.Workbook = new Workbook();
+                var worksheetPart = workbookpart.AddNewPart<WorksheetPart>();
+                var sheetData = new SheetData();
 
-            if (data.ExtendedSheet)
-                AppendDataToExtendedSheet(worksheetPart.Worksheet, sheetData, data);
-            else
-                AppendDataToSheet(sheetData, data);
+                worksheetPart.Worksheet = new Worksheet(sheetData);
 
-            workbookpart.Workbook.Save();
+                var sheets = document.WorkbookPart.Workbook.
+                    AppendChild<Sheets>(new Sheets());
+
+                var sheet = new Sheet()
+                {
+                    Id = document.WorkbookPart.GetIdOfPart(worksheetPart),
+                    SheetId = 1,
+                    Name = data.SheetName ?? "Sheet 1"
+                };
+                sheets.AppendChild(sheet);
+
+                if (data.ExtendedSheet)
+                    AppendDataToExtendedSheet(worksheetPart.Worksheet, sheetData, data);
+                else
+                    AppendDataToSheet(sheetData, data);
+
+                workbookpart.Workbook.Save();
+            }
+
             return stream.ToArray();
         }
 
