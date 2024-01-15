@@ -157,7 +157,7 @@ https://github.com/gustavnavar/Grid.Blazor/releases
 * [GridBlazorOData.Shared](./GridBlazorOData.Shared): Shared project for the Blazor WebAssembly with OData server demo
 * [GridBlazorStandalone](./GridBlazorStandalone): Project for the Blazor WebAssembly with local data demo
 * [GridBlazorServerSide](./GridBlazorServerSide): Blazor Server App demo
-* [GridBlazorSpring](./GridBlazorString): Front-end project for the Blazor WebAssembly (REST API by String Boot projects) demo
+* [GridBlazorSpring](./GridBlazorSpring): Front-end project for the Blazor WebAssembly (REST API by String Boot projects) demo
 * [GridMvc.Demo](./GridMvc.Demo): ASP.NET Core MVC demo
 * [GridBlazor.Tests](./GridBlazor.Tests): Unit tests for the GridBlazor library
 * [GridMvc.Tests](./GridMvc.Tests): Unit tests for the GridMvcCore library
