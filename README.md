@@ -5,6 +5,7 @@ GridBlazor is a Blazor component that shows data in a grid. It requires a back-e
 This back-end component can be one of the following:
 - GridCore (v.5.0.0 or later), supporting ASP.Net Core 3.1, ASP.Net 5.0, ASP.Net 6.0 and ASP.Net 7.0. GridMvcCore, that it is a fork from https://gridmvc.codeplex.com/, was working for earlier versions. But GridMvcCore is only required for Blazor WASM (REST) and ASP.NET MVC projects now.
 - an OData back-end. All samples are based on Microsoft.AspNetCore.OData library, but it can be any other OData provider.
+- there is a new experimental back-end for Spring Boot projects (https://github.com/gustavnavar/Grid.Core)
 
 It supports .NET Core 3.1 and 5.0, 6.0, 7.0 and 8.0, and Blazor WebAssembly 3.2.0, 5.0, 6.0, 7.0 and 8.0
 
@@ -156,6 +157,7 @@ https://github.com/gustavnavar/Grid.Blazor/releases
 * [GridBlazorOData.Shared](./GridBlazorOData.Shared): Shared project for the Blazor WebAssembly with OData server demo
 * [GridBlazorStandalone](./GridBlazorStandalone): Project for the Blazor WebAssembly with local data demo
 * [GridBlazorServerSide](./GridBlazorServerSide): Blazor Server App demo
+* [GridBlazorSpring](./GridBlazorString): Front-end project for the Blazor WebAssembly (REST API by String Boot projects) demo
 * [GridMvc.Demo](./GridMvc.Demo): ASP.NET Core MVC demo
 * [GridBlazor.Tests](./GridBlazor.Tests): Unit tests for the GridBlazor library
 * [GridMvc.Tests](./GridMvc.Tests): Unit tests for the GridMvcCore library
