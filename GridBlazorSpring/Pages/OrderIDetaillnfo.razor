@@ -1,0 +1,36 @@
+﻿@using GridBlazorSpring.Models
+
+@if (OrderDetail == null)
+{
+    <p class="muted">
+        Select order detail to display detailed infomation
+    </p>
+}
+else
+{
+    <dl>
+        <dt>Order number:</dt>
+        <dd>@OrderDetail.OrderID</dd>
+
+        <dt>Product number:</dt>
+        <dd>@OrderDetail.ProductID</dd>
+
+        <dt>Quantity:</dt>
+        <dd>@OrderDetail.Quantity</dd>
+
+        <dt>Unit Price:</dt>
+        <dd>@OrderDetail.UnitPrice</dd>
+
+        <dt>Discount:</dt>
+        <dd>@OrderDetail.Discount</dd>
+    </dl>
+}
+
+@code {
+    public OrderDetail OrderDetail { get; set; }
+
+    public void Refresh()
+    {
+        StateHasChanged();
+    }
+}

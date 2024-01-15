@@ -2,6 +2,7 @@
 using GridShared.Pagination;
 using GridShared.Utility;
 using System;
+using System.Collections.Generic;
 using System.Globalization;
 
 namespace GridCore.Pagination
@@ -45,11 +46,11 @@ namespace GridCore.Pagination
         
             if (_grid.PagingType == PagingType.Virtualization)
             {
-                bool successfullyParsed = int.TryParse(DefaultStartIndexQueryParameter, out int startIndex);
+                bool successfullyParsed = int.TryParse(_grid.Query.Get(DefaultStartIndexQueryParameter), out int startIndex);
                 if (successfullyParsed)
                     StartIndex = startIndex;
 
-                successfullyParsed = int.TryParse(DefaultVirtualizedCountQueryParameter, out int virtualizedCount);
+                successfullyParsed = int.TryParse(_grid.Query.Get(DefaultVirtualizedCountQueryParameter), out int virtualizedCount);
                 if (successfullyParsed)
                     VirtualizedCount = virtualizedCount;
             }
@@ -57,7 +58,7 @@ namespace GridCore.Pagination
             {
                 ParameterName = DefaultPageQueryParameter;
                 TemplateName = DefaultPagerViewName;
-                MaxDisplayedPages = MaxDisplayedPages;
+                MaxDisplayedPages = DefaultMaxDisplayedPages;
 
                 string pageSizeParameter = _grid.Query.Get(DefaultPageSizeQueryParameter);
                 int pageSize = 0;

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using GridShared.Sorting;
+using System;
 using System.Runtime.Serialization;
 
 namespace GridShared.Totals
@@ -7,21 +8,15 @@ namespace GridShared.Totals
     public class Total
     {
         [DataMember(Order = 1)]
-        public bool IsNumber { get; set; } = false;
+        public GridTotalType Type { get; set; } = GridTotalType.None;
 
         [DataMember(Order = 2)]
         public decimal? Number { get; set; }
 
         [DataMember(Order = 3)]
-        public bool IsDateTime { get; set; } = false;
-
-        [DataMember(Order = 4)]
         public DateTime? DateTime { get; set; }
 
-        [DataMember(Order = 5)]
-        public bool IsString { get; set; } = false;
-
-        [DataMember(Order = 6)]
+        [DataMember(Order = 4)]
         public string String { get; set; }
 
         public Total()
@@ -29,30 +24,30 @@ namespace GridShared.Totals
 
         public Total(decimal? number)
         {
-            IsNumber = true;
+            Type = GridTotalType.Number;
             Number = number;
         }
 
         public Total(DateTime? dateTime)
         {
-            IsDateTime = true;
+            Type = GridTotalType.DateTime;
             DateTime = dateTime;
         }
 
         public Total(string str)
         {
-            IsString = true;
+            Type = GridTotalType.String;
             String = str;
         }
 
         public string GetString(string valuePattern)
         {
             object value;
-            if (IsNumber)
+            if (Type == GridTotalType.Number)
                 value = Number;
-            else if (IsDateTime)
+            else if (Type == GridTotalType.DateTime)
                 value = DateTime;
-            else if (IsString)
+            else if (Type == GridTotalType.String)
                 value = String;
             else
                 return null;

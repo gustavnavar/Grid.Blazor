@@ -15,7 +15,7 @@ using System.Threading.Tasks;
 
 namespace GridBlazorClientSide.Server.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/[controller]/[action]")]
     public class SampleDataController : Controller
     {
         private readonly NorthwindDbContext _context;
@@ -25,7 +25,7 @@ namespace GridBlazorClientSide.Server.Controllers
             _context = context;
         }
 
-        [HttpGet("[action]")]
+        [HttpGet]
         public async Task<ActionResult> GetOrdersGrid()
         {
             var repository = new OrdersRepository(_context);
@@ -42,7 +42,7 @@ namespace GridBlazorClientSide.Server.Controllers
             return Ok(items);
         }
 
-        [HttpGet("[action]")]
+        [HttpGet]
         public ActionResult GetOrdersGridordersAutoGenerateColumns()
         {
             var repository = new OrdersRepository(_context);
@@ -60,7 +60,7 @@ namespace GridBlazorClientSide.Server.Controllers
             return Ok(items);
         }
 
-        [HttpGet("[action]")]
+        [HttpGet]
         public async Task<ActionResult> GetOrdersGridWithTotals()
         {
             var repository = new OrdersRepository(_context);
@@ -77,7 +77,7 @@ namespace GridBlazorClientSide.Server.Controllers
             return Ok(items);
         }
 
-        [HttpGet("[action]")]
+        [HttpGet]
         public ActionResult GetOrdersGridWithCount()
         {
             var repository = new OrdersRepository(_context);
@@ -94,7 +94,7 @@ namespace GridBlazorClientSide.Server.Controllers
             return Ok(items);
         }
 
-        [HttpGet("[action]")]
+        [HttpGet]
         public async Task<ActionResult> GetOrdersGridSearchable()
         {
             var repository = new OrdersRepository(_context);
@@ -112,7 +112,7 @@ namespace GridBlazorClientSide.Server.Controllers
             return Ok(items);
         }
 
-        [HttpGet("[action]")]
+        [HttpGet]
         public async Task<ActionResult> GetOrdersGridExtSorting()
         {
             var repository = new OrdersRepository(_context);
@@ -130,7 +130,7 @@ namespace GridBlazorClientSide.Server.Controllers
             return Ok(items);
         }
 
-        [HttpGet("[action]")]
+        [HttpGet]
         public async Task<ActionResult> GetOrdersGridGroupable()
         {
             var repository = new OrdersRepository(_context);
@@ -148,7 +148,7 @@ namespace GridBlazorClientSide.Server.Controllers
             return Ok(items);
         }
 
-        [HttpGet("[action]")]
+        [HttpGet]
         public async Task<ActionResult> GetVirtualizedOrdersGrid()
         {
             var repository = new OrdersRepository(_context);
@@ -166,7 +166,7 @@ namespace GridBlazorClientSide.Server.Controllers
             return Ok(items);
         }
 
-        [HttpGet("[action]")]
+        [HttpGet]
         public ActionResult GetMaxFreight(string clientName)
         {
             var repository = new OrdersRepository(_context);
@@ -179,7 +179,7 @@ namespace GridBlazorClientSide.Server.Controllers
             return Ok(new Order() { Freight = server.ItemsToDisplay.Items.Max(r => r.Freight) });
         }
 
-        [HttpGet("[action]")]
+        [HttpGet]
         public ActionResult GetMinFreight(string clientName)
         {
             var repository = new OrdersRepository(_context);
@@ -192,7 +192,7 @@ namespace GridBlazorClientSide.Server.Controllers
             return Ok(new Order() { Freight = server.ItemsToDisplay.Items.Min(r => r.Freight) });
         }
 
-        [HttpGet("[action]")]
+        [HttpGet]
         public async Task<ActionResult> GetOrdersGridWithSubgrids()
         {
             var repository = new OrdersRepository(_context);
@@ -209,7 +209,7 @@ namespace GridBlazorClientSide.Server.Controllers
             return Ok(items);
         }
 
-        [HttpGet("[action]")]
+        [HttpGet]
         public async Task<ActionResult> OrderColumnsListFilter()
         {
             var repository = new OrdersRepository(_context);
@@ -226,7 +226,7 @@ namespace GridBlazorClientSide.Server.Controllers
             return Ok(items);
         }
 
-        [HttpGet("[action]")]
+        [HttpGet]
         public async Task<ActionResult> OrderColumnsWithEdit()
         {
             var repository = new OrdersRepository(_context);
@@ -243,7 +243,7 @@ namespace GridBlazorClientSide.Server.Controllers
             return Ok(items);
         }
 
-        [HttpGet("[action]")]
+        [HttpGet]
         public async Task<ActionResult> OrderColumnsWithCrud()
         {
             var repository = new OrdersRepository(_context);
@@ -260,7 +260,7 @@ namespace GridBlazorClientSide.Server.Controllers
             return Ok(items);
         }
 
-        [HttpGet("[action]")]
+        [HttpGet]
         public async Task<ActionResult> OrderColumnsWithSubgridCrud()
         {
             var repository = new OrdersRepository(_context);
@@ -277,7 +277,7 @@ namespace GridBlazorClientSide.Server.Controllers
             return Ok(items);
         }
 
-        [HttpGet("[action]")]
+        [HttpGet]
         public ActionResult GetOrderColumnsWithErrors()
         {
             var random = new Random();
@@ -298,7 +298,7 @@ namespace GridBlazorClientSide.Server.Controllers
             return Ok(items);
         }
 
-        [HttpGet("[action]")]
+        [HttpGet]
         public async Task<ActionResult> GetOrdersGridAllFeatures()
         {
             var repository = new OrdersRepository(_context);
@@ -316,7 +316,7 @@ namespace GridBlazorClientSide.Server.Controllers
             return Ok(items);
         }
 
-        [HttpGet("[action]")]
+        [HttpGet]
         public ActionResult GetCustomersNames()
         {
             // get all customer ids in the grid with the current filters
@@ -331,7 +331,7 @@ namespace GridBlazorClientSide.Server.Controllers
             return Ok(customers);
         }
 
-        [HttpGet("[action]")]
+        [HttpGet]
         public ActionResult GetAllCustomers()
         {
             var repository = new CustomersRepository(_context);
@@ -340,7 +340,7 @@ namespace GridBlazorClientSide.Server.Controllers
                     .ToList());
         }
 
-        [HttpGet("[action]")]
+        [HttpGet]
         public ActionResult GetAllCustomers2()
         {
             var repository = new CustomersRepository(_context);
@@ -349,7 +349,7 @@ namespace GridBlazorClientSide.Server.Controllers
                     .ToList());
         }
 
-        [HttpGet("[action]")]
+        [HttpGet]
         public ActionResult GetAllContacts()
         {
             var repository = new CustomersRepository(_context);
@@ -358,7 +358,7 @@ namespace GridBlazorClientSide.Server.Controllers
                     .ToList());
         }
 
-        [HttpGet("[action]")]
+        [HttpGet]
         public ActionResult GetAllEmployees()
         {
             var repository = new EmployeeRepository(_context);
@@ -368,7 +368,7 @@ namespace GridBlazorClientSide.Server.Controllers
                     .ToList());
         }
 
-        [HttpGet("[action]")]
+        [HttpGet]
         public ActionResult GetAllShippers()
         {
             var repository = new ShipperRepository(_context);
@@ -378,7 +378,7 @@ namespace GridBlazorClientSide.Server.Controllers
                     .ToList());
         }
 
-        [HttpGet("[action]")]
+        [HttpGet]
         public ActionResult GetAllProducts()
         {
             var repository = new ProductRepository(_context);
@@ -388,7 +388,7 @@ namespace GridBlazorClientSide.Server.Controllers
                     .ToList());
         }
 
-        [HttpGet("[action]")]
+        [HttpGet]
         public async Task<ActionResult> GetOrderDetailsGrid(int OrderId)
         {
             var orderDetails = (new OrderDetailsRepository(_context)).GetForOrder(OrderId);
@@ -405,7 +405,7 @@ namespace GridBlazorClientSide.Server.Controllers
             return Ok(items);
         }
 
-        [HttpGet("[action]")]
+        [HttpGet]
         public async Task<ActionResult> GetOrderDetailsGridWithCrud(int OrderId)
         {
             var orderDetails = (new OrderDetailsRepository(_context)).GetForOrder(OrderId);
@@ -422,7 +422,7 @@ namespace GridBlazorClientSide.Server.Controllers
             return Ok(items);
         }
 
-        [HttpGet("[action]")]
+        [HttpGet]
         public async Task<ActionResult> GetOrderDetailsGridAllFeatures(int OrderId)
         {
             var orderDetails = (new OrderDetailsRepository(_context)).GetForOrder(OrderId);
@@ -439,7 +439,7 @@ namespace GridBlazorClientSide.Server.Controllers
             return Ok(items);
         }
 
-        [HttpGet("[action]")]
+        [HttpGet]
         public async Task<ActionResult> GetCustomersGrid()
         {
             var repository = new CustomersRepository(_context);
@@ -456,7 +456,7 @@ namespace GridBlazorClientSide.Server.Controllers
             return Ok(items);
         }
 
-        [HttpPost("[action]")]
+        [HttpPost]
         public async Task<ActionResult> Add1ToFreight(int id)
         {
             if (ModelState.IsValid)
@@ -488,7 +488,7 @@ namespace GridBlazorClientSide.Server.Controllers
             });
         }
 
-        [HttpPost("[action]")]
+        [HttpPost]
         public async Task<ActionResult> Subtract1ToFreight(int id)
         {
             if (ModelState.IsValid)
@@ -520,7 +520,7 @@ namespace GridBlazorClientSide.Server.Controllers
             });
         }
 
-        [HttpGet("[action]")]
+        [HttpGet]
         public async Task<ActionResult> GetEmployeesGrid()
         {
             var repository = new EmployeeRepository(_context);
@@ -537,7 +537,7 @@ namespace GridBlazorClientSide.Server.Controllers
             return Ok(items);
         }
 
-        [HttpPost("[action]")]
+        [HttpPost]
         public async Task<ActionResult> SetEmployeePhoto([FromBody] Employee employee)
         {
             if (ModelState.IsValid)
@@ -564,7 +564,7 @@ namespace GridBlazorClientSide.Server.Controllers
             });
         }
 
-        [HttpGet("[action]")]
+        [HttpGet]
         public ActionResult GetTrucksGrid()
         {
             var repository = new EmployeeRepository(_context);

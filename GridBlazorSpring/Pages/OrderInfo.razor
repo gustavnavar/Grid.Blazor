@@ -1,0 +1,67 @@
+﻿@using GridBlazorSpring.Models
+@inject NavigationManager NavigationManager
+
+@if (Order == null)
+{
+    <p class="muted">
+        Select order to display detailed infomation
+    </p>
+}
+else
+{
+    <dl>
+        <dt>Order number:</dt>
+        <dd>@Order.OrderID</dd>
+
+
+        @if (Order.OrderDate.HasValue)
+        {
+
+            <dt>Order date:</dt>
+            <dd>@Order.OrderDate.Value.ToString()</dd>
+
+        }
+
+        <dt>Freight:</dt>
+        <dd>@Order.Freight</dd>
+
+        <dt>
+            Ship address:
+        </dt>
+        <dd>
+            @Order.ShipPostalCode, @Order.ShipCity, @Order.ShipCity,
+            @Order.ShipAddress
+        </dd>
+
+        <dt>
+            Customer:
+        </dt>
+        <dd>@Order.Customer.CompanyName</dd>
+    </dl>
+    @if (ReturnUrl != "selectable")
+    {
+        <div>
+            <button class='btn btn-sm btn-primary' @onclick="MyClickHandler">Edit</button>
+        </div>
+    }
+}
+
+@code {
+    public Order Order { get; set; }
+
+    [Parameter]
+    public string ReturnUrl { get; set; }
+
+    [Parameter]
+    public IGrid Grid { get; set; }
+
+    private void MyClickHandler(MouseEventArgs e)
+    {
+        NavigationManager.NavigateTo($"/editorder/{Order.OrderID.ToString()}/{ReturnUrl}/{Grid.GetState()}");
+    }
+
+    public void Refresh()
+    {
+        StateHasChanged();
+    }
+}
