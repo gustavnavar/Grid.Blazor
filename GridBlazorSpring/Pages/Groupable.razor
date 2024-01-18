@@ -43,7 +43,7 @@ else
 
         var query = new QueryDictionary<StringValues>();
         string url = "http://localhost:8080/" + "api/SampleData/GetOrdersGridGroupable";
-        Action<IGridColumnCollection<Order>> columns = c => ColumnCollections.OrderColumnsGroupable(c, SetCustomerNameLabel);
+        Action<IGridColumnCollection<Order>> columns = ColumnCollections.OrderColumnsGroupable;
         var client = new GridClient<Order>(HttpClient, url, query, false, "ordersGrid", columns, locale)
             .Sortable()
             .Filterable()
@@ -68,22 +68,5 @@ else
             await _grid.GridComponent.InitGrouping(payloads);
             _initGrouping = true;
         }
-    }
-
-    protected async Task<string> SetCustomerNameLabel(object value)
-    {
-        if (value.GetType() == typeof(string))
-        {
-            decimal? max;
-            decimal? min;
-            var clientName = (string)value;
-            var urlParameters = _grid.GetLink().Replace("?", "&");
-            string url = "http://localhost:8080/" + $"api/SampleData/GetMaxFreight?clientName={clientName}";
-            max = (await HttpClient.GetFromJsonAsync<Order>(url + urlParameters))?.Freight;
-            url = "http://localhost:8080/" + $"api/SampleData/GetMinFreight?clientName={clientName}";
-            min = (await HttpClient.GetFromJsonAsync<Order>(url + urlParameters))?.Freight;
-            return clientName + "<span class='ml-5'>Max Freight: " + max?.ToString() + "</span><span class='ml-5'>Min Freight: " + min?.ToString() + "</span>";
-        }
-        return value.ToString();
     }
 }

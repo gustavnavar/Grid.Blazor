@@ -137,7 +137,7 @@ namespace GridBlazorSpring.ColumnCollections
             .RenderValueAs(o => o.Customer.IsVip ? Strings.BoolTrueLabel : Strings.BoolFalseLabel);
         };
 
-        public static Action<IGridColumnCollection<Order>, Func<object, Task<string>>> OrderColumnsGroupable = (c, customerNameLabel) =>
+        public static Action<IGridColumnCollection<Order>> OrderColumnsGroupable = c =>
         {
             /* Adding "OrderID" column: */
             c.Add(o => o.OrderID).Titled(SharedResource.Number).SetWidth(100);
@@ -150,8 +150,7 @@ namespace GridBlazorSpring.ColumnCollections
             c.Add(o => o.Customer.CompanyName).Titled(SharedResource.CompanyName)
             .ThenSortBy(o => o.ShipVia)
             .ThenSortByDescending(o => o.Freight)
-            .SetWidth(250)
-            .SetGroupLabel(customerNameLabel);
+            .SetWidth(250);
 
             /* Adding "ContactName" column: */
             c.Add(o => o.Customer.ContactName).Titled(SharedResource.ContactName);

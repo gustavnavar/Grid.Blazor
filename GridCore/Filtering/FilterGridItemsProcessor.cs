@@ -37,7 +37,7 @@ namespace GridCore.Filtering
             if (_process != null)
                 return _process(items);
 
-            if (items == null || items.Count() == 0)
+            if (items == null)
                 return items;
 
             var source = items.Expression;
