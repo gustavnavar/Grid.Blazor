@@ -50,7 +50,8 @@ namespace GridShared.Filtering.Types
             filterType = GetValidType(filterType);
 
             object typedValue = GetTypedValue(value);
-            if (typedValue == null)
+            if (typedValue == null && filterType != GridFilterType.IsDuplicated 
+                && filterType != GridFilterType.IsNotDuplicated)
                 return null; //incorrent filter value;
 
             Type targetType = TargetType;
@@ -85,13 +86,13 @@ namespace GridShared.Filtering.Types
                     MethodInfo methodInfo = typeof(Queryable).GetMethods()
                         .Single(r => r.Name == "Contains" && r.GetParameters().Length == 2)
                         .MakeGenericMethod(new Type[] { typeof(S) });
-                    return Expression.Call(groupBy, methodInfo, leftExpr);
+                    return Expression.Call(methodInfo, groupBy, leftExpr);
                 case GridFilterType.IsNotDuplicated:
                     groupBy = GetGroupBy<T, S>(source, leftExpr);
                     methodInfo = typeof(Queryable).GetMethods()
                         .Single(r => r.Name == "Contains" && r.GetParameters().Length == 2)
                         .MakeGenericMethod(new Type[] { typeof(S) });
-                    var expresion = Expression.Call(groupBy, methodInfo, leftExpr);
+                    var expresion = Expression.Call(methodInfo, groupBy, leftExpr);
                     return Expression.Not(expresion);
                 default:
                     throw new ArgumentOutOfRangeException();
