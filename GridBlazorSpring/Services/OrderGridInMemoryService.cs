@@ -44,7 +44,7 @@ namespace GridBlazorSpring.Services
         private async Task<IEnumerable<Order>> GetAll()
         {
             if (_orders == null)
-                _orders = await _httpClient.GetFromJsonAsync<IEnumerable<Order>>(_baseUri + $"api/Order/");
+                _orders = await _httpClient.GetFromJsonAsync<IEnumerable<Order>>(_baseUri + $"api/Order");
             return _orders;
         }
     }

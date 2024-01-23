@@ -138,13 +138,13 @@ else
 
     protected override async Task OnParametersSetAsync()
     {
-        _order = await Http.GetFromJsonAsync<Order>($"api/Order/{Convert.ToInt32(OrderId)}");
+        _order = await Http.GetFromJsonAsync<Order>("http://localhost:8080/" + $"api/Order/{Convert.ToInt32(OrderId)}");
     }
 
     private async Task UpdateOrder()
     {
         _error = "";
-        var response = await Http.PutAsJsonAsync($"api/Order/{Convert.ToInt32(OrderId)}", _order);
+        var response = await Http.PutAsJsonAsync("http://localhost:8080/"+ $"api/Order/{Convert.ToInt32(OrderId)}", _order);
         if (!response.IsSuccessStatusCode)
         {
              _error = "Error updating the order detail";

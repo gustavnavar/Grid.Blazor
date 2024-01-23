@@ -54,7 +54,7 @@ else
         Func<object[], bool, bool, bool, bool, Task<IGrid>> subGrids = async (keys, create, read, update, delete) =>
         {
             var subGridQuery = new QueryDictionary<StringValues>();
-            string subGridUrl = "http://localhost:8080/" + "api/SampleData/GetOrderDetailsGridWithCrud?OrderId="
+            string subGridUrl = "http://localhost:8080/" + "api/SampleData/GetOrderDetailsGrid?OrderId="
                 + keys[0].ToString();
 
             Action<IGridColumnCollection<OrderDetail>> subGridColumns = c => ColumnCollections.OrderDetailColumnsCrud(c,

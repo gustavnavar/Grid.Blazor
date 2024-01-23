@@ -46,7 +46,7 @@ else
         {
             if (mode == GridMode.Create)
             {
-                order.OrderDate = DateTime.Now;
+                order.OrderDate = DateTime.UtcNow;
                 StateHasChanged();
                 await Task.CompletedTask;
             }
