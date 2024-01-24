@@ -82,18 +82,17 @@ namespace GridShared.Filtering.Types
                 case GridFilterType.GreaterThanOrEquals:
                     return Expression.GreaterThanOrEqual(leftExpr, valueExpr);
                 case GridFilterType.IsDuplicated:
-                    Expression groupBy = GetGroupBy<T, S>(source, leftExpr);
+                    Expression groupBy = GetDuplicatedGroupBy<T, S>(source, leftExpr);
                     MethodInfo methodInfo = typeof(Queryable).GetMethods()
                         .Single(r => r.Name == "Contains" && r.GetParameters().Length == 2)
                         .MakeGenericMethod(new Type[] { typeof(S) });
                     return Expression.Call(methodInfo, groupBy, leftExpr);
                 case GridFilterType.IsNotDuplicated:
-                    groupBy = GetGroupBy<T, S>(source, leftExpr);
+                    groupBy = GetNotDuplicatedGroupBy<T, S>(source, leftExpr);
                     methodInfo = typeof(Queryable).GetMethods()
                         .Single(r => r.Name == "Contains" && r.GetParameters().Length == 2)
                         .MakeGenericMethod(new Type[] { typeof(S) });
-                    var expresion = Expression.Call(methodInfo, groupBy, leftExpr);
-                    return Expression.Not(expresion);
+                    return Expression.Call(methodInfo, groupBy, leftExpr);
                 default:
                     throw new ArgumentOutOfRangeException();
             }
@@ -101,7 +100,7 @@ namespace GridShared.Filtering.Types
 
         #endregion
 
-        protected Expression GetGroupBy<T, S>(Expression source, Expression expression)
+        protected Expression GetDuplicatedGroupBy<T, S>(Expression source, Expression expression)
         {
             if (expression == null)
                 return null;
@@ -134,6 +133,51 @@ namespace GridShared.Filtering.Types
                 .First()
                 .MakeGenericMethod(new Type[] { typeof(IGrouping<S, T>) }); ;
             Expression<Func<IGrouping<S, T>, bool>> having = c => c.Count() > 1;
+            binaryExpression = Expression.Call(methodInfo, binaryExpression, having);
+
+            methodInfo = typeof(Queryable).GetMethods()
+                .Where(r => r.Name == "Select" && r.GetParameters().Length == 2)
+                .First()
+                .MakeGenericMethod(new Type[] { typeof(IGrouping<S, T>), typeof(S) });
+            Expression<Func<IGrouping<S, T>, S>> select = c => c.Key;
+            binaryExpression = Expression.Call(methodInfo, binaryExpression, select);
+
+            return binaryExpression;
+        }
+
+        protected Expression GetNotDuplicatedGroupBy<T, S>(Expression source, Expression expression)
+        {
+            if (expression == null)
+                return null;
+
+            List<string> names = new List<string>();
+            while (expression.NodeType != ExpressionType.Parameter)
+            {
+                names.Add(((MemberExpression)expression).Member.Name);
+                expression = ((MemberExpression)expression).Expression;
+            }
+
+            Type entityType = typeof(T);
+            ParameterExpression parameter = Expression.Parameter(entityType, "c");
+
+            Expression binaryExpression = parameter;
+            for (int i = names.Count - 1; i >= 0; i--)
+            {
+                binaryExpression = Expression.Property(binaryExpression, names[i]);
+            }
+
+            var selector = Expression.Lambda<Func<T, S>>(binaryExpression, parameter);
+
+            var methodInfo = typeof(Queryable).GetMethods()
+                .Single(r => r.Name == "GroupBy" && r.GetParameters().Length == 2)
+                .MakeGenericMethod(new Type[] { typeof(T), typeof(S) });
+            binaryExpression = Expression.Call(methodInfo, source, selector);
+
+            methodInfo = typeof(Queryable).GetMethods()
+                .Where(r => r.Name == "Where" && r.GetParameters().Length == 2)
+                .First()
+                .MakeGenericMethod(new Type[] { typeof(IGrouping<S, T>) }); ;
+            Expression<Func<IGrouping<S, T>, bool>> having = c => c.Count() <= 1;
             binaryExpression = Expression.Call(methodInfo, binaryExpression, having);
 
             methodInfo = typeof(Queryable).GetMethods()

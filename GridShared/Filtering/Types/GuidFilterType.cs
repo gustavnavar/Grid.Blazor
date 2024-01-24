@@ -73,19 +73,18 @@ namespace GridShared.Filtering.Types
                     binaryExpression = GetCaseInsensitiveСomparation("EndsWith", toStringLeftExpr, valueExpr);
                     break;
                 case GridFilterType.IsDuplicated:
-                    Expression groupBy = GetGroupBy<T, Guid>(source, leftExpr);
+                    Expression groupBy = GetDuplicatedGroupBy<T, Guid>(source, leftExpr);
                     MethodInfo methodInfo = typeof(Queryable).GetMethods()
                         .Single(r => r.Name == "Contains" && r.GetParameters().Length == 2)
                         .MakeGenericMethod(new Type[] { typeof(Guid) });
                     binaryExpression = Expression.Call(methodInfo, groupBy, toStringLeftExpr);
                     break;
                 case GridFilterType.IsNotDuplicated:
-                    groupBy = GetGroupBy<T, Guid>(source, leftExpr);
+                    groupBy = GetNotDuplicatedGroupBy<T, Guid>(source, leftExpr);
                     methodInfo = typeof(Queryable).GetMethods()
                         .Single(r => r.Name == "Contains" && r.GetParameters().Length == 2)
                         .MakeGenericMethod(new Type[] { typeof(Guid) });
-                    var expresion = Expression.Call(methodInfo, groupBy, toStringLeftExpr);
-                    binaryExpression = Expression.Not(expresion);
+                    binaryExpression = Expression.Call(methodInfo, groupBy, toStringLeftExpr);
                     break;
                 default:
                     throw new ArgumentOutOfRangeException();
