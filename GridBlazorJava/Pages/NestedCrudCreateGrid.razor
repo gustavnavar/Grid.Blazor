@@ -1,0 +1,120 @@
+﻿@page "/nestedcrudcreategrid"
+@using GridBlazorJava.ColumnCollections
+@using GridBlazorJava.Services
+@using GridBlazorJava.Models
+@using Microsoft.Extensions.Primitives
+@using System.Globalization
+@using System.Threading.Tasks
+@inject HttpClient HttpClient
+@inject ICrudDataService<Order> orderService
+@inject ICrudDataService<OrderDetail> orderDetailService
+
+<h1>Grid Sample</h1>
+
+<p>
+    This page contains a CRUD grid with nested Create form with subgrids
+</p>
+
+<p>
+    This component demonstrates a GridBlazor client-side grid. For more information, please see: <a href="https://github.com/gustavnavar/Grid.Blazor">https://github.com/gustavnavar/Grid.Blazor</a>
+</p>
+
+@if (_task.IsCompleted)
+{
+    <div class="row">
+        <div class="col-md-12">
+            <GridComponent T="Order" @ref="_gridComponent" Grid="@_grid"></GridComponent>
+        </div>
+    </div>
+}
+else
+{
+    <p><em>Loading...</em></p>
+}
+
+@code
+{
+    private CGrid<Order> _grid;
+    private GridComponent<Order> _gridComponent;
+    private OrderDetailMemoryService _orderDetailMemoryService;
+    private Task _task;
+    private bool _afterRenderExecuted = false;
+
+    protected override async Task OnParametersSetAsync()
+    {
+        var locale = CultureInfo.CurrentCulture;
+
+        Func<object[], bool, bool, bool, bool, Task<IGrid>> subGrids = async (keys, create, read, update, delete) =>
+        {
+            var subGridQuery = new QueryDictionary<StringValues>();
+            string subGridUrl = "http://localhost:8080/" + "api/SampleData/GetOrderDetailsGrid?OrderId="
+                + keys[0].ToString();
+
+            Action<IGridColumnCollection<OrderDetail>> subGridColumns = c => ColumnCollections.OrderDetailColumnsCrud(c,
+                "http://localhost:8080/");
+            var products = await HttpClient.GetFromJsonAsync<List<SelectItem>>("http://localhost:8080/" + "api/SampleData/GetAllProducts");
+
+            _orderDetailMemoryService = new OrderDetailMemoryService(subGridColumns, products);
+            var subGridClient = new GridClient<OrderDetail>(HttpClient, subGridUrl, _orderDetailMemoryService, subGridQuery, false,
+                "orderDetailsGrid" + keys[0].ToString(), subGridColumns, locale)
+                    .Sortable()
+                    .Filterable()
+                    .SetStriped(true)
+                    .Crud(create, read, update, delete, orderDetailService)
+                    .WithMultipleFilters()
+                    .WithGridItemsCount();
+
+            await subGridClient.UpdateGrid();
+            return subGridClient.Grid;
+        };
+
+        var query = new QueryDictionary<StringValues>();
+        string url = "http://localhost:8080/" + "api/SampleData/OrderColumnsWithSubgridCrud";
+
+        var client = new GridClient<Order>(HttpClient, url, query, false, "ordersGrid", c =>
+            ColumnCollections.OrderColumnsWithCreateGrid(c, "http://localhost:8080/", subGrids), locale)
+            .Sortable()
+            .Filterable()
+            .SetStriped(true)
+            .Crud(true, orderService)
+            .WithMultipleFilters()
+            .WithGridItemsCount()
+            .SetInitCreateValues(InitCreateOrder);
+
+        _grid = client.Grid;
+
+        // Set new items to grid
+        _task = client.UpdateGrid();
+        await _task;
+    }
+
+    protected override void OnAfterRender(bool firstRender)
+    {
+        if (_gridComponent != null && !_afterRenderExecuted)
+        {
+            _gridComponent.AfterInsert += AfterInsert;
+            _afterRenderExecuted = true;
+        }
+    }
+
+    private async Task<bool> AfterInsert(GridCreateComponent<Order> component, Order item)
+    {
+        foreach (var orderDetail in _orderDetailMemoryService.Items)
+        {
+            orderDetail.OrderID = item.OrderID;
+            orderDetail.Product = null;
+            var response = await HttpClient.PostAsJsonAsync("http://localhost:8080/" + $"api/OrderDetail", orderDetail);
+            if (!response.IsSuccessStatusCode)
+            {
+                return await Task.FromResult(false);
+            }
+        }
+        return await Task.FromResult(true);
+    }
+
+    private async Task InitCreateOrder(Order order)
+    {
+        order.Freight = 50;
+        await Task.CompletedTask;
+    }
+}

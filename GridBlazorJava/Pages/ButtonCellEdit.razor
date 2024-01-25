@@ -1,0 +1,24 @@
+@using GridBlazorJava.Models
+@using GridShared.Columns
+@implements ICustomGridComponent<Order>
+@inject NavigationManager NavigationManager
+
+<button class='btn btn-sm btn-primary' @onclick="MyClickHandler">Edit</button>
+
+@code {
+    [Parameter]
+    public Order Item { get; set; }
+
+    [Parameter]
+    public CGrid<Order> Grid { get; set; }
+
+    [Parameter]
+    public object Object { get; set; }
+
+    private void MyClickHandler(MouseEventArgs e)
+    {
+        string gridState = Grid.GetState();
+        string returnUrl = (string)Object;
+        NavigationManager.NavigateTo($"/editorder/{Item.OrderID.ToString()}/{returnUrl}/{gridState}");
+    }
+}

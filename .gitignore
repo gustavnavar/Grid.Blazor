@@ -74,5 +74,5 @@
 /GridBlazorGrpc.Client/obj
 /GridBlazorGrpc.Server/obj
 /GridBlazorGrpc.Shared/obj
-/GridBlazorSpring/bin
-/GridBlazorSpring/obj
+/GridBlazorJava/bin
+/GridBlazorJava/obj
