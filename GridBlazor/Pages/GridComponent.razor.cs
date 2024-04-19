@@ -721,8 +721,10 @@ namespace GridBlazor.Pages
             foreach (var payload in payloads)
             {
                 Payload = payload;
-                await AddExtSorting();
+                Grid.AddQueryString(ColumnOrderValue.DefaultSortingQueryParameter, Payload.ToString());
             }
+            await UpdateGrid();
+            await OnExtSortChanged();
         }
 
         public async Task AddExtSorting()

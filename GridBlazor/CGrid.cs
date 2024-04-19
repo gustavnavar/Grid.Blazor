@@ -1321,7 +1321,7 @@ namespace GridBlazor
                         if (response.Totals.Sum != null)
                             foreach (var keyValue in response.Totals.Sum)
                             {
-                                var column = (ITotalsColumn)Columns.SingleOrDefault(r => r.Name != null && r.Name.Equals(keyValue.Key));
+                                var column = (ITotalsColumn)Columns.SingleOrDefault(r => r.Name != null && r.Name.Equals(keyValue.Key, StringComparison.CurrentCultureIgnoreCase));
                                 if (column != null && column.IsSumEnabled)
                                     column.SumValue = keyValue.Value;
                             }
@@ -1329,7 +1329,7 @@ namespace GridBlazor
                         if (response.Totals.Average != null)
                             foreach (var keyValue in response.Totals.Average)
                             {
-                                var column = (ITotalsColumn)Columns.SingleOrDefault(r => r.Name != null && r.Name.Equals(keyValue.Key));
+                                var column = (ITotalsColumn)Columns.SingleOrDefault(r => r.Name != null && r.Name.Equals(keyValue.Key, StringComparison.CurrentCultureIgnoreCase));
                                 if (column != null && column.IsAverageEnabled)
                                     column.AverageValue = keyValue.Value;
                             }
@@ -1337,7 +1337,7 @@ namespace GridBlazor
                         if (response.Totals.Max != null)
                             foreach (var keyValue in response.Totals.Max)
                             {
-                                var column = (ITotalsColumn)Columns.SingleOrDefault(r => r.Name != null && r.Name.Equals(keyValue.Key));
+                                var column = (ITotalsColumn)Columns.SingleOrDefault(r => r.Name != null && r.Name.Equals(keyValue.Key, StringComparison.CurrentCultureIgnoreCase));
                                 if (column != null && column.IsMaxEnabled)
                                     column.MaxValue = keyValue.Value;
                             }
@@ -1345,7 +1345,7 @@ namespace GridBlazor
                         if (response.Totals.Min != null)
                             foreach (var keyValue in response.Totals.Min)
                             {
-                                var column = (ITotalsColumn)Columns.SingleOrDefault(r => r.Name != null && r.Name.Equals(keyValue.Key));
+                                var column = (ITotalsColumn)Columns.SingleOrDefault(r => r.Name != null && r.Name.Equals(keyValue.Key, StringComparison.CurrentCultureIgnoreCase));
                                 if (column != null && column.IsMinEnabled)
                                     column.MinValue = keyValue.Value;
                             }
@@ -1353,7 +1353,7 @@ namespace GridBlazor
                         if (response.Totals.Calculations != null)
                             foreach (var keyValue in response.Totals.Calculations)
                             {
-                                var column = (ITotalsColumn)Columns.SingleOrDefault(r => r.Name != null && r.Name.Equals(keyValue.Key));
+                                var column = (ITotalsColumn)Columns.SingleOrDefault(r => r.Name != null && r.Name.Equals(keyValue.Key, StringComparison.CurrentCultureIgnoreCase));
                                 if (column != null && column.IsCalculationEnabled)
                                     column.CalculationValues = keyValue.Value;
                             }

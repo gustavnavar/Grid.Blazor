@@ -1,0 +1,24 @@
+﻿@using GridBlazorJava.Models
+@using GridShared.Columns
+@implements ICustomGridComponent<Order>
+
+@if (!Item.OrderDate.HasValue)
+{
+    <div data-toggle="tooltip" data-placement="bottom" title="Tooltip on Bottom">@Item.OrderDate?.ToString("yyyy'-'MM'-'dd")</div>
+}
+else
+{
+    if (Item.OrderDate.Value.Day >= 16)
+    {
+        <div data-toggle="tooltip" data-placement="left" title="Tooltip on Left">@Item.OrderDate?.ToString("yyyy'-'MM'-'dd")</div>
+    }
+    else
+    {
+        <div data-toggle="tooltip" data-placement="right" title="Tooltip on Right">@Item.OrderDate?.ToString("yyyy'-'MM'-'dd")</div>
+    }
+}
+
+@code {
+    [Parameter]
+    public Order Item { get; set; }
+}

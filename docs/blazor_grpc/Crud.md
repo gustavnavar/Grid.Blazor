@@ -547,7 +547,7 @@ And finally you will have to create a Blazor component for the custom form. This
 @using GridBlazor
 @using GridBlazor.Resources
 @using GridBlazorClientSide.Shared.Models
-@inherits GridUpdateComponentBase<Order>
+@inherits GridUpdateComponent<Order>
 
 <h1>@Strings.Add Order</h1>
 <EditForm Model="@Item" OnValidSubmit="@UpdateItem">
@@ -656,7 +656,7 @@ And finally you will have to create a Blazor component for the custom form. This
 </EditForm>
 ``` 
 
-**Note**: The Blazor component must be to inherited from the **GridUpdateComponentBase<T>** class.
+**Note**: The Blazor component must be to inherited from the **GridUpdateComponent<T>** class.
 
 If you want to use a drop-down list for a field you have to define it as it was for auto-generated forms.
 

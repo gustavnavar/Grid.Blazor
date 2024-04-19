@@ -71,7 +71,7 @@ namespace GridBlazor.Pagination
             else
             {
                 ParameterName = DefaultPageQueryParameter;
-                MaxDisplayedPages = MaxDisplayedPages;
+                MaxDisplayedPages = DefaultMaxDisplayedPages;
                 PageSize = DefaultPageSize;
 
                 _query = grid.Query;

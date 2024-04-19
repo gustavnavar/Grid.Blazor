@@ -1,0 +1,70 @@
+﻿@page "/afterchangevalue"
+@using GridBlazorJava.ColumnCollections
+@using GridBlazorJava.Models
+@using Microsoft.Extensions.Primitives
+@using System.Globalization
+@using System.Threading.Tasks
+@inject HttpClient HttpClient
+@inject ICrudDataService<Order> orderService
+
+<h1>Grid Sample</h1>
+
+<p>
+    This page contains a CRUD grid implementing an event to modify the OrderDate after the CustomerID is changed on the Create form
+</p>
+
+<p>
+    This component demonstrates a GridBlazor client-side grid. For more information, please see: <a href="https://github.com/gustavnavar/Grid.Blazor">https://github.com/gustavnavar/Grid.Blazor</a>
+</p>
+
+@if (_task.IsCompleted)
+{
+    <div class="row">
+        <div class="col-md-12">
+            <GridComponent T="Order" Grid="@_grid"></GridComponent>
+        </div>
+    </div>
+}
+else
+{
+    <p><em>Loading...</em></p>
+}
+
+@code
+{
+    private CGrid<Order> _grid;
+    private Task _task;
+
+    protected override async Task OnParametersSetAsync()
+    {
+        var locale = CultureInfo.CurrentCulture;
+
+        var query = new QueryDictionary<StringValues>();
+        string url = "http://localhost:8080/" + "api/SampleData/OrderColumnsWithCrud";
+
+        Func<Order, GridMode, Task> afterChangeCustomerID = async (order, mode) =>
+        {
+            if (mode == GridMode.Create)
+            {
+                order.OrderDate = DateTime.UtcNow;
+                StateHasChanged();
+                await Task.CompletedTask;
+            }
+        };
+
+        var client = new GridClient<Order>(HttpClient, url, query, false, "ordersGrid", c =>
+            ColumnCollections.OrderColumnsWithCrudAfterChange(c, afterChangeCustomerID, "http://localhost:8080/"), locale)
+            .Sortable()
+            .Filterable()
+            .SetStriped(true)
+            .Crud(true, orderService)
+            .WithMultipleFilters()
+            .WithGridItemsCount();
+
+        _grid = client.Grid;
+
+        // Set new items to grid
+        _task = client.UpdateGrid();
+        await _task;
+    }
+}

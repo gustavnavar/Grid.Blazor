@@ -37,7 +37,7 @@ namespace GridCore.Sorting
             if (_process != null)
                 return _process(items);
 
-            if (items == null || items.Count() == 0)
+            if (items == null)
                 return items;
 
             if (_settings.SortValues?.Count() > 0)

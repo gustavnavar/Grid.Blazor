@@ -29,7 +29,7 @@ namespace GridCore.Totals
             if (_process != null)
                 return _process(items);
 
-            if (items == null || items.Count() == 0)
+            if (items == null)
                 return items;
 
             if (_grid.PagingType == PagingType.Virtualization && _grid.Pager.NoTotals)

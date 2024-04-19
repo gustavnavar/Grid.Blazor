@@ -41,6 +41,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GridBlazorGrpc.Client", "Gr
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GridBlazorGrpc.Server", "GridBlazorGrpc.Server\GridBlazorGrpc.Server.csproj", "{FD560288-98BB-45C3-AD8E-5085E62AB6EA}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GridBlazorJava", "GridBlazorJava\GridBlazorJava.csproj", "{0BD6B9D8-E55A-40BB-916B-2FAD28CFB541}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -123,6 +125,10 @@ Global
 		{FD560288-98BB-45C3-AD8E-5085E62AB6EA}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{FD560288-98BB-45C3-AD8E-5085E62AB6EA}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{FD560288-98BB-45C3-AD8E-5085E62AB6EA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0BD6B9D8-E55A-40BB-916B-2FAD28CFB541}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0BD6B9D8-E55A-40BB-916B-2FAD28CFB541}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0BD6B9D8-E55A-40BB-916B-2FAD28CFB541}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0BD6B9D8-E55A-40BB-916B-2FAD28CFB541}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
