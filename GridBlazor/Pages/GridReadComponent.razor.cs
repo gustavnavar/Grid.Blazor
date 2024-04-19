@@ -101,6 +101,12 @@ namespace GridBlazor.Pages
             _shouldRender = false;
         }
 
+        protected new void StateHasChanged()
+        {
+            _shouldRender = true;
+            base.StateHasChanged();
+        }
+
         public void ShowCrudButtons()
         {
             _buttonsVisibility ++;

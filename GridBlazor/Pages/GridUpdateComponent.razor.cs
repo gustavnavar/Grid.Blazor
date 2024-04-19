@@ -176,6 +176,12 @@ namespace GridBlazor.Pages
         {
             _shouldRender = false;
         }
+
+        protected new void StateHasChanged()
+        {
+            _shouldRender = true;
+            base.StateHasChanged();
+        }
         
         private void SetValue(object value, IGridColumn column)
         {
