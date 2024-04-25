@@ -14,7 +14,14 @@ namespace GridBlazor
 {
     public class ExcelCell
     {
-        public string Content { get; set; }
+        private string _content;
+
+        public string Content {
+            get { return _content; }
+            set { 
+                _content = RemoveInvalidXmlChars(value); 
+            }
+        }
         public int ColumnIndex { get; set; }
         public int RowIndex { get; set; }
         public int ColSpan { get; set; }
@@ -45,6 +52,11 @@ namespace GridBlazor
                 Type = CellValues.Boolean;
             else
                 Type = CellValues.InlineString;
+        }
+
+        private string RemoveInvalidXmlChars(string content)
+        {
+            return new string(content.Where(ch => System.Xml.XmlConvert.IsXmlChar(ch)).ToArray());
         }
     }
 
