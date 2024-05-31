@@ -56,7 +56,7 @@ namespace GridBlazor
 
         private string RemoveInvalidXmlChars(string content)
         {
-            return new string(content.Where(ch => System.Xml.XmlConvert.IsXmlChar(ch)).ToArray());
+            return new string(content?.Where(ch => System.Xml.XmlConvert.IsXmlChar(ch)).ToArray());
         }
     }
 
