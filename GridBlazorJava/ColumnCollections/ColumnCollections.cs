@@ -312,7 +312,11 @@ namespace GridBlazorJava.ColumnCollections
             .SetWidth(120).RenderComponentAs<TooltipCell>();
 
             /* Adding "CompanyName" column: */
-            c.Add(o => o.Customer.CompanyName).Titled(SharedResource.CompanyName).SetWidth(250);
+            c.Add(o => o.Customer.CompanyName)
+            .Titled(SharedResource.CompanyName)
+            .ThenSortBy(o => o.OrderDetails)
+            .ThenSortByDescending(o => o.Freight)
+            .SetWidth(250);
 
             /* Adding "ContactName" column: */
             c.Add(o => o.Customer.ContactName).Titled(SharedResource.ContactName);
@@ -327,7 +331,9 @@ namespace GridBlazorJava.ColumnCollections
             c.Add(o => o.Customer.IsVip).Titled(SharedResource.IsVip).SetWidth(90).Css("hidden-xs") //hide on phones
             .RenderValueAs(o => o.Customer.IsVip ? Strings.BoolTrueLabel : Strings.BoolFalseLabel);
 
-            c.Add(o => o.OrderDetails.Count).Titled("Details");
+            c.Add(o => o.OrderDetails)
+            .Titled("Details")
+            .Sum(true).Average(true).Max(true).Min(true);
         };
 
         public static Action<IGridColumnCollection<Order>, string> OrderColumnsWithCrud = (c, path) =>

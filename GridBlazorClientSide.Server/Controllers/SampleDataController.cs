@@ -86,6 +86,7 @@ namespace GridBlazorClientSide.Server.Controllers
                     .WithPaging(10)
                     .Sortable()
                     .Filterable()
+                    .Searchable(true, false)
                     .WithMultipleFilters()
                     .WithGridItemsCount()
                     .SetRemoveDiacritics<NorthwindDbContext>("RemoveDiacritics");

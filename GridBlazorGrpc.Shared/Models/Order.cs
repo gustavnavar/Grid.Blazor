@@ -91,10 +91,11 @@ namespace GridBlazorGrpc.Shared.Models
         [ForeignKey("EmployeeID")]
         public virtual Employee Employee { get; set; }
         [GridColumn(Position = 17)]
+        [DataMember(Order = 17)]
         [NotMappedColumn]
         public virtual ICollection<OrderDetail> OrderDetails { get; set; }
         [GridColumn(Position = 16)]
-        [DataMember(Order = 17)]
+        [DataMember(Order = 18)]
         [NotMappedColumn]
         [ForeignKey("ShipVia")]
         public virtual Shipper Shipper { get; set; }

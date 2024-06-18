@@ -70,6 +70,7 @@ namespace GridBlazorStandalone.Services
                         .Sortable()
                         .WithPaging(10)
                         .Filterable()
+                        .Searchable(true, false)
                         .WithMultipleFilters()
                         .Groupable(true)
                         .Searchable(true, false, false)

@@ -43,6 +43,7 @@ else
         var client = new GridClient<Order>(gridClientService.GetOrdersGridWithCount, query, false, "ordersGrid", ColumnCollections.OrderColumnsCount, locale)
             .Sortable()
             .Filterable()
+            .Searchable(true, false)
             .SetStriped(true)
             .WithMultipleFilters()
             .WithGridItemsCount();

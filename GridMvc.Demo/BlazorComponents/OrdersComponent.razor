@@ -67,7 +67,10 @@ else
         .Max(true).Min(true);
 
         /* Adding "CompanyName" column: */
-        c.Add(o => o.Customer.CompanyName).Titled(SharedResource.CompanyName)
+        c.Add(o => o.Customer.CompanyName)
+        .Titled(SharedResource.CompanyName)
+        .ThenSortBy(o => o.OrderDetails)
+        .ThenSortByDescending(o => o.Freight)
         .SetWidth(250)
         .SetCrudHidden(true).SetReadOnlyOnUpdate(true)
         //.ThenSortByDescending(o => o.OrderID)
@@ -119,7 +122,10 @@ else
             c.Add(o => o.ShipCountry, true).SetAutoCompleteTaxonomy(AutoCompleteTerm.Country);
 
             /* Adding "OrderDetails" column: */
-            c.Add(o => o.OrderDetails.Count).Titled("Details").SetCrudHidden(true);
+            c.Add(o => o.OrderDetails)
+            .Titled("Details")
+            .Sum(true).Average(true).Max(true).Min(true)
+            .SetCrudHidden(true);
         };
 
         var client = new GridClient<Order>(q => orderService.GetOrdersGridRowsAsync(orderColumns, q),

@@ -46,6 +46,7 @@ else
         var client = new GridClient<Order>(HttpClient, url, query, false, "ordersGrid", ColumnCollections.OrderColumnsCount, locale)
             .Sortable()
             .Filterable()
+            .Searchable(true, false)
             .SetStriped(true)
             .WithMultipleFilters()
             .WithGridItemsCount();
