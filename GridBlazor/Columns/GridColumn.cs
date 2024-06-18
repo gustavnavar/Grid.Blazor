@@ -312,7 +312,7 @@ namespace GridBlazor.Columns
                     if (nullReferece || value == null)
                         textValue = string.Empty;
                     else if (typeof(TDataType).IsGenericType && typeof(TDataType).Name == "ICollection`1" && value != null)
-                        textValue = ((ICollection)value).Count.ToString();
+                        textValue = (value as ICollection)?.Count.ToString();
                     else
                         textValue = GetFormatedValue(value);
                 }
