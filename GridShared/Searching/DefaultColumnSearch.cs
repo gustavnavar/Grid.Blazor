@@ -72,8 +72,15 @@ namespace GridShared.Searching
                     }
                 }
 
+                if (targetType.IsGenericType && targetType.Name == "ICollection`1")
+                {
+                    PropertyInfo count = pi.PropertyType.GetProperty("Count");
+                    firstExpression = Expression.Property(firstExpression, count);
 
-                if (targetType != typeof(string))
+                    MethodInfo toString = typeof(Int32).GetMethod("ToString", Type.EmptyTypes);
+                    firstExpression = Expression.Call(firstExpression, toString);
+                }
+                else if (targetType != typeof(string))
                 {
                     if (isNullable)
                     {
@@ -86,6 +93,7 @@ namespace GridShared.Searching
 
                         firstExpression = Expression.Property(firstExpression, pi.PropertyType.GetProperty("Value"));
                     }
+
                     // add ToString method to non string columns
                     MethodInfo toString = targetType.GetMethod("ToString", Type.EmptyTypes);
                     firstExpression = Expression.Call(firstExpression, toString);

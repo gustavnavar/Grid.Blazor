@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
+using System.Reflection;
 
 namespace GridShared.Sorting
 {
@@ -23,40 +24,71 @@ namespace GridShared.Sorting
 
         public IQueryable<T> ApplyOrder(IQueryable<T> items, GridSortDirection direction)
         {
-            switch (direction)
+            if (typeof(TKey).IsGenericType && typeof(TKey).Name == "ICollection`1")
             {
-                case GridSortDirection.Ascending:
-                    if(_comparer == null)
-                        return items.OrderBy(_expression);
-                    else
-                        return items.OrderBy(_expression, _comparer);
-                case GridSortDirection.Descending:
-                    if (_comparer == null)
-                        return items.OrderByDescending(_expression);
-                    else
-                        return items.OrderByDescending(_expression, _comparer);
-                default:
-                    throw new ArgumentOutOfRangeException("direction");
+                switch (direction)
+                {
+                    case GridSortDirection.Ascending:
+                        return items.OrderBy(getCountExpresion());
+                    case GridSortDirection.Descending:
+                        return items.OrderByDescending(getCountExpresion());
+                    default:
+                        throw new ArgumentOutOfRangeException("direction");
+                }
+            }
+            else
+            {
+                switch (direction)
+                {
+                    case GridSortDirection.Ascending:
+                        if (_comparer == null)
+                            return items.OrderBy(_expression);
+                        else
+                            return items.OrderBy(_expression, _comparer);
+                    case GridSortDirection.Descending:
+                        if (_comparer == null)
+                            return items.OrderByDescending(_expression);
+                        else
+                            return items.OrderByDescending(_expression, _comparer);
+                    default:
+                        throw new ArgumentOutOfRangeException("direction");
+                }
             }
         }
 
         public IQueryable<T> ApplyThenBy(IQueryable<T> items, GridSortDirection direction)
         {
             var ordered = items as IOrderedQueryable<T>;
-            switch (direction)
+
+            if (typeof(TKey).IsGenericType && typeof(TKey).Name == "ICollection`1")
             {
-                case GridSortDirection.Ascending:
-                    if (_comparer == null)
-                        return ordered.ThenBy(_expression);
-                    else
-                        return ordered.ThenBy(_expression, _comparer);
-                case GridSortDirection.Descending:
-                    if (_comparer == null)
-                        return ordered.ThenByDescending(_expression);
-                    else
-                        return ordered.ThenByDescending(_expression, _comparer);
-                default:
-                    throw new ArgumentOutOfRangeException("direction");
+                switch (direction)
+                {
+                    case GridSortDirection.Ascending:
+                        return ordered.ThenBy(getCountExpresion());
+                    case GridSortDirection.Descending:
+                        return ordered.ThenByDescending(getCountExpresion());
+                    default:
+                        throw new ArgumentOutOfRangeException("direction");
+                }
+            }
+            else
+            {
+                switch (direction)
+                {
+                    case GridSortDirection.Ascending:
+                        if (_comparer == null)
+                            return ordered.ThenBy(_expression);
+                        else
+                            return ordered.ThenBy(_expression, _comparer);
+                    case GridSortDirection.Descending:
+                        if (_comparer == null)
+                            return ordered.ThenByDescending(_expression);
+                        else
+                            return ordered.ThenByDescending(_expression, _comparer);
+                    default:
+                        throw new ArgumentOutOfRangeException("direction");
+                }
             }
         }
 
@@ -98,6 +130,19 @@ namespace GridShared.Sorting
                 default:
                     throw new ArgumentOutOfRangeException("direction");
             }
+        }
+
+
+        private Expression<Func<T, Int32>> getCountExpresion()
+        {
+            ParameterExpression parameter = _expression.Parameters[0];
+
+            var expression = (MemberExpression)_expression.Body;
+            var pi = (PropertyInfo)expression.Member;
+
+            PropertyInfo count = pi.PropertyType.GetProperty("Count");
+            expression = Expression.Property(expression, count);
+            return Expression.Lambda<Func<T, Int32>>(expression, parameter);
         }
 
         #endregion

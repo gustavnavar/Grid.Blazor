@@ -69,6 +69,12 @@ namespace GridShared.Totals
             return firstExpression;
         }
 
+        public Expression GetCountExpression(Expression expression)
+        {
+            PropertyInfo count = _pi.PropertyType.GetProperty("Count");
+            return Expression.Property(expression, count);
+        }
+
         #endregion
 
         #region OData

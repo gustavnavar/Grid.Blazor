@@ -7,6 +7,7 @@ using GridShared.Sorting;
 using GridShared.Totals;
 using GridShared.Utility;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq.Expressions;
 
@@ -71,7 +72,10 @@ namespace GridCore.Columns
 
             Hidden = false;
 
-            _filterWidgetTypeName = PropertiesHelper.GetUnderlyingType(typeof(TDataType)).FullName;
+            if (typeof(TDataType).IsGenericType && typeof(TDataType).Name == "ICollection`1")
+                _filterWidgetTypeName = "System.Collections.Generic.ICollection`1";
+            else
+                _filterWidgetTypeName = PropertiesHelper.GetUnderlyingType(typeof(TDataType)).FullName;
             _grid = grid;
 
             #endregion
@@ -278,6 +282,8 @@ namespace GridCore.Columns
 
                     if (nullReferece || value == null)
                         textValue = string.Empty;
+                    else if (typeof(TDataType).IsGenericType && typeof(TDataType).Name == "ICollection`1" && value != null)
+                        textValue = ((ICollection)value).Count.ToString();
                     else
                         textValue = GetFormatedValue(value);
                 }

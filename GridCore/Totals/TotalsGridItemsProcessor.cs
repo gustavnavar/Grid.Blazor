@@ -3,8 +3,10 @@ using GridShared.Columns;
 using GridShared.Pagination;
 using GridShared.Totals;
 using System;
+using System.Collections;
 using System.Linq;
 using System.Linq.Expressions;
+using System.Numerics;
 
 namespace GridCore.Totals
 {
@@ -35,11 +37,15 @@ namespace GridCore.Totals
             if (_grid.PagingType == PagingType.Virtualization && _grid.Pager.NoTotals)
                 return items;
 
-            ParameterExpression parameter = Expression.Parameter(typeof(T), "x");
-
             foreach (IGridColumn<T> gridColumn in _grid.Columns)
             {
-                if (gridColumn == null || gridColumn.Totals == null)
+                ParameterExpression parameter = Expression.Parameter(typeof(T), "x");
+
+                if (gridColumn == null 
+                    || (!gridColumn.IsSumEnabled && !gridColumn.IsAverageEnabled && !gridColumn.IsMaxEnabled && !gridColumn.IsMinEnabled))
+                    continue;
+
+                if (gridColumn.Totals == null)
                 {
                     gridColumn.IsSumEnabled = false;
                     gridColumn.IsAverageEnabled = false;
@@ -70,6 +76,32 @@ namespace GridCore.Totals
                     continue;
                 }
 
+                // check if the property is a Count method of an IEnumerable
+                if (typeof(IEnumerable).IsAssignableFrom(type) && type != typeof(string))
+                {
+                    expression = gridColumn.Totals.GetCountExpression(expression);
+                    var lambdaExpression = Expression.Lambda<Func<T, Int32>>(expression, parameter);
+
+                    if (gridColumn.IsSumEnabled)
+                    {
+                        gridColumn.SumValue = new Total((decimal?)items.Select(lambdaExpression).AsEnumerable().Sum());
+                    }
+                    if (gridColumn.IsAverageEnabled)
+                    {
+                        gridColumn.AverageValue = new Total((decimal?)items.Select(lambdaExpression).AsEnumerable().Average());
+                    }
+                    if (gridColumn.IsMaxEnabled)
+                    {
+                        gridColumn.MaxValue = new Total((decimal?)items.Select(lambdaExpression).AsEnumerable().Max());
+                    }
+                    if (gridColumn.IsMinEnabled)
+                    {
+                        gridColumn.MinValue = new Total((decimal?)items.Select(lambdaExpression).AsEnumerable().Min());
+                    }
+
+                    continue;
+                }
+               
                 if (isNullable)
                 {
                     if (type == typeof(Single))

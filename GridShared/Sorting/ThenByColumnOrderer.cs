@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
+using System.Reflection;
 
 namespace GridShared.Sorting
 {
@@ -27,20 +28,36 @@ namespace GridShared.Sorting
         {
             var ordered = items as IOrderedQueryable<T>;
             if (ordered == null) return items; //not ordered collection
-            switch (_initialDirection)
+
+            if (typeof(TKey).IsGenericType && typeof(TKey).Name == "ICollection`1")
             {
-                case GridSortDirection.Ascending:
-                    if (_comparer == null)
-                        return ordered.ThenBy(_expression);
-                    else
-                        return ordered.ThenBy(_expression, _comparer);
-                case GridSortDirection.Descending:
-                    if (_comparer == null)
-                        return ordered.ThenByDescending(_expression);
-                    else
-                        return ordered.ThenByDescending(_expression, _comparer);
-                default:
-                    throw new ArgumentOutOfRangeException();
+                switch (_initialDirection)
+                {
+                    case GridSortDirection.Ascending:
+                        return ordered.ThenBy(getCountExpresion());
+                    case GridSortDirection.Descending:
+                        return ordered.ThenByDescending(getCountExpresion());
+                    default:
+                        throw new ArgumentOutOfRangeException();
+                }
+            }
+            else
+            {
+                switch (_initialDirection)
+                {
+                    case GridSortDirection.Ascending:
+                        if (_comparer == null)
+                            return ordered.ThenBy(_expression);
+                        else
+                            return ordered.ThenBy(_expression, _comparer);
+                    case GridSortDirection.Descending:
+                        if (_comparer == null)
+                            return ordered.ThenByDescending(_expression);
+                        else
+                            return ordered.ThenByDescending(_expression, _comparer);
+                    default:
+                        throw new ArgumentOutOfRangeException();
+                }
             }
         }
 
@@ -92,6 +109,18 @@ namespace GridShared.Sorting
                 default:
                     throw new ArgumentOutOfRangeException();
             }
+        }
+
+        private Expression<Func<T, Int32>> getCountExpresion()
+        {
+            ParameterExpression parameter = _expression.Parameters[0];
+
+            var expression = (MemberExpression)_expression.Body;
+            var pi = (PropertyInfo)expression.Member;
+
+            PropertyInfo count = pi.PropertyType.GetProperty("Count");
+            expression = Expression.Property(expression, count);
+            return Expression.Lambda<Func<T, Int32>>(expression, parameter);
         }
 
         #endregion

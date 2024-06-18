@@ -26,7 +26,15 @@ namespace GridShared.Grouping
             var pi = (PropertyInfo)((MemberExpression)expression).Member;
             bool isNullable = pi.PropertyType.GetTypeInfo().IsGenericType &&
                               pi.PropertyType.GetGenericTypeDefinition() == typeof(Nullable<>);
-            if(isNullable)
+            Type targetType = isNullable ? Nullable.GetUnderlyingType(pi.PropertyType) : pi.PropertyType;
+
+            if (targetType.IsGenericType && targetType.Name == "ICollection`1")
+            {
+                PropertyInfo count = pi.PropertyType.GetProperty("Count");
+                expression = Expression.Property(expression, count);
+                expression = Expression.Convert(expression, typeof(object));
+            }
+            else if (isNullable)
             {
                 Expression hasValueExpr = Expression.Property(expression, pi.PropertyType.GetProperty("HasValue"));
                 expression = Expression.Property(expression, pi.PropertyType.GetProperty("Value"));

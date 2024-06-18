@@ -245,6 +245,7 @@ namespace GridBlazor.Pages
             _filterComponents.Add("Week", typeof(WeekFilterComponent<T>));
             _filterComponents.Add("Month", typeof(MonthFilterComponent<T>));
             _filterComponents.Add("System.Boolean", typeof(BooleanFilterComponent<T>));
+            _filterComponents.Add("System.Collections.Generic.ICollection`1", typeof(CollectionFilterComponent<T>));
 
             if (CustomFilters == null)
             {
