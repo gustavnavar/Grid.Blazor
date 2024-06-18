@@ -8,7 +8,6 @@ using GridShared.Sorting;
 using GridShared.Totals;
 using GridShared.Utility;
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq.Expressions;
 
@@ -309,10 +308,22 @@ namespace GridBlazor.Columns
                         // example: x=>x.Child.Property, when Child is NULL
                     }
 
+                    var type = typeof(TDataType);
+
                     if (nullReferece || value == null)
                         textValue = string.Empty;
-                    else if (typeof(TDataType).IsGenericType && typeof(TDataType).Name == "ICollection`1" && value != null)
-                        textValue = (value as ICollection)?.Count.ToString();
+                    else if (type.IsGenericType && type.Name == "ICollection`1" && value != null)
+                    {
+                        var countProperty = type.GetProperty("Count");
+                        if (countProperty != null)
+                        {
+                            textValue = countProperty.GetValue(value).ToString();
+                        }
+                        else
+                        {
+                            textValue = string.Empty;
+                        }
+                    }
                     else
                         textValue = GetFormatedValue(value);
                 }
