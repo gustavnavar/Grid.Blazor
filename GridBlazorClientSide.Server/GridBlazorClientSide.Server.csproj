@@ -3,7 +3,7 @@
   <PropertyGroup>
     <TargetFramework>net8.0</TargetFramework>
     <DisableImplicitComponentsAnalyzers>true</DisableImplicitComponentsAnalyzers>
-    <Version>5.0.5</Version>
+    <Version>5.0.14</Version>
   </PropertyGroup>
 
   <ItemGroup>

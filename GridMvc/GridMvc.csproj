@@ -8,7 +8,7 @@
     <EnableDefaultEmbeddedResourceItems>False</EnableDefaultEmbeddedResourceItems>
     <Product>GridMvc</Product>
     <PackageId>GridMvcCore</PackageId>
-    <Version>7.0.7</Version>
+    <Version>7.0.8</Version>
     <Title>GridMvc</Title>
     <Description>ASP.NET MVC Grid component</Description>
     <Summary>ASP.NET MVC Grid component</Summary>
