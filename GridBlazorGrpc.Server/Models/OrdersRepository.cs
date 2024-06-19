@@ -24,7 +24,7 @@ namespace GridBlazorGrpc.Server.Models
 
         public override async Task<Order> GetById(object id)
         {
-            return await GetAll().SingleOrDefaultAsync(o => o.OrderID == (int)id);
+            return await GetAllWithEmployee().SingleOrDefaultAsync(o => o.OrderID == (int)id);
         }
 
         public async Task Insert(Order order)
