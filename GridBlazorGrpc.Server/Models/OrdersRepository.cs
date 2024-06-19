@@ -14,6 +14,11 @@ namespace GridBlazorGrpc.Server.Models
 
         public override IQueryable<Order> GetAll()
         {
+            return EfDbSet.Include("Customer").Include("Shipper");
+        }
+
+        public IQueryable<Order> GetAllWithEmployee()
+        {
             return EfDbSet.Include("Customer").Include("Employee").Include("Shipper");
         }
 
@@ -67,5 +72,6 @@ namespace GridBlazorGrpc.Server.Models
         void Delete(Order order);
         void Save();
         IQueryable<Order> GetForClient(string companyName);
+        IQueryable<Order> GetAllWithEmployee();
     }
 }

@@ -284,7 +284,7 @@ namespace GridBlazorGrpc.Server.Services
         public async ValueTask<ItemsDTO<Order>> GetOrdersGridAllFeatures(QueryDictionary<string> query)
         {
             var repository = new OrdersRepository(_context);
-            IGridServer<Order> server = new GridCoreServer<Order>(repository.GetAll(), query,
+            IGridServer<Order> server = new GridCoreServer<Order>(repository.GetAllWithEmployee(), query,
                 true, "ordersGrid", c => ColumnCollections.OrderColumnsAllFeatures(c, null, null, null, null, null))
                     .WithPaging(10)
                     .Sortable()
