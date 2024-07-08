@@ -10,11 +10,7 @@ This back-end component can be one of the following:
 It supports .NET Core 3.1 and 5.0, 6.0, 7.0 and 8.0, and Blazor WebAssembly 3.2.0, 5.0, 6.0, 7.0 and 8.0
 
 ## Demo 
-- Blazor server-side: http://gridblazor.azurewebsites.net
-- Blazor WASM with GridMvcCore back-end (REST API): http://gridblazorwasm.azurewebsites.net
-- Blazor WASM with GridCore back-end (gRPC): http://gridblazorgrpc.azurewebsites.net
-- Blazor WASM with OData back-end: http://gridblazorodata.azurewebsites.net
-- Blazor WASM with data local in the client: http://gridblazorlocal.azurewebsites.net
+- http://gridblazor.azurewebsites.net
 
 ## Documentation
 There are native C# Grid components for Blazor client-side and server-side, and for ASP.NET Core MVC.
