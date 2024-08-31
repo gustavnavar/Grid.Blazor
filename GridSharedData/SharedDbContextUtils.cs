@@ -21,7 +21,7 @@ namespace GridShared.Data
                     return optionsBuilder.UseSqlServer(ConnectionString);
                 case DbProvider.Sqlite:
                 default:
-                    var northwindDb = "../northwind.db";
+                    var northwindDb = "../GridSharedData/northwind.db";
                     if (!File.Exists(northwindDb))
                     {
                         using var resxStream = typeof(SharedDbContextUtils).Assembly.GetManifestResourceStream(
