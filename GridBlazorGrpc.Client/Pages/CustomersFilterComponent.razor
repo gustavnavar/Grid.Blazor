@@ -8,7 +8,7 @@
 
 @if (visible)
 {
-    <div class="dropdown dropdown-menu grid-dropdown opened" style="display:block;position:relative;" @onkeyup="FilterKeyup" @onclick:stopPropagation @onkeyup:stopPropagation>
+    <div class="dropdown dropdown-menu grid-dropdown" style="display:block;position:relative;" @onkeyup="FilterKeyup" @onclick:stopPropagation @onkeyup:stopPropagation>
         <div class="grid-dropdown-arrow"></div>
         <div class="grid-dropdown-inner">
             <div class="grid-popup-widget">
@@ -30,7 +30,7 @@
             <div class="grid-popup-additional">
                 @if (_clearVisible)
                 {
-                    <ul class="menu-list">
+                    <ul class="grid-menu-list">
                         <li>
                             <a class="grid-filter-clear" href="javascript:void(0);" @onclick="ClearButtonClicked">
                                 @Strings.ClearFilterLabel

@@ -5,23 +5,23 @@
 <div class="grid-pager-sizer">
     @if (GridComponent.Grid.Pager != null && GridComponent.Grid.Pager.PageCount > 1)
     {
-        <nav class="grid-pager">
-            <ul class="pagination">
+        <nav class="grid-pager @GridComponent.Grid.HtmlClass.PaginationNav">
+            <ul class="@GridComponent.Grid.HtmlClass.PaginationList">
                 @if (GridComponent.Grid.Pager.CurrentPage > 1)
                 {
-                    <li class="page-item">
-                        <button type="button" class="page-link" @onclick="() => PagerButtonClicked(GridComponent.Grid.Pager.CurrentPage - 1)">«</button>
+                    <li class="grid-page-item @GridComponent.Grid.HtmlClass.PageItem">
+                        <button type="button" class="grid-page-link @GridComponent.Grid.HtmlClass.PageLink" @onclick="() => PagerButtonClicked(GridComponent.Grid.Pager.CurrentPage - 1)">«</button>
                     </li>
                 }
                 @if (GridComponent.Grid.Pager.StartDisplayedPage > 1)
                 {
-                    <li class="page-item">
-                        <button type="button" class="page-link" @onclick="() => PagerButtonClicked(1)">1</button>
+                    <li class="grid-page-item @GridComponent.Grid.HtmlClass.PageItem">
+                        <button type="button" class="grid-page-link @GridComponent.Grid.HtmlClass.PageLink" @onclick="() => PagerButtonClicked(1)">1</button>
                     </li>
                     @if (GridComponent.Grid.Pager.StartDisplayedPage > 2)
                     {
-                        <li class="page-item">
-                            <button type="button" class="page-link" @onclick="() => PagerButtonClicked(GridComponent.Grid.Pager.StartDisplayedPage - 1)">...</button>
+                        <li class="grid-page-item @GridComponent.Grid.HtmlClass.PageItem">
+                            <button type="button" class="grid-page-link @GridComponent.Grid.HtmlClass.PageLink" @onclick="() => PagerButtonClicked(GridComponent.Grid.Pager.StartDisplayedPage - 1)">...</button>
                         </li>
                     }
                 }
@@ -29,15 +29,15 @@
                 {
                     if (i == GridComponent.Grid.Pager.CurrentPage)
                     {
-                        <li class="page-item active">
-                            <button type="button" class="page-link">@i <span class="sr-only">(@Strings.current)</span></button>
+                        <li class="grid-page-item @GridComponent.Grid.HtmlClass.PageItem @GridComponent.Grid.HtmlClass.PageItemActive">
+                            <button type="button" class="grid-page-link @GridComponent.Grid.HtmlClass.PageLink @GridComponent.Grid.HtmlClass.PageLinkActive">@i</button>
                         </li>
                     }
                     else
                     {
                         int j = i;
-                        <li class="page-item">
-                            <button type="button" class="page-link" @onclick="async () => await PagerButtonClicked(j)">@j</button>
+                        <li class="grid-page-item @GridComponent.Grid.HtmlClass.PageItem">
+                            <button type="button" class="grid-page-link @GridComponent.Grid.HtmlClass.PageLink" @onclick="async () => await PagerButtonClicked(j)">@j</button>
                         </li>
                     }
                 }
@@ -45,18 +45,18 @@
                 {
                     if (GridComponent.Grid.Pager.EndDisplayedPage < GridComponent.Grid.Pager.PageCount - 1)
                     {
-                        <li class="page-item">
-                            <button type="button" class="page-link" @onclick="async () => await PagerButtonClicked(GridComponent.Grid.Pager.EndDisplayedPage + 1)">...</button>
+                        <li class="grid-page-item @GridComponent.Grid.HtmlClass.PageItem">
+                            <button type="button" class="grid-page-link @GridComponent.Grid.HtmlClass.PageLink" @onclick="async () => await PagerButtonClicked(GridComponent.Grid.Pager.EndDisplayedPage + 1)">...</button>
                         </li>
                     }
-                    <li class="page-item">
-                        <button type="button" class="page-link" @onclick="async () => await PagerButtonClicked(GridComponent.Grid.Pager.PageCount)">@GridComponent.Grid.Pager.PageCount</button>
+                    <li class="grid-page-item @GridComponent.Grid.HtmlClass.PageItem">
+                        <button type="button" class="grid-page-link @GridComponent.Grid.HtmlClass.PageLink" @onclick="async () => await PagerButtonClicked(GridComponent.Grid.Pager.PageCount)">@GridComponent.Grid.Pager.PageCount</button>
                     </li>
                 }
                 @if (GridComponent.Grid.Pager.CurrentPage < GridComponent.Grid.Pager.PageCount)
                 {
-                    <li class="page-item">
-                        <button type="button" class="page-link" @onclick="async () => await PagerButtonClicked(GridComponent.Grid.Pager.CurrentPage + 1)">»</button>
+                    <li class="grid-page-item @GridComponent.Grid.HtmlClass.PageItem">
+                        <button type="button" class="grid-page-link @GridComponent.Grid.HtmlClass.PageLink" @onclick="async () => await PagerButtonClicked(GridComponent.Grid.Pager.CurrentPage + 1)">»</button>
                     </li>
                 }
             </ul>
@@ -64,23 +64,23 @@
 
         @if (GridComponent.Grid.Pager.GoToVisibility)
         {
-            <div class="grid-goto-page form-group">
-                <label class="control-label"><b>@Strings.Goto</b></label>
-            <div>
-                <input class="form-control grid-goto-page-input" @bind="_currentPage" @onkeyup="GoToKeyup" @onblur="GoToBlur" @onclick:stopPropagation />
+            <div class="grid-goto-page @GridComponent.Grid.HtmlClass.FooterRow">
+                <label class="@GridComponent.Grid.HtmlClass.FormLabel">@Strings.Goto</label>
+                <div class="@GridComponent.Grid.HtmlClass.FormDivInput">
+                    <input class="@GridComponent.Grid.HtmlClass.PageInput grid-goto-page-input" @bind="_currentPage" @onkeyup="GoToKeyup" @onblur="GoToBlur" @onclick:stopPropagation />
+                </div>
             </div>
-        </div>
         }
     }
 
     @if (GridComponent.Grid.PagingType == PagingType.Pagination && GridComponent.Grid.Pager.ChangePageSize)
     {
-        <div class="grid-change-page-size form-group" data-change-page-size-url="@GridComponent.ChangePageSizeUrl">
-            <label class="control-label"><b>@Strings.Show</b></label>
-            <div>
-                <input @ref="GridComponent.PageSizeInput" class="form-control grid-change-page-size-input" @bind="GridComponent.PageSize" @onkeyup="GridComponent.InputPageSizeKeyup" @onblur="GridComponent.InputPageSizeBlur" @onclick:stopPropagation />
+        <div class="grid-change-page-size @GridComponent.Grid.HtmlClass.FooterRow" data-change-page-size-url="@GridComponent.ChangePageSizeUrl">
+            <label class="@GridComponent.Grid.HtmlClass.FormLabel">@Strings.Show</label>
+            <div class="@GridComponent.Grid.HtmlClass.FormDivInput">
+                <input @ref="GridComponent.PageSizeInput" class="@GridComponent.Grid.HtmlClass.PageInput grid-change-page-size-input" @bind="GridComponent.PageSize" @onkeyup="GridComponent.InputPageSizeKeyup" @onblur="GridComponent.InputPageSizeBlur" @onclick:stopPropagation />
             </div>
-            <label class="control-label"><b>@Strings.PageSizeItems</b></label>
+            <label class="@GridComponent.Grid.HtmlClass.FormLabel">@Strings.PageSizeItems</label>
         </div>
     }
 </div>

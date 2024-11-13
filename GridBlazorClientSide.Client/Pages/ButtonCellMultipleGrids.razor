@@ -3,7 +3,7 @@
 @implements ICustomGridComponent<Order>
 @inject NavigationManager NavigationManager
 
-<button class='btn btn-sm btn-primary' @onclick="MyClickHandler">Edit</button>
+<button class='@Program.HtmlClass.ButtonPrimary @Program.ButtonSmall' @onclick="MyClickHandler">Edit</button>
 
 @code {
     [Parameter]

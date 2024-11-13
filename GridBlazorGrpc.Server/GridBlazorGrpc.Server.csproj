@@ -1,16 +1,16 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk.Web">
 
 	<PropertyGroup>
-		<TargetFramework>net8.0</TargetFramework>
+		<TargetFramework>net9.0</TargetFramework>
 		<DisableImplicitComponentsAnalyzers>true</DisableImplicitComponentsAnalyzers>
-		<Version>5.0.14</Version>
+		<Version>6.0.0</Version>
 	</PropertyGroup>
 
 	<ItemGroup>
-		<PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.Server" Version="8.0.6" />
-		<PackageReference Include="Grpc.AspNetCore.Web" Version="2.63.0" />
-		<PackageReference Include="protobuf-net.Grpc.AspNetCore" Version="1.1.1" />
-		<PackageReference Include="System.Security.Cryptography.Pkcs" Version="8.0.0" />
+		<PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.Server" Version="9.0.0" />
+		<PackageReference Include="Grpc.AspNetCore.Web" Version="2.66.0" />
+		<PackageReference Include="protobuf-net.Grpc.AspNetCore" Version="1.2.2" />
+		<PackageReference Include="System.Security.Cryptography.Pkcs" Version="9.0.0" />
 	</ItemGroup>
 
 	<ItemGroup>

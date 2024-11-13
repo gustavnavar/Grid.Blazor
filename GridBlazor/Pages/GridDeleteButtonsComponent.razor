@@ -2,7 +2,7 @@
 @typeparam T
 @if (GridDeleteComponent._buttonsVisibility == 0)
 {
-    <button type="button" class="btn btn-primary btn-md" @onclick="() => GridDeleteComponent.DeleteItem()">@(string.IsNullOrWhiteSpace(GridDeleteComponent.GridComponent.Grid.DeleteFormButtonLabel) ? Strings.Delete : GridDeleteComponent.GridComponent.Grid.DeleteFormButtonLabel)</button>
-    <button type="button" class="btn btn-primary btn-md" @onclick="() => GridDeleteComponent.BackButtonClicked()">@Strings.Back</button>
+    <button type="button" class="@GridDeleteComponent.GridComponent.Grid.HtmlClass.ButtonPrimary" @onclick="() => GridDeleteComponent.DeleteItem()">@(string.IsNullOrWhiteSpace(GridDeleteComponent.GridComponent.Grid.DeleteFormButtonLabel) ? Strings.Delete : GridDeleteComponent.GridComponent.Grid.DeleteFormButtonLabel)</button>
+    <button type="button" class="@GridDeleteComponent.GridComponent.Grid.HtmlClass.ButtonPrimary" @onclick="() => GridDeleteComponent.BackButtonClicked()">@Strings.Back</button>
 }
        

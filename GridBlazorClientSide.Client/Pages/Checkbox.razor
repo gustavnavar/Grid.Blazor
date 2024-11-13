@@ -19,11 +19,11 @@
 
 @if (_task.IsCompleted)
 {
-    <div class="row mb-3">
-        <button type="button" class="btn btn-primary" @onclick="ButtonHandler" @onclick:stopPropagation>Change First</button>
+    <div class="@Program.HtmlClass.Mb050">
+        <button type="button" class="@Program.HtmlClass.ButtonPrimary" @onclick="ButtonHandler" @onclick:stopPropagation>Change First</button>
     </div>
-    <div class="row">
-        <div class="col-md-12">
+    <div class="@Program.HtmlClass.Row">
+        <div class="@(Program.HtmlClass.ColMd)12">
             <GridComponent @ref="component" T="Order" Grid="@_grid"></GridComponent>
         </div>
     </div>

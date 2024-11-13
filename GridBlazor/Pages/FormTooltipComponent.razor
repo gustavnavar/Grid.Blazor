@@ -1,11 +1,13 @@
 ﻿@typeparam T
 
-<label for="@Column.FieldName" class="col-form-label" @onmouseover="e => DisplayTooltip(Column.Name)" @onmouseout="e => HideTooltip(Column.Name)">@Column.Title</label>
+<label for="@Column.FieldName" class="@GridComponent.Grid.HtmlClass.FormLabel" @onmouseover="e => DisplayTooltip(Column.Name)" @onmouseout="e => HideTooltip(Column.Name)">@Column.Title</label>
 @if (_isTooltipVisible)
 {
     <div class="grid-tooltip">
-        <div class="dropdown dropdown-menu grid-tooltip-dropdown opened" style="display:block;@(GridComponent.Grid.Direction == GridShared.GridDirection.RTL ? _offset > 0 ? "margin-right:-" + _offset.ToString() + "px;" : "margin-right:90px;" : _offset > 0 ? "margin-left:-" + _offset.ToString() + "px;" : "margin-left:90px;")" @ref="tooltip">
-            <div class="grid-dropdown-arrow" style="@(GridComponent.Grid.Direction == GridShared.GridDirection.RTL ? _offset > 0 ? "margin-right:" + _offset.ToString() + "px" : "margin-right:-90px;" : _offset > 0 ? "margin-left:" + _offset.ToString() + "px" : "margin-left:-90px;")"></div>
+        <div class="@GridComponent.Grid.HtmlClass.DropdownMenu grid-tooltip-dropdown" 
+                style="display:block;@_customStyle1" 
+                @ref="tooltip">
+            <div class="grid-dropdown-arrow" style="@_customStyle2"></div>
             <div class="grid-dropdown-inner">
                 <div class="grid-popup-widget">
                     <div class="grid-tooltip-body">

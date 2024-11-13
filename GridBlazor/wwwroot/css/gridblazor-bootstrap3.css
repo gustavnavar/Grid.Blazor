@@ -1,5 +1,13 @@
-﻿.table > tbody > tr > td.grid-button-cell {
+﻿.grid-dropdown-list-filter-class > .grid-popup-widget > .grid-filter-body > .grid-buttons {
+    margin-bottom: 8px;
+}
+
+.table > tbody > tr > td.grid-button-cell {
     padding: 5px 0 5px 0;
+}
+
+.pagination {
+    margin-top: 0px;
 }
 
 .pagination > li > button {

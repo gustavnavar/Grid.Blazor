@@ -22,8 +22,8 @@
 
 @if (_task.IsCompleted)
 {
-    <div class="row">
-        <div class="col-md-12">
+    <div class="@Program.HtmlClass.Row">
+        <div class="@(Program.HtmlClass.ColMd)12">
             <GridComponent T="Order" @ref="_gridComponent" Grid="@_grid" Mode="_mode" Keys="_keys"></GridComponent>
         </div>
     </div>

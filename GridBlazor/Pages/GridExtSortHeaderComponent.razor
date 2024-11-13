@@ -3,7 +3,7 @@
 
 @typeparam T
 
-<div id="grid-extsort-@Grid.ComponentOptions.GridName" class="input-group grid-extsort-droppable @_dropClass" data-extsort-url="@_groupUrl"
+<div id="grid-extsort-@Grid.ComponentOptions.GridName" class="grid-extsort-droppable @_dropClass" data-extsort-url="@_groupUrl"
      style="display:@(Grid.HiddenExtSortingHeader ? "none;" : "flex;" )"
      @ondragenter="@(() => HandleDragEnter())" @ondragleave="@(() => HandleDragLeave())" @ondrop="HandleDrop" ondragover="event.preventDefault();">
     @if (_sortedColumns.Count() == 0)
@@ -28,10 +28,10 @@
             }
             <span class="grid-extsort-column" data-name="@column.ColumnName" data-extsortdata="@JsonSerializer.Serialize(column)">
                 <span class="@(column.Direction == GridSortDirection.Ascending ? "sorted-asc" : "sorted-desc")">
-                    <button type="button" class="btn btn-link" @onclick="() => TitleButtonClicked(column)" data-column="@column.ColumnName">@gridColumn.Title</button>
+                    <button type="button" class="@GridComponent.Grid.HtmlClass.ButtonLink" @onclick="() => TitleButtonClicked(column)" data-column="@column.ColumnName">@gridColumn.Title</button>
                     <span class="grid-sort-arrow"></span>
                 </span>
-                <button type="button" class="btn btn-link" @onclick="() => CancelButtonClicked(column)" data-column="@column.ColumnName">x</button>
+                <button type="button" class="@GridComponent.Grid.HtmlClass.ButtonLink" @onclick="() => CancelButtonClicked(column)" data-column="@column.ColumnName">x</button>
             </span>
         }
     }

@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace GridBlazor.Pages
 {
-    public partial class GridTabComponent
+    public partial class GridTabComponent<T>
     {
         private bool _shouldRender = false;
 
@@ -17,6 +17,9 @@ namespace GridBlazor.Pages
 
         [Inject]
         private IJSRuntime jSRuntime { get; set; }
+
+        [CascadingParameter(Name = "GridComponent")]
+        protected internal GridComponent<T> GridComponent { get; set; }
 
         [Parameter]
         public IEnumerable<SelectItem> TabLabels { get; set; }
@@ -41,8 +44,10 @@ namespace GridBlazor.Pages
 
         protected async Task TabClicked(MouseEventArgs e, int i)
         {
-            await jSRuntime.InvokeVoidAsync("gridJsFunctions.setActive", labels, i);
-            await jSRuntime.InvokeVoidAsync("gridJsFunctions.setActive", content, i);
+            await jSRuntime.InvokeVoidAsync("gridJsFunctions.setItemActive", labels, i, GridComponent.Grid.HtmlClass.TabItemActive);
+            await jSRuntime.InvokeVoidAsync("gridJsFunctions.setLinkActive", labels, i, GridComponent.Grid.HtmlClass.TabLinkActive);
+            await jSRuntime.InvokeVoidAsync("gridJsFunctions.setPaneActive", content, i, 
+                GridComponent.Grid.HtmlClass.TabPaneActive, GridComponent.Grid.HtmlClass.TabPaneHidden);
         }
     }
 }

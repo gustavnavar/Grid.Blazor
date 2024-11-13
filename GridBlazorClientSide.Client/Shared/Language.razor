@@ -2,7 +2,7 @@
 @inject IJSRuntime JSRuntime
 @inject NavigationManager NavigationManager
 
-<select class="form-control" @bind="Culture">
+<select class="@Program.HtmlClass.FormSelect" style="height:36px;" @bind="Culture">
     @foreach (var culture in supportedCultures)
     {
         <option value="@culture.Name">@culture.Name</option>

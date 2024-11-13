@@ -5,20 +5,26 @@
 
 @if (_init && Visible)
 {
-<div class="dropdown dropdown-menu grid-dropdown opened" style="display:block;position:relative;@("margin-left:" + _offset.ToString() + "px;")" @ref="listFilter" @onkeyup="FilterKeyup" @onclick:stopPropagation @onkeyup:stopPropagation tabindex="-1">
+<div class="@GridHeaderComponent.GridComponent.Grid.HtmlClass.DropdownMenu grid-dropdown" 
+        style="display:block;position:relative;overflow:visible;@("margin-left:" + _offset.ToString() + "px;")" 
+        @ref="listFilter" 
+        @onkeyup="FilterKeyup" 
+        @onclick:stopPropagation 
+        
+        @onkeyup:stopPropagation tabindex="-1">
     <div class="grid-dropdown-arrow" style="@("margin-left:" + (-_offset).ToString() + "px;")"></div>
     <div class="grid-dropdown-inner grid-dropdown-list-filter-class">
         <div class="grid-popup-widget">
             <div class="grid-filter-body">
                 @if (_filterOptions.ShowSelectAllButtons)
                 {
-                    <div class="grid-buttons ml-0 my-2">
+                    <div class="grid-buttons @GridHeaderComponent.GridComponent.Grid.HtmlClass.Mt050 @GridHeaderComponent.GridComponent.Grid.HtmlClass.Ml000 @GridHeaderComponent.GridComponent.Grid.HtmlClass.Mr050">
                         <div class="grid-filter-buttons">
-                            <label class="mr-3"><b>@Strings.Select:</b></label>
-                            <button type="button" class="btn btn-secondary mr-2" @onclick="SelectVisibleButtonClicked" @onclick:stopPropagation>
+                            <label class="@GridHeaderComponent.GridComponent.Grid.HtmlClass.FormLabel @GridHeaderComponent.GridComponent.Grid.HtmlClass.Mr100"><b>@Strings.Select:</b></label>
+                            <button type="button" class="@GridHeaderComponent.GridComponent.Grid.HtmlClass.ButtonSecondary @GridHeaderComponent.GridComponent.Grid.HtmlClass.Mr050" @onclick="SelectVisibleButtonClicked" @onclick:stopPropagation>
                                 @Strings.All
                             </button>
-                            <button type="button" class="btn btn-secondary" @onclick="UnselectVisibleButtonClicked" @onclick:stopPropagation>
+                            <button type="button" class="@GridHeaderComponent.GridComponent.Grid.HtmlClass.ButtonSecondary" @onclick="UnselectVisibleButtonClicked" @onclick:stopPropagation>
                                 @Strings.None
                             </button>
                         </div>
@@ -26,21 +32,23 @@
                 }
                 @if (_filterOptions.ShowSearchInput)
                 {
-                    <div class="form-group my-2">
+                    <div class="@GridHeaderComponent.GridComponent.Grid.HtmlClass.FormDivInput @GridHeaderComponent.GridComponent.Grid.HtmlClass.Mt050 @GridHeaderComponent.GridComponent.Grid.HtmlClass.My050">
                         <input type="text"
-                               class="grid-filter-input form-control" 
+                               class="grid-filter-input @GridHeaderComponent.GridComponent.Grid.HtmlClass.FormInput" 
                                placeholder="@Strings.SearchFilterListInputText"
                                value="@SearchFilterListText"
                                @oninput="FilterTextChanged"/>
                     </div>
                 }
-                <label><b>@Strings.FilterValueLabel:</b></label>
-                <ul class="menu-list">
+                <div class="@GridHeaderComponent.GridComponent.Grid.HtmlClass.Mt050 @GridHeaderComponent.GridComponent.Grid.HtmlClass.ListFilterValueLabel">
+                    <label class="@GridHeaderComponent.GridComponent.Grid.HtmlClass.FormLabel"><b>@Strings.FilterValueLabel:</b></label>
+                </div>
+                <ul class="grid-menu-list">
                     @foreach (var data in _visibleList)
                     {
                         bool isChecked = _filters.Any(x => x.Type.Equals("1") && x.Value.Equals(data.Value));
-                        <li>
-                            <label class="list-filter-label">
+                        <li class="@GridHeaderComponent.GridComponent.Grid.HtmlClass.Mb050">
+                                <label class="grid-filter-list-label">
                                 @if (isChecked)
                                 {
                                     <input type="checkbox" class="grid-filter-list" checked value="@isChecked" @onclick="e => MyClickHandler(e, isChecked, data.Value)"/>
@@ -49,15 +57,17 @@
                                 {
                                     <input type="checkbox" class="grid-filter-list" value="@isChecked" @onclick="e => MyClickHandler(e, isChecked, data.Value)"/>
                                 }
-                                @data.Title
+                                <span>
+                                        @data.Title
+                                </span>
                             </label>
                         </li>
                     }
                     @if (_includeIsNull)
                     {
                         bool isChecked = _filters.Any(x => x.Type.Equals("11"));
-                        <li>
-                            <label class="list-filter-label">
+                        <li  class="@GridHeaderComponent.GridComponent.Grid.HtmlClass.Mb050">
+                            <label class="grid-filter-list-label">
                                 @if (isChecked)
                                 {
                                     <input type="checkbox" class="grid-filter-list" checked value="@isChecked" @onclick="e => IsNullHandler(e, isChecked)"/>
@@ -66,15 +76,17 @@
                                 {
                                     <input type="checkbox" class="grid-filter-list" value="@isChecked" @onclick="e => IsNullHandler(e, isChecked)"/>
                                 }
-                                @Strings.IsNull
+                                <span>
+                                    @Strings.IsNull
+                                </span>
                             </label>
                         </li>
                     }
                     @if (_includeIsNotNull)
                     {
                         bool isChecked = _filters.Any(x => x.Type.Equals("12"));
-                        <li>
-                            <label class="list-filter-label">
+                        <li  class="@GridHeaderComponent.GridComponent.Grid.HtmlClass.Mb050">
+                            <label class="grid-filter-list-label">
                                 @if (isChecked)
                                 {
                                     <input type="checkbox" class="grid-filter-list" checked value="@isChecked" @onclick="e => IsNotNullHandler(e, isChecked)"/>
@@ -83,14 +95,16 @@
                                 {
                                     <input type="checkbox" class="grid-filter-list" value="@isChecked" @onclick="e => IsNotNullHandler(e, isChecked)"/>
                                 }
-                                @Strings.IsNotNull
+                                <span>
+                                    @Strings.IsNotNull
+                                </span>
                             </label>
                         </li>
                     }
                 </ul>
                 <div class="grid-buttons">
                     <div class="grid-filter-buttons">
-                        <button type="button" class="btn btn-primary" @onclick="ApplyButtonClicked">
+                        <button type="button" class="@GridHeaderComponent.GridComponent.Grid.HtmlClass.ButtonPrimary" @onclick="ApplyButtonClicked">
                             @Strings.ApplyFilterButtonText
                         </button>
                     </div>
@@ -100,8 +114,8 @@
         <div class="grid-popup-additional">
             @if (_clearVisible)
             {
-                <ul class="menu-list">
-                    <li>
+                <ul class="grid-menu-list">
+                    <li  class="@GridHeaderComponent.GridComponent.Grid.HtmlClass.Mb050">
                         <a class="grid-filter-clear" href="javascript:void(0);" @onclick="ClearButtonClicked">
                             @Strings.ClearFilterLabel
                         </a>

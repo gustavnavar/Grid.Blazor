@@ -8,6 +8,7 @@ using GridShared.Filtering;
 using GridShared.OData;
 using GridShared.Pagination;
 using GridShared.Sorting;
+using GridShared.Style;
 using GridShared.Utility;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Web;
@@ -27,6 +28,7 @@ namespace GridBlazor.Pages
 {
     public partial class GridComponent<T>
     {
+        private IGridBlazorService? _gridBlazorService;
         private bool _fromCrud = false;
         private bool _shouldRender = false;
         internal bool HasSubGrid = false;
@@ -97,6 +99,9 @@ namespace GridBlazor.Pages
         [Inject]
         private IJSRuntime jSRuntime { get; set; }
 
+        [Inject]
+        private IServiceProvider ServiceProvider { get; set; }
+
         public int SelectedRow { get; internal set; } = -1;
 
         public List<int> SelectedRows { get; internal set; } = new List<int>();
@@ -166,6 +171,9 @@ namespace GridBlazor.Pages
         public bool UseMemoryCrudDataService { get; set; } = false;
 
         [Parameter]
+        public CssFramework? CssFramework { get; set; }
+
+        [Parameter]
         public string GridMvcCssClass { get; set; } = "grid-mvc";
 
         [Parameter]
@@ -220,9 +228,25 @@ namespace GridBlazor.Pages
         public string GridCalculationCssClass { get; set; } = "grid-cell";
 
 
+        protected override void OnInitialized()
+        {
+            _gridBlazorService = (IGridBlazorService)ServiceProvider.GetService(typeof(IGridBlazorService));
+            base.OnInitialized();
+        }
+
         protected override void OnParametersSet()
         {
             ((CGrid<T>)Grid).GridComponent = this;
+
+            if (!CssFramework.HasValue)
+            {
+                if (_gridBlazorService != null)
+                    CssFramework = _gridBlazorService.Style;
+                else
+                    CssFramework = GridShared.Style.CssFramework.Bootstrap_4;
+            }
+            Grid.CssFramework = CssFramework.Value;
+            Grid.HtmlClass = new HtmlClass(CssFramework.Value);
 
             _filterComponents = new QueryDictionary<Type>();
             _filterComponents.Add("System.String", typeof(TextFilterComponent<T>));

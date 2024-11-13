@@ -11,6 +11,8 @@ namespace GridBlazor.Pages
     {
         protected int _offset = 0;
         protected bool _isTooltipVisible = false;
+        protected string _customStyle1 = "";
+        protected string _customStyle2 = "";
 
         protected ElementReference tooltip;
 
@@ -50,6 +52,9 @@ namespace GridBlazor.Pages
                     }
                 }
             }
+
+            _customStyle1 = GridComponent.Grid.Direction == GridShared.GridDirection.RTL ? _offset > 0 ? "margin-right:-" + _offset.ToString() + "px;" : "margin-right:90px;" : _offset > 0 ? "margin-left:-" + _offset.ToString() + "px;" : "margin-left:90px;";
+            _customStyle2 = GridComponent.Grid.Direction == GridShared.GridDirection.RTL ? _offset > 0 ? "margin-right:" + _offset.ToString() + "px" : "margin-right:-90px;" : _offset > 0 ? "margin-left:" + _offset.ToString() + "px" : "margin-left:-90px;";
         }
 
         public void DisplayTooltip(string columnName)

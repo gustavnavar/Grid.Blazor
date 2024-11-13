@@ -26,11 +26,11 @@
                 {
                     @if (string.IsNullOrWhiteSpace(Grid.ReadLabel))
                     {
-                        <button class='grid-button grid-button-view btn btn-sm btn-primary' title="@Grid.ReadTooltip" @onclick="@(e => GridComponent.ReadHandler(Item))" type="button" @onclick:stopPropagation></button>
+                        <button class='grid-button grid-button-view @GridComponent.Grid.HtmlClass.Button' title="@Grid.ReadTooltip" @onclick="@(e => GridComponent.ReadHandler(Item))" type="button" @onclick:stopPropagation></button>
                     }
                     else
                     {
-                        <button class='grid-button-label-view btn btn-sm btn-primary' title="@Grid.ReadTooltip" @onclick="@(e => GridComponent.ReadHandler(Item))" type="button" @onclick:stopPropagation>@Grid.ReadLabel</button>
+                        <button class='grid-button-label-view @GridComponent.Grid.HtmlClass.ButtonPrimary' title="@Grid.ReadTooltip" @onclick="@(e => GridComponent.ReadHandler(Item))" type="button" @onclick:stopPropagation>@Grid.ReadLabel</button>
                     }  
                 }
             </td>
@@ -42,11 +42,11 @@
                 {
                     @if (string.IsNullOrWhiteSpace(Grid.UpdateLabel))
                     {
-                        <button class='grid-button grid-button-edit btn btn-sm btn-primary' title="@Grid.UpdateTooltip" @onclick="@(e => GridComponent.UpdateHandler(Item))" type="button" @onclick:stopPropagation></button>
+                        <button class='grid-button grid-button-edit @GridComponent.Grid.HtmlClass.Button' title="@Grid.UpdateTooltip" @onclick="@(e => GridComponent.UpdateHandler(Item))" type="button" @onclick:stopPropagation></button>
                     }
                     else
                     {
-                        <button class='grid-button-label-edit btn btn-sm btn-primary' title="@Grid.UpdateTooltip" @onclick="@(e => GridComponent.UpdateHandler(Item))" type="button" @onclick:stopPropagation>@Grid.UpdateLabel</button>
+                        <button class='grid-button-label-edit @GridComponent.Grid.HtmlClass.ButtonPrimary' title="@Grid.UpdateTooltip" @onclick="@(e => GridComponent.UpdateHandler(Item))" type="button" @onclick:stopPropagation>@Grid.UpdateLabel</button>
                     } 
                 }
             </td>
@@ -60,11 +60,11 @@
                     {
                         @if (string.IsNullOrWhiteSpace(Grid.DeleteLabel))
                         {
-                            <button class='grid-button grid-button-delete btn btn-sm btn-primary' title="@Grid.DeleteTooltip" @onclick="@(e => GridComponent.DeleteHandler(Item))" type="button" @onclick:stopPropagation></button>
+                            <button class='grid-button grid-button-delete @GridComponent.Grid.HtmlClass.Button' title="@Grid.DeleteTooltip" @onclick="@(e => GridComponent.DeleteHandler(Item))" type="button" @onclick:stopPropagation></button>
                         }
                         else
                         {
-                            <button class='grid-button-label-delete btn btn-sm btn-primary' title="@Grid.DeleteTooltip" @onclick="@(e => GridComponent.DeleteHandler(Item))" type="button" @onclick:stopPropagation>@Grid.DeleteLabel</button>
+                            <button class='grid-button-label-delete @GridComponent.Grid.HtmlClass.ButtonPrimary' title="@Grid.DeleteTooltip" @onclick="@(e => GridComponent.DeleteHandler(Item))" type="button" @onclick:stopPropagation>@Grid.DeleteLabel</button>
                         }
                     }
                 }
@@ -105,11 +105,11 @@ else
                 {
                     @if (string.IsNullOrWhiteSpace(Grid.ReadLabel))
                     {
-                        <button class='grid-button grid-button-view btn btn-sm btn-primary' title="@Grid.ReadTooltip" @onclick="@(e => GridComponent.ReadHandler(Item))" type="button" @onclick:stopPropagation></button>
+                        <button class='grid-button grid-button-view @GridComponent.Grid.HtmlClass.Button' title="@Grid.ReadTooltip" @onclick="@(e => GridComponent.ReadHandler(Item))" type="button" @onclick:stopPropagation></button>
                     }
                     else
                     {
-                        <button class='grid-button-label-view btn btn-sm btn-primary' title="@Grid.ReadTooltip" @onclick="@(e => GridComponent.ReadHandler(Item))" type="button" @onclick:stopPropagation>@Grid.ReadLabel</button>
+                        <button class='grid-button-label-view @GridComponent.Grid.HtmlClass.ButtonPrimary' title="@Grid.ReadTooltip" @onclick="@(e => GridComponent.ReadHandler(Item))" type="button" @onclick:stopPropagation>@Grid.ReadLabel</button>
                     } 
                 }
             </td>
@@ -123,11 +123,11 @@ else
                     {
                         @if (string.IsNullOrWhiteSpace(Grid.UpdateLabel))
                         {
-                            <button class='grid-button grid-button-edit btn btn-sm btn-primary' title="@Grid.UpdateTooltip" @onclick="@(e => GridComponent.UpdateHandler(Item))" type="button" @onclick:stopPropagation></button>
+                            <button class='grid-button grid-button-edit @GridComponent.Grid.HtmlClass.Button' title="@Grid.UpdateTooltip" @onclick="@(e => GridComponent.UpdateHandler(Item))" type="button" @onclick:stopPropagation></button>
                         }
                         else
                         {
-                            <button class='grid-button-label-edit btn btn-sm btn-primary' title="@Grid.UpdateTooltip" @onclick="@(e => GridComponent.UpdateHandler(Item))" type="button" @onclick:stopPropagation>@Grid.UpdateLabel</button>
+                            <button class='grid-button-label-edit @GridComponent.Grid.HtmlClass.ButtonPrimary' title="@Grid.UpdateTooltip" @onclick="@(e => GridComponent.UpdateHandler(Item))" type="button" @onclick:stopPropagation>@Grid.UpdateLabel</button>
                         }
                     }
                 }
@@ -140,11 +140,11 @@ else
                 {
                     @if (string.IsNullOrWhiteSpace(Grid.DeleteLabel))
                     {
-                        <button class='grid-button grid-button-delete btn btn-sm btn-primary' title="@Grid.DeleteTooltip" @onclick="@(e => GridComponent.DeleteHandler(Item))" type="button" @onclick:stopPropagation></button>
+                        <button class='grid-button grid-button-delete @GridComponent.Grid.HtmlClass.Button' title="@Grid.DeleteTooltip" @onclick="@(e => GridComponent.DeleteHandler(Item))" type="button" @onclick:stopPropagation></button>
                     }
                     else
                     {
-                        <button class='grid-button-label-delete btn btn-sm btn-primary' title="@Grid.DeleteTooltip" @onclick="@(e => GridComponent.DeleteHandler(Item))" type="button" @onclick:stopPropagation>@Grid.DeleteLabel</button>
+                        <button class='grid-button-label-delete @GridComponent.Grid.HtmlClass.ButtonPrimary' title="@Grid.DeleteTooltip" @onclick="@(e => GridComponent.DeleteHandler(Item))" type="button" @onclick:stopPropagation>@Grid.DeleteLabel</button>
                     }
                 }
             </td>

@@ -3,16 +3,45 @@
 html, body {
     font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
     font-size: 0.9rem;
+    line-height: 1.5rem;
+}
+
+h1 {
+    font-size: 2.5rem;
+    margin-top: 0;
+    margin-bottom: 0.5rem;
+}
+
+h3 {
+    font-size: 2rem;
+    font-weight: bold;
+    margin-top: 0;
+    margin-bottom: 0.5rem;
+}
+
+h4 {
+    font-size: 1.5rem;
+    font-weight: bold;
+    margin-top: 0;
+    margin-bottom: 0.5rem;
 }
 
 a {
     color: #0366d6;
 }
 
+p {
+    margin-bottom: 1rem;
+}
+
 app {
     position: relative;
     display: flex;
     flex-direction: column;
+}
+
+dt {
+    font-weight: bold;
 }
 
 .top-row {
@@ -86,7 +115,7 @@ li.nav-item a {
         color: white;
     }
 
-.content {
+.app-content {
     padding-top: 1.1rem;
 }
 

@@ -1,5 +1,6 @@
 ﻿using GridShared.Grouping;
 using GridShared.Pagination;
+using GridShared.Style;
 using GridShared.Utility;
 using Microsoft.Extensions.Primitives;
 using System;
@@ -164,5 +165,15 @@ namespace GridShared
         int ItemsCount { get; }
 
         //void OnPreRender(); //TODO backward Compatibility
+
+        /// <summary>
+        ///     CSS Framework
+        /// </summary>
+        CssFramework CssFramework { get; set; }
+
+        /// <summary>
+        ///     Html classes
+        /// </summary>
+        HtmlClass HtmlClass { get; set; }
     }
 }

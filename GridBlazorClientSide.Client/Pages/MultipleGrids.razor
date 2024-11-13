@@ -6,6 +6,7 @@
 @using System.Globalization
 @inject NavigationManager NavigationManager
 @inject HttpClient HttpClient
+@inject IJSRuntime jSRuntime
 
 <h1>Multiple Grids</h1>
 
@@ -19,23 +20,25 @@
 
 @if (_task1.IsCompleted && _task2.IsCompleted)
 {
-    <ul class="nav nav-pills mb-3" id="pills-tab" role="tablist">
-        <li class="nav-item">
-            <a class="nav-link active" id="pills-orders-tab" data-toggle="pill" href="#pills-orders" role="tab" aria-controls="pills-orders" aria-selected="true">Orders</a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link" id="pills-customers-tab" data-toggle="pill" href="#pills-customers" role="tab" aria-controls="pills-customers" aria-selected="false">Customers</a>
-        </li>
-    </ul>
-    <div class="tab-content" id="pills-tabContent">
-        <div class="tab-pane fade show active" id="pills-orders" role="tabpanel" aria-labelledby="pills-orders-tab">
-            <div style="margin:20px">
-                <GridComponent T="Order" Grid="@_ordersGrid"></GridComponent>
+    <div class="@Program.HtmlClass.TabDiv">
+        <ul @ref="labels" class="@Program.HtmlClass.TabList" @onclick:stopPropagation>
+            <li class="@Program.HtmlClass.TabItem @Program.HtmlClass.TabItemActive" data-grid="tab-item" data-grid-id="0">
+                <a class="@Program.HtmlClass.TabLink @Program.HtmlClass.TabLinkActive" data-grid="tab-link" data-grid-id="0" href="javascript:void(0);" @onclick="e => TabClicked(e, 0)">Orders</a>
+            </li>
+            <li class="@Program.HtmlClass.TabItem" data-grid="tab-item" data-grid-id="1">
+                <a class="@Program.HtmlClass.TabLink" data-grid="tab-link" data-grid-id="1" href="javascript:void(0);" @onclick="e => TabClicked(e, 1)">Customers</a>
+            </li>
+        </ul>
+        <div @ref="content" class="tab-content">
+            <div class="tab-pane @Program.HtmlClass.TabPaneActive" data-grid="tab-pane" data-grid-id="0" id="orders">
+                <div style="margin:20px">
+                    <GridComponent T="Order" Grid="@_ordersGrid"></GridComponent>
+                </div>
             </div>
-        </div>
-        <div class="tab-pane fade" id="pills-customers" role="tabpanel" aria-labelledby="pills-customers-tab">
-            <div style="margin:20px">
-                <GridComponent T="Customer" Grid="@_customersGrid"></GridComponent>
+            <div class="tab-pane @Program.HtmlClass.TabPaneHidden" data-grid="tab-pane" data-grid-id="1" id="customers">
+                <div style="margin:20px">
+                    <GridComponent T="Customer" Grid="@_customersGrid"></GridComponent>
+                </div>
             </div>
         </div>
     </div>
@@ -51,6 +54,10 @@ else
     private ICGrid _customersGrid;
     private Task _task1;
     private Task _task2;
+
+    private ElementReference labels;
+    private ElementReference content;
+
 
     [Parameter]
     public string OrdersGridState { get; set; }
@@ -125,6 +132,14 @@ else
         string customersGridState = _customersGrid.GetState();
         await Task.Run(() => 
             NavigationManager.NavigateTo($"/editorder/{((Order)item).OrderID.ToString()}/multiplegrids/{ordersGridState}/{customersGridState}"));
+    }
+
+    protected async Task TabClicked(MouseEventArgs e, int i)
+    {
+        await jSRuntime.InvokeVoidAsync("gridJsFunctions.setItemActive", labels, i, Program.HtmlClass.TabItemActive);
+        await jSRuntime.InvokeVoidAsync("gridJsFunctions.setLinkActive", labels, i, Program.HtmlClass.TabLinkActive);
+        await jSRuntime.InvokeVoidAsync("gridJsFunctions.setPaneActive", content, i,
+            Program.HtmlClass.TabPaneActive, Program.HtmlClass.TabPaneHidden);
     }
 }
 

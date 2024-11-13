@@ -2,9 +2,15 @@
 
 @if (_readonly)
 {
-    <input type='checkbox' checked="@_value" disabled="disabled" readonly="readonly">
+    <label>
+        <input type="checkbox" class="@GridComponent.Grid.HtmlClass.FormCheck" checked="@_value" disabled="disabled" readonly="readonly">
+        <span></span>
+    </label>
 }
 else
 {
-    <input type='checkbox' checked="@_value" @onchange="ChangeHandler" @onclick:stopPropagation>
+    <label>
+        <input type="checkbox" class="@GridComponent.Grid.HtmlClass.FormCheck" checked="@_value" @onchange="ChangeHandler" @onclick:stopPropagation>
+        <span></span>
+    </label>
 }

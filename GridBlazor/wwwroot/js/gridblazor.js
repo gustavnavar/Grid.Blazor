@@ -44,15 +44,49 @@
         else
             return null;
     },
-    setActive: function (element, i) {
+    setItemActive: function (element, i, activeClass) {
         if (element) {
-            var elements = element.querySelectorAll('[data-grid="tab"]');
+            var elements = element.querySelectorAll('[data-grid="tab-item"]');
             [].forEach.call(elements, function (el) {
-                el.classList.remove("active");
+                if (activeClass)
+                    el.classList.remove(activeClass);
             });
             elements = element.querySelectorAll('[data-grid-id="' + i + '"]');
             [].forEach.call(elements, function (el) {
-                el.classList.add("active");
+                if (activeClass)
+                    el.classList.add(activeClass);
+            });
+        }
+    },
+    setLinkActive: function (element, i, activeClass) {
+        if (element) {
+            var elements = element.querySelectorAll('[data-grid="tab-link"]');
+            [].forEach.call(elements, function (el) {
+                if (activeClass)
+                    el.classList.remove(activeClass);
+            });
+            elements = element.querySelectorAll('[data-grid-id="' + i + '"]');
+            [].forEach.call(elements, function (el) {
+                if (activeClass)
+                    el.classList.add(activeClass);
+            });
+        }
+    },
+    setPaneActive: function (element, i, activeClass, hiddenClass) {
+        if (element) {
+            var elements = element.querySelectorAll('[data-grid="tab-pane"]');
+            [].forEach.call(elements, function (el) {
+                if (activeClass)
+                    el.classList.remove(activeClass);
+                if (hiddenClass)
+                    el.classList.add(hiddenClass);
+            });
+            elements = element.querySelectorAll('[data-grid-id="' + i + '"]');
+            [].forEach.call(elements, function (el) {
+                if (hiddenClass)
+                    el.classList.remove(hiddenClass);
+                if (activeClass)
+                    el.classList.add(activeClass);
             });
         }
     },

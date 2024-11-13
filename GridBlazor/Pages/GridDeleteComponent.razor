@@ -8,7 +8,7 @@
 <div class="@GridComponent.GridCrudHeaderCssClass">@(string.IsNullOrWhiteSpace(GridComponent.Grid.DeleteFormLabel) ? Strings.Delete : GridComponent.Grid.DeleteFormLabel)</div>
 
 <p id="error" class="@GridComponent.GridErrorCssClass">@Error</p>
-<div class="form-horizontal">
+<div>
     @foreach (var column in GridComponent.Grid.Columns)
     {
         if (((ICGridColumn)column).SubGrids == null && column.ComponentType == null
@@ -25,27 +25,27 @@
             {
                 continue;
             }
-            <div class="form-group row" style="@(((IGridColumn<T>)column).CrudHidden(Item).HasFlag(CrudHidden.DELETE)?"display:none;":"")">
+            <div class="@GridComponent.Grid.HtmlClass.FormGroupRow" style="@(((IGridColumn<T>)column).CrudHidden(Item).HasFlag(CrudHidden.DELETE)?"display:none;":"")">
                 @if (!string.IsNullOrWhiteSpace(column.TooltipValue))
                 {
-                    <div class="col-md-@column.CrudLabelWidth.ToString()">
+                    <div class="@(GridComponent.Grid.HtmlClass.FormLabel + " " + GridComponent.Grid.HtmlClass.ColMd + column.CrudLabelWidth.ToString())">
                         <FormTooltipComponent T="@T" Column="@column"></FormTooltipComponent>
                     </div>
                 }
                 else
                 {
-                    <label for="@column.FieldName" class="col-form-label col-md-@column.CrudLabelWidth.ToString()">@column.Title</label>
+                    <label for="@column.FieldName" class="@(GridComponent.Grid.HtmlClass.FormLabel + " " + GridComponent.Grid.HtmlClass.ColMd+ column.CrudLabelWidth.ToString())">@column.Title</label>
                 }
-                <div class="@(type == typeof(bool) && !column.ToggleSwitch ? "col-md-1" : "col-md-" + column.CrudWidth.ToString())">
+                <div class="@(type == typeof(bool) && column.ToggleSwitch ? GridComponent.Grid.HtmlClass.FormDivToggleSwitch : GridComponent.Grid.HtmlClass.FormDivInput) @(type == typeof(bool) && !column.ToggleSwitch ? GridComponent.Grid.HtmlClass.ColMd + "1" : GridComponent.Grid.HtmlClass.ColMd + column.CrudWidth.ToString())">
                     @if (((IGridColumn<T>)column).IsSelectField.IsSelectKey)
                     {
                         string text = ((IGridColumn<T>)column).GetFormatedValue(((IGridColumn<T>)column).IsSelectField.Expression, Item);
-                        <input id="@column.FieldName" class="form-control" readonly="readonly" value="@text" />
+                        <input id="@column.FieldName" class="@GridComponent.Grid.HtmlClass.FormInput" readonly="readonly" value="@text" />
                     }
                     else if (((IGridColumn<T>)column).IsSelectColumn.IsSelectKey)
                     {
                         string text = ((IGridColumn<T>)column).GetFormatedValue(((IGridColumn<T>)column).IsSelectColumn.Expression, Item);
-                        <input id="@column.FieldName" class="form-control" readonly="readonly" value="@text" />
+                        <input id="@column.FieldName" class="@GridComponent.Grid.HtmlClass.FormInput" readonly="readonly" value="@text" />
                     }
                     else if (type == typeof(bool))
                     {
@@ -53,32 +53,38 @@
                         {
                             if (column.ToggleSwitch)
                             {
-                                <label class="col-form-label">@column.FalseLabel</label>
+                                <label class="@GridComponent.Grid.HtmlClass.FormLabel">@column.FalseLabel</label>
                                 <label class="grid-switch">
-                                    <input id="@column.FieldName" type="checkbox" class="form-control" disabled="disabled" readonly="readonly" checked="checked" value="true" />
-                                    <span class="grid-slider round"></span>
+                                    <input id="@column.FieldName" type="checkbox" class="@GridComponent.Grid.HtmlClass.FormInput" disabled="disabled" readonly="readonly" checked="checked" value="true" />
+                                    <span class="@GridComponent.Grid.HtmlClass.FormSpanToggleSwitch"></span>
                                 </label>
-                                <label class="col-form-label">@column.TrueLabel</label>
+                                <label class="@GridComponent.Grid.HtmlClass.FormLabel">@column.TrueLabel</label>
                             }
                             else
                             {
-                                <input id="@column.FieldName" type="checkbox" class="form-check" disabled="disabled" readonly="readonly" checked="checked" value="true" />
+                                <label>
+                                    <input id="@column.FieldName" type="checkbox" class="@GridComponent.Grid.HtmlClass.FormCheck" disabled="disabled" readonly="readonly" checked="checked" value="true" />
+                                    <span></span>
+                                </label>
                             }
                         }
                         else
                         {
                             if (column.ToggleSwitch)
                             {
-                                <label class="col-form-label">@column.FalseLabel</label>
+                                <label class="@GridComponent.Grid.HtmlClass.FormLabel">@column.FalseLabel</label>
                                 <label class="grid-switch">
-                                    <input id="@column.FieldName" type="checkbox" class="form-control" disabled="disabled" readonly="readonly" value="false" />
-                                    <span class="grid-slider round"></span>
+                                    <input id="@column.FieldName" type="checkbox" class="@GridComponent.Grid.HtmlClass.FormInput" disabled="disabled" readonly="readonly" value="false" />
+                                    <span class="@GridComponent.Grid.HtmlClass.FormSpanToggleSwitch"></span>
                                 </label>
-                                <label class="col-form-label">@column.TrueLabel</label>
+                                <label class="@GridComponent.Grid.HtmlClass.FormLabel">@column.TrueLabel</label>
                             }
                             else
                             {
-                                <input id="@column.FieldName" type="checkbox" class="form-check" disabled="disabled" readonly="readonly" value="false" />
+                                <label>
+                                    <input id="@column.FieldName" type="checkbox" class="@GridComponent.Grid.HtmlClass.FormCheck" disabled="disabled" readonly="readonly" value="false" />
+                                    <span></span>
+                                </label>
                             }
                         }
                     }
@@ -86,35 +92,35 @@
                     {
                         if (((IGridColumn<T>)column).InputType == InputType.TextArea)
                         {
-                            <textarea id="@column.FieldName" class="form-control" rows="@column.TextAreaRows" readonly="readonly" value="@column.GetFormatedValue(value)" />
+                            <textarea id="@column.FieldName" class="@GridComponent.Grid.HtmlClass.FormTextArea" rows="@column.TextAreaRows" readonly="readonly" value="@column.GetFormatedValue(value)" />
                         }
                         else
                         {
-                            <input id="@column.FieldName" class="form-control" readonly="readonly" value="@column.GetFormatedValue(value)" />
+                            <input id="@column.FieldName" class="@GridComponent.Grid.HtmlClass.FormInput" readonly="readonly" value="@column.GetFormatedValue(value)" />
                         }
                     }
                     else if (type == typeof(string) && ((IGridColumn<T>)column).InputType == InputType.File)
                     {
-                        <input id="@column.FieldName" name="@column.FieldName" type="file" class="form-control" readonly="readonly" value="@column.GetFormatedValue(value)" />
+                        <input id="@column.FieldName" name="@column.FieldName" type="file" class="@GridComponent.Grid.HtmlClass.FormInput" readonly="readonly" value="@column.GetFormatedValue(value)" />
                     }
                     else if (type == typeof(DateTime))
                     {
                         string typeAttr = ((IGridColumn<T>)column).InputType == InputType.None ? "date" : ((IGridColumn<T>)column).InputType.ToTypeAttr();
-                        <input id="@column.FieldName" type="@typeAttr" class="form-control" readonly="readonly" value="@(((ICGridColumn)column).GetFormatedDateTime(value, typeAttr))" />
+                        <input id="@column.FieldName" type="@typeAttr" class="@GridComponent.Grid.HtmlClass.FormInput" readonly="readonly" value="@(((ICGridColumn)column).GetFormatedDateTime(value, typeAttr))" />
                     }
                     else if (type == typeof(DateTimeOffset))
                     {
                         string typeAttr = ((IGridColumn<T>)column).InputType == InputType.None ? "date" : ((IGridColumn<T>)column).InputType.ToTypeAttr();
-                        <input id="@column.FieldName" type="@typeAttr" class="form-control" readonly="readonly" value="@(((ICGridColumn)column).GetFormatedDateTime(value, typeAttr))" />
+                        <input id="@column.FieldName" type="@typeAttr" class="@GridComponent.Grid.HtmlClass.FormInput" readonly="readonly" value="@(((ICGridColumn)column).GetFormatedDateTime(value, typeAttr))" />
                     }
                     else if (type == typeof(TimeSpan))
                     {
                         string typeAttr = ((IGridColumn<T>)column).InputType == InputType.None ? "time" : ((IGridColumn<T>)column).InputType.ToTypeAttr();
-                        <input id="@column.FieldName" type="@typeAttr" class="form-control" readonly="readonly" value="@(((ICGridColumn)column).GetFormatedDateTime(value, typeAttr))" />
+                        <input id="@column.FieldName" type="@typeAttr" class="@GridComponent.Grid.HtmlClass.FormInput" readonly="readonly" value="@(((ICGridColumn)column).GetFormatedDateTime(value, typeAttr))" />
                     }
                     else
                     {
-                        <input id="@column.FieldName" class="form-control" readonly="readonly" value="@column.GetFormatedValue(value)" />
+                        <input id="@column.FieldName" class="@GridComponent.Grid.HtmlClass.FormInput" readonly="readonly" value="@column.GetFormatedValue(value)" />
                     }
                 </div>
             </div>
@@ -122,28 +128,28 @@
         else if ((((ICGridColumn)column).SubGrids != null || column.DeleteComponentType != null)
             && string.IsNullOrWhiteSpace(column.TabGroup))
         {
-            <div class="form-group row" style="@(((IGridColumn<T>)column).CrudHidden(Item).HasFlag(CrudHidden.DELETE)?"display:none;":"")">
+            <div class="@GridComponent.Grid.HtmlClass.FormGroupRow" style="@(((IGridColumn<T>)column).CrudHidden(Item).HasFlag(CrudHidden.DELETE)?"display:none;":"")">
                 @if (!string.IsNullOrWhiteSpace(column.TooltipValue))
                 {
-                    <div class="col-md-@column.CrudLabelWidth.ToString()">
+                    <div class="@(GridComponent.Grid.HtmlClass.ColMd + column.CrudLabelWidth.ToString())">
                         <FormTooltipComponent T="@T" Column="@column"></FormTooltipComponent>
                     </div>
                 }
                 else
                 {
-                    <label class="col-form-label col-md-@column.CrudLabelWidth.ToString()">@column.Title</label>
+                    <label class="@(GridComponent.Grid.HtmlClass.FormLabel + " " + GridComponent.Grid.HtmlClass.ColMd + column.CrudLabelWidth.ToString())">@column.Title</label>
                 }
                 @if (column.EnableCard)
                 {
-                    <div class="col-md-@((12 - column.CrudLabelWidth).ToString())">
-                        <div class="card panel panel-default">
-                            <div class="card-body panel-body">@_renderFragments.Get(column.Name)</div>
+                    <div class="@(GridComponent.Grid.HtmlClass.ColMd + (12 - column.CrudLabelWidth).ToString())">
+                        <div class="@GridComponent.Grid.HtmlClass.Card">
+                            <div class="@GridComponent.Grid.HtmlClass.CardBody">@_renderFragments.Get(column.Name)</div>
                         </div>
                      </div>
                  }
                  else
                  {
-                    <div class="col-md-@(column.CrudWidth.ToString())">
+                    <div class="@(GridComponent.Grid.HtmlClass.ColMd + column.CrudWidth.ToString())">
                         @_renderFragments.Get(column.Name)
                     </div>
                  }
@@ -159,11 +165,11 @@
                     .Where(r => r.TabGroup != null && r.TabGroup.Equals(tabGruop) && _renderFragments.Keys.Any(s => s.Equals(r.Name)));
             var tabLabels = columns.Select(r => new SelectItem(r.Name, r.Title));
             var column = columns.FirstOrDefault();
-            <div class="form-group row">
-                <div class="col-md-offset-@(column.CrudLabelWidth.ToString()) offset-md-@(column.CrudLabelWidth.ToString()) col-md-@((12 - column.CrudLabelWidth).ToString())">
-                    <div class="card panel panel-default">
-                        <div class="card-body panel-body">
-                            <GridTabComponent TabLabels="@tabLabels" TabContent="@_renderFragments" />
+            <div class="@GridComponent.Grid.HtmlClass.FormGroupRow">
+                <div class="@(GridComponent.Grid.HtmlClass.OffsetMd + column.CrudLabelWidth.ToString() + " " + GridComponent.Grid.HtmlClass.ColMd + (12 - column.CrudLabelWidth).ToString())">
+                    <div class="@GridComponent.Grid.HtmlClass.Card">
+                        <div class="@GridComponent.Grid.HtmlClass.CardBody">
+                            <GridTabComponent T="@T" TabLabels="@tabLabels" TabContent="@_renderFragments" />
                         </div>
                     </div>
                 </div>
@@ -173,17 +179,17 @@
 
     @if (GridComponent.Grid.DeleteConfirmation)
     {
-        <div class="form-group row">
-            <label class="col-form-label col-md-@GridComponent.Grid.DeleteConfirmationLabelWidth.ToString()">@Strings.Code</label>
-            <div class="col-md-@GridComponent.Grid.DeleteConfirmationWidth.ToString()">
-                <input class="form-control" id="code" name="code" readonly="readonly" type="text" @bind-value="_code">
+        <div class="@GridComponent.Grid.HtmlClass.FormGroupRow">
+            <label class="@(GridComponent.Grid.HtmlClass.FormLabel + " " + GridComponent.Grid.HtmlClass.ColMd + GridComponent.Grid.DeleteConfirmationLabelWidth.ToString())">@Strings.Code</label>
+            <div class="@GridComponent.Grid.HtmlClass.FormDivInput @(GridComponent.Grid.HtmlClass.ColMd + GridComponent.Grid.DeleteConfirmationWidth.ToString())">
+                <input class="@GridComponent.Grid.HtmlClass.FormInput" id="code" name="code" readonly="readonly" type="text" @bind-value="_code">
             </div>
         </div>
 
-        <div class="form-group row">
-            <label class="col-form-label col-md-@GridComponent.Grid.DeleteConfirmationLabelWidth.ToString()">@Strings.Confirm_Code</label>
-            <div class="col-md-@GridComponent.Grid.DeleteConfirmationWidth.ToString()">
-                <input class="form-control" id="confirm_code" name="confirm_code" type="text" @bind-value="_confirmationCode">
+        <div class="@GridComponent.Grid.HtmlClass.FormGroupRow">
+            <label class="@(GridComponent.Grid.HtmlClass.FormLabel + " " + GridComponent.Grid.HtmlClass.ColMd + GridComponent.Grid.DeleteConfirmationLabelWidth.ToString())">@Strings.Confirm_Code</label>
+            <div class="@GridComponent.Grid.HtmlClass.FormDivInput @(GridComponent.Grid.HtmlClass.ColMd + GridComponent.Grid.DeleteConfirmationWidth.ToString())">
+                <input class="@GridComponent.Grid.HtmlClass.FormInput" id="confirm_code" name="confirm_code" type="text" @bind-value="_confirmationCode">
             </div>
         </div>
     }
@@ -202,11 +208,11 @@
                     {
                         if (buttonCrudComponent.Content.HasValue)
                         {
-                            <button class="btn btn-primary btn-md" type="button" title="@buttonCrudComponent.Label" @onclick="() => GridComponent.ButtonCrudComponentHandler(key)" @onclick:stopPropagation>@buttonCrudComponent.Content.Value</button>
+                            <button class="@GridComponent.Grid.HtmlClass.ButtonPrimary" type="button" title="@buttonCrudComponent.Label" @onclick="() => GridComponent.ButtonCrudComponentHandler(key)" @onclick:stopPropagation>@buttonCrudComponent.Content.Value</button>
                         }
                         else
                         {
-                            <button class="btn btn-primary btn-md" type="button" title="@buttonCrudComponent.Label" @onclick="() => GridComponent.ButtonCrudComponentHandler(key)" @onclick:stopPropagation>@buttonCrudComponent.Label</button>
+                            <button class="@GridComponent.Grid.HtmlClass.ButtonPrimary" type="button" title="@buttonCrudComponent.Label" @onclick="() => GridComponent.ButtonCrudComponentHandler(key)" @onclick:stopPropagation>@buttonCrudComponent.Label</button>
                         }
                     }
                 }

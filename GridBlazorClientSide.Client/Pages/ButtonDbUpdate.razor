@@ -2,8 +2,8 @@
 @using GridShared.Columns
 @implements ICustomGridComponent<Order>
 
-<button class='btn btn-sm btn-primary' @onclick="MyFirstHandler">+1</button>
-<button class='btn btn-sm btn-primary' @onclick="MySecondHandler">-1</button>
+<button class='@Program.HtmlClass.ButtonPrimary @Program.ButtonSmall' @onclick="MyFirstHandler">+1</button>
+<button class='@Program.HtmlClass.ButtonPrimary @Program.ButtonSmall' @onclick="MySecondHandler">-1</button>
 
 @code {
     [Parameter]

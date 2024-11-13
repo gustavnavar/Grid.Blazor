@@ -10,13 +10,13 @@
 
 @if (visible)
 {
-    <div class="dropdown dropdown-menu grid-dropdown opened" style="display:block;position:relative;" @onkeyup="FilterKeyup" @onclick:stopPropagation @onkeyup:stopPropagation>
+    <div class="@Program.HtmlClass.DropdownMenu grid-dropdown" style="display:block;position:relative;overflow:visible;" @onkeyup="FilterKeyup" @onclick:stopPropagation @onkeyup:stopPropagation>
         <div class="grid-dropdown-arrow"></div>
         <div class="grid-dropdown-inner">
             <div class="grid-popup-widget">
-                <div class="form-group">
+                <div class="@(Program.HtmlClass.FormGroupRow)">
                     <p><i>This is custom filter widget demo</i></p>
-                    <select @ref="firstSelect" class="grid-filter-type customerslist form-control" style="width:250px;" @bind="_filterValue">
+                    <select @ref="firstSelect" class="grid-filter-type customerslist @Program.HtmlClass.FormSelect" style="width:250px;" @bind="_filterValue">
                         @foreach (var customerName in _customersNames)
                         {
                             <option value="@customerName">@customerName</option>
@@ -24,7 +24,7 @@
                     </select>
                 </div>
                 <div class="grid-filter-buttons">
-                    <button type="button" class="btn btn-primary grid-apply" @onclick="ApplyButtonClicked">
+                    <button type="button" class="@Program.HtmlClass.ButtonPrimary grid-apply" @onclick="ApplyButtonClicked">
                         @Strings.ApplyFilterButtonText
                     </button>
                 </div>
@@ -32,7 +32,7 @@
             <div class="grid-popup-additional">
                 @if (_clearVisible)
                 {
-                    <ul class="menu-list">
+                    <ul class="grid-menu-list">
                         <li>
                             <a class="grid-filter-clear" href="javascript:void(0);" @onclick="ClearButtonClicked">
                                 @Strings.ClearFilterLabel

@@ -1,6 +1,7 @@
 ﻿using GridShared;
 using GridShared.Grouping;
 using GridShared.Pagination;
+using GridShared.Style;
 using GridShared.Utility;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.Extensions.Primitives;
@@ -167,6 +168,18 @@ namespace GridMvc.Html
         {
             get { return _source.RemoveDiacritics; }
             set { _source.RemoveDiacritics = value; }
+        }
+
+        public CssFramework CssFramework
+        {
+            get { return _source.CssFramework; }
+            set { _source.CssFramework = value; }
+        }
+
+        public HtmlClass HtmlClass
+        {
+            get { return _source.HtmlClass; }
+            set { _source.HtmlClass = value; }
         }
 
         string IGrid.GetRowCssClasses(object item)

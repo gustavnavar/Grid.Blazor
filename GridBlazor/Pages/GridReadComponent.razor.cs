@@ -23,7 +23,7 @@ namespace GridBlazor.Pages
         public QueryDictionary<VariableReference> Children { get; private set; } = new QueryDictionary<VariableReference>();
 
         [CascadingParameter(Name = "GridComponent")]
-        protected GridComponent<T> GridComponent { get; set; }
+        internal GridComponent<T> GridComponent { get; set; }
 
         [Parameter]
         public T Item { get; set; }

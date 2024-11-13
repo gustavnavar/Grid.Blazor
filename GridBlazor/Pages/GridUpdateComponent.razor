@@ -15,7 +15,7 @@
         <ValidationSummary />
     }
     <p id="error" class="@GridComponent.GridErrorCssClass">@Error</p>
-    <div class="form-horizontal">
+    <div>
         @foreach (var column in GridComponent.Grid.Columns)
         {
             if (((ICGridColumn)column).SubGrids == null && column.ComponentType == null
@@ -32,46 +32,53 @@
                 {
                     continue;
                 }
-                <div class="form-group row" style="@(((IGridColumn<T>)column).CrudHidden(Item).HasFlag(CrudHidden.UPDATE) && !((IGridColumn<T>)column).ReadOnlyOnUpdate(Item) ? "display:none;" : "")">
+                <div class="@GridComponent.Grid.HtmlClass.FormGroupRow" style="@(((IGridColumn<T>)column).CrudHidden(Item).HasFlag(CrudHidden.UPDATE) && !((IGridColumn<T>)column).ReadOnlyOnUpdate(Item) ? "display:none;" : "")">
                     @if (!string.IsNullOrWhiteSpace(column.TooltipValue))
                     {
-                        <div class="col-md-@column.CrudLabelWidth.ToString()">
+                        <div class="@(GridComponent.Grid.HtmlClass.FormLabel + " " + GridComponent.Grid.HtmlClass.ColMd + column.CrudLabelWidth.ToString())">
                             <FormTooltipComponent T="@T" Column="@column"></FormTooltipComponent>
                         </div>
                     }
                     else
                     {
-                        <label for="@column.FieldName" class="col-form-label col-md-@column.CrudLabelWidth.ToString()">@column.Title</label>
+                        <label for="@column.FieldName" class="@(GridComponent.Grid.HtmlClass.FormLabel + " " + GridComponent.Grid.HtmlClass.ColMd + column.CrudLabelWidth.ToString())">@column.Title</label>
                     }
-                    <div class="@(type == typeof(bool) && !column.ToggleSwitch ? "col-md-1" : "col-md-" + column.CrudWidth.ToString())">
+                    <div class="@(type == typeof(bool) && column.ToggleSwitch ? GridComponent.Grid.HtmlClass.FormDivToggleSwitch : GridComponent.Grid.HtmlClass.FormDivInput) @(type == typeof(bool) && !column.ToggleSwitch ? GridComponent.Grid.HtmlClass.ColMd + "1" : GridComponent.Grid.HtmlClass.ColMd + column.CrudWidth.ToString())">
                         @if (column.IsPrimaryKey)
                         {
-                            <input id="@column.FieldName" name="@column.FieldName" class="form-control" readonly="readonly" value="@column.GetFormatedValue(value)" />
+                            <input id="@column.FieldName" name="@column.FieldName" class="@GridComponent.Grid.HtmlClass.FormInput" readonly="readonly" value="@column.GetFormatedValue(value)" />
                         }
                         else if (((IGridColumn<T>)column).IsSelectField.IsSelectKey)
                         {
                             if (((IGridColumn<T>)column).ReadOnlyOnUpdate(Item))
                             {
                                 string text = ((IGridColumn<T>)column).GetFormatedValue(((IGridColumn<T>)column).IsSelectField.Expression, Item);
-                                <input id="@column.FieldName" name="@column.FieldName" class="form-control" readonly="readonly" value="@text" />
+                                <input id="@column.FieldName" name="@column.FieldName" class="@GridComponent.Grid.HtmlClass.FormInput" readonly="readonly" value="@text" />
                             }
                             else
                             {
                                 var selectedValue = column.GetFormatedValue(value);
-                                <select autocomplete="@column.CustomAutoComplete.Invoke()" id="@column.FieldName" name="@column.FieldName" class="form-control @(ColumnErrors.ContainsKey(@column.FieldName) ? "input-validation-error" : "")" value="@selectedValue" @onchange="(e) => ChangeValue(e, column)">
-                                    <option value="">@Strings.SelectItem</option>
-                                    @foreach (var selectItem in ((IGridColumn<T>)column).SelectItems)
-                                    {
-                                        if (selectItem.Value == selectedValue)
+                                <div class="@GridComponent.Grid.HtmlClass.FormDivSelect">
+                                    <select autocomplete="@column.CustomAutoComplete.Invoke()" 
+                                            id="@column.FieldName" 
+                                            name="@column.FieldName"
+                                            class="@GridComponent.Grid.HtmlClass.FormSelect @(ColumnErrors.ContainsKey(@column.FieldName) ? "input-validation-error" : "")" 
+                                            value="@selectedValue" 
+                                            @onchange="(e) => ChangeValue(e, column)">
+                                        <option value="">@Strings.SelectItem</option>
+                                        @foreach (var selectItem in ((IGridColumn<T>)column).SelectItems)
                                         {
-                                            <option value="@selectItem.Value" selected="selected">@selectItem.Title</option>
+                                            if (selectItem.Value == selectedValue)
+                                            {
+                                                <option value="@selectItem.Value" selected="selected">@selectItem.Title</option>
+                                            }
+                                            else
+                                            {
+                                                <option value="@selectItem.Value">@selectItem.Title</option>
+                                            }
                                         }
-                                        else
-                                        {
-                                            <option value="@selectItem.Value">@selectItem.Title</option>
-                                        }
-                                    }
-                                </select>
+                                    </select>
+                                </div>
                                  <span class="field-validation-error">
                                     <span>@ColumnErrors.Get(column.FieldName)</span>
                                 </span>
@@ -82,32 +89,39 @@
                             if (((IGridColumn<T>)column).ReadOnlyOnUpdate(Item))
                             {
                                 string text = ((IGridColumn<T>)column).GetFormatedValue(((IGridColumn<T>)column).IsSelectColumn.Expression, Item);
-                                <input id="@column.FieldName" name="@column.FieldName" class="form-control" readonly="readonly" value="@text" />
+                                <input id="@column.FieldName" name="@column.FieldName" class="@GridComponent.Grid.HtmlClass.FormInput" readonly="readonly" value="@text" />
                             }
                             else
                             {
                                 var selectedValue = column.GetFormatedValue(value);
-                                <select autocomplete="@column.CustomAutoComplete.Invoke()" id="@column.FieldName" name="@column.FieldName" class="form-control @(ColumnErrors.ContainsKey(@column.FieldName) ? "input-validation-error" : "")" value="@selectedValue" @onchange="(e) => ChangeValue(e, column)">
-                                    <option value="">@Strings.SelectItem</option>
-                                    @{
-                                        var selectItems = SelectItems.Get(column.Name);
-                                        if (selectItems != null && selectItems.Count() > 0)
-                                        {
-                                            foreach (var selectItem in selectItems)
+                                <div class="@GridComponent.Grid.HtmlClass.FormDivSelect">
+                                    <select autocomplete="@column.CustomAutoComplete.Invoke()" 
+                                            id="@column.FieldName" 
+                                            name="@column.FieldName"
+                                            class="@GridComponent.Grid.HtmlClass.FormSelect @(ColumnErrors.ContainsKey(@column.FieldName) ? "input-validation-error" : "")" 
+                                            value="@selectedValue" 
+                                            @onchange="(e) => ChangeValue(e, column)">
+                                        <option value="">@Strings.SelectItem</option>
+                                        @{
+                                            var selectItems = SelectItems.Get(column.Name);
+                                            if (selectItems != null && selectItems.Count() > 0)
                                             {
-                                                if (selectItem.Value == selectedValue)
+                                                foreach (var selectItem in selectItems)
                                                 {
-                                                    <option value="@selectItem.Value" selected="selected">@selectItem.Title</option>
-                                                }
-                                                else
-                                                {
-                                                    <option value="@selectItem.Value">@selectItem.Title</option>
+                                                    if (selectItem.Value == selectedValue)
+                                                    {
+                                                        <option value="@selectItem.Value" selected="selected">@selectItem.Title</option>
+                                                    }
+                                                    else
+                                                    {
+                                                        <option value="@selectItem.Value">@selectItem.Title</option>
+                                                    }
                                                 }
                                             }
                                         }
-                                    }
-                                </select>
-                                 <span class="field-validation-error">
+                                    </select>
+                                </div>
+                                <span class="field-validation-error">
                                     <span>@ColumnErrors.Get(column.FieldName)</span>
                                 </span>
                             }
@@ -122,49 +136,55 @@
                                     {
                                         if (column.ToggleSwitch)
                                         {
-                                            <label class="col-form-label">@column.FalseLabel</label>
+                                            <label class="@GridComponent.Grid.HtmlClass.FormLabel">@column.FalseLabel</label>
                                             <label class="grid-switch">
-                                                <input id="@column.FieldName" name="@column.FieldName" type="checkbox" class="form-control" disabled="disabled" readonly="readonly" checked="checked" value="true" />
-                                                <span class="grid-slider round"></span>
+                                                <input id="@column.FieldName" name="@column.FieldName" type="checkbox" class="@GridComponent.Grid.HtmlClass.FormInput" disabled="disabled" readonly="readonly" checked="checked" value="true" />
+                                                <span class="@GridComponent.Grid.HtmlClass.FormSpanToggleSwitch"></span>
                                             </label>
-                                            <label class="col-form-label">@column.TrueLabel</label>
+                                            <label class="@GridComponent.Grid.HtmlClass.FormLabel">@column.TrueLabel</label>
                                         }
                                         else
                                         {
-                                            <input id="@column.FieldName" name="@column.FieldName" type="checkbox" class="form-check" disabled="disabled" readonly="readonly" checked="checked" value="true" />
+                                            <label>
+                                                <input id="@column.FieldName" name="@column.FieldName" type="checkbox" class="@GridComponent.Grid.HtmlClass.FormCheck" disabled="disabled" readonly="readonly" checked="checked" value="true" />
+                                                <span></span>
+                                            </label>
                                         }
                                     }
                                     else
                                     {
                                         if (column.ToggleSwitch)
                                         {
-                                            <label class="col-form-label">@column.FalseLabel</label>
+                                            <label class="@GridComponent.Grid.HtmlClass.FormLabel">@column.FalseLabel</label>
                                             <label class="grid-switch">
-                                                <input id="@column.FieldName" name="@column.FieldName" type="checkbox" class="form-control" disabled="disabled" readonly="readonly" value="false" />
-                                                <span class="grid-slider round"></span>
+                                                <input id="@column.FieldName" name="@column.FieldName" type="checkbox" class="@GridComponent.Grid.HtmlClass.FormInput" disabled="disabled" readonly="readonly" value="false" />
+                                                <span class="@GridComponent.Grid.HtmlClass.FormSpanToggleSwitch"></span>
                                             </label>
-                                            <label class="col-form-label">@column.TrueLabel</label>
+                                            <label class="@GridComponent.Grid.HtmlClass.FormLabel">@column.TrueLabel</label>
                                         }
                                         else
                                         {
-                                            <input id="@column.FieldName" name="@column.FieldName" type="checkbox" class="form-check" disabled="disabled" readonly="readonly" value="false" />
+                                            <label>
+                                                <input id="@column.FieldName" name="@column.FieldName" type="checkbox" class="@GridComponent.Grid.HtmlClass.FormCheck" disabled="disabled" readonly="readonly" value="false" />
+                                                <span></span>
+                                            </label>
                                         }
                                     }
                                 }
                                 else if (type == typeof(string) && ((IGridColumn<T>)column).InputType == InputType.TextArea)
                                 {
-                                    <textarea id="@column.FieldName" name="@column.FieldName" class="form-control" rows="@column.TextAreaRows" readonly="readonly" value="@column.GetFormatedValue(value)" />
+                                    <textarea id="@column.FieldName" name="@column.FieldName" class="@GridComponent.Grid.HtmlClass.FormTextArea" rows="@column.TextAreaRows" readonly="readonly" value="@column.GetFormatedValue(value)" />
                                 }
                                 else
                                 {
-                                    <input id="@column.FieldName" name="@column.FieldName" class="form-control" readonly="readonly" value="@column.GetFormatedValue(value)" />
+                                    <input id="@column.FieldName" name="@column.FieldName" class="@GridComponent.Grid.HtmlClass.FormInput" readonly="readonly" value="@column.GetFormatedValue(value)" />
                                 }
                             }
                             else
                             {
                                 if (type == typeof(string) && ((IGridColumn<T>)column).InputType == InputType.TextArea)
                                 {
-                                    <textarea autocomplete="@column.CustomAutoComplete.Invoke()" id="@column.FieldName" name="@column.FieldName" class="form-control @(ColumnErrors.ContainsKey(@column.FieldName) ? "input-validation-error" : "")" rows="@column.TextAreaRows" value="@column.GetFormatedValue(value)" @onchange="(e) => ChangeValue(e, column)" />
+                                    <textarea autocomplete="@column.CustomAutoComplete.Invoke()" id="@column.FieldName" name="@column.FieldName" class="@GridComponent.Grid.HtmlClass.FormTextArea @(ColumnErrors.ContainsKey(@column.FieldName) ? "input-validation-error" : "")" rows="@column.TextAreaRows" value="@column.GetFormatedValue(value)" @onchange="(e) => ChangeValue(e, column)" />
                                 }
                                 else if (((IGridColumn<T>)column).InputType == InputType.File)
                                 {
@@ -176,10 +196,10 @@
                                     {
                                         value = "";
                                     }
-                                    <div class="input-group">
-                                        <input type="text" autocomplete="@column.CustomAutoComplete.Invoke()" id="@column.FieldName" name="@column.FieldName" class="form-control  @(ColumnErrors.ContainsKey(@column.FieldName) ? "input-validation-error" : "")" value="@column.GetFormatedValue(value)">
-                                        <span class="input-group-btn">
-                                            <button type="button" class="btn btn-default btn-primary grid-button-input-file" @onclick="() => ButtonFileClicked(column.FieldName)">@Strings.Files</button>
+                                    <div class="@GridComponent.Grid.HtmlClass.InputGroup">
+                                        <input type="text" autocomplete="@column.CustomAutoComplete.Invoke()" id="@column.FieldName" name="@column.FieldName" class="grid-input-file @GridComponent.Grid.HtmlClass.FormInput @(ColumnErrors.ContainsKey(@column.FieldName) ? "input-validation-error" : "")" value="@column.GetFormatedValue(value)">
+                                        <span class="@GridComponent.Grid.HtmlClass.InputGroupRightButton grid-span-input-file">
+                                            <button type="button" class="@GridComponent.Grid.HtmlClass.Button grid-button-input-file" @onclick="() => ButtonFileClicked(column.FieldName)">@Strings.Files</button>
                                         </span>
                                         @_renderFragments.Get(column.Name)
                                     </div>
@@ -191,44 +211,44 @@
                                     {
                                         if (GridComponent.IsWeekSupported)
                                         {
-                                            <input autocomplete="@column.CustomAutoComplete.Invoke()" id="@column.FieldName" name="@column.FieldName" type="@typeAttr" placeholder="yyyy-Www" class="form-control @(ColumnErrors.ContainsKey(@column.FieldName) ? "input-validation-error" : "")" value="@(((ICGridColumn)column).GetFormatedDateTime(value, typeAttr))" @onchange="(e) => ChangeValue(e, column, typeAttr)" />
+                                            <input autocomplete="@column.CustomAutoComplete.Invoke()" id="@column.FieldName" name="@column.FieldName" type="@typeAttr" placeholder="yyyy-Www" class="@GridComponent.Grid.HtmlClass.FormInput @(ColumnErrors.ContainsKey(@column.FieldName) ? "input-validation-error" : "")" value="@(((ICGridColumn)column).GetFormatedDateTime(value, typeAttr))" @onchange="(e) => ChangeValue(e, column, typeAttr)" />
                                         }
                                         else
                                         {
-                                            <input autocomplete="@column.CustomAutoComplete.Invoke()" id="@column.FieldName" name="@column.FieldName" type="text" placeholder="yyyy-Www" class="form-control @(ColumnErrors.ContainsKey(@column.FieldName) ? "input-validation-error" : "")" value="@(((ICGridColumn)column).GetFormatedDateTime(value, typeAttr))" @onchange="(e) => ChangeValue(e, column, typeAttr)" />
+                                            <input autocomplete="@column.CustomAutoComplete.Invoke()" id="@column.FieldName" name="@column.FieldName" type="text" placeholder="yyyy-Www" class="@GridComponent.Grid.HtmlClass.FormInput @(ColumnErrors.ContainsKey(@column.FieldName) ? "input-validation-error" : "")" value="@(((ICGridColumn)column).GetFormatedDateTime(value, typeAttr))" @onchange="(e) => ChangeValue(e, column, typeAttr)" />
                                         }
                                     }
                                     else if (typeAttr == "month")
                                     {
                                         if (GridComponent.IsMonthSupported)
                                         {
-                                            <input autocomplete="@column.CustomAutoComplete.Invoke()" id="@column.FieldName" name="@column.FieldName" type="@typeAttr" placeholder="yyyy-mm" class="form-control @(ColumnErrors.ContainsKey(@column.FieldName) ? "input-validation-error" : "")" value="@(((ICGridColumn)column).GetFormatedDateTime(value, typeAttr))" @onchange="(e) => ChangeValue(e, column, typeAttr)" />
+                                            <input autocomplete="@column.CustomAutoComplete.Invoke()" id="@column.FieldName" name="@column.FieldName" type="@typeAttr" placeholder="yyyy-mm" class="@GridComponent.Grid.HtmlClass.FormInput @(ColumnErrors.ContainsKey(@column.FieldName) ? "input-validation-error" : "")" value="@(((ICGridColumn)column).GetFormatedDateTime(value, typeAttr))" @onchange="(e) => ChangeValue(e, column, typeAttr)" />
                                         }
                                         else
                                         {
-                                            <input autocomplete="@column.CustomAutoComplete.Invoke()" id="@column.FieldName" name="@column.FieldName" type="text" placeholder="yyyy-mm" class="form-control @(ColumnErrors.ContainsKey(@column.FieldName) ? "input-validation-error" : "")" value="@(((ICGridColumn)column).GetFormatedDateTime(value, typeAttr))" @onchange="(e) => ChangeValue(e, column, typeAttr)" />
+                                            <input autocomplete="@column.CustomAutoComplete.Invoke()" id="@column.FieldName" name="@column.FieldName" type="text" placeholder="yyyy-mm" class="@GridComponent.Grid.HtmlClass.FormInput @(ColumnErrors.ContainsKey(@column.FieldName) ? "input-validation-error" : "")" value="@(((ICGridColumn)column).GetFormatedDateTime(value, typeAttr))" @onchange="(e) => ChangeValue(e, column, typeAttr)" />
                                         }
                                     }
                                     else if (typeAttr == "datetime-local")
                                     {
                                         if (GridComponent.IsDateTimeLocalSupported)
                                         {
-                                            <input autocomplete="@column.CustomAutoComplete.Invoke()" id="@column.FieldName" name="@column.FieldName" type="@typeAttr" placeholder="yyyy-mm-dd hh:mm" class="form-control @(ColumnErrors.ContainsKey(@column.FieldName) ? "input-validation-error" : "")" value="@(((ICGridColumn)column).GetFormatedDateTime(value, typeAttr))" @onchange="(e) => ChangeValue(e, column, typeAttr)" />
+                                            <input autocomplete="@column.CustomAutoComplete.Invoke()" id="@column.FieldName" name="@column.FieldName" type="@typeAttr" placeholder="yyyy-mm-dd hh:mm" class="@GridComponent.Grid.HtmlClass.FormInput @(ColumnErrors.ContainsKey(@column.FieldName) ? "input-validation-error" : "")" value="@(((ICGridColumn)column).GetFormatedDateTime(value, typeAttr))" @onchange="(e) => ChangeValue(e, column, typeAttr)" />
                                         }
                                         else
                                         {
-                                            <input autocomplete="@column.CustomAutoComplete.Invoke()" id="@column.FieldName" name="@column.FieldName" type="text" placeholder="yyyy-mm-dd hh:mm" class="form-control @(ColumnErrors.ContainsKey(@column.FieldName) ? "input-validation-error" : "")" value="@(((ICGridColumn)column).GetFormatedDateTime(value, typeAttr))" @onchange="(e) => ChangeValue(e, column, typeAttr)" />
+                                            <input autocomplete="@column.CustomAutoComplete.Invoke()" id="@column.FieldName" name="@column.FieldName" type="text" placeholder="yyyy-mm-dd hh:mm" class="@GridComponent.Grid.HtmlClass.FormInput @(ColumnErrors.ContainsKey(@column.FieldName) ? "input-validation-error" : "")" value="@(((ICGridColumn)column).GetFormatedDateTime(value, typeAttr))" @onchange="(e) => ChangeValue(e, column, typeAttr)" />
                                         }
                                     }
                                     else
                                     {
-                                        <input autocomplete="@column.CustomAutoComplete.Invoke()" id="@column.FieldName" name="@column.FieldName" type="@typeAttr" class="form-control @(ColumnErrors.ContainsKey(@column.FieldName) ? "input-validation-error" : "")" value="@(((ICGridColumn)column).GetFormatedDateTime(value, typeAttr))" @onchange="(e) => ChangeValue(e, column, typeAttr)" />
+                                        <input autocomplete="@column.CustomAutoComplete.Invoke()" id="@column.FieldName" name="@column.FieldName" type="@typeAttr" class="@GridComponent.Grid.HtmlClass.FormInput @(ColumnErrors.ContainsKey(@column.FieldName) ? "input-validation-error" : "")" value="@(((ICGridColumn)column).GetFormatedDateTime(value, typeAttr))" @onchange="(e) => ChangeValue(e, column, typeAttr)" />
                                     }
                                 }
                                 else if (type == typeof(System.TimeSpan))
                                 {
                                     string typeAttr = ((IGridColumn<T>)column).InputType == InputType.None ? "time" : ((IGridColumn<T>)column).InputType.ToTypeAttr();
-                                    <input autocomplete="@column.CustomAutoComplete.Invoke()" id="@column.FieldName" name="@column.FieldName" type="@typeAttr" class="form-control @(ColumnErrors.ContainsKey(@column.FieldName) ? "input-validation-error" : "")" value="@(((ICGridColumn)column).GetFormatedDateTime(value, typeAttr))" @onchange="(e) => ChangeValue(e, column)" />
+                                    <input autocomplete="@column.CustomAutoComplete.Invoke()" id="@column.FieldName" name="@column.FieldName" type="@typeAttr" class="@GridComponent.Grid.HtmlClass.FormInput @(ColumnErrors.ContainsKey(@column.FieldName) ? "input-validation-error" : "")" value="@(((ICGridColumn)column).GetFormatedDateTime(value, typeAttr))" @onchange="(e) => ChangeValue(e, column)" />
                                 }
                                 else if (type == typeof(bool))
                                 {
@@ -236,42 +256,48 @@
                                     {
                                         if (column.ToggleSwitch)
                                         {
-                                            <label class="col-form-label">@column.FalseLabel</label>
+                                            <label class="@GridComponent.Grid.HtmlClass.FormLabel">@column.FalseLabel</label>
                                             <label class="grid-switch">
-                                                <input id="@column.FieldName" name="@column.FieldName" type="checkbox" class="form-control @(ColumnErrors.ContainsKey(@column.FieldName) ? "input-validation-error" : "")" checked="checked" value="true" @onchange="(e) => ChangeValue(e, column)" />
-                                                <span class="grid-slider round"></span>
+                                                <input id="@column.FieldName" name="@column.FieldName" type="checkbox" class="@GridComponent.Grid.HtmlClass.FormInput @(ColumnErrors.ContainsKey(@column.FieldName) ? "input-validation-error" : "")" checked="checked" value="true" @onchange="(e) => ChangeValue(e, column)" />
+                                                <span class="@GridComponent.Grid.HtmlClass.FormSpanToggleSwitch"></span>
                                             </label>
-                                            <label class="col-form-label">@column.TrueLabel</label>
+                                            <label class="@GridComponent.Grid.HtmlClass.FormLabel">@column.TrueLabel</label>
                                         }
                                         else
                                         {
-                                            <input id="@column.FieldName" name="@column.FieldName" type="checkbox" class="form-check @(ColumnErrors.ContainsKey(@column.FieldName) ? "input-validation-error" : "")" checked="checked" value="true" @onchange="(e) => ChangeValue(e, column)" />
+                                            <label>
+                                                <input id="@column.FieldName" name="@column.FieldName" type="checkbox" class="@GridComponent.Grid.HtmlClass.FormCheck @(ColumnErrors.ContainsKey(@column.FieldName) ? "input-validation-error" : "")" checked="checked" value="true" @onchange="(e) => ChangeValue(e, column)" />
+                                                <span></span>
+                                            </label>
                                         }
                                     }
                                     else
                                     {
                                         if (column.ToggleSwitch)
                                         {
-                                            <label class="col-form-label">@column.FalseLabel</label>
+                                            <label class="@GridComponent.Grid.HtmlClass.FormLabel">@column.FalseLabel</label>
                                             <label class="grid-switch">
-                                                <input id="@column.FieldName" name="@column.FieldName" type="checkbox" class="form-control @(ColumnErrors.ContainsKey(@column.FieldName) ? "input-validation-error" : "")" value="false" @onchange="(e) => ChangeValue(e, column)" />
-                                                <span class="grid-slider round"></span>
+                                                <input id="@column.FieldName" name="@column.FieldName" type="checkbox" class="@GridComponent.Grid.HtmlClass.FormInput @(ColumnErrors.ContainsKey(@column.FieldName) ? "input-validation-error" : "")" value="false" @onchange="(e) => ChangeValue(e, column)" />
+                                                <span class="@GridComponent.Grid.HtmlClass.FormSpanToggleSwitch"></span>
                                             </label>
-                                            <label class="col-form-label">@column.TrueLabel</label>
+                                            <label class="@GridComponent.Grid.HtmlClass.FormLabel">@column.TrueLabel</label>
                                         }
                                         else
                                         {
-                                            <input id="@column.FieldName" name="@column.FieldName" type="checkbox" class="form-check @(ColumnErrors.ContainsKey(@column.FieldName) ? "input-validation-error" : "")" value="false" @onchange="(e) => ChangeValue(e, column)" />
+                                            <label>
+                                                <input id="@column.FieldName" name="@column.FieldName" type="checkbox" class="@GridComponent.Grid.HtmlClass.FormCheck @(ColumnErrors.ContainsKey(@column.FieldName) ? "input-validation-error" : "")" value="false" @onchange="(e) => ChangeValue(e, column)" />
+                                                <span></span>
+                                            </label>
                                         }
                                     }
                                 }
                                 else if (((IGridColumn<T>)column).InputType == InputType.Number)
                                 {
-                                    <input autocomplete="@column.CustomAutoComplete.Invoke()" type="@(InputType.Number.ToTypeAttr())" id="@column.FieldName" name="@column.FieldName" class="form-control @(ColumnErrors.ContainsKey(@column.FieldName) ? "input-validation-error" : "")" value="@column.GetFormatedValue(value)" @onchange="(e) => ChangeValue(e, column)" />
+                                    <input autocomplete="@column.CustomAutoComplete.Invoke()" type="@(InputType.Number.ToTypeAttr())" id="@column.FieldName" name="@column.FieldName" class="@GridComponent.Grid.HtmlClass.FormInput @(ColumnErrors.ContainsKey(@column.FieldName) ? "input-validation-error" : "")" value="@column.GetFormatedValue(value)" @onchange="(e) => ChangeValue(e, column)" />
                                 }
                                 else
                                 {
-                                    <input autocomplete="@column.CustomAutoComplete.Invoke()" id="@column.FieldName" name="@column.FieldName" class="form-control @(ColumnErrors.ContainsKey(@column.FieldName) ? "input-validation-error" : "")" value="@column.GetFormatedValue(value)" @onchange="(e) => ChangeValue(e, column)" />
+                                    <input autocomplete="@column.CustomAutoComplete.Invoke()" id="@column.FieldName" name="@column.FieldName" class="@GridComponent.Grid.HtmlClass.FormInput @(ColumnErrors.ContainsKey(@column.FieldName) ? "input-validation-error" : "")" value="@column.GetFormatedValue(value)" @onchange="(e) => ChangeValue(e, column)" />
                                 }
                                 <span class="field-validation-error">
                                     <span>@ColumnErrors.Get(column.FieldName)</span>
@@ -284,28 +310,28 @@
             else if ((((ICGridColumn)column).SubGrids != null || column.UpdateComponentType != null)
                 && string.IsNullOrWhiteSpace(column.TabGroup))
             {
-                <div class="form-group row" style="@(((IGridColumn<T>)column).CrudHidden(Item).HasFlag(CrudHidden.UPDATE) && !((IGridColumn<T>)column).ReadOnlyOnUpdate(Item) ? "display:none;" : "")">
+                <div class="@GridComponent.Grid.HtmlClass.FormGroupRow" style="@(((IGridColumn<T>)column).CrudHidden(Item).HasFlag(CrudHidden.UPDATE) && !((IGridColumn<T>)column).ReadOnlyOnUpdate(Item) ? "display:none;" : "")">
                     @if (!string.IsNullOrWhiteSpace(column.TooltipValue))
                     {
-                        <div class="col-md-@column.CrudLabelWidth.ToString()">
+                        <div class="@(GridComponent.Grid.HtmlClass.ColMd + column.CrudLabelWidth.ToString())">
                             <FormTooltipComponent T="@T" Column="@column"></FormTooltipComponent>
                         </div>
                     }
                     else
                     {
-                        <label class="col-form-label col-md-@column.CrudLabelWidth.ToString()">@column.Title</label>
+                        <label class="@(GridComponent.Grid.HtmlClass.FormLabel + " " + GridComponent.Grid.HtmlClass.ColMd + column.CrudLabelWidth.ToString())">@column.Title</label>
                     }
                     @if (column.EnableCard)
                     {
-                        <div class="col-md-@((12 - column.CrudLabelWidth).ToString())">
-                            <div class="card panel panel-default">
-                                <div class="card-body panel-body">@_renderFragments.Get(column.Name)</div>
+                        <div class="@(GridComponent.Grid.HtmlClass.ColMd + (12 - column.CrudLabelWidth).ToString())">
+                            <div class="@GridComponent.Grid.HtmlClass.Card">
+                                <div class="@GridComponent.Grid.HtmlClass.CardBody">@_renderFragments.Get(column.Name)</div>
                             </div>
                         </div>
                      }
                      else
                      {
-                         <div class="col-md-@(column.CrudWidth.ToString())">
+                         <div class="@(GridComponent.Grid.HtmlClass.ColMd + column.CrudWidth.ToString())">
                             @_renderFragments.Get(column.Name)
                          </div>
                      }
@@ -321,11 +347,11 @@
                     .Where(r => r.TabGroup != null && r.TabGroup.Equals(tabGruop) && _renderFragments.Keys.Any(s => s.Equals(r.Name)));
                 var tabLabels = columns.Select(r => new SelectItem(r.Name, r.Title));
                 var column = columns.FirstOrDefault();
-                <div class="form-group row">
-                    <div class="col-md-offset-@(column.CrudLabelWidth.ToString()) offset-md-@(column.CrudLabelWidth.ToString()) col-md-@((12 - column.CrudLabelWidth).ToString())">
-                        <div class="card panel panel-default">
-                            <div class="card-body panel-body">
-                                <GridTabComponent TabLabels="@tabLabels" TabContent="@_renderFragments" />
+                <div class="@GridComponent.Grid.HtmlClass.FormGroupRow">
+                    <div class="@(GridComponent.Grid.HtmlClass.OffsetMd + column.CrudLabelWidth.ToString() + " " + GridComponent.Grid.HtmlClass.ColMd + (12 - column.CrudLabelWidth).ToString())">
+                        <div class="@GridComponent.Grid.HtmlClass.Card">
+                            <div class="@GridComponent.Grid.HtmlClass.CardBody">
+                                <GridTabComponent T="@T" TabLabels="@tabLabels" TabContent="@_renderFragments" />
                             </div>
                         </div>
                     </div>
@@ -335,17 +361,17 @@
 
         @if (GridComponent.Grid.UpdateConfirmation)
         {
-            <div class="form-group row">
-                <label class="col-form-label col-md-@GridComponent.Grid.UpdateConfirmationLabelWidth.ToString()">@Strings.Code</label>
-                <div class="col-md-@GridComponent.Grid.UpdateConfirmationWidth.ToString()">
-                    <input class="form-control" id="code" name="code" readonly="readonly" type="text" @bind-value="_code">
+            <div class="@GridComponent.Grid.HtmlClass.FormGroupRow">
+                <label class="@(GridComponent.Grid.HtmlClass.FormLabel + " " + GridComponent.Grid.HtmlClass.ColMd + GridComponent.Grid.UpdateConfirmationLabelWidth.ToString())">@Strings.Code</label>
+                <div class="@GridComponent.Grid.HtmlClass.FormDivInput @(GridComponent.Grid.HtmlClass.ColMd + GridComponent.Grid.UpdateConfirmationWidth.ToString())">
+                    <input class="@GridComponent.Grid.HtmlClass.FormInput" id="code" name="code" readonly="readonly" type="text" @bind-value="_code">
                 </div>
             </div>
 
-            <div class="form-group row">
-                <label class="col-form-label col-md-@GridComponent.Grid.UpdateConfirmationLabelWidth.ToString()">@Strings.Confirm_Code</label>
-                <div class="col-md-@GridComponent.Grid.UpdateConfirmationWidth.ToString()">
-                    <input class="form-control" id="confirm_code" name="confirm_code" type="text" @bind-value="_confirmationCode">
+            <div class="@GridComponent.Grid.HtmlClass.FormGroupRow">
+                <label class="@(GridComponent.Grid.HtmlClass.FormLabel + " " + GridComponent.Grid.HtmlClass.ColMd + GridComponent.Grid.UpdateConfirmationLabelWidth.ToString())">@Strings.Confirm_Code</label>
+                <div class="@GridComponent.Grid.HtmlClass.FormDivInput @(GridComponent.Grid.HtmlClass.ColMd + GridComponent.Grid.UpdateConfirmationWidth.ToString())">
+                    <input class="@GridComponent.Grid.HtmlClass.FormInput" id="confirm_code" name="confirm_code" type="text" @bind-value="_confirmationCode">
                 </div>
             </div>
         }
@@ -364,11 +390,11 @@
                         {
                             if (buttonCrudComponent.Content.HasValue)
                             {
-                                <button class="btn btn-primary btn-md" type="button" title="@buttonCrudComponent.Label" @onclick="() => GridComponent.ButtonCrudComponentHandler(key)" @onclick:stopPropagation>@buttonCrudComponent.Content.Value</button>
+                                <button class="@GridComponent.Grid.HtmlClass.ButtonPrimary" type="button" title="@buttonCrudComponent.Label" @onclick="() => GridComponent.ButtonCrudComponentHandler(key)" @onclick:stopPropagation>@buttonCrudComponent.Content.Value</button>
                             }
                             else
                             {
-                                <button class="btn btn-primary btn-md" type="button" title="@buttonCrudComponent.Label" @onclick="() => GridComponent.ButtonCrudComponentHandler(key)" @onclick:stopPropagation>@buttonCrudComponent.Label</button>
+                                <button class="@GridComponent.Grid.HtmlClass.ButtonPrimary" type="button" title="@buttonCrudComponent.Label" @onclick="() => GridComponent.ButtonCrudComponentHandler(key)" @onclick:stopPropagation>@buttonCrudComponent.Label</button>
                             }
                         }
                     }

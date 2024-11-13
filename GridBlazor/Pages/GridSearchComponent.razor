@@ -2,14 +2,14 @@
 
 @typeparam T
 
-<div class="grid-search col-md-6" data-search-url="@_seachUrl">
-    <div class="input-group">
-        <span class="input-group-btn">
-            <button class="grid-button btn btn-default btn-primary grid-search-apply" type="button" @onclick="ApplyButtonClicked" @onclick:stopPropagation></button>
+<div class="grid-search @GridComponent.Grid.HtmlClass.FormDivInput @(GridComponent.Grid.HtmlClass.ColMd)6" data-search-url="@_seachUrl">
+    <div class="@GridComponent.Grid.HtmlClass.InputGroup">
+        <span class="@GridComponent.Grid.HtmlClass.InputGroupLeftButton">
+            <button class="grid-button @GridComponent.Grid.HtmlClass.Button grid-search-apply" type="button" @onclick="ApplyButtonClicked" @onclick:stopPropagation></button>
         </span>
-        <input type="text" @ref="SearchInput" class="form-control grid-search-input" @bind="_searchValue" @onkeyup="InputSearchKeyup" @onkeyup:stopPropagation placeholder="@Strings.SearchFor" />
-        <span class="input-group-btn">
-            <button class="grid-button btn btn-default btn-primary grid-search-clear" type="button" @onclick="ClearButtonClicked" @onclick:stopPropagation></button>
+        <input type="text" @ref="SearchInput" class="@GridComponent.Grid.HtmlClass.SearchInput grid-search-input" @bind="_searchValue" @onkeyup="InputSearchKeyup" @onkeyup:stopPropagation placeholder="@Strings.SearchFor" />
+        <span class="@GridComponent.Grid.HtmlClass.InputGroupRightButton">
+            <button class="grid-button @GridComponent.Grid.HtmlClass.Button grid-search-clear" type="button" @onclick="ClearButtonClicked" @onclick:stopPropagation></button>
         </span>
     </div>
 </div>

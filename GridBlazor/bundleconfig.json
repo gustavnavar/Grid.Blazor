@@ -12,9 +12,21 @@
     ]
   },
   {
+    "outputFileName": "wwwroot/css/gridblazor-materialize.min.css",
+    "inputFiles": [
+      "wwwroot/css/gridblazor-materialize.css"
+    ]
+  },
+  {
     "outputFileName": "wwwroot/js/gridblazor.min.js",
     "inputFiles": [
       "wwwroot/js/gridblazor.js"
+    ]
+  },
+  {
+    "outputFileName": "wwwroot/css/gridblazor-bulma.min.css",
+    "inputFiles": [
+      "wwwroot/css/gridblazor-bulma.css"
     ]
   }
 ]

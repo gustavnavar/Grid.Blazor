@@ -5,14 +5,17 @@
 </div>
 
 <div class="main">
-    <div class="top-row px-4">
-        <div class="col-md-2">
+    <div class="top-row px-4" style="z-index: 1500">
+        <div class="@(Program.HtmlClass.ColMd)2 @Program.HtmlClass.Mr050">
+            <Style />
+        </div>
+        <div class="@(Program.HtmlClass.ColMd)2 @Program.HtmlClass.Mr050">
             <Language />
         </div>
         <a href="https://github.com/gustavnavar/Grid.Blazor" target="_blank">About</a>
     </div>
 
-    <div class="content px-4">
+    <div class="app-content px-4">
         @Body
     </div>
 </div>

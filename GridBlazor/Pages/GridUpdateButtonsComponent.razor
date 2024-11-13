@@ -2,6 +2,6 @@
 @typeparam T
 @if (GridUpdateComponent._buttonsVisibility == 0)
 {
-    <button type="submit" class="btn btn-primary btn-md">@(string.IsNullOrWhiteSpace(GridUpdateComponent.GridComponent.Grid.UpdateFormButtonLabel) ? Strings.Save : GridUpdateComponent.GridComponent.Grid.UpdateFormButtonLabel)</button>
-    <button type="button" class="btn btn-primary btn-md" @onclick="() => GridUpdateComponent.BackButtonClicked()">@Strings.Back</button>
+    <button type="submit" class="@GridUpdateComponent.GridComponent.Grid.HtmlClass.ButtonPrimary">@(string.IsNullOrWhiteSpace(GridUpdateComponent.GridComponent.Grid.UpdateFormButtonLabel) ? Strings.Save : GridUpdateComponent.GridComponent.Grid.UpdateFormButtonLabel)</button>
+    <button type="button" class="@GridUpdateComponent.GridComponent.Grid.HtmlClass.ButtonPrimary" @onclick="() => GridUpdateComponent.BackButtonClicked()">@Strings.Back</button>
 }

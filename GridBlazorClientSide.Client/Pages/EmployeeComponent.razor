@@ -13,15 +13,15 @@
 
 @if (_task.IsCompleted)
 {
-    <div class="row">
-        <div class="col-md-12">
+    <div class="@Program.HtmlClass.Row">
+        <div class="@(Program.HtmlClass.ColMd)12">
             <GridComponent T="Employee" Grid="@_grid"></GridComponent>
         </div>
     </div>
 
-    <div class="row mt-3">
-        <div class="col-md-5">
-            <button type="button" class="btn btn-primary btn-md" @onclick="() => BackButtonClicked()">@Strings.Back</button>
+    <div class="@Program.HtmlClass.Row @Program.HtmlClass.Mt000">
+        <div class="@(Program.HtmlClass.ColMd)5">
+            <button type="button" class="@Program.HtmlClass.ButtonPrimary" @onclick="() => BackButtonClicked()">@Strings.Back</button>
         </div>
     </div>
 }

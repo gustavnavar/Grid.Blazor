@@ -1,0 +1,77 @@
+.grid-table {
+    width: 100%;
+}
+
+.button.is-small {
+    background-color: transparent;
+}
+
+.button.is-link {
+    height: var(--bulma-control-height);
+}
+
+.grid-dropdown {
+    border: 1px solid #ccc;
+    border-radius: 5.4px;
+    z-index: 1000;
+}
+
+.grid-page-item:first-child .grid-page-link,
+div[dir="rtl"] .grid-page-item:first-child .grid-page-link,
+.grid-page-item:last-child .grid-page-link,
+div[dir="rtl"] .grid-page-item:last-child .grid-page-link {
+    border-radius: 5.4px;
+}
+
+.columns.grid-header-row {
+    margin: 0px -15px;
+}
+
+.column.grid-header-buttons,
+.column.grid-search {
+    padding: 0px 15px;
+}
+
+.grid-bulma-select {
+    width: 100%;
+}
+
+.has-addons .grid-search-input {
+    border-radius: 0px;
+}
+
+.has-addons .grid-input-file {
+    border-radius: var(--bulma-input-radius) 0px 0px var(--bulma-input-radius);
+}
+
+.grid-bulma-switch {
+    display: flex;
+}
+
+.grid-filter-list-label {
+    margin-bottom: 1rem;
+}
+
+.modal {
+    background-color: white;
+    border-radius: 8px;
+    border: 1px solid #ccc;
+    padding: 1rem 2rem;
+}
+
+.modal-body {
+    overflow-x:hidden;
+    margin-bottom: 1rem;
+}
+
+.hidden {
+    display: none;
+}
+
+.grid-tabs {
+    display: block;
+}
+
+.tabs ul.pagination-list {
+    border-bottom: none;
+}

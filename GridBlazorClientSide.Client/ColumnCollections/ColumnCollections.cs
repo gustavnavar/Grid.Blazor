@@ -266,7 +266,7 @@ namespace GridBlazorClientSide.Client.ColumnCollections
             .Format("{0:F}");
 
             /* Adding not mapped column, that renders body, using inline Razor html helper */
-            c.Add().Encoded(false).Sanitized(false).SetWidth(100).Css("hidden-xs") //hide on phones
+            c.Add().Encoded(false).Sanitized(false).SetWidth(160).Css("hidden-xs") //hide on phones
             .RenderComponentAs<ButtonDbUpdate>(functions);
 
             /* Adding "Vip customer" column: */

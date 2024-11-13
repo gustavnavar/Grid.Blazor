@@ -12,7 +12,7 @@
 @if (Grid != null)
 {
     <div @ref="Spinner" class="grid-spinner" style="display:none;"></div>
-    <div @ref="Content">
+    <div @ref="Content" class="grid-content">
         @if (Grid.Mode == GridMode.Grid || Grid.PagingType == PagingType.Virtualization || Grid.ModalForms)
         {
             if (Grid.ComponentOptions.RenderRowsOnly)
@@ -85,6 +85,7 @@
             {
                 <div class="@GridMvcCssClass"
                      data-lang="@Grid.Language"
+                     data-style="@CssFramework.ToString()"
                      data-gridname="@Grid.ComponentOptions.GridName"
                      data-selectable="@Grid.ComponentOptions.Selectable.ToString().ToLower()"
                      data-extsortable="@Grid.ExtSortingEnabled.ToString().ToLower()"
@@ -96,18 +97,18 @@
                      @onkeyup="GridComponentKeyup">
                     <div class="@GridWrapCssClass">
                         <p id="error" class="@GridErrorCssClass">@Error</p>
-                        <div class="row">
-                            <div class="col-md-6 grid-header-buttons">
+                        <div class="@Grid.HtmlClass.Row grid-header-row">
+                            <div class="@(Grid.HtmlClass.ColMd)6 grid-header-buttons">
                                 @if (Grid.SyncButtonEnabled)
                                 {
                                     <div class="grid-sync">
-                                        <button class="grid-button grid-button-sync btn btn-default btn-primary" type="button" title="Sync" @onclick="e => UpdateGrid(true, true)" @onclick:stopPropagation></button>
+                                        <button class="grid-button grid-button-sync @Grid.HtmlClass.Button" type="button" title="Sync" @onclick="e => UpdateGrid(true, true)" @onclick:stopPropagation></button>
                                     </div>
                                 }
                                 @if (Grid.ClearFiltersButtonEnabled)
                                 {
                                     <div class="grid-all-filters-clear">
-                                        <button class="grid-button grid-button-all-filters-clear btn btn-default btn-primary" type="button" title="@Strings.ClearAllFilters" @onclick="RemoveAllFilters" @onclick:stopPropagation></button>
+                                        <button class="grid-button grid-button-all-filters-clear @Grid.HtmlClass.Button" type="button" title="@Strings.ClearAllFilters" @onclick="RemoveAllFilters" @onclick:stopPropagation></button>
                                     </div>
                                 }
                                 @if (Grid.CreateEnabled)
@@ -115,11 +116,11 @@
                                     <div class="grid-crud">
                                         @if (string.IsNullOrWhiteSpace(Grid.CreateLabel))
                                         {
-                                            <button class="grid-button grid-button-add btn btn-sm btn-primary" type="button" title="@Grid.CreateTooltip" @onclick="CreateHandler" @onclick:stopPropagation></button>
+                                            <button class="grid-button grid-button-add @Grid.HtmlClass.Button" type="button" title="@Grid.CreateTooltip" @onclick="CreateHandler" @onclick:stopPropagation></button>
                                         }
                                         else
                                         {
-                                            <button class="grid-button-label-add btn btn-sm btn-primary" type="button" title="@Grid.CreateTooltip" @onclick="CreateHandler" @onclick:stopPropagation>@Grid.CreateLabel</button>
+                                            <button class="grid-button-label-add @Grid.HtmlClass.ButtonPrimary" type="button" title="@Grid.CreateTooltip" @onclick="CreateHandler" @onclick:stopPropagation>@Grid.CreateLabel</button>
                                         }
                                     </div>
                                 }
@@ -128,11 +129,11 @@
                                     <div class="grid-crud">
                                         @if (string.IsNullOrWhiteSpace(Grid.ReadLabel))
                                         {
-                                            <button class='grid-button grid-button-header-view btn btn-sm btn-primary' title="@Grid.ReadTooltip" @onclick="@(e => ReadSelectedHandler())" type="button" @onclick:stopPropagation></button>
+                                            <button class='grid-button grid-button-header-view @Grid.HtmlClass.Button' title="@Grid.ReadTooltip" @onclick="@(e => ReadSelectedHandler())" type="button" @onclick:stopPropagation></button>
                                         }
                                         else
                                         {
-                                            <button class='grid-button-header-label-view btn btn-sm btn-primary' title="@Grid.ReadTooltip" @onclick="@(e => ReadSelectedHandler())" type="button" @onclick:stopPropagation>@Grid.ReadLabel</button>
+                                            <button class='grid-button-header-label-view @Grid.HtmlClass.ButtonPrimary' title="@Grid.ReadTooltip" @onclick="@(e => ReadSelectedHandler())" type="button" @onclick:stopPropagation>@Grid.ReadLabel</button>
                                         }
                                     </div>
                                 }
@@ -141,11 +142,11 @@
                                     <div class="grid-crud">
                                         @if (string.IsNullOrWhiteSpace(Grid.UpdateLabel))
                                         {
-                                            <button class='grid-button grid-button-header-edit btn btn-sm btn-primary' title="@Grid.UpdateTooltip" @onclick="@(e => UpdateSelectedHandler())" type="button" @onclick:stopPropagation></button>
+                                            <button class='grid-button grid-button-header-edit @Grid.HtmlClass.Button' title="@Grid.UpdateTooltip" @onclick="@(e => UpdateSelectedHandler())" type="button" @onclick:stopPropagation></button>
                                         }
                                         else
                                         {
-                                            <button class='grid-button-header-label-edit btn btn-sm btn-primary' title="@Grid.UpdateTooltip" @onclick="@(e => UpdateSelectedHandler())" type="button" @onclick:stopPropagation>@Grid.UpdateLabel</button>
+                                            <button class='grid-button-header-label-edit @Grid.HtmlClass.ButtonPrimary' title="@Grid.UpdateTooltip" @onclick="@(e => UpdateSelectedHandler())" type="button" @onclick:stopPropagation>@Grid.UpdateLabel</button>
                                         }
                                     </div>
                                 }
@@ -154,18 +155,18 @@
                                     <div class="grid-crud">
                                         @if (string.IsNullOrWhiteSpace(Grid.DeleteLabel))
                                         {
-                                            <button class='grid-button grid-button-header-delete btn btn-sm btn-primary' title="@Grid.DeleteTooltip" @onclick="@(e => DeleteSelectedHandler())" type="button" @onclick:stopPropagation></button>
+                                            <button class='grid-button grid-button-header-delete @Grid.HtmlClass.Button' title="@Grid.DeleteTooltip" @onclick="@(e => DeleteSelectedHandler())" type="button" @onclick:stopPropagation></button>
                                         }
                                         else
                                         {
-                                            <button class='grid-button-header-label-delete btn btn-sm btn-primary' title="@Grid.DeleteTooltip" @onclick="@(e => DeleteSelectedHandler())" type="button" @onclick:stopPropagation>@Grid.DeleteLabel</button>
+                                            <button class='grid-button-header-label-delete @Grid.HtmlClass.ButtonPrimary' title="@Grid.DeleteTooltip" @onclick="@(e => DeleteSelectedHandler())" type="button" @onclick:stopPropagation>@Grid.DeleteLabel</button>
                                         }
                                     </div>
                                 }
                                 @if (Grid.ExcelExport)
                                 {
                                     <div class="grid-excel">
-                                        <button class="grid-button grid-button-excel btn btn-sm btn-primary" type="button" title="Excel" @onclick="ExcelHandler" @onclick:stopPropagation></button>
+                                        <button class="grid-button grid-button-excel @Grid.HtmlClass.Button" type="button" title="Excel" @onclick="ExcelHandler" @onclick:stopPropagation></button>
                                     </div>
                                 }
                                 @if (Grid.ButtonComponents != null && Grid.ButtonComponents.Count() > 0)
@@ -175,11 +176,11 @@
                                         {
                                             if (Grid.ButtonComponents.Get(key).Content.HasValue)
                                             {
-                                                <button class="grid-button grid-button-component btn btn-sm btn-primary" type="button" title="@Grid.ButtonComponents.Get(key).Label" @onclick="() => ButtonComponentHandler(key)" @onclick:stopPropagation>@Grid.ButtonComponents.Get(key).Content.Value</button>
+                                                <button class="grid-button grid-button-component @Grid.HtmlClass.Button" type="button" title="@Grid.ButtonComponents.Get(key).Label" @onclick="() => ButtonComponentHandler(key)" @onclick:stopPropagation>@Grid.ButtonComponents.Get(key).Content.Value</button>
                                             }
                                             else
                                             {
-                                                <button class="grid-button grid-button-component btn btn-sm btn-primary" type="button" title="@Grid.ButtonComponents.Get(key).Label" @onclick="() => ButtonComponentHandler(key)" @onclick:stopPropagation>@Grid.ButtonComponents.Get(key).Label</button>
+                                                <button class="grid-button grid-button-component @Grid.HtmlClass.Button" type="button" title="@Grid.ButtonComponents.Get(key).Label" @onclick="() => ButtonComponentHandler(key)" @onclick:stopPropagation>@Grid.ButtonComponents.Get(key).Label</button>
                                             }
                                         }
                                     </div>
@@ -445,14 +446,16 @@
                                     <GridPagerComponent T="@T"></GridPagerComponent>
                                 </CascadingValue>
                             }
-                            @if (Grid.PagingType == PagingType.Virtualization && Grid.ChangeVirtualizedHeight)
+                            else if (Grid.PagingType == PagingType.Virtualization && Grid.ChangeVirtualizedHeight)
                             {
-                                <div class="grid-change-page-size form-group">
-                                    <label class="control-label"><b>@Strings.Height</b></label>
-                                    <div>
-                                        <input class="form-control grid-change-page-size-input" @bind="VirtualizedHeight" @onkeyup="InputVirtualizedHeightKeyup" @onblur="InputVirtualizedHeightBlur" @onclick:stopPropagation />
+                                <div class="grid-pager-sizer">
+                                    <div class="grid-change-page-size @Grid.HtmlClass.FooterRow">
+                                        <label class="@Grid.HtmlClass.FormLabel">@Strings.Height</label>
+                                        <div class="@Grid.HtmlClass.FormDivInput">
+                                            <input class="@Grid.HtmlClass.FormInput grid-change-page-size-input" @bind="VirtualizedHeight" @onkeyup="InputVirtualizedHeightKeyup" @onblur="InputVirtualizedHeightBlur" @onclick:stopPropagation />
+                                        </div>
+                                        <label class="@Grid.HtmlClass.FormLabel">px</label>
                                     </div>
-                                    <label class="control-label"><b>px</b></label>
                                 </div>
                             }
                             @if (Grid.ComponentOptions.ShowGridItemsCount)
@@ -467,10 +470,10 @@
 
                 @if (Grid.Mode != GridMode.Grid)
                 {
-                    <div class="modal fade show" tabindex="-1" role="dialog" style="display:block;position:absolute;margin-left:1.3rem;">
-                        <div class="modal-dialog" role="document" style="position:absolute;">
-                            <div class="modal-content grid-crud" style="overflow-y:scroll;@(!string.IsNullOrWhiteSpace(Grid.ModalWidth) ? "width:" + Grid.ModalWidth + ";" : (gridComponentSP == null ? "" : "width:" + gridComponentSP.Width + "px;")) @(!string.IsNullOrWhiteSpace(Grid.ModalHeight) ? "height:" + Grid.ModalHeight + ";" : (gridComponentSP == null ? "" : "height:" + (int)(gridComponentSP.Height * 0.96) + "px;"))">
-                                <div class="modal-body">
+                    <div class="@Grid.HtmlClass.Modal" tabindex="-1" role="dialog" style="display:block;position:absolute;margin-left:5px;">
+                        <div class="@Grid.HtmlClass.ModalDialog" role="document" style="position:absolute;">
+                            <div class="@Grid.HtmlClass.ModalContent grid-crud" style="overflow-y:scroll;@(!string.IsNullOrWhiteSpace(Grid.ModalWidth) ? "width:" + Grid.ModalWidth + ";" : (gridComponentSP == null ? "" : "width:" + gridComponentSP.Width + "px;")) @(!string.IsNullOrWhiteSpace(Grid.ModalHeight) ? "height:" + Grid.ModalHeight + ";" : (gridComponentSP == null ? "" : "height:" + (int)(gridComponentSP.Height * 0.96) + "px;"))">
+                                <div class="@Grid.HtmlClass.ModalBody">
                                     @if (Grid.Mode == GridMode.Create && Grid.CreateEnabled)
                                     {
                                         <div dir="@Grid.Direction.ToDirection()">

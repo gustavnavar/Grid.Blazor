@@ -1,0 +1,58 @@
+﻿@using  System.Globalization
+@inject IJSRuntime JSRuntime
+@inject NavigationManager NavigationManager
+@inject IGridBlazorService GridBlazorService
+
+<select class="@Program.HtmlClass.FormSelect" style="height:36px;" @bind="GridStyle">
+    @foreach (var style in _supportedStyles)
+    {
+        <option value="@style">@style.ToText()</option>
+    }
+</select>
+
+@code {
+
+    private CssFramework[] _supportedStyles = new CssFramework[]
+    {
+        CssFramework.Bootstrap_3,
+        CssFramework.Bootstrap_4,
+        CssFramework.Bootstrap_5,
+        CssFramework.Materialize,
+        CssFramework.Bulma,
+    };
+
+    private string[] _urls = new string[]
+    {
+        "index3.html",
+        "index.html",
+        "index5.html",
+        "indexm.html",
+        "indexb.html"
+    };
+
+    private CssFramework GridStyle
+    {
+        get { return Program.HtmlClass.GridStyle; }
+        set
+        {
+            if (Program.HtmlClass.GridStyle != value)
+            {
+                GridBlazorService.Style = value;
+                Program.HtmlClass = new HtmlClass(value);
+                var js = (IJSInProcessRuntime)JSRuntime;
+                js.InvokeVoid("blazorStyle.set", value);
+                NavigationManager.NavigateTo(_urls[(int)value], forceLoad: true);
+            }
+        }
+    }
+
+    protected override async Task OnParametersSetAsync()
+    {
+        var js = (IJSInProcessRuntime)JSRuntime;
+        int value = await js.InvokeAsync<int>("pageStyle.get");
+        if (Program.HtmlClass.GridStyle != (CssFramework)value)
+        {
+            NavigationManager.NavigateTo(_urls[(int)Program.HtmlClass.GridStyle], forceLoad: true);
+        }
+    }
+}

@@ -14,6 +14,7 @@ using GridShared.Filtering;
 using GridShared.Grouping;
 using GridShared.Pagination;
 using GridShared.Sorting;
+using GridShared.Style;
 using GridShared.Totals;
 using GridShared.Utility;
 using Microsoft.AspNetCore.Components;
@@ -957,6 +958,10 @@ namespace GridBlazor
         public string Error { get; set; } = "";
 
         public bool EditAfterInsert { get; set; } = false;
+
+        public CssFramework CssFramework { get; set; }
+
+        public HtmlClass HtmlClass { get; set; }
 
         #region Custom row css classes
         public void SetRowCssClassesContraint(Func<T, string> contraint)

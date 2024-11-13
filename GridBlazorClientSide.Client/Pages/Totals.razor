@@ -19,8 +19,8 @@
 
 @if (_task.IsCompleted)
 {
-    <div class="row">
-        <div class="col-md-12">
+    <div class="@Program.HtmlClass.Row">
+        <div class="@(Program.HtmlClass.ColMd)12">
             <GridComponent T="Order" Grid="@_grid" GridSumCssClass="custom-sum"></GridComponent>
         </div>
     </div>

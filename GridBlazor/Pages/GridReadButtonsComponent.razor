@@ -2,5 +2,5 @@
 @typeparam T
 @if (GridReadComponent._buttonsVisibility == 0)
 {
-    <button type="button" class="btn btn-primary btn-md" @onclick="() => GridReadComponent.BackButtonClicked()">@Strings.Back</button>
+    <button type="button" class="@GridReadComponent.GridComponent.Grid.HtmlClass.ButtonPrimary" @onclick="() => GridReadComponent.BackButtonClicked()">@Strings.Back</button>
 }

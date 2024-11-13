@@ -12,6 +12,7 @@ using GridShared.DataAnnotations;
 using GridShared.Grouping;
 using GridShared.Pagination;
 using GridShared.Sorting;
+using GridShared.Style;
 using GridShared.Totals;
 using GridShared.Utility;
 using Microsoft.Extensions.Primitives;
@@ -427,6 +428,10 @@ namespace GridCore
         ///     Get value for table height
         /// </summary>
         public string Height { get; set; } = "auto";
+
+        public CssFramework CssFramework { get; set; }
+
+        public HtmlClass HtmlClass { get; set; }
 
         #endregion IGrid Members
 

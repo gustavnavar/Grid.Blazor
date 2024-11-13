@@ -20,11 +20,11 @@
 
 @if (_task.IsCompleted)
 {
-    <div class="row">
-        <div class="col-md-9">
+    <div class="@Program.HtmlClass.Row">
+        <div class="@(Program.HtmlClass.ColMd)9">
             <GridComponent T="Order" Grid="@_grid" OnRowClicked="@OrderDetails"></GridComponent>
         </div>
-        <div class="col-md-3">
+        <div class="@(Program.HtmlClass.ColMd)3">
             <h4>
                 Order details
             </h4>

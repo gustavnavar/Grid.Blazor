@@ -1,21 +1,25 @@
-﻿<ul @ref="labels" class="nav nav-tabs" @onclick:stopPropagation>
-    @for (int i = 0; i < TabLabels.Count(); i++)
-    {
-        var tab = TabLabels.ElementAt(i);
-        int capturedI = i;
-        <li class="nav-item@(i == 0 ? " active" : "")" data-grid="tab" data-grid-id="@capturedI">
-            <a class="nav-link@(i == 0 ? " active" : "")" data-grid="tab" data-grid-id="@capturedI" href="javascript:void(0);" @onclick="e => TabClicked(e, capturedI)">@tab.Title</a>
-        </li>
-    }
-</ul>
-<div @ref="content" class="tab-content">
-    @for (int i = 0; i < TabLabels.Count(); i++)
-    {
-        var tab = TabLabels.ElementAt(i);
-        int capturedI = i;
-        <div class="tab-pane@(i == 0 ? " active" : "")" data-grid="tab" data-grid-id="@capturedI" id="@tab.Value.ToLower()">
-            @TabContent.Get(tab.Value)
-        </div>
-    }
+﻿@typeparam T
+
+<div class="@GridComponent.Grid.HtmlClass.TabDiv">
+    <ul @ref="labels" class="@GridComponent.Grid.HtmlClass.TabList" @onclick:stopPropagation>
+        @for (int i = 0; i < TabLabels.Count(); i++)
+        {
+            var tab = TabLabels.ElementAt(i);
+            int capturedI = i;
+            <li class="@GridComponent.Grid.HtmlClass.TabItem @(i == 0 ? @GridComponent.Grid.HtmlClass.TabItemActive : "")" data-grid="tab-item" data-grid-id="@capturedI">
+                <a class="@GridComponent.Grid.HtmlClass.TabLink @(i == 0 ? @GridComponent.Grid.HtmlClass.TabLinkActive : "")" data-grid="tab-link" data-grid-id="@capturedI" href="javascript:void(0);" @onclick="e => TabClicked(e, capturedI)">@tab.Title</a>
+            </li>
+        }
+    </ul>
+    <div @ref="content" class="tab-content">
+        @for (int i = 0; i < TabLabels.Count(); i++)
+        {
+            var tab = TabLabels.ElementAt(i);
+            int capturedI = i;
+            <div class="tab-pane @(i == 0 ? @GridComponent.Grid.HtmlClass.TabPaneActive : GridComponent.Grid.HtmlClass.TabPaneHidden)" data-grid="tab-pane" data-grid-id="@capturedI" id="@tab.Value.ToLower()">
+                @TabContent.Get(tab.Value)
+            </div>
+        }
+    </div>
 </div>
 

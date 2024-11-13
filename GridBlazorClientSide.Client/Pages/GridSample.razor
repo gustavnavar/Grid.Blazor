@@ -23,12 +23,12 @@
 
 @if (_task1.IsCompleted && _task2.IsCompleted)
 {
-    <div class="row">
-        <div class="col-md-9">
+    <div class="@Program.HtmlClass.Row">
+        <div class="@(Program.HtmlClass.ColMd)9">
             <GridComponent T="Order" Grid="@_grid" OnRowClickedActions="@_rowClickActions"
                            CustomFilters="@_customFilters"></GridComponent>
         </div>
-        <div class="col-md-3">
+        <div class="@(Program.HtmlClass.ColMd)3">
             <h4>
                 Order
             </h4>

@@ -5,27 +5,29 @@
     <meta name="viewport" content="width=device-width" />
     <title>GridBlazor</title>
     <base href="/" />
-    <link href="css/bootstrap/bootstrap.min.css" rel="stylesheet" />
-    <link href="css/site.css" rel="stylesheet" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.2/dist/css/bootstrap.min.css" rel="stylesheet" />
     <link href="_content/GridBlazor/css/gridblazor.min.css" rel="stylesheet" />
+    <link href="css/site.css" rel="stylesheet" />
 </head>
 <body>
     <app>Loading...</app>
 
     <script src="_framework/blazor.webassembly.js"></script>
-    <script src="lib/jquery/jquery.min.js"></script>
-    <script src="js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.7.1/dist/jquery.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.2/dist/js/bootstrap.bundle.min.js"></script>
     <script src="_content/GridBlazor/js/gridblazor.js"></script>
     <script>
         window.blazorCulture = {
             get: () => window.localStorage['BlazorCulture'],
             set: (value) => window.localStorage['BlazorCulture'] = value
         };
-    </script>
-    <script type="text/javascript">
-        $(function () {
-            $('[data-toggle="tooltip"]').tooltip()
-        })
+        window.blazorStyle = {
+            get: () => window.localStorage['BlazorStyle'],
+            set: (value) => window.localStorage['BlazorStyle'] = value
+        };
+        window.pageStyle = {
+            get: () => 1
+        };
     </script>
 </body>
 </html>

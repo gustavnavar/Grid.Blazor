@@ -4,13 +4,20 @@
 
 @if (_init && Visible)
 {
-<div class="dropdown dropdown-menu grid-dropdown opened" style="display:block;position:relative;@("margin-left:" + _offset.ToString() + "px;")" @ref="boolFilter" @onkeyup="FilterKeyup" @onclick:stopPropagation @onkeyup:stopPropagation>
+<div class="@GridHeaderComponent.GridComponent.Grid.HtmlClass.DropdownMenu grid-dropdown" 
+        style="display:block;position:relative;overflow:visible;@("margin-left:" + _offset.ToString() + "px;")"
+        @ref="boolFilter" 
+        @onkeyup="FilterKeyup" 
+        @onclick:stopPropagation 
+        @onkeyup:stopPropagation>
     <div class="grid-dropdown-arrow" style="@("margin-left:" + (-_offset).ToString() + "px;")"></div>
     <div class="grid-dropdown-inner">
         <div class="grid-popup-widget">
             <div class="grid-filter-body">
-                <label><b>@Strings.FilterValueLabel:</b></label>
-                <ul class="menu-list">
+                <div class="@GridHeaderComponent.GridComponent.Grid.HtmlClass.Mt050 @GridHeaderComponent.GridComponent.Grid.HtmlClass.ListFilterValueLabel">
+                    <label class="@GridHeaderComponent.GridComponent.Grid.HtmlClass.FormLabel"><b>@Strings.FilterValueLabel:</b></label>
+                </div>
+                <ul class="grid-menu-list">
                     <li>
                         <a class="grid-filter-choose@(_filterValue != null && _filterValue.ToLower() == "true" ? " choose-selected" : "")" data-value="true" href="javascript:void(0);" @onclick="ApplyTrueButtonClicked">
                             @Strings.BoolTrueLabel
@@ -27,7 +34,7 @@
         <div class="grid-popup-additional">
             @if (_clearVisible)
             {
-                <ul class="menu-list">
+                <ul class="grid-menu-list">
                     <li>
                         <a class="grid-filter-clear" href="javascript:void(0);" @onclick="ClearButtonClicked">
                             @Strings.ClearFilterLabel
