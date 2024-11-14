@@ -3,11 +3,11 @@
 GridBlazor is a Blazor component that shows data in a grid. It requires a back-end component that performs paging, sorting, filtering and others. 
 
 This back-end component can be one of the following:
-- GridCore (v.5.0.0 or later), supporting ASP.Net Core 3.1, ASP.Net 5.0, ASP.Net 6.0 and ASP.Net 7.0. GridMvcCore, that it is a fork from https://gridmvc.codeplex.com/, was working for earlier versions. But GridMvcCore is only required for Blazor WASM (REST) and ASP.NET MVC projects now.
+- GridCore (v.6.0.0 or later), supporting ASP.Net Core 3.1, ASP.Net 5.0, ASP.Net 6.0, ASP.Net 7.0, ASP.Net 8.0 and ASP.Net 9.0. GridMvcCore, that it is a fork from https://gridmvc.codeplex.com/, was working for earlier versions. But GridMvcCore is only required for Blazor WASM (REST) and ASP.NET MVC projects now.
 - an OData back-end. All samples are based on Microsoft.AspNetCore.OData library, but it can be any other OData provider.
 - GridJavaCore back-end for Java JPA / Hibernate projects (https://github.com/gustavnavar/Grid.Java.Core)
 
-It supports .NET Core 3.1 and 5.0, 6.0, 7.0 and 8.0, and Blazor WebAssembly 3.2.0, 5.0, 6.0, 7.0 and 8.0
+GridBlazor supports .NET Core 3.1 and 5.0, 6.0, 7.0, 8.0 and 9.0, and Blazor WebAssembly 3.2.0, 5.0, 6.0, 7.0, 8.0 and 9.0
 
 ## Demo 
 - http://gridblazor.azurewebsites.net
@@ -61,6 +61,13 @@ This is an example of a table of items using this component:
 
 
 ## Notes
+
+- GridBlazor 6.0.0 supports the following CSS frameworks:
+    - Bootstrap_4 https://getbootstrap.com/docs/4.0/getting-started/introduction/ (default)
+    - Bootstrap_5 https://getbootstrap.com/docs/5.0/getting-started/introduction/
+    - Bootstrap_3 https://getbootstrap.com/docs/3.4/getting-started/
+    - Materialize https://materializeweb.com/
+    - Bulma https://bulma.io/
 
 - GridBlazor 3.4.1 supports the build-in InputFile component for columns of type "file" for .Net 6.0 and later projects. The old Agno.BlazorInputFile component is ussed for .Net Core 3.1 and .Net 5.x projects. See https://github.com/gustavnavar/Grid.Blazor/blob/master/docs/blazor_client/Crud.md#file-type-columns
 

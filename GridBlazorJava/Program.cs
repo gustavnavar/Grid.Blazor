@@ -9,6 +9,7 @@ using System;
 using System.Globalization;
 using System.Net.Http;
 using System.Threading.Tasks;
+using GridShared.Style;
 
 namespace GridBlazorJava
 {
@@ -28,6 +29,8 @@ namespace GridBlazorJava
             builder.Services.AddScoped<ICrudFileService<Employee>, EmployeeFileService>();
 
             builder.Services.AddLocalization();
+
+            builder.Services.AddGridBlazor(x => x.Style = CssFramework.Bootstrap_4);
 
             var host = builder.Build();
             var jsInterop = host.Services.GetRequiredService<IJSRuntime>();

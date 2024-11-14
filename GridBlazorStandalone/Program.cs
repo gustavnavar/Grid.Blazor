@@ -1,7 +1,6 @@
 ﻿using GridBlazor;
 using GridBlazorStandalone.Services;
-using GridBlazorStandalone.Models;
-using GridShared;
+using GridShared.Style;
 using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.JSInterop;
@@ -30,6 +29,8 @@ namespace GridBlazorStandalone
             builder.Services.AddScoped<ITruckService, TruckService>();
 
             builder.Services.AddLocalization();
+
+            builder.Services.AddGridBlazor(x => x.Style = CssFramework.Bootstrap_4);
 
             var host = builder.Build();
             var jsInterop = host.Services.GetRequiredService<IJSRuntime>();

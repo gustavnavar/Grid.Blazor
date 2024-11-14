@@ -2,6 +2,7 @@
 using GridBlazorGrpc.Client.Services;
 using GridBlazorGrpc.Shared.Models;
 using GridShared;
+using GridShared.Style;
 using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.JSInterop;
@@ -28,6 +29,8 @@ namespace GridBlazorGrpc.Client
             builder.Services.AddScoped<ICrudDataService<Employee>, EmployeeClientService>();
             builder.Services.AddScoped<ICrudFileService<Employee>, EmployeeFileService>();
             builder.Services.AddLocalization();
+
+            builder.Services.AddGridBlazor(x => x.Style = CssFramework.Bootstrap_4);
 
             var host = builder.Build();
             var jsInterop = host.Services.GetRequiredService<IJSRuntime>();

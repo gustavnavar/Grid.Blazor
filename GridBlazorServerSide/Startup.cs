@@ -1,3 +1,4 @@
+using GridBlazor;
 using GridBlazorServerSide.Data;
 using GridBlazorServerSide.Services;
 using Microsoft.AspNetCore.Builder;
@@ -10,6 +11,7 @@ using Microsoft.Extensions.Options;
 using System.Collections.Generic;
 using System.Globalization;
 using GridShared.Data;
+using GridShared.Style;
 
 namespace GridBlazorServerSide
 {
@@ -31,6 +33,8 @@ namespace GridBlazorServerSide
                 options.UseGridBlazorDatabase();
                 //options.ConfigureWarnings(warnings => warnings.Ignore(RelationalEventId.QueryClientEvaluationWarning));
             });
+
+            services.AddGridBlazor(x => x.Style = CssFramework.Bootstrap_4);
 
             services.AddControllers();
             services.AddRazorPages();
