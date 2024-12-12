@@ -1438,6 +1438,7 @@ namespace GridBlazor.Pages
                 if (isValid)
                 {
                     await ShowSpinner();
+                    Item = component.Item;
                     if (Grid.ServerAPI == ServerAPI.OData && !UseMemoryCrudDataService)
                         Item = await ((ICrudODataService<T>)((CGrid<T>)Grid).CrudDataService).Add(Item);
                     else
@@ -1499,6 +1500,7 @@ namespace GridBlazor.Pages
                 if (isValid)
                 {
                     await ShowSpinner();
+                    Item = component.Item;
                     if (((CGrid<T>)Grid).CrudFileService != null)
                         Item = await ((CGrid<T>)Grid).CrudFileService.UpdateFiles(Item, component.Files);
                     await ((CGrid<T>)Grid).CrudDataService.Update(Item);
