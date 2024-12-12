@@ -17,7 +17,7 @@ namespace GridBlazor.Pages
         public QueryDictionary<(GridGroupRowsComponent<T> Component, string Label)> Children { get; private set; }
 
         [CascadingParameter(Name = "GridComponent")]
-        protected GridComponent<T> GridComponent { get; private set; }
+        protected internal GridComponent<T> GridComponent { get; private set; }
 
         [Parameter]
         public ICGrid Grid { get; set; }

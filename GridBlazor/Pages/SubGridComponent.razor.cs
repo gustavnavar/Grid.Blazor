@@ -15,7 +15,7 @@ namespace GridBlazor.Pages
         protected RenderFragment _subGridRender;
 
         [CascadingParameter(Name = "GridComponent")]
-        private GridComponent<T> GridComponent { get; set; }
+        protected internal GridComponent<T> GridComponent { get; set; }
 
         [Parameter]
         public int GridPosition { get; set; }

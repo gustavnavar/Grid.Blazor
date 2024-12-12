@@ -19,7 +19,7 @@ namespace GridBlazor.Pages
         public object ChildComponent { get; private set; } = null;
 
         [CascadingParameter(Name = "GridComponent")]
-        protected GridComponent<T> GridComponent { get; set; }
+        protected internal GridComponent<T> GridComponent { get; set; }
 
         [Parameter]
         public IGridColumn Column { get; set; }

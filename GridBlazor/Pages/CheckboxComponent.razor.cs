@@ -18,7 +18,7 @@ namespace GridBlazor.Pages
         private string _columnName;
 
         [CascadingParameter(Name = "GridComponent")]
-        protected GridComponent<T> GridComponent { get; set; }
+        protected internal GridComponent<T> GridComponent { get; set; }
 
         [Parameter]
         public T Item { get; set; }

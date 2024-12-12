@@ -18,7 +18,7 @@ namespace GridBlazor.Pages
         private IJSRuntime jSRuntime { get; set; }
 
         [CascadingParameter(Name = "GridComponent")]
-        protected GridComponent<T> GridComponent { get; set; }
+        protected internal GridComponent<T> GridComponent { get; set; }
 
         [Parameter]
         public bool Visible { get; set; }

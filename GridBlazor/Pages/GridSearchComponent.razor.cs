@@ -15,7 +15,8 @@ namespace GridBlazor.Pages
         public ElementReference SearchInput;
 
         [CascadingParameter(Name = "GridComponent")]
-        private GridComponent<T> GridComponent { get; set; }
+        protected internal GridComponent<T> GridComponent { get; set; }
+
         [Parameter]
         public ICGrid Grid { get; set; }
 

@@ -8,7 +8,7 @@ namespace GridBlazor.Pages
         private bool _shouldRender = false;
 
         [CascadingParameter(Name = "GridComponent")]
-        protected GridComponent<T> GridComponent { get; set; }
+        protected internal GridComponent<T> GridComponent { get; set; }
 
         [Parameter]
         public ICGrid Grid { get; set; }

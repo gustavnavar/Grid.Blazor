@@ -45,7 +45,7 @@ namespace GridBlazor.Pages
         protected RenderFragment FilterWidgetRender { get; set; }
 
         [CascadingParameter(Name = "GridComponent")]
-        internal GridComponent<T> GridComponent { get; set; }
+        protected internal GridComponent<T> GridComponent { get; set; }
 
         [Parameter]
         public IGridColumn Column { get; set; }

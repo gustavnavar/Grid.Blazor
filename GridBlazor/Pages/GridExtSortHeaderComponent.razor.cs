@@ -14,7 +14,7 @@ namespace GridBlazor.Pages
         protected string _dropClass = "";
 
         [CascadingParameter(Name = "GridComponent")]
-        private GridComponent<T> GridComponent { get; set; }
+        protected internal GridComponent<T> GridComponent { get; set; }
 
         [Parameter]
         public ICGrid Grid { get; set; }
