@@ -140,7 +140,7 @@
                 }
                 @if (column.EnableCard)
                 {
-                    <div class="@(GridComponent.Grid.HtmlClass.ColMd + column.CrudCustomWith ? column.CrudWidth.ToString() : (12 - column.CrudLabelWidth).ToString())">
+                    <div class="@(GridComponent.Grid.HtmlClass.ColMd + (column.CrudCustomWith ? column.CrudWidth.ToString() : (12 - column.CrudLabelWidth).ToString()))">
                         <div class="@GridComponent.Grid.HtmlClass.Card">
                             <div class="@GridComponent.Grid.HtmlClass.CardBody">@_renderFragments.Get(column.Name)</div>
                         </div>
@@ -165,7 +165,7 @@
             var tabLabels = columns.Select(r => new SelectItem(r.Name, r.Title));
             var column = columns.FirstOrDefault();
             <div class="@GridComponent.Grid.HtmlClass.FormGroupRow">
-                <div class="@(GridComponent.Grid.HtmlClass.OffsetMd + column.CrudLabelWidth.ToString() + " " + GridComponent.Grid.HtmlClass.ColMd + column.CrudCustomWith ? column.CrudWidth.ToString() : (12 - column.CrudLabelWidth).ToString())">
+                <div class="@(GridComponent.Grid.HtmlClass.OffsetMd + column.CrudLabelWidth.ToString() + " " + GridComponent.Grid.HtmlClass.ColMd + (column.CrudCustomWith ? column.CrudWidth.ToString() : (12 - column.CrudLabelWidth).ToString()))">
                     <div class="@GridComponent.Grid.HtmlClass.Card">
                         <div class="@GridComponent.Grid.HtmlClass.CardBody">
                             <GridTabComponent T="@T" TabLabels="@tabLabels" TabContent="@_renderFragments" />
