@@ -44,6 +44,8 @@ namespace GridCore.Columns
 
         public abstract string Width { get; set; }
 
+        public bool CrudCustomWith { get; internal set; } = false;
+
         public int CrudWidth { get; set; } = 5;
 
         public int CrudLabelWidth { get; set; } = 2;
@@ -170,12 +172,14 @@ namespace GridCore.Columns
 
         IGridColumn<T> IColumn<T>.SetCrudWidth(int width)
         {
+            CrudCustomWith = true;
             CrudWidth = width;
             return this;
         }
 
         IGridColumn<T> IColumn<T>.SetCrudWidth(int width, int labelWidth)
         {
+            CrudCustomWith = true;
             CrudWidth = width;
             CrudLabelWidth = labelWidth;
             return this;

@@ -528,6 +528,11 @@ namespace GridShared.Columns
         string Width { get; set; }
 
         /// <summary>
+        ///     Custom width of the column on crud forms
+        /// </summary>
+        bool CrudCustomWith { get; }
+
+        /// <summary>
         ///     Width of the column on crud forms
         /// </summary>
         int CrudWidth { get; set; }
