@@ -6,21 +6,21 @@
     <div class="@(Program.HtmlClass.FormGroupRow)">
         <label for="OrderID" class="@Program.HtmlClass.FormLabel @(Program.HtmlClass.ColMd)2">ShipperID: </label>
         <div class="@Program.HtmlClass.FormDivInput @(Program.HtmlClass.ColMd)5">
-            <input id="ShipperID" class="@Program.HtmlClass.FormInput" readonly="readonly" value="@_shipper.ShipperID" />
+            <input id="ShipperID" class="@Program.HtmlClass.FormInput" readonly disabled value="@_shipper.ShipperID" />
         </div>
     </div>
 
     <div class="@(Program.HtmlClass.FormGroupRow)">
         <label for="RequiredDate" class="@Program.HtmlClass.FormLabel @(Program.HtmlClass.ColMd)2">CompanyName: </label>
         <div class="@Program.HtmlClass.FormDivInput @(Program.HtmlClass.ColMd)5">
-            <input id="CompanyName" class="@Program.HtmlClass.FormInput" readonly="readonly" value="@_shipper.CompanyName" />
+            <input id="CompanyName" class="@Program.HtmlClass.FormInput" readonly disabled value="@_shipper.CompanyName" />
         </div>
     </div>
 
     <div class="@(Program.HtmlClass.FormGroupRow)">
         <label for="ShippedDate" class="@Program.HtmlClass.FormLabel @(Program.HtmlClass.ColMd)2">Phone: </label>
         <div class="@Program.HtmlClass.FormDivInput @(Program.HtmlClass.ColMd)5">
-            <input id="Phone" class="@Program.HtmlClass.FormInput" readonly="readonly" value="@_shipper.Phone" />
+            <input id="Phone" class="@Program.HtmlClass.FormInput" readonly disabled value="@_shipper.Phone" />
         </div>
     </div>
 

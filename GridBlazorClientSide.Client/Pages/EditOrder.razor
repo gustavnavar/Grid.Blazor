@@ -26,14 +26,14 @@ else
         <div class="@(Program.HtmlClass.FormGroupRow)">
             <label for="OrderID" class="@Program.HtmlClass.FormLabel @(Program.HtmlClass.ColMd)2">OrderID: </label>
             <div class="@Program.HtmlClass.FormDivInput @(Program.HtmlClass.ColMd)5">
-                <input id="OrderID" name="OrderID" class="@Program.HtmlClass.FormInput" readonly="readonly" @bind="_order.OrderID" />
+                <input id="OrderID" name="OrderID" class="@Program.HtmlClass.FormInput" readonly disabled @bind="_order.OrderID" />
             </div>
         </div>
 
         <div class="@(Program.HtmlClass.FormGroupRow)">
             <label for="CompanyName" class="@Program.HtmlClass.FormLabel @(Program.HtmlClass.ColMd)2">Customer: </label>
             <div class="@Program.HtmlClass.FormDivInput @(Program.HtmlClass.ColMd)5">
-                <input id="CompanyName" name="CompanyName" class="@Program.HtmlClass.FormInput" readonly="readonly" @bind="_order.Customer.CompanyName" />
+                <input id="CompanyName" name="CompanyName" class="@Program.HtmlClass.FormInput" readonly disabled @bind="_order.Customer.CompanyName" />
             </div>
         </div>
 

@@ -39,12 +39,12 @@
                     @if (((IGridColumn<T>)column).IsSelectField.IsSelectKey)
                     {
                         string text = ((IGridColumn<T>)column).GetFormatedValue(((IGridColumn<T>)column).IsSelectField.Expression, Item);
-                        <input id="@column.FieldName" class="@GridComponent.Grid.HtmlClass.FormInput" readonly="readonly" value="@text" />
+                        <input id="@column.FieldName" class="@GridComponent.Grid.HtmlClass.FormInput" readonly disabled value="@text" />
                     }
                     else if (((IGridColumn<T>)column).IsSelectColumn.IsSelectKey)
                     {
                         string text = ((IGridColumn<T>)column).GetFormatedValue(((IGridColumn<T>)column).IsSelectColumn.Expression, Item);
-                        <input id="@column.FieldName" class="@GridComponent.Grid.HtmlClass.FormInput" readonly="readonly" value="@text" />
+                        <input id="@column.FieldName" class="@GridComponent.Grid.HtmlClass.FormInput" readonly disabled value="@text" />
                     }
                     else if (type == typeof(bool))
                     {
@@ -54,7 +54,7 @@
                             {
                                 <label class="@GridComponent.Grid.HtmlClass.FormLabel">@column.FalseLabel</label>
                                 <label class="grid-switch">
-                                    <input id="@column.FieldName" type="checkbox" class="@GridComponent.Grid.HtmlClass.FormInput" disabled="disabled" readonly="readonly" checked="checked" value="true" />
+                                    <input id="@column.FieldName" type="checkbox" class="@GridComponent.Grid.HtmlClass.FormInput" readonly disabled checked="checked" value="true" />
                                     <span class="@GridComponent.Grid.HtmlClass.FormSpanToggleSwitch"></span>
                                 </label>
                                 <label class="@GridComponent.Grid.HtmlClass.FormLabel">@column.TrueLabel</label>
@@ -62,7 +62,7 @@
                             else
                             {
                                 <label>
-                                    <input id="@column.FieldName" type="checkbox" class="@GridComponent.Grid.HtmlClass.FormCheck" disabled="disabled" readonly="readonly" checked="checked" value="true" />
+                                    <input id="@column.FieldName" type="checkbox" class="@GridComponent.Grid.HtmlClass.FormCheck" readonly disabled checked="checked" value="true" />
                                     <span></span>
                                 </label>
                             }
@@ -73,7 +73,7 @@
                             {
                                 <label class="@GridComponent.Grid.HtmlClass.FormLabel">@column.FalseLabel</label>
                                 <label class="grid-switch">
-                                    <input id="@column.FieldName" type="checkbox" class="@GridComponent.Grid.HtmlClass.FormInput" disabled="disabled" readonly="readonly" value="false" />
+                                    <input id="@column.FieldName" type="checkbox" class="@GridComponent.Grid.HtmlClass.FormInput" readonly disabled value="false" />
                                     <span class="@GridComponent.Grid.HtmlClass.FormSpanToggleSwitch"></span>
                                 </label>
                                 <label class="@GridComponent.Grid.HtmlClass.FormLabel">@column.TrueLabel</label>
@@ -81,7 +81,7 @@
                             else
                             {
                                 <label>
-                                    <input id="@column.FieldName" type="checkbox" class="@GridComponent.Grid.HtmlClass.FormCheck" disabled="disabled" readonly="readonly" value="false" />
+                                    <input id="@column.FieldName" type="checkbox" class="@GridComponent.Grid.HtmlClass.FormCheck" readonly disabled value="false" />
                                     <span></span>
                                 </label>
                             }
@@ -91,35 +91,35 @@
                     {
                         if (((IGridColumn<T>)column).InputType == InputType.TextArea)
                         {
-                            <textarea id="@column.FieldName" class="@GridComponent.Grid.HtmlClass.FormTextArea" rows="@column.TextAreaRows" readonly="readonly" value="@column.GetFormatedValue(value)" />
+                            <textarea id="@column.FieldName" class="@GridComponent.Grid.HtmlClass.FormTextArea" rows="@column.TextAreaRows" readonly disabled value="@column.GetFormatedValue(value)" />
                         }
                         else
                         {
-                            <input id="@column.FieldName" class="@GridComponent.Grid.HtmlClass.FormInput" readonly="readonly" value="@column.GetFormatedValue(value)" />
+                            <input id="@column.FieldName" class="@GridComponent.Grid.HtmlClass.FormInput" readonly disabled value="@column.GetFormatedValue(value)" />
                         }
                     }
                     else if (type == typeof(string) && ((IGridColumn<T>)column).InputType == InputType.File)
                     {
-                        <input id="@column.FieldName" name="@column.FieldName" type="file" class="@GridComponent.Grid.HtmlClass.FormInput" readonly="readonly" value="@column.GetFormatedValue(value)" />
+                        <input id="@column.FieldName" name="@column.FieldName" type="file" class="@GridComponent.Grid.HtmlClass.FormInput" readonly disabled value="@column.GetFormatedValue(value)" />
                     }
                     else if (type == typeof(DateTime))
                     {
                         string typeAttr = ((IGridColumn<T>)column).InputType == InputType.None ? "date" : ((IGridColumn<T>)column).InputType.ToTypeAttr();
-                        <input id="@column.FieldName" type="@typeAttr" class="@GridComponent.Grid.HtmlClass.FormInput" readonly="readonly" value="@(((ICGridColumn)column).GetFormatedDateTime(value, typeAttr))" />
+                        <input id="@column.FieldName" type="@typeAttr" class="@GridComponent.Grid.HtmlClass.FormInput" readonly disabled value="@(((ICGridColumn)column).GetFormatedDateTime(value, typeAttr))" />
                     }
                     else if (type == typeof(DateTimeOffset))
                     {
                         string typeAttr = ((IGridColumn<T>)column).InputType == InputType.None ? "date" : ((IGridColumn<T>)column).InputType.ToTypeAttr();
-                        <input id="@column.FieldName" type="@typeAttr" class="@GridComponent.Grid.HtmlClass.FormInput" readonly="readonly" value="@(((ICGridColumn)column).GetFormatedDateTime(value, typeAttr))" />
+                        <input id="@column.FieldName" type="@typeAttr" class="@GridComponent.Grid.HtmlClass.FormInput" readonly disabled value="@(((ICGridColumn)column).GetFormatedDateTime(value, typeAttr))" />
                     }
                     else if (type == typeof(TimeSpan))
                     {
                         string typeAttr = ((IGridColumn<T>)column).InputType == InputType.None ? "time" : ((IGridColumn<T>)column).InputType.ToTypeAttr();
-                        <input id="@column.FieldName" type="@typeAttr" class="@GridComponent.Grid.HtmlClass.FormInput" readonly="readonly" value="@(((ICGridColumn)column).GetFormatedDateTime(value, typeAttr))" />
+                        <input id="@column.FieldName" type="@typeAttr" class="@GridComponent.Grid.HtmlClass.FormInput" readonly disabled value="@(((ICGridColumn)column).GetFormatedDateTime(value, typeAttr))" />
                     }
                     else
                     {
-                        <input id="@column.FieldName" class="@GridComponent.Grid.HtmlClass.FormInput" readonly="readonly" value="@column.GetFormatedValue(value)" />
+                        <input id="@column.FieldName" class="@GridComponent.Grid.HtmlClass.FormInput" readonly disabled value="@column.GetFormatedValue(value)" />
                     }
                 </div>
             </div>

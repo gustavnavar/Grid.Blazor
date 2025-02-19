@@ -29,14 +29,14 @@ else
             <div class="form-group">
                 <label for="OrderID" class="control-label col-md-2">OrderID: </label>
                 <div class="col-md-5">
-                    <InputNumber id="OrderID" class="form-control" readonly="readonly" @bind-Value="_order.OrderID" />
+                    <InputNumber id="OrderID" class="form-control" readonly disabled @bind-Value="_order.OrderID" />
                 </div>
             </div>
 
             <div class="form-group">
                 <label for="CompanyName" class="control-label col-md-2">Customer: </label>
                 <div class="col-md-5">
-                    <InputText id="CompanyName" class="form-control" readonly="readonly" @bind-Value="_order.Customer.CompanyName" />
+                    <InputText id="CompanyName" class="form-control" readonly disabled @bind-Value="_order.Customer.CompanyName" />
                 </div>
             </div>
 

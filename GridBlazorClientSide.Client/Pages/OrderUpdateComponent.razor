@@ -17,7 +17,7 @@
             <div class="@(Program.HtmlClass.FormGroupRow)">
                 <label for="OrderID" class="@Program.HtmlClass.FormLabel @(Program.HtmlClass.ColMd)2">OrderID: </label>
                 <div class="@Program.HtmlClass.FormDivInput @(Program.HtmlClass.ColMd)5">
-                    <InputNumber id="OrderID" class="@Program.HtmlClass.FormInput" readonly="readonly" @bind-Value="Item.OrderID" />
+                    <InputNumber id="OrderID" class="@Program.HtmlClass.FormInput" readonly disabled @bind-Value="Item.OrderID" />
                 </div>
             </div>
 

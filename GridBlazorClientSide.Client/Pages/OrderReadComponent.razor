@@ -10,91 +10,91 @@
     <div class="@(Program.HtmlClass.FormGroupRow)">
         <label for="OrderID" class="@Program.HtmlClass.FormLabel @(Program.HtmlClass.ColMd)2">OrderID: </label>
         <div class="@Program.HtmlClass.FormDivInput @(Program.HtmlClass.ColMd)5">
-            <input id="OrderID" class="@Program.HtmlClass.FormInput" readonly="readonly" value="@Item.OrderID" />
+            <input id="OrderID" class="@Program.HtmlClass.FormInput" readonly disabled value="@Item.OrderID" />
         </div>
     </div>
 
     <div class="@(Program.HtmlClass.FormGroupRow)">
         <label for="CustomerID" class="@Program.HtmlClass.FormLabel @(Program.HtmlClass.ColMd)2">Customer Id: </label>
         <div class="@Program.HtmlClass.FormDivInput @(Program.HtmlClass.ColMd)5">
-            <input id="CustomerID" class="@Program.HtmlClass.FormInput" readonly="readonly" value="@Item.CustomerID - @Item.Customer.CompanyName" />
+            <input id="CustomerID" class="@Program.HtmlClass.FormInput" readonly disabled value="@Item.CustomerID - @Item.Customer.CompanyName" />
         </div>
     </div>
 
     <div class="@(Program.HtmlClass.FormGroupRow)">
         <label for="EmployeeID" class="@Program.HtmlClass.FormLabel @(Program.HtmlClass.ColMd)2">Employee Id: </label>
         <div class="@Program.HtmlClass.FormDivInput @(Program.HtmlClass.ColMd)5">
-            <input id="EmployeeID" class="@Program.HtmlClass.FormInput" readonly="readonly" value="@Item.EmployeeID - @Item.Employee.FirstName @Item.Employee.LastName" />
+            <input id="EmployeeID" class="@Program.HtmlClass.FormInput" readonly disabled value="@Item.EmployeeID - @Item.Employee.FirstName @Item.Employee.LastName" />
         </div>
     </div>
 
     <div class="@(Program.HtmlClass.FormGroupRow)">
         <label for="ShipVia" class="@Program.HtmlClass.FormLabel @(Program.HtmlClass.ColMd)2">Ship Via: </label>
         <div class="@Program.HtmlClass.FormDivInput @(Program.HtmlClass.ColMd)5">
-            <input id="ShipVia" class="@Program.HtmlClass.FormInput" readonly="readonly" value="@Item.ShipVia - @Item.Shipper?.CompanyName" />
+            <input id="ShipVia" class="@Program.HtmlClass.FormInput" readonly disabled value="@Item.ShipVia - @Item.Shipper?.CompanyName" />
         </div>
     </div>
 
     <div class="@(Program.HtmlClass.FormGroupRow)">
         <label for="RequiredDate" class="@Program.HtmlClass.FormLabel @(Program.HtmlClass.ColMd)2">Required Date: </label>
         <div class="@Program.HtmlClass.FormDivInput @(Program.HtmlClass.ColMd)5">
-            <input id="RequiredDate" class="@Program.HtmlClass.FormInput" readonly="readonly" value="@Item.RequiredDate" />
+            <input id="RequiredDate" class="@Program.HtmlClass.FormInput" readonly disabled value="@Item.RequiredDate" />
         </div>
     </div>
 
     <div class="@(Program.HtmlClass.FormGroupRow)">
         <label for="ShippedDate" class="@Program.HtmlClass.FormLabel @(Program.HtmlClass.ColMd)2">Shipped Date: </label>
         <div class="@Program.HtmlClass.FormDivInput @(Program.HtmlClass.ColMd)5">
-            <input id="ShippedDate" class="@Program.HtmlClass.FormInput" readonly="readonly" value="@Item.ShippedDate" />
+            <input id="ShippedDate" class="@Program.HtmlClass.FormInput" readonly disabled value="@Item.ShippedDate" />
         </div>
     </div>
 
     <div class="@(Program.HtmlClass.FormGroupRow)">
         <label for="ShipName" class="@Program.HtmlClass.FormLabel @(Program.HtmlClass.ColMd)2">Ship Name: </label>
         <div class="@Program.HtmlClass.FormDivInput @(Program.HtmlClass.ColMd)5">
-            <input id="ShipName" class="@Program.HtmlClass.FormInput" readonly="readonly" value="@Item.ShipName" />
+            <input id="ShipName" class="@Program.HtmlClass.FormInput" readonly disabled value="@Item.ShipName" />
         </div>
     </div>
 
     <div class="@(Program.HtmlClass.FormGroupRow)">
         <label for="ShipAddress" class="@Program.HtmlClass.FormLabel @(Program.HtmlClass.ColMd)2">Ship Address: </label>
         <div class="@Program.HtmlClass.FormDivInput @(Program.HtmlClass.ColMd)5">
-            <input id="ShipAddress" class="@Program.HtmlClass.FormInput" readonly="readonly" value="@Item.ShipAddress" />
+            <input id="ShipAddress" class="@Program.HtmlClass.FormInput" readonly disabled value="@Item.ShipAddress" />
         </div>
     </div>
 
     <div class="@(Program.HtmlClass.FormGroupRow)">
         <label for="ShipCity" class="@Program.HtmlClass.FormLabel @(Program.HtmlClass.ColMd)2">Ship City: </label>
         <div class="@Program.HtmlClass.FormDivInput @(Program.HtmlClass.ColMd)5">
-            <input id="ShipCity" class="@Program.HtmlClass.FormInput" readonly="readonly" value="@Item.ShipCity" />
+            <input id="ShipCity" class="@Program.HtmlClass.FormInput" readonly disabled value="@Item.ShipCity" />
         </div>
     </div>
 
     <div class="@(Program.HtmlClass.FormGroupRow)">
         <label for="ShipPostalCode" class="@Program.HtmlClass.FormLabel @(Program.HtmlClass.ColMd)2">Ship Postal Code: </label>
         <div class="@Program.HtmlClass.FormDivInput @(Program.HtmlClass.ColMd)5">
-            <input id="ShipPostalCode" class="@Program.HtmlClass.FormInput" readonly="readonly" value="@Item.ShipPostalCode" />
+            <input id="ShipPostalCode" class="@Program.HtmlClass.FormInput" readonly disabled value="@Item.ShipPostalCode" />
         </div>
     </div>
 
     <div class="@(Program.HtmlClass.FormGroupRow)">
         <label for="ShipRegion" class="@Program.HtmlClass.FormLabel @(Program.HtmlClass.ColMd)2">Ship Region: </label>
         <div class="@Program.HtmlClass.FormDivInput @(Program.HtmlClass.ColMd)5">
-            <input id="ShipRegion" class="@Program.HtmlClass.FormInput" readonly="readonly" value="@Item.ShipRegion" />
+            <input id="ShipRegion" class="@Program.HtmlClass.FormInput" readonly disabled value="@Item.ShipRegion" />
         </div>
     </div>
 
     <div class="@(Program.HtmlClass.FormGroupRow)">
         <label for="ShipCountry" class="@Program.HtmlClass.FormLabel @(Program.HtmlClass.ColMd)2">Ship Country: </label>
         <div class="@Program.HtmlClass.FormDivInput @(Program.HtmlClass.ColMd)5">
-            <input id="ShipCountry" class="@Program.HtmlClass.FormInput" readonly="readonly" value="@Item.ShipCountry" />
+            <input id="ShipCountry" class="@Program.HtmlClass.FormInput" readonly disabled value="@Item.ShipCountry" />
         </div>
     </div>
 
     <div class="@(Program.HtmlClass.FormGroupRow)">
         <label for="Freight" class="@Program.HtmlClass.FormLabel @(Program.HtmlClass.ColMd)2">Freight: </label>
         <div class="@Program.HtmlClass.FormDivInput @(Program.HtmlClass.ColMd)5">
-            <input id="Freight" name="Freight" class="@Program.HtmlClass.FormInput" readonly="readonly" value="@Item.Freight" />
+            <input id="Freight" name="Freight" class="@Program.HtmlClass.FormInput" readonly disabled value="@Item.Freight" />
         </div>
     </div>
 

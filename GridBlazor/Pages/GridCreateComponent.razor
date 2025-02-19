@@ -49,7 +49,7 @@
                             if (((IGridColumn<T>)column).ReadOnlyOnCreate(Item))
                             {
                                 string text = ((IGridColumn<T>)column).GetFormatedValue(((IGridColumn<T>)column).IsSelectField.Expression, Item);
-                                <input id="@column.FieldName" name="@column.FieldName" class="@GridComponent.Grid.HtmlClass.FormInput" readonly="readonly" value="@text" />
+                                <input id="@column.FieldName" name="@column.FieldName" class="@GridComponent.Grid.HtmlClass.FormInput" readonly disabled value="@text" />
                             }
                             else
                             {
@@ -85,7 +85,7 @@
                             if (((IGridColumn<T>)column).ReadOnlyOnCreate(Item))
                             {
                                 string text = ((IGridColumn<T>)column).GetFormatedValue(((IGridColumn<T>)column).IsSelectColumn.Expression, Item);
-                                <input id="@column.FieldName" name="@column.FieldName" class="@GridComponent.Grid.HtmlClass.FormInput" readonly="readonly" value="@text" />
+                                <input id="@column.FieldName" name="@column.FieldName" class="@GridComponent.Grid.HtmlClass.FormInput" readonly disabled value="@text" />
                             }
                             else
                             {
@@ -134,7 +134,7 @@
                                         {
                                             <label class="@GridComponent.Grid.HtmlClass.FormLabel">@column.FalseLabel</label>
                                             <label class="grid-switch">
-                                                <input id="@column.FieldName" name="@column.FieldName" type="checkbox" class="@GridComponent.Grid.HtmlClass.FormInput" disabled="disabled" readonly="readonly" checked="checked" value="true" />
+                                                <input id="@column.FieldName" name="@column.FieldName" type="checkbox" class="@GridComponent.Grid.HtmlClass.FormInput" readonly disabled checked="checked" value="true" />
                                                 <span class="@GridComponent.Grid.HtmlClass.FormSpanToggleSwitch"></span>
                                             </label>
                                             <label class="@GridComponent.Grid.HtmlClass.FormLabel">@column.TrueLabel</label>
@@ -142,7 +142,7 @@
                                         else
                                         {
                                             <label>
-                                                <input id="@column.FieldName" name="@column.FieldName" type="checkbox" class="@GridComponent.Grid.HtmlClass.FormCheck" disabled="disabled" readonly="readonly" checked="checked" value="true" />
+                                                <input id="@column.FieldName" name="@column.FieldName" type="checkbox" class="@GridComponent.Grid.HtmlClass.FormCheck" readonly disabled checked="checked" value="true" />
                                                 <span></span>
                                             </label>
                                         }
@@ -153,7 +153,7 @@
                                         {
                                             <label class="@GridComponent.Grid.HtmlClass.FormLabel">@column.FalseLabel</label>
                                             <label class="grid-switch">
-                                                <input id="@column.FieldName" name="@column.FieldName" type="checkbox" class="@GridComponent.Grid.HtmlClass.FormInput" disabled="disabled" readonly="readonly" value="false" />
+                                                <input id="@column.FieldName" name="@column.FieldName" type="checkbox" class="@GridComponent.Grid.HtmlClass.FormInput" readonly disabled value="false" />
                                                 <span class="@GridComponent.Grid.HtmlClass.FormSpanToggleSwitch"></span>
                                             </label>
                                             <label class="@GridComponent.Grid.HtmlClass.FormLabel">@column.TrueLabel</label>
@@ -161,7 +161,7 @@
                                         else
                                         {
                                             <label>
-                                                <input id="@column.FieldName" name="@column.FieldName" type="checkbox" class="@GridComponent.Grid.HtmlClass.FormCheck" disabled="disabled" readonly="readonly" value="false" />
+                                                <input id="@column.FieldName" name="@column.FieldName" type="checkbox" class="@GridComponent.Grid.HtmlClass.FormCheck" readonly disabled value="false" />
                                                 <span></span>
                                             </label>
                                         }
@@ -169,18 +169,18 @@
                                 }
                                 else if (type == typeof(string) && ((IGridColumn<T>)column).InputType == InputType.TextArea)
                                 {
-                                    <textarea id="@column.FieldName" name="@column.FieldName" class="@GridComponent.Grid.HtmlClass.FormTextArea" rows="@column.TextAreaRows" readonly="readonly" value="@column.GetFormatedValue(value)" />
+                                    <textarea id="@column.FieldName" name="@column.FieldName" class="@GridComponent.Grid.HtmlClass.FormTextArea" rows="@column.TextAreaRows" readonly disabled value="@column.GetFormatedValue(value)" />
                                 }
                                 else
                                 {
-                                    <input id="@column.FieldName" name="@column.FieldName" class="@GridComponent.Grid.HtmlClass.FormInput" readonly="readonly" value="@column.GetFormatedValue(value)" />
+                                    <input id="@column.FieldName" name="@column.FieldName" class="@GridComponent.Grid.HtmlClass.FormInput" readonly disabled value="@column.GetFormatedValue(value)" />
                                 }
                             }
                             else
                             {                        
                                 if (column.IsPrimaryKey && column.IsAutoGeneratedKey)
                                 {
-                                    <input id="@column.FieldName" name="@column.FieldName" class="@GridComponent.Grid.HtmlClass.FormInput" readonly="readonly" value="@column.GetFormatedValue(value)" />
+                                    <input id="@column.FieldName" name="@column.FieldName" class="@GridComponent.Grid.HtmlClass.FormInput" readonly disabled value="@column.GetFormatedValue(value)" />
                                 }
                                 else if (type == typeof(string) && ((IGridColumn<T>)column).InputType == InputType.TextArea)
                                 {
@@ -364,7 +364,7 @@
             <div class="@GridComponent.Grid.HtmlClass.FormGroupRow">
                 <label class="@(GridComponent.Grid.HtmlClass.FormLabel + " " + GridComponent.Grid.HtmlClass.ColMd + GridComponent.Grid.CreateConfirmationLabelWidth.ToString())">@Strings.Code</label>
                 <div class="@GridComponent.Grid.HtmlClass.FormDivInput @(GridComponent.Grid.HtmlClass.ColMd + GridComponent.Grid.CreateConfirmationWidth.ToString())">
-                    <input class="@GridComponent.Grid.HtmlClass.FormInput" id="code" name="code" readonly="readonly" type="text" @bind-value="_code">
+                    <input class="@GridComponent.Grid.HtmlClass.FormInput" id="code" name="code" readonly disabled type="text" @bind-value="_code">
                 </div>
             </div>
 

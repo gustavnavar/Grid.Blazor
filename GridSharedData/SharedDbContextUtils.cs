@@ -11,7 +11,7 @@ namespace GridShared.Data
     {
         public static DbProvider DbProvider = DbProvider.SqlServer;
 
-        public static string ConnectionString = "Server=.\\SQLEXPRESS;Database=NorthWind;Trusted_Connection=True;MultipleActiveResultSets=true;TrustServerCertificate=True";
+        public static string ConnectionString = "Server=.;Database=NorthWind;Trusted_Connection=True;MultipleActiveResultSets=true;TrustServerCertificate=True";
 
         public static DbContextOptionsBuilder UseGridBlazorDatabase(this DbContextOptionsBuilder optionsBuilder)
         {
