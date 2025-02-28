@@ -44,6 +44,8 @@ namespace GridShared.Searching
                 // bool columns are not searched as a workaround until the final release of EF Core 3.0
                 if (targetType == typeof(bool)) return null;
 
+                if (targetType == typeof(Enum) || targetType.BaseType == typeof(Enum)) return null;
+
                 if (onlyTextColumns && targetType != typeof(string))
                     return null;
 
