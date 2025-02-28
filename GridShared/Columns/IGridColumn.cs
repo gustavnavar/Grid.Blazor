@@ -139,6 +139,11 @@ namespace GridShared.Columns
         IGridColumn<T> SetCheckboxColumn(bool headerCheckbox, Func<T, bool> expression, Func<T, bool> readonlyExpr);
 
         /// <summary>
+        ///     Set column as not DB mapped (sorting, filtering, searching, etc. will not be available)
+        /// </summary>
+        IGridColumn<T> SetNotDbMapped(bool notDbMapped);
+
+        /// <summary>
         ///     Setup the custom rendere for property
         /// </summary>
         IGridColumn<T> RenderValueAs(Func<T, string> constraint);
@@ -552,6 +557,8 @@ namespace GridShared.Columns
         Func<string> CustomAutoComplete { get; set; }
 
         AutoCompleteTerm AutoCompleteTaxonomy { get; set; }
+
+        bool NotDbMapped { get; }
 
         /// <summary>
         ///     Gets value of the gridColumn by instance

@@ -60,6 +60,17 @@
                 .SetWidth(220);
     ```
 
+## Not mapped columns
+
+If you need to add a column that is not mapped to a database and the its property is configured with the **NotMapped** attribute, you must use the **SetNotDbMapped** method to configure it properly:
+
+```c#
+    Columns.Add(o => o.CalculatedTotal)
+	    .Titled("Total")
+        .SetNotDbMapped(true);
+```
+Remember that sorting, filtering and searching will not work on not mapped columns.
+
 ## Not connected columns
 
 Sometimes you need to add a column that renders some content, but there is no base model property. In this case you must use an empty contructor of the **Add** method to create a column and its **RenderValueAs** method to define the content that will be rendered in it:
@@ -122,6 +133,7 @@ Titled | Setup the column header text | Columns.Add(x=>x.Name).Titled("Name of p
 Encoded | Enable or disable encoding column values | Columns.Add(x=>x.Name).Encoded(false);
 Sanitized | If encoding is disabled sanitize column value from XSS attacks | Columns.Add(x=>x.Name).Encoded(false).Sanitize(false);
 SetWidth | Setup width of current column | Columns.Add(x=>x.Name).SetWidth("30%");
+SetNotDbMapped | Configure the current column as not DB mapped | Columns.Add(x=>x.CalculatedTotal).SetNotDbMapped(true);
 RenderValueAs | Setup delegate to render column values | Columns.Add(x=>x.Name).RenderValueAs(o => o.Employees.FirstName + " " + o.Employees.LastName);
 Sortable | Enable or disable sorting for current column | Columns.Add(x=>x.Name).Sortable(true);
 SortInitialDirection | Setup the initial sort deirection of the column (need to enable sorting) | Columns.Add(x=>x.Name).Sortable(true).SortInitialDirection(GridSortDirection.Descending);

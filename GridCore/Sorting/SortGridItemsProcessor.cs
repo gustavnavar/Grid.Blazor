@@ -45,7 +45,7 @@ namespace GridCore.Sorting
                 var sortedColumns = _settings.SortValues.OrderBy(r => r.Id).ToList();
 
                 var gridColumn = _grid.Columns.FirstOrDefault(c => c.Name == sortedColumns[0].ColumnName) as IGridColumn<T>;
-                if(gridColumn == null)
+                if(gridColumn == null || gridColumn.NotDbMapped)
                     return items;
                 items = gridColumn.Orderers.FirstOrDefault().ApplyOrder(items, sortedColumns[0].Direction);
                 for (int i = 1; i < gridColumn.Orderers.Count(); i++)
@@ -73,7 +73,7 @@ namespace GridCore.Sorting
                     return items;
                 //determine gridColumn sortable:
                 gridColumn = _grid.Columns.FirstOrDefault(c => c.Name == _settings.ColumnName) as IGridColumn<T>;
-                if (gridColumn == null || !gridColumn.SortEnabled)
+                if (gridColumn == null || !gridColumn.SortEnabled || gridColumn.NotDbMapped)
                     return items;
                 foreach (var columnOrderer in gridColumn.Orderers)
                 {
@@ -86,7 +86,7 @@ namespace GridCore.Sorting
                     return items;
                 //determine gridColumn sortable:
                 var gridColumn = _grid.Columns.FirstOrDefault(c => c.Name == _settings.ColumnName) as IGridColumn<T>;
-                if (gridColumn == null || !gridColumn.SortEnabled)
+                if (gridColumn == null || !gridColumn.SortEnabled || gridColumn.NotDbMapped)
                     return items;
                 foreach (var columnOrderer in gridColumn.Orderers)
                 {

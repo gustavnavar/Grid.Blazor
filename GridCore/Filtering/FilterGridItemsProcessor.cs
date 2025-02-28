@@ -46,6 +46,7 @@ namespace GridCore.Filtering
                 var gridColumn = column as IGridColumn<T>;
                 if (gridColumn == null) continue;
                 if (gridColumn.Filter == null) continue;
+                if (gridColumn.NotDbMapped) continue;
 
                 IEnumerable<ColumnFilterValue> options = _settings.IsInitState(column)
                                                              ? new List<ColumnFilterValue>

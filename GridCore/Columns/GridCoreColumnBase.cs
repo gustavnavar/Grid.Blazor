@@ -50,6 +50,8 @@ namespace GridCore.Columns
 
         public int CrudLabelWidth { get; set; } = 2;
 
+        public bool NotDbMapped { get; protected set; } = false;
+
         public bool ColumnSortDefined { get; protected set; } = false;
 
         public bool SortEnabled { get; protected set; }
@@ -215,6 +217,12 @@ namespace GridCore.Columns
         public IGridColumn<T> SetCheckboxColumn(bool headerCheckbox, Func<T, bool> expression, Func<T, bool> readonlyExpr)
         {
             return SetCheckboxColumn(headerCheckbox, expression);
+        }
+
+        public IGridColumn<T> SetNotDbMapped(bool notDbMapped)
+        {
+            NotDbMapped = notDbMapped;
+            return this;
         }
 
         public IGridColumn<T> RenderValueAs(Func<T, string> constraint)

@@ -73,6 +73,7 @@ namespace GridCore.Searching
                 IGridColumn<T> gridColumn = column as IGridColumn<T>;
                 if (gridColumn == null) continue;
                 if (gridColumn.Search == null) continue;
+                if (gridColumn.NotDbMapped) continue;
                 if (!grid.SearchOptions.HiddenColumns && gridColumn.Hidden) continue;
 
                 if (binaryExpression == null)
