@@ -31,7 +31,7 @@ namespace GridBlazor.Columns
         /// <summary>
         ///     Searchers collection for this columns
         /// </summary>
-        private readonly IColumnSearch<T> _search;
+        private IColumnSearch<T> _search;
 
         /// <summary>
         ///     Totals collection for this columns
@@ -131,6 +131,7 @@ namespace GridBlazor.Columns
         public override IColumnSearch<T> Search
         {
             get { return _search; }
+            protected set { _search = value; }
         }
 
         public override IColumnTotals<T> Totals

@@ -31,7 +31,7 @@ namespace GridCore.Columns
         /// <summary>
         ///     Searchers collection for this columns
         /// </summary>
-        protected readonly IColumnSearch<T> _search;
+        protected IColumnSearch<T> _search;
 
         /// <summary>
         ///     Totals collection for this columns
@@ -125,6 +125,7 @@ namespace GridCore.Columns
         public override IColumnSearch<T> Search
         {
             get { return _search; }
+            protected set { _search = value; }
         }
 
         public override IColumnTotals<T> Totals

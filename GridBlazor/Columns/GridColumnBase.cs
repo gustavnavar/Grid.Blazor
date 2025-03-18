@@ -854,7 +854,7 @@ namespace GridBlazor.Columns
         public abstract string FilterWidgetTypeName { get; }
         public object FilterWidgetData { get; protected set; }
 
-        public abstract IColumnSearch<T> Search { get; }
+        public abstract IColumnSearch<T> Search { get; protected set; }
 
         public abstract IColumnTotals<T> Totals { get; }
 
@@ -886,6 +886,7 @@ namespace GridBlazor.Columns
             SubGrids = subGrids;
             ShowCreateSubGrids = showCreateSubGrids;
             SubGridKeys = keys;
+            Search = null;
             return this;
         }
 

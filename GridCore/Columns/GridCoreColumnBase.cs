@@ -823,7 +823,7 @@ namespace GridCore.Columns
         public abstract string FilterWidgetTypeName { get; }
         public object FilterWidgetData { get; protected set; }
 
-        public abstract IColumnSearch<T> Search { get; }
+        public abstract IColumnSearch<T> Search { get; protected set; }
 
         public abstract IColumnTotals<T> Totals { get; }
 
@@ -848,6 +848,7 @@ namespace GridCore.Columns
 
         public IGridColumn<T> SubGrid(bool showCreateSubGrids, string tabGrup, Func<object[], bool, bool, bool, bool, Task<IGrid>> subGrids, params (string, string)[] keys)
         {
+            Search = null;
             return this;
         }
 
