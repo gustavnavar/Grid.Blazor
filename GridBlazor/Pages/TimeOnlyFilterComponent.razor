@@ -1,0 +1,154 @@
+﻿@{
+#if !NETSTANDARD2_1 && !NET5_0
+}
+
+@using GridBlazor.Resources
+
+@typeparam T
+
+@if (_init && Visible)
+{
+<div class="@GridHeaderComponent.GridComponent.Grid.HtmlClass.DropdownMenu grid-dropdown" 
+        style="display:block;position:relative;overflow:visible;@("margin-left:" + _offset.ToString() + "px;")" 
+        @ref="timeOnlyFilter" 
+        @onkeyup="FilterKeyup" 
+        @onclick:stopPropagation 
+        @onkeyup:stopPropagation>
+    <div class="grid-dropdown-arrow" style="@("margin-left:" + (-_offset).ToString() + "px;")"></div>
+    <div class="grid-dropdown-inner">
+        <div class="grid-popup-widget">
+            <div class="grid-filter-body">
+                @for (int i = 0; i < _filters.Count(); i++)
+                {
+                    int j = i;
+                    if (j == 1)
+                    {
+                        <div class="@GridHeaderComponent.GridComponent.Grid.HtmlClass.FormGroupRow" style="display:flex;justify-content:center;">
+                            <div class="@(GridHeaderComponent.GridComponent.Grid.HtmlClass.FormDivInput + " " + GridHeaderComponent.GridComponent.Grid.HtmlClass.ColMd)3">
+                                <div class="@GridHeaderComponent.GridComponent.Grid.HtmlClass.FormDivSelect">
+                                    <select class="grid-filter-cond @GridHeaderComponent.GridComponent.Grid.HtmlClass.FormSelect" 
+                                            @bind="_condition">
+                                        <option value="1">@Strings.And</option>
+                                        <option value="2">@Strings.Or</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                    }
+                    else if (j > 1)
+                    {
+                        <div class="@GridHeaderComponent.GridComponent.Grid.HtmlClass.FormGroupRow" style="display:flex;justify-content:center;">
+                            <div class="@(GridHeaderComponent.GridComponent.Grid.HtmlClass.FormDivInput + " " + GridHeaderComponent.GridComponent.Grid.HtmlClass.ColMd)3">
+                                <div class="@GridHeaderComponent.GridComponent.Grid.HtmlClass.FormDivSelect">
+                                    <select class="grid-filter-cond @GridHeaderComponent.GridComponent.Grid.HtmlClass.FormSelect" 
+                                            disabled="disabled" 
+                                            value="@_condition">
+                                        <option value="1">@Strings.And</option>
+                                        <option value="2">@Strings.Or</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                    }
+                    <div class="@GridHeaderComponent.GridComponent.Grid.HtmlClass.FormGroupRow">
+                        <div class="@(GridHeaderComponent.GridComponent.Grid.HtmlClass.ColMd)5 @GridHeaderComponent.GridComponent.Grid.HtmlClass.My050">
+                            @if (j == 0)
+                            {
+                                <label class="@GridHeaderComponent.GridComponent.Grid.HtmlClass.FormLabel"><b>@Strings.FilterTypeLabel:</b></label>
+                                <div class="@GridHeaderComponent.GridComponent.Grid.HtmlClass.FormDivInput">
+                                    <div class="@GridHeaderComponent.GridComponent.Grid.HtmlClass.FormDivSelect">
+                                        <select @ref="firstSelect" 
+                                                class="grid-filter-type @GridHeaderComponent.GridComponent.Grid.HtmlClass.FormSelect" 
+                                                @bind="_filters[j].Type">
+                                            <option value="1">@Strings.Equal</option>
+                                            <option value="10">@Strings.NotEqual</option>
+                                            <option value="5">@Strings.GreaterThan</option>
+                                            <option value="6">@Strings.LessThan</option>
+                                            <option value="7">@Strings.GreaterThanOrEquals</option>
+                                            <option value="8">@Strings.LessThanOrEquals</option>
+                                            @if (GridHeaderComponent.Column.Filter.IsNullable)
+                                            {
+                                                <option value="11">@Strings.IsNull</option>
+                                                <option value="12">@Strings.IsNotNull</option>
+                                            }
+                                            @if (GridHeaderComponent.GridComponent.Grid.ServerAPI == ServerAPI.ItemsDTO || GridHeaderComponent.GridComponent.UseMemoryCrudDataService)
+                                            {
+                                                <option value="13">@Strings.Duplicated</option>
+                                                <option value="14">@Strings.NotDuplicated</option>
+                                            }
+                                        </select>
+                                    </div>
+                                </div>
+                            }
+                            else
+                            {
+                                <div class="@GridHeaderComponent.GridComponent.Grid.HtmlClass.FormDivInput">
+                                    <div class="@GridHeaderComponent.GridComponent.Grid.HtmlClass.FormDivSelect">
+                                        <select class="grid-filter-type @GridHeaderComponent.GridComponent.Grid.HtmlClass.FormSelect" 
+                                                @bind="_filters[j].Type">
+                                            <option value="1">@Strings.Equal</option>
+                                            <option value="10">@Strings.NotEqual</option>
+                                            <option value="5">@Strings.GreaterThan</option>
+                                            <option value="6">@Strings.LessThan</option>
+                                            <option value="7">@Strings.GreaterThanOrEquals</option>
+                                            <option value="8">@Strings.LessThanOrEquals</option>
+                                            @if (GridHeaderComponent.Column.Filter.IsNullable)
+                                            {
+                                                <option value="11">@Strings.IsNull</option>
+                                                <option value="12">@Strings.IsNotNull</option>
+                                            }
+                                            @if (GridHeaderComponent.GridComponent.Grid.ServerAPI == ServerAPI.ItemsDTO || GridHeaderComponent.GridComponent.UseMemoryCrudDataService)
+                                            {
+                                                <option value="13">@Strings.Duplicated</option>
+                                                <option value="14">@Strings.NotDuplicated</option>
+                                            }
+                                        </select>
+                                    </div>
+                                </div>
+                            }
+                        </div>
+                        <div class="@(GridHeaderComponent.GridComponent.Grid.HtmlClass.ColMd)7 @GridHeaderComponent.GridComponent.Grid.HtmlClass.My050">
+                            @if (j == 0)
+                            {
+                                <label class="@GridHeaderComponent.GridComponent.Grid.HtmlClass.FormLabel"><b>@Strings.FilterValueLabel:</b></label>
+                            }
+                            <div class="@GridHeaderComponent.GridComponent.Grid.HtmlClass.FormDivInput">
+                                <input type="time" placeholder="hh:mm" class="grid-filter-input @GridHeaderComponent.GridComponent.Grid.HtmlClass.FormInput" value="@_filters[j].Value" @onchange="(ChangeEventArgs __e) => _filters[j].Value = __e.Value.ToString()" />
+                            </div>
+                        </div>
+                    </div>
+                }
+                <div class="grid-buttons">
+                    <div class="grid-filter-buttons">
+                        <button type="button" class="@GridHeaderComponent.GridComponent.Grid.HtmlClass.ButtonPrimary" @onclick="ApplyButtonClicked">
+                            @Strings.ApplyFilterButtonText
+                        </button>
+                    </div>
+                    <div class="grid-filter-buttons">
+                        <button type="button" class="@GridHeaderComponent.GridComponent.Grid.HtmlClass.ButtonPrimary" @onclick="() => AddColumnFilterValue()"><b>+</b></button>
+                        @if (_filters.Length > 1)
+                        {
+                            <button type="button" class="@GridHeaderComponent.GridComponent.Grid.HtmlClass.ButtonPrimary" @onclick="() => RemoveColumnFilterValue()"><b>-</b></button>
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="grid-popup-additional">
+            @if (_clearVisible)
+            {
+                <ul class="grid-menu-list">
+                    <li>
+                        <a class="grid-filter-clear" href="javascript:void(0);" @onclick="ClearButtonClicked">
+                            @Strings.ClearFilterLabel
+                        </a>
+                    </li>
+                </ul>
+            }
+        </div>
+    </div>
+</div>
+}
+@{
+#endif
+}

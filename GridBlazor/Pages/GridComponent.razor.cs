@@ -268,6 +268,10 @@ namespace GridBlazor.Pages
             _filterComponents.Add("DateTimeLocal", typeof(DateTimeLocalFilterComponent<T>));
             _filterComponents.Add("Week", typeof(WeekFilterComponent<T>));
             _filterComponents.Add("Month", typeof(MonthFilterComponent<T>));
+#if ! NETSTANDARD2_1 && !NET5_0
+            _filterComponents.Add("System.DateOnly", typeof(DateOnlyFilterComponent<T>));
+            _filterComponents.Add("System.TimeOnly", typeof(TimeOnlyFilterComponent<T>));
+#endif
             _filterComponents.Add("System.Boolean", typeof(BooleanFilterComponent<T>));
             _filterComponents.Add("System.Collections.Generic.ICollection`1", typeof(CollectionFilterComponent<T>));
 

@@ -1,7 +1,7 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
 
-namespace GridBlazorClientSide.Shared.Models
+namespace GridMvc.Demo.Models
 {
     [Serializable]
     public class Truck

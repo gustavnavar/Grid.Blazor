@@ -250,6 +250,16 @@
                                     string typeAttr = ((IGridColumn<T>)column).InputType == InputType.None ? "time" : ((IGridColumn<T>)column).InputType.ToTypeAttr();
                                     <input autocomplete="@column.CustomAutoComplete.Invoke()" id="@column.FieldName" name="@column.FieldName" type="@typeAttr" class="@GridComponent.Grid.HtmlClass.FormInput @(ColumnErrors.ContainsKey(@column.FieldName) ? "input-validation-error" : "")" value="@(((ICGridColumn)column).GetFormatedDateTime(value, typeAttr))" @onchange="(e) => ChangeValue(e, column)" />
                                 }
+#if !NETSTANDARD2_1 && !NET5_0
+                                else if (type == typeof(DateOnly))
+                                {
+                                    <input autocomplete="@column.CustomAutoComplete.Invoke()" id="@column.FieldName" name="@column.FieldName" type="date" class="@GridComponent.Grid.HtmlClass.FormInput @(ColumnErrors.ContainsKey(@column.FieldName) ? "input-validation-error" : "")" value="@(((ICGridColumn)column).GetFormatedDateTime(value, "date"))" @onchange="(e) => ChangeValue(e, column)" />
+                                }
+                                else if (type == typeof(TimeOnly))
+                                {
+                                    <input autocomplete="@column.CustomAutoComplete.Invoke()" id="@column.FieldName" name="@column.FieldName" type="time" class="@GridComponent.Grid.HtmlClass.FormInput @(ColumnErrors.ContainsKey(@column.FieldName) ? "input-validation-error" : "")" value="@(((ICGridColumn)column).GetFormatedDateTime(value, "time"))" @onchange="(e) => ChangeValue(e, column)" />
+                                }
+#endif
                                 else if (type == typeof(bool))
                                 {
                                     if (value != null && (bool)value == true)

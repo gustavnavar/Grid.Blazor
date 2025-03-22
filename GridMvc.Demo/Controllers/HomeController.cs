@@ -14,6 +14,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ViewEngines;
 using Microsoft.EntityFrameworkCore;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
@@ -610,6 +611,134 @@ namespace GridMvc.Demo.Controllers
                 .SetToListAsyncFunc(async x => await x.ToListAsync());
 
             return View(server.Grid);
+        }
+
+        [HttpGet]
+        public ActionResult Trucks()
+        {
+            IQueryCollection query = Request.Query;
+
+            ViewBag.ActiveMenuTitle = "Trucks";
+
+            var requestCulture = HttpContext.Features.Get<IRequestCultureFeature>();
+            var locale = requestCulture.RequestCulture.UICulture.TwoLetterISOLanguageName;
+            SharedResource.Culture = requestCulture.RequestCulture.UICulture;
+
+            IEnumerable<SelectItem> Types = new PersonType[] { PersonType.Driver, PersonType.Owner, PersonType.DriverAndOwner }
+               .Select(r => new SelectItem(r.ToString(), r.ToText()));
+
+            Action<IGridColumnCollection<Truck>> columns = c =>
+            {
+                c.Add(t => t.Description).Titled("Description");
+                c.Add(t => t.Person.FullName).Titled("Person");
+                c.Add(t => t.Date).Titled("Date");
+                c.Add(t => t.Time).Titled("Time");
+                c.Add(t => t.Type).Titled("Type").RenderValueAs(r => r.Type?.ToText()).SetListFilter(Types, true, true);
+            };
+
+            var server = new GridServer<Truck>(GetAllTrucks(), query, false, "trucksGrid",
+                columns, 10, locale)
+                .Sortable()
+                .Filterable()
+                .WithMultipleFilters()
+                .Searchable(true, false)
+                .Groupable(true)
+                .ClearFiltersButton(true)
+                .Selectable(true)
+                .SetStriped(true)
+                .ChangePageSize(true)
+                .WithGridItemsCount()
+                .SyncButton(true);
+
+            return View(server.Grid);
+        }
+
+        private IEnumerable<Truck> GetAllTrucks()
+        {
+            var trucks = new List<Truck>();
+            trucks.Add(new Truck
+            {
+                Id = 1,
+                Description = "Truck 1",
+                Date = new DateOnly(2021, 1, 1),
+                Time = new TimeOnly(12, 30),
+                Person = new Person
+                {
+                    Id = 1,
+                    FirstName = "Person",
+                    LastName = "1"
+                },
+                Type = PersonType.DriverAndOwner
+            });
+            trucks.Add(new Truck
+            {
+                Id = 2,
+                Description = "Truck 2",
+                Date = new DateOnly(2021, 1, 4),
+                Time = new TimeOnly(14, 30),
+                Person = new Person
+                {
+                    Id = 2,
+                    LastName = "2"
+                },
+                Type = PersonType.Driver
+            });
+            trucks.Add(new Truck
+            {
+                Id = 3,
+                Description = "Truck 3",
+                Date = new DateOnly(2021, 1, 8),
+                Time = new TimeOnly(16, 30),
+                Person = new Person
+                {
+                    Id = 1,
+                    FirstName = "Person"
+                },
+                Type = PersonType.Owner
+            });
+            trucks.Add(new Truck
+            {
+                Id = 4,
+                Description = "Truck 4",
+                Date = new DateOnly(2021, 1, 12),
+                Time = new TimeOnly(18, 30),
+                Person = new Person
+                {
+                    Id = 4,
+                    FirstName = "Person",
+                    LastName = "4"
+                },
+                Type = PersonType.Driver
+            });
+            trucks.Add(new Truck
+            {
+                Id = 5,
+                Description = "Truck 5",
+                Date = new DateOnly(2021, 1, 16),
+                Time = new TimeOnly(20, 30),
+                Person = new Person
+                {
+                    Id = 5,
+                    FirstName = "Person",
+                    LastName = "5"
+                },
+                Type = PersonType.Driver
+            });
+            trucks.Add(new Truck
+            {
+                Id = 6,
+                Description = "Truck 6",
+                Date = new DateOnly(2021, 1, 20),
+                Time = new TimeOnly(22, 30),
+                Person = new Person
+                {
+                    Id = 6,
+                    FirstName = "Person",
+                    LastName = "6"
+                },
+                Type = PersonType.Owner
+            });
+            return trucks;
         }
     }
 }

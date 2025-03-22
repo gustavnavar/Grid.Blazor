@@ -1,0 +1,23 @@
+﻿@using GridCore
+@addTagHelper *, GridMvc
+
+@model ISGrid
+
+@{
+    ViewBag.Title = "Trucks Page";
+}
+
+<div class="row">
+    <div class="col-md-12">
+        <p>
+            This page demonstrates the possibilities of GridMvcCore. For more documentation, please
+            see: <a href="https://github.com/gustavnavar/Grid.Blazor">https://github.com/gustavnavar/Grid.Blazor</a>
+        </p>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-9">
+        <grid model="@Model" />
+    </div>
+</div>

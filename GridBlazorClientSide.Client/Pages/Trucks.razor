@@ -53,6 +53,8 @@ else
     {
         c.Add(t => t.Description).Titled("Description");
         c.Add(t => t.Person.FullName).Titled("Person");
+        c.Add(t => t.Date).Titled("Date");
+        c.Add(t => t.Time).Titled("Time");
         c.Add(t => t.Type).Titled("Type").RenderValueAs(r => r.Type?.ToText()).SetListFilter(Trucks.Types, true, true);
     };
 }

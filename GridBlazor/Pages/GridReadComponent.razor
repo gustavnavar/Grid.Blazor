@@ -117,6 +117,16 @@
                         string typeAttr = ((IGridColumn<T>)column).InputType == InputType.None ? "time" : ((IGridColumn<T>)column).InputType.ToTypeAttr();
                         <input id="@column.FieldName" type="@typeAttr" class="@GridComponent.Grid.HtmlClass.FormInput" readonly disabled value="@(((ICGridColumn)column).GetFormatedDateTime(value, typeAttr))" />
                     }
+#if !NETSTANDARD2_1 && !NET5_0
+                    else if (type == typeof(DateOnly))
+                    {
+                        <input id="@column.FieldName" type="date" class="@GridComponent.Grid.HtmlClass.FormInput" readonly disabled value="@(((ICGridColumn)column).GetFormatedDateTime(value, "date"))" />
+                    }
+                    else if (type == typeof(TimeOnly))
+                    {
+                        <input id="@column.FieldName" type="time" class="@GridComponent.Grid.HtmlClass.FormInput" readonly disabled value="@(((ICGridColumn)column).GetFormatedDateTime(value, "time"))" />
+                    }
+#endif
                     else
                     {
                         <input id="@column.FieldName" class="@GridComponent.Grid.HtmlClass.FormInput" readonly disabled value="@column.GetFormatedValue(value)" />

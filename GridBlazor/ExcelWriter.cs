@@ -44,7 +44,11 @@ namespace GridBlazor
                 || type == typeof(Single) || type == typeof(float) || type == typeof(Int64) || type == typeof(Int16)
                 || type == typeof(UInt64) || type == typeof(UInt32) || type == typeof(UInt16))
                 Type = CellValues.Number;
-            else if (type == typeof(DateTime) || type == typeof(DateTimeOffset) || type == typeof(decimal) || type == typeof(byte)
+            else if (type == typeof(DateTime) || type == typeof(DateTimeOffset)
+#if !NETSTANDARD2_1 && !NET5_0
+                || type == typeof(DateOnly) || type == typeof(TimeOnly)
+#endif
+                || type == typeof(decimal) || type == typeof(byte)
                 || type == typeof(Single) || type == typeof(float) || type == typeof(Int64) || type == typeof(Int16)
                 || type == typeof(UInt64) || type == typeof(UInt32) || type == typeof(UInt16))
                 Type = CellValues.Date;

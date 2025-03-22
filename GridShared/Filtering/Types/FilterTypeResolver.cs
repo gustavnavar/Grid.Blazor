@@ -16,6 +16,10 @@ namespace GridShared.Filtering.Types
             _filterCollection.Add(new BooleanFilterType());
             _filterCollection.Add(new DateTimeFilterType());
             _filterCollection.Add(new DateTimeOffsetFilterType());
+#if !NETSTANDARD2_1 && !NET5_0
+            _filterCollection.Add(new DateOnlyFilterType());
+            _filterCollection.Add(new TimeOnlyFilterType());
+#endif
             _filterCollection.Add(new DecimalFilterType());
             _filterCollection.Add(new ByteFilterType());
             _filterCollection.Add(new SingleFilterType());
