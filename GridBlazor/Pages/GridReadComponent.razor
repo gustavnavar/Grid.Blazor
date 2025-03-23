@@ -5,6 +5,9 @@
 
 @typeparam T
 
+@{
+    #if !NETSTANDARD2_1 && !NET5_0
+}
 <div class="@GridComponent.GridCrudHeaderCssClass">@(string.IsNullOrWhiteSpace(GridComponent.Grid.ReadFormLabel) ? Strings.View : GridComponent.Grid.ReadFormLabel)</div>
 
 <div>
@@ -117,7 +120,6 @@
                         string typeAttr = ((IGridColumn<T>)column).InputType == InputType.None ? "time" : ((IGridColumn<T>)column).InputType.ToTypeAttr();
                         <input id="@column.FieldName" type="@typeAttr" class="@GridComponent.Grid.HtmlClass.FormInput" readonly disabled value="@(((ICGridColumn)column).GetFormatedDateTime(value, typeAttr))" />
                     }
-#if !NETSTANDARD2_1 && !NET5_0
                     else if (type == typeof(DateOnly))
                     {
                         <input id="@column.FieldName" type="date" class="@GridComponent.Grid.HtmlClass.FormInput" readonly disabled value="@(((ICGridColumn)column).GetFormatedDateTime(value, "date"))" />
@@ -126,7 +128,6 @@
                     {
                         <input id="@column.FieldName" type="time" class="@GridComponent.Grid.HtmlClass.FormInput" readonly disabled value="@(((ICGridColumn)column).GetFormatedDateTime(value, "time"))" />
                     }
-#endif
                     else
                     {
                         <input id="@column.FieldName" class="@GridComponent.Grid.HtmlClass.FormInput" readonly disabled value="@column.GetFormatedValue(value)" />
@@ -212,3 +213,206 @@
         </div>
     </div>
 </div>
+@{
+    #else
+}
+<div class="@GridComponent.GridCrudHeaderCssClass">@(string.IsNullOrWhiteSpace(GridComponent.Grid.ReadFormLabel) ? Strings.View : GridComponent.Grid.ReadFormLabel)</div>
+
+<div>
+    @foreach (var column in GridComponent.Grid.Columns)
+    {
+        if (((ICGridColumn)column).SubGrids == null && column.ComponentType == null
+            && column.CreateComponentType == null && column.ReadComponentType == null
+            && column.UpdateComponentType == null && column.DeleteComponentType == null)
+        {
+            if (column.FieldName == null)
+            {
+                continue;
+            }
+
+            (Type type, object value) = ((IGridColumn<T>)column).GetTypeAndValue(Item);
+            if (type == null)
+            {
+                continue;
+            }
+            <div class="@GridComponent.Grid.HtmlClass.FormGroupRow" style="@(((IGridColumn<T>)column).CrudHidden(Item).HasFlag(CrudHidden.READ) ? "display:none;" : "")">
+                @if (!string.IsNullOrWhiteSpace(column.TooltipValue))
+                {
+                    <div class="@(GridComponent.Grid.HtmlClass.FormLabel + " " + GridComponent.Grid.HtmlClass.ColMd + column.CrudLabelWidth.ToString())">
+                        <FormTooltipComponent T="@T" Column="@column"></FormTooltipComponent>
+                    </div>
+                }
+                else
+                {
+                    <label for="@column.FieldName" class="@(GridComponent.Grid.HtmlClass.FormLabel + " " + GridComponent.Grid.HtmlClass.ColMd + column.CrudLabelWidth.ToString())">@column.Title</label>
+                }
+                <div class="@(type == typeof(bool) && column.ToggleSwitch ? GridComponent.Grid.HtmlClass.FormDivToggleSwitch : GridComponent.Grid.HtmlClass.FormDivInput) @(type == typeof(bool) && !column.ToggleSwitch ? GridComponent.Grid.HtmlClass.ColMd + "1" : GridComponent.Grid.HtmlClass.ColMd + column.CrudWidth.ToString())">
+                    @if (((IGridColumn<T>)column).IsSelectField.IsSelectKey)
+                    {
+                        string text = ((IGridColumn<T>)column).GetFormatedValue(((IGridColumn<T>)column).IsSelectField.Expression, Item);
+                        <input id="@column.FieldName" class="@GridComponent.Grid.HtmlClass.FormInput" readonly disabled value="@text" />
+                    }
+                    else if (((IGridColumn<T>)column).IsSelectColumn.IsSelectKey)
+                    {
+                        string text = ((IGridColumn<T>)column).GetFormatedValue(((IGridColumn<T>)column).IsSelectColumn.Expression, Item);
+                        <input id="@column.FieldName" class="@GridComponent.Grid.HtmlClass.FormInput" readonly disabled value="@text" />
+                    }
+                    else if (type == typeof(bool))
+                    {
+                        if (value != null && (bool)value == true)
+                        {
+                            if (column.ToggleSwitch)
+                            {
+                                <label class="@GridComponent.Grid.HtmlClass.FormLabel">@column.FalseLabel</label>
+                                <label class="grid-switch">
+                                    <input id="@column.FieldName" type="checkbox" class="@GridComponent.Grid.HtmlClass.FormInput" readonly disabled checked="checked" value="true" />
+                                    <span class="@GridComponent.Grid.HtmlClass.FormSpanToggleSwitch"></span>
+                                </label>
+                                <label class="@GridComponent.Grid.HtmlClass.FormLabel">@column.TrueLabel</label>
+                            }
+                            else
+                            {
+                                <label>
+                                    <input id="@column.FieldName" type="checkbox" class="@GridComponent.Grid.HtmlClass.FormCheck" readonly disabled checked="checked" value="true" />
+                                    <span></span>
+                                </label>
+                            }
+                        }
+                        else
+                        {
+                            if (column.ToggleSwitch)
+                            {
+                                <label class="@GridComponent.Grid.HtmlClass.FormLabel">@column.FalseLabel</label>
+                                <label class="grid-switch">
+                                    <input id="@column.FieldName" type="checkbox" class="@GridComponent.Grid.HtmlClass.FormInput" readonly disabled value="false" />
+                                    <span class="@GridComponent.Grid.HtmlClass.FormSpanToggleSwitch"></span>
+                                </label>
+                                <label class="@GridComponent.Grid.HtmlClass.FormLabel">@column.TrueLabel</label>
+                            }
+                            else
+                            {
+                                <label>
+                                    <input id="@column.FieldName" type="checkbox" class="@GridComponent.Grid.HtmlClass.FormCheck" readonly disabled value="false" />
+                                    <span></span>
+                                </label>
+                            }
+                        }
+                    }
+                    else if (type == typeof(string))
+                    {
+                        if (((IGridColumn<T>)column).InputType == InputType.TextArea)
+                        {
+                            <textarea id="@column.FieldName" class="@GridComponent.Grid.HtmlClass.FormTextArea" rows="@column.TextAreaRows" readonly disabled value="@column.GetFormatedValue(value)" />
+                        }
+                        else
+                        {
+                            <input id="@column.FieldName" class="@GridComponent.Grid.HtmlClass.FormInput" readonly disabled value="@column.GetFormatedValue(value)" />
+                        }
+                    }
+                    else if (type == typeof(string) && ((IGridColumn<T>)column).InputType == InputType.File)
+                    {
+                        <input id="@column.FieldName" name="@column.FieldName" type="file" class="@GridComponent.Grid.HtmlClass.FormInput" readonly disabled value="@column.GetFormatedValue(value)" />
+                    }
+                    else if (type == typeof(DateTime))
+                    {
+                        string typeAttr = ((IGridColumn<T>)column).InputType == InputType.None ? "date" : ((IGridColumn<T>)column).InputType.ToTypeAttr();
+                        <input id="@column.FieldName" type="@typeAttr" class="@GridComponent.Grid.HtmlClass.FormInput" readonly disabled value="@(((ICGridColumn)column).GetFormatedDateTime(value, typeAttr))" />
+                    }
+                    else if (type == typeof(DateTimeOffset))
+                    {
+                        string typeAttr = ((IGridColumn<T>)column).InputType == InputType.None ? "date" : ((IGridColumn<T>)column).InputType.ToTypeAttr();
+                        <input id="@column.FieldName" type="@typeAttr" class="@GridComponent.Grid.HtmlClass.FormInput" readonly disabled value="@(((ICGridColumn)column).GetFormatedDateTime(value, typeAttr))" />
+                    }
+                    else if (type == typeof(TimeSpan))
+                    {
+                        string typeAttr = ((IGridColumn<T>)column).InputType == InputType.None ? "time" : ((IGridColumn<T>)column).InputType.ToTypeAttr();
+                        <input id="@column.FieldName" type="@typeAttr" class="@GridComponent.Grid.HtmlClass.FormInput" readonly disabled value="@(((ICGridColumn)column).GetFormatedDateTime(value, typeAttr))" />
+                    }
+                    else
+                    {
+                        <input id="@column.FieldName" class="@GridComponent.Grid.HtmlClass.FormInput" readonly disabled value="@column.GetFormatedValue(value)" />
+                    }
+                </div>
+            </div>
+        }
+        else if ((((ICGridColumn)column).SubGrids != null || column.ReadComponentType != null)
+            && string.IsNullOrWhiteSpace(column.TabGroup))
+        {
+            <div class="@GridComponent.Grid.HtmlClass.FormGroupRow" style="@(((IGridColumn<T>)column).CrudHidden(Item).HasFlag(CrudHidden.READ)?"display:none;":"")">
+                @if (!string.IsNullOrWhiteSpace(column.TooltipValue))
+                {
+                    <div class="@(GridComponent.Grid.HtmlClass.ColMd + column.CrudLabelWidth.ToString())">
+                        <FormTooltipComponent T="@T" Column="@column"></FormTooltipComponent>
+                    </div>
+                }
+                else
+                {
+                    <label class="@(GridComponent.Grid.HtmlClass.FormLabel + " " + GridComponent.Grid.HtmlClass.ColMd + column.CrudLabelWidth.ToString())">@column.Title</label>
+                }
+                @if (column.EnableCard)
+                {
+                    <div class="@(GridComponent.Grid.HtmlClass.ColMd + (column.CrudCustomWith ? column.CrudWidth.ToString() : (12 - column.CrudLabelWidth).ToString()))">
+                        <div class="@GridComponent.Grid.HtmlClass.Card">
+                            <div class="@GridComponent.Grid.HtmlClass.CardBody">@_renderFragments.Get(column.Name)</div>
+                        </div>
+                     </div>
+                 }
+                 else
+                 {
+                    <div class="@(GridComponent.Grid.HtmlClass.ColMd + column.CrudWidth.ToString())">
+                        @_renderFragments.Get(column.Name)
+                     </div>
+                 }
+            </div>
+        }
+    }
+
+    @if (_tabGroups != null)
+    {
+        foreach (var tabGruop in _tabGroups)
+        {
+            var columns = GridComponent.Grid.Columns
+                    .Where(r => r.TabGroup != null && r.TabGroup.Equals(tabGruop) && _renderFragments.Keys.Any(s => s.Equals(r.Name)));
+            var tabLabels = columns.Select(r => new SelectItem(r.Name, r.Title));
+            var column = columns.FirstOrDefault();
+            <div class="@GridComponent.Grid.HtmlClass.FormGroupRow">
+                <div class="@(GridComponent.Grid.HtmlClass.OffsetMd + column.CrudLabelWidth.ToString() + " " + GridComponent.Grid.HtmlClass.ColMd + (column.CrudCustomWith ? column.CrudWidth.ToString() : (12 - column.CrudLabelWidth).ToString()))">
+                    <div class="@GridComponent.Grid.HtmlClass.Card">
+                        <div class="@GridComponent.Grid.HtmlClass.CardBody">
+                            <GridTabComponent T="@T" TabLabels="@tabLabels" TabContent="@_renderFragments" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+    }
+
+    <div style="display:flex;">
+        <div>
+            <CascadingValue Value=@this Name="GridReadComponent">
+                <GridReadButtonsComponent @ref="GridReadButtonsComponent" T="@T"></GridReadButtonsComponent>
+            </CascadingValue>
+            @if (((CGrid<T>)GridComponent.Grid).ButtonCrudComponents != null && ((CGrid<T>)GridComponent.Grid).ButtonCrudComponents.Count() > 0)
+            {
+                @foreach (var key in ((CGrid<T>)GridComponent.Grid).ButtonCrudComponents.Keys)
+                {
+                    var buttonCrudComponent = ((CGrid<T>)GridComponent.Grid).ButtonCrudComponents.Get(key);
+                    if (_buttonCrudComponentVisibility.Get(key))
+                    {
+                        if (buttonCrudComponent.Content.HasValue)
+                        {
+                            <button class="@GridComponent.Grid.HtmlClass.ButtonPrimary" type="button" title="@buttonCrudComponent.Label" @onclick="() => GridComponent.ButtonCrudComponentHandler(key)" @onclick:stopPropagation>@buttonCrudComponent.Content.Value</button>
+                        }
+                        else
+                        {
+                            <button class="@GridComponent.Grid.HtmlClass.ButtonPrimary" type="button" title="@buttonCrudComponent.Label" @onclick="() => GridComponent.ButtonCrudComponentHandler(key)" @onclick:stopPropagation>@buttonCrudComponent.Label</button>
+                        }
+                    }
+                }
+            }
+        </div>
+    </div>
+</div>
+@{
+    #endif
+}

@@ -34,6 +34,7 @@ namespace GridBlazorClientSide.Client
             builder.Services.AddScoped<ICrudDataService<Customer>, CustomerService>();
             builder.Services.AddScoped<ICrudDataService<Employee>, EmployeeService>();
             builder.Services.AddScoped<ICrudFileService<Employee>, EmployeeFileService>();
+            builder.Services.AddScoped<ICrudDataService<Truck>, TruckService>();
             builder.Services.AddLocalization();
 
             var host = builder.Build();

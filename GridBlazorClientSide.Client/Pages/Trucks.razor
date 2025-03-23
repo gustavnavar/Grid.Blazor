@@ -5,6 +5,7 @@
 @using System.Threading.Tasks
 @inject NavigationManager NavigationManager
 @inject HttpClient HttpClient
+@inject ICrudDataService<Truck> truckService
 
 @if (_task.IsCompleted)
 {
@@ -32,7 +33,7 @@ else
         var locale = CultureInfo.CurrentCulture;
 
         var query = new QueryDictionary<StringValues>();
-        string url = NavigationManager.BaseUri + "api/SampleData/GetTrucksGrid";
+        string url = NavigationManager.BaseUri + "api/Truck/GetTrucksGrid";
 
         var client = new GridClient<Truck>(HttpClient, url, query, false, "trucksGrid", Trucks.Columns, locale)
             .Sortable()
@@ -41,7 +42,8 @@ else
             .SetStriped(true)
             .WithMultipleFilters()
             .WithGridItemsCount()
-            .Searchable(true, false, false);
+            .Searchable(true, false, false)
+            .Crud(true, truckService);
 
         _grid = client.Grid;
         // Set new items to grid
@@ -51,6 +53,7 @@ else
 
     public static Action<IGridColumnCollection<Truck>> Columns = c =>
     {
+        c.Add(t => t.Id).Titled("Id").SetPrimaryKey(true);
         c.Add(t => t.Description).Titled("Description");
         c.Add(t => t.Person.FullName).Titled("Person");
         c.Add(t => t.Date).Titled("Date");
