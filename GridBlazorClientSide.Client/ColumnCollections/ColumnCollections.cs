@@ -97,7 +97,9 @@ namespace GridBlazorClientSide.Client.ColumnCollections
             .Titled(SharedResource.Freight)
             .Format("{0:#,##0.000}")
             .SetWidth(150)
-            .Sum(true).Average(true).Max(true).Min(true)
+            .Sum(true)
+            .Average(true, c => c.AverageValue.Number != 100 ? "red" : "")
+            .Max(true).Min(true)
             .Calculate("Average 2", x => x.Grid.ItemsCount == 0 ? "" : x.Get("Freight").SumValue.Number / x.Grid.ItemsCount)
             .Calculate("Average 3", x => x.Get("OrderID").SumValue.Number == 0 ? "" : x.Get("Freight").SumValue.Number / x.Get("OrderID").SumValue.Number);
 

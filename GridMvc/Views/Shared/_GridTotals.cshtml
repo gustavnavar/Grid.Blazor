@@ -48,7 +48,14 @@ else
                 {
                     if (column.IsSumEnabled && column.SumValue != null)
                     {
-                        <td class="grid-cell" style="@cssStyles"><b>@column.SumValue.GetString(column.ValuePattern)</b></td>
+                        if (column.CssSumClass != null)
+                        {
+                            <td class="grid-cell @column.CssSumClass(column)" style="@cssStyles"><b>@column.SumValue.GetString(column.ValuePattern)</b></td>
+                        }
+                        else
+                        {
+                            <td class="grid-cell" style="@cssStyles"><b>@column.SumValue.GetString(column.ValuePattern)</b></td>
+                        }
                     }
                     else
                     {
@@ -89,7 +96,14 @@ else
                 {
                     if (column.IsAverageEnabled && column.AverageValue != null)
                     {
-                        <td class="grid-cell" style="@cssStyles"><b>@column.AverageValue.GetString(column.ValuePattern)</b></td>
+                        if (column.CssAverageClass != null)
+                        {
+                            <td class="grid-cell @column.CssAverageClass(column)" style="@cssStyles"><b>@column.AverageValue.GetString(column.ValuePattern)</b></td>
+                        }
+                        else
+                        {
+                            <td class="grid-cell" style="@cssStyles"><b>@column.AverageValue.GetString(column.ValuePattern)</b></td>
+                        }
                     }
                     else
                     {
@@ -129,7 +143,14 @@ else
                 {
                     if (column.IsMaxEnabled && column.MaxValue != null)
                     {
-                        <td class="grid-cell" style="@cssStyles"><b>@column.MaxValue.GetString(column.ValuePattern)</b></td>
+                        if (column.CssMaxClass != null)
+                        {
+                            <td class="grid-cell @column.CssMaxClass(column)" style="@cssStyles"><b>@column.MaxValue.GetString(column.ValuePattern)</b></td>
+                        }
+                        else
+                        {
+                            <td class="grid-cell" style="@cssStyles"><b>@column.MaxValue.GetString(column.ValuePattern)</b></td>
+                        }
                     }
                     else
                     {
@@ -169,7 +190,14 @@ else
                 {
                     if (column.IsMinEnabled && column.MinValue != null)
                     {
-                        <td class="grid-cell" style="@cssStyles"><b>@column.MinValue.GetString(column.ValuePattern)</b></td>
+                        if (column.CssMinClass != null)
+                        {
+                            <td class="grid-cell @column.CssMinClass(column)" style="@cssStyles"><b>@column.MinValue.GetString(column.ValuePattern)</b></td>
+                        }
+                        else
+                        {
+                            <td class="grid-cell" style="@cssStyles"><b>@column.MinValue.GetString(column.ValuePattern)</b></td>
+                        }
                     }
                     else
                     {
@@ -211,7 +239,14 @@ else
                     {
                         if (column.IsCalculationEnabled && column.CalculationValues != null && column.CalculationValues.ContainsKey(calculationName))
                         {
-                            <td class="grid-cell" style="@cssStyles"><b>@column.CalculationValues.Get(calculationName)?.GetString(column.ValuePattern)</b></td>
+                            if (column.CssCalculationClass != null)
+                            {
+                                <td class="grid-cell @column.CssCalculationClass(column)" style="@cssStyles"><b>@column.CalculationValues.Get(calculationName)?.GetString(column.ValuePattern)</b></td>
+                            }
+                            else
+                            {
+                                <td class="grid-cell" style="@cssStyles"><b>@column.CalculationValues.Get(calculationName)?.GetString(column.ValuePattern)</b></td>
+                            }
                         }
                         else
                         {

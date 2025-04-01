@@ -32,8 +32,8 @@
                 <td class="@GridComponent.GridSumCssClass" data-name="" style="width:35px;"></td>
             }
             @if (firstColumn != null
-              && (firstColumn.IsSumEnabled || firstColumn.IsAverageEnabled
-              || firstColumn.IsMaxEnabled || firstColumn.IsMinEnabled || firstColumn.IsCalculationEnabled))
+    && (firstColumn.IsSumEnabled || firstColumn.IsAverageEnabled
+    || firstColumn.IsMaxEnabled || firstColumn.IsMinEnabled || firstColumn.IsCalculationEnabled))
             {
                 <td class="@GridComponent.GridSumCssClass" style="width:90px;"><b>@Strings.Sum</b></td>
             }
@@ -58,7 +58,14 @@
                 {
                     if (column.IsSumEnabled && column.SumValue != null)
                     {
-                        <td class="@GridComponent.GridSumCssClass" style="@cssStyles"><b>@column.SumValue.GetString(column.ValuePattern)</b></td>
+                        if(column.CssSumClass != null)
+                        {
+                            <td class="@GridComponent.GridSumCssClass @column.CssSumClass(column)" style="@cssStyles"><b>@column.SumValue.GetString(column.ValuePattern)</b></td>
+                        }
+                        else
+                        {
+                            <td class="@GridComponent.GridSumCssClass" style="@cssStyles"><b>@column.SumValue.GetString(column.ValuePattern)</b></td>
+                        }
                     }
                     else
                     {
@@ -89,8 +96,8 @@
                 <td class="@GridComponent.GridAverageCssClass" data-name="" style="width:35px;"></td>
             }
             @if (firstColumn != null
-              && (firstColumn.IsSumEnabled || firstColumn.IsAverageEnabled
-              || firstColumn.IsMaxEnabled || firstColumn.IsMinEnabled || firstColumn.IsCalculationEnabled))
+    && (firstColumn.IsSumEnabled || firstColumn.IsAverageEnabled
+    || firstColumn.IsMaxEnabled || firstColumn.IsMinEnabled || firstColumn.IsCalculationEnabled))
             {
                 <td class="@GridComponent.GridAverageCssClass" style="width:90px;"><b>@Strings.Average</b></td>
             }
@@ -115,7 +122,14 @@
                 {
                     if (column.IsAverageEnabled && column.AverageValue != null)
                     {
-                        <td class="@GridComponent.GridAverageCssClass" style="@cssStyles"><b>@column.AverageValue.GetString(column.ValuePattern)</b></td>
+                        if (column.CssAverageClass != null)
+                        {
+                            <td class="@GridComponent.GridAverageCssClass @column.CssAverageClass(column)" style="@cssStyles"><b>@column.AverageValue.GetString(column.ValuePattern)</b></td>
+                        }
+                        else
+                        {
+                            <td class="@GridComponent.GridAverageCssClass" style="@cssStyles"><b>@column.AverageValue.GetString(column.ValuePattern)</b></td>
+                        }
                     }
                     else
                     {
@@ -145,8 +159,8 @@
                 <td class="@GridComponent.GridMaxCssClass" data-name="" style="width:35px;"></td>
             }
             @if (firstColumn != null
-              && (firstColumn.IsSumEnabled || firstColumn.IsAverageEnabled
-              || firstColumn.IsMaxEnabled || firstColumn.IsMinEnabled || firstColumn.IsCalculationEnabled))
+     && (firstColumn.IsSumEnabled || firstColumn.IsAverageEnabled
+     || firstColumn.IsMaxEnabled || firstColumn.IsMinEnabled || firstColumn.IsCalculationEnabled))
             {
                 <td class="@GridComponent.GridMaxCssClass" style="width:90px;"><b>@Strings.Max</b></td>
             }
@@ -171,7 +185,14 @@
                 {
                     if (column.IsMaxEnabled && column.MaxValue != null)
                     {
-                        <td class="@GridComponent.GridMaxCssClass" style="@cssStyles"><b>@column.MaxValue.GetString(column.ValuePattern)</b></td>
+                        if (column.CssMaxClass != null)
+                        {
+                            <td class="@GridComponent.GridMaxCssClass @column.CssMaxClass(column)" style="@cssStyles"><b>@column.MaxValue.GetString(column.ValuePattern)</b></td>
+                        }
+                        else
+                        {
+                            <td class="@GridComponent.GridMaxCssClass" style="@cssStyles"><b>@column.MaxValue.GetString(column.ValuePattern)</b></td>
+                        }
                     }
                     else
                     {
@@ -201,8 +222,8 @@
                 <td class="@GridComponent.GridMinCssClass" data-name="" style="width:35px;"></td>
             }
             @if (firstColumn != null
-              && (firstColumn.IsSumEnabled || firstColumn.IsAverageEnabled
-              || firstColumn.IsMaxEnabled || firstColumn.IsMinEnabled || firstColumn.IsCalculationEnabled))
+         && (firstColumn.IsSumEnabled || firstColumn.IsAverageEnabled
+         || firstColumn.IsMaxEnabled || firstColumn.IsMinEnabled || firstColumn.IsCalculationEnabled))
             {
                 <td class="@GridComponent.GridMinCssClass" style="width:90px;"><b>@Strings.Min</b></td>
             }
@@ -227,7 +248,14 @@
                 {
                     if (column.IsMinEnabled && column.MinValue != null)
                     {
-                        <td class="@GridComponent.GridMinCssClass" style="@cssStyles"><b>@column.MinValue.GetString(column.ValuePattern)</b></td>
+                        if (column.CssMinClass != null)
+                        {
+                            <td class="@GridComponent.GridMinCssClass @column.CssMinClass(column)" style="@cssStyles"><b>@column.MinValue.GetString(column.ValuePattern)</b></td>
+                        }
+                        else
+                        {
+                            <td class="@GridComponent.GridMinCssClass" style="@cssStyles"><b>@column.MinValue.GetString(column.ValuePattern)</b></td>
+                        }
                     }
                     else
                     {
@@ -259,8 +287,8 @@
                     <td class="@GridComponent.GridCalculationCssClass" data-name="" style="width:35px;"></td>
                 }
                 @if (firstColumn != null
-                  && (firstColumn.IsSumEnabled || firstColumn.IsAverageEnabled
-                  || firstColumn.IsMaxEnabled || firstColumn.IsMinEnabled || firstColumn.IsCalculationEnabled))
+                && (firstColumn.IsSumEnabled || firstColumn.IsAverageEnabled
+                || firstColumn.IsMaxEnabled || firstColumn.IsMinEnabled || firstColumn.IsCalculationEnabled))
                 {
                     <td class="@GridComponent.GridCalculationCssClass" style="width:90px;"><b>@calculationName</b></td>
                 }
@@ -285,7 +313,14 @@
                     {
                         if (column.IsCalculationEnabled && column.CalculationValues != null && column.CalculationValues.ContainsKey(calculationName))
                         {
-                            <td class="@GridComponent.GridCalculationCssClass" style="@cssStyles"><b>@column.CalculationValues.Get(calculationName)?.GetString(column.ValuePattern)</b></td>
+                            if (column.CssCalculationClass != null)
+                            {
+                                <td class="@GridComponent.GridCalculationCssClass @column.CssCalculationClass(column)" style="@cssStyles"><b>@column.CalculationValues.Get(calculationName)?.GetString(column.ValuePattern)</b></td>
+                            }
+                            else
+                            {
+                                <td class="@GridComponent.GridCalculationCssClass" style="@cssStyles"><b>@column.CalculationValues.Get(calculationName)?.GetString(column.ValuePattern)</b></td>
+                            }
                         }
                         else
                         {

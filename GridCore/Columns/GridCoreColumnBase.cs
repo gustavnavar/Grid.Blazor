@@ -133,6 +133,16 @@ namespace GridCore.Columns
 
         public QueryDictionary<Func<IGridColumnCollection<T>, object>> Calculations { get; set; }
 
+        public Func<ITotalsColumn, string> CssSumClass { get; private set; }
+
+        public Func<ITotalsColumn, string> CssAverageClass { get; private set; }
+
+        public Func<ITotalsColumn, string> CssMaxClass { get; private set; }
+
+        public Func<ITotalsColumn, string> CssMinClass { get; private set; }
+
+        public Func<ITotalsColumn, string> CssCalculationClass { get; private set; }
+
         public QueryDictionary<Total> CalculationValues { get; set; }
 
         public Total SumValue { get; set; }
@@ -486,34 +496,40 @@ namespace GridCore.Columns
             return this;
         }
 
-        public IGridColumn<T> Sum(bool enabled)
+        public IGridColumn<T> Sum(bool enabled, Func<ITotalsColumn, string> cssSumClass = null)
         {
             IsSumEnabled = enabled;
+            CssSumClass = cssSumClass;
             return this;
         }
 
-        public IGridColumn<T> Average(bool enabled)
+        public IGridColumn<T> Average(bool enabled, Func<ITotalsColumn, string> cssAverageClass = null)
         {
             IsAverageEnabled = enabled;
+            CssAverageClass = cssAverageClass;
             return this;
         }
 
-        public IGridColumn<T> Max(bool enabled)
+        public IGridColumn<T> Max(bool enabled, Func<ITotalsColumn, string> cssMaxClass = null)
         {
             IsMaxEnabled = enabled;
+            CssMaxClass = cssMaxClass;
             return this;
         }
 
-        public IGridColumn<T> Min(bool enabled)
+        public IGridColumn<T> Min(bool enabled, Func<ITotalsColumn, string> cssMinClass = null)
         {
             IsMinEnabled = enabled;
+            CssMinClass = cssMinClass;
             return this;
         }
 
-        public IGridColumn<T> Calculate(string name, Func<IGridColumnCollection<T>, object> calculation)
+        public IGridColumn<T> Calculate(string name, Func<IGridColumnCollection<T>, object> calculation,
+            Func<ITotalsColumn, string> cssCalculationClass = null)
         {
             IsCalculationEnabled = true;
             Calculations.AddParameter(name, calculation);
+            CssCalculationClass = cssCalculationClass;
             return this;
         }
 

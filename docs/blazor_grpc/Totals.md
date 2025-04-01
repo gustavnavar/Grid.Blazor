@@ -11,7 +11,7 @@ You can enable the totals option for each column of your grid.
 You can enable total's calculation for each column of a grid using the **Sum**, **Average**, **Max** and/or **Min** methods for the **Column** object:
 
 ```c#
-    Columns.Add(o => o.Freight).Titled("Freight").Sum(true).Average(true);
+    Columns.Add(o => o.Freight).Titled("Freight").Sum(true).Average(true, c => c.AverageValue.Number != 100 ? "red" : "");
 ```
 
 * **Sum** method works only for number columns
@@ -21,12 +21,29 @@ You can enable total's calculation for each column of a grid using the **Sum**, 
 
 ## Methods
 
-Method | Parameter | Description | Example
------- | --------- | ----------- | -------
-Sum | enable | bool to enable sum calculation on column | Sum(true)
-Average | enable | bool to enable average calculation on column | Average(true)
-Max | enable | bool to enable maximum calculation on column | Max(true)
-Min | enable | bool to enable minimum calculation on column | Min(true)
+The parameters of the **Sum** method are:
+Parameter | Type | Description
+--------- | ---- | -----------
+enable | bool | enable sum calculation on column
+cssSumClass | (optional) Func<ITotalsColumn, string> | function to add CSS class to the total cell
+
+The parameters of the **Average** method are:
+Parameter | Type | Description
+--------- | ---- | -----------
+enable | bool | enable average calculation on column
+cssAverageClass | (optional) Func<ITotalsColumn, string> | function to add CSS class to the total cell
+
+The parameters of the **Max** method are:
+Parameter | Type | Description
+--------- | ---- | -----------
+enable | bool | enable max calculation on column
+cssMaxClass | (optional) Func<ITotalsColumn, string> | function to add CSS class to the total cell
+
+The parameters of the **Min** method are:
+Parameter | Type | Description
+--------- | ---- | -----------
+enable | bool | enable min calculation on column
+cssMinClass | (optional) Func<ITotalsColumn, string> | function to add CSS class to the total cell
 
 
 ## Calculated totals
@@ -37,7 +54,7 @@ You can enable calculated totals for each column of a grid using the **Calculate
 
 ```c#
     Columns.Add(o => o.Freight).Titled("Freight").Sum(true).Average(true)
-        .Calculate("Average 2", x => x.Get("Freight").SumValue.Number / x.Grid.ItemsCount)
+        .Calculate("Average 2", x => x.Get("Freight").SumValue.Number / x.Grid.ItemsCount, c => c.SumValue.Number != 100 ? "red" : "")
         .Calculate("Average 3", x => x.Get("Freight").SumValue.Number / x.Get("OrderID").SumValue.Number);;
 ```
 
@@ -46,6 +63,7 @@ Parameter | Type | Description
 --------- | ---- | -----------
 name | string | label of the total
 calculation | Func<IGridColumnCollection<T>, object> | function to calculate the total
+cssCalculationClass | (optional) Func<ITotalsColumn, string> | function to add CSS class to the total cell
 
 The function to calculted the total has only one parameter, the grid column collection. 
 

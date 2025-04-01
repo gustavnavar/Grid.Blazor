@@ -325,27 +325,28 @@ namespace GridShared.Columns
         /// <summary>
         ///     Calculate Sum of column values
         /// </summary>
-        IGridColumn<T> Sum(bool enabled);
+        IGridColumn<T> Sum(bool enabled, Func<ITotalsColumn, string> cssSumClass = null);
 
         /// <summary>
         ///     Calculate average of column values
         /// </summary>
-        IGridColumn<T> Average(bool enabled);
+        IGridColumn<T> Average(bool enabled, Func<ITotalsColumn, string> cssAverageClass = null);
 
         /// <summary>
         ///     Calculate max of column values
         /// </summary>
-        IGridColumn<T> Max(bool enabled);
+        IGridColumn<T> Max(bool enabled, Func<ITotalsColumn, string> cssMaxClass = null);
 
         /// <summary>
         ///     Calculation of column values
         /// </summary>
-        IGridColumn<T> Calculate(string name, Func<IGridColumnCollection<T>, object> calculation);
+        IGridColumn<T> Calculate(string name, Func<IGridColumnCollection<T>, object> calculation, 
+            Func<ITotalsColumn, string> cssCalculationClass = null);
 
         /// <summary>
         ///     Calculate min of column values
         /// </summary>
-        IGridColumn<T> Min(bool enabled);
+        IGridColumn<T> Min(bool enabled, Func<ITotalsColumn, string> cssMinClass = null);
 
         /// <summary>
         ///     Sets the column as hidden in crud views
@@ -763,6 +764,16 @@ namespace GridShared.Columns
         QueryDictionary<Total> CalculationValues { get; set; }
 
         string ValuePattern { get; }
+
+        Func<ITotalsColumn, string> CssSumClass { get; }
+
+        Func<ITotalsColumn, string> CssAverageClass { get; }
+
+        Func<ITotalsColumn, string> CssMaxClass { get; }
+
+        Func<ITotalsColumn, string> CssMinClass { get; }
+
+        Func<ITotalsColumn, string> CssCalculationClass { get; }
     }
 
     public interface IExpandColumn<T>
