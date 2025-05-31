@@ -21,6 +21,7 @@
         private readonly string[] _formCheck = { "form-control", "form-check", "form-check", "", "checkbox" };
         private readonly string[] _formDivToggleSwitch = { "", "", "", "switch", "grid-bulma-switch" };
         private readonly string[] _formSpanToggleSwitch = { "grid-slider round", "grid-slider round", "grid-slider round", "lever", "grid-slider round" };
+        private readonly string[] _formSpanToggleDisabledSwitch = { "grid-slider-disabled round", "grid-slider-disabled round", "grid-slider-disabled round", "lever", "grid-slider-disabled round" };
         private readonly string[] _inputGroup = { "input-group", "input-group", "input-group", "input-group", "field has-addons" };
         private readonly string[] _inputGroupLeftButton = { "input-group-btn", "input-group-btn", "input-group-btn", "prefix mt-2", "" };
         private readonly string[] _inputGroupRightButton = { "input-group-btn", "input-group-btn", "input-group-btn", "suffix mt-2", "" };
@@ -87,6 +88,7 @@
         public string FormCheck { get { return _formCheck[(int)GridStyle]; } }
         public string FormDivToggleSwitch { get { return _formDivToggleSwitch[(int)GridStyle]; } }
         public string FormSpanToggleSwitch { get { return _formSpanToggleSwitch[(int)GridStyle]; } }
+        public string FormSpanToggleDisabledSwitch { get { return _formSpanToggleDisabledSwitch[(int)GridStyle]; } }
         public string InputGroup { get { return _inputGroup[(int)GridStyle]; } }
         public string InputGroupLeftButton { get { return _inputGroupLeftButton[(int)GridStyle]; } }
         public string InputGroupRightButton { get { return _inputGroupRightButton[(int)GridStyle]; } }

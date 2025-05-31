@@ -19,7 +19,6 @@ namespace GridBlazor.Pages
 {
     public partial class GridHeaderComponent<T>
     {
-        private const string ThClass = "grid-header";
         private const string ThStyle = "display:none;";
 
         private const string FilteredButtonCssClass = "filtered";
@@ -91,7 +90,7 @@ namespace GridBlazor.Pages
                 _cssStyles = ((GridStyledColumn)Column).GetCssStylesString() + " " + ThStyle;
             else
                 _cssStyles = ((GridStyledColumn)Column).GetCssStylesString();
-            _cssClass = ((GridStyledColumn)Column).GetCssClassesString() + " " + ThClass;
+            _cssClass = ((GridStyledColumn)Column).GetCssClassesString() + " " + GridComponent.GridHeaderCssClass;
 
             if (GridComponent.Grid.Direction == GridDirection.RTL)
                 _cssStyles = string.Concat(_cssStyles, " text-align:right;direction:rtl;").Trim();
