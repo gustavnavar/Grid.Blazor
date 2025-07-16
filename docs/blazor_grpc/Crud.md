@@ -798,7 +798,7 @@ When inline edition is configured, double clicking on a row will make input fiel
 
 The ```CrudType``` enum can have one of the following value:
 Value | Description
----------  -----------
+----- | -----------
 Form | only form edition is enabled (default behavior)
 Inline | only inline edition is enabled
 FormOrInline | form or inline edition are enabled using a toogle switch, with the form edition beeing the default selection 
