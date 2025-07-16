@@ -682,4 +682,38 @@ But it's also possible to use modal windows for CRUD forms. You have to use the 
 
 When CRUD is used on virtualized grids, it is not necessary to use the ```SetModalForms``` method because modal is used automaticaly.
 
+
+## Inline edit
+
+CRUD forms are shown a normal windows by default. But inline edition on the same grid can be enabled instead of using the update form. And both behaviors can also work altogether on the same grid. 
+
+You have to use the ```CrudType``` property in the ```ODataCrud``` method of the ```GridODataClient``` object:
+
+```c#
+    var client = new GridODataClient<Order>(HttpClient, url, query, false, "ordersGrid", orderColumns, 10, locale,
+            new List<string> { "Employee", "Shipper" })
+        .ODataCrud(true, CrudType.Inline);
+```
+
+When inline edition is configured, double clicking on a row will make input fields visible. There is a ```Save``` button on the row that will save any changes done in the record. Inline edition of a row will be switched off when another row on the grid is clicked (single).
+
+![](../images/Inline_edit.png)
+
+The ```CrudType``` enum can have one of the following value:
+Value | Description
+---------  -----------
+Form | only form edition is enabled (default behavior)
+Inline | only inline edition is enabled
+FormOrInline | form or inline edition are enabled using a toogle switch, with the form edition beeing the default selection 
+InlineOrForm | form or inline edition are enabled using a toogle switch, with the inline edition beeing the default selection
+FormAndInline | form and inline edition are both enabled, form edition when the Update button is pressed, and inline edition double clicking on the row
+
+It si possible to disable edition of a field using the ```SetInlineCrudReadOnly``` method on the column definition:
+
+```c#
+    c.Add(o => o.Customer.ContactName).SetInlineCrudReadOnly(true);
+```
+
+Note: Inline edit is not supported on virtualized grids.
+
 [<- Front-end back-end API](API.md) | [Nested CRUD ->](Nested_crud.md)
