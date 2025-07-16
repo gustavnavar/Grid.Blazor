@@ -117,15 +117,6 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="DefaultGridEmptyText" xml:space="preserve">
-    <value>Der er ingen elementer at vise</value>
-  </data>
-  <data name="FilterButtonTooltipText" xml:space="preserve">
-    <value>Filtrér denne kolonne</value>
-  </data>
-  <data name="Lang" xml:space="preserve">
-    <value>da</value>
-  </data>
   <data name="ApplyFilterButtonText" xml:space="preserve">
     <value>Anvend</value>
   </data>
@@ -141,11 +132,17 @@
   <data name="Contains" xml:space="preserve">
     <value>Indeholder</value>
   </data>
+  <data name="DefaultGridEmptyText" xml:space="preserve">
+    <value>Der er ingen elementer at vise</value>
+  </data>
   <data name="EndsWith" xml:space="preserve">
     <value>Slutter på</value>
   </data>
   <data name="Equal" xml:space="preserve">
     <value>Lig</value>
+  </data>
+  <data name="FilterButtonTooltipText" xml:space="preserve">
+    <value>Filtrér denne kolonne</value>
   </data>
   <data name="FilterTypeLabel" xml:space="preserve">
     <value>Type</value>
@@ -159,20 +156,26 @@
   <data name="GreaterThanOrEquals" xml:space="preserve">
     <value>Større end eller lig</value>
   </data>
+  <data name="Items" xml:space="preserve">
+    <value>Elementer</value>
+  </data>
+  <data name="Lang" xml:space="preserve">
+    <value>da</value>
+  </data>
   <data name="LessThan" xml:space="preserve">
     <value>Mindre end</value>
   </data>
   <data name="LessThanOrEquals" xml:space="preserve">
     <value>Mindre end eller lig</value>
   </data>
-  <data name="StartsWith" xml:space="preserve">
-    <value>Begynder med</value>
-  </data>
   <data name="SearchFor" xml:space="preserve">
     <value>Søg efter ...</value>
   </data>
-  <data name="Items" xml:space="preserve">
-    <value>Elementer</value>
+  <data name="StartsWith" xml:space="preserve">
+    <value>Begynder med</value>
+  </data>
+  <data name="Average" xml:space="preserve">
+    <value>Gennemsnit</value>
   </data>
   <data name="Max" xml:space="preserve">
     <value>Maks</value>
@@ -182,9 +185,6 @@
   </data>
   <data name="Sum" xml:space="preserve">
     <value>Sum</value>
-  </data>
-  <data name="Average" xml:space="preserve">
-    <value>Gennemsnit</value>
   </data>
   <data name="And" xml:space="preserve">
     <value>Og</value>
@@ -282,14 +282,14 @@
   <data name="Goto" xml:space="preserve">
     <value>Gå til</value>
   </data>
-  <data name="SearchFilterListInputText" xml:space="preserve">
-    <value>Søgeudtryk</value>
-  </data>
   <data name="All" xml:space="preserve">
     <value>Alle</value>
   </data>
   <data name="None" xml:space="preserve">
     <value>Ingen</value>
+  </data>
+  <data name="SearchFilterListInputText" xml:space="preserve">
+    <value>Søgeudtryk</value>
   </data>
   <data name="Select" xml:space="preserve">
     <value>Vælg</value>
@@ -308,5 +308,11 @@
   </data>
   <data name="PageSizeItems" xml:space="preserve">
     <value>Elementer</value>
+  </data>
+  <data name="Inline edit" xml:space="preserve">
+    <value>Indlejret redigering</value>
+  </data>
+  <data name="Form edit" xml:space="preserve">
+    <value>Formularredigering</value>
   </data>
 </root>

@@ -117,15 +117,6 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="DefaultGridEmptyText" xml:space="preserve">
-    <value>Нема ставки за приказ</value>
-  </data>
-  <data name="FilterButtonTooltipText" xml:space="preserve">
-    <value>Филтрирај ову колону</value>
-  </data>
-  <data name="Lang" xml:space="preserve">
-    <value>srCyrlBA</value>
-  </data>
   <data name="ApplyFilterButtonText" xml:space="preserve">
     <value>Примијени</value>
   </data>
@@ -141,11 +132,17 @@
   <data name="Contains" xml:space="preserve">
     <value>Садржи</value>
   </data>
+  <data name="DefaultGridEmptyText" xml:space="preserve">
+    <value>Нема ставки за приказ</value>
+  </data>
   <data name="EndsWith" xml:space="preserve">
     <value>Завршава са</value>
   </data>
   <data name="Equal" xml:space="preserve">
     <value>Једнако</value>
+  </data>
+  <data name="FilterButtonTooltipText" xml:space="preserve">
+    <value>Филтрирај ову колону</value>
   </data>
   <data name="FilterTypeLabel" xml:space="preserve">
     <value>Тип</value>
@@ -159,20 +156,26 @@
   <data name="GreaterThanOrEquals" xml:space="preserve">
     <value>Веће од или једнако</value>
   </data>
+  <data name="Items" xml:space="preserve">
+    <value>Ставке</value>
+  </data>
+  <data name="Lang" xml:space="preserve">
+    <value>srCyrlBA</value>
+  </data>
   <data name="LessThan" xml:space="preserve">
     <value>Мање од</value>
   </data>
   <data name="LessThanOrEquals" xml:space="preserve">
     <value>Мање од или једнако</value>
   </data>
-  <data name="StartsWith" xml:space="preserve">
-    <value>Почиње са</value>
-  </data>
   <data name="SearchFor" xml:space="preserve">
     <value>Претражи ...</value>
   </data>
-  <data name="Items" xml:space="preserve">
-    <value>Ставке</value>
+  <data name="StartsWith" xml:space="preserve">
+    <value>Почиње са</value>
+  </data>
+  <data name="Average" xml:space="preserve">
+    <value>Просјек</value>
   </data>
   <data name="Max" xml:space="preserve">
     <value>Макс</value>
@@ -182,9 +185,6 @@
   </data>
   <data name="Sum" xml:space="preserve">
     <value>Сума</value>
-  </data>
-  <data name="Average" xml:space="preserve">
-    <value>Просјек</value>
   </data>
   <data name="And" xml:space="preserve">
     <value>и</value>
@@ -282,14 +282,14 @@
   <data name="Goto" xml:space="preserve">
     <value>Иди на</value>
   </data>
-  <data name="SearchFilterListInputText" xml:space="preserve">
-    <value>Фраза за претрагу</value>
-  </data>
   <data name="All" xml:space="preserve">
     <value>Све</value>
   </data>
   <data name="None" xml:space="preserve">
     <value>Нико</value>
+  </data>
+  <data name="SearchFilterListInputText" xml:space="preserve">
+    <value>Фраза за претрагу</value>
   </data>
   <data name="Select" xml:space="preserve">
     <value>Изаберите</value>
@@ -308,5 +308,11 @@
   </data>
   <data name="PageSizeItems" xml:space="preserve">
     <value>Ставке</value>
+  </data>
+  <data name="Inline edit" xml:space="preserve">
+    <value>Уређивање у тексту</value>
+  </data>
+  <data name="Form edit" xml:space="preserve">
+    <value>Измена формулара</value>
   </data>
 </root>

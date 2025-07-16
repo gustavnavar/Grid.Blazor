@@ -117,8 +117,23 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="Add" xml:space="preserve">
+    <value>Ekle</value>
+  </data>
+  <data name="All" xml:space="preserve">
+    <value>Tüm</value>
+  </data>
+  <data name="And" xml:space="preserve">
+    <value>Ve</value>
+  </data>
   <data name="ApplyFilterButtonText" xml:space="preserve">
     <value>Uygula</value>
+  </data>
+  <data name="Average" xml:space="preserve">
+    <value>Ortalama</value>
+  </data>
+  <data name="Back" xml:space="preserve">
+    <value>Geri</value>
   </data>
   <data name="BoolFalseLabel" xml:space="preserve">
     <value>Hayır</value>
@@ -126,20 +141,65 @@
   <data name="BoolTrueLabel" xml:space="preserve">
     <value>Evet</value>
   </data>
+  <data name="ClearAllFilters" xml:space="preserve">
+    <value>Tüm Filtreleri Temizle</value>
+  </data>
   <data name="ClearFilterLabel" xml:space="preserve">
     <value>Filtreyi temizle</value>
+  </data>
+  <data name="Code" xml:space="preserve">
+    <value>Kod</value>
+  </data>
+  <data name="Confirm Code" xml:space="preserve">
+    <value>Kodu Onayla</value>
+  </data>
+  <data name="ConfirmCodeError" xml:space="preserve">
+    <value>Kod ve onay kodu bu öğeyi kaydetmek için eşit olmalıdır</value>
   </data>
   <data name="Contains" xml:space="preserve">
     <value>İçinde Geçen</value>
   </data>
+  <data name="CreateError" xml:space="preserve">
+    <value>Yeni öğe oluşturulurken bir hata oluştu</value>
+  </data>
+  <data name="CreateItem" xml:space="preserve">
+    <value>Öğe Yarat</value>
+  </data>
+  <data name="current" xml:space="preserve">
+    <value>akım</value>
+  </data>
   <data name="DefaultGridEmptyText" xml:space="preserve">
     <value>Gösterilecek öğe bulunamadı</value>
+  </data>
+  <data name="Delete" xml:space="preserve">
+    <value>Sil</value>
+  </data>
+  <data name="DeleteConfirmCodeError" xml:space="preserve">
+    <value>Kod ve onay kodu bu öğeyi silmek için eşit olmalıdır</value>
+  </data>
+  <data name="DeleteError" xml:space="preserve">
+    <value>Bu öğe silinirken bir hata oluştu</value>
+  </data>
+  <data name="DeleteItem" xml:space="preserve">
+    <value>Öğe sil</value>
+  </data>
+  <data name="Duplicated" xml:space="preserve">
+    <value>Çoğaltıldı</value>
+  </data>
+  <data name="Edit" xml:space="preserve">
+    <value>Düzenle</value>
   </data>
   <data name="EndsWith" xml:space="preserve">
     <value>İle Biten</value>
   </data>
   <data name="Equal" xml:space="preserve">
     <value>Eşit</value>
+  </data>
+  <data name="ExtSortingText" xml:space="preserve">
+    <value>Sütunları sıralamak için buraya bırakın</value>
+  </data>
+  <data name="Files" xml:space="preserve">
+    <value>Dosyaları</value>
   </data>
   <data name="FilterButtonTooltipText" xml:space="preserve">
     <value>Bu sütuna göre filtrele</value>
@@ -150,11 +210,26 @@
   <data name="FilterValueLabel" xml:space="preserve">
     <value>Değer</value>
   </data>
+  <data name="Goto" xml:space="preserve">
+    <value>Git</value>
+  </data>
   <data name="GreaterThan" xml:space="preserve">
     <value>Büyüktür</value>
   </data>
   <data name="GreaterThanOrEquals" xml:space="preserve">
     <value>Büyüktür veya Eşittir</value>
+  </data>
+  <data name="GroupingText" xml:space="preserve">
+    <value>Gruplamak için sütunları buraya bırakın</value>
+  </data>
+  <data name="Height" xml:space="preserve">
+    <value>Yükseklik</value>
+  </data>
+  <data name="IsNotNull" xml:space="preserve">
+    <value>Boş değil</value>
+  </data>
+  <data name="IsNull" xml:space="preserve">
+    <value>Boş</value>
   </data>
   <data name="Items" xml:space="preserve">
     <value>Öğeler</value>
@@ -168,92 +243,41 @@
   <data name="LessThanOrEquals" xml:space="preserve">
     <value>Küçüktür veya Eşittir</value>
   </data>
-  <data name="SearchFor" xml:space="preserve">
-    <value>Aramak için ...</value>
-  </data>
-  <data name="StartsWith" xml:space="preserve">
-    <value>İle Başlar</value>
-  </data>
-  <data name="Average" xml:space="preserve">
-    <value>Ortalama</value>
-  </data>
   <data name="Max" xml:space="preserve">
     <value>Maks</value>
   </data>
   <data name="Min" xml:space="preserve">
     <value>Min</value>
   </data>
-  <data name="Sum" xml:space="preserve">
-    <value>Toplam</value>
+  <data name="None" xml:space="preserve">
+    <value>Hiçbiri</value>
   </data>
-  <data name="And" xml:space="preserve">
-    <value>Ve</value>
-  </data>
-  <data name="Or" xml:space="preserve">
-    <value>Veya</value>
-  </data>
-  <data name="ExtSortingText" xml:space="preserve">
-    <value>Sütunları sıralamak için buraya bırakın</value>
-  </data>
-  <data name="GroupingText" xml:space="preserve">
-    <value>Gruplamak için sütunları buraya bırakın</value>
-  </data>
-  <data name="Add" xml:space="preserve">
-    <value>Ekle</value>
-  </data>
-  <data name="Back" xml:space="preserve">
-    <value>Geri</value>
-  </data>
-  <data name="Delete" xml:space="preserve">
-    <value>Sil</value>
-  </data>
-  <data name="Edit" xml:space="preserve">
-    <value>Düzenle</value>
-  </data>
-  <data name="Save" xml:space="preserve">
-    <value>Kaydet</value>
-  </data>
-  <data name="View" xml:space="preserve">
-    <value>Görüntüle</value>
-  </data>
-  <data name="SelectItem" xml:space="preserve">
-    <value>--- Öğe Seç ---</value>
-  </data>
-  <data name="Show" xml:space="preserve">
-    <value>Göster</value>
-  </data>
-  <data name="ClearAllFilters" xml:space="preserve">
-    <value>Tüm Filtreleri Temizle</value>
-  </data>
-  <data name="CreateItem" xml:space="preserve">
-    <value>Öğe Yarat</value>
-  </data>
-  <data name="DeleteItem" xml:space="preserve">
-    <value>Öğe sil</value>
-  </data>
-  <data name="ReadItem" xml:space="preserve">
-    <value>Öğe Görüntüle</value>
-  </data>
-  <data name="UpdateItem" xml:space="preserve">
-    <value>Öğe Güncelle</value>
+  <data name="NotDuplicated" xml:space="preserve">
+    <value>Kopyalanmadı</value>
   </data>
   <data name="NotEqual" xml:space="preserve">
     <value>Eşit değil</value>
   </data>
-  <data name="CreateError" xml:space="preserve">
-    <value>Yeni öğe oluşturulurken bir hata oluştu</value>
+  <data name="Or" xml:space="preserve">
+    <value>Veya</value>
   </data>
-  <data name="DeleteError" xml:space="preserve">
-    <value>Bu öğe silinirken bir hata oluştu</value>
+  <data name="PageSizeItems" xml:space="preserve">
+    <value>Öğeler</value>
   </data>
-  <data name="UpdateError" xml:space="preserve">
-    <value>Bu öğe güncellenirken bir hata oluştu</value>
+  <data name="ReadItem" xml:space="preserve">
+    <value>Öğe Görüntüle</value>
   </data>
-  <data name="IsNotNull" xml:space="preserve">
-    <value>Boş değil</value>
+  <data name="Save" xml:space="preserve">
+    <value>Kaydet</value>
   </data>
-  <data name="IsNull" xml:space="preserve">
-    <value>Boş</value>
+  <data name="SearchFilterListInputText" xml:space="preserve">
+    <value>Arama ifadesi</value>
+  </data>
+  <data name="SearchFor" xml:space="preserve">
+    <value>Aramak için ...</value>
+  </data>
+  <data name="Select" xml:space="preserve">
+    <value>Seçme</value>
   </data>
   <data name="SelectionDeleteError" xml:space="preserve">
     <value>Silmek istediğiniz satırı seçmelisiniz</value>
@@ -264,52 +288,25 @@
   <data name="SelectionUpdateError" xml:space="preserve">
     <value>Düzenlemek istediğiniz satırı seçmelisiniz</value>
   </data>
-  <data name="Files" xml:space="preserve">
-    <value>Dosyaları</value>
+  <data name="SelectItem" xml:space="preserve">
+    <value>--- Öğe Seç ---</value>
   </data>
-  <data name="Code" xml:space="preserve">
-    <value>Kod</value>
+  <data name="Show" xml:space="preserve">
+    <value>Göster</value>
   </data>
-  <data name="Confirm Code" xml:space="preserve">
-    <value>Kodu Onayla</value>
+  <data name="StartsWith" xml:space="preserve">
+    <value>İle Başlar</value>
   </data>
-  <data name="String" xml:space="preserve">
-    <value>Kod</value>
+  <data name="Sum" xml:space="preserve">
+    <value>Toplam</value>
   </data>
-  <data name="ConfirmCodeError" xml:space="preserve">
-    <value>Kod ve onay kodu bu öğeyi kaydetmek için eşit olmalıdır</value>
+  <data name="UpdateError" xml:space="preserve">
+    <value>Bu öğe güncellenirken bir hata oluştu</value>
   </data>
-  <data name="DeleteConfirmCodeError" xml:space="preserve">
-    <value>Kod ve onay kodu bu öğeyi silmek için eşit olmalıdır</value>
+  <data name="UpdateItem" xml:space="preserve">
+    <value>Öğe Güncelle</value>
   </data>
-  <data name="Goto" xml:space="preserve">
-    <value>Git</value>
-  </data>
-  <data name="SearchFilterListInputText" xml:space="preserve">
-    <value>Arama ifadesi</value>
-  </data>
-  <data name="All" xml:space="preserve">
-    <value>Tüm</value>
-  </data>
-  <data name="None" xml:space="preserve">
-    <value>Hiçbiri</value>
-  </data>
-  <data name="Select" xml:space="preserve">
-    <value>Seçme</value>
-  </data>
-  <data name="Height" xml:space="preserve">
-    <value>Yükseklik</value>
-  </data>
-  <data name="Duplicated" xml:space="preserve">
-    <value>Çoğaltıldı</value>
-  </data>
-  <data name="NotDuplicated" xml:space="preserve">
-    <value>Kopyalanmadı</value>
-  </data>
-  <data name="current" xml:space="preserve">
-    <value>akım</value>
-  </data>
-  <data name="PageSizeItems" xml:space="preserve">
-    <value>Öğeler</value>
+  <data name="View" xml:space="preserve">
+    <value>Görüntüle</value>
   </data>
 </root>

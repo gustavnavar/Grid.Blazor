@@ -386,6 +386,43 @@ namespace GridBlazor
             return this;
         }
 
+        public IGridClient<T> Crud(bool enabled, CrudType crudType, ICrudDataService<T> crudDataService, ICrudFileService<T> crudFileService = null)
+        {
+            return Crud(enabled, enabled, enabled, enabled, crudType, crudDataService, crudFileService);
+        }
+
+        public IGridClient<T> Crud(bool createEnabled, bool readEnabled, bool updateEnabled, bool deleteEnabled, CrudType crudType,
+            ICrudDataService<T> crudDataService, ICrudFileService<T> crudFileService = null)
+        {
+            _source.CrudType = crudType;
+            _source.CreateEnabled = createEnabled;
+            _source.ReadEnabled = readEnabled;
+            _source.UpdateEnabled = updateEnabled;
+            _source.DeleteEnabled = deleteEnabled;
+            _source.CrudDataService = crudDataService;
+            _source.CrudFileService = crudFileService;
+            return this;
+        }
+
+        public IGridClient<T> Crud(bool createEnabled, Func<T, bool> enabled, CrudType crudType, ICrudDataService<T> crudDataService,
+            ICrudFileService<T> crudFileService = null)
+        {
+            return Crud(createEnabled, enabled, enabled, enabled, crudType, crudDataService, crudFileService);
+        }
+
+        public IGridClient<T> Crud(bool createEnabled, Func<T, bool> readEnabled, Func<T, bool> updateEnabled, Func<T, bool> deleteEnabled, 
+            CrudType crudType, ICrudDataService<T> crudDataService, ICrudFileService<T> crudFileService = null)
+        {
+            _source.CrudType = crudType;
+            _source.CreateEnabled = createEnabled;
+            _source.FuncReadEnabled = readEnabled;
+            _source.FuncUpdateEnabled = updateEnabled;
+            _source.FuncDeleteEnabled = deleteEnabled;
+            _source.CrudDataService = crudDataService;
+            _source.CrudFileService = crudFileService;
+            return this;
+        }
+
         public IGridClient<T> ODataCrud(bool enabled, ICrudFileService<T> crudFileService = null)
         {
             return ODataCrud(enabled, enabled, enabled, enabled, crudFileService);
@@ -416,6 +453,46 @@ namespace GridBlazor
             _source.FuncDeleteEnabled = deleteEnabled;
             _source.CrudFileService = crudFileService;
             return this;
+        }
+
+        public IGridClient<T> ODataCrud(bool enabled, CrudType crudType, ICrudFileService<T> crudFileService = null)
+        {
+            return ODataCrud(enabled, enabled, enabled, enabled, crudType, crudFileService);
+        }
+
+        public IGridClient<T> ODataCrud(bool createEnabled, bool readEnabled, bool updateEnabled, bool deleteEnabled,
+            CrudType crudType, ICrudFileService<T> crudFileService = null)
+        {
+            _source.CrudType = crudType;
+            _source.CreateEnabled = createEnabled;
+            _source.ReadEnabled = readEnabled;
+            _source.UpdateEnabled = updateEnabled;
+            _source.DeleteEnabled = deleteEnabled;
+            _source.CrudFileService = crudFileService;
+            if (crudType == CrudType.Inline || crudType == CrudType.InlineOrForm || crudType == CrudType.FormAndInline)
+                return Selectable(true);
+            else
+                return this;
+        }
+
+        public IGridClient<T> ODataCrud(bool createEnabled, Func<T, bool> enabled, CrudType crudType, ICrudFileService<T> crudFileService = null)
+        {
+            return ODataCrud(createEnabled, enabled, enabled, enabled, crudType, crudFileService);
+        }
+
+        public IGridClient<T> ODataCrud(bool createEnabled, Func<T, bool> readEnabled, Func<T, bool> updateEnabled, Func<T, bool> deleteEnabled,
+            CrudType crudType, ICrudFileService<T> crudFileService = null)
+        {
+            _source.CrudType = crudType;
+            _source.CreateEnabled = createEnabled;
+            _source.FuncReadEnabled = readEnabled;
+            _source.FuncUpdateEnabled = updateEnabled;
+            _source.FuncDeleteEnabled = deleteEnabled;
+            _source.CrudFileService = crudFileService;
+            if (crudType == CrudType.Inline || crudType == CrudType.InlineOrForm || crudType == CrudType.FormAndInline)
+                return Selectable(true);
+            else
+                return this;
         }
 
         public IGridClient<T> SetInitCreateValues(Func<T, Task> initCreateValues)
@@ -504,7 +581,7 @@ namespace GridBlazor
         public IGridClient<T> SetHeaderCrudButtons(bool enabled)
         {
             _source.HeaderCrudButtons = enabled;
-            return this;
+            return Selectable(enabled);
         }
 
         public IGridClient<T> SetCreateComponent<TComponent>()

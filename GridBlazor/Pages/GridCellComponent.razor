@@ -1,12 +1,297 @@
-﻿@typeparam T
+﻿@using GridBlazor.Columns
+@using GridBlazor.Resources
+@using GridShared
+@using GridShared.Columns
+@typeparam T
 
-@if (_cellRender != null)
-{
-    <td class="@_cssClass" style="@_cssStyles" data-name="@Column.Name">@_cellRender</td>
-}
-else
-{
-    <td class="@_cssClass" style="@_cssStyles" data-name="@Column.Name">@_cell</td>
-}
-
+<td class="@_cssClass" style="@_cssStyles" data-name="@Column.Name">
+    @if (GridComponent.Grid.CrudType == CrudType.Form || GridComponent.Grid.CrudType == CrudType.FormOrInline || Column.InlineCrudReadOnly)
+    {
+        if (_cellRender != null)
+        {
+            <span>@_cellRender</span>
+        }
+        else
+        {
+            <span>@_cell</span>
+        }
+    }
+    else
+    {
+        if (GridComponent.InlineCrudRow == RowId && !Column.IsPrimaryKey)
+        {
+            if (((ICGridColumn)Column).SubGrids == null && Column.ComponentType == null
+                    && Column.CreateComponentType == null && Column.ReadComponentType == null
+                    && Column.UpdateComponentType == null && Column.DeleteComponentType == null)
+            {
+                (Type type, object value) = ((IGridColumn<T>)Column).GetTypeAndValue((T)Item);
+            
+                @if (Column.IsPrimaryKey)
+                {
+                    <input id="@Column.FieldName" name="@Column.FieldName" class="@GridComponent.Grid.HtmlClass.FormInput" readonly disabled value="@Column.GetFormatedValue(value)" />
+                }
+                else if (((IGridColumn<T>)Column).IsSelectField.IsSelectKey)
+                {
+                    if (((IGridColumn<T>)Column).ReadOnlyOnUpdate((T)Item))
+                    {
+                        string text = ((IGridColumn<T>)Column).GetFormatedValue(((IGridColumn<T>)Column).IsSelectField.Expression, Item);
+                        <input id="@Column.FieldName" name="@Column.FieldName" class="@GridComponent.Grid.HtmlClass.FormInput" readonly disabled value="@text" />
+                    }
+                    else
+                    {
+                        var selectedValue = Column.GetFormatedValue(value);
+                        <div class="@GridComponent.Grid.HtmlClass.FormDivSelect">
+                            <select autocomplete="@Column.CustomAutoComplete.Invoke()"
+                                    id="@Column.FieldName"
+                                    name="@Column.FieldName"
+                                    class="@GridComponent.Grid.HtmlClass.FormSelect"
+                                    value="@selectedValue"
+                                    @onchange="(e) => ChangeValue(e, Column)">
+                                <option value="">@Strings.SelectItem</option>
+                                @foreach (var selectItem in ((IGridColumn<T>)Column).SelectItems)
+                                {
+                                    if (selectItem.Value == selectedValue)
+                                    {
+                                        <option value="@selectItem.Value" selected="selected">@selectItem.Title</option>
+                                    }
+                                    else
+                                    {
+                                        <option value="@selectItem.Value">@selectItem.Title</option>
+                                    }
+                                }
+                            </select>
+                        </div>
+                    }
+                }
+                else if (((IGridColumn<T>)Column).IsSelectColumn.IsSelectKey)
+                {
+                    if (((IGridColumn<T>)Column).ReadOnlyOnUpdate((T)Item))
+                    {
+                        string text = ((IGridColumn<T>)Column).GetFormatedValue(((IGridColumn<T>)Column).IsSelectColumn.Expression, Item);
+                        <input id="@Column.FieldName" name="@Column.FieldName" class="@GridComponent.Grid.HtmlClass.FormInput" readonly disabled value="@text" />
+                    }
+                    else
+                    {
+                        var selectedValue = Column.GetFormatedValue(value);
+                        <div class="@GridComponent.Grid.HtmlClass.FormDivSelect">
+                            <select autocomplete="@Column.CustomAutoComplete.Invoke()"
+                                    id="@Column.FieldName"
+                                    name="@Column.FieldName"
+                                    class="@GridComponent.Grid.HtmlClass.FormSelect"
+                                    value="@selectedValue"
+                                    @onchange="(e) => ChangeValue(e, Column)">
+                                <option value="">@Strings.SelectItem</option>
+                                @{
+                                    if (SelectItems != null && SelectItems.Count() > 0)
+                                    {
+                                        foreach (var selectItem in SelectItems)
+                                        {
+                                            if (selectItem.Value == selectedValue)
+                                            {
+                                                <option value="@selectItem.Value" selected="selected">@selectItem.Title</option>
+                                            }
+                                            else
+                                            {
+                                                <option value="@selectItem.Value">@selectItem.Title</option>
+                                            }
+                                        }
+                                    }
+                                }
+                            </select>
+                        </div>
+                    }
+                }
+                else
+                {
+                    if (((IGridColumn<T>)Column).ReadOnlyOnUpdate((T)Item))
+                    {
+                        if (type == typeof(bool))
+                        {
+                            if (value != null && (bool)value == true)
+                            {
+                                if (Column.ToggleSwitch)
+                                {
+                                    <label class="@GridComponent.Grid.HtmlClass.FormLabel">@Column.FalseLabel</label>
+                                    <label class="grid-switch">
+                                        <input id="@Column.FieldName" name="@Column.FieldName" type="checkbox" class="@GridComponent.Grid.HtmlClass.FormInput" readonly disabled checked="checked" value="true" />
+                                        <span class="@GridComponent.Grid.HtmlClass.FormSpanToggleDisabledSwitch"></span>
+                                    </label>
+                                    <label class="@GridComponent.Grid.HtmlClass.FormLabel">@Column.TrueLabel</label>
+                                }
+                                else
+                                {
+                                    <label>
+                                        <input id="@Column.FieldName" name="@Column.FieldName" type="checkbox" class="@GridComponent.Grid.HtmlClass.FormCheck" readonly disabled checked="checked" value="true" />
+                                        <span></span>
+                                    </label>
+                                }
+                            }
+                            else
+                            {
+                                if (Column.ToggleSwitch)
+                                {
+                                    <label class="@GridComponent.Grid.HtmlClass.FormLabel">@Column.FalseLabel</label>
+                                    <label class="grid-switch">
+                                        <input id="@Column.FieldName" name="@Column.FieldName" type="checkbox" class="@GridComponent.Grid.HtmlClass.FormInput" readonly disabled value="false" />
+                                        <span class="@GridComponent.Grid.HtmlClass.FormSpanToggleDisabledSwitch"></span>
+                                    </label>
+                                    <label class="@GridComponent.Grid.HtmlClass.FormLabel">@Column.TrueLabel</label>
+                                }
+                                else
+                                {
+                                    <label>
+                                        <input id="@Column.FieldName" name="@Column.FieldName" type="checkbox" class="@GridComponent.Grid.HtmlClass.FormCheck" readonly disabled value="false" />
+                                        <span></span>
+                                    </label>
+                                }
+                            }
+                        }
+                        else if (type == typeof(string) && ((IGridColumn<T>)Column).InputType == InputType.TextArea)
+                        {
+                            <textarea id="@Column.FieldName" name="@Column.FieldName" class="@GridComponent.Grid.HtmlClass.FormTextArea" rows="@Column.TextAreaRows" readonly disabled value="@Column.GetFormatedValue(value)" />
+                        }
+                        else
+                        {
+                            <input id="@Column.FieldName" name="@Column.FieldName" class="@GridComponent.Grid.HtmlClass.FormInput" readonly disabled value="@Column.GetFormatedValue(value)" />
+                        }
+                    }
+                    else
+                    {
+                        if (type == typeof(string) && ((IGridColumn<T>)Column).InputType == InputType.TextArea)
+                        {
+                            <textarea autocomplete="@Column.CustomAutoComplete.Invoke()" id="@Column.FieldName" name="@Column.FieldName" class="@GridComponent.Grid.HtmlClass.FormTextArea" rows="@Column.TextAreaRows" value="@Column.GetFormatedValue(value)" @onchange="(e) => ChangeValue(e, Column)" />
+                        }
+                        else if (((IGridColumn<T>)Column).InputType == InputType.File)
+                        {
+                            if (_cellRender != null)
+                            {
+                                <span>@_cellRender</span>
+                            }
+                            else
+                            {
+                                <span>@_cell</span>
+                            }
+                        }
+                        else if (type == typeof(DateTime) || type == typeof(System.DateTimeOffset))
+                        {
+                            string typeAttr = ((IGridColumn<T>)Column).InputType == InputType.None ? "date" : ((IGridColumn<T>)Column).InputType.ToTypeAttr();
+                            if (typeAttr == "week")
+                            {
+                                if (GridComponent.IsWeekSupported)
+                                {
+                                    <input autocomplete="@Column.CustomAutoComplete.Invoke()" id="@Column.FieldName" name="@Column.FieldName" type="@typeAttr" placeholder="yyyy-Www" class="@GridComponent.Grid.HtmlClass.FormInput" value="@(((ICGridColumn)Column).GetFormatedDateTime(value, typeAttr))" @onchange="(e) => ChangeValue(e, Column, typeAttr)" />
+                                }
+                                else
+                                {
+                                    <input autocomplete="@Column.CustomAutoComplete.Invoke()" id="@Column.FieldName" name="@Column.FieldName" type="text" placeholder="yyyy-Www" class="@GridComponent.Grid.HtmlClass.FormInput" value="@(((ICGridColumn)Column).GetFormatedDateTime(value, typeAttr))" @onchange="(e) => ChangeValue(e, Column, typeAttr)" />
+                                }
+                            }
+                            else if (typeAttr == "month")
+                            {
+                                if (GridComponent.IsMonthSupported)
+                                {
+                                    <input autocomplete="@Column.CustomAutoComplete.Invoke()" id="@Column.FieldName" name="@Column.FieldName" type="@typeAttr" placeholder="yyyy-mm" class="@GridComponent.Grid.HtmlClass.FormInput" value="@(((ICGridColumn)Column).GetFormatedDateTime(value, typeAttr))" @onchange="(e) => ChangeValue(e, Column, typeAttr)" />
+                                }
+                                else
+                                {
+                                    <input autocomplete="@Column.CustomAutoComplete.Invoke()" id="@Column.FieldName" name="@Column.FieldName" type="text" placeholder="yyyy-mm" class="@GridComponent.Grid.HtmlClass.FormInput" value="@(((ICGridColumn)Column).GetFormatedDateTime(value, typeAttr))" @onchange="(e) => ChangeValue(e, Column, typeAttr)" />
+                                }
+                            }
+                            else if (typeAttr == "datetime-local")
+                            {
+                                if (GridComponent.IsDateTimeLocalSupported)
+                                {
+                                    <input autocomplete="@Column.CustomAutoComplete.Invoke()" id="@Column.FieldName" name="@Column.FieldName" type="@typeAttr" placeholder="yyyy-mm-dd hh:mm" class="@GridComponent.Grid.HtmlClass.FormInput" value="@(((ICGridColumn)Column).GetFormatedDateTime(value, typeAttr))" @onchange="(e) => ChangeValue(e, Column, typeAttr)" />
+                                }
+                                else
+                                {
+                                    <input autocomplete="@Column.CustomAutoComplete.Invoke()" id="@Column.FieldName" name="@Column.FieldName" type="text" placeholder="yyyy-mm-dd hh:mm" class="@GridComponent.Grid.HtmlClass.FormInput" value="@(((ICGridColumn)Column).GetFormatedDateTime(value, typeAttr))" @onchange="(e) => ChangeValue(e, Column, typeAttr)" />
+                                }
+                            }
+                            else
+                            {
+                                <input autocomplete="@Column.CustomAutoComplete.Invoke()" id="@Column.FieldName" name="@Column.FieldName" type="@typeAttr" class="@GridComponent.Grid.HtmlClass.FormInput" value="@(((ICGridColumn)Column).GetFormatedDateTime(value, typeAttr))" @onchange="(e) => ChangeValue(e, Column, typeAttr)" />
+                            }
+                        }
+                        else if (type == typeof(System.TimeSpan))
+                        {
+                            string typeAttr = ((IGridColumn<T>)Column).InputType == InputType.None ? "time" : ((IGridColumn<T>)Column).InputType.ToTypeAttr();
+                            <input autocomplete="@Column.CustomAutoComplete.Invoke()" id="@Column.FieldName" name="@Column.FieldName" type="@typeAttr" class="@GridComponent.Grid.HtmlClass.FormInput" value="@(((ICGridColumn)Column).GetFormatedDateTime(value, typeAttr))" @onchange="(e) => ChangeValue(e, Column)" />
+                        }
+    #if !NETSTANDARD2_1 && !NET5_0
+                        else if (type == typeof(DateOnly))
+                        {
+                            <input autocomplete="@Column.CustomAutoComplete.Invoke()" id="@Column.FieldName" name="@Column.FieldName" type="date" class="@GridComponent.Grid.HtmlClass.FormInput" value="@(((ICGridColumn)Column).GetFormatedDateTime(value, "date"))" @onchange="(e) => ChangeValue(e, Column)" />
+                        }
+                        else if (type == typeof(TimeOnly))
+                        {
+                            <input autocomplete="@Column.CustomAutoComplete.Invoke()" id="@Column.FieldName" name="@Column.FieldName" type="time" class="@GridComponent.Grid.HtmlClass.FormInput" value="@(((ICGridColumn)Column).GetFormatedDateTime(value, "time"))" @onchange="(e) => ChangeValue(e, Column)" />
+                        }
+    #endif
+                        else if (type == typeof(bool))
+                        {
+                            if (value != null && (bool)value == true)
+                            {
+                                if (Column.ToggleSwitch)
+                                {
+                                    <label class="@GridComponent.Grid.HtmlClass.FormLabel">@Column.FalseLabel</label>
+                                    <label class="grid-switch">
+                                        <input id="@Column.FieldName" name="@Column.FieldName" type="checkbox" class="@GridComponent.Grid.HtmlClass.FormInput" checked="checked" value="true" @onchange="(e) => ChangeValue(e, Column)" />
+                                        <span class="@GridComponent.Grid.HtmlClass.FormSpanToggleSwitch"></span>
+                                    </label>
+                                    <label class="@GridComponent.Grid.HtmlClass.FormLabel">@Column.TrueLabel</label>
+                                }
+                                else
+                                {
+                                    <label>
+                                        <input id="@Column.FieldName" name="@Column.FieldName" type="checkbox" class="@GridComponent.Grid.HtmlClass.FormCheck" checked="checked" value="true" @onchange="(e) => ChangeValue(e, Column)" />
+                                        <span></span>
+                                    </label>
+                                }
+                            }
+                            else
+                            {
+                                if (Column.ToggleSwitch)
+                                {
+                                    <label class="@GridComponent.Grid.HtmlClass.FormLabel">@Column.FalseLabel</label>
+                                    <label class="grid-switch">
+                                        <input id="@Column.FieldName" name="@Column.FieldName" type="checkbox" class="@GridComponent.Grid.HtmlClass.FormInput" value="false" @onchange="(e) => ChangeValue(e, Column)" />
+                                        <span class="@GridComponent.Grid.HtmlClass.FormSpanToggleSwitch"></span>
+                                    </label>
+                                    <label class="@GridComponent.Grid.HtmlClass.FormLabel">@Column.TrueLabel</label>
+                                }
+                                else
+                                {
+                                    <label>
+                                        <input id="@Column.FieldName" name="@Column.FieldName" type="checkbox" class="@GridComponent.Grid.HtmlClass.FormCheck" value="false" @onchange="(e) => ChangeValue(e, Column)" />
+                                        <span></span>
+                                    </label>
+                                }
+                            }
+                        }
+                        else if (((IGridColumn<T>)Column).InputType == InputType.Number)
+                        {
+                            <input autocomplete="@Column.CustomAutoComplete.Invoke()" type="@(InputType.Number.ToTypeAttr())" id="@Column.FieldName" name="@Column.FieldName" class="@GridComponent.Grid.HtmlClass.FormInput" value="@Column.GetFormatedValue(value)" @onchange="(e) => ChangeValue(e, Column)" />
+                        }
+                        else
+                        {
+                            <input autocomplete="@Column.CustomAutoComplete.Invoke()" id="@Column.FieldName" name="@Column.FieldName" class="@GridComponent.Grid.HtmlClass.FormInput" value="@Column.GetFormatedValue(value)" @onchange="(e) => ChangeValue(e, Column)" />
+                        }
+                    }
+                }
+            }
+        }
+        else
+        {
+            if (_cellRender != null)
+            {
+                <span>@_cellRender</span>
+            }
+            else
+            {
+                <span>@_cell</span>
+            }
+        }
+    }
+</td>
 

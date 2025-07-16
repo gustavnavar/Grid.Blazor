@@ -19,6 +19,7 @@ using Microsoft.AspNetCore.Components.Web.Virtualization;
 using Microsoft.JSInterop;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Net.Http.Json;
 using System.Threading;
@@ -112,6 +113,8 @@ namespace GridBlazor.Pages
         public QueryDictionary<Dictionary<int, CheckboxComponent<T>>> Checkboxes { get; private set; }
 
         public QueryDictionary<QueryDictionary<bool>> ExceptCheckedRows { get; private set; } = new QueryDictionary<QueryDictionary<bool>>();
+
+        public int InlineCrudRow { get; internal set; } = -1;
 
         public QueryDictionary<GridHeaderComponent<T>> HeaderComponents { get; private set; }
 
@@ -563,6 +566,14 @@ namespace GridBlazor.Pages
             if (OnRowClicked != null)
                 OnRowClicked.Invoke(item);
 
+
+            //Disable inline CRUD row if it is not the same as the clicked row
+            if (InlineCrudRow != i &&
+                (Grid.CrudType == CrudType.Inline || Grid.CrudType == CrudType.InlineOrForm || Grid.CrudType == CrudType.FormAndInline))
+            {
+                InlineCrudRow = -1;
+            }
+
             _shouldRender = true;
             StateHasChanged();
         }
@@ -582,6 +593,28 @@ namespace GridBlazor.Pages
                 mouseEventArgs = new MouseEventArgs { CtrlKey = false };
 
             RowClicked(i, Grid.ItemsToDisplay.ElementAt(i), mouseEventArgs);
+        }
+
+        internal void RowDblClicked(int i)
+        {
+            if (InlineCrudRow != i && 
+                (Grid.CrudType == CrudType.Inline || Grid.CrudType == CrudType.InlineOrForm || Grid.CrudType == CrudType.FormAndInline))
+            {
+                InlineCrudRow = i;
+                _shouldRender = true;
+                StateHasChanged();
+            }
+        }
+
+        internal void ClearInlineCrudRow(int i)
+        {
+            if (InlineCrudRow != i &&
+                (Grid.CrudType == CrudType.Inline || Grid.CrudType == CrudType.InlineOrForm || Grid.CrudType == CrudType.FormAndInline))
+            {
+                InlineCrudRow = -1;
+                _shouldRender = true;
+                StateHasChanged();
+            }
         }
 
         public async Task GoTo(int page)
@@ -1528,6 +1561,17 @@ namespace GridBlazor.Pages
             }
         }
 
+        protected internal async Task SaveItem(object item)
+        {
+            if(Grid.ItemsToDisplay != null && InlineCrudRow >= 0 && InlineCrudRow < Grid.ItemsToDisplay.Count())
+            {
+                await ShowSpinner();
+                await ((CGrid<T>)Grid).CrudDataService.Update((T)item);
+                await HideSpinner();
+                await UpdateGrid(true, true);
+            }
+        }
+
         protected virtual async Task<bool> OnBeforeUpdate(GridUpdateComponent<T> component)
         {
             if (BeforeUpdate != null)
@@ -1807,6 +1851,7 @@ namespace GridBlazor.Pages
             if (reloadData) await Grid.UpdateGrid();
             SelectedRow = -1;
             SelectedRows.Clear();
+            InlineCrudRow = -1;
             InitCheckboxAndSubGridVars();
 
 #if !NETSTANDARD2_1
@@ -1839,6 +1884,22 @@ namespace GridBlazor.Pages
             {
                 await AfterRefreshGrid.Invoke();
             }
+        }
+
+        private void ChangeToFormEdit()
+        {
+            ((CGrid<T>)Grid).CrudType = CrudType.FormOrInline;
+            InlineCrudRow = -1;
+            _shouldRender = true;
+            StateHasChanged();
+        }
+
+        private void ChangeToInlineEdit()
+        {
+            ((CGrid<T>)Grid).CrudType = CrudType.InlineOrForm;
+            InlineCrudRow = -1;
+            _shouldRender = true;
+            StateHasChanged();
         }
     }
 }

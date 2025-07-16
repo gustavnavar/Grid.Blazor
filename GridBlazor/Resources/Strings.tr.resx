@@ -273,9 +273,6 @@
   <data name="Confirm Code" xml:space="preserve">
     <value>Kodu Onayla</value>
   </data>
-  <data name="String" xml:space="preserve">
-    <value>Kod</value>
-  </data>
   <data name="ConfirmCodeError" xml:space="preserve">
     <value>Kod ve onay kodu bu öğeyi kaydetmek için eşit olmalıdır</value>
   </data>
@@ -285,14 +282,14 @@
   <data name="Goto" xml:space="preserve">
     <value>Git</value>
   </data>
-  <data name="SearchFilterListInputText" xml:space="preserve">
-    <value>Arama ifadesi</value>
-  </data>
   <data name="All" xml:space="preserve">
     <value>Tüm</value>
   </data>
   <data name="None" xml:space="preserve">
     <value>Hiçbiri</value>
+  </data>
+  <data name="SearchFilterListInputText" xml:space="preserve">
+    <value>Arama ifadesi</value>
   </data>
   <data name="Select" xml:space="preserve">
     <value>Seçme</value>
@@ -311,5 +308,11 @@
   </data>
   <data name="PageSizeItems" xml:space="preserve">
     <value>Öğeler</value>
+  </data>
+  <data name="Inline edit" xml:space="preserve">
+    <value>Satır içi düzenleme</value>
+  </data>
+  <data name="Form edit" xml:space="preserve">
+    <value>Form düzenleme</value>
   </data>
 </root>

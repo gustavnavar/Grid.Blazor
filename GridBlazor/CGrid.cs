@@ -530,6 +530,11 @@ namespace GridBlazor
         public string ExcelExportFileName { get; internal set; }
 
         /// <summary>
+        ///     CRUD type
+        /// </summary>
+        public CrudType CrudType { get; internal set; } = CrudType.Form;
+
+        /// <summary>
         ///     Get value for creating items
         /// </summary>
         public bool CreateEnabled { get; internal set; }

@@ -117,20 +117,8 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="Add" xml:space="preserve">
-    <value>Přidat</value>
-  </data>
-  <data name="And" xml:space="preserve">
-    <value>A</value>
-  </data>
   <data name="ApplyFilterButtonText" xml:space="preserve">
     <value>Potvrdit</value>
-  </data>
-  <data name="Average" xml:space="preserve">
-    <value>Průměr</value>
-  </data>
-  <data name="Back" xml:space="preserve">
-    <value>Zpět</value>
   </data>
   <data name="BoolFalseLabel" xml:space="preserve">
     <value>Ne</value>
@@ -138,38 +126,20 @@
   <data name="BoolTrueLabel" xml:space="preserve">
     <value>Ano</value>
   </data>
-  <data name="ClearAllFilters" xml:space="preserve">
-    <value>Smazat všechny filtry</value>
-  </data>
   <data name="ClearFilterLabel" xml:space="preserve">
     <value>Smazat filtr</value>
   </data>
   <data name="Contains" xml:space="preserve">
     <value>Obsahuje</value>
   </data>
-  <data name="CreateItem" xml:space="preserve">
-    <value>Vytvořit položku</value>
-  </data>
   <data name="DefaultGridEmptyText" xml:space="preserve">
     <value>Nejsou k dispozici žádné položky</value>
-  </data>
-  <data name="Delete" xml:space="preserve">
-    <value>Odstranit</value>
-  </data>
-  <data name="DeleteItem" xml:space="preserve">
-    <value>Odstranit položku</value>
-  </data>
-  <data name="Edit" xml:space="preserve">
-    <value>Upravit</value>
   </data>
   <data name="EndsWith" xml:space="preserve">
     <value>Končí</value>
   </data>
   <data name="Equal" xml:space="preserve">
     <value>Je stejný</value>
-  </data>
-  <data name="ExtSortingText" xml:space="preserve">
-    <value>Přetáhněte sloupce sem pro pokročilé řazení</value>
   </data>
   <data name="FilterButtonTooltipText" xml:space="preserve">
     <value>Filtrovat sloupec</value>
@@ -186,9 +156,6 @@
   <data name="GreaterThanOrEquals" xml:space="preserve">
     <value>Větší než nebo rovno</value>
   </data>
-  <data name="GroupingText" xml:space="preserve">
-    <value>Přetáhněte sloupce sem pro seskupování sloupců</value>
-  </data>
   <data name="Items" xml:space="preserve">
     <value>Položky</value>
   </data>
@@ -201,26 +168,53 @@
   <data name="LessThanOrEquals" xml:space="preserve">
     <value>Menší než nebo rovno</value>
   </data>
+  <data name="SearchFor" xml:space="preserve">
+    <value>Vyhledat...</value>
+  </data>
+  <data name="StartsWith" xml:space="preserve">
+    <value>Začíná</value>
+  </data>
+  <data name="Average" xml:space="preserve">
+    <value>Průměr</value>
+  </data>
   <data name="Max" xml:space="preserve">
     <value>Max</value>
   </data>
   <data name="Min" xml:space="preserve">
     <value>Min</value>
   </data>
-  <data name="NotEqual" xml:space="preserve">
-    <value>Není stejný</value>
+  <data name="Sum" xml:space="preserve">
+    <value>Suma</value>
+  </data>
+  <data name="And" xml:space="preserve">
+    <value>A</value>
   </data>
   <data name="Or" xml:space="preserve">
     <value>Nebo</value>
   </data>
-  <data name="ReadItem" xml:space="preserve">
-    <value>Zobrazit položku</value>
+  <data name="ExtSortingText" xml:space="preserve">
+    <value>Přetáhněte sloupce sem pro pokročilé řazení</value>
+  </data>
+  <data name="GroupingText" xml:space="preserve">
+    <value>Přetáhněte sloupce sem pro seskupování sloupců</value>
+  </data>
+  <data name="Add" xml:space="preserve">
+    <value>Přidat</value>
+  </data>
+  <data name="Back" xml:space="preserve">
+    <value>Zpět</value>
+  </data>
+  <data name="Delete" xml:space="preserve">
+    <value>Odstranit</value>
+  </data>
+  <data name="Edit" xml:space="preserve">
+    <value>Upravit</value>
   </data>
   <data name="Save" xml:space="preserve">
     <value>Uložit</value>
   </data>
-  <data name="SearchFor" xml:space="preserve">
-    <value>Vyhledat...</value>
+  <data name="View" xml:space="preserve">
+    <value>Zobrazit</value>
   </data>
   <data name="SelectItem" xml:space="preserve">
     <value>--- Vyberte položku ---</value>
@@ -228,17 +222,23 @@
   <data name="Show" xml:space="preserve">
     <value>Zobrazit</value>
   </data>
-  <data name="StartsWith" xml:space="preserve">
-    <value>Začíná</value>
+  <data name="ClearAllFilters" xml:space="preserve">
+    <value>Smazat všechny filtry</value>
   </data>
-  <data name="Sum" xml:space="preserve">
-    <value>Suma</value>
+  <data name="CreateItem" xml:space="preserve">
+    <value>Vytvořit položku</value>
+  </data>
+  <data name="DeleteItem" xml:space="preserve">
+    <value>Odstranit položku</value>
+  </data>
+  <data name="ReadItem" xml:space="preserve">
+    <value>Zobrazit položku</value>
   </data>
   <data name="UpdateItem" xml:space="preserve">
     <value>Upravit položku</value>
   </data>
-  <data name="View" xml:space="preserve">
-    <value>Zobrazit</value>
+  <data name="NotEqual" xml:space="preserve">
+    <value>Není stejný</value>
   </data>
   <data name="CreateError" xml:space="preserve">
     <value>Při vytváření nové položky došlo k chybě</value>
@@ -279,17 +279,17 @@
   <data name="DeleteConfirmCodeError" xml:space="preserve">
     <value>Kód a potvrzovací kód se musí rovnat odstranění této položky.</value>
   </data>
-  <data name="String1" xml:space="preserve">
-    <value>Jít do</value>
-  </data>
-  <data name="SearchFilterListInputText" xml:space="preserve">
-    <value>Hledaná fráze</value>
+  <data name="Goto" xml:space="preserve">
+    <value>Jdi na</value>
   </data>
   <data name="All" xml:space="preserve">
     <value>Všechno</value>
   </data>
   <data name="None" xml:space="preserve">
     <value>Žádný</value>
+  </data>
+  <data name="SearchFilterListInputText" xml:space="preserve">
+    <value>Hledaná fráze</value>
   </data>
   <data name="Select" xml:space="preserve">
     <value>Vybrat</value>
@@ -308,5 +308,11 @@
   </data>
   <data name="PageSizeItems" xml:space="preserve">
     <value>Položky</value>
+  </data>
+  <data name="Inline edit" xml:space="preserve">
+    <value>Vložená úprava</value>
+  </data>
+  <data name="Form edit" xml:space="preserve">
+    <value>Úprava formuláře</value>
   </data>
 </root>

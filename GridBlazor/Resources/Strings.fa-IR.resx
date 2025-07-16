@@ -117,15 +117,6 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="DefaultGridEmptyText" xml:space="preserve">
-    <value>موردی برای نمایش وجود ندارد</value>
-  </data>
-  <data name="FilterButtonTooltipText" xml:space="preserve">
-    <value>فیلتر کردن این ستون</value>
-  </data>
-  <data name="Lang" xml:space="preserve">
-    <value>fa</value>
-  </data>
   <data name="ApplyFilterButtonText" xml:space="preserve">
     <value>اعمال</value>
   </data>
@@ -141,11 +132,17 @@
   <data name="Contains" xml:space="preserve">
     <value>شامل</value>
   </data>
+  <data name="DefaultGridEmptyText" xml:space="preserve">
+    <value>موردی برای نمایش وجود ندارد</value>
+  </data>
   <data name="EndsWith" xml:space="preserve">
     <value>پایان با ...</value>
   </data>
   <data name="Equal" xml:space="preserve">
     <value>برابر</value>
+  </data>
+  <data name="FilterButtonTooltipText" xml:space="preserve">
+    <value>فیلتر کردن این ستون</value>
   </data>
   <data name="FilterTypeLabel" xml:space="preserve">
     <value>نوع</value>
@@ -159,20 +156,26 @@
   <data name="GreaterThanOrEquals" xml:space="preserve">
     <value>بزرگتر مساوی</value>
   </data>
+  <data name="Items" xml:space="preserve">
+    <value>آیتم ها</value>
+  </data>
+  <data name="Lang" xml:space="preserve">
+    <value>fa</value>
+  </data>
   <data name="LessThan" xml:space="preserve">
     <value>کوچکتر از</value>
   </data>
   <data name="LessThanOrEquals" xml:space="preserve">
     <value>کوچکتر مساوی</value>
   </data>
-  <data name="StartsWith" xml:space="preserve">
-    <value>شروع با ...</value>
-  </data>
   <data name="SearchFor" xml:space="preserve">
     <value>جستجو...</value>
   </data>
-  <data name="Items" xml:space="preserve">
-    <value>آیتم ها</value>
+  <data name="StartsWith" xml:space="preserve">
+    <value>شروع با ...</value>
+  </data>
+  <data name="Average" xml:space="preserve">
+    <value>میانگین</value>
   </data>
   <data name="Max" xml:space="preserve">
     <value>بیشترین</value>
@@ -182,9 +185,6 @@
   </data>
   <data name="Sum" xml:space="preserve">
     <value>جمع</value>
-  </data>
-  <data name="Average" xml:space="preserve">
-    <value>میانگین</value>
   </data>
   <data name="And" xml:space="preserve">
     <value>و</value>
@@ -282,14 +282,14 @@
   <data name="Goto" xml:space="preserve">
     <value>برو به</value>
   </data>
-  <data name="SearchFilterListInputText" xml:space="preserve">
-    <value>عبارت جستجو</value>
-  </data>
   <data name="All" xml:space="preserve">
     <value>همه</value>
   </data>
   <data name="None" xml:space="preserve">
     <value>هیچ یک</value>
+  </data>
+  <data name="SearchFilterListInputText" xml:space="preserve">
+    <value>عبارت جستجو</value>
   </data>
   <data name="Select" xml:space="preserve">
     <value>انتخاب کنید</value>
@@ -308,5 +308,11 @@
   </data>
   <data name="PageSizeItems" xml:space="preserve">
     <value>آیتم ها</value>
+  </data>
+  <data name="Inline edit" xml:space="preserve">
+    <value>ویرایش درون‌خطی</value>
+  </data>
+  <data name="Form edit" xml:space="preserve">
+    <value>ویرایش فرم</value>
   </data>
 </root>

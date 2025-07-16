@@ -23,11 +23,16 @@
             {
                 <td class="@GridComponent.GridSumCssClass" data-name="" style="width:35px;"></td>
             }
-            @if ((Grid.UpdateEnabled || ((CGrid<T>)Grid).FuncUpdateEnabled != null) && !GridComponent.HeaderCrudButtons)
+            @if ((Grid.UpdateEnabled || ((CGrid<T>)Grid).FuncUpdateEnabled != null) && !GridComponent.HeaderCrudButtons
+                && (Grid.CrudType == CrudType.Form || Grid.CrudType == CrudType.FormOrInline || Grid.CrudType == CrudType.FormAndInline))
             {
                 <td class="@GridComponent.GridSumCssClass" data-name="" style="width:35px;"></td>
             }
             @if ((Grid.DeleteEnabled || ((CGrid<T>)Grid).FuncDeleteEnabled != null) && !GridComponent.HeaderCrudButtons)
+            {
+                <td class="@GridComponent.GridSumCssClass" data-name="" style="width:35px;"></td>
+            }
+            @if (GridComponent.Grid.CrudType == CrudType.Inline || GridComponent.Grid.CrudType == CrudType.InlineOrForm || GridComponent.Grid.CrudType == CrudType.FormAndInline)
             {
                 <td class="@GridComponent.GridSumCssClass" data-name="" style="width:35px;"></td>
             }
@@ -87,13 +92,18 @@
             {
                 <td class="@GridComponent.GridAverageCssClass" data-name="" style="width:35px;"></td>
             }
-            @if ((Grid.UpdateEnabled || ((CGrid<T>)Grid).FuncUpdateEnabled != null) && !GridComponent.HeaderCrudButtons)
+            @if ((Grid.UpdateEnabled || ((CGrid<T>)Grid).FuncUpdateEnabled != null) && !GridComponent.HeaderCrudButtons
+                && (Grid.CrudType == CrudType.Form || Grid.CrudType == CrudType.FormOrInline || Grid.CrudType == CrudType.FormAndInline))
             {
                 <td class="@GridComponent.GridAverageCssClass" data-name="" style="width:35px;"></td>
             }
             @if ((Grid.DeleteEnabled || ((CGrid<T>)Grid).FuncDeleteEnabled != null) && !GridComponent.HeaderCrudButtons)
             {
                 <td class="@GridComponent.GridAverageCssClass" data-name="" style="width:35px;"></td>
+            }
+            @if (GridComponent.Grid.CrudType == CrudType.Inline || GridComponent.Grid.CrudType == CrudType.InlineOrForm || GridComponent.Grid.CrudType == CrudType.FormAndInline)
+            {
+                <td class="@GridComponent.GridSumCssClass" data-name="" style="width:35px;"></td>
             }
             @if (firstColumn != null
     && (firstColumn.IsSumEnabled || firstColumn.IsAverageEnabled
@@ -150,13 +160,18 @@
             {
                 <td class="@GridComponent.GridMaxCssClass" data-name="" style="width:35px;"></td>
             }
-            @if ((Grid.UpdateEnabled || ((CGrid<T>)Grid).FuncUpdateEnabled != null) && !GridComponent.HeaderCrudButtons)
+            @if ((Grid.UpdateEnabled || ((CGrid<T>)Grid).FuncUpdateEnabled != null) && !GridComponent.HeaderCrudButtons
+                && (Grid.CrudType == CrudType.Form || Grid.CrudType == CrudType.FormOrInline || Grid.CrudType == CrudType.FormAndInline))
             {
                 <td class="@GridComponent.GridMaxCssClass" data-name="" style="width:35px;"></td>
             }
             @if ((Grid.DeleteEnabled || ((CGrid<T>)Grid).FuncDeleteEnabled != null) && !GridComponent.HeaderCrudButtons)
             {
                 <td class="@GridComponent.GridMaxCssClass" data-name="" style="width:35px;"></td>
+            }
+            @if (GridComponent.Grid.CrudType == CrudType.Inline || GridComponent.Grid.CrudType == CrudType.InlineOrForm || GridComponent.Grid.CrudType == CrudType.FormAndInline)
+            {
+                <td class="@GridComponent.GridSumCssClass" data-name="" style="width:35px;"></td>
             }
             @if (firstColumn != null
      && (firstColumn.IsSumEnabled || firstColumn.IsAverageEnabled
@@ -213,13 +228,18 @@
             {
                 <td class="@GridComponent.GridMinCssClass" data-name="" style="width:35px;"></td>
             }
-            @if ((Grid.UpdateEnabled || ((CGrid<T>)Grid).FuncUpdateEnabled != null) && !GridComponent.HeaderCrudButtons)
+            @if ((Grid.UpdateEnabled || ((CGrid<T>)Grid).FuncUpdateEnabled != null) && !GridComponent.HeaderCrudButtons
+                && (Grid.CrudType == CrudType.Form || Grid.CrudType == CrudType.FormOrInline || Grid.CrudType == CrudType.FormAndInline))
             {
                 <td class="@GridComponent.GridMinCssClass" data-name="" style="width:35px;"></td>
             }
             @if ((Grid.DeleteEnabled || ((CGrid<T>)Grid).FuncDeleteEnabled != null) && !GridComponent.HeaderCrudButtons)
             {
                 <td class="@GridComponent.GridMinCssClass" data-name="" style="width:35px;"></td>
+            }
+            @if (GridComponent.Grid.CrudType == CrudType.Inline || GridComponent.Grid.CrudType == CrudType.InlineOrForm || GridComponent.Grid.CrudType == CrudType.FormAndInline)
+            {
+                <td class="@GridComponent.GridSumCssClass" data-name="" style="width:35px;"></td>
             }
             @if (firstColumn != null
          && (firstColumn.IsSumEnabled || firstColumn.IsAverageEnabled
@@ -278,13 +298,18 @@
                 {
                     <td class="@GridComponent.GridCalculationCssClass" data-name="" style="width:35px;"></td>
                 }
-                @if ((Grid.UpdateEnabled || ((CGrid<T>)Grid).FuncUpdateEnabled != null) && !GridComponent.HeaderCrudButtons)
+                @if ((Grid.UpdateEnabled || ((CGrid<T>)Grid).FuncUpdateEnabled != null) && !GridComponent.HeaderCrudButtons
+                    && (Grid.CrudType == CrudType.Form || Grid.CrudType == CrudType.FormOrInline || Grid.CrudType == CrudType.FormAndInline))
                 {
                     <td class="@GridComponent.GridCalculationCssClass" data-name="" style="width:35px;"></td>
                 }
                 @if ((Grid.DeleteEnabled || ((CGrid<T>)Grid).FuncDeleteEnabled != null) && !GridComponent.HeaderCrudButtons)
                 {
                     <td class="@GridComponent.GridCalculationCssClass" data-name="" style="width:35px;"></td>
+                }
+                @if (GridComponent.Grid.CrudType == CrudType.Inline || GridComponent.Grid.CrudType == CrudType.InlineOrForm || GridComponent.Grid.CrudType == CrudType.FormAndInline)
+                {
+                    <td class="@GridComponent.GridSumCssClass" data-name="" style="width:35px;"></td>
                 }
                 @if (firstColumn != null
                 && (firstColumn.IsSumEnabled || firstColumn.IsAverageEnabled

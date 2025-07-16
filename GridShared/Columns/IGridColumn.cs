@@ -43,6 +43,7 @@ namespace GridShared.Columns
         IList<Action<object>> CrudActions { get; }
         IList<Func<object, Task>> CrudFunctions { get; }
         object CrudObject { get; }
+        bool InlineCrudReadOnly { get; }
         bool EnableCard { get; }
 
         IGrid ParentGrid { get; }
@@ -97,6 +98,11 @@ namespace GridShared.Columns
         ///     Sets the width of the column in pizels
         /// </summary>
         IGridColumn<T> SetWidth(int width);
+
+        /// <summary>
+        ///     Sets the associated column for inline edit
+        /// </summary>
+        IGridColumn<T> SetInlineCrudReadOnly(bool readOnly);
 
         /// <summary>
         ///     Sets the width of the column on crud forms

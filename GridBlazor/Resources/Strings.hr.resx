@@ -117,15 +117,6 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="DefaultGridEmptyText" xml:space="preserve">
-    <value>Nema stavki za prikaz</value>
-  </data>
-  <data name="FilterButtonTooltipText" xml:space="preserve">
-    <value>Filtriraj kolonu</value>
-  </data>
-  <data name="Lang" xml:space="preserve">
-    <value>hr</value>
-  </data>
   <data name="ApplyFilterButtonText" xml:space="preserve">
     <value>Primijeni</value>
   </data>
@@ -141,11 +132,17 @@
   <data name="Contains" xml:space="preserve">
     <value>Sadrži</value>
   </data>
+  <data name="DefaultGridEmptyText" xml:space="preserve">
+    <value>Nema stavki za prikaz</value>
+  </data>
   <data name="EndsWith" xml:space="preserve">
     <value>Završava sa</value>
   </data>
   <data name="Equal" xml:space="preserve">
     <value>Jednako</value>
+  </data>
+  <data name="FilterButtonTooltipText" xml:space="preserve">
+    <value>Filtriraj kolonu</value>
   </data>
   <data name="FilterTypeLabel" xml:space="preserve">
     <value>Tip</value>
@@ -159,20 +156,26 @@
   <data name="GreaterThanOrEquals" xml:space="preserve">
     <value>Veće od ili jednako</value>
   </data>
+  <data name="Items" xml:space="preserve">
+    <value>Stavke</value>
+  </data>
+  <data name="Lang" xml:space="preserve">
+    <value>hr</value>
+  </data>
   <data name="LessThan" xml:space="preserve">
     <value>Manje od</value>
   </data>
   <data name="LessThanOrEquals" xml:space="preserve">
     <value>Manje od ili jednako</value>
   </data>
-  <data name="StartsWith" xml:space="preserve">
-    <value>Počinje sa</value>
-  </data>
   <data name="SearchFor" xml:space="preserve">
     <value>Pretraži ...</value>
   </data>
-  <data name="Items" xml:space="preserve">
-    <value>Stavke</value>
+  <data name="StartsWith" xml:space="preserve">
+    <value>Počinje sa</value>
+  </data>
+  <data name="Average" xml:space="preserve">
+    <value>Prosjek</value>
   </data>
   <data name="Max" xml:space="preserve">
     <value>Max</value>
@@ -182,9 +185,6 @@
   </data>
   <data name="Sum" xml:space="preserve">
     <value>Suma</value>
-  </data>
-  <data name="Average" xml:space="preserve">
-    <value>Prosjek</value>
   </data>
   <data name="And" xml:space="preserve">
     <value>i</value>
@@ -282,14 +282,14 @@
   <data name="Goto" xml:space="preserve">
     <value>Menj</value>
   </data>
-  <data name="SearchFilterListInputText" xml:space="preserve">
-    <value>Keresési kifejezés</value>
-  </data>
   <data name="All" xml:space="preserve">
     <value>Összes</value>
   </data>
   <data name="None" xml:space="preserve">
     <value>Egyik sem</value>
+  </data>
+  <data name="SearchFilterListInputText" xml:space="preserve">
+    <value>Keresési kifejezés</value>
   </data>
   <data name="Select" xml:space="preserve">
     <value>Válassza ki</value>
@@ -308,5 +308,11 @@
   </data>
   <data name="PageSizeItems" xml:space="preserve">
     <value>Stavke</value>
+  </data>
+  <data name="Inline edit" xml:space="preserve">
+    <value>Uređivanje u tekstu</value>
+  </data>
+  <data name="Form edit" xml:space="preserve">
+    <value>&#x8;Uređivanje obrasca</value>
   </data>
 </root>

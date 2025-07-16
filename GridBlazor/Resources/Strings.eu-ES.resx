@@ -117,15 +117,6 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="DefaultGridEmptyText" xml:space="preserve">
-    <value>Ez dago elementurik bistaratzeko</value>
-  </data>
-  <data name="FilterButtonTooltipText" xml:space="preserve">
-    <value>Gehitu iragazkia eremuan</value>
-  </data>
-  <data name="Lang" xml:space="preserve">
-    <value>eu</value>
-  </data>
   <data name="ApplyFilterButtonText" xml:space="preserve">
     <value>Aplikatu</value>
   </data>
@@ -141,11 +132,17 @@
   <data name="Contains" xml:space="preserve">
     <value>Badu</value>
   </data>
+  <data name="DefaultGridEmptyText" xml:space="preserve">
+    <value>Ez dago elementurik bistaratzeko</value>
+  </data>
   <data name="EndsWith" xml:space="preserve">
     <value>Honekin amaitzen da</value>
   </data>
   <data name="Equal" xml:space="preserve">
     <value>Berdin</value>
+  </data>
+  <data name="FilterButtonTooltipText" xml:space="preserve">
+    <value>Gehitu iragazkia eremuan</value>
   </data>
   <data name="FilterTypeLabel" xml:space="preserve">
     <value>Mota</value>
@@ -159,20 +156,26 @@
   <data name="GreaterThanOrEquals" xml:space="preserve">
     <value>Baino handiagoa edo berdina</value>
   </data>
+  <data name="Items" xml:space="preserve">
+    <value>Elementuak</value>
+  </data>
+  <data name="Lang" xml:space="preserve">
+    <value>eu</value>
+  </data>
   <data name="LessThan" xml:space="preserve">
     <value>Baino txikiagoa</value>
   </data>
   <data name="LessThanOrEquals" xml:space="preserve">
     <value>Berdinak baino gutxiago</value>
   </data>
-  <data name="StartsWith" xml:space="preserve">
-    <value>Honekin hasten da</value>
-  </data>
   <data name="SearchFor" xml:space="preserve">
     <value>Bilatu ...</value>
   </data>
-  <data name="Items" xml:space="preserve">
-    <value>Elementuak</value>
+  <data name="StartsWith" xml:space="preserve">
+    <value>Honekin hasten da</value>
+  </data>
+  <data name="Average" xml:space="preserve">
+    <value>Batez bestekoa</value>
   </data>
   <data name="Max" xml:space="preserve">
     <value>Gehienez</value>
@@ -182,9 +185,6 @@
   </data>
   <data name="Sum" xml:space="preserve">
     <value>Batuketa</value>
-  </data>
-  <data name="Average" xml:space="preserve">
-    <value>Batez bestekoa</value>
   </data>
   <data name="And" xml:space="preserve">
     <value>Eta</value>
@@ -282,14 +282,14 @@
   <data name="Goto" xml:space="preserve">
     <value>Joan</value>
   </data>
-  <data name="SearchFilterListInputText" xml:space="preserve">
-    <value>Bilatu esaldia</value>
-  </data>
   <data name="All" xml:space="preserve">
     <value>Denak</value>
   </data>
   <data name="None" xml:space="preserve">
     <value>Bat ere ez</value>
+  </data>
+  <data name="SearchFilterListInputText" xml:space="preserve">
+    <value>Bilatu esaldia</value>
   </data>
   <data name="Select" xml:space="preserve">
     <value>Hautatu</value>
@@ -308,5 +308,11 @@
   </data>
   <data name="PageSizeItems" xml:space="preserve">
     <value>Elementuak</value>
+  </data>
+  <data name="Inline edit" xml:space="preserve">
+    <value>Lerroko edizioa</value>
+  </data>
+  <data name="Form edit" xml:space="preserve">
+    <value>Inprimakiaren edizioa</value>
   </data>
 </root>

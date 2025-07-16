@@ -120,6 +120,11 @@ namespace GridMvc.Html
             get { return _source.Mode; }
         }
 
+        public CrudType CrudType 
+        {
+            get { return _source.CrudType; } 
+        }
+
         public bool CreateEnabled
         {
             get { return _source.CreateEnabled; }

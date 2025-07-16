@@ -117,17 +117,23 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="DefaultGridEmptyText" xml:space="preserve">
-    <value>Нет элементов для отображения</value>
+  <data name="Add" xml:space="preserve">
+    <value>Добавить</value>
   </data>
-  <data name="FilterButtonTooltipText" xml:space="preserve">
-    <value>Добавить фильтр по полю</value>
+  <data name="All" xml:space="preserve">
+    <value>Все</value>
   </data>
-  <data name="Lang" xml:space="preserve">
-    <value>ru</value>
+  <data name="And" xml:space="preserve">
+    <value>И</value>
   </data>
   <data name="ApplyFilterButtonText" xml:space="preserve">
     <value>Применить</value>
+  </data>
+  <data name="Average" xml:space="preserve">
+    <value>Cреднюю</value>
+  </data>
+  <data name="Back" xml:space="preserve">
+    <value>Назад</value>
   </data>
   <data name="BoolFalseLabel" xml:space="preserve">
     <value>Нет</value>
@@ -135,137 +141,11 @@
   <data name="BoolTrueLabel" xml:space="preserve">
     <value>Да</value>
   </data>
-  <data name="ClearFilterLabel" xml:space="preserve">
-    <value>Очистить фильтр</value>
-  </data>
-  <data name="Contains" xml:space="preserve">
-    <value>Содержит</value>
-  </data>
-  <data name="EndsWith" xml:space="preserve">
-    <value>Оканчивается</value>
-  </data>
-  <data name="Equal" xml:space="preserve">
-    <value>Равно</value>
-  </data>
-  <data name="FilterTypeLabel" xml:space="preserve">
-    <value>Тип фильтра</value>
-  </data>
-  <data name="FilterValueLabel" xml:space="preserve">
-    <value>Значение</value>
-  </data>
-  <data name="GreaterThan" xml:space="preserve">
-    <value>Больше</value>
-  </data>
-  <data name="GreaterThanOrEquals" xml:space="preserve">
-    <value>Больше или равно</value>
-  </data>
-  <data name="LessThan" xml:space="preserve">
-    <value>Меньше</value>
-  </data>
-  <data name="LessThanOrEquals" xml:space="preserve">
-    <value>Меньше или равно</value>
-  </data>
-  <data name="StartsWith" xml:space="preserve">
-    <value>Начинается с</value>
-  </data>
-  <data name="SearchFor" xml:space="preserve">
-    <value>Искать</value>
-  </data>
-  <data name="Items" xml:space="preserve">
-    <value>Предметы</value>
-  </data>
-  <data name="Max" xml:space="preserve">
-    <value>Mакс(им)</value>
-  </data>
-  <data name="Min" xml:space="preserve">
-    <value>Mин</value>
-  </data>
-  <data name="Sum" xml:space="preserve">
-    <value>Cумма</value>
-  </data>
-  <data name="Average" xml:space="preserve">
-    <value>Cреднюю</value>
-  </data>
-  <data name="And" xml:space="preserve">
-    <value>И</value>
-  </data>
-  <data name="Or" xml:space="preserve">
-    <value>Или</value>
-  </data>
-  <data name="ExtSortingText" xml:space="preserve">
-    <value>Удалите столбцы здесь для расширенной сортировки столбцов</value>
-  </data>
-  <data name="GroupingText" xml:space="preserve">
-    <value>Перетащите столбцы сюда для группировки столбцов</value>
-  </data>
-  <data name="Add" xml:space="preserve">
-    <value>Добавить</value>
-  </data>
-  <data name="Back" xml:space="preserve">
-    <value>Назад</value>
-  </data>
-  <data name="Delete" xml:space="preserve">
-    <value>Удалить</value>
-  </data>
-  <data name="Edit" xml:space="preserve">
-    <value>Редактировать</value>
-  </data>
-  <data name="Save" xml:space="preserve">
-    <value>Сохранить</value>
-  </data>
-  <data name="View" xml:space="preserve">
-    <value>Смотреть</value>
-  </data>
-  <data name="SelectItem" xml:space="preserve">
-    <value>--- выберите предмет ---</value>
-  </data>
-  <data name="Show" xml:space="preserve">
-    <value>Показать</value>
-  </data>
   <data name="ClearAllFilters" xml:space="preserve">
     <value>Очистить все фильтры</value>
   </data>
-  <data name="CreateItem" xml:space="preserve">
-    <value>Создать предмет</value>
-  </data>
-  <data name="DeleteItem" xml:space="preserve">
-    <value>Удалить предмет</value>
-  </data>
-  <data name="ReadItem" xml:space="preserve">
-    <value>Читать предмет</value>
-  </data>
-  <data name="UpdateItem" xml:space="preserve">
-    <value>Обновить предмет</value>
-  </data>
-  <data name="NotEqual" xml:space="preserve">
-    <value>Не равно</value>
-  </data>
-  <data name="CreateError" xml:space="preserve">
-    <value>Произошла ошибка при создании нового элемента</value>
-  </data>
-  <data name="DeleteError" xml:space="preserve">
-    <value>При удалении этого элемента произошла ошибка</value>
-  </data>
-  <data name="UpdateError" xml:space="preserve">
-    <value>При обновлении этого элемента произошла ошибка</value>
-  </data>
-  <data name="IsNotNull" xml:space="preserve">
-    <value>Не является нулевым</value>
-  </data>
-  <data name="IsNull" xml:space="preserve">
-    <value>Нулевой</value>
-  </data>
-  <data name="SelectionDeleteError" xml:space="preserve">
-    <value>Вы должны выбрать строку, которую хотите удалить</value>
-  </data>
-  <data name="SelectionReadError" xml:space="preserve">
-    <value>Вы должны выбрать строку, которую хотите просмотреть</value>
-  </data>
-  <data name="SelectionUpdateError" xml:space="preserve">
-    <value>Вы должны выбрать строку, которую хотите редактировать</value>
-  </data>
-  <data name="Files" xml:space="preserve">
-    <value>Файлы</value>
+  <data name="ClearFilterLabel" xml:space="preserve">
+    <value>Очистить фильтр</value>
   </data>
   <data name="Code" xml:space="preserve">
     <value>Код</value>
@@ -276,37 +156,157 @@
   <data name="ConfirmCodeError" xml:space="preserve">
     <value>Код кода и подтверждения должен быть равным, чтобы сохранить этот элемент</value>
   </data>
-  <data name="DeleteConfirmCodeError" xml:space="preserve">
-    <value>Код кода и код подтверждения должны быть равны для удаления этого элемента</value>
+  <data name="Contains" xml:space="preserve">
+    <value>Содержит</value>
   </data>
-  <data name="Goto" xml:space="preserve">
-    <value>Перейти к</value>
+  <data name="CreateError" xml:space="preserve">
+    <value>Произошла ошибка при создании нового элемента</value>
   </data>
-  <data name="SearchFilterListInputText" xml:space="preserve">
-    <value>Поисковая фраза</value>
-  </data>
-  <data name="All" xml:space="preserve">
-    <value>Все</value>
-  </data>
-  <data name="None" xml:space="preserve">
-    <value>Никто</value>
-  </data>
-  <data name="Select" xml:space="preserve">
-    <value>Выбирать</value>
-  </data>
-  <data name="Height" xml:space="preserve">
-    <value>Высота</value>
-  </data>
-  <data name="Duplicated" xml:space="preserve">
-    <value>Дублированный</value>
-  </data>
-  <data name="NotDuplicated" xml:space="preserve">
-    <value>Не дублируется</value>
+  <data name="CreateItem" xml:space="preserve">
+    <value>Создать предмет</value>
   </data>
   <data name="current" xml:space="preserve">
     <value>текущий</value>
   </data>
+  <data name="DefaultGridEmptyText" xml:space="preserve">
+    <value>Нет элементов для отображения</value>
+  </data>
+  <data name="Delete" xml:space="preserve">
+    <value>Удалить</value>
+  </data>
+  <data name="DeleteConfirmCodeError" xml:space="preserve">
+    <value>Код кода и код подтверждения должны быть равны для удаления этого элемента</value>
+  </data>
+  <data name="DeleteError" xml:space="preserve">
+    <value>При удалении этого элемента произошла ошибка</value>
+  </data>
+  <data name="DeleteItem" xml:space="preserve">
+    <value>Удалить предмет</value>
+  </data>
+  <data name="Duplicated" xml:space="preserve">
+    <value>Дублированный</value>
+  </data>
+  <data name="Edit" xml:space="preserve">
+    <value>Редактировать</value>
+  </data>
+  <data name="EndsWith" xml:space="preserve">
+    <value>Оканчивается</value>
+  </data>
+  <data name="Equal" xml:space="preserve">
+    <value>Равно</value>
+  </data>
+  <data name="ExtSortingText" xml:space="preserve">
+    <value>Удалите столбцы здесь для расширенной сортировки столбцов</value>
+  </data>
+  <data name="Files" xml:space="preserve">
+    <value>Файлы</value>
+  </data>
+  <data name="FilterButtonTooltipText" xml:space="preserve">
+    <value>Добавить фильтр по полю</value>
+  </data>
+  <data name="FilterTypeLabel" xml:space="preserve">
+    <value>Тип фильтра</value>
+  </data>
+  <data name="FilterValueLabel" xml:space="preserve">
+    <value>Значение</value>
+  </data>
+  <data name="Goto" xml:space="preserve">
+    <value>Перейти к</value>
+  </data>
+  <data name="GreaterThan" xml:space="preserve">
+    <value>Больше</value>
+  </data>
+  <data name="GreaterThanOrEquals" xml:space="preserve">
+    <value>Больше или равно</value>
+  </data>
+  <data name="GroupingText" xml:space="preserve">
+    <value>Перетащите столбцы сюда для группировки столбцов</value>
+  </data>
+  <data name="Height" xml:space="preserve">
+    <value>Высота</value>
+  </data>
+  <data name="IsNotNull" xml:space="preserve">
+    <value>Не является нулевым</value>
+  </data>
+  <data name="IsNull" xml:space="preserve">
+    <value>Нулевой</value>
+  </data>
+  <data name="Items" xml:space="preserve">
+    <value>Предметы</value>
+  </data>
+  <data name="Lang" xml:space="preserve">
+    <value>ru</value>
+  </data>
+  <data name="LessThan" xml:space="preserve">
+    <value>Меньше</value>
+  </data>
+  <data name="LessThanOrEquals" xml:space="preserve">
+    <value>Меньше или равно</value>
+  </data>
+  <data name="Max" xml:space="preserve">
+    <value>Mакс(им)</value>
+  </data>
+  <data name="Min" xml:space="preserve">
+    <value>Mин</value>
+  </data>
+  <data name="None" xml:space="preserve">
+    <value>Никто</value>
+  </data>
+  <data name="NotDuplicated" xml:space="preserve">
+    <value>Не дублируется</value>
+  </data>
+  <data name="NotEqual" xml:space="preserve">
+    <value>Не равно</value>
+  </data>
+  <data name="Or" xml:space="preserve">
+    <value>Или</value>
+  </data>
   <data name="PageSizeItems" xml:space="preserve">
     <value>Предметы</value>
+  </data>
+  <data name="ReadItem" xml:space="preserve">
+    <value>Читать предмет</value>
+  </data>
+  <data name="Save" xml:space="preserve">
+    <value>Сохранить</value>
+  </data>
+  <data name="SearchFilterListInputText" xml:space="preserve">
+    <value>Поисковая фраза</value>
+  </data>
+  <data name="SearchFor" xml:space="preserve">
+    <value>Искать</value>
+  </data>
+  <data name="Select" xml:space="preserve">
+    <value>Выбирать</value>
+  </data>
+  <data name="SelectionDeleteError" xml:space="preserve">
+    <value>Вы должны выбрать строку, которую хотите удалить</value>
+  </data>
+  <data name="SelectionReadError" xml:space="preserve">
+    <value>Вы должны выбрать строку, которую хотите просмотреть</value>
+  </data>
+  <data name="SelectionUpdateError" xml:space="preserve">
+    <value>Вы должны выбрать строку, которую хотите редактировать</value>
+  </data>
+  <data name="SelectItem" xml:space="preserve">
+    <value>--- выберите предмет ---</value>
+  </data>
+  <data name="Show" xml:space="preserve">
+    <value>Показать</value>
+  </data>
+  <data name="StartsWith" xml:space="preserve">
+    <value>Начинается с</value>
+  </data>
+  <data name="Sum" xml:space="preserve">
+    <value>Cумма</value>
+  </data>
+  <data name="UpdateError" xml:space="preserve">
+    <value>При обновлении этого элемента произошла ошибка</value>
+  </data>
+  <data name="UpdateItem" xml:space="preserve">
+    <value>Обновить предмет</value>
+  </data>
+  <data name="View" xml:space="preserve">
+    <value>Смотреть</value>
   </data>
 </root>

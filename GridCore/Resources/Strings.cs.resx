@@ -120,6 +120,9 @@
   <data name="Add" xml:space="preserve">
     <value>Přidat</value>
   </data>
+  <data name="All" xml:space="preserve">
+    <value>Všechno</value>
+  </data>
   <data name="And" xml:space="preserve">
     <value>A</value>
   </data>
@@ -144,11 +147,26 @@
   <data name="ClearFilterLabel" xml:space="preserve">
     <value>Smazat filtr</value>
   </data>
+  <data name="Code" xml:space="preserve">
+    <value>Kód</value>
+  </data>
+  <data name="Confirm Code" xml:space="preserve">
+    <value>Potvrdit Kód</value>
+  </data>
+  <data name="ConfirmCodeError" xml:space="preserve">
+    <value>Kód a potvrzovací kód musí být rovny pro uložení této položky</value>
+  </data>
   <data name="Contains" xml:space="preserve">
     <value>Obsahuje</value>
   </data>
+  <data name="CreateError" xml:space="preserve">
+    <value>Při vytváření nové položky došlo k chybě</value>
+  </data>
   <data name="CreateItem" xml:space="preserve">
     <value>Vytvořit položku</value>
+  </data>
+  <data name="current" xml:space="preserve">
+    <value>aktuální</value>
   </data>
   <data name="DefaultGridEmptyText" xml:space="preserve">
     <value>Nejsou k dispozici žádné položky</value>
@@ -156,8 +174,17 @@
   <data name="Delete" xml:space="preserve">
     <value>Odstranit</value>
   </data>
+  <data name="DeleteConfirmCodeError" xml:space="preserve">
+    <value>Kód a potvrzovací kód se musí rovnat odstranění této položky.</value>
+  </data>
+  <data name="DeleteError" xml:space="preserve">
+    <value>Při mazání této položky došlo k chybě</value>
+  </data>
   <data name="DeleteItem" xml:space="preserve">
     <value>Odstranit položku</value>
+  </data>
+  <data name="Duplicated" xml:space="preserve">
+    <value>Duplicitní</value>
   </data>
   <data name="Edit" xml:space="preserve">
     <value>Upravit</value>
@@ -171,6 +198,9 @@
   <data name="ExtSortingText" xml:space="preserve">
     <value>Přetáhněte sloupce sem pro pokročilé řazení</value>
   </data>
+  <data name="Files" xml:space="preserve">
+    <value>Archiv</value>
+  </data>
   <data name="FilterButtonTooltipText" xml:space="preserve">
     <value>Filtrovat sloupec</value>
   </data>
@@ -180,6 +210,9 @@
   <data name="FilterValueLabel" xml:space="preserve">
     <value>Hodnota</value>
   </data>
+  <data name="Goto" xml:space="preserve">
+    <value>Jdi na</value>
+  </data>
   <data name="GreaterThan" xml:space="preserve">
     <value>Větší než</value>
   </data>
@@ -188,6 +221,15 @@
   </data>
   <data name="GroupingText" xml:space="preserve">
     <value>Přetáhněte sloupce sem pro seskupování sloupců</value>
+  </data>
+  <data name="Height" xml:space="preserve">
+    <value>Výška</value>
+  </data>
+  <data name="IsNotNull" xml:space="preserve">
+    <value>Není null</value>
+  </data>
+  <data name="IsNull" xml:space="preserve">
+    <value>Je null</value>
   </data>
   <data name="Items" xml:space="preserve">
     <value>Položky</value>
@@ -207,11 +249,20 @@
   <data name="Min" xml:space="preserve">
     <value>Min</value>
   </data>
+  <data name="None" xml:space="preserve">
+    <value>Žádný</value>
+  </data>
+  <data name="NotDuplicated" xml:space="preserve">
+    <value>Není duplicitní</value>
+  </data>
   <data name="NotEqual" xml:space="preserve">
     <value>Není stejný</value>
   </data>
   <data name="Or" xml:space="preserve">
     <value>Nebo</value>
+  </data>
+  <data name="PageSizeItems" xml:space="preserve">
+    <value>Položky</value>
   </data>
   <data name="ReadItem" xml:space="preserve">
     <value>Zobrazit položku</value>
@@ -219,8 +270,23 @@
   <data name="Save" xml:space="preserve">
     <value>Uložit</value>
   </data>
+  <data name="SearchFilterListInputText" xml:space="preserve">
+    <value>Hledaná fráze</value>
+  </data>
   <data name="SearchFor" xml:space="preserve">
     <value>Vyhledat...</value>
+  </data>
+  <data name="Select" xml:space="preserve">
+    <value>Vybrat</value>
+  </data>
+  <data name="SelectionDeleteError" xml:space="preserve">
+    <value>Musíte vybrat řádek, který chcete odstranit</value>
+  </data>
+  <data name="SelectionReadError" xml:space="preserve">
+    <value>Musíte vybrat řádek, který chcete zobrazit</value>
+  </data>
+  <data name="SelectionUpdateError" xml:space="preserve">
+    <value>Musíte vybrat řádek, který chcete upravit</value>
   </data>
   <data name="SelectItem" xml:space="preserve">
     <value>--- Vyberte položku ---</value>
@@ -234,79 +300,13 @@
   <data name="Sum" xml:space="preserve">
     <value>Suma</value>
   </data>
+  <data name="UpdateError" xml:space="preserve">
+    <value>Při aktualizaci této položky došlo k chybě</value>
+  </data>
   <data name="UpdateItem" xml:space="preserve">
     <value>Upravit položku</value>
   </data>
   <data name="View" xml:space="preserve">
     <value>Zobrazit</value>
-  </data>
-  <data name="CreateError" xml:space="preserve">
-    <value>Při vytváření nové položky došlo k chybě</value>
-  </data>
-  <data name="DeleteError" xml:space="preserve">
-    <value>Při mazání této položky došlo k chybě</value>
-  </data>
-  <data name="UpdateError" xml:space="preserve">
-    <value>Při aktualizaci této položky došlo k chybě</value>
-  </data>
-  <data name="IsNotNull" xml:space="preserve">
-    <value>Není null</value>
-  </data>
-  <data name="IsNull" xml:space="preserve">
-    <value>Je null</value>
-  </data>
-  <data name="SelectionDeleteError" xml:space="preserve">
-    <value>Musíte vybrat řádek, který chcete odstranit</value>
-  </data>
-  <data name="SelectionReadError" xml:space="preserve">
-    <value>Musíte vybrat řádek, který chcete zobrazit</value>
-  </data>
-  <data name="SelectionUpdateError" xml:space="preserve">
-    <value>Musíte vybrat řádek, který chcete upravit</value>
-  </data>
-  <data name="Files" xml:space="preserve">
-    <value>Archiv</value>
-  </data>
-  <data name="Code" xml:space="preserve">
-    <value>Kód</value>
-  </data>
-  <data name="Confirm Code" xml:space="preserve">
-    <value>Potvrdit Kód</value>
-  </data>
-  <data name="ConfirmCodeError" xml:space="preserve">
-    <value>Kód a potvrzovací kód musí být rovny pro uložení této položky</value>
-  </data>
-  <data name="DeleteConfirmCodeError" xml:space="preserve">
-    <value>Kód a potvrzovací kód se musí rovnat odstranění této položky.</value>
-  </data>
-  <data name="String1" xml:space="preserve">
-    <value>Jít do</value>
-  </data>
-  <data name="SearchFilterListInputText" xml:space="preserve">
-    <value>Hledaná fráze</value>
-  </data>
-  <data name="All" xml:space="preserve">
-    <value>Všechno</value>
-  </data>
-  <data name="None" xml:space="preserve">
-    <value>Žádný</value>
-  </data>
-  <data name="Select" xml:space="preserve">
-    <value>Vybrat</value>
-  </data>
-  <data name="Height" xml:space="preserve">
-    <value>Výška</value>
-  </data>
-  <data name="Duplicated" xml:space="preserve">
-    <value>Duplicitní</value>
-  </data>
-  <data name="NotDuplicated" xml:space="preserve">
-    <value>Není duplicitní</value>
-  </data>
-  <data name="current" xml:space="preserve">
-    <value>aktuální</value>
-  </data>
-  <data name="PageSizeItems" xml:space="preserve">
-    <value>Položky</value>
   </data>
 </root>

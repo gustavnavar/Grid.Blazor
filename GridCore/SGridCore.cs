@@ -332,6 +332,11 @@ namespace GridCore
         public GridMode Mode { get { return GridMode.Grid; } }
 
         /// <summary>
+        ///     CRUD type
+        /// </summary>
+        public CrudType CrudType { get { return CrudType.Form; } }
+
+        /// <summary>
         ///     Get value for creating items
         /// </summary>
         public bool CreateEnabled { get { return false; } }

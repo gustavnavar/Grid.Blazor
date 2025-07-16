@@ -174,20 +174,28 @@ namespace GridBlazor.Columns
             return this;
         }
 
-        IGridColumn<T> IColumn<T>.SetWidth(string width)
+        public IGridColumn<T> SetWidth(string width)
         {
             Width = width;
             return this;
         }
 
-        IGridColumn<T> IColumn<T>.SetCrudWidth(int width)
+        public bool InlineCrudReadOnly { get; private set; } = false;
+
+        public IGridColumn<T> SetInlineCrudReadOnly(bool readOnly)
+        {
+            InlineCrudReadOnly = readOnly;
+            return this;
+        }
+
+        public IGridColumn<T> SetCrudWidth(int width)
         {
             CrudCustomWith = true;
             CrudWidth = width;
             return this;
         }
 
-        IGridColumn<T> IColumn<T>.SetCrudWidth(int width, int labelWidth)
+        public IGridColumn<T> SetCrudWidth(int width, int labelWidth)
         {
             CrudCustomWith = true;
             CrudWidth = width;
@@ -195,7 +203,7 @@ namespace GridBlazor.Columns
             return this;
         }
 
-        IGridColumn<T> IColumn<T>.SetWidth(int width)
+        public IGridColumn<T> SetWidth(int width)
         {
             Width = width.ToString(CultureInfo.InvariantCulture) + "px";
             return this;

@@ -1,11 +1,12 @@
 ﻿@using GridBlazor.Resources
+@using GridShared
 @using GridShared.Columns
 
 @typeparam T
 
 @if (Grid.ComponentOptions.Selectable)
 {
-    <tr class="grid-row@(GridComponent.SelectedRow == GridPosition || GridComponent.SelectedRows.Contains(GridPosition) || (Grid.ComponentOptions.InitSelection && GridPosition == 0 && GridComponent.SelectedRow == -1 && GridComponent.SelectedRows.Count == 0) ? " grid-row-selected" : "") @Grid.GetRowCssClasses(Item)" @onclick="(args) => GridComponent.RowClicked(GridPosition, Item, args)" @onclick:stopPropagation>
+    <tr class="grid-row@(GridComponent.SelectedRow == GridPosition || GridComponent.SelectedRows.Contains(GridPosition) || (Grid.ComponentOptions.InitSelection && GridPosition == 0 && GridComponent.SelectedRow == -1 && GridComponent.SelectedRows.Count == 0) ? " grid-row-selected" : "") @Grid.GetRowCssClasses(Item)" @onclick="(args) => GridComponent.RowClicked(GridPosition, Item, args)" @onclick:stopPropagation @ondblclick="_ => GridComponent.RowDblClicked(GridPosition)" @ondblclick:stopPropagation>
         @if (HasSubGrid)
         {
             <td class="@GridComponent.GridCellCssClass @GridComponent.GridSubGridCssClass" data-is-rendered="false" data-is-visible="false" data-name="" style="width:36.5px;" @onclick="SubGridClicked" @onclick:stopPropagation>
@@ -35,7 +36,8 @@
                 }
             </td>
         }
-        @if ((Grid.UpdateEnabled || ((CGrid<T>)Grid).FuncUpdateEnabled != null) && !GridComponent.HeaderCrudButtons)
+        @if ((Grid.UpdateEnabled || ((CGrid<T>)Grid).FuncUpdateEnabled != null) && !GridComponent.HeaderCrudButtons
+            && (Grid.CrudType == CrudType.Form || Grid.CrudType == CrudType.FormOrInline || Grid.CrudType == CrudType.FormAndInline))
         {
             <td class="@GridComponent.GridButtonCellCssClass" data-name="" style="width:35px;">
                 @if (Grid.UpdateEnabled || (((CGrid<T>)Grid).FuncUpdateEnabled != null && ((CGrid<T>)Grid).FuncUpdateEnabled((T)Item)))
@@ -56,17 +58,23 @@
             <td class="@GridComponent.GridButtonCellCssClass" data-name="" style="width:35px;">
                 @if (Grid.DeleteEnabled || (((CGrid<T>)Grid).FuncDeleteEnabled != null && ((CGrid<T>)Grid).FuncDeleteEnabled((T)Item)))
                 {
-                    @if (Grid.DeleteEnabled || (((CGrid<T>)Grid).FuncDeleteEnabled != null && ((CGrid<T>)Grid).FuncDeleteEnabled((T)Item)))
+                    @if (string.IsNullOrWhiteSpace(Grid.DeleteLabel))
                     {
-                        @if (string.IsNullOrWhiteSpace(Grid.DeleteLabel))
-                        {
-                            <button class='grid-button grid-button-delete @GridComponent.Grid.HtmlClass.Button' title="@Grid.DeleteTooltip" @onclick="@(e => GridComponent.DeleteHandler(Item))" type="button" @onclick:stopPropagation></button>
-                        }
-                        else
-                        {
-                            <button class='grid-button-label-delete @GridComponent.Grid.HtmlClass.ButtonPrimary' title="@Grid.DeleteTooltip" @onclick="@(e => GridComponent.DeleteHandler(Item))" type="button" @onclick:stopPropagation>@Grid.DeleteLabel</button>
-                        }
+                        <button class='grid-button grid-button-delete @GridComponent.Grid.HtmlClass.Button' title="@Grid.DeleteTooltip" @onclick="@(e => GridComponent.DeleteHandler(Item))" type="button" @onclick:stopPropagation></button>
                     }
+                    else
+                    {
+                        <button class='grid-button-label-delete @GridComponent.Grid.HtmlClass.ButtonPrimary' title="@Grid.DeleteTooltip" @onclick="@(e => GridComponent.DeleteHandler(Item))" type="button" @onclick:stopPropagation>@Grid.DeleteLabel</button>
+                    }
+                }
+            </td>
+        }
+        @if (Grid.CrudType == CrudType.Inline || Grid.CrudType == CrudType.InlineOrForm || Grid.CrudType == CrudType.FormAndInline)
+        {
+            <td class="@GridComponent.GridButtonCellCssClass" data-name="" style="width:35px;">
+                @if (GridComponent.InlineCrudRow == GridPosition)
+                {
+                    <button class="grid-button grid-button-save @Grid.HtmlClass.Button" type="button" title="Save" @onclick="async _ => await GridComponent.SaveItem(Item)" @onclick:stopPropagation></button>
                 }
             </td>
         }
@@ -76,15 +84,13 @@
         }
         @foreach (IGridColumn column in Grid.Columns)
         {
-            <CascadingValue Value=@this Name="GridComponent">
-                <GridCellComponent T="@T" Column="@column" Item="@Item" RowId="GridPosition" TdClass="@GridComponent.GridCellCssClass"></GridCellComponent>
-            </CascadingValue>
+            <GridCellComponent T="@T" Column="@column" Item="@Item" RowId="GridPosition" TdClass="@GridComponent.GridCellCssClass"></GridCellComponent>
         }
     </tr>
 }
 else
 {
-    <tr class="grid-row @Grid.GetRowCssClasses(Item)">
+    <tr class="grid-row @Grid.GetRowCssClasses(Item)" @onclick="_ => GridComponent.ClearInlineCrudRow(GridPosition)" @onclick:stopPropagation @ondblclick="_ => GridComponent.RowDblClicked(GridPosition)" @ondblclick:stopPropagation>
         @if (HasSubGrid)
         {
             <td class="@GridComponent.GridCellCssClass @GridComponent.GridSubGridCssClass" data-is-rendered="false" data-is-visible="false" data-name="" style="width:36.5px;" @onclick="SubGridClicked" @onclick:stopPropagation>
@@ -114,21 +120,19 @@ else
                 }
             </td>
         }
-        @if ((Grid.UpdateEnabled || ((CGrid<T>)Grid).FuncUpdateEnabled != null) && !GridComponent.HeaderCrudButtons)
+        @if ((Grid.UpdateEnabled || ((CGrid<T>)Grid).FuncUpdateEnabled != null) && !GridComponent.HeaderCrudButtons
+            && (Grid.CrudType == CrudType.Form || Grid.CrudType == CrudType.FormOrInline || Grid.CrudType == CrudType.FormAndInline))
         {
             <td class="@GridComponent.GridButtonCellCssClass" data-name="" style="width:35px;">
                 @if (Grid.UpdateEnabled || (((CGrid<T>)Grid).FuncUpdateEnabled != null && ((CGrid<T>)Grid).FuncUpdateEnabled((T)Item)))
                 {
-                    @if (Grid.UpdateEnabled || (((CGrid<T>)Grid).FuncUpdateEnabled != null && ((CGrid<T>)Grid).FuncUpdateEnabled((T)Item)))
+                    @if (string.IsNullOrWhiteSpace(Grid.UpdateLabel))
                     {
-                        @if (string.IsNullOrWhiteSpace(Grid.UpdateLabel))
-                        {
-                            <button class='grid-button grid-button-edit @GridComponent.Grid.HtmlClass.Button' title="@Grid.UpdateTooltip" @onclick="@(e => GridComponent.UpdateHandler(Item))" type="button" @onclick:stopPropagation></button>
-                        }
-                        else
-                        {
-                            <button class='grid-button-label-edit @GridComponent.Grid.HtmlClass.ButtonPrimary' title="@Grid.UpdateTooltip" @onclick="@(e => GridComponent.UpdateHandler(Item))" type="button" @onclick:stopPropagation>@Grid.UpdateLabel</button>
-                        }
+                        <button class='grid-button grid-button-edit @GridComponent.Grid.HtmlClass.Button' title="@Grid.UpdateTooltip" @onclick="@(e => GridComponent.UpdateHandler(Item))" type="button" @onclick:stopPropagation></button>
+                    }
+                    else
+                    {
+                        <button class='grid-button-label-edit @GridComponent.Grid.HtmlClass.ButtonPrimary' title="@Grid.UpdateTooltip" @onclick="@(e => GridComponent.UpdateHandler(Item))" type="button" @onclick:stopPropagation>@Grid.UpdateLabel</button>
                     }
                 }
             </td>
@@ -149,15 +153,22 @@ else
                 }
             </td>
         }
+        @if (Grid.CrudType == CrudType.Inline || Grid.CrudType == CrudType.InlineOrForm || Grid.CrudType == CrudType.FormAndInline)
+        {
+            <td class="@GridComponent.GridButtonCellCssClass" data-name="" style="width:35px;">
+                @if (GridComponent.InlineCrudRow == GridPosition)
+                {
+                    <button class="grid-button grid-button-save @Grid.HtmlClass.Button" type="button" title="Save" @onclick="async _ => await GridComponent.SaveItem(Item)" @onclick:stopPropagation></button>
+                }
+            </td>
+        }
         @if (RequiredTotalsColumn)
         {
             <td class="@GridComponent.GridCellCssClass" data-name="" style="width:90px;"></td>
         }
         @foreach (IGridColumn column in Grid.Columns)
         {
-            <CascadingValue Value=@this Name="GridComponent">
-                <GridCellComponent T="@T" Column="@column" Item="@Item" RowId="GridPosition" TdClass="@GridComponent.GridCellCssClass"></GridCellComponent>
-            </CascadingValue>
+            <GridCellComponent T="@T" Column="@column" Item="@Item" RowId="GridPosition" TdClass="@GridComponent.GridCellCssClass"></GridCellComponent>
         }
     </tr>
 }
@@ -172,11 +183,16 @@ else
     {
         cols++;
     }
-    if ((Grid.UpdateEnabled || ((CGrid<T>)Grid).FuncUpdateEnabled != null) && !GridComponent.HeaderCrudButtons)
+    if ((Grid.UpdateEnabled || ((CGrid<T>)Grid).FuncUpdateEnabled != null) && !GridComponent.HeaderCrudButtons
+        && (Grid.CrudType == CrudType.Form || Grid.CrudType == CrudType.FormOrInline || Grid.CrudType == CrudType.FormAndInline))
     {
         cols++;
     }
     if ((Grid.DeleteEnabled || ((CGrid<T>)Grid).FuncDeleteEnabled != null) && !GridComponent.HeaderCrudButtons)
+    {
+        cols++;
+    }
+    if (Grid.CrudType == CrudType.Inline || Grid.CrudType == CrudType.InlineOrForm || Grid.CrudType == CrudType.FormAndInline)
     {
         cols++;
     }
@@ -188,8 +204,6 @@ else
         onRowClickedActions = GridComponent.OnRowClickedActions.Where(r => !r.Equals(GridComponent.OnRowClickedActions.First()));
     }
     <tr class="subgrid-row">
-        <CascadingValue Value=@this Name="GridComponent">
-            <SubGridComponent T="@T" GridPosition="@GridPosition" Cols="@cols" Values="@values" OnRowClickedActions="onRowClickedActions"></SubGridComponent>
-        </CascadingValue>
+        <SubGridComponent T="@T" GridPosition="@GridPosition" Cols="@cols" Values="@values" OnRowClickedActions="onRowClickedActions"></SubGridComponent>
     </tr>
 }

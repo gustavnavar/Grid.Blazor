@@ -282,14 +282,14 @@
   <data name="Goto" xml:space="preserve">
     <value>Ga naar</value>
   </data>
-  <data name="SearchFilterListInputText" xml:space="preserve">
-    <value>Zoekterm</value>
-  </data>
   <data name="All" xml:space="preserve">
     <value>Alle</value>
   </data>
   <data name="None" xml:space="preserve">
     <value>Geen</value>
+  </data>
+  <data name="SearchFilterListInputText" xml:space="preserve">
+    <value>Zoekterm</value>
   </data>
   <data name="Select" xml:space="preserve">
     <value>Selecteer</value>
@@ -308,5 +308,11 @@
   </data>
   <data name="PageSizeItems" xml:space="preserve">
     <value>Items</value>
+  </data>
+  <data name="Inline edit" xml:space="preserve">
+    <value>Inline bewerken</value>
+  </data>
+  <data name="Form edit" xml:space="preserve">
+    <value>Formulier bewerken</value>
   </data>
 </root>

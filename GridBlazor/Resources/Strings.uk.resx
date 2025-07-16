@@ -117,15 +117,6 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="DefaultGridEmptyText" xml:space="preserve">
-    <value>Немає елементів для відображення</value>
-  </data>
-  <data name="FilterButtonTooltipText" xml:space="preserve">
-    <value>Фільтруйте цей стовпець</value>
-  </data>
-  <data name="Lang" xml:space="preserve">
-    <value>uk</value>
-  </data>
   <data name="ApplyFilterButtonText" xml:space="preserve">
     <value>Застосувати</value>
   </data>
@@ -141,11 +132,17 @@
   <data name="Contains" xml:space="preserve">
     <value>Містить</value>
   </data>
+  <data name="DefaultGridEmptyText" xml:space="preserve">
+    <value>Немає елементів для відображення</value>
+  </data>
   <data name="EndsWith" xml:space="preserve">
     <value>Закінчується с</value>
   </data>
   <data name="Equal" xml:space="preserve">
     <value>Дорівнює</value>
+  </data>
+  <data name="FilterButtonTooltipText" xml:space="preserve">
+    <value>Фільтруйте цей стовпець</value>
   </data>
   <data name="FilterTypeLabel" xml:space="preserve">
     <value>Тип</value>
@@ -159,20 +156,26 @@
   <data name="GreaterThanOrEquals" xml:space="preserve">
     <value>Більше або дорівнює</value>
   </data>
+  <data name="Items" xml:space="preserve">
+    <value>Елементи</value>
+  </data>
+  <data name="Lang" xml:space="preserve">
+    <value>uk</value>
+  </data>
   <data name="LessThan" xml:space="preserve">
     <value>Менше ніж</value>
   </data>
   <data name="LessThanOrEquals" xml:space="preserve">
     <value>Менше або дорівнює</value>
   </data>
-  <data name="StartsWith" xml:space="preserve">
-    <value>Починається з</value>
-  </data>
   <data name="SearchFor" xml:space="preserve">
     <value>Шукати ...</value>
   </data>
-  <data name="Items" xml:space="preserve">
-    <value>Елементи</value>
+  <data name="StartsWith" xml:space="preserve">
+    <value>Починається з</value>
+  </data>
+  <data name="Average" xml:space="preserve">
+    <value>Середній</value>
   </data>
   <data name="Max" xml:space="preserve">
     <value>Макс</value>
@@ -182,9 +185,6 @@
   </data>
   <data name="Sum" xml:space="preserve">
     <value>Сума</value>
-  </data>
-  <data name="Average" xml:space="preserve">
-    <value>Середній</value>
   </data>
   <data name="And" xml:space="preserve">
     <value>І</value>
@@ -282,14 +282,14 @@
   <data name="Goto" xml:space="preserve">
     <value>Йти до</value>
   </data>
-  <data name="SearchFilterListInputText" xml:space="preserve">
-    <value>Пошукова фраза</value>
-  </data>
   <data name="All" xml:space="preserve">
     <value>Всі</value>
   </data>
   <data name="None" xml:space="preserve">
     <value>Жодного</value>
+  </data>
+  <data name="SearchFilterListInputText" xml:space="preserve">
+    <value>Пошукова фраза</value>
   </data>
   <data name="Select" xml:space="preserve">
     <value>Виберіть</value>
@@ -308,5 +308,11 @@
   </data>
   <data name="PageSizeItems" xml:space="preserve">
     <value>Елементи</value>
+  </data>
+  <data name="Inline edit" xml:space="preserve">
+    <value>Вбудоване редагування</value>
+  </data>
+  <data name="Form edit" xml:space="preserve">
+    <value>Редагування форми</value>
   </data>
 </root>

@@ -61,8 +61,6 @@
     }
     @foreach (IGridColumn column in Grid.Columns)
     {
-        <CascadingValue Value=@this Name="GridComponent">
-            <GridCellComponent T="@T" Column="@column" Item="@Item" TdClass="@GridComponent.GridCellCssClass"></GridCellComponent>
-        </CascadingValue>
+        <GridCellComponent T="@T" Column="@column" Item="@Item" TdClass="@GridComponent.GridCellCssClass"></GridCellComponent>
     }
 </tr>

@@ -1,4 +1,5 @@
 ﻿@using GridBlazor.Resources
+@using GridShared
 @using GridShared.Columns
 
 @typeparam T
@@ -23,11 +24,16 @@
             {
                 count++;
             }
-            if ((Grid.UpdateEnabled || ((CGrid<T>)Grid).FuncUpdateEnabled != null) && !GridComponent.HeaderCrudButtons)
+            if ((Grid.UpdateEnabled || ((CGrid<T>)Grid).FuncUpdateEnabled != null) && !GridComponent.HeaderCrudButtons
+                && (Grid.CrudType == CrudType.Form || Grid.CrudType == CrudType.FormOrInline || Grid.CrudType == CrudType.FormAndInline))
             {
                 count++;
             }
             if ((Grid.DeleteEnabled || ((CGrid<T>)Grid).FuncDeleteEnabled != null) && !GridComponent.HeaderCrudButtons)
+            {
+                count++;
+            }
+            if (Grid.CrudType == CrudType.Inline || Grid.CrudType == CrudType.InlineOrForm || Grid.CrudType == CrudType.FormAndInline)
             {
                 count++;
             }

@@ -117,23 +117,8 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="Add" xml:space="preserve">
-    <value>اضافة</value>
-  </data>
-  <data name="All" xml:space="preserve">
-    <value>الكل</value>
-  </data>
-  <data name="And" xml:space="preserve">
-    <value>و</value>
-  </data>
   <data name="ApplyFilterButtonText" xml:space="preserve">
     <value>تطبيق</value>
-  </data>
-  <data name="Average" xml:space="preserve">
-    <value>المتوسط</value>
-  </data>
-  <data name="Back" xml:space="preserve">
-    <value>رجوع</value>
   </data>
   <data name="BoolFalseLabel" xml:space="preserve">
     <value>لا</value>
@@ -141,65 +126,20 @@
   <data name="BoolTrueLabel" xml:space="preserve">
     <value>نعم</value>
   </data>
-  <data name="ClearAllFilters" xml:space="preserve">
-    <value>حذف كل التصفية</value>
-  </data>
   <data name="ClearFilterLabel" xml:space="preserve">
     <value>حذف التصفية</value>
-  </data>
-  <data name="Code" xml:space="preserve">
-    <value>كود</value>
-  </data>
-  <data name="Confirm Code" xml:space="preserve">
-    <value>تأكيد الكود</value>
-  </data>
-  <data name="ConfirmCodeError" xml:space="preserve">
-    <value>الكود وتأكيد الكود يجب أن يكونوا متطابقين لحفظ العنصر</value>
   </data>
   <data name="Contains" xml:space="preserve">
     <value>تحتوي على</value>
   </data>
-  <data name="CreateError" xml:space="preserve">
-    <value>حدث خطأ اثناء اضافة هذا العنصر</value>
-  </data>
-  <data name="CreateItem" xml:space="preserve">
-    <value>اضافة بيان</value>
-  </data>
-  <data name="current" xml:space="preserve">
-    <value>حاضِر</value>
-  </data>
   <data name="DefaultGridEmptyText" xml:space="preserve">
     <value>لا يوجد عناصر</value>
-  </data>
-  <data name="Delete" xml:space="preserve">
-    <value>حذف</value>
-  </data>
-  <data name="DeleteConfirmCodeError" xml:space="preserve">
-    <value>الكود وتأكيد الكود يجب أن يكونوا متطابقين لحذف العنصر</value>
-  </data>
-  <data name="DeleteError" xml:space="preserve">
-    <value>حدث خطأ اثناء حذف هذا العنصر</value>
-  </data>
-  <data name="DeleteItem" xml:space="preserve">
-    <value>حذف عنصر</value>
-  </data>
-  <data name="Duplicated" xml:space="preserve">
-    <value>مكررة</value>
-  </data>
-  <data name="Edit" xml:space="preserve">
-    <value>تعديل</value>
   </data>
   <data name="EndsWith" xml:space="preserve">
     <value>ينتهي ب</value>
   </data>
   <data name="Equal" xml:space="preserve">
     <value>تساوي</value>
-  </data>
-  <data name="ExtSortingText" xml:space="preserve">
-    <value>اسحب العمود لتمديد الترتيب</value>
-  </data>
-  <data name="Files" xml:space="preserve">
-    <value>الملفات</value>
   </data>
   <data name="FilterButtonTooltipText" xml:space="preserve">
     <value>تصفية بيانات العمود</value>
@@ -210,26 +150,11 @@
   <data name="FilterValueLabel" xml:space="preserve">
     <value>القيمة</value>
   </data>
-  <data name="Goto" xml:space="preserve">
-    <value>أذهب إلى</value>
-  </data>
   <data name="GreaterThan" xml:space="preserve">
     <value>أكبر من</value>
   </data>
   <data name="GreaterThanOrEquals" xml:space="preserve">
     <value>أكبر من أو يساوي</value>
-  </data>
-  <data name="GroupingText" xml:space="preserve">
-    <value>أسحب العمود هنا لعمل تجميع للبيانات</value>
-  </data>
-  <data name="Height" xml:space="preserve">
-    <value>ارتفاع</value>
-  </data>
-  <data name="IsNotNull" xml:space="preserve">
-    <value>غير فارغ</value>
-  </data>
-  <data name="IsNull" xml:space="preserve">
-    <value>فارغ</value>
   </data>
   <data name="Items" xml:space="preserve">
     <value>العناصر</value>
@@ -243,41 +168,92 @@
   <data name="LessThanOrEquals" xml:space="preserve">
     <value>أقل من أو يساوي</value>
   </data>
+  <data name="SearchFor" xml:space="preserve">
+    <value>بحث عن ...</value>
+  </data>
+  <data name="StartsWith" xml:space="preserve">
+    <value>يبدأ ب</value>
+  </data>
+  <data name="Average" xml:space="preserve">
+    <value>المتوسط</value>
+  </data>
   <data name="Max" xml:space="preserve">
     <value>أكبر قيمة</value>
   </data>
   <data name="Min" xml:space="preserve">
     <value>أقل قيمة</value>
   </data>
-  <data name="None" xml:space="preserve">
-    <value>بدون</value>
+  <data name="Sum" xml:space="preserve">
+    <value>المجموع</value>
   </data>
-  <data name="NotDuplicated" xml:space="preserve">
-    <value>غير مكررة</value>
-  </data>
-  <data name="NotEqual" xml:space="preserve">
-    <value>لا تساوي</value>
+  <data name="And" xml:space="preserve">
+    <value>و</value>
   </data>
   <data name="Or" xml:space="preserve">
     <value>أو</value>
   </data>
-  <data name="PageSizeItems" xml:space="preserve">
-    <value>العناصر</value>
+  <data name="ExtSortingText" xml:space="preserve">
+    <value>اسحب العمود لتمديد الترتيب</value>
   </data>
-  <data name="ReadItem" xml:space="preserve">
-    <value>عرض العنصر</value>
+  <data name="GroupingText" xml:space="preserve">
+    <value>أسحب العمود هنا لعمل تجميع للبيانات</value>
+  </data>
+  <data name="Add" xml:space="preserve">
+    <value>اضافة</value>
+  </data>
+  <data name="Back" xml:space="preserve">
+    <value>رجوع</value>
+  </data>
+  <data name="Delete" xml:space="preserve">
+    <value>حذف</value>
+  </data>
+  <data name="Edit" xml:space="preserve">
+    <value>تعديل</value>
   </data>
   <data name="Save" xml:space="preserve">
     <value>حفظ</value>
   </data>
-  <data name="SearchFilterListInputText" xml:space="preserve">
-    <value>جملة البحث</value>
+  <data name="View" xml:space="preserve">
+    <value>عرض</value>
   </data>
-  <data name="SearchFor" xml:space="preserve">
-    <value>بحث عن ...</value>
+  <data name="SelectItem" xml:space="preserve">
+    <value>أختر عنصر </value>
   </data>
-  <data name="Select" xml:space="preserve">
-    <value>أختر</value>
+  <data name="Show" xml:space="preserve">
+    <value>عرض</value>
+  </data>
+  <data name="ClearAllFilters" xml:space="preserve">
+    <value>حذف كل التصفية</value>
+  </data>
+  <data name="CreateItem" xml:space="preserve">
+    <value>اضافة بيان</value>
+  </data>
+  <data name="DeleteItem" xml:space="preserve">
+    <value>حذف عنصر</value>
+  </data>
+  <data name="ReadItem" xml:space="preserve">
+    <value>عرض العنصر</value>
+  </data>
+  <data name="UpdateItem" xml:space="preserve">
+    <value>تعديل عنصر</value>
+  </data>
+  <data name="NotEqual" xml:space="preserve">
+    <value>لا تساوي</value>
+  </data>
+  <data name="CreateError" xml:space="preserve">
+    <value>حدث خطأ اثناء اضافة هذا العنصر</value>
+  </data>
+  <data name="DeleteError" xml:space="preserve">
+    <value>حدث خطأ اثناء حذف هذا العنصر</value>
+  </data>
+  <data name="UpdateError" xml:space="preserve">
+    <value>حدث خطأ اثناء تعديل هذا العنصر</value>
+  </data>
+  <data name="IsNotNull" xml:space="preserve">
+    <value>غير فارغ</value>
+  </data>
+  <data name="IsNull" xml:space="preserve">
+    <value>فارغ</value>
   </data>
   <data name="SelectionDeleteError" xml:space="preserve">
     <value>يجب أختيار العنصر المراد حذفه</value>
@@ -288,25 +264,55 @@
   <data name="SelectionUpdateError" xml:space="preserve">
     <value>يجب أختيار العنصر المراد تعديله</value>
   </data>
-  <data name="SelectItem" xml:space="preserve">
-    <value>أختر عنصر </value>
+  <data name="Files" xml:space="preserve">
+    <value>الملفات</value>
   </data>
-  <data name="Show" xml:space="preserve">
-    <value>عرض</value>
+  <data name="Code" xml:space="preserve">
+    <value>كود</value>
   </data>
-  <data name="StartsWith" xml:space="preserve">
-    <value>يبدأ ب</value>
+  <data name="Confirm Code" xml:space="preserve">
+    <value>تأكيد الكود</value>
   </data>
-  <data name="Sum" xml:space="preserve">
-    <value>المجموع</value>
+  <data name="ConfirmCodeError" xml:space="preserve">
+    <value>الكود وتأكيد الكود يجب أن يكونوا متطابقين لحفظ العنصر</value>
   </data>
-  <data name="UpdateError" xml:space="preserve">
-    <value>حدث خطأ اثناء تعديل هذا العنصر</value>
+  <data name="DeleteConfirmCodeError" xml:space="preserve">
+    <value>الكود وتأكيد الكود يجب أن يكونوا متطابقين لحذف العنصر</value>
   </data>
-  <data name="UpdateItem" xml:space="preserve">
-    <value>تعديل عنصر</value>
+  <data name="Goto" xml:space="preserve">
+    <value>أذهب إلى</value>
   </data>
-  <data name="View" xml:space="preserve">
-    <value>عرض</value>
+  <data name="All" xml:space="preserve">
+    <value>الكل</value>
+  </data>
+  <data name="None" xml:space="preserve">
+    <value>بدون</value>
+  </data>
+  <data name="SearchFilterListInputText" xml:space="preserve">
+    <value>جملة البحث</value>
+  </data>
+  <data name="Select" xml:space="preserve">
+    <value>أختر</value>
+  </data>
+  <data name="Height" xml:space="preserve">
+    <value>ارتفاع</value>
+  </data>
+  <data name="Duplicated" xml:space="preserve">
+    <value>مكررة</value>
+  </data>
+  <data name="NotDuplicated" xml:space="preserve">
+    <value>غير مكررة</value>
+  </data>
+  <data name="current" xml:space="preserve">
+    <value>حاضِر</value>
+  </data>
+  <data name="PageSizeItems" xml:space="preserve">
+    <value>العناصر</value>
+  </data>
+  <data name="Inline edit" xml:space="preserve">
+    <value>تحرير مضمن</value>
+  </data>
+  <data name="Form edit" xml:space="preserve">
+    <value>تعديل النموذج</value>
   </data>
 </root>

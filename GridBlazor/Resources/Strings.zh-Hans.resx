@@ -117,15 +117,6 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="DefaultGridEmptyText" xml:space="preserve">
-    <value>没有可显示的项目</value>
-  </data>
-  <data name="FilterButtonTooltipText" xml:space="preserve">
-    <value>过虑此列</value>
-  </data>
-  <data name="Lang" xml:space="preserve">
-    <value>zh-Hans</value>
-  </data>
   <data name="ApplyFilterButtonText" xml:space="preserve">
     <value>应用</value>
   </data>
@@ -141,11 +132,17 @@
   <data name="Contains" xml:space="preserve">
     <value>包含</value>
   </data>
+  <data name="DefaultGridEmptyText" xml:space="preserve">
+    <value>没有可显示的项目</value>
+  </data>
   <data name="EndsWith" xml:space="preserve">
     <value>以...结尾</value>
   </data>
   <data name="Equal" xml:space="preserve">
     <value>等于</value>
+  </data>
+  <data name="FilterButtonTooltipText" xml:space="preserve">
+    <value>过虑此列</value>
   </data>
   <data name="FilterTypeLabel" xml:space="preserve">
     <value>类型</value>
@@ -159,20 +156,26 @@
   <data name="GreaterThanOrEquals" xml:space="preserve">
     <value>大于等于</value>
   </data>
+  <data name="Items" xml:space="preserve">
+    <value>项目</value>
+  </data>
+  <data name="Lang" xml:space="preserve">
+    <value>zh-Hans</value>
+  </data>
   <data name="LessThan" xml:space="preserve">
     <value>小于</value>
   </data>
   <data name="LessThanOrEquals" xml:space="preserve">
     <value>小于等于</value>
   </data>
-  <data name="StartsWith" xml:space="preserve">
-    <value>以…开头</value>
-  </data>
   <data name="SearchFor" xml:space="preserve">
     <value>搜索 ...</value>
   </data>
-  <data name="Items" xml:space="preserve">
-    <value>项目</value>
+  <data name="StartsWith" xml:space="preserve">
+    <value>以…开头</value>
+  </data>
+  <data name="Average" xml:space="preserve">
+    <value>平均</value>
   </data>
   <data name="Max" xml:space="preserve">
     <value>最大</value>
@@ -182,9 +185,6 @@
   </data>
   <data name="Sum" xml:space="preserve">
     <value>合计</value>
-  </data>
-  <data name="Average" xml:space="preserve">
-    <value>平均</value>
   </data>
   <data name="And" xml:space="preserve">
     <value>与</value>
@@ -282,14 +282,14 @@
   <data name="Goto" xml:space="preserve">
     <value>跳转</value>
   </data>
-  <data name="SearchFilterListInputText" xml:space="preserve">
-    <value>搜索短语</value>
-  </data>
   <data name="All" xml:space="preserve">
     <value>全部</value>
   </data>
   <data name="None" xml:space="preserve">
     <value>无</value>
+  </data>
+  <data name="SearchFilterListInputText" xml:space="preserve">
+    <value>搜索短语</value>
   </data>
   <data name="Select" xml:space="preserve">
     <value>选择</value>
@@ -308,5 +308,11 @@
   </data>
   <data name="PageSizeItems" xml:space="preserve">
     <value>项目</value>
+  </data>
+  <data name="Inline edit" xml:space="preserve">
+    <value>内联编辑</value>
+  </data>
+  <data name="Form edit" xml:space="preserve">
+    <value>表格编辑</value>
   </data>
 </root>

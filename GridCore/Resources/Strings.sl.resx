@@ -117,8 +117,23 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="Add" xml:space="preserve">
+    <value>Dodaj</value>
+  </data>
+  <data name="All" xml:space="preserve">
+    <value>Vse</value>
+  </data>
+  <data name="And" xml:space="preserve">
+    <value>In</value>
+  </data>
   <data name="ApplyFilterButtonText" xml:space="preserve">
     <value>Uveljavi</value>
+  </data>
+  <data name="Average" xml:space="preserve">
+    <value>Povprečje</value>
+  </data>
+  <data name="Back" xml:space="preserve">
+    <value>Nazaj</value>
   </data>
   <data name="BoolFalseLabel" xml:space="preserve">
     <value>Ne</value>
@@ -126,20 +141,65 @@
   <data name="BoolTrueLabel" xml:space="preserve">
     <value>Da</value>
   </data>
+  <data name="ClearAllFilters" xml:space="preserve">
+    <value>Počisti vse filtre</value>
+  </data>
   <data name="ClearFilterLabel" xml:space="preserve">
     <value>Počisti filter</value>
+  </data>
+  <data name="Code" xml:space="preserve">
+    <value>Kodo</value>
+  </data>
+  <data name="Confirm Code" xml:space="preserve">
+    <value>Potrdi Kodo</value>
+  </data>
+  <data name="ConfirmCodeError" xml:space="preserve">
+    <value>Koda in potrditvena koda morata biti enaki za shranjevanje tega artikla</value>
   </data>
   <data name="Contains" xml:space="preserve">
     <value>Vsebuje</value>
   </data>
+  <data name="CreateError" xml:space="preserve">
+    <value>Pri ustvarjanju novega elementa je prišlo do napake.</value>
+  </data>
+  <data name="CreateItem" xml:space="preserve">
+    <value>Ustvari</value>
+  </data>
+  <data name="current" xml:space="preserve">
+    <value>trenutno</value>
+  </data>
   <data name="DefaultGridEmptyText" xml:space="preserve">
     <value>Ni elementov za prikaz</value>
+  </data>
+  <data name="Delete" xml:space="preserve">
+    <value>Izbriši</value>
+  </data>
+  <data name="DeleteConfirmCodeError" xml:space="preserve">
+    <value>Koda in potrditvena koda morata biti enaki za brisanje tega artikla</value>
+  </data>
+  <data name="DeleteError" xml:space="preserve">
+    <value>Pri brisanju tega elementa je prišlo do napake</value>
+  </data>
+  <data name="DeleteItem" xml:space="preserve">
+    <value>Izbriši element</value>
+  </data>
+  <data name="Duplicated" xml:space="preserve">
+    <value>Podvojeno</value>
+  </data>
+  <data name="Edit" xml:space="preserve">
+    <value>Uredi</value>
   </data>
   <data name="EndsWith" xml:space="preserve">
     <value>Konča z</value>
   </data>
   <data name="Equal" xml:space="preserve">
     <value>Je enako</value>
+  </data>
+  <data name="ExtSortingText" xml:space="preserve">
+    <value>Povlecite stolpec tu za razširjeno sortiranje</value>
+  </data>
+  <data name="Files" xml:space="preserve">
+    <value>Datoteke</value>
   </data>
   <data name="FilterButtonTooltipText" xml:space="preserve">
     <value>Filtriraj ta stolpec</value>
@@ -150,11 +210,26 @@
   <data name="FilterValueLabel" xml:space="preserve">
     <value>Vrednost</value>
   </data>
+  <data name="Goto" xml:space="preserve">
+    <value>Pojdi do</value>
+  </data>
   <data name="GreaterThan" xml:space="preserve">
     <value>Večji</value>
   </data>
   <data name="GreaterThanOrEquals" xml:space="preserve">
     <value>Večji ali enak</value>
+  </data>
+  <data name="GroupingText" xml:space="preserve">
+    <value>Povlecite stolpec tu za grupiranje po stolpcu</value>
+  </data>
+  <data name="Height" xml:space="preserve">
+    <value>Višina</value>
+  </data>
+  <data name="IsNotNull" xml:space="preserve">
+    <value>Ni nična</value>
+  </data>
+  <data name="IsNull" xml:space="preserve">
+    <value>Nična</value>
   </data>
   <data name="Items" xml:space="preserve">
     <value>Elementi</value>
@@ -168,83 +243,41 @@
   <data name="LessThanOrEquals" xml:space="preserve">
     <value>Manjši ali enak</value>
   </data>
-  <data name="SearchFor" xml:space="preserve">
-    <value>Išči ...</value>
-  </data>
-  <data name="StartsWith" xml:space="preserve">
-    <value>Se začne z</value>
-  </data>
-  <data name="Average" xml:space="preserve">
-    <value>Povprečje</value>
-  </data>
   <data name="Max" xml:space="preserve">
     <value>Max</value>
   </data>
   <data name="Min" xml:space="preserve">
     <value>Min</value>
   </data>
-  <data name="Sum" xml:space="preserve">
-    <value>Vsota</value>
+  <data name="None" xml:space="preserve">
+    <value>Nobena</value>
   </data>
-  <data name="And" xml:space="preserve">
-    <value>In</value>
-  </data>
-  <data name="Or" xml:space="preserve">
-    <value>Ali</value>
-  </data>
-  <data name="ExtSortingText" xml:space="preserve">
-    <value>Povlecite stolpec tu za razširjeno sortiranje</value>
-  </data>
-  <data name="GroupingText" xml:space="preserve">
-    <value>Povlecite stolpec tu za grupiranje po stolpcu</value>
-  </data>
-  <data name="Add" xml:space="preserve">
-    <value>Dodaj</value>
-  </data>
-  <data name="Back" xml:space="preserve">
-    <value>Nazaj</value>
-  </data>
-  <data name="Delete" xml:space="preserve">
-    <value>Izbriši</value>
-  </data>
-  <data name="Edit" xml:space="preserve">
-    <value>Uredi</value>
-  </data>
-  <data name="Save" xml:space="preserve">
-    <value>Shrani</value>
-  </data>
-  <data name="View" xml:space="preserve">
-    <value>Pogled</value>
-  </data>
-  <data name="SelectItem" xml:space="preserve">
-    <value>--- Izberite ---</value>
-  </data>
-  <data name="Show" xml:space="preserve">
-    <value>Prikaži</value>
-  </data>
-  <data name="ClearAllFilters" xml:space="preserve">
-    <value>Počisti vse filtre</value>
-  </data>
-  <data name="CreateItem" xml:space="preserve">
-    <value>Ustvari</value>
-  </data>
-  <data name="DeleteItem" xml:space="preserve">
-    <value>Izbriši element</value>
-  </data>
-  <data name="ReadItem" xml:space="preserve">
-    <value>Preberi element</value>
-  </data>
-  <data name="UpdateItem" xml:space="preserve">
-    <value>Posodobi</value>
+  <data name="NotDuplicated" xml:space="preserve">
+    <value>Ni podvojeno</value>
   </data>
   <data name="NotEqual" xml:space="preserve">
     <value>Ni enak</value>
   </data>
-  <data name="IsNotNull" xml:space="preserve">
-    <value>Ni nična</value>
+  <data name="Or" xml:space="preserve">
+    <value>Ali</value>
   </data>
-  <data name="IsNull" xml:space="preserve">
-    <value>Nična</value>
+  <data name="PageSizeItems" xml:space="preserve">
+    <value>Elementi</value>
+  </data>
+  <data name="ReadItem" xml:space="preserve">
+    <value>Preberi element</value>
+  </data>
+  <data name="Save" xml:space="preserve">
+    <value>Shrani</value>
+  </data>
+  <data name="SearchFilterListInputText" xml:space="preserve">
+    <value>Iskalni izraz</value>
+  </data>
+  <data name="SearchFor" xml:space="preserve">
+    <value>Išči ...</value>
+  </data>
+  <data name="Select" xml:space="preserve">
+    <value>Izberite</value>
   </data>
   <data name="SelectionDeleteError" xml:space="preserve">
     <value>Izbrati morate vrstico, ki jo želite izbrisati</value>
@@ -255,49 +288,25 @@
   <data name="SelectionUpdateError" xml:space="preserve">
     <value>Izbrati morate vrstico, ki jo želite urediti</value>
   </data>
-  <data name="Files" xml:space="preserve">
-    <value>Datoteke</value>
+  <data name="SelectItem" xml:space="preserve">
+    <value>--- Izberite ---</value>
   </data>
-  <data name="Code" xml:space="preserve">
-    <value>Kodo</value>
+  <data name="Show" xml:space="preserve">
+    <value>Prikaži</value>
   </data>
-  <data name="Confirm Code" xml:space="preserve">
-    <value>Potrdi Kodo</value>
+  <data name="StartsWith" xml:space="preserve">
+    <value>Se začne z</value>
   </data>
-  <data name="ConfirmCodeError" xml:space="preserve">
-    <value>Koda in potrditvena koda morata biti enaki za shranjevanje tega artikla</value>
+  <data name="Sum" xml:space="preserve">
+    <value>Vsota</value>
   </data>
-  <data name="DeleteConfirmCodeError" xml:space="preserve">
-    <value>Koda in potrditvena koda morata biti enaki za brisanje tega artikla</value>
+  <data name="UpdateError" xml:space="preserve">
+    <value>Pri posodabljanju tega elementa je prišlo do napake</value>
   </data>
-  <data name="Goto" xml:space="preserve">
-    <value>Pojdi do</value>
+  <data name="UpdateItem" xml:space="preserve">
+    <value>Posodobi</value>
   </data>
-  <data name="SearchFilterListInputText" xml:space="preserve">
-    <value>Iskalni izraz</value>
-  </data>
-  <data name="All" xml:space="preserve">
-    <value>Vse</value>
-  </data>
-  <data name="None" xml:space="preserve">
-    <value>Nobena</value>
-  </data>
-  <data name="Select" xml:space="preserve">
-    <value>Izberite</value>
-  </data>
-  <data name="Height" xml:space="preserve">
-    <value>Višina</value>
-  </data>
-  <data name="Duplicated" xml:space="preserve">
-    <value>Podvojeno</value>
-  </data>
-  <data name="NotDuplicated" xml:space="preserve">
-    <value>Ni podvojeno</value>
-  </data>
-  <data name="current" xml:space="preserve">
-    <value>trenutno</value>
-  </data>
-  <data name="PageSizeItems" xml:space="preserve">
-    <value>Elementi</value>
+  <data name="View" xml:space="preserve">
+    <value>Pogled</value>
   </data>
 </root>

@@ -103,6 +103,11 @@ namespace GridShared
         GridMode Mode { get; }
 
         /// <summary>
+        ///     CRUD type
+        /// </summary>
+        CrudType CrudType { get; }
+
+        /// <summary>
         ///     Get value for creating items
         /// </summary>
         bool CreateEnabled { get; }

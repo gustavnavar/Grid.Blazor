@@ -240,6 +240,15 @@
   <data name="NotEqual" xml:space="preserve">
     <value>Ni enak</value>
   </data>
+  <data name="CreateError" xml:space="preserve">
+    <value>Pri ustvarjanju novega elementa je prišlo do napake.</value>
+  </data>
+  <data name="DeleteError" xml:space="preserve">
+    <value>Pri brisanju tega elementa je prišlo do napake</value>
+  </data>
+  <data name="UpdateError" xml:space="preserve">
+    <value>Pri posodabljanju tega elementa je prišlo do napake</value>
+  </data>
   <data name="IsNotNull" xml:space="preserve">
     <value>Ni nična</value>
   </data>
@@ -273,14 +282,14 @@
   <data name="Goto" xml:space="preserve">
     <value>Pojdi do</value>
   </data>
-  <data name="SearchFilterListInputText" xml:space="preserve">
-    <value>Iskalni izraz</value>
-  </data>
   <data name="All" xml:space="preserve">
     <value>Vse</value>
   </data>
   <data name="None" xml:space="preserve">
     <value>Nobena</value>
+  </data>
+  <data name="SearchFilterListInputText" xml:space="preserve">
+    <value>Iskalni izraz</value>
   </data>
   <data name="Select" xml:space="preserve">
     <value>Izberite</value>
@@ -299,5 +308,11 @@
   </data>
   <data name="PageSizeItems" xml:space="preserve">
     <value>Elementi</value>
+  </data>
+  <data name="Inline edit" xml:space="preserve">
+    <value>Urejanje v vrstici</value>
+  </data>
+  <data name="Form edit" xml:space="preserve">
+    <value>Urejanje obrazca</value>
   </data>
 </root>

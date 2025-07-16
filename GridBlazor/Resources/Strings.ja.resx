@@ -117,15 +117,6 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="DefaultGridEmptyText" xml:space="preserve">
-    <value>表示するレコードはありません</value>
-  </data>
-  <data name="FilterButtonTooltipText" xml:space="preserve">
-    <value>この列をフィルタリング</value>
-  </data>
-  <data name="Lang" xml:space="preserve">
-    <value>ja</value>
-  </data>
   <data name="ApplyFilterButtonText" xml:space="preserve">
     <value>適用</value>
   </data>
@@ -141,11 +132,17 @@
   <data name="Contains" xml:space="preserve">
     <value>含む</value>
   </data>
+  <data name="DefaultGridEmptyText" xml:space="preserve">
+    <value>表示するレコードはありません</value>
+  </data>
   <data name="EndsWith" xml:space="preserve">
     <value>で終わる</value>
   </data>
   <data name="Equal" xml:space="preserve">
     <value>等しい</value>
+  </data>
+  <data name="FilterButtonTooltipText" xml:space="preserve">
+    <value>この列をフィルタリング</value>
   </data>
   <data name="FilterTypeLabel" xml:space="preserve">
     <value>タイプ</value>
@@ -159,20 +156,26 @@
   <data name="GreaterThanOrEquals" xml:space="preserve">
     <value>以上</value>
   </data>
+  <data name="Items" xml:space="preserve">
+    <value>レコード</value>
+  </data>
+  <data name="Lang" xml:space="preserve">
+    <value>ja</value>
+  </data>
   <data name="LessThan" xml:space="preserve">
     <value>未満</value>
   </data>
   <data name="LessThanOrEquals" xml:space="preserve">
     <value>以下</value>
   </data>
-  <data name="StartsWith" xml:space="preserve">
-    <value>で始まる</value>
-  </data>
   <data name="SearchFor" xml:space="preserve">
     <value>検索 ...</value>
   </data>
-  <data name="Items" xml:space="preserve">
-    <value>レコード</value>
+  <data name="StartsWith" xml:space="preserve">
+    <value>で始まる</value>
+  </data>
+  <data name="Average" xml:space="preserve">
+    <value>平均</value>
   </data>
   <data name="Max" xml:space="preserve">
     <value>最大</value>
@@ -182,9 +185,6 @@
   </data>
   <data name="Sum" xml:space="preserve">
     <value>合計</value>
-  </data>
-  <data name="Average" xml:space="preserve">
-    <value>平均</value>
   </data>
   <data name="And" xml:space="preserve">
     <value>かつ</value>
@@ -282,14 +282,14 @@
   <data name="Goto" xml:space="preserve">
     <value>ジャンプ</value>
   </data>
-  <data name="SearchFilterListInputText" xml:space="preserve">
-    <value>検索</value>
-  </data>
   <data name="All" xml:space="preserve">
     <value>全て</value>
   </data>
   <data name="None" xml:space="preserve">
     <value>なし</value>
+  </data>
+  <data name="SearchFilterListInputText" xml:space="preserve">
+    <value>検索</value>
   </data>
   <data name="Select" xml:space="preserve">
     <value>選択</value>
@@ -308,5 +308,11 @@
   </data>
   <data name="PageSizeItems" xml:space="preserve">
     <value>レコードを表示</value>
+  </data>
+  <data name="Inline edit" xml:space="preserve">
+    <value>インライン編集</value>
+  </data>
+  <data name="Form edit" xml:space="preserve">
+    <value>フォーム編集</value>
   </data>
 </root>

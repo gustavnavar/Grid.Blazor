@@ -282,14 +282,14 @@
   <data name="Goto" xml:space="preserve">
     <value>Отидете на</value>
   </data>
-  <data name="SearchFilterListInputText" xml:space="preserve">
-    <value>Фраза за търсене</value>
-  </data>
   <data name="All" xml:space="preserve">
     <value>Bсичко</value>
   </data>
   <data name="None" xml:space="preserve">
     <value>Нито един</value>
+  </data>
+  <data name="SearchFilterListInputText" xml:space="preserve">
+    <value>Фраза за търсене</value>
   </data>
   <data name="Select" xml:space="preserve">
     <value>Изберете</value>
@@ -308,5 +308,11 @@
   </data>
   <data name="PageSizeItems" xml:space="preserve">
     <value>Елемента</value>
+  </data>
+  <data name="Inline edit" xml:space="preserve">
+    <value>Вградено редактиране</value>
+  </data>
+  <data name="Form edit" xml:space="preserve">
+    <value>Редактиране на формуляр</value>
   </data>
 </root>

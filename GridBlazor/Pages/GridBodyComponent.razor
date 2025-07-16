@@ -1,4 +1,5 @@
-﻿@using GridShared.Pagination
+﻿@using GridShared
+@using GridShared.Pagination
 @typeparam T
 
 @if (GridComponent.Grid.DisplayingItemsCount == 0 && GridComponent.Grid.PagingType != PagingType.Virtualization)
@@ -12,11 +13,16 @@
         {
             <td class="@GridComponent.GridButtonCellCssClass" data-name="" style="width:35px;"></td>
         }
-        @if ((GridComponent.Grid.UpdateEnabled || ((CGrid<T>)GridComponent.Grid).FuncUpdateEnabled != null) && !GridComponent.HeaderCrudButtons)
+        @if ((GridComponent.Grid.UpdateEnabled || ((CGrid<T>)GridComponent.Grid).FuncUpdateEnabled != null) && !GridComponent.HeaderCrudButtons
+            && (GridComponent.Grid.CrudType == CrudType.Form || GridComponent.Grid.CrudType == CrudType.FormOrInline || GridComponent.Grid.CrudType == CrudType.FormAndInline))
         {
             <td class="@GridComponent.GridButtonCellCssClass" data-name="" style="width:35px;"></td>
         }
         @if ((GridComponent.Grid.DeleteEnabled || ((CGrid<T>)GridComponent.Grid).FuncDeleteEnabled != null) && !GridComponent.HeaderCrudButtons)
+        {
+            <td class="@GridComponent.GridButtonCellCssClass" data-name="" style="width:35px;"></td>
+        }
+        @if (GridComponent.Grid.CrudType == CrudType.Inline || GridComponent.Grid.CrudType == CrudType.InlineOrForm || GridComponent.Grid.CrudType == CrudType.FormAndInline)
         {
             <td class="@GridComponent.GridButtonCellCssClass" data-name="" style="width:35px;"></td>
         }

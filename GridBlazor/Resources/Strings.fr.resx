@@ -117,15 +117,6 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="DefaultGridEmptyText" xml:space="preserve">
-    <value>Il ya pas d'articles à afficher</value>
-  </data>
-  <data name="FilterButtonTooltipText" xml:space="preserve">
-    <value>Filtrer cette colonne</value>
-  </data>
-  <data name="Lang" xml:space="preserve">
-    <value>fr</value>
-  </data>
   <data name="ApplyFilterButtonText" xml:space="preserve">
     <value>Appliquer</value>
   </data>
@@ -141,11 +132,17 @@
   <data name="Contains" xml:space="preserve">
     <value>Contient</value>
   </data>
+  <data name="DefaultGridEmptyText" xml:space="preserve">
+    <value>Il ya pas d'articles à afficher</value>
+  </data>
   <data name="EndsWith" xml:space="preserve">
     <value>Fini par</value>
   </data>
   <data name="Equal" xml:space="preserve">
     <value>Egale</value>
+  </data>
+  <data name="FilterButtonTooltipText" xml:space="preserve">
+    <value>Filtrer cette colonne</value>
   </data>
   <data name="FilterTypeLabel" xml:space="preserve">
     <value>Type</value>
@@ -159,20 +156,26 @@
   <data name="GreaterThanOrEquals" xml:space="preserve">
     <value>Supérieur ou égale à</value>
   </data>
+  <data name="Items" xml:space="preserve">
+    <value>Articles</value>
+  </data>
+  <data name="Lang" xml:space="preserve">
+    <value>fr</value>
+  </data>
   <data name="LessThan" xml:space="preserve">
     <value>Inférieur à</value>
   </data>
   <data name="LessThanOrEquals" xml:space="preserve">
     <value>Inférieur ou égale à</value>
   </data>
-  <data name="StartsWith" xml:space="preserve">
-    <value>Commence par</value>
-  </data>
   <data name="SearchFor" xml:space="preserve">
     <value>Chercher ...</value>
   </data>
-  <data name="Items" xml:space="preserve">
-    <value>Articles</value>
+  <data name="StartsWith" xml:space="preserve">
+    <value>Commence par</value>
+  </data>
+  <data name="Average" xml:space="preserve">
+    <value>Moyen</value>
   </data>
   <data name="Max" xml:space="preserve">
     <value>Max</value>
@@ -182,9 +185,6 @@
   </data>
   <data name="Sum" xml:space="preserve">
     <value>Somme</value>
-  </data>
-  <data name="Average" xml:space="preserve">
-    <value>Moyen</value>
   </data>
   <data name="And" xml:space="preserve">
     <value>Et</value>
@@ -282,14 +282,14 @@
   <data name="Goto" xml:space="preserve">
     <value>Aller à</value>
   </data>
-  <data name="SearchFilterListInputText" xml:space="preserve">
-    <value>Expression de recherche</value>
-  </data>
   <data name="All" xml:space="preserve">
     <value>Tout</value>
   </data>
   <data name="None" xml:space="preserve">
     <value>Rien</value>
+  </data>
+  <data name="SearchFilterListInputText" xml:space="preserve">
+    <value>Expression de recherche</value>
   </data>
   <data name="Select" xml:space="preserve">
     <value>Sélectionner</value>
@@ -308,5 +308,11 @@
   </data>
   <data name="PageSizeItems" xml:space="preserve">
     <value>Articles</value>
+  </data>
+  <data name="Inline edit" xml:space="preserve">
+    <value>Édition en ligne</value>
+  </data>
+  <data name="Form edit" xml:space="preserve">
+    <value>Formulaire d'édition</value>
   </data>
 </root>

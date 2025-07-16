@@ -28,11 +28,16 @@
                         {
                             <td class="@GridButtonCellCssClass" data-name="" style="width:35px;"></td>
                         }
-                        @if ((Grid.UpdateEnabled || ((CGrid<T>)Grid).FuncUpdateEnabled != null) && !HeaderCrudButtons)
+                        @if ((Grid.UpdateEnabled || ((CGrid<T>)Grid).FuncUpdateEnabled != null) && !HeaderCrudButtons
+                                && (Grid.CrudType == CrudType.Form || Grid.CrudType == CrudType.FormOrInline || Grid.CrudType == CrudType.FormAndInline))
                         {
                             <td class="@GridButtonCellCssClass" data-name="" style="width:35px;"></td>
                         }
                         @if ((Grid.DeleteEnabled || ((CGrid<T>)Grid).FuncDeleteEnabled != null) && !HeaderCrudButtons)
+                        {
+                            <td class="@GridButtonCellCssClass" data-name="" style="width:35px;"></td>
+                        }
+                        @if (Grid.CrudType == CrudType.Inline || Grid.CrudType == CrudType.InlineOrForm || Grid.CrudType == CrudType.FormAndInline)
                         {
                             <td class="@GridButtonCellCssClass" data-name="" style="width:35px;"></td>
                         }
@@ -185,6 +190,28 @@
                                         }
                                     </div>
                                 }
+                                @if (Grid.CrudType == CrudType.InlineOrForm)
+                                {
+                                    <div class="grid-crud-type">
+                                        <label class="@Grid.HtmlClass.FormLabel">@(Grid.Direction == GridDirection.LTR ? Strings.Form_edit : Strings.Inline_edit)</label>
+                                        <label class="grid-switch">
+                                            <input type="checkbox" class="@Grid.HtmlClass.FormInput" checked="checked" value="true" @onchange="ChangeToFormEdit" />
+                                            <span class="@Grid.HtmlClass.FormSpanToggleSwitch"></span>
+                                        </label>
+                                        <label class="@Grid.HtmlClass.FormLabel">@(Grid.Direction == GridDirection.LTR ? Strings.Inline_edit : Strings.Form_edit)</label>
+                                    </div>
+                                }
+                                else if (Grid.CrudType == CrudType.FormOrInline)
+                                {
+                                    <div class="grid-crud-type">
+                                        <label class="@Grid.HtmlClass.FormLabel">@(Grid.Direction == GridDirection.LTR ? Strings.Form_edit : Strings.Inline_edit)</label>
+                                        <label class="grid-switch">
+                                            <input type="checkbox" class="@Grid.HtmlClass.FormInput" value="false" @onchange="ChangeToInlineEdit" />
+                                            <span class="@Grid.HtmlClass.FormSpanToggleSwitch"></span>
+                                        </label>
+                                        <label class="@Grid.HtmlClass.FormLabel">@(Grid.Direction == GridDirection.LTR ? Strings.Inline_edit : Strings.Form_edit)</label>
+                                    </div>
+                                }
                             </div>
                             @if (Grid.SearchOptions.Enabled)
                             {
@@ -214,11 +241,16 @@
                                                 {
                                                     <th class="@GridHeaderCssClass" style="width:35px;"></th>
                                                 }
-                                                @if ((Grid.UpdateEnabled || ((CGrid<T>)Grid).FuncUpdateEnabled != null) && !HeaderCrudButtons)
+                                                @if ((Grid.UpdateEnabled || ((CGrid<T>)Grid).FuncUpdateEnabled != null) && !HeaderCrudButtons
+                                                    && (Grid.CrudType == CrudType.Form || Grid.CrudType == CrudType.FormOrInline || Grid.CrudType == CrudType.FormAndInline))
                                                 {
                                                     <th class="@GridHeaderCssClass" style="width:35px;"></th>
                                                 }
                                                 @if ((Grid.DeleteEnabled || ((CGrid<T>)Grid).FuncDeleteEnabled != null) && !HeaderCrudButtons)
+                                                {
+                                                    <th class="@GridHeaderCssClass" style="width:35px;"></th>
+                                                }
+                                                @if (Grid.CrudType == CrudType.Inline || Grid.CrudType == CrudType.InlineOrForm || Grid.CrudType == CrudType.FormAndInline)
                                                 {
                                                     <th class="@GridHeaderCssClass" style="width:35px;"></th>
                                                 }
@@ -265,11 +297,16 @@
                                             {
                                                 <col style="width:35px;" />
                                             }
-                                            @if ((Grid.UpdateEnabled || ((CGrid<T>)Grid).FuncUpdateEnabled != null) && !HeaderCrudButtons)
+                                            @if ((Grid.UpdateEnabled || ((CGrid<T>)Grid).FuncUpdateEnabled != null) && !HeaderCrudButtons
+                                                && (Grid.CrudType == CrudType.Form || Grid.CrudType == CrudType.FormOrInline || Grid.CrudType == CrudType.FormAndInline))
                                             {
                                                 <col style="width:35px;" />
                                             }
                                             @if ((Grid.DeleteEnabled || ((CGrid<T>)Grid).FuncDeleteEnabled != null) && !HeaderCrudButtons)
+                                            {
+                                                <col style="width:35px;" />
+                                            }
+                                            @if (Grid.CrudType == CrudType.Inline || Grid.CrudType == CrudType.InlineOrForm || Grid.CrudType == CrudType.FormAndInline)
                                             {
                                                 <col style="width:35px;" />
                                             }
@@ -304,7 +341,8 @@
                                                         </div>
                                                     </th>
                                                 }
-                                                @if ((Grid.UpdateEnabled || ((CGrid<T>)Grid).FuncUpdateEnabled != null) && !HeaderCrudButtons)
+                                                @if ((Grid.UpdateEnabled || ((CGrid<T>)Grid).FuncUpdateEnabled != null) && !HeaderCrudButtons
+                                                    && (Grid.CrudType == CrudType.Form || Grid.CrudType == CrudType.FormOrInline || Grid.CrudType == CrudType.FormAndInline))
                                                 {
                                                     <th class="@GridHeaderCssClass">
                                                         <div class="grid-header-group">
@@ -315,6 +353,16 @@
                                                     </th>
                                                 }
                                                 @if ((Grid.DeleteEnabled || ((CGrid<T>)Grid).FuncDeleteEnabled != null) && !HeaderCrudButtons)
+                                                {
+                                                    <th class="@GridHeaderCssClass">
+                                                        <div class="grid-header-group">
+                                                            <div class="grid-header-title" data-column="">
+                                                                <span data-column=""></span>
+                                                            </div>
+                                                        </div>
+                                                    </th>
+                                                }
+                                                @if (Grid.CrudType == CrudType.Inline || Grid.CrudType == CrudType.InlineOrForm || Grid.CrudType == CrudType.FormAndInline)
                                                 {
                                                     <th class="@GridHeaderCssClass">
                                                         <div class="grid-header-group">
@@ -379,11 +427,16 @@
                                             {
                                                 <col style="width:35px;" />
                                             }
-                                            @if ((Grid.UpdateEnabled || ((CGrid<T>)Grid).FuncUpdateEnabled != null) && !HeaderCrudButtons)
+                                            @if ((Grid.UpdateEnabled || ((CGrid<T>)Grid).FuncUpdateEnabled != null) && !HeaderCrudButtons
+                                                && (Grid.CrudType == CrudType.Form || Grid.CrudType == CrudType.FormOrInline || Grid.CrudType == CrudType.FormAndInline))
                                             {
                                                 <col style="width:35px;" />
                                             }
                                             @if ((Grid.DeleteEnabled || ((CGrid<T>)Grid).FuncDeleteEnabled != null) && !HeaderCrudButtons)
+                                            {
+                                                <col style="width:35px;" />
+                                            }
+                                            @if (Grid.CrudType == CrudType.Inline || Grid.CrudType == CrudType.InlineOrForm || Grid.CrudType == CrudType.FormAndInline)
                                             {
                                                 <col style="width:35px;" />
                                             }
@@ -416,11 +469,16 @@
                                                 {
                                                     <col style="width:35px;" />
                                                 }
-                                                @if ((Grid.UpdateEnabled || ((CGrid<T>)Grid).FuncUpdateEnabled != null) && !HeaderCrudButtons)
+                                                @if ((Grid.UpdateEnabled || ((CGrid<T>)Grid).FuncUpdateEnabled != null) && !HeaderCrudButtons
+                                                    && (Grid.CrudType == CrudType.Form || Grid.CrudType == CrudType.FormOrInline || Grid.CrudType == CrudType.FormAndInline))
                                                 {
                                                     <col style="width:35px;" />
                                                 }
                                                 @if ((Grid.DeleteEnabled || ((CGrid<T>)Grid).FuncDeleteEnabled != null) && !HeaderCrudButtons)
+                                                {
+                                                    <col style="width:35px;" />
+                                                }
+                                                @if (Grid.CrudType == CrudType.Inline || Grid.CrudType == CrudType.InlineOrForm || Grid.CrudType == CrudType.FormAndInline)
                                                 {
                                                     <col style="width:35px;" />
                                                 }
@@ -504,7 +562,7 @@
                                             }
                                         </div>
                                     }
-                                    else if (Grid.Mode == GridMode.Update && (Grid.UpdateEnabled || (((CGrid<T>)Grid).FuncUpdateEnabled != null && ((CGrid<T>)Grid).FuncUpdateEnabled(Item))))
+                                    else if (Grid.Mode == GridMode.Update && (Grid.UpdateEnabled || ((CGrid<T>)Grid).FuncUpdateEnabled != null && ((CGrid<T>)Grid).FuncUpdateEnabled(Item)))
                                     {
                                         <div dir="@Grid.Direction.ToDirection()">
                                             @if (Grid.UpdateComponent == null)
