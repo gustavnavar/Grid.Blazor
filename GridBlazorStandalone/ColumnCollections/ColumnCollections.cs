@@ -652,6 +652,53 @@ namespace GridBlazorStandalone.ColumnCollections
                 c.Add(true).Titled("Images").RenderCrudComponentAs<Carousel, Carousel, Carousel, NullComponent>();
             };
 
+        public static Action<IGridColumnCollection<Order>, Func<Order, IEnumerable<SelectItem>>, Func<Order, IEnumerable<SelectItem>>,
+            Func<Order, IEnumerable<SelectItem>>, Func<IEnumerable<SelectItem>>, Func<IEnumerable<SelectItem>>, Func<IEnumerable<SelectItem>>>
+            OrderColumnsWithInlineCrud = (c, f, g, h, i, j, k) =>
+            {
+                /* Adding "OrderID" column: */
+                c.Add(o => o.OrderID).SetPrimaryKey(true).Titled(SharedResource.Number).SetWidth(100);
+
+                /* Adding "CustomerID" column: */
+                c.Add(o => o.CustomerID).Titled("Customer")
+                .SetWidth(350).RenderValueAs(o => o.Customer == null ? "" : o.Customer.CompanyName)
+                .SetSelectField(true, o => o.Customer == null ? "" : o.Customer.CustomerID + " - " + o.Customer.CompanyName, f)
+                .SetListFilter(i.Invoke(), true, true);
+
+                /* Adding "EmployeeID" column: */
+                c.Add(o => o.EmployeeID).Titled("Employee")
+                .SetWidth(250).RenderValueAs(o => o.Employee == null ? "" : o.Employee.FirstName + " " + o.Employee.LastName)
+                .SetSelectField(true, o => o.Employee == null ? "" : o.Employee.EmployeeID.ToString() + " - " + o.Employee.FirstName + " " + o.Employee.LastName, g)
+                .SetListFilter(j.Invoke(), true, true);
+
+                /* Adding "ShipVia" column: */
+                c.Add(o => o.ShipVia).Titled("Via")
+                .SetWidth(250).RenderValueAs(o => o.Shipper == null ? "" : o.Shipper.CompanyName)
+                .SetSelectField(true, o => o.Shipper == null ? "" : o.Shipper.ShipperID.ToString() + " - " + o.Shipper.CompanyName, h)
+                .SetListFilter(k.Invoke(), true, true);
+
+                /* Adding "OrderDate" column: */
+                c.Add(o => o.OrderDate, "OrderCustomDate").Titled(SharedResource.OrderCustomDate)
+                .Format("{0:yyyy-MM-dd}").SetWidth(120);
+
+                /* Adding "ContactName" column: */
+                c.Add(o => o.Customer.ContactName).Titled(SharedResource.ContactName)
+                .SetCrudHidden(true)
+                .SetInlineCrudReadOnly(true);
+
+                /* Adding "Freight" column: */
+                c.Add(o => o.Freight)
+                .Titled(SharedResource.Freight)
+                .SetWidth(150)
+                .Format("{0:F}");
+
+                /* Adding "Vip customer" column: */
+                c.Add(o => o.Customer.IsVip).Titled(SharedResource.IsVip).SetWidth(90).Css("hidden-xs") //hide on phones
+                .RenderValueAs(o => o.Customer.IsVip ? Strings.BoolTrueLabel : Strings.BoolFalseLabel)
+                .SetCrudHidden(true)
+                .SetInlineCrudReadOnly(true);
+            };
+
         public static Action<IGridColumnCollection<Order>> OrderColumnsWithSubgrids = c =>
         {
             /* Adding "OrderID" column: */
@@ -716,16 +763,19 @@ namespace GridBlazorStandalone.ColumnCollections
             .RenderValueAs(o => o.Customer.IsVip ? Strings.BoolTrueLabel : Strings.BoolFalseLabel);
         };
 
-        public static Action<IGridColumnCollection<Order>, Func<Order, IEnumerable<SelectItem>>,
-            Func<Order, IEnumerable<SelectItem>>, Func<IEnumerable<SelectItem>>,
+        public static Action<IGridColumnCollection<Order>, Func<Order, IEnumerable<SelectItem>>, Func<Order, IEnumerable<SelectItem>>, 
+            Func<Order, IEnumerable<SelectItem>>, Func<IEnumerable<SelectItem>>, Func<IEnumerable<SelectItem>>,
             Func<object[], bool, bool, bool, bool, Task<IGrid>>>
-            OrderColumnsAllFeatures = (c, f, g, h, subgrids) =>
+            OrderColumnsAllFeatures = (c, f, g, h, i, j, subgrids) =>
             {
                 /* Adding "OrderID" column: */
                 c.Add(o => o.OrderID).SetPrimaryKey(true, false).Titled(SharedResource.Number).SetTooltip("Order ID is ... ").SetWidth(100);
 
                 /* Adding "CustomerID" column: */
-                c.Add(o => o.CustomerID, true).SetSelectField(true, o => o.Customer.CustomerID + " - " + o.Customer.CompanyName, f);
+                c.Add(o => o.CustomerID).Titled("Customer")
+                .SetWidth(350).RenderValueAs(o => o.Customer == null ? "" : o.Customer.CompanyName)
+                .SetSelectField(true, o => o.Customer == null ? "" : o.Customer.CustomerID + " - " + o.Customer.CompanyName, f)
+                .SetListFilter(i.Invoke(), true, true);
 
                 /* Adding "EmployeeID" column: */
                 c.Add(o => o.EmployeeID, true).SetSelectField(true, o => o.Employee.EmployeeID.ToString() + " - " + o.Employee.FirstName + " " + o.Employee.LastName, g);
@@ -734,7 +784,7 @@ namespace GridBlazorStandalone.ColumnCollections
                 c.Add(o => o.ShipVia).Titled("Via")
                 .SetWidth(250).RenderValueAs(o => o.Shipper == null ? "" : o.Shipper.CompanyName)
                 .SetSelectField(true, o => o.Shipper == null ? "" : o.Shipper.ShipperID.ToString() + " - " + o.Shipper.CompanyName, h)
-                .SetListFilter(h.Invoke(), true, true);
+                .SetListFilter(j.Invoke(), true, true);
 
                 /* Adding "OrderDate" column: */
                 c.Add(o => o.OrderDate, "OrderCustomDate").Titled(SharedResource.OrderCustomDate)
@@ -745,18 +795,10 @@ namespace GridBlazorStandalone.ColumnCollections
                 .Format("{0:yyyy-MM-dd HH:mm}").SetWidth(120)
                 .Max(true).Min(true);
 
-                /* Adding "CompanyName" column: */
-                c.Add(o => o.Customer.CompanyName).Titled(SharedResource.CompanyName)
-                .SetWidth(250)
-                .SetCrudHidden(true).SetReadOnlyOnUpdate(true)
-                //.ThenSortByDescending(o => o.OrderID)
-                //.SetInitialFilter(GridFilterType.StartsWith, "a")
-                .SetFilterWidgetType(CompanyNameFilter)
-                .Max(true).Min(true);
-
                 /* Adding "ContactName" column: */
                 c.Add(o => o.Customer.ContactName).Titled(SharedResource.ContactName)
                 .SetCrudHidden(true)
+                .SetInlineCrudReadOnly(true)
                 .Max(true).Min(true);
 
                 /* Adding "Freight" column: */
@@ -768,10 +810,12 @@ namespace GridBlazorStandalone.ColumnCollections
 
                 /* Adding "Vip customer" column: */
                 c.Add(o => o.Customer.IsVip).Titled(SharedResource.IsVip).SetWidth(90).Css("hidden-xs") //hide on phones
-                .RenderValueAs(o => o.Customer.IsVip ? Strings.BoolTrueLabel : Strings.BoolFalseLabel).SetCrudHidden(true);
+                .RenderValueAs(o => o.Customer.IsVip ? Strings.BoolTrueLabel : Strings.BoolFalseLabel).SetCrudHidden(true)
+                .SetInlineCrudReadOnly(true);
 
                 c.Add().Encoded(false).Sanitized(false).SetWidth("5%").SetCrudHidden(true)
-                    .RenderValueAs(o => $"<img width='50' height='50' src='data:image/bmp;base64,{o.Employee.Base64String}' />");
+                    .RenderValueAs(o => $"<img width='50' height='50' src='data:image/bmp;base64,{o.Employee.Base64String}' />")
+                    .SetInlineCrudReadOnly(true);
 
                 /* Adding hidden "RequiredDate" column: */
                 c.Add(o => o.RequiredDate, true).Format("{0:yyyy-MM-dd}");
@@ -955,6 +999,7 @@ namespace GridBlazorStandalone.ColumnCollections
                 c.Add(o => o.Product.ProductName)
                     .Titled("ProdName")
                     .SetCrudHidden(true)
+                    .SetInlineCrudReadOnly(true)
                     .SetWidth(250);
 
                 /* Adding "Quantity" column: */
@@ -997,6 +1042,7 @@ namespace GridBlazorStandalone.ColumnCollections
                 c.Add(o => o.Product.ProductName)
                     .Titled("ProdName")
                     .SetCrudHidden(true)
+                    .SetInlineCrudReadOnly(true)
                     .SetWidth(250);
 
                 /* Adding "Quantity" column: */

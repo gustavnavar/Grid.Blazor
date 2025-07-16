@@ -25,6 +25,7 @@ namespace GridBlazorGrpc.Shared.Services
         ValueTask<ItemsDTO<Order>> OrderColumnsWithCrud(QueryDictionary<string> query);
         ValueTask<ItemsDTO<Order>> OrderColumnsWithSubgridCrud(QueryDictionary<string> query);
         ValueTask<ItemsDTO<Order>> GetOrderColumnsWithErrors(QueryDictionary<string> query);
+        ValueTask<ItemsDTO<Order>> GetOrderColumnsWithInlineCrud(QueryDictionary<string> query);
         ValueTask<ItemsDTO<Order>> GetVirtualizedOrdersGrid(QueryDictionary<string> query);
         ValueTask<ItemsDTO<Order>> GetOrdersGridAllFeatures(QueryDictionary<string> query);
         ValueTask<IEnumerable<string>> GetCustomersNames(QueryDictionary<string> query);

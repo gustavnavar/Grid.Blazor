@@ -21,7 +21,7 @@
     This component demonstrates a GridBlazor client-side grid with an OData back-end. For more information, please see: <a href="https://github.com/gustavnavar/Grid.Blazor">https://github.com/gustavnavar/Grid.Blazor</a>
 </p>
 
-@if (_task1.IsCompleted && _task2.IsCompleted)
+@if (_task1.IsCompleted && _task2.IsCompleted && _task3.IsCompleted)
 {
     <div class="row">
         <div class="col-md-9">
@@ -49,10 +49,12 @@ else
 @code
 {
     private CGrid<Order> _grid;
-    private Task<ODataDTO<Shipper>> _task1;
-    private Task _task2;
+    private Task<ODataDTO<Customer>> _task1;
+    private Task<ODataDTO<Shipper>> _task2;
+    private Task _task3;
     private OrderInfo _orderInfo;
     private OrderIDetaillnfo _orderDetailInfo;
+    private IEnumerable<SelectItem> _customers;
     private IEnumerable<SelectItem> _shippers;
     private IQueryDictionary<Type> _customFilters = new QueryDictionary<Type>();
     private List<Action<object>> _rowClickActions;
@@ -67,8 +69,22 @@ else
         _rowClickActions.Add(OrderDetailInfo);
 
         var locale = CultureInfo.CurrentCulture;
-        _task1 = HttpClient.GetFromJsonAsync<ODataDTO<Shipper>>(NavigationManager.BaseUri + $"odata/Shippers?$select=ShipperID,CompanyName");
-        var shippers = await _task1;
+        
+        _task1 = HttpClient.GetFromJsonAsync<ODataDTO<Customer>>(NavigationManager.BaseUri + $"odata/Customers?$select=CustomerID,CompanyName");
+        var customers = await _task1;
+        if (customers == null || customers.Value == null)
+        {
+            _customers = new List<SelectItem>();
+        }
+        else
+        {
+            _customers = customers.Value
+                .Select(r => new SelectItem(r.CustomerID.ToString(), r.CustomerID.ToString() + " - " + r.CompanyName))
+                .ToList();
+        }
+
+        _task2 = HttpClient.GetFromJsonAsync<ODataDTO<Shipper>>(NavigationManager.BaseUri + $"odata/Shippers?$select=ShipperID,CompanyName");
+        var shippers = await _task2;
         if (shippers == null || shippers.Value == null)
         {
             _shippers = new List<SelectItem>();
@@ -89,7 +105,7 @@ else
             {
                 c.Add(o => o.OrderID, true).SetPrimaryKey(true).SetWidth(100);
                 c.Add(o => o.ProductID).SetPrimaryKey(true).Titled("ProdId").SetWidth(100).SetSelectField(true, o => o.Product.ProductID + " - " + o.Product.ProductName, () => GetAllProducts(NavigationManager.BaseUri));
-                c.Add(o => o.Product.ProductName).Titled("ProdName").SetCrudHidden(true).SetWidth(250);
+                c.Add(o => o.Product.ProductName).Titled("ProdName").SetCrudHidden(true).SetInlineCrudReadOnly(true).SetWidth(250);
                 c.Add(o => o.Quantity).Titled("Quant").SetWidth(100).Format("{0:F}");
                 c.Add(o => o.UnitPrice).Titled("Unit Price").SetWidth(100).Format("{0:F}");
                 c.Add(o => o.Discount).Titled("Disc").SetWidth(100).Format("{0:F}");
@@ -100,7 +116,7 @@ else
                     .Sortable()
                     .Filterable()
                     .SetStriped(true)
-                    .ODataCrud(create, read, update, delete)
+                    .ODataCrud(create, read, update, delete, CrudType.FormOrInline)
                     .WithMultipleFilters()
                     .WithGridItemsCount();
 
@@ -117,7 +133,7 @@ else
             {
                 c.Add(o => o.OrderID, true).SetPrimaryKey(true).SetWidth(100);
                 c.Add(o => o.ProductID).SetPrimaryKey(true).Titled("ProdId").SetWidth(100).SetSelectField(true, o => o.Product.ProductID + " - " + o.Product.ProductName, NavigationManager.BaseUri + $"api/SampleData/GetAllProducts");
-                c.Add(o => o.Product.ProductName).Titled("ProdName").SetCrudHidden(true).SetWidth(250);
+                c.Add(o => o.Product.ProductName).Titled("ProdName").SetCrudHidden(true).SetInlineCrudReadOnly(true).SetWidth(250);
                 c.Add(o => o.Quantity).Titled("Quant").SetCellCssClassesContraint(o => o.Quantity >= 50 ? "red" : "").SetWidth(100).Format("{0:F}");
                 c.Add(o => o.UnitPrice).Titled("Unit Price").SetWidth(100).Format("{0:F}");
                 c.Add(o => o.Discount).Titled("Disc").SetWidth(100).Format("{0:F}");
@@ -130,7 +146,7 @@ else
                     .Filterable()
                     .SetStriped(true)
                     .Selectable(true)
-                    .ODataCrud(true)
+                    .ODataCrud(true, CrudType.FormOrInline)
                     .WithMultipleFilters()
                     .WithGridItemsCount();
 
@@ -141,15 +157,14 @@ else
         Action<IGridColumnCollection<Order>> orderColumns = c =>
         {
             c.Add(o => o.OrderID).SetPrimaryKey(true).Titled(SharedResource.Number).SetTooltip("Order ID is ... ").SetWidth(100);
-            c.Add(o => o.CustomerID, true).SetSelectField(true, o => o.Customer.CustomerID + " - " + o.Customer.CompanyName, o => GetAllCustomers(NavigationManager.BaseUri));
+            c.Add(o => o.CustomerID).Titled("Customer").SetWidth(350).RenderValueAs(o => o.Customer == null ? "" : o.Customer.CompanyName).SetSelectField(true, o => o.Customer == null ? "" : o.Customer.CustomerID + " - " + o.Customer.CompanyName, o => GetAllCustomers(NavigationManager.BaseUri)).SetListFilter(_customers, true, true);
             c.Add(o => o.EmployeeID, true).SetSelectField(true, o => o.Employee.EmployeeID.ToString() + " - " + o.Employee.FirstName + " " + o.Employee.LastName, o => GetAllEmployees(NavigationManager.BaseUri));
             c.Add(o => o.ShipVia).Titled("Via").SetWidth(250).RenderValueAs(o => o.Shipper == null ? "" : o.Shipper.CompanyName).SetSelectField(true, o => o.Shipper == null ? "" : o.Shipper.ShipperID.ToString() + " - " + o.Shipper.CompanyName, () => GetAllShippers(NavigationManager.BaseUri)).SetListFilter(_shippers, true, true);
             c.Add(o => o.OrderDate, "OrderCustomDate").Titled(SharedResource.OrderCustomDate).SetCellCssClassesContraint(o => o.OrderDate.HasValue && o.OrderDate.Value >= DateTime.Parse("1997-01-01") ? "red" : "").SetInputType(InputType.DateTimeLocal).SetFilterWidgetType("DateTimeLocal").Format("{0:yyyy-MM-dd HH:mm}").SetWidth(120);
-            c.Add(o => o.Customer.CompanyName).Titled(SharedResource.CompanyName).SetWidth(250).SetCrudHidden(true).SetReadOnlyOnUpdate(true).SetFilterWidgetType("CompanyNameFilter");
-            c.Add(o => o.Customer.ContactName).Titled(SharedResource.ContactName).SetCrudHidden(true);
+            c.Add(o => o.Customer.ContactName).Titled(SharedResource.ContactName).SetCrudHidden(true).SetInlineCrudReadOnly(true);
             c.Add(o => o.Freight).Titled(SharedResource.Freight).SetWidth(150).Format("{0:F}");
-            c.Add(o => o.Customer.IsVip).Titled(SharedResource.IsVip).SetWidth(90).Css("hidden-xs").RenderValueAs(o => o.Customer.IsVip ? Strings.BoolTrueLabel : Strings.BoolFalseLabel).SetCrudHidden(true);
-            c.Add().Encoded(false).Sanitized(false).SetWidth("5%").SetCrudHidden(true).RenderValueAs(o => $"<img width='50' height='50' src='data:image/bmp;base64,{o.Employee.Base64String}' />");
+            c.Add(o => o.Customer.IsVip).Titled(SharedResource.IsVip).SetWidth(90).Css("hidden-xs").RenderValueAs(o => o.Customer.IsVip ? Strings.BoolTrueLabel : Strings.BoolFalseLabel).SetCrudHidden(true).SetInlineCrudReadOnly(true);
+            c.Add().Encoded(false).Sanitized(false).SetWidth("5%").SetCrudHidden(true).RenderValueAs(o => $"<img width='50' height='50' src='data:image/bmp;base64,{o.Employee.Base64String}' />").SetInlineCrudReadOnly(true);
             c.Add(o => o.RequiredDate, true).Format("{0:yyyy-MM-dd}");
             c.Add(o => o.ShippedDate, true).Format("{0:yyyy-MM-dd}");
             c.Add(o => o.ShipName, true);
@@ -189,7 +204,7 @@ else
                 .WithGridItemsCount()
                 .ChangePageSize(true)
                 .SubGrid(subGrids, ("OrderID", "OrderID"))
-                .ODataCrud(true, r => r.Customer.IsVip, r => !r.Customer.IsVip, r => r.Customer.IsVip)
+                .ODataCrud(true, r => r.Customer.IsVip, r => !r.Customer.IsVip, r => r.Customer.IsVip, CrudType.FormOrInline)
                 .SetExcelExport(true)
                 .SyncButton(true);
 
@@ -197,8 +212,8 @@ else
 
         _grid = client.Grid;
         // Set new items to grid
-        _task2 = client.UpdateGrid();
-        await _task2;
+        _task3 = client.UpdateGrid();
+        await _task3;
     }
 
     protected void OrderInfo(object item)

@@ -6,6 +6,7 @@ using GridCore;
 using GridCore.Server;
 using GridShared;
 using GridShared.Utility;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -285,7 +286,7 @@ namespace GridBlazorGrpc.Server.Services
         {
             var repository = new OrdersRepository(_context);
             IGridServer<Order> server = new GridCoreServer<Order>(repository.GetAllWithEmployee(), query,
-                true, "ordersGrid", c => ColumnCollections.OrderColumnsAllFeatures(c, null, null, null, null, null))
+                true, "ordersGrid", c => ColumnCollections.OrderColumnsAllFeatures(c, null, null, null, null, null, null))
                     .WithPaging(10)
                     .Sortable()
                     .Filterable()
@@ -478,6 +479,22 @@ namespace GridBlazorGrpc.Server.Services
                         .Filterable()
                         .WithMultipleFilters()
                         .SetRemoveDiacritics<NorthwindDbContext>("RemoveDiacritics");
+
+            var items = await server.GetItemsToDisplayAsync(async x => await x.ToListAsync());
+            return items;
+        }
+
+        public async ValueTask<ItemsDTO<Order>> GetOrderColumnsWithInlineCrud(QueryDictionary<string> query)
+        {
+            var repository = new OrdersRepository(_context);
+            IGridServer<Order> server = new GridCoreServer<Order>(repository.GetAll(), query,
+                true, "ordersGrid", c => ColumnCollections.OrderColumnsWithInlineCrud(c, null, null, null, null, null, null))
+                    .WithPaging(10)
+                    .Sortable()
+                    .Filterable()
+                    .WithMultipleFilters()
+                    .WithGridItemsCount()
+                    .SetRemoveDiacritics<NorthwindDbContext>("RemoveDiacritics");
 
             var items = await server.GetItemsToDisplayAsync(async x => await x.ToListAsync());
             return items;

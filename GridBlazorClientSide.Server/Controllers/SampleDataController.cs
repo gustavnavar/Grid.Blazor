@@ -278,6 +278,23 @@ namespace GridBlazorClientSide.Server.Controllers
         }
 
         [HttpGet]
+        public async Task<ActionResult> OrderColumnsWithInlineCrud()
+        {
+            var repository = new OrdersRepository(_context);
+            IGridServer<Order> server = new GridServer<Order>(repository.GetAll(), Request.Query,
+                true, "ordersGrid", c => ColumnCollections.OrderColumnsWithInlineCrud(c, null, null, null, null))
+                    .WithPaging(10)
+                    .Sortable()
+                    .Filterable()
+                    .WithMultipleFilters()
+                    .WithGridItemsCount()
+                    .SetRemoveDiacritics<NorthwindDbContext>("RemoveDiacritics");
+
+            var items = await server.GetItemsToDisplayAsync(async x => await x.ToListAsync());
+            return Ok(items);
+        }
+
+        [HttpGet]
         public ActionResult GetOrderColumnsWithErrors()
         {
             var random = new Random();
@@ -303,7 +320,7 @@ namespace GridBlazorClientSide.Server.Controllers
         {
             var repository = new OrdersRepository(_context);
             IGridServer<Order> server = new GridServer<Order>(repository.GetAll(), Request.Query,
-                true, "ordersGrid", c => ColumnCollections.OrderColumnsAllFeatures(c, null, null, null))
+                true, "ordersGrid", c => ColumnCollections.OrderColumnsAllFeatures(c, null, null, null, null))
                     .WithPaging(10)
                     .Sortable()
                     .Filterable()

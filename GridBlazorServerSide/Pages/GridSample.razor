@@ -86,7 +86,7 @@ else
                     .Sortable()
                     .Filterable()
                     .SetStriped(true)
-                    .Crud(create, read, update, delete, orderDetailService)
+                    .Crud(create, read, update, delete, CrudType.FormOrInline, orderDetailService)
                     .WithMultipleFilters()
                     .WithGridItemsCount();
 
@@ -109,7 +109,7 @@ else
                     .Filterable()
                     .SetStriped(true)
                     .Selectable(true)
-                    .Crud(true, orderDetailService)
+                    .Crud(true, CrudType.FormOrInline, orderDetailService)
                     .WithMultipleFilters()
                     .WithGridItemsCount();
 
@@ -119,7 +119,8 @@ else
 
         // build the column collection passing an action list with the action executed by the ButtonCell component
         Action<IGridColumnCollection<Order>> orderColumns = c => ColumnCollections.OrderColumnsAllFeatures(c,
-            c => customerService.GetAllCustomers(), c => employeeService.GetAllEmployees(), shipperService.GetAllShippers,
+            c => customerService.GetAllCustomers(), c => employeeService.GetAllEmployees(), c => shipperService.GetAllShippers(),
+            customerService.GetAllCustomers, shipperService.GetAllShippers,
             crudSubGrids);
 
         var query = new QueryDictionary<StringValues>();
@@ -149,7 +150,7 @@ else
             .WithGridItemsCount()
             .ChangePageSize(true)
             .SubGrid(subGrids, ("OrderID","OrderID"))
-            .Crud(true, r => r.Customer.IsVip, r => !r.Customer.IsVip, r => r.Customer.IsVip, orderService)
+            .Crud(true, r => r.Customer.IsVip, r => !r.Customer.IsVip, r => r.Customer.IsVip, CrudType.FormOrInline, orderService)
             .SetExcelExport(true)
             .SyncButton(true);
 

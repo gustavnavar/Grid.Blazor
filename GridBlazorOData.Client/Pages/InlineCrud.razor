@@ -1,0 +1,227 @@
+﻿@page "/inlinecrud"
+@using GridBlazor.Resources
+@using GridBlazorOData.Client.Resources
+@using GridBlazorOData.Shared.Models
+@using GridShared.Columns
+@using Microsoft.Extensions.Primitives
+@using System.Globalization
+@using System.Threading.Tasks
+@inject NavigationManager NavigationManager
+@inject HttpClient HttpClient
+
+<h1>Grid Sample</h1>
+
+<p>
+    This page contains a CRUD grid with inline editing capabilities. It allows you to edit orders directly within the grid interface. Double click on a row to edit it. Click on any other row to clear edition.
+</p>
+
+<p>
+    This component demonstrates a GridBlazor client-side grid with an OData back-end. For more information, please see: <a href="https://github.com/gustavnavar/Grid.Blazor">https://github.com/gustavnavar/Grid.Blazor</a>
+</p>
+
+@if (_task1.IsCompleted && _task2.IsCompleted && _task3.IsCompleted && _task4.IsCompleted)
+{
+    <div class="row">
+        <div class="col-md-12">
+            <GridComponent T="Order" Grid="@_grid"></GridComponent>
+        </div>
+    </div>
+}
+else
+{
+    <p><em>Loading...</em></p>
+}
+
+@code
+{
+    private CGrid<Order> _grid;
+    private GridComponent<Order> _gridComponent;
+    private bool _afterRenderExecuted = false;
+    private IEnumerable<SelectItem> _customers;
+    private IEnumerable<SelectItem> _employees;
+    private IEnumerable<SelectItem> _shippers;
+    private Task<ODataDTO<Customer>> _task1;
+    private Task<ODataDTO<Employee>> _task2;
+    private Task<ODataDTO<Shipper>> _task3;
+    private Task _task4;
+
+    protected override async Task OnParametersSetAsync()
+    {
+        var locale = CultureInfo.CurrentCulture;
+        
+        _task1 = HttpClient.GetFromJsonAsync<ODataDTO<Customer>>(NavigationManager.BaseUri + $"odata/Customers?$select=CustomerID,CompanyName");
+        var customers = await _task1;
+        if (customers == null || customers.Value == null)
+        {
+            _customers = new List<SelectItem>();
+        }
+        else
+        {
+            _customers = customers.Value
+                .Select(r => new SelectItem(r.CustomerID.ToString(), r.CustomerID.ToString() + " - " + r.CompanyName))
+                .ToList();
+        }
+
+        _task2 = HttpClient.GetFromJsonAsync<ODataDTO<Employee>>(NavigationManager.BaseUri + $"odata/Employees?$select=EmployeeID,FirstName,LastName");
+        var employees = await _task2;
+        if (employees == null || customers.Value == null)
+        {
+            _employees = new List<SelectItem>();
+        }
+        else
+        {
+            _employees = employees.Value
+                .Select(r => new SelectItem(r.EmployeeID.ToString(), r.EmployeeID.ToString() + " - " + r.FirstName + " " + r.LastName))
+                .ToList();
+        }
+
+        _task3 = HttpClient.GetFromJsonAsync<ODataDTO<Shipper>>(NavigationManager.BaseUri + $"odata/Shippers?$select=ShipperID,CompanyName");
+        var shippers = await _task3;
+        if (shippers == null || shippers.Value == null)
+        {
+            _shippers = new List<SelectItem>();
+        }
+        else
+        {
+            _shippers = shippers.Value
+                .Select(r => new SelectItem(r.ShipperID.ToString(), r.ShipperID.ToString() + " - " + r.CompanyName))
+                .ToList();
+        }
+
+        Action<IGridColumnCollection<Order>> orderColumns = c =>
+        {
+            c.Add(o => o.OrderID).SetPrimaryKey(true).Titled(SharedResource.Number).SetTooltip("Order ID is ... ").SetWidth(100);
+            c.Add(o => o.CustomerID).Titled("Customer").SetWidth(350).RenderValueAs(o => o.Customer == null ? "" : o.Customer.CompanyName).SetSelectField(true, o => o.Customer == null ? "" : o.Customer.CustomerID + " - " + o.Customer.CompanyName, o => GetAllCustomers(NavigationManager.BaseUri)).SetListFilter(_customers, true, true);
+            c.Add(o => o.EmployeeID).Titled("Employee").SetWidth(250).RenderValueAs(o => o.Employee == null ? "" : o.Employee.FirstName + " " + o.Employee.LastName).SetSelectField(true, o => o.Employee.EmployeeID.ToString() + " - " + o.Employee.FirstName + " " + o.Employee.LastName, () => GetAllEmployees(NavigationManager.BaseUri)).SetListFilter(_employees, true, true);
+            c.Add(o => o.ShipVia).Titled("Via").SetWidth(250).RenderValueAs(o => o.Shipper == null ? "" : o.Shipper.CompanyName).SetSelectField(true, o => o.Shipper == null ? "" : o.Shipper.ShipperID.ToString() + " - " + o.Shipper.CompanyName, () => GetAllShippers(NavigationManager.BaseUri)).SetListFilter(_shippers, true, true);
+            c.Add(o => o.OrderDate, "OrderCustomDate").Titled(SharedResource.OrderCustomDate).SetCellCssClassesContraint(o => o.OrderDate.HasValue && o.OrderDate.Value >= DateTime.Parse("1997-01-01") ? "red" : "").SetInputType(InputType.DateTimeLocal).SetFilterWidgetType("DateTimeLocal").Format("{0:yyyy-MM-dd HH:mm}").SetWidth(120);
+            c.Add(o => o.Customer.ContactName).Titled(SharedResource.ContactName).SetCrudHidden(true).SetInlineCrudReadOnly(true);
+            c.Add(o => o.Freight).Titled(SharedResource.Freight).SetWidth(150).Format("{0:F}");
+            c.Add(o => o.Customer.IsVip).Titled(SharedResource.IsVip).SetWidth(90).Css("hidden-xs").RenderValueAs(o => o.Customer.IsVip ? Strings.BoolTrueLabel : Strings.BoolFalseLabel).SetCrudHidden(true).SetInlineCrudReadOnly(true);
+        };
+
+
+        var query = new QueryDictionary<StringValues>();
+        string url = NavigationManager.BaseUri + "odata/Orders";
+        var client = new GridODataClient<Order>(HttpClient, url, query, false, "ordersGrid", orderColumns, 10, locale,
+            new List<string> { "Employee", "Shipper" })
+            .Sortable()
+            .Filterable()
+            .SetStriped(true)
+            .ODataCrud(true, CrudType.Inline)
+            .WithMultipleFilters()
+            .WithGridItemsCount();
+
+        _grid = client.Grid;
+
+        // Set new items to grid
+        _task4 = client.UpdateGrid();
+        await _task4;
+    }
+
+    protected override void OnAfterRender(bool firstRender)
+    {
+        if (!_afterRenderExecuted && _gridComponent != null)
+        {
+            _gridComponent.BeforeInsert += BeforeInsert;
+            _gridComponent.BeforeUpdate += BeforeUpdate;
+            _gridComponent.BeforeDelete += BeforeDelete;
+            _afterRenderExecuted = true;
+        }
+    }
+
+    private async Task<bool> BeforeInsert(GridCreateComponent<Order> component, Order item)
+    {
+        var orderValidator = new OrderValidator();
+        var valid = await orderValidator.ValidateAsync(item);
+
+        if (!valid.IsValid)
+        {
+            component.Error = "Insert operation returned one or more errors";
+            foreach (var error in valid.Errors)
+            {
+                component.ColumnErrors.AddParameter(error.PropertyName, error.ErrorMessage);
+            }
+        }
+
+        return valid.IsValid;
+    }
+
+    private async Task<bool> BeforeUpdate(GridUpdateComponent<Order> component, Order item)
+    {
+        var orderValidator = new OrderValidator();
+        var valid = await orderValidator.ValidateAsync(item);
+
+        if (!valid.IsValid)
+        {
+            component.Error = "Update operation returned one or more errors";
+            foreach (var error in valid.Errors)
+            {
+                component.ColumnErrors.AddParameter(error.PropertyName, error.ErrorMessage);
+            }
+        }
+
+        return valid.IsValid;
+    }
+
+    private async Task<bool> BeforeDelete(GridDeleteComponent<Order> component, Order item)
+    {
+        var orderValidator = new OrderValidator();
+        var valid = await orderValidator.ValidateAsync(item);
+
+        if (!valid.IsValid)
+        {
+            component.Error = valid.ToString();
+        }
+
+        return valid.IsValid;
+    }
+
+    Func<string, Task<IEnumerable<SelectItem>>> GetAllCustomers = async (baseUri) =>
+    {
+        string url = baseUri + $"odata/Customers?$select=CustomerID,CompanyName";
+        ODataDTO<Customer> response = await new HttpClient().GetFromJsonAsync<ODataDTO<Customer>>(url);
+        if (response == null || response.Value == null)
+        {
+            return new List<SelectItem>();
+        }
+        else
+        {
+            return response.Value
+                .Select(r => new SelectItem(r.CustomerID, r.CustomerID + " - " + r.CompanyName))
+                .ToList();
+        }
+    };
+
+    Func<string, Task<IEnumerable<SelectItem>>> GetAllEmployees = async (baseUri) =>
+    {
+        string url = baseUri + $"odata/Employees?$select=EmployeeID,FirstName,LastName";
+        ODataDTO<Employee> response = await new HttpClient().GetFromJsonAsync<ODataDTO<Employee>>(url);
+        if (response == null || response.Value == null)
+        {
+            return new List<SelectItem>();
+        }
+        else
+        {
+            return response.Value
+                .Select(r => new SelectItem(r.EmployeeID.ToString(), r.EmployeeID.ToString() + " - " + r.FirstName + " " + r.LastName))
+                .ToList();
+        }
+    };
+
+    Func<string, Task<IEnumerable<SelectItem>>> GetAllShippers = async (baseUri) =>
+    {
+        string url = baseUri + $"odata/Shippers?$select=ShipperID,CompanyName";
+        ODataDTO<Shipper> response = await new HttpClient().GetFromJsonAsync<ODataDTO<Shipper>>(url);
+        if (response == null || response.Value == null)
+        {
+            return new List<SelectItem>();
+        }
+        else
+        {
+            return response.Value
+                .Select(r => new SelectItem(r.ShipperID.ToString(), r.ShipperID.ToString() + " - " + r.CompanyName))
+                .ToList();
+        }
+    };
+}

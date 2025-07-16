@@ -21,7 +21,7 @@
     This component demonstrates a GridBlazor client-side grid. For more information, please see: <a href="https://github.com/gustavnavar/Grid.Blazor">https://github.com/gustavnavar/Grid.Blazor</a>
 </p>
 
-@if (_task1.IsCompleted && _task2.IsCompleted)
+@if (_task1.IsCompleted && _task2.IsCompleted && _task3.IsCompleted)
 {
     <div class="@Program.HtmlClass.Row">
         <div class="@(Program.HtmlClass.ColMd)9">
@@ -50,9 +50,11 @@ else
 {
     private CGrid<Order> _grid;
     private Task<List<SelectItem>> _task1;
-    private Task _task2;
+    private Task<List<SelectItem>> _task2;
+    private Task _task3;
     private OrderInfo _orderInfo;
     private OrderIDetaillnfo _orderDetailInfo;
+    private IEnumerable<SelectItem> _customers;
     private IEnumerable<SelectItem> _shippers;
     private IQueryDictionary<Type> _customFilters = new QueryDictionary<Type>();
     private List<Action<object>> _rowClickActions;
@@ -67,8 +69,10 @@ else
         _rowClickActions.Add(OrderDetailInfo);
 
         var locale = CultureInfo.CurrentCulture;
-        _task1 = HttpClient.GetFromJsonAsync<List<SelectItem>>(NavigationManager.BaseUri + $"api/SampleData/GetAllShippers");
-        _shippers = await _task1;
+        _task1 = HttpClient.GetFromJsonAsync<List<SelectItem>>(NavigationManager.BaseUri + $"api/SampleData/GetAllCustomers");
+        _customers = await _task1;
+        _task2 = HttpClient.GetFromJsonAsync<List<SelectItem>>(NavigationManager.BaseUri + $"api/SampleData/GetAllShippers");
+        _shippers = await _task2;
 
         Func<object[], bool, bool, bool, bool, Task<IGrid>> crudSubGrids = async (keys, create, read, update, delete) =>
         {
@@ -84,7 +88,7 @@ else
                     .Sortable()
                     .Filterable()
                     .SetStriped(true)
-                    .Crud(create, read, update, delete, orderDetailService)
+                    .Crud(create, read, update, delete, CrudType.FormOrInline, orderDetailService)
                     .WithMultipleFilters()
                     .WithGridItemsCount();
 
@@ -107,7 +111,7 @@ else
                     .Filterable()
                     .SetStriped(true)
                     .Selectable(true)
-                    .Crud(true, orderDetailService)
+                    .Crud(true, CrudType.FormOrInline, orderDetailService)
                     .WithMultipleFilters()
                     .WithGridItemsCount();
 
@@ -117,7 +121,7 @@ else
 
         // build the column collection passing an action list with the action executed by the ButtonCell component
         Action<IGridColumnCollection<Order>> orderColumns = c =>
-        ColumnCollections.OrderColumnsAllFeatures(c, NavigationManager.BaseUri, _shippers, crudSubGrids);
+        ColumnCollections.OrderColumnsAllFeatures(c, NavigationManager.BaseUri, _customers, _shippers, crudSubGrids);
 
         var query = new QueryDictionary<StringValues>();
         if (!string.IsNullOrWhiteSpace(GridState))
@@ -146,7 +150,7 @@ else
             .WithGridItemsCount()
             .ChangePageSize(true)
             .SubGrid(subGrids, ("OrderID", "OrderID"))
-            .Crud(true, r => r.Customer.IsVip, r => !r.Customer.IsVip, r => r.Customer.IsVip, orderService)
+            .Crud(true, r => r.Customer.IsVip, r => !r.Customer.IsVip, r => r.Customer.IsVip, CrudType.FormOrInline, orderService)
             .SetExcelExport(true)
             .SyncButton(true);
 
@@ -154,8 +158,8 @@ else
 
         _grid = client.Grid;
         // Set new items to grid
-        _task2 = client.UpdateGrid();
-        await _task2;
+        _task3 = client.UpdateGrid();
+        await _task3;
     }
 
     protected void OrderInfo(object item)
