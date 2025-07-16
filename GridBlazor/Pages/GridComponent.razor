@@ -192,7 +192,7 @@
                                 }
                                 @if (Grid.CrudType == CrudType.InlineOrForm)
                                 {
-                                    <div class="grid-crud-type">
+                                    <div class="grid-crud-type @Grid.HtmlClass.FormDivToggleSwitch">
                                         <label class="@Grid.HtmlClass.FormLabel">@(Grid.Direction == GridDirection.LTR ? Strings.Form_edit : Strings.Inline_edit)</label>
                                         <label class="grid-switch">
                                             <input type="checkbox" class="@Grid.HtmlClass.FormInput" checked="checked" value="true" @onchange="ChangeToFormEdit" />
@@ -203,7 +203,7 @@
                                 }
                                 else if (Grid.CrudType == CrudType.FormOrInline)
                                 {
-                                    <div class="grid-crud-type">
+                                    <div class="grid-crud-type @Grid.HtmlClass.FormDivToggleSwitch">
                                         <label class="@Grid.HtmlClass.FormLabel">@(Grid.Direction == GridDirection.LTR ? Strings.Form_edit : Strings.Inline_edit)</label>
                                         <label class="grid-switch">
                                             <input type="checkbox" class="@Grid.HtmlClass.FormInput" value="false" @onchange="ChangeToInlineEdit" />
