@@ -1563,12 +1563,25 @@ namespace GridBlazor.Pages
 
         protected internal async Task SaveItem(object item)
         {
-            if(Grid.ItemsToDisplay != null && InlineCrudRow >= 0 && InlineCrudRow < Grid.ItemsToDisplay.Count())
+            try
             {
-                await ShowSpinner();
-                await ((CGrid<T>)Grid).CrudDataService.Update((T)item);
+                Error = "";
+
+                if (Grid.ItemsToDisplay != null && InlineCrudRow >= 0 && InlineCrudRow < Grid.ItemsToDisplay.Count())
+                {
+                    await ShowSpinner();
+                    await ((CGrid<T>)Grid).CrudDataService.Update((T)item);
+                    await HideSpinner();
+                    await UpdateGrid(true, true);
+                }
+            }
+            catch (Exception e)
+            {
                 await HideSpinner();
-                await UpdateGrid(true, true);
+                Console.WriteLine(e.Message);
+                Error = e.Message;
+                _shouldRender = true;
+                StateHasChanged();
             }
         }
 
