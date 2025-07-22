@@ -27,6 +27,7 @@ table.grid-table { margin: 0; }
 
     /* Grid body */
     table.grid-table td.grid-cell { padding: 0.75rem; }
+    table.grid-table td.grid-cell textarea { overflow: scroll; }
     table.grid-table tr.grid-row-selected td { background: #4888C2 !important; color: white; }
     table.grid-table tr.grid-row-selected a { color: white; }
     table.striped > tbody > tr.grid-row:nth-of-type(odd) { background-color: #f9f9f9; }
