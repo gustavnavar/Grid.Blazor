@@ -57,7 +57,7 @@ namespace GridBlazor.Pages
         internal ElementReference GridTable;
         internal ElementReference GridTableWrap;
 
-        internal ScreenPosition gridComponentSP;
+        private ScreenPosition gridComponentSP;
 
         internal ElementReference Spinner;
         internal ElementReference Content;

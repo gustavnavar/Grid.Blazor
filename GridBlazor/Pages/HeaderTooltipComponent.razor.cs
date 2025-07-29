@@ -32,7 +32,7 @@ namespace GridBlazor.Pages
             {
                 await jSRuntime.InvokeVoidAsync("gridJsFunctions.focusElement", tooltip);
                 ScreenPosition sp = await jSRuntime.InvokeAsync<ScreenPosition>("gridJsFunctions.getPosition", tooltip);
-                ScreenPosition gridComponentSP = GridComponent.gridComponentSP;
+                ScreenPosition gridComponentSP = await jSRuntime.InvokeAsync<ScreenPosition>("gridJsFunctions.getPosition", GridComponent.Gridmvc);
                 if (GridComponent.Grid.Direction == GridShared.GridDirection.RTL)
                 {
                     if (sp != null && gridComponentSP != null && sp.X < Math.Max(35, gridComponentSP.X))
