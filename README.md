@@ -1,4 +1,4 @@
-# Grid.Blazor
+# Grid Blazor
 
 GridBlazor is a Blazor component that shows data in a grid. It requires a back-end component that performs paging, sorting, filtering and others. 
 
