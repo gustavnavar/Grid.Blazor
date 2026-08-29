@@ -41,6 +41,7 @@ else
         //query.Add("grid-filter", "Customer.Country__1__usa");
 
         var client = new GridClient<Order>(gridClientService.GetOrdersGridWithCount, query, false, "ordersGrid", ColumnCollections.OrderColumnsCount, locale)
+            .SetDateInputMode(DateInputMode.Grid)
             .Sortable()
             .Filterable()
             .Searchable(true, false)

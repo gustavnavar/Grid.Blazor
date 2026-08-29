@@ -55,6 +55,7 @@ else
                 o => gridClientService.GetAllCustomers(), 
                 o => gridClientService.GetAllEmployees(), 
                 o => gridClientService.GetAllShippers()), locale)
+            .SetDateInputMode(DateInputMode.Grid)
             .Sortable()
             .Filterable()
             .SetStriped(true)

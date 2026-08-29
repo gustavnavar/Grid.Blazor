@@ -57,6 +57,7 @@
 
         string url = NavigationManager.BaseUri + $"odata/Orders({_order.OrderID.ToString()})/OrderDetails";
         var client = new GridODataClient<OrderDetail>(HttpClient, url, query, false, "orderDetailsGrid", columns, 10, locale)
+            .SetDateInputMode(DateInputMode.Grid)
             .Sortable()
             .Filterable()
             .SetStriped(true)

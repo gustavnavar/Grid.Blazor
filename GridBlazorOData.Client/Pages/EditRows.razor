@@ -64,7 +64,7 @@ else
         {
             c.Add().Encoded(false).Sanitized(false).RenderComponentAs<ButtonCellEdit>("editrows");
             c.Add(o => o.OrderID).Titled(SharedResource.Number).SetWidth(100);
-            c.Add(o => o.OrderDate, "OrderCustomDate").Titled(SharedResource.OrderCustomDate).Format("{0:yyyy-MM-dd}").SetWidth(120);
+            c.Add(o => o.OrderDate, "OrderCustomDate").Titled(SharedResource.OrderCustomDate).SetWidth(120);
             c.Add(o => o.Customer.CompanyName).Titled(SharedResource.CompanyName).SetWidth(250);
             c.Add(o => o.Customer.ContactName).Titled(SharedResource.ContactName);
             c.Add(o => o.Freight).Titled(SharedResource.Freight).SetWidth(150).Format("{0:F}");
@@ -75,6 +75,7 @@ else
 
         string url = NavigationManager.BaseUri + "odata/Orders";
         var client = new GridODataClient<Order>(HttpClient, url, query, false, "ordersGrid", columns, 10, locale)
+            .SetDateInputMode(DateInputMode.Grid)
             .Sortable()
             .Filterable()
             .SetStriped(true)

@@ -13,6 +13,7 @@ using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Linq;
 using System.Threading.Tasks;
+using System.Globalization;
 
 namespace GridMvc.Demo.Components
 {
@@ -71,8 +72,7 @@ namespace GridMvc.Demo.Components
                     .Titled(SharedResource.OrderCustomDate)
                     .SortInitialDirection(GridSortDirection.Descending)
                     .ThenSortByDescending(o => o.OrderID)
-                    .SetCellCssClassesContraint(o => o.OrderDate.HasValue && o.OrderDate.Value >= DateTime.Parse("1997-01-01") ? "red" : "")
-                    .Format("{0:yyyy-MM-dd}")
+                    .SetCellCssClassesContraint(o => o.OrderDate.HasValue && o.OrderDate.Value >= DateTime.Parse("1997-01-01", CultureInfo.InvariantCulture) ? "red" : "")
                     .SetWidth(110)
                     .Max(true).Min(true);
 

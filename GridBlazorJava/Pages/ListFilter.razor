@@ -55,6 +55,7 @@ else
         var query = new QueryDictionary<StringValues>();
         string url = "http://localhost:8080/" + "api/SampleData/OrderColumnsListFilter";
         var client = new GridClient<Order>(HttpClient, url, query, false, "ordersGrid", columns, locale)
+            .SetDateInputMode(DateInputMode.Grid)
             .Sortable()
             .Filterable()
             .SetStriped(true)

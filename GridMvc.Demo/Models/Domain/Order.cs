@@ -41,11 +41,11 @@ namespace GridMvc.Demo.Models
         public string CustomerID { get; set; }
         [GridColumn(Position = 4)]
         public int? EmployeeID { get; set; }
-        [GridColumn(Position = 1, Title = "Date", Width = "120px", Format = "{0:yyyy-MM-dd}", SortEnabled = true, FilterEnabled = true, SortInitialDirection = GridSortDirection.Descending)]
+        [GridColumn(Position = 1, Title = "Date", Width = "120px", SortEnabled = true, FilterEnabled = true, SortInitialDirection = GridSortDirection.Descending)]
         public DateTime? OrderDate { get; set; }
-        [GridColumn(Position = 2, Width = "120px", Format = "{0:yyyy-MM-dd}")]
+        [GridColumn(Position = 2, Width = "120px")]
         public DateTime? RequiredDate { get; set; }
-        [GridColumn(Position = 3, Width = "120px", Format = "{0:yyyy-MM-dd}")]
+        [GridColumn(Position = 3, Width = "120px")]
         public DateTime? ShippedDate { get; set; }
         [GridColumn(Position = 6)]
         public int? ShipVia { get; set; }

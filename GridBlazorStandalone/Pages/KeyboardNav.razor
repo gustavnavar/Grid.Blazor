@@ -63,6 +63,7 @@ else
         }
         var client = new GridClient<Order>(q => orderService.GetOrdersGridRows(ColumnCollections.OrderColumns, q), 
             query, false, "ordersGrid", ColumnCollections.OrderColumns, locale)
+            .SetDateInputMode(DateInputMode.Grid)
             .Sortable()
             .Filterable()
             .SetKeyboard(true)

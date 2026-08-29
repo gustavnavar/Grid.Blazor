@@ -29,6 +29,61 @@ This is an example of a table of items using this component:
 ![Image of GridBlazor](./docs/images/GridBlazor.png)
 
 
+## Migration to GridBlazor 6.4.0 and GridCore / GridMvcCore / GridShared 8.4.0 from earlier versions
+
+This release changes how dates are **displayed**. What travels between the client and the server
+is unchanged - filter values and query strings are still ISO 8601 (```yyyy-MM-dd```) - so no
+back-end change is needed and a grid can be upgraded on its own.
+
+1. **Dates now follow the reader's locale.** A date used to be written ```yyyy-MM-dd``` for
+everybody; it is now written the way the reader writes dates, with the day and the month padded
+to two digits. Nothing has to be done to get this.
+
+2. **A column that sets its own format keeps it.** ```Format``` now takes precedence over the
+locale, so a column defined as ```Format("{0:yyyy-MM-dd}")``` goes on showing ISO to every
+reader. Grids that pinned that format on every date column - which was the only way to get a
+stable date before - should **remove it** to follow the reader:
+
+    ```c#
+        c.Add(o => o.OrderDate).Format("{0:yyyy-MM-dd}");   // before: the only stable option
+        c.Add(o => o.OrderDate);                            // now: written as the reader writes it
+    ```
+
+3. **A ```DateTime``` column with no format shows its date alone.** It used to fall back to
+```ToString()```, which appended the time of day and its seconds - ```01/09/2026 0:00:00```.
+Where the hour matters the column has to say so now, with ```Format("{0:g}")``` or any pattern
+spelling both halves. Editing is unaffected: the CRUD form still edits the whole value.
+
+4. **```System.TimeSpan``` columns are filtered as durations.** They used to fall through to the
+text filter, so the operators offered were the text ones and a duration was compared as a string.
+They now get their own filter type and the clock widget, with the ordered operators - equals, not
+equals, greater than, less than and their inclusive forms. **A stored grid state or a saved URL
+that applies a text operator to a ```TimeSpan``` column will no longer filter as it did.**
+
+5. **Update the static assets together with the package.** ```gridblazor.js``` and the CSS files
+ship with GridBlazor and are versioned with it. Projects that copied them into their own
+```wwwroot``` instead of referencing ```_content/GridBlazor/...``` must take the new versions:
+the component calls JavaScript functions that did not exist before, and the new picker has no
+styles without the new CSS. A browser holding an old copy in cache shows it as a picker that will
+not open, so force a reload after upgrading.
+
+6. **New, and entirely opt-in: ```SetDateInputMode```.** The default is
+```DateInputMode.Browser```, which is exactly the behaviour of earlier versions - the native
+```<input type="date">``` and its relatives. Only an application that chooses its own culture,
+rather than taking the browser's, needs ```DateInputMode.Grid```; see
+[Using a date time filter](./docs/blazor_client/Using_datetime_filter.md).
+
+7. If you maintain a **CSS theme derived from the shipped ones**, note that the picker rules now
+live only in ```gridblazor.css```. The per-theme files no longer carry a copy of them.
+
+8. **```SetInputType``` is now honoured on ```DateOnly``` and ```TimeOnly``` columns**, which used
+to ignore it and always render a plain date or time control. A column that asked for
+```InputType.Month``` on a ```DateOnly``` now gets a month control, which is what it asked for. In
+the other direction, a date column set to an input type a date cannot be - ```Text```,
+```TextArea```, ```File```, ```Number``` - now falls back to its natural control instead of
+rendering ```<input type="">``` and reading its value with the current culture.
+
+
 ## Migration to GridBlazor 3.5.0 and GridCore 5.5.0 from GridBlazor 3.0.0 and GridCore 5.0.0 for Blazor WASM projects with REST back-end
 
 1. You have to remove the package ```GridCore``` and install the package ```GridMvcCore```, and upgrade the ```GridBlazor``` package

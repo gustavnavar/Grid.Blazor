@@ -63,6 +63,7 @@ else
         }
         string url = NavigationManager.BaseUri + "api/SampleData/OrderColumnsWithEdit";
         var client = new GridClient<Order>(HttpClient, url, query, false, "ordersGrid", columns, locale)
+            .SetDateInputMode(DateInputMode.Grid)
             .Sortable()
             .Filterable()
             .SetStriped(true)

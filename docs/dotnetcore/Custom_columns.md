@@ -146,5 +146,20 @@ Format | Format column value | Columns.Add(o => o.OrderDate).Format("{0:dd/MM/yy
 Css | Apply css classes to the column | Columns.Add(x => x.Number).Css("hidden-xs");
 SetCellCssClassesContraint | Apply css classes to selected cells | Columns.Add(x => x.Number).SetCellCssClassesContraint(x => x.Number < 0 ? "red" : "black");
 
+## Dates without a format
+
+A column that names no ```Format``` is written in the reader's culture: its field order, its
+separator, and the day and the month padded to two digits. A ```DateTime``` shows its **date
+alone** - nearly every date column in a grid is a date, and appending ```0:00``` to all of them
+is noise in every row to keep the hour legible in the few that carry one.
+
+Where the hour matters the column says so:
+
+```c#
+    Columns.Add(o => o.OrderDate).Format("{0:g}");
+```
+
+The same holds for group labels and for the Max and Min of a totals row.
+
 
 [<- Paging](Paging.md) | [Totals ->](Totals.md)

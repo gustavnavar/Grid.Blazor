@@ -78,6 +78,7 @@ else
 
             var subGridClient = new GridClient<OrderDetail>(q => orderDetailService.GetOrderDetailsGridRows(subGridColumns, keys, q),
                 subGridQuery, false, "orderDetailsGrid" + keys[0].ToString(), subGridColumns, locale)
+                    .SetDateInputMode(DateInputMode.Grid)
                     .Sortable()
                     .Filterable()
                     .SetStriped(true)
@@ -98,6 +99,7 @@ else
 
             var subGridClient = new GridClient<OrderDetail>(q => orderDetailService.GetOrderDetailsGridRows(subGridColumns, keys, q),
                 subGridQuery, false, "orderDetailsGrid" + keys[0].ToString(), subGridColumns, locale)
+                    .SetDateInputMode(DateInputMode.Grid)
                     .SetRowCssClasses(item => item.Quantity > 10 ? "success" : string.Empty)
                     .Sortable()
                     .Filterable()
@@ -131,6 +133,7 @@ else
         }
         var client = new GridClient<Order>(q => orderService.GetOrdersGridRows(orderColumns, q), query, false, 
             "ordersGrid", orderColumns, locale)
+            .SetDateInputMode(DateInputMode.Grid)
             .SetRowCssClasses(item => item.Customer.IsVip ? "success" : string.Empty)
             .Sortable()
             .Filterable()

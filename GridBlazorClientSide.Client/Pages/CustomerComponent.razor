@@ -49,6 +49,7 @@ else
 
         string url = NavigationManager.BaseUri + "api/SampleData/GetCustomersGrid";
         var client = new GridClient<Customer>(HttpClient, url, query, false, "customersGrid", ColumnCollections.CustomerColumns, locale)
+            .SetDateInputMode(DateInputMode.Grid)
             .Sortable()
             .Filterable()
             .SetStriped(true)

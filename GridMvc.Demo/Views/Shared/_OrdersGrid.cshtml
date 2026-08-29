@@ -5,6 +5,7 @@
 @using GridShared.Filtering
 @using GridShared.Sorting
 @using Microsoft.AspNetCore.Localization
+@using System.Globalization
 @model SGrid<Order>
 
 @{
@@ -38,8 +39,7 @@
             .Titled(SharedResource.OrderCustomDate)
             .SortInitialDirection(GridSortDirection.Descending)
             .ThenSortByDescending(o => o.OrderID)
-            .SetCellCssClassesContraint(o => o.OrderDate.HasValue && o.OrderDate.Value >= DateTime.Parse("1997-01-01") ? "red" : "")
-            .Format("{0:yyyy-MM-dd}")
+            .SetCellCssClassesContraint(o => o.OrderDate.HasValue && o.OrderDate.Value >= DateTime.Parse("1997-01-01", CultureInfo.InvariantCulture) ? "red" : "")
             .SetWidth(110)
             .Max(true).Min(true);
 

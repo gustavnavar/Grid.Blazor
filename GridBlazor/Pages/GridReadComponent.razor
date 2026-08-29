@@ -112,25 +112,25 @@
                     else if (type == typeof(DateTime))
                     {
                         string typeAttr = ((IGridColumn<T>)column).InputType == InputType.None ? "date" : ((IGridColumn<T>)column).InputType.ToTypeAttr();
-                        <input id="@column.FieldName" type="@typeAttr" class="@GridComponent.Grid.HtmlClass.FormInput" readonly disabled value="@(((ICGridColumn)column).GetFormatedDateTime(value, typeAttr))" />
+                        <input id="@column.FieldName" type="text" class="@GridComponent.Grid.HtmlClass.FormInput" readonly disabled value="@(((ICGridColumn)column).GetDisplayDateTime(value, typeAttr))" />
                     }
                     else if (type == typeof(DateTimeOffset))
                     {
                         string typeAttr = ((IGridColumn<T>)column).InputType == InputType.None ? "date" : ((IGridColumn<T>)column).InputType.ToTypeAttr();
-                        <input id="@column.FieldName" type="@typeAttr" class="@GridComponent.Grid.HtmlClass.FormInput" readonly disabled value="@(((ICGridColumn)column).GetFormatedDateTime(value, typeAttr))" />
+                        <input id="@column.FieldName" type="text" class="@GridComponent.Grid.HtmlClass.FormInput" readonly disabled value="@(((ICGridColumn)column).GetDisplayDateTime(value, typeAttr))" />
                     }
                     else if (type == typeof(TimeSpan))
                     {
                         string typeAttr = ((IGridColumn<T>)column).InputType == InputType.None ? "time" : ((IGridColumn<T>)column).InputType.ToTypeAttr();
-                        <input id="@column.FieldName" type="@typeAttr" class="@GridComponent.Grid.HtmlClass.FormInput" readonly disabled value="@(((ICGridColumn)column).GetFormatedDateTime(value, typeAttr))" />
+                        <input id="@column.FieldName" type="text" class="@GridComponent.Grid.HtmlClass.FormInput" readonly disabled value="@(((ICGridColumn)column).GetDisplayDateTime(value, typeAttr))" />
                     }
                     else if (type == typeof(DateOnly))
                     {
-                        <input id="@column.FieldName" type="date" class="@GridComponent.Grid.HtmlClass.FormInput" readonly disabled value="@(((ICGridColumn)column).GetFormatedDateTime(value, "date"))" />
+                        <input id="@column.FieldName" type="text" class="@GridComponent.Grid.HtmlClass.FormInput" readonly disabled value="@(((ICGridColumn)column).GetDisplayDateTime(value, "date"))" />
                     }
                     else if (type == typeof(TimeOnly))
                     {
-                        <input id="@column.FieldName" type="time" class="@GridComponent.Grid.HtmlClass.FormInput" readonly disabled value="@(((ICGridColumn)column).GetFormatedDateTime(value, "time"))" />
+                        <input id="@column.FieldName" type="text" class="@GridComponent.Grid.HtmlClass.FormInput" readonly disabled value="@(((ICGridColumn)column).GetDisplayDateTime(value, "time"))" />
                     }
                     else
                     {
@@ -323,17 +323,17 @@
                     else if (type == typeof(DateTime))
                     {
                         string typeAttr = ((IGridColumn<T>)column).InputType == InputType.None ? "date" : ((IGridColumn<T>)column).InputType.ToTypeAttr();
-                        <input id="@column.FieldName" type="@typeAttr" class="@GridComponent.Grid.HtmlClass.FormInput" readonly disabled value="@(((ICGridColumn)column).GetFormatedDateTime(value, typeAttr))" />
+                        <input id="@column.FieldName" type="text" class="@GridComponent.Grid.HtmlClass.FormInput" readonly disabled value="@(((ICGridColumn)column).GetDisplayDateTime(value, typeAttr))" />
                     }
                     else if (type == typeof(DateTimeOffset))
                     {
                         string typeAttr = ((IGridColumn<T>)column).InputType == InputType.None ? "date" : ((IGridColumn<T>)column).InputType.ToTypeAttr();
-                        <input id="@column.FieldName" type="@typeAttr" class="@GridComponent.Grid.HtmlClass.FormInput" readonly disabled value="@(((ICGridColumn)column).GetFormatedDateTime(value, typeAttr))" />
+                        <input id="@column.FieldName" type="text" class="@GridComponent.Grid.HtmlClass.FormInput" readonly disabled value="@(((ICGridColumn)column).GetDisplayDateTime(value, typeAttr))" />
                     }
                     else if (type == typeof(TimeSpan))
                     {
                         string typeAttr = ((IGridColumn<T>)column).InputType == InputType.None ? "time" : ((IGridColumn<T>)column).InputType.ToTypeAttr();
-                        <input id="@column.FieldName" type="@typeAttr" class="@GridComponent.Grid.HtmlClass.FormInput" readonly disabled value="@(((ICGridColumn)column).GetFormatedDateTime(value, typeAttr))" />
+                        <input id="@column.FieldName" type="text" class="@GridComponent.Grid.HtmlClass.FormInput" readonly disabled value="@(((ICGridColumn)column).GetDisplayDateTime(value, typeAttr))" />
                     }
                     else
                     {

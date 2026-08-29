@@ -44,6 +44,7 @@ else
         string url = NavigationManager.BaseUri + "odata/Trucks";
 
         var client = new GridODataClient<Truck>(HttpClient, url, query, false, "trucksGrid", columns, 10, locale)
+            .SetDateInputMode(DateInputMode.Grid)
             .Sortable()
             .Filterable()
             .ClearFiltersButton(true)

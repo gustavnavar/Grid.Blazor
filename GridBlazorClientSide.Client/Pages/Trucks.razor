@@ -36,6 +36,7 @@ else
         string url = NavigationManager.BaseUri + "api/Truck/GetTrucksGrid";
 
         var client = new GridClient<Truck>(HttpClient, url, query, false, "trucksGrid", Trucks.Columns, locale)
+            .SetDateInputMode(DateInputMode.Grid)
             .Sortable()
             .Filterable()
             .ClearFiltersButton(true)

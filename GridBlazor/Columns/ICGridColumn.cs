@@ -30,6 +30,22 @@ namespace GridBlazor.Columns
         /// </summary>
         QueryDictionary<object> GetSubGridKeyValues(object item);
 
+        /// <summary>
+        ///     The ISO value for a native HTML date input, which the browser then renders in the
+        ///     reader's locale. Client to server only — never show it to a reader.
+        /// </summary>
         string GetFormatedDateTime(object value, string type);
+
+        /// <summary>
+        ///     The value written for a reader: the column's own format when it defines one, the
+        ///     browser's locale otherwise.
+        /// </summary>
+        string GetDisplayDateTime(object value, string type);
+
+        /// <summary>
+        ///     The hint for a text input of this type, spelled the way this column writes its
+        ///     values.
+        /// </summary>
+        string GetDateTimePlaceholder(string type);
     }
 }

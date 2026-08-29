@@ -52,6 +52,7 @@ else
 
         string url = "http://localhost:8080/" + "api/SampleData/GetVirtualizedOrdersGrid";
         var client = new GridClient<Order>(HttpClient, url, query, false, "ordersGrid", orderColumns, locale)
+            .SetDateInputMode(DateInputMode.Grid)
             .Sortable()
             .ExtSortable(true)
             .Filterable()

@@ -42,6 +42,7 @@ else
         //query.Add("grid-filter", "Customer.Country__1__usa");
 
         var client = new GridClient<Order>(gridClientService.GetOrdersGridordersAutoGenerateColumns, query, false, "ordersGrid", null, locale)
+            .SetDateInputMode(DateInputMode.Grid)
             .AutoGenerateColumns()
             .Sortable()
             .Filterable()

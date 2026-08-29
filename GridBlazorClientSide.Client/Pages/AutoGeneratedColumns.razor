@@ -44,6 +44,7 @@ else
 
         string url = NavigationManager.BaseUri + "api/SampleData/GetOrdersGridordersAutoGenerateColumns";
         var client = new GridClient<Order>(HttpClient, url, query, false, "ordersGrid", null, locale)
+            .SetDateInputMode(DateInputMode.Grid)
             .AutoGenerateColumns()
             .Sortable()
             .Filterable()

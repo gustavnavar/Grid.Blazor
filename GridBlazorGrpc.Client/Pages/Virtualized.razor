@@ -52,6 +52,7 @@ else
                o => gridClientService.GetAllShippers(), _shippers);
 
         var client = new GridClient<Order>(gridClientService.GetVirtualizedOrdersGridRows, query, false, "ordersGrid", orderColumns, locale)
+            .SetDateInputMode(DateInputMode.Grid)
             .Sortable()
             .ExtSortable(true)
             .Filterable()

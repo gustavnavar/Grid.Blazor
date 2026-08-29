@@ -274,6 +274,32 @@ Parameter | Description
 --------- | -----------
 inputType | ```InputType``` enum. Its value can be ```InputType.TextArea```, ```InputType.Date```, ```InputType.Time```, ```InputType.Month```, ```InputType.Week``` or ```InputType.DateTimeLocal```
 
+### Dates and times in the forms
+
+A date or time field is written and read in the reader's format, and travels to the server in ISO
+8601 whatever that format is. What the reader sees is the column's own ```Format``` where it
+defines one, and the current culture's short date pattern otherwise.
+
+Which control opens is decided once for the whole grid by ```SetDateInputMode```, and it applies
+to the create and update forms exactly as it does to the filters:
+
+- ```DateInputMode.Browser``` - the default - uses the native ```<input type="date">``` and its
+  relatives. The browser paints them in **its own** language, which for an application that takes
+  its culture from the browser is the same thing and for one that chooses its own is not.
+- ```DateInputMode.Grid``` renders a field the grid writes itself, with its own calendar, clock or
+  month grid, drawn in the culture the grid was given and in that culture's calendar.
+
+Read and delete forms are unaffected either way: their fields are read-only and were never
+pickers. See [Using a date time filter](Using_datetime_filter.md) for what each picker draws and
+what it does not cover.
+
+**```SetInputType``` applies to every date and time column**, ```System.DateTime```,
+```System.DateTimeOffset```, ```System.TimeSpan```, ```System.DateOnly``` and
+```System.TimeOnly``` alike. The last two used to ignore it and always render a plain date or time
+control. Only the five date-shaped values mean anything here - ```Date```, ```Time```, ```Week```,
+```Month```, ```DateTimeLocal```; a date column set to ```Text```, ```TextArea```, ```File``` or
+```Number``` falls back to the control its type asks for.
+
 The **SetTextArea** method has 1 optional parameter:
 Parameter | Description
 --------- | -----------

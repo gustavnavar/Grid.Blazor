@@ -109,13 +109,16 @@
                                 <label class="@GridHeaderComponent.GridComponent.Grid.HtmlClass.FormLabel"><b>@Strings.FilterValueLabel:</b></label>
                             }
                             <div class="@GridHeaderComponent.GridComponent.Grid.HtmlClass.FormDivInput">
-                                @if (GridHeaderComponent.GridComponent.IsMonthSupported)
+                                @if (GridHeaderComponent.GridComponent.UseNativeDateInput("month"))
                                 {
-                                    <input type="month" placeholder="yyyy-mm" class="grid-filter-input @GridHeaderComponent.GridComponent.Grid.HtmlClass.FormInput" value="@_filters[j].Value" @onchange="(ChangeEventArgs __e) => _filters[j].Value = __e.Value.ToString()" />
+                                    <input type="month" class="grid-filter-input @GridHeaderComponent.GridComponent.Grid.HtmlClass.FormInput" value="@_filters[j].Value" @onchange="(ChangeEventArgs __e) => _filters[j].Value = __e.Value.ToString()" />
                                 }
                                 else
                                 {
-                                    <input type="text" placeholder="yyyy-mm" class="grid-filter-input @GridHeaderComponent.GridComponent.Grid.HtmlClass.FormInput" value="@_filters[j].Value" @onchange="(ChangeEventArgs __e) => _filters[j].Value = __e.Value.ToString()" />
+                                    <GridDatePickerComponent T="T" Type="month" ValuePattern="@ColumnValuePattern"
+                                                             InputCssClass="@("grid-filter-input " + GridHeaderComponent.GridComponent.Grid.HtmlClass.FormInput)"
+                                                             Value="@_filters[j].Value"
+                                                             ValueChanged="@((string v) => SetTransportValue(j, v))" />
                                 }
                             </div>
                         </div>

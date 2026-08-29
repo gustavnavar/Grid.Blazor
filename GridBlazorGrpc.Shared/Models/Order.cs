@@ -47,13 +47,13 @@ namespace GridBlazorGrpc.Shared.Models
         [DataMember(Order = 3)]
         [Required]
         public int? EmployeeID { get; set; }
-        [GridColumn(Position = 1, Title = "Date", Width = "120px", Format = "{0:yyyy-MM-dd}", SortEnabled = true, FilterEnabled = true, SortInitialDirection = GridSortDirection.Ascending)]
+        [GridColumn(Position = 1, Title = "Date", Width = "120px", SortEnabled = true, FilterEnabled = true, SortInitialDirection = GridSortDirection.Ascending)]
         [DataMember(Order = 4)]
         public DateTime? OrderDate { get; set; }
-        [GridColumn(Position = 2, Width = "120px", Format = "{0:yyyy-MM-dd}")]
+        [GridColumn(Position = 2, Width = "120px")]
         [DataMember(Order = 5)]
         public DateTime? RequiredDate { get; set; }
-        [GridColumn(Position = 3, Width = "120px", Format = "{0:yyyy-MM-dd}")]
+        [GridColumn(Position = 3, Width = "120px")]
         [DataMember(Order = 6)]
         public DateTime? ShippedDate { get; set; }
         [GridColumn(Position = 6)]

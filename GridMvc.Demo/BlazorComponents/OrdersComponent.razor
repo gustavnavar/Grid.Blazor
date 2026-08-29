@@ -62,8 +62,8 @@ else
         /* Adding "OrderDate" column: */
         c.Add(o => o.OrderDate, "OrderCustomDate").Titled(SharedResource.OrderCustomDate)
         .SortInitialDirection(GridSortDirection.Descending)
-        .SetCellCssClassesContraint(o => o.OrderDate.HasValue && o.OrderDate.Value >= DateTime.Parse("1997-01-01") ? "red" : "")
-        .Format("{0:yyyy-MM-dd}").SetWidth(120)
+        .SetCellCssClassesContraint(o => o.OrderDate.HasValue && o.OrderDate.Value >= DateTime.Parse("1997-01-01", CultureInfo.InvariantCulture) ? "red" : "")
+        .SetWidth(120)
         .Max(true).Min(true);
 
         /* Adding "CompanyName" column: */
@@ -98,10 +98,10 @@ else
                 .RenderValueAs(o => o.Customer.IsVip ? Strings.BoolTrueLabel : Strings.BoolFalseLabel).SetCrudHidden(true);
 
             /* Adding hidden "RequiredDate" column: */
-            c.Add(o => o.RequiredDate, true).Format("{0:yyyy-MM-dd}");
+            c.Add(o => o.RequiredDate, true);
 
             /* Adding hidden "ShippedDate" column: */
-            c.Add(o => o.ShippedDate, true).Format("{0:yyyy-MM-dd}");
+            c.Add(o => o.ShippedDate, true);
 
             /* Adding hidden "ShipName" column: */
             c.Add(o => o.ShipName, true);
@@ -130,6 +130,7 @@ else
 
         var client = new GridClient<Order>(q => orderService.GetOrdersGridRowsAsync(orderColumns, q),
             query, false, "ordersGrid", orderColumns, locale)
+            .SetDateInputMode(DateInputMode.Grid)
             .SetRowCssClasses(item => item.Customer.IsVip ? "success" : string.Empty)
             .Sortable()
             .Filterable()

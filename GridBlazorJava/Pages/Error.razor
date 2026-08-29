@@ -42,6 +42,7 @@ else
 
         string url = "http://localhost:8080/" + "api/SampleData/GetOrderColumnsWithErrors";
         var client = new GridClient<Order>(HttpClient, url, query, false, "ordersGrid", ColumnCollections.OrderColumns, locale)
+            .SetDateInputMode(DateInputMode.Grid)
             .Sortable()
             .Filterable()
             .SetStriped(true)

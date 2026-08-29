@@ -45,6 +45,7 @@ else
 
         string url = "http://localhost:8080/" + "api/SampleData/GetEmployeesGrid";
         var client = new GridClient<Employee>(HttpClient, url, query, false, "employeesGrid", ColumnCollections.EmployeeColumns, locale)
+            .SetDateInputMode(DateInputMode.Grid)
             .Sortable()
             .Filterable()
             .SetStriped(true)

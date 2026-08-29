@@ -195,6 +195,12 @@ namespace GridBlazor
             return this;
         }
 
+        public IGridClient<T> SetDateInputMode(DateInputMode mode)
+        {
+            _source.DateInputMode = mode;
+            return this;
+        }
+
         public IGridClient<T> Sortable()
         {
             return Sortable(true, GridSortMode.ThreeState);

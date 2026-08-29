@@ -8,6 +8,7 @@ using GridShared.Utility;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using System.Globalization;
 
 namespace GridBlazorGrpc.Client.ColumnCollections
 {
@@ -80,7 +81,7 @@ namespace GridBlazorGrpc.Client.ColumnCollections
 
             /* Adding "OrderDate" column: */
             c.Add(o => o.OrderDate, "OrderCustomDate").Titled(SharedResource.OrderCustomDate)
-            .Format("{0:yyyy-MM-dd}").SetWidth(120)
+            .SetWidth(120)
             .Max(true).Min(true);
 
             /* Adding "CompanyName" column: */
@@ -251,7 +252,7 @@ namespace GridBlazorGrpc.Client.ColumnCollections
 
             /* Adding "OrderDate" column: */
             c.Add(o => o.OrderDate, "OrderCustomDate").Titled(SharedResource.OrderCustomDate)
-            .Format("{0:yyyy-MM-dd}").SetWidth(120);
+            .SetWidth(120);
 
             /* Adding "CompanyName" column: */
             c.Add(o => o.Customer.CompanyName).Titled(SharedResource.CompanyName).SetWidth(250);
@@ -380,10 +381,10 @@ namespace GridBlazorGrpc.Client.ColumnCollections
             .RenderValueAs(o => o.Customer.IsVip ? Strings.BoolTrueLabel : Strings.BoolFalseLabel).SetCrudHidden(true);
 
             /* Adding hidden "RequiredDate" column: */
-            c.Add(o => o.RequiredDate, true).Format("{0:yyyy-MM-dd}").SetCrudWidth(3);
+            c.Add(o => o.RequiredDate, true).SetCrudWidth(3);
 
             /* Adding hidden "ShippedDate" column: */
-            c.Add(o => o.ShippedDate, true).Format("{0:yyyy-MM-dd}").SetCrudWidth(3);
+            c.Add(o => o.ShippedDate, true).SetCrudWidth(3);
 
             /* Adding hidden "ShipName" column: */
             c.Add(o => o.ShipName, true);
@@ -449,10 +450,10 @@ namespace GridBlazorGrpc.Client.ColumnCollections
             .RenderValueAs(o => o.Customer.IsVip ? Strings.BoolTrueLabel : Strings.BoolFalseLabel).SetCrudHidden(true);
 
             /* Adding hidden "RequiredDate" column: */
-            c.Add(o => o.RequiredDate, true).Format("{0:yyyy-MM-dd}");
+            c.Add(o => o.RequiredDate, true);
 
             /* Adding hidden "ShippedDate" column: */
-            c.Add(o => o.ShippedDate, true).Format("{0:yyyy-MM-dd}");
+            c.Add(o => o.ShippedDate, true);
 
             /* Adding hidden "ShipName" column: */
             c.Add(o => o.ShipName, true);
@@ -521,10 +522,10 @@ namespace GridBlazorGrpc.Client.ColumnCollections
             .RenderValueAs(o => o.Customer.IsVip ? Strings.BoolTrueLabel : Strings.BoolFalseLabel).SetCrudHidden(true);
 
             /* Adding hidden "RequiredDate" column: */
-            c.Add(o => o.RequiredDate, true).Format("{0:yyyy-MM-dd}");
+            c.Add(o => o.RequiredDate, true);
 
             /* Adding hidden "ShippedDate" column: */
-            c.Add(o => o.ShippedDate, true).Format("{0:yyyy-MM-dd}");
+            c.Add(o => o.ShippedDate, true);
 
             /* Adding hidden "ShipName" column: */
             c.Add(o => o.ShipName, true);
@@ -569,7 +570,7 @@ namespace GridBlazorGrpc.Client.ColumnCollections
 
             /* Adding "OrderDate" column: */
             c.Add(o => o.OrderDate, "OrderCustomDate").Titled(SharedResource.OrderCustomDate)
-            .Format("{0:yyyy-MM-dd}").SetWidth(120);
+            .SetWidth(120);
 
             /* Adding "CompanyName" column: */
             c.Add(o => o.Customer.CompanyName).Titled(SharedResource.CompanyName)
@@ -608,7 +609,7 @@ namespace GridBlazorGrpc.Client.ColumnCollections
 
             /* Adding "OrderDate" column: */
             c.Add(o => o.OrderDate, "OrderCustomDate").Titled(SharedResource.OrderCustomDate)
-            .Format("{0:yyyy-MM-dd}").SetWidth(120)
+            .SetWidth(120)
             .SetCrudWidth(3);
 
             /* Adding "CompanyName" column: */
@@ -629,10 +630,10 @@ namespace GridBlazorGrpc.Client.ColumnCollections
             .RenderValueAs(o => o.Customer.IsVip ? Strings.BoolTrueLabel : Strings.BoolFalseLabel).SetCrudHidden(true);
 
             /* Adding hidden "RequiredDate" column: */
-            c.Add(o => o.RequiredDate, true).Format("{0:yyyy-MM-dd}").SetCrudWidth(3);
+            c.Add(o => o.RequiredDate, true).SetCrudWidth(3);
 
             /* Adding hidden "ShippedDate" column: */
-            c.Add(o => o.ShippedDate, true).Format("{0:yyyy-MM-dd}").SetCrudWidth(3);
+            c.Add(o => o.ShippedDate, true).SetCrudWidth(3);
 
             /* Adding hidden "ShipName" column: */
             c.Add(o => o.ShipName, true);
@@ -684,7 +685,7 @@ namespace GridBlazorGrpc.Client.ColumnCollections
 
                 /* Adding "OrderDate" column: */
                 c.Add(o => o.OrderDate, "OrderCustomDate").Titled(SharedResource.OrderCustomDate)
-                .Format("{0:yyyy-MM-dd}").SetWidth(120);
+                .SetWidth(120);
 
                 /* Adding "ContactName" column: */
                 c.Add(o => o.Customer.ContactName).Titled(SharedResource.ContactName)
@@ -712,8 +713,8 @@ namespace GridBlazorGrpc.Client.ColumnCollections
             /* Adding "OrderDate" column: */
             c.Add(o => o.OrderDate, "OrderCustomDate").Titled(SharedResource.OrderCustomDate)
             //.SortInitialDirection(GridSortDirection.Descending)
-            .SetCellCssClassesContraint(o => o.OrderDate.HasValue && o.OrderDate.Value >= DateTime.Parse("1997-01-01") ? "red" : "")
-            .Format("{0:yyyy-MM-dd}").SetWidth(120);
+            .SetCellCssClassesContraint(o => o.OrderDate.HasValue && o.OrderDate.Value >= DateTime.Parse("1997-01-01", CultureInfo.InvariantCulture) ? "red" : "")
+            .SetWidth(120);
 
             /* Adding "CompanyName" column: */
             c.Add(o => o.Customer.CompanyName).Titled(SharedResource.CompanyName)
@@ -794,10 +795,10 @@ namespace GridBlazorGrpc.Client.ColumnCollections
             /* Adding "OrderDate" column: */
             c.Add(o => o.OrderDate, "OrderCustomDate").Titled(SharedResource.OrderCustomDate)
             //.SortInitialDirection(GridSortDirection.Descending)
-            .SetCellCssClassesContraint(o => o.OrderDate.HasValue && o.OrderDate.Value >= DateTime.Parse("1997-01-01") ? "red" : "")
+            .SetCellCssClassesContraint(o => o.OrderDate.HasValue && o.OrderDate.Value >= DateTime.Parse("1997-01-01", CultureInfo.InvariantCulture) ? "red" : "")
             .SetInputType(InputType.DateTimeLocal)
             .SetFilterWidgetType("DateTimeLocal")
-            .Format("{0:yyyy-MM-dd HH:mm}").SetWidth(120)
+            .Format("{0:g}").SetWidth(120)
             .Max(true).Min(true);
 
             /* Adding "ContactName" column: */
@@ -824,10 +825,10 @@ namespace GridBlazorGrpc.Client.ColumnCollections
             .SetInlineCrudReadOnly(true);
 
             /* Adding hidden "RequiredDate" column: */
-            c.Add(o => o.RequiredDate, true).Format("{0:yyyy-MM-dd}");
+            c.Add(o => o.RequiredDate, true);
 
             /* Adding hidden "ShippedDate" column: */
-            c.Add(o => o.ShippedDate, true).Format("{0:yyyy-MM-dd}");
+            c.Add(o => o.ShippedDate, true);
 
             /* Adding hidden "ShipName" column: */
             c.Add(o => o.ShipName, true);
@@ -873,8 +874,8 @@ namespace GridBlazorGrpc.Client.ColumnCollections
                 /* Adding "OrderDate" column: */
                 c.Add(o => o.OrderDate, "OrderCustomDate").Titled(SharedResource.OrderCustomDate)
                 //.SortInitialDirection(GridSortDirection.Descending)
-                .SetCellCssClassesContraint(o => o.OrderDate.HasValue && o.OrderDate.Value >= DateTime.Parse("1997-01-01") ? "red" : "")
-                .Format("{0:yyyy-MM-dd}").SetWidth(120)
+                .SetCellCssClassesContraint(o => o.OrderDate.HasValue && o.OrderDate.Value >= DateTime.Parse("1997-01-01", CultureInfo.InvariantCulture) ? "red" : "")
+                .SetWidth(120)
                 .Max(true).Min(true);
 
                 /* Adding "CompanyName" column: */
@@ -903,10 +904,10 @@ namespace GridBlazorGrpc.Client.ColumnCollections
                 .RenderValueAs(o => o.Customer.IsVip ? Strings.BoolTrueLabel : Strings.BoolFalseLabel).SetCrudHidden(true);
 
                 /* Adding hidden "RequiredDate" column: */
-                c.Add(o => o.RequiredDate, true).Format("{0:yyyy-MM-dd}");
+                c.Add(o => o.RequiredDate, true);
 
                 /* Adding hidden "ShippedDate" column: */
-                c.Add(o => o.ShippedDate, true).Format("{0:yyyy-MM-dd}");
+                c.Add(o => o.ShippedDate, true);
 
                 /* Adding hidden "ShipName" column: */
                 c.Add(o => o.ShipName, true);
@@ -936,7 +937,7 @@ namespace GridBlazorGrpc.Client.ColumnCollections
             c.Add(o => o.OrderID).Titled(SharedResource.Number).SetWidth(100);
 
             /* Adding "OrderDate" column: */
-            c.Add(o => o.OrderDate, "OrderCustomDate").Titled(SharedResource.OrderCustomDate).Format("{0:yyyy-MM-dd}").SetWidth(120);
+            c.Add(o => o.OrderDate, "OrderCustomDate").Titled(SharedResource.OrderCustomDate).SetWidth(120);
 
             /* Adding "CompanyName" column: */
             c.Add(o => o.Customer.CompanyName).Titled(SharedResource.CompanyName).SetWidth(250);
@@ -1109,8 +1110,8 @@ namespace GridBlazorGrpc.Client.ColumnCollections
             c.Add(o => o.FirstName);
             c.Add(o => o.LastName);
             c.Add(o => o.Title);
-            c.Add(o => o.BirthDate, true).Format("{0:yyyy-MM-dd}");
-            c.Add(o => o.HireDate).Format("{0:yyyy-MM-dd}");
+            c.Add(o => o.BirthDate, true);
+            c.Add(o => o.HireDate);
             c.Add().Encoded(false).Sanitized(false).SetWidth("5%").Titled("Photo")
                 .RenderValueAs(o => $"<img width='50' height='50' src='data:image/bmp;base64,{o.Base64String}' />")
                 .SetCrudHidden(true);

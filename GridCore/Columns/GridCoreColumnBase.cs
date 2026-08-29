@@ -781,7 +781,12 @@ namespace GridCore.Columns
             if (!string.IsNullOrEmpty(ValuePattern))
                 textValue = string.Format(ValuePattern, value);
             else
-                textValue = value.ToString();
+                // A date with no format of its own is written the way the reader writes dates.
+                // ToString() is already the reader's culture, but its general pattern gives a
+                // one-digit day one row and two the next and appends seconds nobody asked for,
+                // so a date column would not line up with itself, let alone with the CRUD form
+                // beside it. Everything that is not a date falls through untouched.
+                textValue = GridDateTimeFormats.ToDisplayValue(value) ?? value.ToString();
             return textValue;
         }
 

@@ -786,30 +786,51 @@ namespace GridBlazor.Columns
             if (!string.IsNullOrEmpty(ValuePattern))
                 textValue = string.Format(ValuePattern, value);
             else
-                textValue = value.ToString();
+                // A date with no format of its own is written the way the reader writes dates.
+                // ToString() is already the reader's culture, but its general pattern gives a
+                // one-digit day one row and two the next and appends seconds nobody asked for,
+                // so a date column would not line up with itself, let alone with the CRUD form
+                // beside it. Everything that is not a date falls through untouched.
+                textValue = GridDateTimeFormats.ToDisplayValue(value) ?? value.ToString();
             return textValue;
         }
 
+        /// <summary>
+        ///     The ISO value a <b>native</b> HTML date input carries. Never localized, and the
+        ///     column's own format never applies here: the browser is what renders this in the
+        ///     reader's locale, and it only recognises the value in ISO. Anything the reader reads
+        ///     directly — a text input, a read-only field, a cell — goes through
+        ///     <see cref="GetDisplayDateTime"/> instead.
+        /// </summary>
         public string GetFormatedDateTime(object value, string type)
         {
             if (value == null)
                 return null;
-            string textValue;
-            if(type == "date")
-                textValue = string.Format("{0:yyyy-MM-dd}", value);
-            else if (type == "time")
-                textValue = string.Format("{0:HH:mm}", value);
-            else if (type == "datetime-local")
-                textValue = string.Format("{0:yyyy-MM-ddTHH:mm}", value);
-            else if (type == "week")
-                textValue = string.Format("{0:yyyy}-W{1}", value, DateTimeUtils.GetIso8601WeekOfYear(value));
-            else if (type == "month")
-                textValue = string.Format("{0:yyyy-MM}", value);
-            else if (!string.IsNullOrEmpty(ValuePattern))
-                textValue = string.Format(ValuePattern, value);
-            else
-                textValue = value.ToString();
-            return textValue;
+            if (GridDateTimeFormats.IsDateType(type))
+                return GridDateTimeFormats.ToTransport(value, type);
+            return GetFormatedValue(value);
+        }
+
+        /// <summary>
+        ///     The same value written for a reader: this column's format when it defines one, the
+        ///     browser's locale otherwise.
+        /// </summary>
+        public string GetDisplayDateTime(object value, string type)
+        {
+            if (value == null)
+                return null;
+            if (GridDateTimeFormats.IsDateType(type))
+                return GridDateTimeFormats.ToDisplay(value, type, ValuePattern);
+            return GetFormatedValue(value);
+        }
+
+        /// <summary>
+        ///     The hint for a text input of this type, spelled the way this column writes its
+        ///     values, so the placeholder and the value never disagree.
+        /// </summary>
+        public string GetDateTimePlaceholder(string type)
+        {
+            return GridDateTimeFormats.Placeholder(type, ValuePattern);
         }
 
         public string GetFormatedValue(Func<T, string> expression, object value)

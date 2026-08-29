@@ -34,6 +34,7 @@ else
         var query = new QueryDictionary<StringValues>();
         var client = new GridClient<Truck>(q => truckService.GetTrucksGridRows(Trucks.Columns, q), 
             query, false, "trucksGrid", Trucks.Columns, locale)
+            .SetDateInputMode(DateInputMode.Grid)
             .Sortable()
             .Filterable()
             .ClearFiltersButton(true)

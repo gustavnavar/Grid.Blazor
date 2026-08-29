@@ -48,6 +48,7 @@
 
         var client = new GridClient<OrderDetail>(q => orderDetailService.GetOrderDetailsGridRows(ColumnCollections.OrderDetailColumns,
             new object[] { _order.OrderID }, q), query, false, "orderDetailsGrid", ColumnCollections.OrderDetailColumns, locale)
+            .SetDateInputMode(DateInputMode.Grid)
             .Sortable()
             .Filterable()
             .SetStriped(true)

@@ -50,6 +50,31 @@ namespace GridBlazor.Pages
         internal bool IsWeekSupported = false;
         internal bool IsMonthSupported = false;
 
+        /// <summary>
+        ///     Does this input type get the browser's own picker, or a text box the grid writes
+        ///     itself? The single answer for every date input in the grid - filters and CRUD
+        ///     forms alike - so the two can never disagree about it.
+        ///     <para>
+        ///     Two reasons to fall back to text, and they are different: the grid was told to
+        ///     (<see cref="DateInputMode.Grid"/>), or the browser has no picker of that type to
+        ///     offer. Date and time are the exception to the second - every browser has those,
+        ///     which is why there is no support flag for them to consult.
+        ///     </para>
+        /// </summary>
+        internal bool UseNativeDateInput(string type)
+        {
+            if (Grid.DateInputMode != DateInputMode.Browser)
+                return false;
+
+            switch (type)
+            {
+                case GridDateTimeFormats.WeekType: return IsWeekSupported;
+                case GridDateTimeFormats.MonthType: return IsMonthSupported;
+                case GridDateTimeFormats.DateTimeLocalType: return IsDateTimeLocalSupported;
+                default: return true;
+            }
+        }
+
         // CRUD buttons on the header
         internal bool HeaderCrudButtons = false;
 
@@ -273,6 +298,9 @@ namespace GridBlazor.Pages
 #if ! NETSTANDARD2_1 && !NET5_0
             _filterComponents.Add("System.DateOnly", typeof(DateOnlyFilterComponent<T>));
             _filterComponents.Add("System.TimeOnly", typeof(TimeOnlyFilterComponent<T>));
+            // A duration inside a day is a time of day to a reader, and the clock reads and
+            // writes HH:mm either way, so the same widget serves both.
+            _filterComponents.Add("System.TimeSpan", typeof(TimeOnlyFilterComponent<T>));
 #endif
             _filterComponents.Add("System.Boolean", typeof(BooleanFilterComponent<T>));
             _filterComponents.Add("System.Collections.Generic.ICollection`1", typeof(CollectionFilterComponent<T>));

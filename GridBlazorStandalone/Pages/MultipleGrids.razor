@@ -82,6 +82,7 @@ else
         }
         var ordersClient = new GridClient<Order>(q => orderService.GetOrdersGridRows(orderColumns, q),
             ordersQuery, false, "ordersGrid", orderColumns, locale)
+            .SetDateInputMode(DateInputMode.Grid)
             .Sortable()
             .Filterable()
             .SetStriped(true)
@@ -107,6 +108,7 @@ else
         }
         var customersClient = new GridClient<Customer>(q => customerService.GetCustomersGridRows(ColumnCollections.CustomersColumns, q),
             customersQuery, false, "customersGrid", ColumnCollections.CustomersColumns, locale)
+            .SetDateInputMode(DateInputMode.Grid)
             .Sortable()
             .Filterable()
             .SetStriped(true)

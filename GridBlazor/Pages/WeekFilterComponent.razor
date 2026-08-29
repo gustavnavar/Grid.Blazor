@@ -109,9 +109,9 @@
                                 <label class="@GridHeaderComponent.GridComponent.Grid.HtmlClass.FormLabel"><b>@Strings.FilterValueLabel:</b></label>
                             }
                             <div class="@GridHeaderComponent.GridComponent.Grid.HtmlClass.FormDivInput">
-                                @if (GridHeaderComponent.GridComponent.IsWeekSupported)
+                                @if (GridHeaderComponent.GridComponent.UseNativeDateInput("week"))
                                 {
-                                    <input type="week" placeholder="yyyy-Www" class="grid-filter-input @GridHeaderComponent.GridComponent.Grid.HtmlClass.FormInput" value="@_filters[j].Value" @onchange="(ChangeEventArgs __e) => _filters[j].Value = __e.Value.ToString()" />
+                                    <input type="week" class="grid-filter-input @GridHeaderComponent.GridComponent.Grid.HtmlClass.FormInput" value="@_filters[j].Value" @onchange="(ChangeEventArgs __e) => _filters[j].Value = __e.Value.ToString()" />
                                 }
                                 else
                                 {

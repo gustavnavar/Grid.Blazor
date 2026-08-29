@@ -1,4 +1,5 @@
 ﻿using GridShared.Sorting;
+using GridShared.Utility;
 using System;
 using System.Runtime.Serialization;
 
@@ -57,7 +58,9 @@ namespace GridShared.Totals
                 if (!string.IsNullOrEmpty(valuePattern))
                     return string.Format(valuePattern, value);
                 else
-                    return value?.ToString();
+                    // The oldest and the newest row of a date column are read in the same
+                    // breath as the column itself, so they are written the same way it is.
+                    return GridDateTimeFormats.ToDisplayValue(value) ?? value?.ToString();
             }
             catch (Exception)
             {

@@ -67,7 +67,7 @@ else
         {
             c.Add().Encoded(false).Sanitized(false).SetWidth(30).RenderComponentAs<ButtonCellMultipleGrids>(new List<Func<object, Task>>() { MyFunction });
             c.Add(o => o.OrderID).Titled(SharedResource.Number).SetWidth(100);
-            c.Add(o => o.OrderDate, "OrderCustomDate").Titled(SharedResource.OrderCustomDate).Format("{0:yyyy-MM-dd}").SetWidth(120);
+            c.Add(o => o.OrderDate, "OrderCustomDate").Titled(SharedResource.OrderCustomDate).SetWidth(120);
             c.Add(o => o.Customer.CompanyName).Titled(SharedResource.CompanyName).SetWidth(250);
             c.Add(o => o.Customer.ContactName).Titled(SharedResource.ContactName);
             c.Add(o => o.Freight).Titled(SharedResource.Freight).SetWidth(150).Format("{0:F}");
@@ -88,6 +88,7 @@ else
         }
         string ordersUrl = NavigationManager.BaseUri + "odata/Orders";
         var ordersClient = new GridODataClient<Order>(HttpClient, ordersUrl, ordersQuery, false, "ordersGrid", orderColumns, 10, locale)
+            .SetDateInputMode(DateInputMode.Grid)
             .Sortable()
             .Filterable()
             .SetStriped(true)
@@ -126,6 +127,7 @@ else
         string customersUrl = NavigationManager.BaseUri + "odata/Customers";
         var customersClient = new GridODataClient<Customer>(HttpClient, customersUrl, customersQuery, false, "customersGrid",
             customerColumns, 10, locale)
+                .SetDateInputMode(DateInputMode.Grid)
                 .Sortable()
                 .Filterable()
                 .SetStriped(true)

@@ -44,6 +44,14 @@
 
     _isColumnFiltered = _filterSettings.Any(r => r.FilterType != GridFilterType.Condition);
 
+    // How this column's date filter is written for the reader: the column's own format when it
+    // defines one that writes a date and nothing else, this request's culture otherwise. The
+    // filter still travels as ISO — the widget converts on its way in and out. The culture is
+    // resolved here rather than in the browser on purpose: the cells beside the filter are
+    // rendered by this same request, and a filter reading a day differently from the column it
+    // filters is worse than either choice on its own.
+    string _datePattern = GridDateTimeFormats.FilterDatePattern((Model as ITotalsColumn)?.ValuePattern);
+
     //determine current url:
     var queryBuilder = new CustomQueryStringBuilder(_settings.FilterSettings.Query);
 
@@ -231,7 +239,7 @@
         }
         @if (Model.FilterEnabled && !Model.NotDbMapped)
         {
-            <div class="grid-filter" data-type="@Model.FilterWidgetTypeName" data-isnullable="@Model.Filter.IsNullable" data-name="@Model.Name" data-widgetdata="@JsonSerializer.Serialize(Model.FilterWidgetData)" data-filterdata="@JsonSerializer.Serialize(_filterSettings)" data-url="@_url" data-clearinitfilter="@_clearInitFilter.ToString()">
+            <div class="grid-filter" data-type="@Model.FilterWidgetTypeName" data-isnullable="@Model.Filter.IsNullable" data-name="@Model.Name" data-widgetdata="@JsonSerializer.Serialize(Model.FilterWidgetData)" data-filterdata="@JsonSerializer.Serialize(_filterSettings)" data-url="@_url" data-clearinitfilter="@_clearInitFilter.ToString()" data-datepattern="@_datePattern">
                 <span class="@_cssFilterClass" title="@Strings.FilterButtonTooltipText"></span>
             </div>
         }

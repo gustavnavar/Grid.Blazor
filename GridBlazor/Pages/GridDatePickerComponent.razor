@@ -1,0 +1,159 @@
+﻿@typeparam T
+
+<div class="grid-datepicker">
+    <div class="grid-datepicker-field">
+        <input type="text"
+               @ref="_field"
+               id="@Id"
+               name="@Name"
+               class="@InputCssClass"
+               placeholder="@Placeholder"
+               value="@Display"
+               autocomplete="@AutoComplete"
+               @onfocus="Close"
+               @onchange="TextChanged"
+               @onkeydown="FieldKeyDown" />
+        @if (HasPicker)
+        {
+            <button type="button"
+                    class="grid-datepicker-toggle"
+                    title="@Title"
+                    tabindex="-1"
+                    @onclick="Toggle">
+                <span class="grid-datepicker-icon"></span>
+            </button>
+        }
+    </div>
+
+    @if (_open && HasClock && !IsInstant)
+    {
+        <div class="grid-datepicker-popup grid-timepicker-popup" style="@PopupStyle" @ref="_popup" tabindex="0"
+             role="dialog" aria-label="@Title"
+             @onkeydown="PopupKeyDown" @onkeydown:preventDefault="true">
+            <div class="grid-timepicker-columns">
+                <ul class="grid-timepicker-column">
+                    @{ var hourRow = 0; }
+                    @foreach (var hour in Hours)
+                    {
+                        var h = hour;
+                        var row = hourRow++;
+                        <li class="@ClockCssClass(h == SelectedHourLabel, 0, row)" @onclick="() => SelectHour(h)">@h.ToString("00")</li>
+                    }
+                </ul>
+                <ul class="grid-timepicker-column">
+                    @{ var minuteRow = 0; }
+                    @foreach (var minute in Minutes)
+                    {
+                        var m = minute;
+                        var row = minuteRow++;
+                        <li class="@ClockCssClass(m == SelectedMinute, 1, row)" @onclick="() => SelectMinute(m)">@m.ToString("00")</li>
+                    }
+                </ul>
+                @if (Uses12Hour)
+                {
+                    <ul class="grid-timepicker-column grid-timepicker-meridiem">
+                        <li class="@ClockCssClass(!IsAfternoon, 2, 0)" @onclick="() => SelectMeridiem(false)">@MeridiemLabel(false)</li>
+                        <li class="@ClockCssClass(IsAfternoon, 2, 1)" @onclick="() => SelectMeridiem(true)">@MeridiemLabel(true)</li>
+                    </ul>
+                }
+            </div>
+        </div>
+    }
+
+    @if (_open && HasMonths)
+    {
+        <div class="grid-datepicker-popup grid-monthpicker-popup" style="@PopupStyle" @ref="_popup" tabindex="0"
+             role="dialog" aria-label="@Title"
+             @onkeydown="PopupKeyDown" @onkeydown:preventDefault="true">
+            <div class="grid-datepicker-header">
+                <button type="button" class="grid-datepicker-nav" tabindex="-1"
+                        @onclick="() => PageYear(-1)">@PreviousGlyph</button>
+                <span class="grid-datepicker-title">@_month.Year</span>
+                <button type="button" class="grid-datepicker-nav" tabindex="-1"
+                        @onclick="() => PageYear(1)">@NextGlyph</button>
+            </div>
+            <div class="grid-monthpicker-grid">
+                @{ var monthNumber = 0; }
+                @foreach (var name in _month.MonthNames)
+                {
+                    var number = ++monthNumber;
+                    <div class="@MonthCssClass(number)" @onclick="() => SelectMonth(number)">@name</div>
+                }
+            </div>
+        </div>
+    }
+
+    @if (_open && HasCalendar)
+    {
+        <div class="grid-datepicker-popup @(IsInstant ? "grid-datepicker-instant" : "")" style="@PopupStyle" @ref="_popup" tabindex="0"
+             role="dialog" aria-label="@Title"
+             @onkeydown="PopupKeyDown" @onkeydown:preventDefault="true">
+            <div class="grid-datepicker-header">
+                <button type="button" class="grid-datepicker-nav" tabindex="-1"
+                        @onclick="() => Page(-1)">@PreviousGlyph</button>
+                <span class="grid-datepicker-title">@_month.Label</span>
+                <button type="button" class="grid-datepicker-nav" tabindex="-1"
+                        @onclick="() => Page(1)">@NextGlyph</button>
+            </div>
+            <div class="grid-datepicker-body">
+            <table class="grid-datepicker-grid" role="grid">
+                <thead>
+                    <tr>
+                        @foreach (var name in _month.DayNames)
+                        {
+                            <th>@name</th>
+                        }
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var week in _month.Weeks)
+                    {
+                        <tr>
+                            @foreach (var day in week)
+                            {
+                                var date = day.Date;
+                                <td class="@DayCssClass(day)" role="gridcell"
+                                    aria-selected="@(DayCssClass(day).Contains("grid-datepicker-selected") ? "true" : "false")"
+                                    @onclick="() => Select(date)">@day.DayNumber</td>
+                            }
+                        </tr>
+                    }
+                </tbody>
+            </table>
+            @if (IsInstant)
+            {
+                <div class="grid-timepicker-columns grid-datepicker-instant-clock">
+                    <ul class="grid-timepicker-column">
+                        <li class="grid-timepicker-head" aria-hidden="true">&nbsp;</li>
+                        @{ var instantHourRow = 0; }
+                        @foreach (var hour in Hours)
+                        {
+                            var h = hour;
+                            var row = instantHourRow++;
+                            <li class="@ClockCssClass(h == SelectedHourLabel, 0, row)" @onclick="() => SelectHour(h)">@h.ToString("00")</li>
+                        }
+                    </ul>
+                    <ul class="grid-timepicker-column">
+                        <li class="grid-timepicker-head" aria-hidden="true">&nbsp;</li>
+                        @{ var instantMinuteRow = 0; }
+                        @foreach (var minute in Minutes)
+                        {
+                            var m = minute;
+                            var row = instantMinuteRow++;
+                            <li class="@ClockCssClass(m == SelectedMinute, 1, row)" @onclick="() => SelectMinute(m)">@m.ToString("00")</li>
+                        }
+                    </ul>
+                    @if (Uses12Hour)
+                    {
+                        <ul class="grid-timepicker-column grid-timepicker-meridiem">
+                            <li class="grid-timepicker-head" aria-hidden="true">&nbsp;</li>
+                            <li class="@ClockCssClass(!IsAfternoon, 2, 0)" @onclick="() => SelectMeridiem(false)">@MeridiemLabel(false)</li>
+                            <li class="@ClockCssClass(IsAfternoon, 2, 1)" @onclick="() => SelectMeridiem(true)">@MeridiemLabel(true)</li>
+                        </ul>
+                    }
+                </div>
+            }
+            </div>
+        </div>
+    }
+</div>

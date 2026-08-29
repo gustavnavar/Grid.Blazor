@@ -1,4 +1,5 @@
 ﻿#if !NETSTANDARD2_1 && !NET5_0
+using GridShared.Columns;
 using GridShared.Filtering;
 using GridShared.Utility;
 using Microsoft.AspNetCore.Components;
@@ -37,6 +38,51 @@ namespace GridBlazor.Pages
 
         [Parameter]
         public IEnumerable<ColumnFilterValue> FilterSettings { get; set; }
+
+        /// <summary>
+        ///     Where the reader types instead of picking, the browser draws nothing of its own, so
+        ///     the value has to be written and read back here. The column's format when it defines
+        ///     one, the reader's locale otherwise — while <c>_filters[j].Value</c> stays ISO all
+        ///     along, because that is what travels to the server.
+        /// </summary>
+        protected string Placeholder
+        {
+            get { return GridDateTimeFormats.Placeholder(GridDateTimeFormats.TimeType, ColumnPattern); }
+        }
+
+        protected string DisplayValue(string value)
+        {
+            return GridDateTimeFormats.TransportToDisplay(value, GridDateTimeFormats.TimeType, ColumnPattern);
+        }
+
+        protected void SetDisplayValue(int index, string text)
+        {
+            _filters[index].Value = GridDateTimeFormats.DisplayToTransport(text, GridDateTimeFormats.TimeType, ColumnPattern);
+        }
+
+        /// <summary>
+        ///     The picker hands back ISO already, so this only stores it. The loop that owns the
+        ///     index copies it per iteration, which is what makes capturing it here safe.
+        /// </summary>
+        protected void SetTransportValue(int index, string transport)
+        {
+            _filters[index].Value = transport;
+        }
+
+        /// <summary>The column's format, for the picker that draws the value.</summary>
+        protected string ColumnValuePattern
+        {
+            get { return ColumnPattern; }
+        }
+
+        private string ColumnPattern
+        {
+            get
+            {
+                var column = GridHeaderComponent.Column as IGridColumn<T>;
+                return column == null ? null : column.ValuePattern;
+            }
+        }
 
         protected override void OnParametersSet()
         {

@@ -55,6 +55,7 @@ else
 
         var client = new GridClient<Order>(HttpClient, url, query, false, "ordersGrid", c =>
             ColumnCollections.OrderColumnsWithCrud(c, "http://localhost:8080/"), locale)
+            .SetDateInputMode(DateInputMode.Grid)
             .Sortable()
             .Filterable()
             .SetStriped(true)

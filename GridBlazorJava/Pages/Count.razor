@@ -43,6 +43,7 @@ else
 
         string url = "http://localhost:8080/" + "api/SampleData/GetOrdersGridWithCount";
         var client = new GridClient<Order>(HttpClient, url, query, false, "ordersGrid", ColumnCollections.OrderColumnsCount, locale)
+            .SetDateInputMode(DateInputMode.Grid)
             .Sortable()
             .Filterable()
             .Searchable(true, false)

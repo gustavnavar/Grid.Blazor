@@ -62,6 +62,7 @@ else
 
             var subGridClient = new GridClient<OrderDetail>(q => orderDetailService.GetOrderDetailsGridRows(subGridColumns, keys, q), 
                 subGridQuery, false, "orderDetailsGrid" + keys[0].ToString(), subGridColumns, locale)
+                    .SetDateInputMode(DateInputMode.Grid)
                     .Sortable()
                     .Filterable()
                     .SetStriped(true)
@@ -82,6 +83,7 @@ else
             c => customerService.GetAllCustomers(), c => employeeService.GetAllEmployees(), shipperService.GetAllShippers, subGrids);
 
         var client = new GridClient<Order>(q => orderService.GetOrdersGridRows(columns, q), query, false, "ordersGrid", columns, locale)
+            .SetDateInputMode(DateInputMode.Grid)
             .Sortable()
             .Filterable()
             .SetStriped(true)

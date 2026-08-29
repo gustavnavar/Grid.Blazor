@@ -20,6 +20,7 @@ namespace GridShared.Filtering.Types
             _filterCollection.Add(new DateOnlyFilterType());
             _filterCollection.Add(new TimeOnlyFilterType());
 #endif
+            _filterCollection.Add(new TimeSpanFilterType());
             _filterCollection.Add(new DecimalFilterType());
             _filterCollection.Add(new ByteFilterType());
             _filterCollection.Add(new SingleFilterType());

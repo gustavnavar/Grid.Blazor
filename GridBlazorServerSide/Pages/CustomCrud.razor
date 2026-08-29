@@ -50,6 +50,7 @@ else
             c => customerService.GetAllCustomers(), c => employeeService.GetAllEmployees(), shipperService.GetAllShippers);
         var client = new GridClient<Order>(q => orderService.GetOrdersGridRowsAsync(columns, q),
             query, false, "ordersGrid", columns, locale)
+            .SetDateInputMode(DateInputMode.Grid)
             .Sortable()
             .Filterable()
             .SetStriped(true)

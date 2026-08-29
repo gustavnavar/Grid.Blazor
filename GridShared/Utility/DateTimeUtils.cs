@@ -56,8 +56,16 @@ namespace GridShared.Utility
                         int week;
                         if (int.TryParse(date[1].Remove(0, 1), out week))
                         {
+                            // The 4th of January is always in ISO week 1, so stepping back to
+                            // its Monday and forward by whole weeks lands on the week asked for.
+                            // DayOfWeek counts Sunday as 0 and ISO counts it as 7: without the
+                            // correction every year whose 4th of January is a Sunday - 2026,
+                            // 2032, 2037 - comes back a week late, and the filter queries the
+                            // wrong seven days without saying so.
                             DateTime result = new DateTime(year, 1, 4);
-                            return result.AddDays((week - 1) * 7 - (int)result.DayOfWeek + 1);
+                            int isoDayOfWeek = result.DayOfWeek == DayOfWeek.Sunday
+                                ? 7 : (int)result.DayOfWeek;
+                            return result.AddDays((week - 1) * 7 - isoDayOfWeek + 1);
                         }
                         else
                             return null;

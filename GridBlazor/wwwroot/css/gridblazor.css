@@ -60,7 +60,15 @@ table.grid-table .grid-popup-additional { padding: 3px 0 0 0; }
 div[dir="rtl"] .grid-tooltip-dropdown { left: 0; right: -102px; }
 
 /* POP-UP */
-.grid-dropdown { font-weight: normal; left: -102px; top: 16px!important; min-width: 360px; z-index: 1000; }
+/* float:left is load-bearing, not cosmetic. The -102px/-258px offsets below are measured
+   from the panel's static position, and that position is only the container's left edge while
+   the panel is floated. Left in normal flow it is a block wider than the 10px cell holding it,
+   so a right-to-left container lays it out from its right edge instead and the panel starts
+   ~350px further left - which is then compounded by the -258px. Bootstrap 3 and 4 float
+   .dropdown-menu themselves and never showed it; Bootstrap 5 dropped the declaration and every
+   other theme never had it, so all five were displaced. Declaring it here stops the layout
+   depending on what a theme happens to say. */
+.grid-dropdown { float: left; font-weight: normal; left: -102px; top: 16px!important; min-width: 360px; z-index: 1000; }
 div[dir="rtl"] .grid-dropdown { left: -258px; }
 .grid-dropdown-arrow { background: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAA4AAAAICAYAAADJEc7MAAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAOwgAADsIBFShKgAAAABp0RVh0U29mdHdhcmUAUGFpbnQuTkVUIHYzLjUuMTAw9HKhAAAAl0lEQVQoU42PMQuFMAyE6xN5gpOjjsIb/P9/o3O3zh27dY25kIPq8DBwmLT35WoQkUEVOmGec84CaW2q7+N+AdCD6M9SisQYTei1jsfyCeCu+vjFVGs1AN++94DRfUOfuNLoKUiyRC5y2F5I8NdaM4P/l0EswvBorQTnfxBhLMRih+2pklIy+eEtjQPu6MNZwIBNbwteMBd5X4ZGHcwL3QAAAABJRU5ErkJggg==") no-repeat; height: 8px; left: 99px; position: absolute; top: -8px; width: 14px; }
 div[dir="rtl"] .grid-dropdown-arrow { left: 255px; }
@@ -271,3 +279,79 @@ input:checked + .grid-slider:before, input:checked + .grid-slider-disabled:befor
 @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
 @-webkit-keyframes spin { 0% { -webkit-transform: rotate(0deg); } 100% { -webkit-transform: rotate(360deg); } }
 @-moz-keyframes spin { from { -moz-transform: rotate(0deg); } to { -moz-transform: rotate(360deg); } }
+/* Date picker drawn by the grid, so the reader gets a calendar AND the culture the application
+   chose. The native input gives only the first: the browser paints it in the browser's language
+   and the page cannot change that. Markup is all ours, so one block serves every CSS framework. */
+.grid-datepicker { position: relative; display: block; }
+.grid-datepicker-field { display: flex; align-items: stretch; }
+.grid-datepicker-field > input { flex: 1 1 auto; min-width: 0; }
+.grid-datepicker-toggle { flex: 0 0 auto; margin-left: -1px; padding: 0 8px; cursor: pointer; background: #f8f8f8; border: 1px solid #ccc; border-radius: 0 3px 3px 0; line-height: 1; }
+.grid-datepicker-toggle:hover { background: #eee; }
+div[dir="rtl"] .grid-datepicker-toggle { margin-left: 0; margin-right: -1px; border-radius: 3px 0 0 3px; }
+.grid-datepicker-icon { display: inline-block; width: 14px; height: 14px; vertical-align: middle; border: 1px solid #555; border-top-width: 4px; border-radius: 2px; box-sizing: border-box; }
+.grid-datepicker-popup { width: max-content; position: absolute; z-index: 1100; top: 100%; left: 0; margin-top: 2px; padding: 6px; background: #fff; border: 1px solid #ccc; border-radius: 3px; box-shadow: 0 2px 8px rgba(0,0,0,.2); user-select: none; }
+div[dir="rtl"] .grid-datepicker-popup { left: auto; right: 0; }
+.grid-datepicker-header { display: flex; align-items: center; justify-content: space-between; padding: 2px 4px 6px 4px; }
+.grid-datepicker-title { font-weight: bold; white-space: nowrap; padding: 0 10px; }
+.grid-datepicker-nav { cursor: pointer; border: none; background: none; font-size: 18px; line-height: 1; padding: 0 6px; }
+.grid-datepicker-nav:hover { background: #eee; border-radius: 3px; }
+.grid-datepicker-grid { border-collapse: collapse; margin: 0; }
+.grid-datepicker-grid th { width: 32px; padding: 2px 0; text-align: center; font-size: .85em; font-weight: normal; color: #777; }
+.grid-datepicker-grid td { width: 32px; height: 28px; padding: 0; text-align: center; cursor: pointer; border-radius: 3px; }
+.grid-datepicker-grid td:hover { background: #e6e6e6; }
+.grid-datepicker-outside { color: #bbb; }
+.grid-datepicker-today { outline: 1px solid #999; }
+.grid-datepicker-selected { background: #337ab7; color: #fff; }
+.grid-datepicker-selected:hover { background: #2e6da4; }
+.grid-timepicker-popup { padding: 4px; }
+.grid-timepicker-columns { display: flex; gap: 4px; }
+.grid-timepicker-column { list-style: none; margin: 0; padding: 0; max-height: 200px; overflow-y: auto; min-width: 44px; scrollbar-width: none; -ms-overflow-style: none; }
+/* The column still scrolls - it has to, sixty minutes do not fit - but the bar itself
+   is hidden: three of them side by side inside a popup this small read as chrome, and
+   the reader never drags them anyway. Reaching a value is done by wheel, by keyboard,
+   or by the scroll-to-selected that runs when the popup opens. */
+.grid-timepicker-column::-webkit-scrollbar { width: 0; height: 0; }
+.grid-timepicker-item { padding: 3px 10px; text-align: center; cursor: pointer; border-radius: 3px; }
+.grid-timepicker-item:hover { background: #e6e6e6; }
+.grid-timepicker-selected { background: #337ab7; color: #fff; }
+.grid-timepicker-selected:hover { background: #2e6da4; }
+.grid-timepicker-meridiem { min-width: 52px; }
+.grid-datepicker-popup:focus { outline: none; }
+.grid-datepicker-focused { box-shadow: inset 0 0 0 2px #337ab7; }
+.grid-datepicker-selected.grid-datepicker-focused { box-shadow: inset 0 0 0 2px #fff; }
+
+
+
+.grid-monthpicker-popup { min-width: 220px; }
+.grid-monthpicker-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2px; }
+.grid-monthpicker-item { padding: 6px 4px; text-align: center; cursor: pointer; border-radius: 3px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.grid-monthpicker-item:hover { background: #e6e6e6; }
+/* The header is a flex row, so right-to-left already swaps which button sits on which side.
+   What it does not do is mirror the glyph, which would leave the button that means "previous"
+   pointing forwards. Flipping the arrow costs nothing and needs no knowledge of direction in
+   the component. */
+
+
+div[dir="rtl"] .grid-datepicker-toggle { border-radius: 3px 0 0 3px; }
+
+
+
+/* The header spans the popup and the row below it holds the day table and the clock, so the
+   clock starts where the table starts instead of level with the month selector. */
+.grid-datepicker-body { display: flex; align-items: flex-start; gap: 6px; }
+.grid-datepicker-instant-clock { border-left: 1px solid #bbb; padding-left: 12px; }
+div[dir="rtl"] .grid-datepicker-instant-clock { border-left: none; border-right: 1px solid #bbb; padding-left: 0; padding-right: 12px; }
+/* An invisible cell the size of a day-name heading, so the first hour lines up with the first
+   row of days rather than with the row of day names. Matching the box beats guessing a margin. */
+.grid-timepicker-head { padding: 2px 0; font-size: .85em; visibility: hidden; cursor: default; }
+/* Six rows of days is the calendar's height; the clock scrolls within it instead of growing
+   past the frame. */
+.grid-datepicker-body .grid-timepicker-column { max-height: 168px; }
+/* Inside a filter dropdown the value field is sized by ".grid-dropdown input.grid-filter-input
+   { width: 90%; margin-left: 5% }". That rule predates the picker and now lands on an input
+   sharing a flex row with the toggle button, so the 90% and the 5% and the button compete for
+   the same line and the field ends up a sliver. The size belongs to the wrapper; the input
+   fills whatever the button leaves. */
+.grid-dropdown .grid-datepicker { width: 100%; margin-left: 0; }
+.grid-dropdown .grid-datepicker input.grid-filter-input { width: auto; margin-left: 0; }
+div[dir="rtl"] .grid-dropdown .grid-datepicker { margin-left: 0; margin-right: 0; }

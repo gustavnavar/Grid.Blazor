@@ -62,6 +62,7 @@ else
 
             var subGridClient = new GridClient<OrderDetail>(q => gridClientService.GetOrderDetailsGridWithCrud(q, orderId), subGridQuery, 
                 false, "orderDetailsGrid" + keys[0].ToString(), subGridColumns, locale)
+                    .SetDateInputMode(DateInputMode.Grid)
                     .Sortable()
                     .Filterable()
                     .SetStriped(true)
@@ -81,6 +82,7 @@ else
             ColumnCollections.OrderColumnsWithNestedCrud(c, o => gridClientService.GetAllCustomers(), 
                 o => gridClientService.GetAllEmployees(), 
                 o => gridClientService.GetAllShippers(), subGrids), locale)
+            .SetDateInputMode(DateInputMode.Grid)
             .Sortable()
             .Filterable()
             .SetStriped(true)

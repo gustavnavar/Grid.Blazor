@@ -7,6 +7,11 @@ namespace GridBlazor.Tests
         public int Id { get; set; }
         public string Title { get; set; }
         public DateTime Created { get; set; }
+        public DateTime? NullableCreated { get; set; }
+        public DateTimeOffset OffsetCreated { get; set; }
+        public DateOnly DateOnlyField { get; set; }
+        public TimeOnly TimeOnlyField { get; set; }
+        public TimeSpan TimeSpanField { get; set; }
         public TestModelChild Child { get; set; }
 
         public TestModelChild[] List { get; set; }

@@ -52,8 +52,8 @@ else
             c.Add(o => o.FirstName);
             c.Add(o => o.LastName);
             c.Add(o => o.Title);
-            c.Add(o => o.BirthDate, true).Format("{0:yyyy-MM-dd}");
-            c.Add(o => o.HireDate).Format("{0:yyyy-MM-dd}");
+            c.Add(o => o.BirthDate, true);
+            c.Add(o => o.HireDate);
             c.Add().Encoded(false).Sanitized(false).SetWidth("5%")
                 .RenderValueAs(o => $"<img width='50' height='50' src='data:image/bmp;base64,{o.Base64String}' />")
                 .SetCrudHidden(true);
@@ -72,6 +72,7 @@ else
 
         var client = new GridClient<Employee>(q => employeeService.GetEmployeesGridRows(employeeColumns, q),
             query, false, "employeesGrid", employeeColumns, locale)
+            .SetDateInputMode(DateInputMode.Grid)
             .Sortable()
             .Filterable()
             .SetStriped(true)

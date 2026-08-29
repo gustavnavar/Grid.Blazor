@@ -44,6 +44,7 @@ else
         var query = new QueryDictionary<StringValues>();
         string url = NavigationManager.BaseUri + "api/SampleData/GetOrdersGridExtSorting";
         var client = new GridClient<Order>(HttpClient, url, query, false, "ordersGrid", ColumnCollections.OrderColumnsExtSorting, locale)
+            .SetDateInputMode(DateInputMode.Grid)
             .Sortable()
             .Filterable()
             .SetStriped(true)

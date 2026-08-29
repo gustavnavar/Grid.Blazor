@@ -47,6 +47,7 @@
         string url = "http://localhost:8080/" + "api/SampleData/GetOrderDetailsGridWithCrud?OrderId=" + _order.OrderID.ToString();
 
         var client = new GridClient<OrderDetail>(HttpClient, url, query, false, "orderDetailsGrid", ColumnCollections.OrderDetailColumns, locale)
+            .SetDateInputMode(DateInputMode.Grid)
             .Sortable()
             .Filterable()
             .SetStriped(true)

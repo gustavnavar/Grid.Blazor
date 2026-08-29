@@ -109,7 +109,17 @@
                                 <label class="@GridHeaderComponent.GridComponent.Grid.HtmlClass.FormLabel"><b>@Strings.FilterValueLabel:</b></label>
                             }
                             <div class="@GridHeaderComponent.GridComponent.Grid.HtmlClass.FormDivInput">
-                                <input type="date" placeholder="yyyy-mm-dd" class="grid-filter-input @GridHeaderComponent.GridComponent.Grid.HtmlClass.FormInput" value="@_filters[j].Value" @onchange="(ChangeEventArgs __e) => _filters[j].Value = __e.Value.ToString()" />
+                                @if (GridHeaderComponent.GridComponent.UseNativeDateInput("date"))
+                                {
+                                    <input type="date" class="grid-filter-input @GridHeaderComponent.GridComponent.Grid.HtmlClass.FormInput" value="@_filters[j].Value" @onchange="(ChangeEventArgs __e) => _filters[j].Value = __e.Value.ToString()" />
+                                }
+                                else
+                                {
+                                    <GridDatePickerComponent T="T" Type="date" ValuePattern="@ColumnValuePattern"
+                                                             InputCssClass="@("grid-filter-input " + GridHeaderComponent.GridComponent.Grid.HtmlClass.FormInput)"
+                                                             Value="@_filters[j].Value"
+                                                             ValueChanged="@((string v) => SetTransportValue(j, v))" />
+                                }
                             </div>
                         </div>
                     </div>

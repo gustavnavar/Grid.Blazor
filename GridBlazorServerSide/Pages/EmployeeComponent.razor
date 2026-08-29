@@ -47,6 +47,7 @@ else
 
         var client = new GridClient<Employee>(q => employeeService.GetEmployeesGridRowsAsync(ColumnCollections.EmployeeColumns, q),
             query, false, "employeesGrid", ColumnCollections.EmployeeColumns, locale)
+            .SetDateInputMode(DateInputMode.Grid)
             .Sortable()
             .Filterable()
             .SetStriped(true)

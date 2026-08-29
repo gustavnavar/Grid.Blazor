@@ -141,15 +141,20 @@ namespace GridBlazor.Pages
             }
             else
             {
-                if (typeAttr == "week")
+                // The text arrives either as ISO, the way a native date input sends it, or
+                // written the way the reader reads it, the way the text fallback and a column
+                // format leave it. One parser covers both, so nothing here has to know which of
+                // the two inputs the browser decided to draw.
+                if (GridDateTimeFormats.IsDateType(typeAttr))
                 {
-                    var value = DateTimeUtils.FromIso8601WeekDate(e.Value.ToString());
-                    SetValue(value, column);
-                }
-                else if (typeAttr == "month")
-                {
-                    var value = DateTimeUtils.FromMonthDate(e.Value.ToString());
-                    SetValue(value, column);
+                    var (dateType, _) = ((IGridColumn<T>)column).GetTypeAndValue((T)Item);
+                    object value;
+                    if (GridDateTimeFormats.TryParseDisplay(e.Value.ToString(), typeAttr,
+                        ((IGridColumn<T>)column).ValuePattern, dateType, CultureInfo.CurrentCulture,
+                        out value))
+                        SetValue(value, column);
+                    else
+                        SetValue(null, column);
                 }
                 else
                 {

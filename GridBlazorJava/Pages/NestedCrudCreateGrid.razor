@@ -57,6 +57,7 @@ else
             _orderDetailMemoryService = new OrderDetailMemoryService(subGridColumns, products);
             var subGridClient = new GridClient<OrderDetail>(HttpClient, subGridUrl, _orderDetailMemoryService, subGridQuery, false,
                 "orderDetailsGrid" + keys[0].ToString(), subGridColumns, locale)
+                    .SetDateInputMode(DateInputMode.Grid)
                     .Sortable()
                     .Filterable()
                     .SetStriped(true)
@@ -73,6 +74,7 @@ else
 
         var client = new GridClient<Order>(HttpClient, url, query, false, "ordersGrid", c =>
             ColumnCollections.OrderColumnsWithCreateGrid(c, "http://localhost:8080/", subGrids), locale)
+            .SetDateInputMode(DateInputMode.Grid)
             .Sortable()
             .Filterable()
             .SetStriped(true)

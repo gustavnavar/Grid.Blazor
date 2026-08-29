@@ -49,13 +49,13 @@ else
             c.Add(o => o.CustomerID, true).SetSelectField(true, o => o.Customer.CustomerID + " - " + o.Customer.CompanyName, o => GetAllCustomers(baseUri)).SetAfterChangeValue(afterChangeCustomerID);
             c.Add(o => o.EmployeeID, true).SetSelectField(true, o => o.Employee.EmployeeID.ToString() + " - " + o.Employee.FirstName + " " + o.Employee.LastName, o => GetAllEmployees(baseUri));
             c.Add(o => o.ShipVia, true).SetSelectField(true, o => o.Shipper == null ? "" : o.Shipper.ShipperID.ToString() + " - " + o.Shipper.CompanyName, () => GetAllShippers(baseUri));
-            c.Add(o => o.OrderDate, "OrderCustomDate").Titled(SharedResource.OrderCustomDate).Format("{0:yyyy-MM-dd}").SetWidth(120).SetCrudWidth(3);
+            c.Add(o => o.OrderDate, "OrderCustomDate").Titled(SharedResource.OrderCustomDate).SetWidth(120).SetCrudWidth(3);
             c.Add(o => o.Customer.CompanyName).Titled(SharedResource.CompanyName).SetWidth(250).SetCrudHidden(true).SetReadOnlyOnUpdate(true);
             c.Add(o => o.Customer.ContactName).Titled(SharedResource.ContactName).SetCrudHidden(true);
             c.Add(o => o.Freight).Titled(SharedResource.Freight).SetWidth(150).Format("{0:#,##0.00}");
             c.Add(o => o.Customer.IsVip).Titled(SharedResource.IsVip).SetWidth(90).Css("hidden-xs").RenderValueAs(o => o.Customer.IsVip ? Strings.BoolTrueLabel : Strings.BoolFalseLabel).SetCrudHidden(true);
-            c.Add(o => o.RequiredDate, true).Format("{0:yyyy-MM-dd}").SetCrudWidth(3);
-            c.Add(o => o.ShippedDate, true).Format("{0:yyyy-MM-dd}").SetCrudWidth(3);
+            c.Add(o => o.RequiredDate, true).SetCrudWidth(3);
+            c.Add(o => o.ShippedDate, true).SetCrudWidth(3);
             c.Add(o => o.ShipName, true);
             c.Add(o => o.ShipAddress, true);
             c.Add(o => o.ShipCity, true);
@@ -78,6 +78,7 @@ else
         string url = NavigationManager.BaseUri + "odata/Orders";
         var client = new GridODataClient<Order>(HttpClient, url, query, false, "ordersGrid",
             c => columns(c, afterChangeCustomerID, NavigationManager.BaseUri), 10, locale, new List<string> { "Employee", "Shipper" })
+                .SetDateInputMode(DateInputMode.Grid)
                 .Sortable()
                 .Filterable()
                 .SetStriped(true)

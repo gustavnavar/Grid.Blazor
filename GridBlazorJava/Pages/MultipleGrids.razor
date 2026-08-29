@@ -81,6 +81,7 @@ else
         string ordersUrl = "http://localhost:8080/" + "api/SampleData/OrderColumnsWithEdit";
         var ordersClient = new GridClient<Order>(HttpClient, ordersUrl, ordersQuery, false, "ordersGrid",
             orderColumns, locale)
+            .SetDateInputMode(DateInputMode.Grid)
             .Sortable()
             .Filterable()
             .SetStriped(true)
@@ -107,6 +108,7 @@ else
         string customersUrl = "http://localhost:8080/" + "api/SampleData/GetCustomersGrid";
         var customersClient = new GridClient<Customer>(HttpClient, customersUrl, customersQuery, false, "customersGrid",
             ColumnCollections.CustomersColumns, locale)
+            .SetDateInputMode(DateInputMode.Grid)
             .Sortable()
             .Filterable()
             .SetStriped(true)

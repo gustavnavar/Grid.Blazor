@@ -1,24 +1,31 @@
 ﻿@using GridBlazorClientSide.Shared.Models
 @using GridShared.Columns
+@using GridShared.Utility
 @implements ICustomGridComponent<Order>
 
 @if (!Item.OrderDate.HasValue)
 {
-    <div data-toggle="tooltip" data-placement="bottom" title="Tooltip on Bottom">@Item.OrderDate?.ToString("yyyy'-'MM'-'dd")</div>
+    <div data-toggle="tooltip" data-placement="bottom" title="Tooltip on Bottom">@_date</div>
 }
 else
 {
     if (Item.OrderDate.Value.Day >= 16)
     {
-        <div data-toggle="tooltip" data-placement="left" title="Tooltip on Left">@Item.OrderDate?.ToString("yyyy'-'MM'-'dd")</div>
+        <div data-toggle="tooltip" data-placement="left" title="Tooltip on Left">@_date</div>
     }
     else
     {
-        <div data-toggle="tooltip" data-placement="right" title="Tooltip on Right">@Item.OrderDate?.ToString("yyyy'-'MM'-'dd")</div>
+        <div data-toggle="tooltip" data-placement="right" title="Tooltip on Right">@_date</div>
     }
 }
 
 @code {
     [Parameter]
     public Order Item { get; set; }
+
+    // A cell component renders itself, so the grid cannot write this date for us: whatever we
+    // spell here is what the reader gets. GridDateTimeFormats.DatePattern is the same pattern
+    // every other cell in the grid uses - the reader's locale, day and month padded - so this
+    // column agrees with the ones beside it instead of being the odd one out in ISO.
+    private string _date => Item.OrderDate?.ToString(GridDateTimeFormats.DatePattern());
 }

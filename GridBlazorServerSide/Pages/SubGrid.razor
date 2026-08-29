@@ -48,6 +48,7 @@ else
             var subGridQuery = new QueryDictionary<StringValues>();
             var subGridClient = new GridClient<OrderDetail>(q => orderDetailService.GetOrderDetailsGridRowsAsync(ColumnCollections.OrderDetailColumns, keys, q),
                 subGridQuery, false, "orderDetailsGrid" + keys[0].ToString(), ColumnCollections.OrderDetailColumns, locale)
+                    .SetDateInputMode(DateInputMode.Grid)
                     .Sortable()
                     .Filterable()
                     .SetStriped(true)
@@ -61,6 +62,7 @@ else
         var query = new QueryDictionary<StringValues>();
         var client = new GridClient<Order>(q => orderService.GetOrdersGridRowsAsync(ColumnCollections.OrderColumnsWithSubgrids, q), query,
             false, "ordersGrid", ColumnCollections.OrderColumnsWithSubgrids, locale)
+            .SetDateInputMode(DateInputMode.Grid)
             .Sortable()
             .Filterable()
             .SetStriped(true)

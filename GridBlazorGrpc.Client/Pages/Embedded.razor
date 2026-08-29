@@ -40,6 +40,7 @@ else
         var query = new QueryDictionary<string>();
 
         var client = new GridClient<Order>(gridClientService.GetOrdersGridRows, query, false, "ordersGrid", ColumnCollections.OrderColumnsWithButttonComponents, locale)
+            .SetDateInputMode(DateInputMode.Grid)
             .Sortable()
             .Filterable()
             .SetStriped(true)

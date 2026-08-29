@@ -46,6 +46,7 @@ else
             var subGridQuery = new QueryDictionary<StringValues>();
             var subGridClient = new GridClient<OrderDetail>(HttpClient, subGridUrl + keys[0], subGridQuery, false,
                 "orderDetailsGrid" + keys[0].ToString(), ColumnCollections.OrderDetailColumns, locale)
+                    .SetDateInputMode(DateInputMode.Grid)
                     .Sortable()
                     .Filterable()
                     .SetStriped(true)
@@ -60,6 +61,7 @@ else
         string url = NavigationManager.BaseUri + "api/SampleData/GetOrdersGridWithSubgrids";
         var client = new GridClient<Order>(HttpClient, url, query, false, "ordersGrid", 
             ColumnCollections.OrderColumnsWithSubgrids, locale)
+            .SetDateInputMode(DateInputMode.Grid)
             .Sortable()
             .Filterable()
             .SetStriped(true)

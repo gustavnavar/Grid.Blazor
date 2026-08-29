@@ -48,6 +48,7 @@ else
 
         var client = new GridClient<Customer>(q => customerService.GetCustomersGridRows(ColumnCollections.CustomerColumns, q), query, false,
             "customersGrid", ColumnCollections.CustomerColumns, locale)
+            .SetDateInputMode(DateInputMode.Grid)
             .Sortable()
             .Filterable()
             .SetStriped(true)

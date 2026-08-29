@@ -171,6 +171,7 @@ GridMvc = (function ($) {
         
         var filterData = $(this).attr("data-filterdata") || "";
         var widgetData = $(this).attr("data-widgetdata") || "{}";
+        var datePattern = GridMvc.dates.patternOf(this);
         var filterDataObj = self.parseFilterValues(filterData) || {};
         var filterUrl = $(this).attr("data-url") || "";
 
@@ -186,7 +187,7 @@ GridMvc = (function ($) {
             widget.onRender(widgetContainer, self.lang, columnType, columnName, isNullable, filterDataObj, function (values) {
                 self.closeOpenedPopups();
                 self.applyFilterValues(filterUrl, columnName, values, false);
-            }, $.parseJSON(widgetData));
+            }, $.parseJSON(widgetData), datePattern);
         //adding 'clear filter' button if needed:
         if ($(this).find(".grid-filter-btn").hasClass("filtered") && widget.showClearFilterButton()) {
             var inner = $(this).find(".grid-popup-additional");
@@ -816,6 +817,142 @@ GridMvc = (function ($) {
 })(window.jQuery);
 
 /***
+* GridMvc.dates - how a date is written on screen and how it travels.
+*
+* Two jobs that must not be confused. The filter value exchanged with the server is always ISO
+* (yyyy-MM-dd): a localized value there would be read as another day the moment the reader's
+* locale writes the month first. What the reader types and reads is the pattern the server
+* resolved for the column - its own format when it defines one, the request's culture otherwise -
+* which arrives on the filter element as data-datepattern.
+*
+* The patterns are .NET ones (dd/MM/yyyy), not the datepicker's (dd/mm/yyyy). Only the year,
+* month and day fields are understood; everything else in the pattern is a literal, which is
+* what a locale's separators and quoted words are.
+*/
+GridMvc.dates = (function ($) {
+    var TRANSPORT = "yyyy-MM-dd";
+    var FIELD = /y+|M+|d+/g;
+
+    function fields(pattern) {
+        var result = [];
+        var last = 0;
+        var match;
+        FIELD.lastIndex = 0;
+        while ((match = FIELD.exec(pattern)) !== null) {
+            result.push({ literal: pattern.substring(last, match.index) });
+            result.push({ field: match[0][0], width: match[0].length });
+            last = match.index + match[0].length;
+        }
+        result.push({ literal: pattern.substring(last) });
+        return result;
+    }
+
+    function pad(value, width) {
+        var text = String(value);
+        while (text.length < width) text = "0" + text;
+        return text;
+    }
+
+    function escapeRegex(text) {
+        return text.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+    }
+
+    // A date is held as a plain {year, month, day}: nothing here needs a Date object, and
+    // building one would drag a time zone into a value that has no time of day at all.
+    function write(date, pattern) {
+        var parts = fields(pattern);
+        var text = "";
+        for (var i = 0; i < parts.length; i++) {
+            var part = parts[i];
+            if (part.literal !== undefined) {
+                text += part.literal;
+                continue;
+            }
+            if (part.field === "y")
+                text += part.width <= 2 ? pad(date.year % 100, 2) : pad(date.year, part.width);
+            else if (part.field === "M")
+                text += pad(date.month, part.width);
+            else
+                text += pad(date.day, part.width);
+        }
+        return text;
+    }
+
+    function read(text, pattern) {
+        var parts = fields(pattern);
+        var expression = "^";
+        var order = [];
+        for (var i = 0; i < parts.length; i++) {
+            var part = parts[i];
+            if (part.literal !== undefined) {
+                expression += escapeRegex(part.literal);
+                continue;
+            }
+            // One or two digits are accepted wherever the pattern asks for two, so a reader
+            // who leaves the leading zero off is understood.
+            expression += part.field === "y" && part.width > 2 ? "(\\d{4})" : "(\\d{1,4})";
+            order.push(part.field);
+        }
+        expression += "$";
+
+        var match = new RegExp(expression).exec(text);
+        if (match === null)
+            return null;
+
+        var date = { year: 0, month: 1, day: 1 };
+        for (var j = 0; j < order.length; j++) {
+            var value = parseInt(match[j + 1], 10);
+            if (order[j] === "y") date.year = value < 100 ? 2000 + value : value;
+            else if (order[j] === "M") date.month = value;
+            else date.day = value;
+        }
+        if (date.month < 1 || date.month > 12 || date.day < 1 || date.day > 31)
+            return null;
+        return date;
+    }
+
+    return {
+        transportPattern: TRANSPORT,
+
+        // The pattern the reader reads, or ISO when the grid's markup predates this attribute.
+        patternOf: function (element) {
+            var pattern = $(element).attr("data-datepattern");
+            return pattern && pattern.length > 0 ? pattern : TRANSPORT;
+        },
+
+        // The same pattern in the datepicker's own spelling, which differs in one letter: it
+        // writes the month lower case, having no minutes to tell it apart from.
+        pickerPattern: function (pattern) {
+            return (pattern || TRANSPORT).replace(/M+/g, function (field) {
+                return field.toLowerCase();
+            });
+        },
+
+        placeholder: function (pattern) {
+            return (pattern || TRANSPORT).toLowerCase();
+        },
+
+        // ISO in, the reader's pattern out. Anything that is not a date is handed back
+        // untouched: a half-typed filter is still the reader's, and clearing the box under
+        // them mid-keystroke is not an improvement.
+        toDisplay: function (value, pattern) {
+            if (!value) return value;
+            var date = read(value, TRANSPORT);
+            return date === null ? value : write(date, pattern || TRANSPORT);
+        },
+
+        // The reader's pattern in, ISO out. ISO is accepted as well, so somebody who types
+        // 2026-08-27 into a Spanish grid means that day.
+        toTransport: function (value, pattern) {
+            if (!value) return value;
+            var date = read(value, pattern || TRANSPORT);
+            if (date === null) date = read(value, TRANSPORT);
+            return date === null ? value : write(date, TRANSPORT);
+        }
+    };
+})(window.jQuery);
+
+/***
 * ============= LOCALIZATION =============
 * You can localize Grid.Mvc by creating localization files and include it on the page after this script file
 * This script file provides localization only for english language.
@@ -1316,11 +1453,14 @@ DateTimeFilterWidget = (function ($) {
         textBox.last().focus();
     };
 
-    dateTimeFilterWidget.prototype.onRender = function (container, lang, typeName, columnName, isNullable, values, applycb, data) {
+    dateTimeFilterWidget.prototype.onRender = function (container, lang, typeName, columnName, isNullable, values, applycb, data, datePattern) {
         this.datePickerIncluded = typeof $.fn.datepicker !== 'undefined';
         this.cb = applycb;
         this.data = data;
         this.lang = lang;
+        // How the reader reads a date here. The values below stay ISO throughout; only what is
+        // put in the box and read back out of it is written this way.
+        this.datePattern = datePattern || GridMvc.dates.transportPattern;
 
         if (!this.filterData) {
             this.filterData = new Object();
@@ -1399,7 +1539,7 @@ DateTimeFilterWidget = (function ($) {
                 html +=     '<label class="control-label">' + this.lang.filterValueLabel + '</label>';
             }
             html +=        '<div>\
-                                <input id="input-' + columnName + '-' + i.toString() + '" type="text" placeholder="yyyy-mm-dd" class="grid-filter-input form-control" value="' + decodeURIComponent((this.filterData[columnName].values[i].filterValue + '').replace(/\+/g, '%20')) + '" />\
+                                <input id="input-' + columnName + '-' + i.toString() + '" type="text" placeholder="' + GridMvc.dates.placeholder(this.datePattern) + '" class="grid-filter-input form-control" value="' + GridMvc.dates.toDisplay(decodeURIComponent((this.filterData[columnName].values[i].filterValue + '').replace(/\+/g, '%20')), this.datePattern) + '" />\
                             </div>';
             html += this.datePickerIncluded ? '<div id="picker-' + columnName + '-' + i.toString() + '" class="grid-filter-datepicker"></div>' : '';
             html +=    '</div>\
@@ -1438,7 +1578,10 @@ DateTimeFilterWidget = (function ($) {
                     filters.push({ filterType: "9", filterValue: option });
                 }
                 for (var i = 0; i < types.length; i++) {
-                    filters.push({ filterType: types[i].value, filterValue: values[i].value });
+                    filters.push({
+                        filterType: types[i].value,
+                        filterValue: GridMvc.dates.toTransport(values[i].value, self.datePattern)
+                    });
                 }
                 self.cb(filters);
             }
@@ -1451,7 +1594,7 @@ DateTimeFilterWidget = (function ($) {
                     var pickerid = id.replace("input-", "picker-");
 
                     var datePickerOptions = self.data || {};
-                    datePickerOptions.format = datePickerOptions.format || "yyyy-mm-dd";
+                    datePickerOptions.format = datePickerOptions.format || GridMvc.dates.pickerPattern(self.datePattern);
                     datePickerOptions.language = datePickerOptions.language || self.lang.code;
 
                     var dateContainer = $context.container.find("#" + pickerid);
@@ -1484,7 +1627,11 @@ DateTimeFilterWidget = (function ($) {
                     $context.condition = cond;
                 }
                 for (var i = 0; i < types.length; i++) {
-                    $context.values.push({ filterType: types[i].value, filterValue: values[i].value, columnName: columnName });
+                    $context.values.push({
+                        filterType: types[i].value,
+                        filterValue: GridMvc.dates.toTransport(values[i].value, self.datePattern),
+                        columnName: columnName
+                    });
                 }
                 $context.values.push({ filterType: "1", filterValue: "", columnName: columnName });
                 self.renderWidget(columnName, isNullable);
@@ -1505,7 +1652,11 @@ DateTimeFilterWidget = (function ($) {
                     $context.condition = cond;
                 }
                 for (var i = 0; i < types.length; i++) {
-                    $context.values.push({ filterType: types[i].value, filterValue: values[i].value, columnName: columnName });
+                    $context.values.push({
+                        filterType: types[i].value,
+                        filterValue: GridMvc.dates.toTransport(values[i].value, self.datePattern),
+                        columnName: columnName
+                    });
                 }
                 $context.values.splice(values.length - 1, 1);
                 self.renderWidget(columnName, isNullable);
@@ -1622,7 +1773,7 @@ TimeOnlyFilterWidget = (function ($) {
                 html += '<label class="control-label">' + this.lang.filterValueLabel + '</label>';
             }
             html += '<div>\
-                                <input id="input-' + columnName + '-' + i.toString() + '" type="time" placeholder="hh:mm" class="grid-filter-input form-control" value="' + decodeURIComponent((this.filterData[columnName].values[i].filterValue + '').replace(/\+/g, '%20')) + '" />\
+                                <input id="input-' + columnName + '-' + i.toString() + '" type="time" class="grid-filter-input form-control" value="' + decodeURIComponent((this.filterData[columnName].values[i].filterValue + '').replace(/\+/g, '%20')) + '" />\
                             </div>';
             html += '</div>\
                     </div > ';

@@ -47,7 +47,6 @@ else
             c.Add(o => o.OrderID).Titled(SharedResource.Number).SetTooltip("Order ID is ... ").SetWidth(100).Sum(true);
             c.Add(o => o.OrderDate, "OrderCustomDate").Titled(SharedResource.OrderCustomDate).SetWidth(120)
                 .RenderComponentAs<TooltipCell>()
-                .Format("{0:yyyy-MM-dd}")
                 .Max(true).Min(true);
             c.Add(o => o.Customer.CompanyName).Titled(SharedResource.CompanyName).SetWidth(250).Max(true).Min(true);
             c.Add(o => o.Customer.ContactName).Titled(SharedResource.ContactName).Max(true).Min(true);
@@ -62,6 +61,7 @@ else
 
         string url = NavigationManager.BaseUri + "odata/Orders";
         var client = new GridODataClient<Order>(HttpClient, url, query, false, "ordersGrid", columns, 10, locale)
+            .SetDateInputMode(DateInputMode.Grid)
             .Sortable()
             .Filterable()
             .SetStriped(true)

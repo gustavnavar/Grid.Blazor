@@ -76,6 +76,15 @@ namespace GridBlazor
         IGridClient<T> SetModalForms(bool enable, string width = null, string height = null);
 
         /// <summary>
+        ///     Choose who spells the dates the reader types into filters and CRUD forms. Use
+        ///     <see cref="DateInputMode.Grid"/> when the application picks its own culture -
+        ///     with a language selector, say - because the browser's picker reads in the
+        ///     browser's language and would disagree with the cells.
+        /// </summary>
+        /// <param name="mode">Browser for the native picker, Grid for a text box in the grid's culture</param>
+        IGridClient<T> SetDateInputMode(DateInputMode mode);
+
+        /// <summary>
         ///     Enable sorting for all columns
         /// </summary>
         IGridClient<T> Sortable();

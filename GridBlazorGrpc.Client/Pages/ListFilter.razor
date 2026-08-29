@@ -54,6 +54,7 @@ else
         Action<IGridColumnCollection<Order>> columns = c => ColumnCollections.OrderColumnsListFilter(c, _customers, _contacts, _shippers);
 
         var client = new GridClient<Order>(gridClientService.OrderColumnsListFilter, query, false, "ordersGrid", columns, locale)
+            .SetDateInputMode(DateInputMode.Grid)
             .Sortable()
             .Filterable()
             .SetStriped(true)

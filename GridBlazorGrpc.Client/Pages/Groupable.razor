@@ -44,6 +44,7 @@ else
         
         Action<IGridColumnCollection<Order>> columns = c => ColumnCollections.OrderColumnsGroupable(c, SetCustomerNameLabel);
         var client = new GridClient<Order>(gridClientService.GetOrdersGridGroupable, query, false, "ordersGrid", columns, locale)
+            .SetDateInputMode(DateInputMode.Grid)
             .Sortable()
             .Filterable()
             .SetStriped(true)

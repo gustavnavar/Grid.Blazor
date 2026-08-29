@@ -185,15 +185,20 @@ namespace GridBlazor.Pages
             }
             else
             {
-                if (typeAttr == "week")
+                // The text arrives either as ISO, the way a native date input sends it, or
+                // written the way the reader reads it, the way the text fallback and a column
+                // format leave it. One parser covers both, so nothing here has to know which of
+                // the two inputs the browser decided to draw.
+                if (GridDateTimeFormats.IsDateType(typeAttr))
                 {
-                    var value = DateTimeUtils.FromIso8601WeekDate(e.Value.ToString());
-                    SetValue(value, column);
-                }
-                else if (typeAttr == "month")
-                {
-                    var value = DateTimeUtils.FromMonthDate(e.Value.ToString());
-                    SetValue(value, column);
+                    var (dateType, _) = ((IGridColumn<T>)column).GetTypeAndValue(Item);
+                    object value;
+                    if (GridDateTimeFormats.TryParseDisplay(e.Value.ToString(), typeAttr,
+                        ((IGridColumn<T>)column).ValuePattern, dateType, CultureInfo.CurrentCulture,
+                        out value))
+                        SetValue(value, column);
+                    else
+                        SetValue(null, column);
                 }
                 else
                 {
@@ -352,6 +357,21 @@ namespace GridBlazor.Pages
         public async Task BackButtonClicked()
         {
             await GridComponent.Back();
+        }
+
+
+        /// <summary>
+        ///     The classes a field carries: the framework's, plus the validation one when this
+        ///     column has an error. Written once here rather than repeated in every input, which
+        ///     is also what lets a component take it - a component attribute cannot mix markup
+        ///     and C# the way a plain HTML attribute can.
+        /// </summary>
+        protected string FieldCssClass(IGridColumn column)
+        {
+            var css = GridComponent.Grid.HtmlClass.FormInput;
+            if (ColumnErrors.ContainsKey(column.FieldName))
+                css += " input-validation-error";
+            return css;
         }
 
     }

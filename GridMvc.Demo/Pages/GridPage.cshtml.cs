@@ -15,6 +15,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Linq;
+using System.Globalization;
 
 namespace GridMvc.Demo.Pages
 {
@@ -78,8 +79,7 @@ namespace GridMvc.Demo.Pages
                     .Titled(SharedResource.OrderCustomDate)
                     .SortInitialDirection(GridSortDirection.Descending)
                     .ThenSortByDescending(o => o.OrderID)
-                    .SetCellCssClassesContraint(o => o.OrderDate.HasValue && o.OrderDate.Value >= DateTime.Parse("1997-01-01") ? "red" : "")
-                    .Format("{0:yyyy-MM-dd}")
+                    .SetCellCssClassesContraint(o => o.OrderDate.HasValue && o.OrderDate.Value >= DateTime.Parse("1997-01-01", CultureInfo.InvariantCulture) ? "red" : "")
                     .SetWidth(110)
                     .Max(true).Min(true);
 

@@ -50,6 +50,7 @@ else
 
         var client = new GridClient<Order>(q => orderService.GetVirtualizedOrdersGridRows(orderColumns, q),
             query, false, "ordersGrid", orderColumns, locale)
+            .SetDateInputMode(DateInputMode.Grid)
             .Sortable()
             .ExtSortable(true)
             .Filterable()

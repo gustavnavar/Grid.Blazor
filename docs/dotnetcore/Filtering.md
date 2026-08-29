@@ -38,6 +38,10 @@ You can enable a button to clear all selected filters using the ***ClearFiltersB
 * System.Int64
 * System.Boolean
 * System.DateTime
+* System.DateTimeOffset
+* System.DateOnly
+* System.TimeOnly
+* System.TimeSpan
 * System.Decimal
 * System.Byte
 * System.Double
@@ -45,6 +49,11 @@ You can enable a button to clear all selected filters using the ***ClearFiltersB
 * enum
 
 It also supports nullable types of any element of the list.
+
+```System.DateOnly``` and ```System.TimeOnly``` need a target framework that has them, so they are
+absent from ```netstandard2.1``` and ```net5.0```. ```System.TimeSpan``` is there in every one.
+Without its own filter type a duration used to fall through to the text one and was compared as a
+string, which reads plausibly and asks the wrong question.
 
 **GridMvc** has different filter widgets for these types:
 * **TextFitlerWidget**: it provides a filter interface for text columns (System.String). This means that if your column has text data, **GridMvcCore** will render an specific filter interface:
@@ -62,6 +71,26 @@ It also supports nullable types of any element of the list.
 * **DateTimeFilterWidget**: it provides a filter interface for datetime columns (System.DateTime):
 
     ![](../images/Filtering_datetime.png)
+
+## Date format
+
+The date filter is written the way the reader writes dates, and travels to the server in ISO 8601
+(```yyyy-MM-dd```) whatever the reader's locale. The two are deliberately separate: the order of
+day and month is exactly what changes between locales, and reading ```09/01``` as the ninth of
+January when it is the first of September is a mistake nothing in the text reveals.
+
+The pattern the box and its calendar use is decided in this order:
+
+1. the ```format``` entry of the widget data, when the column sets one with
+   ```SetFilterWidgetType```, in the datepicker's own spelling (```dd/mm/yyyy```);
+2. otherwise the column's own format, when it sets one with ```Format``` that writes a date and
+   nothing else - a format carrying a time is skipped here, because the filter asks for a day and
+   the calendar it opens can only offer one;
+3. otherwise the request's culture, with the day and the month padded to two digits.
+
+The culture is resolved on the server rather than in the browser on purpose: the cells beside the
+filter are rendered by the same request, and a filter reading a day differently from the column it
+filters is worse than either choice on its own.
 
 ## Multiple filters
 

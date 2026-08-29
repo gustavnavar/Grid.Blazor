@@ -46,6 +46,7 @@ else
         var query = new QueryDictionary<string>();
 
         var client = new GridClient<Customer>(gridClientService.GetCustomersGrid, query, false, "customersGrid", ColumnCollections.CustomerColumns, locale)
+            .SetDateInputMode(DateInputMode.Grid)
             .Sortable()
             .Filterable()
             .SetStriped(true)

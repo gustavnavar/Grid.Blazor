@@ -508,6 +508,10 @@ namespace GridBlazor
 
         public bool ChangeVirtualizedHeight { get; set; } = false;
 
+        // The browser's picker by default: it is the better control, and an application that
+        // takes its culture from the browser sees no difference either way.
+        public DateInputMode DateInputMode { get; set; } = DateInputMode.Browser;
+
         public bool ModalForms { get; set; } = false;
 
         public string ModalWidth { get; set; }

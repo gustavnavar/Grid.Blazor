@@ -46,6 +46,7 @@ else
         string url = NavigationManager.BaseUri + "api/SampleData/GetOrdersGridGroupable";
         Action<IGridColumnCollection<Order>> columns = c => ColumnCollections.OrderColumnsGroupable(c, SetCustomerNameLabel);
         var client = new GridClient<Order>(HttpClient, url, query, false, "ordersGrid", columns, locale)
+            .SetDateInputMode(DateInputMode.Grid)
             .Sortable()
             .Filterable()
             .SetStriped(true)

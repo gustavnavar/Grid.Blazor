@@ -420,6 +420,13 @@ namespace GridBlazor
         bool ChangeVirtualizedHeight { get; set; }
 
         /// <summary>
+        ///     Who spells the dates the reader types: the browser's own picker, or the grid, in
+        ///     the culture it was given. See <see cref="DateInputMode"/> for why this is not a
+        ///     style choice.
+        /// </summary>
+        DateInputMode DateInputMode { get; set; }
+
+        /// <summary>
         ///     Enable modal CRUD forms 
         /// </summary>
         bool ModalForms { get; set; }

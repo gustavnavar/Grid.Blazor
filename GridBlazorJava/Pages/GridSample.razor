@@ -80,6 +80,7 @@ else
 
             var subGridClient = new GridClient<OrderDetail>(HttpClient, subGridUrl, subGridQuery, false,
                 "orderDetailsGrid" + keys[0].ToString(), subGridColumns, locale)
+                    .SetDateInputMode(DateInputMode.Grid)
                     .Sortable()
                     .Filterable()
                     .SetStriped(true)
@@ -101,6 +102,7 @@ else
 
             var subGridClient = new GridClient<OrderDetail>(HttpClient, subGridUrl + keys[0], subGridQuery, false,
                 "orderDetailsGrid" + keys[0].ToString(), subGridColumns, locale)
+                    .SetDateInputMode(DateInputMode.Grid)
                     .SetRowCssClasses(item => item.Quantity > 10 ? "success" : string.Empty)
                     .Sortable()
                     .Filterable()
@@ -132,6 +134,7 @@ else
         }
         string url = "http://localhost:8080/" + "api/SampleData/GetOrdersGridAllFeatures";
         var client = new GridClient<Order>(HttpClient, url, query, false, "ordersGrid", orderColumns, locale)
+            .SetDateInputMode(DateInputMode.Grid)
             .SetRowCssClasses(item => item.Customer.IsVip ? "success" : string.Empty)
             .Sortable()
             .Filterable()

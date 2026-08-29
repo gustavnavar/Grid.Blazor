@@ -53,6 +53,7 @@ else
 
         var client = new GridClient<Order>(q => orderService.GetOrdersGridRowsAsync(orderColumns, q), query, false,
             "ordersGrid", orderColumns, locale)
+            .SetDateInputMode(DateInputMode.Grid)
             .Sortable()
             .Filterable()
             .SetStriped(true)

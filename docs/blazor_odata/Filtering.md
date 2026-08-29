@@ -36,6 +36,10 @@ You can enable a button to clear all selected filters using the ***ClearFiltersB
 * System.Int64
 * System.Boolean
 * System.DateTime
+* System.DateTimeOffset
+* System.DateOnly
+* System.TimeOnly
+* System.TimeSpan
 * System.Decimal
 * System.Byte
 * System.Double
@@ -43,6 +47,13 @@ You can enable a button to clear all selected filters using the ***ClearFiltersB
 * enum
 
 It also supports nullable types of any element of the list.
+
+```System.DateOnly``` and ```System.TimeOnly``` need a target framework that has them, so they are
+absent from ```netstandard2.1``` and ```net5.0```. ```System.TimeSpan``` is there in every one.
+A ```TimeSpan``` is a duration and reads as a time of day - the clock writes ```HH:mm``` either
+way - so it is filtered with the same widget as a ```TimeOnly```. Without its own filter type it
+used to fall through to the text one and a duration was compared as a string: the widget looked
+right and asked the wrong question.
 
 **GridBlazor** has different filter widgets for these types:
 * **TextFitlerWidget**: it provides a filter interface for text columns (System.String). This means that if your column has text data, **GridBlazor** will render an specific filter interface:
@@ -60,6 +71,13 @@ It also supports nullable types of any element of the list.
 * **DateTimeFilterWidget**: it provides a filter interface for datetime columns (System.DateTime):
 
     ![](../images/Filtering_datetime.png)
+
+* **TimeFilterWidget**: it provides a clock for time-of-day columns (System.TimeOnly) and for
+  durations inside a day (System.TimeSpan).
+
+Which control the date and time widgets draw - the browser's or one the grid draws in the
+application's own culture and calendar - is decided by ```SetDateInputMode```. See
+[Using a date time filter](Using_datetime_filter.md).
 
 ## Multiple filters
 

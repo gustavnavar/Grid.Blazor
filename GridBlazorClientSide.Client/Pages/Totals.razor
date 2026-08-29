@@ -45,6 +45,7 @@ else
         string url = NavigationManager.BaseUri + "api/SampleData/GetOrdersGridWithTotals";
         var client = new GridClient<Order>
             (HttpClient, url, query, false, "ordersGrid", ColumnCollections.OrderColumnsWithTotals, locale)
+            .SetDateInputMode(DateInputMode.Grid)
             .Sortable()
             .Filterable()
             .SetStriped(true)

@@ -2,6 +2,7 @@
 @using GridBlazor.Resources
 @using GridShared
 @using GridShared.Columns
+@using GridShared.Utility
 @typeparam T
 
 <td class="@_cssClass" style="@_cssStyles" data-name="@Column.Name">
@@ -172,62 +173,28 @@
                                 <span>@_cell</span>
                             }
                         }
-                        else if (type == typeof(DateTime) || type == typeof(System.DateTimeOffset))
+                        else if (GridDateTimeFormats.NaturalTypeOf(type) != null)
                         {
-                            string typeAttr = ((IGridColumn<T>)Column).InputType == InputType.None ? "date" : ((IGridColumn<T>)Column).InputType.ToTypeAttr();
-                            if (typeAttr == "week")
-                            {
-                                if (GridComponent.IsWeekSupported)
-                                {
-                                    <input autocomplete="@Column.CustomAutoComplete.Invoke()" id="@Column.FieldName" name="@Column.FieldName" type="@typeAttr" placeholder="yyyy-Www" class="@GridComponent.Grid.HtmlClass.FormInput" value="@(((ICGridColumn)Column).GetFormatedDateTime(value, typeAttr))" @onchange="(e) => ChangeValue(e, Column, typeAttr)" />
-                                }
-                                else
-                                {
-                                    <input autocomplete="@Column.CustomAutoComplete.Invoke()" id="@Column.FieldName" name="@Column.FieldName" type="text" placeholder="yyyy-Www" class="@GridComponent.Grid.HtmlClass.FormInput" value="@(((ICGridColumn)Column).GetFormatedDateTime(value, typeAttr))" @onchange="(e) => ChangeValue(e, Column, typeAttr)" />
-                                }
-                            }
-                            else if (typeAttr == "month")
-                            {
-                                if (GridComponent.IsMonthSupported)
-                                {
-                                    <input autocomplete="@Column.CustomAutoComplete.Invoke()" id="@Column.FieldName" name="@Column.FieldName" type="@typeAttr" placeholder="yyyy-mm" class="@GridComponent.Grid.HtmlClass.FormInput" value="@(((ICGridColumn)Column).GetFormatedDateTime(value, typeAttr))" @onchange="(e) => ChangeValue(e, Column, typeAttr)" />
-                                }
-                                else
-                                {
-                                    <input autocomplete="@Column.CustomAutoComplete.Invoke()" id="@Column.FieldName" name="@Column.FieldName" type="text" placeholder="yyyy-mm" class="@GridComponent.Grid.HtmlClass.FormInput" value="@(((ICGridColumn)Column).GetFormatedDateTime(value, typeAttr))" @onchange="(e) => ChangeValue(e, Column, typeAttr)" />
-                                }
-                            }
-                            else if (typeAttr == "datetime-local")
-                            {
-                                if (GridComponent.IsDateTimeLocalSupported)
-                                {
-                                    <input autocomplete="@Column.CustomAutoComplete.Invoke()" id="@Column.FieldName" name="@Column.FieldName" type="@typeAttr" placeholder="yyyy-mm-dd hh:mm" class="@GridComponent.Grid.HtmlClass.FormInput" value="@(((ICGridColumn)Column).GetFormatedDateTime(value, typeAttr))" @onchange="(e) => ChangeValue(e, Column, typeAttr)" />
-                                }
-                                else
-                                {
-                                    <input autocomplete="@Column.CustomAutoComplete.Invoke()" id="@Column.FieldName" name="@Column.FieldName" type="text" placeholder="yyyy-mm-dd hh:mm" class="@GridComponent.Grid.HtmlClass.FormInput" value="@(((ICGridColumn)Column).GetFormatedDateTime(value, typeAttr))" @onchange="(e) => ChangeValue(e, Column, typeAttr)" />
-                                }
-                            }
-                            else
+                            string typeAttr = GridDateTimeFormats.InputTypeFor(((IGridColumn<T>)Column).InputType, type);
+                            @* One body for every date and time column. The five CLR types differ only in
+                               the input type they default to, and the five input types only in typeAttr,
+                               which the markup already reads. NaturalTypeOf answers the first,
+                               InputTypeFor the second. *@
+                            if (GridComponent.UseNativeDateInput(typeAttr))
                             {
                                 <input autocomplete="@Column.CustomAutoComplete.Invoke()" id="@Column.FieldName" name="@Column.FieldName" type="@typeAttr" class="@GridComponent.Grid.HtmlClass.FormInput" value="@(((ICGridColumn)Column).GetFormatedDateTime(value, typeAttr))" @onchange="(e) => ChangeValue(e, Column, typeAttr)" />
                             }
+                            else
+                            {
+                                    <GridDatePickerComponent T="T" Type="@typeAttr"
+                                                             Id="@Column.FieldName" Name="@Column.FieldName"
+                                                             AutoComplete="@Column.CustomAutoComplete.Invoke()"
+                                                             ValuePattern="@(((IGridColumn<T>)Column).ValuePattern)"
+                                                             InputCssClass="@GridComponent.Grid.HtmlClass.FormInput"
+                                                             Value="@(((ICGridColumn)Column).GetFormatedDateTime(value, typeAttr))"
+                                                             ValueChanged="@((string v) => ChangeValue(new ChangeEventArgs { Value = v }, Column, typeAttr))" />
+                            }
                         }
-                        else if (type == typeof(System.TimeSpan))
-                        {
-                            string typeAttr = ((IGridColumn<T>)Column).InputType == InputType.None ? "time" : ((IGridColumn<T>)Column).InputType.ToTypeAttr();
-                            <input autocomplete="@Column.CustomAutoComplete.Invoke()" id="@Column.FieldName" name="@Column.FieldName" type="@typeAttr" class="@GridComponent.Grid.HtmlClass.FormInput" value="@(((ICGridColumn)Column).GetFormatedDateTime(value, typeAttr))" @onchange="(e) => ChangeValue(e, Column)" />
-                        }
-    #if !NETSTANDARD2_1 && !NET5_0
-                        else if (type == typeof(DateOnly))
-                        {
-                            <input autocomplete="@Column.CustomAutoComplete.Invoke()" id="@Column.FieldName" name="@Column.FieldName" type="date" class="@GridComponent.Grid.HtmlClass.FormInput" value="@(((ICGridColumn)Column).GetFormatedDateTime(value, "date"))" @onchange="(e) => ChangeValue(e, Column)" />
-                        }
-                        else if (type == typeof(TimeOnly))
-                        {
-                            <input autocomplete="@Column.CustomAutoComplete.Invoke()" id="@Column.FieldName" name="@Column.FieldName" type="time" class="@GridComponent.Grid.HtmlClass.FormInput" value="@(((ICGridColumn)Column).GetFormatedDateTime(value, "time"))" @onchange="(e) => ChangeValue(e, Column)" />
-                        }
-    #endif
                         else if (type == typeof(bool))
                         {
                             if (value != null && (bool)value == true)

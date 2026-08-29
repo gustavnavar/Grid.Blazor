@@ -45,6 +45,7 @@ else
         var query = new QueryDictionary<StringValues>();
         var client = new GridClient<Order>(q => orderService.GetOrdersGridRowsAsync(ColumnCollections.OrderColumnsWithTotals, q),
             query, false, "ordersGrid", ColumnCollections.OrderColumnsWithTotals, locale)
+            .SetDateInputMode(DateInputMode.Grid)
             .Sortable()
             .Filterable()
             .SetStriped(true)
