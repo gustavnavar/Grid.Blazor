@@ -40,13 +40,13 @@ namespace GridMvc.Tests.Server
         public void TestMainMethods()
         {
             _server.Grid.PagingType = PagingType.Virtualization;
-            Assert.AreEqual(_server.Grid.PagingType, PagingType.Virtualization);
-            Assert.AreEqual(_server.Grid.Pager.StartIndex, 0);
-            Assert.AreEqual(_server.Grid.Pager.VirtualizedCount, 0);
+            Assert.AreEqual(PagingType.Virtualization, _server.Grid.PagingType);
+            Assert.AreEqual(0, _server.Grid.Pager.StartIndex);
+            Assert.AreEqual(0, _server.Grid.Pager.VirtualizedCount);
 
             _server.WithPaging(5);
-            Assert.AreEqual(_server.Grid.PagingType, PagingType.Pagination);
-            Assert.AreEqual(_server.Grid.Pager.PageSize, 5);
+            Assert.AreEqual(PagingType.Pagination, _server.Grid.PagingType);
+            Assert.AreEqual(5, _server.Grid.Pager.PageSize);
 
             Assert.IsTrue(_server.Grid.Pager.GoToVisibility);
             _server.GoToVisibility(false);
@@ -60,7 +60,7 @@ namespace GridMvc.Tests.Server
             Assert.IsTrue(_server.Grid.SearchOptions.OnlyTextColumns);
 
             _server.Named("test");
-            Assert.AreEqual(_server.Grid.RenderOptions.GridName, "test");
+            Assert.AreEqual("test", _server.Grid.RenderOptions.GridName);
 
             _server.Selectable(true);
             Assert.IsTrue(_server.Grid.RenderOptions.Selectable);

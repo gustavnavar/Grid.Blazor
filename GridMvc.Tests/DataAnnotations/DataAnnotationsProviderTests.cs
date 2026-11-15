@@ -22,12 +22,12 @@ namespace GridMvc.Tests.DataAnnotations
             var pi = typeof(TestGridAnnotationModel).GetProperty("Title");
             var opt = _provider.GetAnnotationForColumn<TestGridAnnotationModel>(pi);
             Assert.IsNotNull(opt);
-            Assert.AreEqual(opt.Title, "Some title"); //ensure that title reads from metadata type class
+            Assert.AreEqual("Some title", opt.Title); //ensure that title reads from metadata type class
 
             var gridSettings = _provider.GetAnnotationForTable<TestGridAnnotationModel>();
             Assert.IsNotNull(gridSettings);
-            Assert.AreEqual(gridSettings.PageSize, 20);
-            Assert.AreEqual(gridSettings.PagingType, PagingType.Pagination);
+            Assert.AreEqual(20, gridSettings.PageSize);
+            Assert.AreEqual(PagingType.Pagination, gridSettings.PagingType);
         }
     }
 }

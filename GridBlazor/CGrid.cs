@@ -1266,7 +1266,7 @@ namespace GridBlazor
                 }
                 else
                     content = excelWriter.GenerateExcel(Columns, Items);
-                await js.InvokeAsync<object>("gridJsFunctions.saveAsFile", filename, Convert.ToBase64String(content));
+                await js.InvokeVoidAsync("gridJsFunctions.saveAsFile", filename, Convert.ToBase64String(content));
             }
         }
 

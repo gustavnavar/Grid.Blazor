@@ -25,7 +25,7 @@ namespace GridBlazor.Tests.Utility
             Expression<Func<TestModel, DateTime>> expr = m => m.Created;
 
             string name = PropertiesHelper.BuildColumnNameFromMemberExpression((MemberExpression)expr.Body);
-            Assert.AreEqual(name, "Created");
+            Assert.AreEqual("Created", name);
 
         }
 
@@ -34,7 +34,7 @@ namespace GridBlazor.Tests.Utility
         {
             Expression<Func<TestModel, string>> expr = m => m.Child.ChildTitle;
             string name = PropertiesHelper.BuildColumnNameFromMemberExpression((MemberExpression)expr.Body);
-            Assert.AreEqual(name, "Child.ChildTitle");
+            Assert.AreEqual("Child.ChildTitle", name);
 
         }
 
@@ -44,8 +44,8 @@ namespace GridBlazor.Tests.Utility
             const string columnName = "Created";
             IEnumerable<PropertyInfo> sequence;
             var pi = PropertiesHelper.GetPropertyFromColumnName(columnName, typeof(TestModel), out sequence);
-            Assert.AreEqual(sequence.Count(), 1);
-            Assert.AreEqual(pi.Name, "Created");
+            Assert.AreEqual(1, sequence.Count());
+            Assert.AreEqual("Created", pi.Name);
         }
 
         [TestMethod]
@@ -54,8 +54,8 @@ namespace GridBlazor.Tests.Utility
             const string columnName = "Child.ChildTitle";
             IEnumerable<PropertyInfo> sequence;
             var pi = PropertiesHelper.GetPropertyFromColumnName(columnName, typeof(TestModel), out sequence);
-            Assert.AreEqual(sequence.Count(), 2);
-            Assert.AreEqual(pi.Name, "ChildTitle");
+            Assert.AreEqual(2, sequence.Count());
+            Assert.AreEqual("ChildTitle", pi.Name);
         }
 
 

@@ -35,13 +35,13 @@ namespace GridBlazor.Tests.Client
         [TestMethod]
         public void TestMainMethods()
         {
-            Assert.AreEqual(_client.Grid.PagingType, PagingType.Pagination);
-            Assert.AreEqual(_client.Grid.ServerAPI, ServerAPI.OData);
-            Assert.AreEqual(_client.Grid.Pager.PageSize, 10);
+            Assert.AreEqual(PagingType.Pagination, _client.Grid.PagingType);
+            Assert.AreEqual(ServerAPI.OData, _client.Grid.ServerAPI);
+            Assert.AreEqual(10, _client.Grid.Pager.PageSize);
 
             _client.WithPaging(5);
-            Assert.AreEqual(_client.Grid.PagingType, PagingType.Pagination);
-            Assert.AreEqual(_client.Grid.Pager.PageSize, 5);
+            Assert.AreEqual(PagingType.Pagination, _client.Grid.PagingType);
+            Assert.AreEqual(5, _client.Grid.Pager.PageSize);
 
             Assert.IsTrue(_client.Grid.Pager.GoToVisibility);
             _client.GoToVisibility(false);
@@ -55,7 +55,7 @@ namespace GridBlazor.Tests.Client
             Assert.IsTrue(_client.Grid.SearchOptions.OnlyTextColumns);
 
             _client.Named("test");
-            Assert.AreEqual(_client.Grid.ComponentOptions.GridName, "test");
+            Assert.AreEqual("test", _client.Grid.ComponentOptions.GridName);
 
             _client.Selectable(true);
             Assert.IsTrue(_client.Grid.ComponentOptions.Selectable);
@@ -65,8 +65,8 @@ namespace GridBlazor.Tests.Client
 
             _client.SetModalForms(true, "auto", "auto");
             Assert.IsTrue(_client.Grid.ModalForms);
-            Assert.AreEqual(_client.Grid.ModalWidth, "auto");
-            Assert.AreEqual(_client.Grid.ModalHeight, "auto");
+            Assert.AreEqual("auto", _client.Grid.ModalWidth);
+            Assert.AreEqual("auto", _client.Grid.ModalHeight);
 
             _client.SyncButton(true);
             Assert.IsTrue(_client.Grid.SyncButtonEnabled);

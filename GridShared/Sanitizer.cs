@@ -6,42 +6,60 @@ namespace GridShared
     /// <summary>
     ///     Default ISanitizer implementation
     /// </summary>
-    public class Sanitizer : ISanitizer
+    public partial class Sanitizer : ISanitizer
     {
-        private static readonly Regex Tags = new Regex("<[^>]*(>|$)",
-                                                       RegexOptions.Singleline | RegexOptions.ExplicitCapture |
-                                                       RegexOptions.Compiled);
+        private const string TagsPattern = "<[^>]*(>|$)";
 
-        private static readonly Regex Whitelist =
-            new Regex(
-                @"
+        private const string WhitelistPattern = @"
                 ^</?(b(lockquote)?|code|d(d|t|l|el)|em|h(1|2|3)|i|kbd|li|ol|p(re)?|s(ub|up|trong|trike)?|ul)>$|
-                ^<(b|h)r\s?/?>$",
-                RegexOptions.Singleline | RegexOptions.ExplicitCapture | RegexOptions.Compiled |
-                RegexOptions.IgnorePatternWhitespace);
+                ^<(b|h)r\s?/?>$";
 
-        private static readonly Regex WhitelistA =
-            new Regex(
-                @"
+        private const string WhitelistAPattern = @"
                 ^<a\s
                 href=""(\#\d+|(https?|ftp)://[-a-z0-9+&@#/%?=~_|!:,.;\(\)]+)""
                 (\stitle=""[^""<>]+"")?\s?>$|
-                ^</a>$",
-                RegexOptions.Singleline | RegexOptions.ExplicitCapture | RegexOptions.Compiled |
-                RegexOptions.IgnorePatternWhitespace);
+                ^</a>$";
 
-        private static readonly Regex WhitelistImg =
-            new Regex(
-                @"
+        private const string WhitelistImgPattern = @"
                 ^<img\s
                 src=""https?://[-a-z0-9+&@#/%?=~_|!:,.;\(\)]+""
                 (\swidth=""\d{1,3}"")?
                 (\sheight=""\d{1,3}"")?
                 (\salt=""[^""<>]*"")?
                 (\stitle=""[^""<>]*"")?
-                \s?/?>$",
-                RegexOptions.Singleline | RegexOptions.ExplicitCapture | RegexOptions.Compiled |
-                RegexOptions.IgnorePatternWhitespace);
+                \s?/?>$";
+
+        private const RegexOptions TagsOptions = RegexOptions.Singleline | RegexOptions.ExplicitCapture;
+
+        private const RegexOptions WhitelistOptions = RegexOptions.Singleline | RegexOptions.ExplicitCapture |
+            RegexOptions.IgnorePatternWhitespace;
+
+#if NET7_0_OR_GREATER
+        // Generated at build time. RegexOptions.Compiled does nothing on Blazor WebAssembly, where code
+        // cannot be emitted at run time, so the expressions used to be interpreted there and built on
+        // first use; the generated ones are plain compiled code on every runtime.
+        [GeneratedRegex(TagsPattern, TagsOptions)]
+        private static partial Regex Tags();
+
+        [GeneratedRegex(WhitelistPattern, WhitelistOptions)]
+        private static partial Regex Whitelist();
+
+        [GeneratedRegex(WhitelistAPattern, WhitelistOptions)]
+        private static partial Regex WhitelistA();
+
+        [GeneratedRegex(WhitelistImgPattern, WhitelistOptions)]
+        private static partial Regex WhitelistImg();
+#else
+        private static readonly Regex _tags = new Regex(TagsPattern, TagsOptions | RegexOptions.Compiled);
+        private static readonly Regex _whitelist = new Regex(WhitelistPattern, WhitelistOptions | RegexOptions.Compiled);
+        private static readonly Regex _whitelistA = new Regex(WhitelistAPattern, WhitelistOptions | RegexOptions.Compiled);
+        private static readonly Regex _whitelistImg = new Regex(WhitelistImgPattern, WhitelistOptions | RegexOptions.Compiled);
+
+        private static Regex Tags() => _tags;
+        private static Regex Whitelist() => _whitelist;
+        private static Regex WhitelistA() => _whitelistA;
+        private static Regex WhitelistImg() => _whitelistImg;
+#endif
 
         #region ISanitizer Members
 
@@ -55,13 +73,13 @@ namespace GridShared
             if (String.IsNullOrEmpty(html)) return html;
 
             // match every HTML tag in the input
-            MatchCollection tags = Tags.Matches(html);
+            MatchCollection tags = Tags().Matches(html);
             for (int i = tags.Count - 1; i > -1; i--)
             {
                 Match tag = tags[i];
                 string tagname = tag.Value.ToLowerInvariant();
 
-                if (!(Whitelist.IsMatch(tagname) || WhitelistA.IsMatch(tagname) || WhitelistImg.IsMatch(tagname)))
+                if (!(Whitelist().IsMatch(tagname) || WhitelistA().IsMatch(tagname) || WhitelistImg().IsMatch(tagname)))
                 {
                     html = html.Remove(tag.Index, tag.Length);
                     //System.Diagnostics.Debug.WriteLine("tag sanitized: " + tagname);

@@ -25,10 +25,10 @@ namespace GridBlazor.Tests.Utility
             _builder = new CustomQueryStringBuilder(query);
 
             var str1 = _builder.GetQueryStringExcept(new[] { "key1" });
-            Assert.AreEqual(str1, "?key2=value2");
+            Assert.AreEqual("?key2=value2", str1);
 
             str1 = _builder.GetQueryStringExcept(new[] { "key2" });
-            Assert.AreEqual(str1, "?key1=value1");
+            Assert.AreEqual("?key1=value1", str1);
 
             str1 = _builder.GetQueryStringExcept(new[] { "key1", "key2" });
             Assert.AreEqual(str1, string.Empty);
@@ -45,10 +45,10 @@ namespace GridBlazor.Tests.Utility
             _builder = new CustomQueryStringBuilder(query);
 
             var str1 = _builder.GetQueryStringWithParameter("key4", "value4");
-            Assert.AreEqual(str1, "?key1=value1&key2=value2&key3=value3&key4=value4");
+            Assert.AreEqual("?key1=value1&key2=value2&key3=value3&key4=value4", str1);
 
             str1 = _builder.GetQueryStringWithParameter("key4", "value4new");
-            Assert.AreEqual(str1, "?key1=value1&key2=value2&key3=value3&key4=value4new");
+            Assert.AreEqual("?key1=value1&key2=value2&key3=value3&key4=value4new", str1);
         }
     }
 }

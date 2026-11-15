@@ -27,8 +27,8 @@ namespace GridBlazor.Tests.Pagination
 
         public void PagerInitTest()
         {
-            Assert.AreEqual(_pager.StartIndex, 0);
-            Assert.AreEqual(_pager.VirtualizedCount, 0);
+            Assert.AreEqual(0, _pager.StartIndex);
+            Assert.AreEqual(0, _pager.VirtualizedCount);
         }
 
         [TestMethod]
@@ -36,8 +36,8 @@ namespace GridBlazor.Tests.Pagination
         {
             _pager.StartIndex = 3;
 
-            Assert.AreEqual(_pager.StartIndex, 3);
-            Assert.AreEqual(_pager.VirtualizedCount, 0);
+            Assert.AreEqual(3, _pager.StartIndex);
+            Assert.AreEqual(0, _pager.VirtualizedCount);
         }
 
         [TestMethod]
@@ -45,8 +45,8 @@ namespace GridBlazor.Tests.Pagination
         {
             _pager.VirtualizedCount = 13;
 
-            Assert.AreEqual(_pager.StartIndex, 0);
-            Assert.AreEqual(_pager.VirtualizedCount, 13);
+            Assert.AreEqual(0, _pager.StartIndex);
+            Assert.AreEqual(13, _pager.VirtualizedCount);
         }
     }
 }

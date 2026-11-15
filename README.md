@@ -3,11 +3,11 @@
 GridBlazor is a Blazor component that shows data in a grid. It requires a back-end component that performs paging, sorting, filtering and others. 
 
 This back-end component can be one of the following:
-- GridCore (v.6.0.0 or later), supporting ASP.Net Core 3.1, ASP.Net 5.0, ASP.Net 6.0, ASP.Net 7.0, ASP.Net 8.0 and ASP.Net 9.0. GridMvcCore, that it is a fork from https://gridmvc.codeplex.com/, was working for earlier versions. But GridMvcCore is only required for Blazor WASM (REST) and ASP.NET MVC projects now.
+- GridCore (v.6.0.0 or later), supporting ASP.Net Core 3.1, ASP.Net 5.0, ASP.Net 6.0, ASP.Net 7.0, ASP.Net 8.0, ASP.Net 9.0, ASP.Net 10.0 and ASP.Net 11.0. GridMvcCore, that it is a fork from https://gridmvc.codeplex.com/, was working for earlier versions. But GridMvcCore is only required for Blazor WASM (REST) and ASP.NET MVC projects now.
 - an OData back-end. All samples are based on Microsoft.AspNetCore.OData library, but it can be any other OData provider.
 - GridJavaCore back-end for Java JPA / Hibernate projects (https://github.com/gustavnavar/Grid.Java.Core)
 
-GridBlazor supports .NET Core 3.1 and 5.0, 6.0, 7.0, 8.0 and 9.0, and Blazor WebAssembly 3.2.0, 5.0, 6.0, 7.0, 8.0 and 9.0
+GridBlazor supports .NET Core 3.1 and 5.0, 6.0, 7.0, 8.0, 9.0, 10.0 and 11.0, and Blazor WebAssembly 3.2.0, 5.0, 6.0, 7.0, 8.0, 9.0, 10.0 and 11.0
 
 ## Demo 
 - http://gridblazor.azurewebsites.net
@@ -27,6 +27,35 @@ You can find the specific documentation for each environment clicking the follow
 This is an example of a table of items using this component:
 
 ![Image of GridBlazor](./docs/images/GridBlazor.png)
+
+
+## Migration to GridBlazor 6.5.0 and GridCore / GridMvcCore / GridShared 8.5.0 from 6.4.0 / 8.4.0
+
+This release adds **.NET 11 support**. The API is unchanged, so a project that only upgrades the
+packages has nothing to change in its code.
+
+1. **All four packages now include a ```net11.0``` build.** GridBlazor, GridCore, GridMvcCore and
+GridShared keep every target framework they had - from ```netstandard2.1``` (```netcoreapp3.1```
+for GridMvcCore) up to ```net10.0``` - and add ```net11.0```. A project picks the build that
+matches its own target framework, so projects that stay on an earlier .NET keep getting the same
+build as before.
+
+2. **Moving a project to .NET 11 needs the .NET 11 SDK.** On ```net11.0``` the packages depend on
+the 11.0 versions of ```Microsoft.AspNetCore.Components```, ```Microsoft.Extensions.Primitives```,
+```System.Text.Json``` and the rest of their Microsoft dependencies. Upgrade the application's own
+ASP.NET Core, Blazor and Entity Framework Core packages to 11.0 at the same time, rather than mixing
+10.0 and 11.0 versions of them.
+
+3. **The demo projects now target .NET 11.** If your project was set up from one of them, the
+changes they needed are the ones yours will need when it moves to .NET 11:
+    - ```app.UseWebAssemblyDebugging()``` is obsolete in .NET 11 (warning ```ASPDEPR011```) and has
+      been removed, together with the ```inspectUri``` entries in ```launchSettings.json```. Visual
+      Studio and Visual Studio Code now start Blazor WebAssembly debugging themselves.
+    - Packages that are part of the .NET 11 framework - ```System.Net.Http.Json```,
+      ```System.Text.Json```, ```System.ComponentModel.Annotations``` and others - are no longer
+      referenced. The SDK reports each of them with warning ```NU1510```.
+    - Entity Framework Core 11 removes ```IMutableProperty.DeclaringEntityType```; use
+      ```DeclaringType``` instead.
 
 
 ## Migration to GridBlazor 6.4.0 and GridCore / GridMvcCore / GridShared 8.4.0 from earlier versions

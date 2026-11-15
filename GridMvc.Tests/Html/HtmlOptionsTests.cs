@@ -29,8 +29,8 @@ namespace GridMvc.Tests.Html
         public void TestMainMethods()
         {
             _opt.WithPaging(5);
-            Assert.AreEqual(_grid.PagingType, PagingType.Pagination);
-            Assert.AreEqual(_grid.Pager.PageSize, 5);
+            Assert.AreEqual(PagingType.Pagination, _grid.PagingType);
+            Assert.AreEqual(5, _grid.Pager.PageSize);
 
             _opt.WithMultipleFilters();
             Assert.IsTrue(_grid.RenderOptions.AllowMultipleFilters);
@@ -40,7 +40,7 @@ namespace GridMvc.Tests.Html
             Assert.IsTrue(_grid.SearchOptions.OnlyTextColumns);
 
             _opt.Named("test");
-            Assert.AreEqual(_grid.RenderOptions.GridName, "test");
+            Assert.AreEqual("test", _grid.RenderOptions.GridName);
 
             _opt.Selectable(true);
             Assert.IsTrue(_grid.RenderOptions.Selectable);

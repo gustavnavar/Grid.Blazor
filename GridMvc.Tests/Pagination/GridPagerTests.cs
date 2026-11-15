@@ -22,7 +22,7 @@ namespace GridMvc.Tests.Pagination
             _pager.ItemsCount = 1200;
             _pager.PageSize = 13;
 
-            Assert.AreEqual(_pager.PageCount, 93);
+            Assert.AreEqual(93, _pager.PageCount);
         }
 
         [TestMethod]
@@ -34,9 +34,9 @@ namespace GridMvc.Tests.Pagination
             _pager.MaxDisplayedPages = 5;
             _pager.CurrentPage = 40;
 
-            Assert.AreEqual(_pager.TemplateName, "_GridPager");
-            Assert.AreEqual(_pager.StartDisplayedPage, 38);
-            Assert.AreEqual(_pager.EndDisplayedPage, 42);
+            Assert.AreEqual("_GridPager", _pager.TemplateName);
+            Assert.AreEqual(38, _pager.StartDisplayedPage);
+            Assert.AreEqual(42, _pager.EndDisplayedPage);
         }
 
         [TestMethod]
@@ -59,7 +59,7 @@ namespace GridMvc.Tests.Pagination
             _pager.ChangePageSize = true;
             _pager.QueryPageSize = 20;
 
-            Assert.AreEqual(_pager.PageCount, 60);
+            Assert.AreEqual(60, _pager.PageCount);
         }
 
         [TestMethod]
@@ -74,10 +74,10 @@ namespace GridMvc.Tests.Pagination
             _pager.ChangePageSize = true;
             _pager.QueryPageSize = 20;
 
-            Assert.AreEqual(_pager.TemplateName, "_GridPager");
-            Assert.AreEqual(_pager.PageCount, 60);
-            Assert.AreEqual(_pager.StartDisplayedPage, 38);
-            Assert.AreEqual(_pager.EndDisplayedPage, 42);
+            Assert.AreEqual("_GridPager", _pager.TemplateName);
+            Assert.AreEqual(60, _pager.PageCount);
+            Assert.AreEqual(38, _pager.StartDisplayedPage);
+            Assert.AreEqual(42, _pager.EndDisplayedPage);
         }
 
         [TestMethod]

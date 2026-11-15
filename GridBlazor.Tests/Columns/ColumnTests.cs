@@ -78,7 +78,7 @@ namespace GridBlazor.Tests.Columns
             _columns.Add(x => x.List[1].ChildCreated, "t1");
 
             _columns.Add(x => x.Id);
-            Assert.AreEqual(_columns.Count(), 5);
+            Assert.AreEqual(5, _columns.Count());
             try
             {
                 _columns.Add(x => x.Id);
@@ -92,12 +92,12 @@ namespace GridBlazor.Tests.Columns
                 Assert.Fail();
             }
             _columns.Insert(0, x => x.Title);
-            Assert.AreEqual(_columns.Count(), 6);
-            Assert.AreEqual(_columns.ElementAt(0).Name, "Title");
+            Assert.AreEqual(6, _columns.Count());
+            Assert.AreEqual("Title", _columns.ElementAt(0).Name);
             //test hidden columns
 
             _columns.Add(x => x.Created, true);
-            Assert.AreEqual(_columns.Count(), 7);
+            Assert.AreEqual(7, _columns.Count());
         }
 
         [TestMethod]
@@ -105,7 +105,7 @@ namespace GridBlazor.Tests.Columns
         {
             const string name = "MyId";
             var column = _columns.Add(x => x.Id, name);
-            Assert.AreEqual(column.Name, name);
+            Assert.AreEqual(name, column.Name);
         }
     }
 }

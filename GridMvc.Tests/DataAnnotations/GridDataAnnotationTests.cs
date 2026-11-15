@@ -25,8 +25,8 @@ namespace GridMvc.Tests.DataAnnotations
         [TestMethod]
         public void TestPaging()
         {
-            Assert.AreEqual(_grid.PagingType, PagingType.Pagination);
-            Assert.AreEqual(_grid.Pager.PageSize, 20);
+            Assert.AreEqual(PagingType.Pagination, _grid.PagingType);
+            Assert.AreEqual(20, _grid.Pager.PageSize);
         }
 
         [TestMethod]
@@ -59,7 +59,7 @@ namespace GridMvc.Tests.DataAnnotations
                 }
                 i++;
             }
-            Assert.AreEqual(_grid.Columns.Count(), 3);
+            Assert.AreEqual(3, _grid.Columns.Count());
         }
     }
 }

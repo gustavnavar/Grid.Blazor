@@ -36,17 +36,17 @@ namespace GridBlazor.Tests.Client
         public void TestMainMethods()
         {
             _client.Virtualize("1200px",600);
-            Assert.AreEqual(_client.Grid.PagingType, PagingType.Virtualization);
-            Assert.AreEqual(_client.Grid.Pager.StartIndex, 0);
-            Assert.AreEqual(_client.Grid.Pager.VirtualizedCount, 0);
-            Assert.AreEqual(_client.Grid.ServerAPI, ServerAPI.ItemsDTO);
-            Assert.AreEqual(_client.Grid.Width, "1200px");
-            Assert.AreEqual(_client.Grid.Height, "600px");
+            Assert.AreEqual(PagingType.Virtualization, _client.Grid.PagingType);
+            Assert.AreEqual(0, _client.Grid.Pager.StartIndex);
+            Assert.AreEqual(0, _client.Grid.Pager.VirtualizedCount);
+            Assert.AreEqual(ServerAPI.ItemsDTO, _client.Grid.ServerAPI);
+            Assert.AreEqual("1200px", _client.Grid.Width);
+            Assert.AreEqual("600px", _client.Grid.Height);
 
             _client.WithPaging(5);
-            Assert.AreEqual(_client.Grid.PagingType, PagingType.Pagination);
-            Assert.AreEqual(_client.Grid.Pager.PageSize, 5);
-            Assert.AreEqual(_client.Grid.ServerAPI, ServerAPI.ItemsDTO);
+            Assert.AreEqual(PagingType.Pagination, _client.Grid.PagingType);
+            Assert.AreEqual(5, _client.Grid.Pager.PageSize);
+            Assert.AreEqual(ServerAPI.ItemsDTO, _client.Grid.ServerAPI);
 
             Assert.IsTrue(_client.Grid.Pager.GoToVisibility);
             _client.GoToVisibility(false);
@@ -60,7 +60,7 @@ namespace GridBlazor.Tests.Client
             Assert.IsTrue(_client.Grid.SearchOptions.OnlyTextColumns);
 
             _client.Named("test");
-            Assert.AreEqual(_client.Grid.ComponentOptions.GridName, "test");
+            Assert.AreEqual("test", _client.Grid.ComponentOptions.GridName);
 
             _client.Selectable(true);
             Assert.IsTrue(_client.Grid.ComponentOptions.Selectable);
@@ -70,8 +70,8 @@ namespace GridBlazor.Tests.Client
 
             _client.SetModalForms(true, "auto", "auto");
             Assert.IsTrue(_client.Grid.ModalForms);
-            Assert.AreEqual(_client.Grid.ModalWidth, "auto");
-            Assert.AreEqual(_client.Grid.ModalHeight, "auto");
+            Assert.AreEqual("auto", _client.Grid.ModalWidth);
+            Assert.AreEqual("auto", _client.Grid.ModalHeight);
 
             _client.SyncButton(true);
             Assert.IsTrue(_client.Grid.SyncButtonEnabled);

@@ -51,7 +51,7 @@ namespace GridBlazor.Tests.Searching
                 if (searched.ElementAt(i).Id != original.ElementAt(i).Id)
                     Assert.Fail("Searching doesn't work");
             }
-            Assert.AreEqual(_gridClient.Grid.ItemsCount, 3);
+            Assert.AreEqual(3, _gridClient.Grid.ItemsCount);
         }
 
         [TestMethod]
@@ -81,7 +81,7 @@ namespace GridBlazor.Tests.Searching
                 if (searched.ElementAt(i).Id != original.ElementAt(i).Id)
                     Assert.Fail("Searching doesn't work");
             }
-            Assert.AreEqual(_gridClient.Grid.ItemsCount, 10);
+            Assert.AreEqual(10, _gridClient.Grid.ItemsCount);
         }
     }
 }
